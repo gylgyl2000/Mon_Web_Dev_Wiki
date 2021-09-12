@@ -4,15 +4,15 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
 // With JSDoc @type annotations, IDEs can provide config autocompletion
 /** @type {import('@docusaurus/types').DocusaurusConfig} */
 (module.exports = {
-  title: 'My Site',
-  tagline: 'Dinosaurs are cool',
-  url: 'https://your-docusaurus-test-site.com',
+  title: 'Mon wiki de développement web',
+  tagline: 'HTML - CSS - JavaScript - Python',
+  url: 'https://gylgyl2000.github.io/Mon_Web_Dev_Wiki',
   baseUrl: '/',
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'warn',
-  favicon: 'img/favicon.ico',
-  organizationName: 'facebook', // Usually your GitHub org/user name.
-  projectName: 'docusaurus', // Usually your repo name.
+  favicon: 'img/otter-solid.svg',
+  organizationName: 'gylgyl2000', // Usually your GitHub org/user name.
+  projectName: 'Mon_Web_Dev_Wiki', // Usually your repo name.
 
   presets: [
     [
@@ -22,14 +22,14 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
         docs: {
           sidebarPath: require.resolve('./sidebars.js'),
           // Please change this to your repo.
-          editUrl: 'https://github.com/facebook/docusaurus/edit/main/website/',
+          editUrl: 'https://github.com/gylgyl2000/Mon_Web_Dev_Wiki/edit/master/website/',
         },
-        blog: {
+        /* blog: {
           showReadingTime: true,
           // Please change this to your repo.
           editUrl:
-            'https://github.com/facebook/docusaurus/edit/main/website/blog/',
-        },
+            'https://github.com/gylgyl2000/Mon_Web_Dev_Wiki/edit/master/website/blog/',
+        }, */
         theme: {
           customCss: require.resolve('./src/css/custom.css'),
         },
@@ -41,10 +41,10 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
     ({
       navbar: {
-        title: 'My Site',
+        title: 'WIKI DEV WEB par LaLoutre',
         logo: {
-          alt: 'My Site Logo',
-          src: 'img/logo.svg',
+          alt: 'Otter',
+          src: 'img/otter-solid.svg',
         },
         items: [
           {
