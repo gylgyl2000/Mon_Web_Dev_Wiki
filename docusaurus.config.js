@@ -6,8 +6,8 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
 (module.exports = {
   title: 'Mon wiki de développement web',
   tagline: 'HTML - CSS - JavaScript - Python',
-  url: 'https://gylgyl2000.github.io/Mon_Web_Dev_Wiki',
-  baseUrl: '/',
+  url: 'https://gylgyl2000.github.io',
+  baseUrl: '/Mon_Web_Dev_Wiki/',
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'warn',
   favicon: 'img/otter-solid.svg',
