@@ -9,7 +9,7 @@
     "swizzle": "docusaurus swizzle",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build",
-    "homepage": "https://gylgyl2000.github.io/Mon_Web_Dev_Wiki",
+    
     "clear": "docusaurus clear",
     "serve": "docusaurus serve",
     "write-translations": "docusaurus write-translations",
