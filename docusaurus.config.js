@@ -10,7 +10,7 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
   baseUrl: '/Mon_Web_Dev_Wiki/',
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'warn',
-  favicon: 'img/otter-solid.svg',
+  favicon: 'img/river-otter-silhouette.svg',
   organizationName: 'gylgyl2000', // Usually your GitHub org/user name.
   projectName: 'Mon_Web_Dev_Wiki', // Usually your repo name.
 
@@ -41,10 +41,10 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
     ({
       navbar: {
-        title: 'WIKI DEV WEB par LaLoutre',
+        title: 'Mon Wiki Dev Web par LaLoutre',
         logo: {
           alt: 'Otter',
-          src: 'img/otter-solid.svg',
+          src: 'img/river-otter-silhouette.svg',
         },
         items: [
           {
@@ -55,8 +55,8 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
           },
           {to: '/blog', label: 'Blog', position: 'left'},
           {
-            href: 'https://github.com/facebook/docusaurus',
-            label: 'GitHub',
+            href: 'https://github.com/gylgyl2000/Mon_Web_Dev_Wiki',
+            className: 'github',
             position: 'right',
           },
         ],
@@ -99,12 +99,12 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
               },
               {
                 label: 'GitHub',
-                href: 'https://github.com/facebook/docusaurus',
+                href: 'https://github.com/gylgyl2000/Mon_Web_Dev_Wiki',
               },
             ],
           },
         ],
-        copyright: `Copyright © ${new Date().getFullYear()} My Project, Inc. Built with Docusaurus.`,
+        copyright: `Copyright © ${new Date().getFullYear()} Mon Wiki Dev Web, Inc. Built with Docusaurus.`,
       },
       prism: {
         theme: lightCodeTheme,

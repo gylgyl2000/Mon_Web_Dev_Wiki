@@ -1,0 +1,26 @@
+.topics {
+  display: flex;
+  align-items: center;
+  padding: 2rem 0;
+  width: 100%;
+  text-transform: uppercase;
+  font-family: Play, sans-serif;
+  text-decoration: none;
+  
+}
+
+.topic {
+  align-items: center;
+  height: 85px;
+  width: 85px;
+}
+
+.topicSvg {
+  height: 10vh;
+  width: 10vh;
+  border: 2px solid #bfc7d5;
+  border-radius: 50%;
+  color: #fff;
+  background-color: transparent;
+  padding: 12px;
+}
