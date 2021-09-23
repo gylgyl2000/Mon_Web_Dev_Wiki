@@ -37,9 +37,12 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
     ],
   ],
 
-  themeConfig:
-    /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
-    ({
+  themeConfig: {
+  /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
+      hideableSidebar: true,
+      /* sidebarCollapsible: true, */
+    
+    
       navbar: {
         title: 'Mon Wiki Dev Web par LaLoutre',
         logo: {
@@ -49,11 +52,11 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
         items: [
           {
             type: 'doc',
-            docId: 'intro',
-            position: 'left',
-            label: 'Tutorial',
+            docId: 'menu',
+            position: 'right',
+            label: 'Menu',
           },
-          {to: '/blog', label: 'Blog', position: 'left'},
+          /* {to: '/blog', label: 'Blog', position: 'left'}, */
           {
             href: 'https://github.com/gylgyl2000/Mon_Web_Dev_Wiki',
             className: 'github',
@@ -110,5 +113,5 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
         theme: lightCodeTheme,
         darkTheme: darkCodeTheme,
       },
-    }),
+    }
 });

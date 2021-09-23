@@ -1,0 +1,520 @@
+---
+id: OpenClassrooms-Decouvrez_le_fonctionnement_des_algorithmes-3-Choisissez_le_type_et_la_structure_de_donnees_adequats
+title: Choisissez le type et la structure de données adéquats
+---
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+import { Vimeo } from 'mdx-embed';
+
+
+## Découvrez les types de données les plus fréquents
+
+[Découvrez les types de données les plus fréquents - Découvrez le fonctionnement des algorithmes - OpenClassrooms](https://openclassrooms.com/fr/courses/4366701-decouvrez-le-fonctionnement-des-algorithmes/4384952-decouvrez-les-types-de-donnees-les-plus-frequents)
+
+<Vimeo vimeoId="213636217" />
+
+<br />
+
+Dans notre programme, nous avons déjà manipulé trois types de données différents : les nombres, les mots et une manière de savoir si
+une condition est vraie ou fausse. Cela vous semble logique : oui, évidemment, un mot n’est pas un nombre. Pourquoi ? Car vous savez
+que ce sont deux concepts différents et que vous ne souhaitez pas effectuer les mêmes actions avec eux.
+
+Vous n’allez pas diviser un mot par cinq, par exemple ! Ou mettre un nombre en majuscules ! Mais l’ordinateur ne voit pas la différence
+entre les deux. C’est pourquoi nous attribuons des types aux différents concepts que nous manipulons dans un programme.
+
+Nous pouvons les visualiser comme étant des pièces de Lego. Certains sont des plaques plates et larges pour le sol, d’autres des ronds
+pour fabriquer un mât ou des charnières de porte. Certaines pièces ont une utilité spécifique, mais ce sont toutes des Lego !
+
+### Les nombres
+
+Tout comme en mathématiques, il existe plusieurs sortes de nombres qui sont regroupés sous le doux nom de ["nombres décimaux"](https://fr.wikipedia.org/wiki/Nombre_d%C3%A9cimal).
+Les nombres décimaux peuvent être entiers (pas de virgules, Integer en anglais) ou à virgules (Float en anglais).
+
+Nombre entier : 1 ; 5 ; 10. Nombre à virgules : 1,3 ; 1,7777 ; 2,3.
+
+:::info
+En informatique, il est assez compliqué de représenter des nombres qui contiennent une infinité de chiffres après la virgule, comme pi
+ou 1/3. Chaque langage propose des solutions différentes.
+:::
+
+### Les chaînes de caractères
+
+Ce sont des lettres ou un ensemble de lettres qui forment des mots. Par exemple : "a", "Petit Poucet", "Godzilla".
+
+### Les booléens
+
+Enfin, notre petit dernier est un type de données qui indique "Vrai" ou "Faux". Vous pouvez vous le représenter comme [un interrupteur](https://www.youtube.com/watch?v=Pr8ETbGz35Q)
+ou une carte qui aurait deux faces : "Vrai" et "Faux".
+
+À quoi cela sert-il ? À utiliser des conditions ! Lorsque vous vérifiez une condition, c’est une information de type booléen qui est
+donnée en réponse.
+
+Dans le prochain chapitre, vous apprendrez à regrouper les données entre elles. À tout de suite !
+
+-----
+
+## Agencez les informations entre elles
+
+[Agencez les informations entre elles - Découvrez le fonctionnement des algorithmes - OpenClassrooms](https://openclassrooms.com/fr/courses/4366701-decouvrez-le-fonctionnement-des-algorithmes/4385034-agencez-les-informations-entre-elles)
+
+<Vimeo vimeoId="213636247" />
+
+<br />
+
+Les différents types définis et utilisés dans un programme s’appellent des structures de données. Elles peuvent être comparées à des
+constructions en Lego qui ont un but assez particulier : roue, fenêtre, carrosse ou encore lac.
+
+Il en est de même pour les structures de données en programmation. Nous serons vite limités si nous entrons les données une à une dans
+un algorithme. Nous aimerions parfois entrer plusieurs données déjà organisées d’une certaine manière pour améliorer l’efficacité d’un
+algorithme. Ou bien nous aimerions générer une certaine structure pour qu’elle puisse être utilisée par ailleurs.
+
+:::info
+Une structure permet de stocker plusieurs données de même type ou de types différents dans un seul conteneur (la structure). Une
+structure est composée de plusieurs champs, chaque champ correspondant à une donnée.
+:::
+
+Il existe de multiples structures de données, mais nous allons nous concentrer sur les plus connues :
+- tableaux, listes chaînées et dictionnaires ;
+- piles et files ;
+- arbres binaires et graphs.
+
+:::info
+Ces structures sont parfois prévues "par défaut" par les langages de programmation... ou pas. Je donnerai des exemples d’utilisation
+et d’implémentation dans deux langages très différents, C et Python, afin que vous puissiez comparer.
+:::
+
+### Opérations
+
+Une opération est une utilisation possible de la structure de données. De manière générale, nous retrouverons ces quatre opérations
+basiques :
+- Créer
+- Lire
+- Modifier
+- Supprimer
+
+:::info
+Ces opérations sont couramment représentées via leur acronyme anglais CRUD (Create Read Update Delete).
+:::
+
+Les trois dernières dépendent également d’une autre opération : la recherche ! Il faut en effet trouver l’élément demandé dans une
+structure avant de pouvoir le lire, le modifier ou le supprimer.
+
+Le type d’opérations que nous souhaitons effectuer déterminera notre choix de structure, certaines étant plus efficaces pour la
+recherche et d’autres pour la création ou la suppression de nouveaux éléments. Commençons tout de suite par les tableaux !
+
+### Tableaux
+
+#### Présentation
+
+Un tableau est une structure qui permet de mémoriser plusieurs données de type semblable ou différent. Autrement dit, cela ressemble
+en beaucoup de points aux tableaux de notre vie quotidienne.
+
+Un tableau qui stocke la correspondance entre le diamètre d’un arbre et sa taille :
+
+| Diamètre | Taille |
+|----------|--------|
+| 10 | 50 |
+| 20 | 100 |
+
+Un autre qui liste des joueurs de l’OM :
+
+| **Joueurs** |
+|-------------|
+| Roger Scotti |
+| Steve Mandanda |
+| Brice Samba |
+
+:::info
+En informatique, le tableau "basique" correspond, dans notre vie quotidienne, à un tableau à une colonne. D’ailleurs, un tableau
+informatique est parfois appelé "liste", comme en Python (à ne pas confondre avec "liste chaînée" : on en reparlera un peu plus loin !).
+:::
+
+Un tableau s’implémentera différemment selon les langages de programmation. Par exemple, voici la liste des joueurs en C :
+
+```c
+const char *joueurs[] = {"Roger Scotti", "Steve Mandanda", "Brice Samba"};
+```
+
+
+#### Opérations courantes
+
+Dans un tableau, chaque élément est associé à sa position dans la liste. Exactement comme dans une liste numérotée !
+
+:::info
+Cette position est appelée _index_. Attention, petite feinte : le premier élément de la liste est à l’index 0 et non 1 ! ;-)
+:::
+
+Vous retrouvez un élément en indiquant sa position. Exemple en Python :
+
+```python
+>>> roger = joueurs[0]
+"Roger Scotti"
+```
+
+#### Avantages et inconvénients
+
+Dans plusieurs langages, la taille d’un tableau est fixe. Autrement dit, vous ne pouvez pas ajouter ou supprimer les données d’un
+tableau. Il vous faut en faire une copie intégrant vos ajouts ou vos suppressions. Ce n’est pas très pratique si vous devez changer
+fréquemment la taille de ce tableau. Dans ce cas, vous préférerez d’autres structures de données telles que les listes chaînées.
+
+Néanmoins, il est très facile de lire ou de modifier une donnée d’un tableau grâce à son index. Chaque donnée ayant un numéro, il vous
+suffit de le connaître et le tour est joué.
+
+### Listes chaînées
+
+Une liste chaînée (_Singly-linked list_ en anglais) est un ensemble de valeurs enregistrées dans des endroits différents de la mémoire.
+À la différence d’un tableau qui contient un nombre fixe d’éléments, la liste chaînée est très souple : vous pouvez ajouter ou
+supprimer des éléments à votre guise.
+
+On dit que toute valeur d’une liste chaînée est une **cellule**. Chaque cellule est reliée aux autres par des pointeurs.
+
+:::note ?
+Qu’est-ce qu’un pointeur ?
+:::
+
+Un pointeur est, de manière très schématisée, l’adresse d’un autre élément. Pour les personnes ayant déjà fait de la programmation, il
+s’agit d’une variable qui contient une adresse mémoire. Cela vous permet de savoir où est enregistrée une autre donnée.
+
+Une liste chaînée est un peu comme une chasse au trésor informatique. Votre première cellule est comme le premier indice : elle
+contient l’adresse vous permettant de vous rendre au second indice et ainsi de suite. Le dernier endroit visité n’a pas d’indice.
+L’informatique n’aimant pas le vide, nous dirons que le dernier élément d’une liste a un pointeur égal à 'valeur nulle' ('NULL' en C,
+'None' en Python...).
+
+La première cellule est appelée cellule "de tête", car aucune autre cellule ne pointe sur elle.
+
+La dernière cellule est appelée cellule "de queue", car son pointeur est de valeur nulle.
+
+#### À quoi ça sert exactement ?
+
+Dans un tableau, toutes les informations sont stockées de manière contiguë dans la mémoire de votre ordinateur. Cela permet d’accéder
+plus facilement aux données, mais il est, de fait, moins flexible. Une liste chaînée rend l’ajout et la suppression de valeurs plus
+facile, mais l’accès à un élément plus long.
+
+#### Opérations courantes
+
+##### Insertion en tête de liste
+
+Insérer un élément en début de liste est très facile : vous commencez par le premier élément ! Cela demande peu de mémoire et de temps.
+
+##### Insertion en queue de liste
+
+L’ajout d’une cellule en queue de liste est un peu plus compliqué que l’insertion en tête de liste. Pourquoi ? Car il vous faut
+parcourir toute la liste avant de trouver la cellule dont le pointeur est nul.
+
+##### Retrouver une valeur en parcourant la liste
+
+Étant donné que nous ne savons pas où se trouve la valeur recherchée, nous allons commencer par le premier élément de la liste, puis
+avancer jusqu’à le trouver. Retrouver une valeur demande de parcourir une partie (voire la totalité) de la liste avant de trouver une
+correspondance.
+
+### Tables de hachage
+
+Une table de hachage est une structure de données qui vous permet d’associer une valeur à une _clé_ et non plus à un indice. Cette clé
+peut être un mot ou un chiffre. Par exemple :
+
+```python
+{"name": "Dolorès", "address": "New Hampshire"}
+```
+
+Les tables de hachage ne comportent pas d’ordre. Contrairement aux tableaux, vous ne pouvez pas retrouver un élément via sa position,
+mais uniquement via sa clé. Il s’agit d’une structure très commune et très pratique !
+
+On les appelle également des dictionnaires. Pourquoi ? Car les tables de hachage fonctionnent de la même manière : elles associent une
+clé (un mot dans le cas d’un dictionnaire) à une valeur (la définition d’un mot).
+
+#### Opérations courantes
+
+Pour retrouver une valeur, vous indiquez sa clé. Par exemple en Python :
+
+```python
+>>> lolita = {"name": "Dolorès", "address": "New Hampshire"}
+>>> lolita["address"]
+"New Hampshire"
+```
+
+Les tables de hachage sont très flexibles : vous pouvez ajouter ou supprimer des données rapidement. À noter que plusieurs langages
+n’ont pas ce type de données en natif : il faut l’implémenter si l’on souhaite l’utiliser.
+
+Découvrez un [exemple d’implémentation de table de hachage en C](https://openclassrooms.com/courses/apprenez-a-programmer-en-c/les-tables-de-hachage).
+
+-----
+
+## Découvrez les piles et les files
+
+[Découvrez les piles et les files - Découvrez le fonctionnement des algorithmes - OpenClassrooms](https://openclassrooms.com/fr/courses/4366701-decouvrez-le-fonctionnement-des-algorithmes/4385096-decouvrez-les-piles-et-les-files)
+
+<Vimeo vimeoId="213636312" />
+
+<br />
+
+Dans le chapitre précédent, nous avons vu trois structures de données qui permettent de regrouper des informations et de les retrouver.
+
+Mais que se passe-t-il si vous voulez accéder à vos données selon leur ordre d’arrivée ? Par exemple, si vous voulez trouver en premier
+la toute dernière information ajoutée ?
+
+Laissez-moi vous présenter les piles et les files !
+
+### Qu’est-ce qu’une pile ?
+
+#### Présentation
+
+Il s’agit d’une structure de données qui donne accès en priorité aux dernières données ajoutées. Ainsi, la dernière information ajoutée
+sera la première à en sortir.
+
+Les piles sont ce que l’on appelle un traitement des données **LIFO** (_Last In First Out,_ ou dans la langue de Molière : dernier
+ajouté premier parti), très pratique lorsque nous aurons à utiliser en premier les dernières données ajoutées.
+
+:::info
+Pourquoi appeler cela une pile ? Car vous empilez les données comme vous le feriez avec des t-shirts dans votre armoire : la seconde
+vient "au-dessus" de la première.
+:::
+
+Les piles sont très utilisées sur les plateformes de streaming musical. Lorsque vous demandez à la plateforme de lire une chanson à la
+suite, elle va ajouter cette dernière tout en haut de la liste "en attente de lecture".
+
+Mais que se passe-t-il si nous avons besoin d’accéder non pas aux dernières données ajoutées, mais aux premières ? C’est exactement ce
+qui se passe lorsque vous constituez une liste de musique. Vous ajoutez peu à peu les chansons qui seront lues dans le même ordre : les
+premières chansons ajoutées sont les premières lues. Impossible de réaliser cela avec une pile. C’est pourquoi les files existent !
+
+#### Implémentation
+
+En C et [en Python](https://docs.python.org/3/tutorial/datastructures.html#using-lists-as-stacks), vous pouvez utiliser des tableaux
+pour créer des piles. En effet, vous pouvez ajouter très facilement un élément au début d’un tableau et le retrouver.
+
+### Qu’est-ce qu’une file ?
+
+#### Présentation
+
+Une file (_queue_ en anglais) est une structure de données dans laquelle on accède aux éléments suivant la règle du premier arrivé
+premier sorti, ou encore **FIFO** (First In First Out).
+
+Elle suit la même logique que les files d’attente (au McDrive, à Pôle Emploi...) : plus vous arrivez tôt et plus vous partez tôt ! ;-)
+
+Prenons un exemple de notre vie courante. Vous vous rendez à la Poste, car vous avez reçu un colis. Vous prenez un ticket qui vous
+indique votre ordre dans la file d’attente. Vous comparez alors ce numéro avec celui qui s’affiche et vous avez une idée du nombre de
+personnes avant vous. Vous râlez : si seulement vous étiez arrivé·e plus tôt, vous auriez moins attendu ! Premier arrivé, premier servi
+(et premier parti !)...
+
+#### Implémentation
+
+En C, une file peut être implémentée par une liste chaînée ou par un tableau avec une gestion circulaire.
+
+En Python, vous préférerez utiliser le [type Deque](https://docs.python.org/3/library/collections.html#collections.deque).
+
+Les programmeurs l’utilisent dans des services de commande en ligne (commande de pizza sur Internet) ou dans les plateformes de
+gestion de la clientèle (le premier à avoir posé une question est le premier servi).
+
+### En résumé
+
+![](https://user.oc-static.com/upload/2017/04/18/14925237517103_FIFO-LIFO.png)
+
+Les piles (de type LIFO) s’utilisent lorsque vous devez traiter en priorité les dernières données arrivées. Nous retrouvons ce système
+dans les placards de notre cuisine ou dans notre frigo : ce qui est mis en avant est ce que l’on va consommer le plus vite ! C’est
+également le cas dans le flux d’actualité de Facebook ou de Twitter (la dernière information arrivée est la première que vous voyez).
+
+Les files (de type FIFO) s’utilisent lorsque vous devez traiter un flux de données par ordre d’arrivée. C’est le cas lorsque vous
+faites une _todo list_ (votre première action est celle qui vous devez réaliser en priorité) ou que vous listez les bugs en attente de
+traitement.
+
+### Opérations courantes
+
+Les opérations courantes de ces deux structures sont appelées _primitives_ de gestion des piles ou des files. Les noms sont assez
+parlants ! ![:)](https://openclassrooms.com/bundles/common/images/smiley/smile.png)
+
+Piles :
+- Initialiser
+- EstVide
+- EstPleine
+- AccederSommet
+- Empiler
+- Depiler
+- Vider
+- Détruire
+
+Files :
+- Initialiser
+- EstVide
+- EstPleine
+- AccederTete
+- Enfiler
+- Defiler
+- Vider
+- Detruire
+
+Dans le chapitre suivant, nous nous intéresserons à deux structures de données bien utiles pour retrouver des données selon les liens
+qu’elles entretiennent les unes avec les autres. À tout de suite !
+
+-----
+
+## Familiarisez-vous avec les arbres
+
+[Familiarisez-vous avec les arbres - Découvrez le fonctionnement des algorithmes - OpenClassrooms](https://openclassrooms.com/fr/courses/4366701-decouvrez-le-fonctionnement-des-algorithmes/4385117-familiarisez-vous-avec-les-arbres)
+
+<Vimeo vimeoId="213636346" />
+
+<br />
+
+### Qu’est-ce qu’un arbre binaire ?
+
+#### Présentation
+
+Vous souvenez-vous des listes chaînées, ces chasses au trésor aux multiples indices ? Maintenant, imaginez que chaque étape contienne
+deux adresses et non pas une. Si vous deviez le représenter par un schéma, cela ressemblerait étrangement à un arbre. C’est ce que nous
+appelons un arbre binaire.
+
+![Exemple d'arbre binaire](https://user.oc-static.com/upload/2017/04/18/14925229992861_211px-Arbre_binaire_ordonne.svg.png)
+
+Exemple d’arbre binaire
+
+Comme dans un arbre généalogique, toutes les cellules sont des cellules filles, sauf une qui est la cellule mère. Si l’arbre n’est pas
+vide, une seule cellule n’a pas de cellule mère et celle-ci est appelée racine de l’arbre. Toute cellule descend de la racine.
+
+Pourquoi l’appeler arbre **binaire** ? Car chaque cellule mère a 0, 1 ou 2 cellules enfants qui elles-mêmes sont liées à d’autres
+cellules.
+
+Dans la terminologie des arbres, les cellules sont appelées des nœuds ou des sommets. Un nœud n’ayant pas de fils s’appelle une feuille.
+
+En d’autres termes, un arbre binaire est une structure analogue à une liste chaînée, sauf que chaque cellule possède jusqu’à deux
+suivants. Par convention, on convient d’appeler fils gauche et fils droit les deux fils d’un nœud. Le fils gauche et le fils droit d’un
+nœud peuvent ne pas exister (pointeur égal à NULL). L’accès à l’arbre est donné par un pointeur qui contient l’adresse de la racine.
+
+#### Parcours d’arbres binaires
+
+Pour trouver une information dans un arbre binaire, il vous faut parcourir tous ses nœuds. Comment faire ? Le moyen le plus simple est
+de réaliser une fonction récursive.
+
+:::note ?
+_Une fonction quoi ? J’ai l’impression que tu me laisses là au bord d’un abîme rempli de ptérodactyles affamés._
+:::
+
+_Pardon cher lecteur ou chère lectrice ! Nous parlerons de la récursivité un peu plus tard, dans la dernière partie de ce cours. Je vous
+promets que vous aurez alors toutes les cartes en main pour vous construire un avion et planter là les dinosaures (je sais, je pars un
+peu loin ![:-°](https://openclassrooms.com/bundles/common/images/smiley/siffle.png) )._
+
+Il existe [de nombreuses manières](https://en.wikipedia.org/wiki/Graph_theory) de parcourir un arbre selon l’ordre dans lequel vous
+souhaitez examiner les nœuds.
+
+:::info
+Nous n’allons pas entrer dans le détail des parcours, car ceux-ci mériteraient un cours à eux seuls ! Retenez simplement que les arbres
+sont très utiles pour trier des informations.
+:::
+
+### Qu’est-ce qu’un graphe ?
+
+Un graphe est un ensemble de cellules reliées les unes aux autres non plus par un lien d’ascendance, comme dans le cas d’un arbre, mais
+par une relation. Visuellement, il s’agit d’un ensemble de sommets reliés par des arcs.
+
+![Exemple de graphe](https://user.oc-static.com/upload/2017/04/18/14925229561806_219px-6n-graf.svg.png)
+
+Exemple de graphe
+
+Un [graphe](https://en.wikipedia.org/wiki/Graph_theory) peut représenter un réseau routier, un réseau de transport aérien, un réseau
+informatique et bien plus encore.
+
+Les graphes sont souvent utilisés par des algorithmes dont le but est de trouver le plus court chemin entre un point A et un point B.
+Le service que nous connaissons tous qui utilise ce schéma est Google Maps. Facebook utilise également les graphes pour trouver les
+amis de vos amis et vous les présenter !
+
+Sur Facebook, chaque personne du réseau est représentée par un cercle (appelé _sommet_). Vos amis sont reliés à vous par des lignes
+(appelées _arcs_). Les amis qui pourraient vous intéresser sont ceux qui sont reliés à vos amis par un arc, tout simplement !
+
+:::info
+Un _chemin_ dans un graphe G est une suite de sommets tels que deux sommets consécutifs du chemin sont liés par un arc (orienté).
+:::
+
+-----
+
+## Quiz : Choisissez le type et la structure de données adéquats
+
+[Choisissez le type et la structure de données adéquats - OpenClassrooms](https://openclassrooms.com/fr/courses/4366701-decouvrez-le-fonctionnement-des-algorithmes/exercises/1620)
+
+#### Compétences évaluées
+
+<i class="bi bi-check2-circle"></i> Manipuler les structures de données essentielles : tableaux, listes chaînées, tables de hachage...
+
+-----
+
+#### Question 1 : Un nombre est un type de données qui en regroupe d'autres et notamment :
+
+*Attention, plusieurs réponses sont possibles.*
+
+<i class="bi bi-check-square-fill"></i> les nombres à virgule (<em>Float</em>)<br />
+<i class="bi bi-check-square-fill"></i> les nombres entiers (<em>Integer</em>)<br />
+<i class="bi bi-square"></i> les chiffres chinois<br />
+<br />
+
+-----
+
+#### Question 2 : Cochez la valeur qui correspond au type de données "chaîne de caractères" :
+
+<i class="bi bi-circle"></i> 3901<br />
+<i class="bi bi-circle"></i> [1, 5, 10]<br />
+<i class="bi bi-record-circle"></i> « San-Antonio a dit : "On se met à devenir vieux sitôt qu'on cesse de grandir." »<br />
+<br />
+
+-----
+
+#### Question 3 : Un booléen renvoie toujours "vrai" ou "faux".
+
+<i class="bi bi-record-circle"></i> Vrai<br />
+<i class="bi bi-circle"></i> Faux<br />
+<br />
+
+-----
+
+#### Question 4 : Trouver une valeur dans un tableau est possible grâce à :
+
+<i class="bi bi-record-circle"></i> son index<br />
+<i class="bi bi-circle"></i> son majeur<br />
+<i class="bi bi-circle"></i> sa clé<br />
+<br />
+
+-----
+
+#### Question 5 : Trouver une information dans une table de hachage est possible grâce à :
+
+<i class="bi bi-circle"></i> son index<br />
+<i class="bi bi-circle"></i> son majeur<br />
+<i class="bi bi-record-circle"></i> sa clé<br />
+<br />
+
+-----
+
+#### Question 6 : Une liste chaînée ressemble à une chasse au trésor : chaque valeur, sauf la dernière, "connaît" l'adresse de la suivante.
+
+<i class="bi bi-record-circle"></i> Vrai<br />
+<i class="bi bi-circle"></i> Faux<br />
+<br />
+
+-----
+
+#### Question 7 : Une pile est une structure :
+
+*Attention, plusieurs réponses sont possibles.*
+
+<i class="bi bi-square"></i> FIFO (First In First Out)<br />
+<i class="bi bi-check-square-fill"></i> LIFO (Last In First Out)<br />
+<i class="bi bi-circle"></i> 
+
+-----
+
+#### Question 8 : Une file est une structure :
+
+<i class="bi bi-record-circle"></i> FIFO (First In First Out)<br />
+<i class="bi bi-circle"></i> LIFO (Last In First Out)<br />
+<br />
+
+-----
+
+#### Question 9 : Chaque cellule d'un arbre binaire a un nombre infini de cellules enfants.
+
+<i class="bi bi-circle"></i> Vrai<br />
+<i class="bi bi-record-circle"></i> Faux<br />
+<br />
+
+-----
+
+#### Question 10 : Un graphe est composé...
+
+<i class="bi bi-record-circle"></i> d'arcs et de sommets.<br />
+<i class="bi bi-circle"></i> de rectangles, d'une abscisse et d'une ordonnée.<br />

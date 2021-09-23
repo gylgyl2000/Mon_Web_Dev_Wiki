@@ -4,6 +4,51 @@ import styles from './HomepageTopics.module.css';
 
 const TopicsList = [
     {
+        title: 'CSS',
+        Svg: require('../../static/img/logos/CSS3.svg').default,
+        siteUrl: 'https://www.w3.org/Style/CSS/Overview.fr.html',
+    },
+    {
+        title: 'HTML',
+        Svg: require('../../static/img/logos/HTML5.svg').default,
+        siteUrl: 'https://html.spec.whatwg.org/',
+    },
+    {
+        title: 'JavaScript',
+        Svg: require('../../static/img/logos/JavaScript.svg').default,
+        siteUrl: 'https://developer.mozilla.org/fr/docs/Web/JavaScript',
+    },
+    {
+        title: 'nodejs',
+        Svg: require('../../static/img/logos/NodeJS.svg').default,
+        siteUrl: 'https://nodejs.org/fr/',
+    },
+    {
+        title: 'reactjs',
+        Svg: require('../../static/img/logos/react.svg').default,
+        siteUrl: 'https://fr.reactjs.org/',
+    },
+    {
+        title: 'php',
+        Svg: require('../../static/img/logos/PHP.svg').default,
+        siteUrl: 'https://www.php.net/',
+    },
+    {
+        title: 'MySQL',
+        Svg: require('../../static/img/logos/MySQL.svg').default,
+        siteUrl: 'https://www.mysql.com/',
+    },
+    {
+        title: 'WordPress',
+        Svg: require('../../static/img/logos/WordPress.svg').default,
+        siteUrl: 'https://fr.wordpress.org/',
+    },
+    {
+        title: 'Python',
+        Svg: require('../../static/img/logos/Python.svg').default,
+        siteUrl: 'https://www.python.org/',
+    },
+    {
         title: 'Bootstrap',
         Svg: require('../../static/img/logos/Bootstrap.svg').default,
         siteUrl: 'https://getbootstrap.com/',
@@ -17,11 +62,6 @@ const TopicsList = [
         title: 'sass',
         Svg: require('../../static/img/logos/sass.svg').default,
         siteUrl: 'https://sass-lang.com/',
-    },
-    {
-        title: 'reactjs',
-        Svg: require('../../static/img/logos/react.svg').default,
-        siteUrl: 'https://fr.reactjs.org/',
     },
     {
         title: 'redux',
@@ -42,11 +82,6 @@ const TopicsList = [
         title: 'gitlab',
         Svg: require('../../static/img/logos/gitlab.svg').default,
         siteUrl: 'https://gitlab.com',
-    },
-    {
-        title: 'nodejs',
-        Svg: require('../../static/img/logos/NodeJS.svg').default,
-        siteUrl: 'https://nodejs.org/fr/',
     },
     {
         title: 'yarn',

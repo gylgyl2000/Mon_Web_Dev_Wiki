@@ -1,0 +1,1171 @@
+---
+id: OpenClassrooms-Decouvrez_le_fonctionnement_des_algorithmes-4-Allez_plus_loin
+title: Allez plus loin 
+---
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+import { Vimeo, YouTube } from 'mdx-embed';
+
+
+## Triez des informations
+
+[Triez des informations - Découvrez le fonctionnement des algorithmes - OpenClassrooms](https://openclassrooms.com/fr/courses/4366701-decouvrez-le-fonctionnement-des-algorithmes/4385150-triez-des-informations)
+
+<Vimeo vimeoId="213636393" />
+
+<br />
+
+Nous avons vu que les algorithmes nous permettaient de résoudre des problèmes plus ou moins complexes. Un des problèmes les plus
+répandus consiste à trier les informations. Cela vous semble facile à faire ? Et pourtant ! Il ne nous faut pas seulement trier les
+informations, mais également trouver la manière la plus efficace de le faire.
+
+Trier une suite de 10 nombres du plus petit au plus grand n’est effectivement pas très long. Mais qu’en est-il lorsque nous avons
+100000 nombres à trier ? Que se passe-t-il lorsque vous vous appelez Google et que vous devez trier plusieurs centaines de gigaoctets
+d’e-mails ?
+
+Les algorithmes de tri sont l’essence même de l’algorithmique. En effet, nous souhaitons souvent réorganiser des données pour les
+manipuler autrement. Il est donc essentiel d’en savoir un peu plus.
+
+Découvrez tout de suite un des algorithmes de tri les plus connus : le tri à bulles !
+
+### Le tri à bulles
+
+Cet algorithme avance dans une liste d’éléments. Il compare les données deux à deux et les échange si la première valeur est plus
+élevée que la seconde. Il fait cela pour toutes les paires d’éléments dans une liste puis recommence au début jusqu’à ce que toutes
+les paires soient dans le bon ordre.
+
+<YouTube youTubeId="Cq7SMsQBEUw" />
+
+<br />
+
+Faisons une démonstration avec des livres ! Nous avons tous eu un jour ou l’autre à trier notre bibliothèque, que ce soit par ordre
+alphabétique, par auteur ou par hauteur. Pour cette démonstration, disons que nous trions les livres par hauteur.
+
+Nous saisissons le premier livre et le comparons au suivant. S’il est plus grand, nous les échangeons. Sinon, nous les laissons ainsi.
+
+Quand nous avons fini de parcourir tous les livres une première fois, le plus grand se trouve bien à la fin. Nous pouvons alors
+recommencer un tour de boucle pour placer l’élément suivant.
+
+Et ainsi de suite jusqu’à ce que la bibliothèque soit triée !
+
+:::info
+Pourquoi ce nom 'tri à bulles' ? Tout simplement parce que la plus grande donnée remonte peu à peu à la fin de la liste, exactement
+comme des bulles de savon.
+:::
+
+Comment l’écririons-nous en pseudo-code ?
+
+Nous commençons par écrire une fonction qui va parcourir tous les livres, un à un. Vous connaissez déjà cette structure : il s’agit
+d’une boucle ! Nous allons donc faire 10 tours, puisque nous allons parcourir une liste de 10 livres.
+
+```text
+tri_à_bulles(Tableau T)
+    pour i allant de taille de T - 1 à 1
+        fais quelque chose
+```
+
+Quand nous sommes dans la boucle, nous intervertissons les livres _si_ le second est plus grand que le premier. Nous pouvons donc
+utiliser les structures conditionnelles que nous avons déjà vues.
+
+```text
+tri_à_bulles(TableauT)
+    pour i allant de taille de T - 1 à 1
+        si T[i + 1] < T[i]
+            echanger_(T[i + 1], T[i])
+```
+
+Ceci est déjà très bien, mais ce n’est pas suffisant. Actuellement, chaque item a bougé d’une place, mais n’est pas vraiment remonté
+jusqu’à la fin. Alors, comment faire ?
+
+Si nous réfléchissons bien, il faut faire un nombre de boucles correspondant au nombre d’items restant à trier dans la liste au carré.
+
+Prenons l’exemple du premier livre. S’il s’agit du plus grand, notre algorithme devra effectuer 9 tours de boucle afin de le
+positionner à la fin. Mais une fois que le livre est en place, il sait qu’il n’a pas à aller jusqu’à la fin. Il peut donc effectuer 8
+tours de boucle, puis 7, puis 6 et ainsi de suite jusqu’à 1.
+
+En pseudo-code, nous allons le représenter ainsi :
+
+```text
+tri_à_bulles(Tableau T)
+    pour i allant de taille de T - 1 à 1
+        pour j allant de 0 à i - 1
+            si T[j+1] < T[j]
+                échanger(T[j+1], T[j])
+```
+
+En Python :
+
+```python
+def inter(a_list):
+    for i in range(0, len(a_list) - 1):
+        for j in range(0, len(a_list) - 1):
+            if a_list[j + 1] < a_list[j]:
+                a_list[j+1], a_list[j] = a_list[j], a_list[j+1]
+    return a_list
+```
+
+:::info
+Il existe d’autres manières d’utiliser le tri à bulles en Python. Je vous en fais la démonstration dans l’avant-dernier chapitre ! ;-)
+:::
+
+### Autres algorithmes de tri
+
+Le tri à bulles est le plus connu de tous, mais pas le plus efficace. D’ailleurs, nous-mêmes, lorsque nous devons trier des livres,
+nous ne comparons pas deux livres et ainsi de suite. Nous utilisons d’autres algorithmes.
+
+Si nous avons une grande bibliothèque, nous pouvons décider de la diviser en plusieurs unités plus petites afin de les trier séparément
+et ensuite de les fusionner. Ou bien nous nous disons : je mets les livres les plus grands et les plus petits au début, en même temps.
+
+Bref, nous avons chacun notre stratégie. Il existe trop d’algorithmes de tri différents pour tous les expliquer ici. Je vous conseille
+néanmoins de regarder cette [liste non exhaustive des différents tris proposés sur cette page Wikipédia](https://fr.wikipedia.org/wiki/Algorithme_de_tri#Comparaison_des_algorithmes)
+et d’en lire quelques définitions afin de mieux les comprendre.
+
+-----
+
+## Comprenez la complexité algorithmique
+
+[Comprenez la complexité algorithmique - Découvrez le fonctionnement des algorithmes - OpenClassrooms](https://openclassrooms.com/fr/courses/4366701-decouvrez-le-fonctionnement-des-algorithmes/4420551-comprenez-la-complexite-algorithmique)
+
+<Vimeo vimeoId="213636441" />
+
+<br />
+
+### Un problème vraiment complexe ?
+
+La complexité algorithmique est un concept très important qui permet de **comparer les algorithmes** afin de trouver celui qui est le
+plus efficace.
+
+Avant d’entrer dans le détail de son calcul, laissez-moi vous conter une petite histoire.
+
+#### Complexité exponentielle
+
+Nous sommes dans le Midi, au cœur d’une belle forêt composée d’arbustes aromatiques et de pins. Il s’agit d’une douce matinée d’été
+éclairée par un soleil enthousiaste et nous nous promenons sur un chemin serpentant entre les collines. Soudain, un éclat de lumière
+attire votre regard entre les branchages. Vous vous approchez. Quelle n’est pas votre surprise lorsque vous apercevez, entre deux
+bruyères, un coffre qui semble être sorti tout droit d’un bateau pirate !
+
+Oh gloire, la fortune serait-elle enfin à votre portée ? Vous soulevez le coffre et tombez nez à nez avec un **cadenas à trois chiffres**,
+en fonte, bien décidé à ne pas vous laisser accéder au trésor tant escompté. Quand bien même ! Nous décidons de relever le défi et de
+tester rapidement, une à une, toutes les combinaisons.
+
+Plutôt que de les tester dans le désordre, car il serait impossible de se souvenir de toutes les tentatives, nous réfléchissons à
+**différentes stratégies**. L’une d’elles consiste à **essayer le nombre le plus petit (000) puis le nombre suivant (001)** et ainsi de
+suite jusqu’à atteindre 999. En effet, nous calculons que cette stratégie nous prendra, dans le pire des cas, 30 minutes.
+
+Effectivement, quelques minutes plus tard, le cadenas s’ouvre. Hourra ! Le code était 123. Facile ! Notre stratégie était efficace et
+nous nous félicitons d’être si intelligents.
+
+Nous ouvrons le coffre... pour en découvrir un second, plus petit, comportant un **cadenas à 4 chiffres**. Tristesse.
+
+Forts de notre premier succès, **nous nous basons sur le même algorithme pour trouver le code**. Au bout d’une heure et demie, las,
+nous abandonnons l’idée. C’est le plus raisonnable : tester toutes les combinaisons possibles aurait pris plus de 5 heures.
+
+Nous reprenons notre marche, le petit coffre sous le bras, et partons dans un grand débat : comment en est-on arrivés là ? Comment le
+temps de calcul peut-il passer de 30 minutes à 5 heures en ajoutant un simple chiffre ? **Le secret, c’est la complexité de notre
+algorithme**.
+
+Au risque de ne pas vous surprendre, plus il y a de chiffres dans le code, plus il sera long à trouver. **Mais plus long comment ?**
+
+Si le code a **3 chiffres**, il faut tester **1000 combinaisons** (eh oui, tous les nombres entre 000 et 999). En revanche, s’il en a
+**4**, il faut en tester **10 000**. S’il en avait eu **5**, il aurait fallu en tester **100 000**, et ainsi de suite. Nous nous
+apercevons donc que **notre algorithme d’ouverture de coffre dépend du nombre de chiffres du code**.
+
+:::info
+Plus précisément, le temps mis à l’ouvrir est multiplié par 10 à chaque fois que l’on ajoute un chiffre : 10 pour un code à 1 chiffre,
+100 (10 x 10) pour un code à 2 chiffres, 1 000 (10 x 10 x 10) pour un code à trois chiffres, et ainsi de suite.
+
+Si l’on note *n* le nombre de chiffres de notre cadenas, le temps de calcul est donc 10<sup>n</sup>.
+:::
+
+On dit alors que **la complexité est exponentielle.** Très vite, nous nous sommes rendu compte que notre algorithme était impossible à
+réaliser, car il devenait trop long.
+
+#### Complexité linéaire
+
+Après avoir disserté sur ce sujet, nous avons soudain une idée : et si nous arrêtions de calculer et faisions appel à Bill, notre
+cousin, celui qui trempe dans des affaires louches ? Il nous a raconté un jour qu’il savait "_écouter les cadenas_". Sa technique est
+simple : **il tourne la molette du premier chiffre jusqu’à entendre un "_clic_"**. Il sait alors que le chiffre est bon et passe au
+suivant. Il peut donc trouver les bons chiffres un par un, sans avoir à se soucier des autres.
+
+Évidemment, le jour où il vous a exposé sa théorie vous avez bien ri. À présent, vous êtes dubitatif : vous avez passé deux heures à
+essayer d’ouvrir des coffres de pirates, alors bon, pourquoi ne pas tenter ?
+
+Au bout de deux minutes, le cadenas à 4 chiffres est ouvert. Youpi ! Le code était 7339. ET L’ON A UTILISÉ UNE TECHNIQUE DE GANGSTER !!
+Nous hurlons si fort que même les cigales se taisent.
+
+À présent, nous ouvrons le coffre et en découvrons le contenu. Il est à la hauteur de nos efforts !
+
+:::note ?
+_Mais comment peut-on aller si vite, alors que nous avons exactement le même nombre de chiffres sur le cadenas ?_
+:::
+
+C’est très simple ! Afin de trouver le premier chiffre du code, Bill tente 10 combinaisons. Quand il l’a trouvé, il passe au suivant
+et teste de nouveau 10 combinaisons. Et ainsi de suite pour chaque chiffre !
+
+Il n’aura donc à tester que **40 combinaisons** (10 + 10 + 10 + 10, soit 10 x 4) pour ce cadenas à quatre chiffres (ce qui est mieux
+que les 10 000 combinaisons que nous nous apprêtions à essayer…).
+
+Si l’on y regarde de plus près, Bill teste **10 nouvelles combinaisons pour chaque nouveau chiffre du cadenas**. Autrement dit, si _n_
+est le nombre de chiffres, il teste 10 x _n_ combinaisons. Vous l’avez dans le mille, la "complexité" de son algorithme était bien
+meilleure que la nôtre.
+
+Nous appelons cela une **complexité linéaire**. Pourquoi ? Car elle augmente **proportionnellement** au nombre de chiffres.
+
+#### Complexité en temps constant
+
+Tout contents, nous allons rendre visite à Bill pour lui montrer le cadenas (nous avons bien pris soin de cacher le contenu du coffre...
+on ne sait jamais !) et crâner un peu. Pour sûr, il sera impressionné !
+
+Bill vous adresse un regard circonspect. _"Vous voulez vous amuser ? Voilà de quoi faire !",_ vous dit-il, sortant d’un placard un
+cadenas à **500 chiffres** qui manque de faire écrouler la table de la salle à manger. _"Il faut tester **5000 combinaisons**, ce qui
+prendra environ 3 heures. Enfin... Si vous êtes rapides."_
+
+Mince, nous nous retrouvons dans le même problème que tout à l’heure. Aussi efficace que soit sa technique, le nombre de chiffres du
+cadenas est trop important. Autrement dit, **la taille des données du problème excède la capacité de son algorithme**.
+
+C’est là que passe Jack, votre neveu. Il rigole, **prend une pierre et tape sur le cadenas**. Paf ! Ce dernier s’ouvre d’un coup sec.
+Effectivement... Cela paraît si simple, maintenant que l’on y pense…
+
+Si l’on s’y attarde de plus près, son algorithme est sacrément efficace ! **Quel que soit le nombre de chiffres, il prend toujours le
+même temps**. Balèze !
+
+Nous parlons alors de **complexité en temps constant**.
+
+:::info
+En résumé, ces coffres nous ont permis de découvrir trois formes de complexités différentes :
+- Complexité en temps constant (merci Jack !) : notée O(1)
+- Complexité linéaire (merci Bill !) : notée O(n)
+- Complexité exponentielle (merci notre cerveau !) : noté O(10<sup>n</sup>)
+:::
+
+### Le temps et l’espace
+
+#### La complexité temporelle
+
+Si nous comparons nos différents algorithmes, nous nous rendons compte que nous avons surtout pris en compte le facteur **temps** :
+notre première solution nous a pris 30 minutes quand celle de Jack ne demande qu’une seconde (bon, deux si le cadenas est vraiment
+récalcitrant).
+
+Il en sera de même pour chaque algorithme, que ce soit le tri d’une liste, la décomposition en facteur premier ou encore la recherche
+du cours le plus suivi sur OpenClassrooms. Nous parlons alors de **complexité temporelle**.
+
+Quel est l’intérêt, me direz-vous ? Cela nous permet de savoir à l’avance si un algorithme ne se terminera jamais. Bien pratique !
+
+:::warning X
+Si nous avions utilisé notre algorithme naïf pour ouvrir le cadenas à 500 chiffres, un milliard d’années ne nous auraient pas suffi à
+trouver la bonne combinaison. Inutile de dire que nous serions morts, réincarnés et re-morts avant de pouvoir profiter du contenu
+derrière le cadenas.
+:::
+
+Internet nous offre une autre application très importante de ce concept. Imaginons un site de restauration à emporter. Que se passe-t-il
+lorsque vous cherchez tous les restaurants asiatiques à 1 km de chez vous, ouverts jusqu’à 23 heures et qui livrent à domicile ?
+L’algorithme va tout faire pour trouver le résultat de votre recherche. Malgré cela, vous n’avez pas envie d’attendre 3 heures. Vous
+souhaitez que le site affiche la page de résultats en une seconde ou deux, pas plus. Il est donc primordial de trouver l’algorithme le
+plus efficace qui soit.
+
+#### La complexité spatiale
+
+Le dernier point à connaître concerne le stockage des données. Lorsque nous réalisons un algorithme en informatique, les informations
+sont stockées sur la mémoire de l’ordinateur. Or, vous l’aurez deviné, cette mémoire n’est pas infinie. Si nous ne faisons pas
+attention, un algorithme peut vite occuper tout l’espace libre d’un ordinateur et le faire planter.
+
+On parle ici de **complexité spatiale** (en espace). Les notations sont exactement les mêmes que pour la complexité temporelle.
+
+### Épilogue
+
+Alors que nous nous promenons de nouveau dans la forêt, je me tourne vers vous et vous demande : _"D’ailleurs, si Jack n’était pas
+entré et que l’on avait essayé toutes les combinaisons sur le cadenas à 500 chiffres, combien de temps cela nous aurait-il pris ?"_
+Avez-vous une idée ?
+
+:::note ?
+Vous souhaitez en savoir plus sur l’ouverture des cadenas ? Ulysse, avec qui j’ai coécrit ce chapitre, vous offre ce [lien bonus](https://www.youtube.com/watch?v=p2RY08QKNtw).
+:::
+
+-----
+
+## Voyez le monde autrement avec la récursivité
+
+[Voyez le monde autrement avec la récursivité - Découvrez le fonctionnement des algorithmes - OpenClassrooms](https://openclassrooms.com/fr/courses/4366701-decouvrez-le-fonctionnement-des-algorithmes/4385343-voyez-le-monde-autrement-avec-la-recursivite)
+
+<Vimeo vimeoId="213636505" />
+
+<br />
+
+Dans ce chapitre, nous allons explorer un nouveau mode de calcul : la récursivité.
+
+En programmation, nous avons vu que nous pouvions utiliser des boucles pour répéter une opération. Nous les appelons des boucles
+_itératives_. Laissez-moi vous présenter un nouveau concept : la récursivité.
+
+Il s’agit d’un concept un peu spécial. Avez-vous déjà rêvé que vous rêviez ? Vous y êtes ! Nous allons parler de concepts qui
+s’appellent eux-mêmes. C’est parti !
+
+### Présentation
+
+La récursivité est un concept qui fait référence à lui-même dans son fonctionnement. Cela se retrouve dans tous les champs artistiques :
+littérature (mise en abyme), peinture, photographie...
+
+![Jan Van Eyck, Les Epoux Arnolfini](https://user.oc-static.com/upload/2017/04/06/14914881234382_jan_van_eyck.jpeg)
+
+Jan Van Eyck, Les Époux Arnolfini
+
+![Mirroirs](https://user.oc-static.com/upload/2017/04/06/14914882140622_mirrors.jpeg)
+
+Miroirs
+
+Nous utilisons d’ailleurs tous les jours la récursivité lorsque nous définissons des mots ! En effet, nous utilisons des mots pour en
+définir d’autres, eux-mêmes étant définis par d’autres mots !
+
+Pour les fans de Wall-E, c’est également un procédé utilisé par le Capitaine de l’Axiom !
+
+<YouTube youTubeId="OWugQ4Rla9k" />
+
+<br />
+
+### En programmation
+
+En programmation, il s’agit d’une fonction qui fait référence à elle-même. Deux fonctions peuvent s’appeler l’une l’autre, on parle
+alors de récursivité croisée.
+
+Une fois n’est pas coutume, utilisons un exemple du monde des mathématiques : les factorielles. Une factorielle d’un entier naturel n
+est le produit des nombres entiers strictement positifs inférieurs ou égaux à n.
+
+Elle est notée `n!` et se calcule ainsi : n! = (n-1)! * n.
+
+Exemple : la factorielle 10!
+
+1 × 2 × 3 × 4 × 5 × 6 × 7 × 8 × 9 × 10 = 3 628 800
+
+Comment la programmer ?
+
+Réalisons un premier essai en Python :
+
+```python
+def factorielle_recursive(n):
+    return n*factorielle_recursive(n-1)
+```
+
+Déroulez cet algorithme dans votre tête : vous vous apercevrez qu’il ne s’arrête jamais et qu’il tourne à l’infini ! En effet, si on
+lance la fonction avec `n=3`, `factorielle_recursive(n)` sera appelée avec n=3, puis n=2, puis n=1, puis n=0, puis n=-1, etc.
+
+Un algorithme qui ne s’arrête jamais, c’est un problème, vous vous en doutez bien !
+
+La solution est donc de spécifier une _condition d’arrêt_, qui dépendra toujours de notre problème. Dans notre cas, `3!= 3*2*1`. Vous
+remarquez que les différents facteurs (3, 2 et 1) ne sont jamais négatifs ni même égaux à 0. C’est précisément cette condition qui nous
+servira de condition d’arrêt : "le facteur ne doit jamais être ni inférieur ni égal à 0".
+
+Ainsi, nous ajoutons une instruction conditionnelle :
+
+```python
+def factorielle_recursive(n):
+    if n <= 1:
+        return 1
+    else:
+        return n*factorielle_recursive(n-1)
+```
+
+Un appel récursif doit obligatoirement être dans une instruction conditionnelle.
+
+:::info
+L’appel d’une fonction à l’intérieur d’elle-même est nommé _appel récursif_.
+:::
+
+Nous aurions également pu implémenter la fonction factorielle de manière itérative :
+
+```python
+def factorielle_iterative(n):
+    x = 1
+        for i in range(2, n+1):
+            x *= i
+        return x
+```
+
+### Suite de Fibonacci
+
+Avez-vous déjà passé un entretien d’embauche technique pour travailler en tant que développeur·se, par exemple ? Si oui, la suite de
+Fibonacci vous parlera certainement ! Il s’agit d’un des problèmes les plus couramment posés en entretien.
+
+La suite de Fibonacci est une liste de nombres entiers. Elle commence généralement par les nombres 0 et 1 (parfois 1 et 1). On appelle
+un nombre de cette liste un terme. Chaque terme est la somme des deux termes qui le précèdent.
+
+Par exemple, si la suite de Fibonacci débute ainsi : 0, 1, 1, 2, 3, 5, 8, 13, 21, etc., vous voyez que 0 + 1 donne 1, que 1 + 2 donne 3,
+que 3 + 5 donne 8, et ainsi de suite.
+
+Il existe plusieurs manières de résoudre le problème lié à la suite de Fibonacci. Prenez quelques minutes pour réfléchir aux différents
+algorithmes que vous pourriez inventer.
+
+Dans ce chapitre, nous allons utiliser une méthode récursive et une méthode itérative afin que vous puissiez comparer les deux
+possibilités !
+
+### Algorithme récursif naïf
+
+Un algorithme naïf désigne un algorithme "simple", très proche de notre pensée quotidienne. Concrètement, il s’agit de la première
+manière qui vous vient à l’esprit de résoudre un problème.
+
+Dans notre cas, nous pouvons dire :
+
+```text
+fonction fibonacci(n):
+    si n <= 1
+        renvoie 1
+    sinon
+        renvoie fibonacci(n-1) + fibonacci(n-2)
+
+fibonacci(10)
+# renverra 89
+```
+
+En Python :
+
+```python
+def fibo(n):
+    if n <= 1:
+        return 1
+    else:
+        return fibo(n-1) + fibo(n-2)
+```
+
+Le problème dans ce cas est que nous consommons beaucoup de mémoire. En effet, le calcul est exponentiel : il demande deux calculs
+différents pour se calculer lui-même.
+
+Quand nous calculons la valeur d’un nombre, nous réalisons les trois opérations suivantes :
+- calcule fibonacci(n-1) [qui lui-même va calculer fibonacci(n-1) et ainsi de suite jusqu’à arriver au chiffre 1] et garde la valeur
+en mémoire ;
+- calcule fibonacci(n-2) [fais-en de même à chaque fois jusqu’à arriver à 1] et garde la valeur en mémoire ;
+- enfin, ajoute les deux précédentes valeurs.
+
+Nous voyons par conséquent que ce calcul est exponentiel : chaque nouveau nombre demande deux fois plus de mémoire que son précédent.
+Sa complexité est de O(2<sup>n</sup>).
+
+Peut-on trouver une manière moins consommatrice de le calculer ?
+
+### Algorithme linéaire
+
+Et si vous calculiez deux valeurs consécutives à la suite ? Cela serait mieux, non ?
+
+```python
+def fibo(n):
+    a,b = 0,1
+    for i in range(1, n+1):
+        c = a + b
+        print(b)
+        a = b
+        b = c
+```
+
+À présent, chaque nouveau nombre n’a plus besoin de deux niveaux d’opération pour le générer, mais d’un seul. Il est donc linéaire et
+sa complexité est de O(n).
+
+Nous voyons ici que, dans bien des cas, nous préférerons la version itérative, car elle est moins consommatrice en mémoire.
+
+### Les piles d’appels
+
+L’ordinateur doit retenir le résultat de tous les calculs récursifs avant de finir sa boucle. Il utilise alors ce que nous appelons une
+"pile d’appels" (en anglais, _stack_). Celle-ci est gérée automatiquement par le système.
+
+Dans le cas d’un appel récursif, c’est exactement ce qui se passe ! Lorsque nous calculons une factorielle, nous devons exécuter n(-1)!
+puis n(-2)! puis n(-3)! jusqu’à arriver au nombre que nous souhaitons calculer. L’ordinateur va donc empiler les résultats de n(-1)!,
+puis de n(-2)!, de n(-3)! etc.
+
+| valeur de n | résultat dans la pile |
+|-------------|-----------------------|
+| n(-9) | 1 |
+| n(-8) | 2 |
+| n(-7) | 3 |
+| n(-6) | 4 |
+| n(-5) | 5 |
+| n(-4) | 6 |
+| n(-3) | 7 |
+| n(-2) | 8 |
+| n(-1) | 9 |
+| n | 10 |
+
+Lorsque la dernière fonction récursive est appelée, l’ordinateur "dépile". Autrement dit, il va chercher dans la pile le dernier élément
+enregistré et ainsi de suite jusqu’à arriver en bas de la pile. Bien pratique !
+
+### En résumé : comment programmer une fonction récursive ?
+
+1/ Décomposer le problème en un ou plusieurs sous-problèmes du même type. On résout les sous-problèmes par des appels récursifs.
+
+2/ Les sous-problèmes doivent être de taille plus petite que le problème initial.
+
+3/ Enfin, la décomposition doit en fin de compte conduire à un élémentaire qui, lui, n’est pas décomposé en sous-problèmes (c’est la
+condition d’arrêt).
+
+Structure d’une fonction récursive :
+
+```text
+mafonction(param1, param2):
+    début
+        si condition faire
+            retourner calcul
+        sinon faire
+            mafonction(param1, param2)
+            retourner quelque-chose
+        fin condition faire
+    fin
+fin ma fonction
+```
+
+-----
+
+## Codez l'algorithme en Python
+
+[Codez l'algorithme en Python - Découvrez le fonctionnement des algorithmes - OpenClassrooms](https://openclassrooms.com/fr/courses/4366701-decouvrez-le-fonctionnement-des-algorithmes/4385470-codez-lalgorithme-en-python)
+
+:::info
+Ce chapitre nécessite l’apprentissage de Python, un langage de programmation très utilisé dans la sphère scientifique. Vous voulez
+apprendre ? Cela tombe bien : j’ai justement écrit [un cours ô combien passionnant](https://openclassrooms.com/courses/demarrez-votre-projet-avec-python)
+qui vous permettra de commencer en douceur.
+:::
+
+:::caution !
+La version textuelle de ce chapitre diffère **légèrement** de la vidéo, car j’ai amélioré le code à la suite des retours avisés de
+plusieurs lecteurs.
+:::
+
+<Vimeo vimeoId="213636575" />
+
+<br />
+
+Pour rappel, voici les règles de notre programme :
+- Chaque candidat a une mention entre "Excellent" et "À rejeter".
+- La mention majoritaire de chaque candidat est calculée sur une médiane et non sur une moyenne. 50% au moins des votants trouvent
+cette mention valable.
+- En cas d’égalité de mentions majoritaires : celle ou celui ayant le pourcentage de mentions supérieures à la mention majoritaire le
+plus important est le mieux classé.
+
+Et voici les mentions :
+- Excellent [0]
+- Très bien [1]
+- Bien [2]
+- Assez Bien [3]
+- Passable [4]
+- Insuffisant [5]
+- À rejeter [6]
+
+Vous souhaitez coder en même temps que moi ? Youpi, vous avez entièrement raison ! Téléchargez [ce code pour commencer](https://github.com/celine-m-s/majoritary-judgment/blob/starter/program.py).
+Il vous permettra de créer aléatoirement 100000 votes.
+
+Le fichier de départ inclut un dictionnaire et un tableau qui vous seront bien utiles. Le premier, `CANDIDATES`, contient le nom de
+chaque candidat associé à sa clé. Le second, `MENTIONS`, contient la liste de toutes les mentions dans un format agréable à lire.
+
+```python
+CANDIDATES = {
+    "hermione": "Hermione Granger",
+    "balou": "Balou",
+    "chuck-norris": "Chuck Norris",
+    "elsa": "Elsa",
+    "gandalf": "Gandalf",
+    "beyonce": "Beyoncé"
+}
+
+MENTIONS = [
+    "Excellent",
+    "Très bien",
+    "Bien",
+    "Assez Bien",
+    "Passable",
+    "Insuffisant",
+    "A rejeter"
+]
+```
+
+Nous y reviendrons plus tard.
+
+### Format de données en entrée
+
+Quelle structure de données choisir pour qu’elle soit le plus facilement interprétable ? Commençons par nous questionner sur les
+opérations que nous allons effectuer. Nous allons lire les données, les trier et trouver l’élément qui se situe à la moitié.
+
+Regardons sur la [Big O Cheat Sheet](http://bigocheatsheet.com/) ce qui nous est conseillé. Il semblerait que ce soient la table de
+hachage (Hash table) et les tableaux (Array) qui l’emportent en ce qui concerne l’accès et la recherche. Vous souvenez-vous pourquoi ?
+Un tableau a un index qui le rend plus facile à parcourir pour en extraire des données. Quant à la table de hachage, vous retrouvez
+des données via des clés. Le tableau est moins flexible, mais ce n’est pas vraiment notre souci dans le cas présent, puisque nous ne
+le modifierons pas.
+
+Je vous propose de créer un tableau pour regrouper tous nos votes.
+
+Chaque vote sera représenté par une table de hachage dont les clés seront les différents candidats et leur valeur la mention sous
+forme de numéro. Par exemple :
+
+```python
+{ "Hermione": 6 }
+```
+
+Voici un extrait de nos données en entrée :
+
+```python
+[
+    {"hermione": 1, "balou": 2, "chuck-norris": 3, "elsa": 4, "gandalf": 5, "beyonce": 6},
+    {"hermione": 2, "balou": 3, "chuck-norris": 4, "elsa": 5, "gandalf": 6, "beyonce": 0}
+]
+```
+
+### Format de données en sortie
+
+Notre programme sera lancé en ligne de commandes et devra imprimer, dans notre terminal, une liste affichant ainsi :
+
+```sh
+Gagnant : Hermione avec 70% de mentions Bien
+Suivants :
+- Balou avec 50% de mentions bien
+- Chuck Norris avec 50% de mentions assez bien
+- Elsa avec 70% de mentions passable
+- Gandalf avec 60% de mentions passable
+- Beyoncé avec 50% de mentions à rejeter
+```
+
+Ceci n’est qu’un exemple, car je pense que les résultats seront bien différents !
+
+### Algorithme
+
+#### Créer un tableau intermédiaire
+
+C’est parti !
+
+Nous avons vu que notre tableau intermédiaire ressemblerait à ceci :
+
+| | Balou | Hermione | Chuck Norris | Elsa | Gandalf | Beyonce |
+|-|-------|----------|--------------|------|---------|---------|
+| 6 - À rejeter | | | | | | |
+| 5 - Insuffisant | | | | | | |
+| 4 - Passable | | | | | | |
+| 3 - Assez bien | | | | | | |
+| 2 - Bien | | | | | | |
+| 1 - Très bien | | | | | | |
+| 0 - Excellent | | | | | | |
+
+Comment le créer en Python ? En créant un tableau à l’intérieur d’un hash. Comme ceci :
+
+```python
+candidates = {
+    'hermione': [0, 0, 0, 0, 0, 0, 0],
+    'balou': [0, 0, 0, 0, 0, 0, 0],
+    'chuck-norris': [0, 0, 0, 0, 0, 0, 0],
+    'elsa': [0, 0, 0, 0, 0, 0, 0],
+    'gandalf': [0, 0, 0, 0, 0, 0, 0],
+    'beyonce': [0, 0, 0, 0, 0, 0, 0]
+}
+```
+
+:::info
+Chaque nombre dans le tableau est le nombre de votes pour chaque mention ! Le nombre à l’index 0 sera le nombre total de mentions 0
+(Excellent, celui à l’index 1 le nombre total de mentions 5 (Insuffisant), etc.
+:::
+
+Créons une fonction qui prendra en entrée une liste de votes et renverra, en sortie, un dictionnaire contenant le résultat des
+candidats :
+
+```python
+def results_hash(votes):
+    candidates_results = {
+        candidate: [0]*len(MENTIONS)
+        for candidate in CANDIDATES.keys()
+    }
+    for vote in votes:
+        for candidate, mention in vote.items():
+            candidates_results[candidate][mention] += 1
+    return candidates_results
+```
+
+Et ajoutons dans la fonction `main` son exécution :
+
+```python
+def main():
+    votes = create_votes()
+    results = results_hash(votes)
+```
+
+Décomposons-le :
+
+```python
+candidates_results = {
+    candidate: [0]*len(MENTIONS)
+    for candidate in CANDIDATES.keys()
+}
+```
+
+Je commence par créer un premier tableau dont toutes les valeurs sont à zéro. C’est normal : pour l’instant, chaque candidat a zéro
+vote ! Exactement de la même manière que nous l’avons fait à la main précédemment !
+
+Cette fonction crée le dictionnaire suivant :
+
+```python
+{
+    "hermione": [0, 0, 0, 0, 0, 0, 0],
+    "balou": [0, 0, 0, 0, 0, 0, 0],
+    "chuck-norris": [0, 0, 0, 0, 0, 0, 0],
+    "elsa": [0, 0, 0, 0, 0, 0, 0],
+    "gandalf": [0, 0, 0, 0, 0, 0, 0],
+    "beyonce": [0, 0, 0, 0, 0, 0, 0]
+}
+```
+
+Puis, je vais parcourir chaque vote et ajouter 1 quand un candidat recevra une mention :
+
+```python
+for vote in votes:
+    for candidate, mention in vote.items():
+        candidates_results[candidate][mention] += 1
+return candidates_results
+```
+
+Cela va générer un dictionnaire similaire à celui-ci :
+
+```python
+{
+    'hermione': [0, 0, 0, 25333, 24796, 24871, 25000],
+    'balou': [14404, 14311, 14305, 14250, 14195, 14231, 14304],
+    'chuck-norris': [33320, 33436, 33244, 0, 0, 0, 0],
+    'elsa': [0, 49969, 50031, 0, 0, 0, 0],
+    'gandalf': [0, 0, 0, 25023, 25033, 25039, 24905],
+    'beyonce': [0, 0, 19926, 20099, 19835, 20214, 19926]
+}
+```
+
+Nous allons maintenant calculer la mention médiane !
+
+### Calculer la mention médiane de chaque candidat
+
+Commencez par regarder cette vidéo :
+
+<YouTube youTubeId="uIx2xvdwIIo" />
+
+<br />
+
+Nous atteignons la médiane lorsque 50% des votes pour un candidat sont représentés. Prenons un exemple.
+
+Considérons les résultats d’Hermione : [0, 0, 0, 25333, 24796, 24871, 25000]
+
+Nous allons calculer les résultats cumulés afin d’atteindre 50 000 votes (100 000 / 2).
+- Mention 0 : 0 + 0 = 0 => atteint-on 50 000 ? Non. Alors on continue avec la mention suivante.
+- Mention 1 : 0 + 0 = 0 => atteint-on 50 000 ? Non. Alors on continue avec la mention suivante.
+- Mention 2 : 0 + 0 = 0 => atteint-on 50 000 ? Non. Alors on continue avec la mention suivante.
+- Mention 3 : 0 + 25333 = 25333 => atteint-on 50 000 ? Non. Alors on continue avec la mention suivante.
+- Mention 4 : 25333 + 24796 = 50129 => atteint-on 50 000 ? Oui ! La boucle s’arrête.
+
+La mention médiane d’Hermione sera "Passable", car au moins 50 % des votants lui ont accordé cette mention ou une supérieure.
+
+Commençons par coder cette première boucle :
+
+```pyrhon
+def majoritary_mentions_hash(candidates_results):
+    cumulated_votes = 0
+    for mention, vote_count in enumerate(candidates_results["hermione"]):
+        cumulated_votes += vote_count
+        if MEDIAN < cumulated_votes:
+                # add a key in a dictionary
+            break
+    print(cumulated_votes)
+```
+
+Et ajoutons son exécution dans la fonction `main()`.
+
+```python
+def main():
+    votes = create_votes()
+    results = results_hash(votes)
+    majoritary_mentions = majoritary_mentions_hash(results)
+```
+
+Résultat :
+
+```sh
+50129
+```
+
+Ajoutons maintenant un dictionnaire dans lequel nous garderons la mention et les votes cumulés, sous cette forme :
+
+```python
+{'hermione': {'mention': 4, 'score': 50129}}
+```
+
+```python
+def majoritary_mentions_hash(candidates_results):
+    r = {}
+    cumulated_votes = 0
+    for mention, vote_count in enumerate(candidates_results["hermione"]):
+        cumulated_votes += vote_count
+        if MEDIAN < cumulated_votes:
+            r["hermione"] = {
+                "mention": mention,
+                "score": cumulated_votes
+            }
+            break
+    print(r)
+```
+
+Ajoutons désormais une boucle pour réaliser cette opération pour tous nos candidats :
+
+```python
+def majoritary_mentions_hash(candidates_results):
+    r = {}
+    for candidate, candidate_result in candidates_results.items():
+        cumulated_votes = 0
+        for mention, vote_count in enumerate(candidate_result):
+            cumulated_votes += vote_count
+            if MEDIAN < cumulated_votes:
+                r[candidate] = {
+                    "mention": mention,
+                    "score": cumulated_votes
+                }
+                break
+    print(r)
+```
+
+Résultat :
+
+```sh
+{
+    'hermione': {'mention': 4, 'score': 50129},
+    'balou': {'mention': 3, 'score': 57270},
+    'chuck-norris': {'mention': 1, 'score': 66756},
+    'elsa': {'mention': 2, 'score': 100000},
+    'gandalf': {'mention': 4, 'score': 50056},
+    'beyonce': {'mention': 4, 'score': 59860}
+}
+```
+
+Enfin, remplaçons notre `print` final (uniquement utilisé à des fins de débug) par un return :
+
+```python
+def majoritary_mentions_hash(candidates_results):
+    r = {}
+    for candidate, candidate_result in candidates_results.items():
+        cumulated_votes = 0
+        for mention, vote_count in enumerate(candidate_result):
+            cumulated_votes += vote_count
+            if MEDIAN < cumulated_votes:
+                r[candidate] = {
+                    "mention": mention,
+                    "score": cumulated_votes
+                }
+                break
+    return r
+```
+
+### Trier les candidats par mention
+
+Bien. Maintenant que nous savons comment trouver la mention médiane d’un candidat, je vous propose de les trier par mention ! Celui
+ayant la meilleure mention devra arriver en haut de la liste et celui ayant la mention la plus basse (À rejeter) en bas.
+
+Cela tombe bien, nous avons justement déjà vu un algorithme de tri : le tri par bulles !
+
+:::info
+La librairie standard de Python inclut des méthodes de tri, mais l’objectif de ce cours étant de mieux comprendre les algorithmes,
+autant les essayer !
+:::
+
+Notre fonction prend en paramètre un dictionnaire. Or, le tri par bulles n’est possible que sur un tableau, car vous avez besoin des
+index pour réordonner les items. La première étape va donc être de recréer un tableau comprenant les informations suivantes : le nom
+du candidat (cela nous sera utile, plus tard, pour retrouver ses résultats) et sa mention.
+
+```python
+def sort_candidates_by(mention):
+    unsorted = [(key, (mention["mention"], mention["score"])) for key, mention in mentions.items()]
+```
+
+À présent, nous allons utiliser la forme du tri à bulles que nous avons vue précédemment. Attention, détail important : vous comparez
+les valeurs des _mentions_ et non de l’élément en lui-même !
+
+```python
+def sort_candidates_by(mentions):
+    ## bubble sort here we go!
+    unsorted = [(key, (mention["mention"], mention["score"])) for key, mention in mentions.items()]
+    swapped = True
+    while swapped:
+        swapped = False
+        for j in range(0, len(unsorted) - 1):
+        ## but we need REVERSE bubble sort ;-)
+        # (note that here we compare tuples, which is pretty neat)
+        if unsorted[j + 1][1] < unsorted[j][1]:
+            unsorted[j+1], unsorted[j] = unsorted[j], unsorted[j+1]
+            swapped = True
+```
+
+Et ajoutons un bout de code dans la fonction `main()` pour l’exécuter :
+
+```python
+def main():
+    votes = create_votes()
+    results = results_hash(votes)
+    majoritary_mentions = majoritary_mentions_hash(results)
+    sorted_candidates = sort_candidates_by(majoritary_mentions)
+```
+
+Cela fonctionne, sauf que la mention la plus haute se trouve ainsi à la fin de la liste, or nous voulions qu’elle apparaisse au début !
+Changeons la comparaison en ligne 3 : nous dirons que, si l’élément suivant est plus grand, il doit être interverti !
+
+```python
+def sort_candidates_by(mentions):
+    unsorted = [(key, (mention["mention"], mention["score"])) for key, mention in mentions.items()]
+    swapped = True
+    while swapped:
+        swapped = False
+        for j in range(0, len(unsorted) - 1):
+            if unsorted[j + 1][1] > unsorted[j][1]:
+                unsorted[j+1], unsorted[j] = unsorted[j], unsorted[j+1]
+                swapped = True
+    print(unsorted)
+```
+
+Voici le résultat :
+
+```sh
+[
+    ('hermione', (0, 50044)),
+    ('beyonce', (1, 66748)),
+    ('balou', (3, 66575)),
+    ('elsa', (4, 100000)),
+    ('chuck-norris', (5, 66648)),
+    ('gandalf', (6, 100000))
+]
+```
+
+Nos candidats sont bien classés !
+
+Ajoutons un petit peu de code pour renvoyer un tableau tout joli tout beau :
+
+```python
+def sort_candidates_by(mentions):
+    ## bubble sort here we go!
+    unsorted = [(key, (mention["mention"], mention["score"])) for key, mention in mentions.items()]
+    swapped = True
+    while swapped:
+        swapped = False
+        for j in range(0, len(unsorted) - 1):
+            ## but we need REVERSE bubble sort ;-)
+            # (note that here we compare tuples, which is pretty neat)
+            if unsorted[j + 1][1] > unsorted[j][1]:
+                unsorted[j+1], unsorted[j] = unsorted[j], unsorted[j+1]
+                swapped = True
+    print(unsorted)
+
+    return [
+        {
+            "name": candidate[0],
+            "mention": candidate[1][0],
+            "score": candidate[1][1],
+        }
+        for candidate in unsorted
+    ]
+```
+
+### Afficher les résultats dans la console
+
+Créons une nouvelle fonction qui tranformera nos résultats en plusieurs chaînes de caractères agréables à lire.
+
+Utilisons le dictionnaire `CANDIDATES` afin de retrouver le nom du candidat grâce à sa clé. Quant à chaque mention, il est assez
+simple d’afficher son nom "humain" grâce à son index.
+
+```python
+def print_results(results):
+    for i, result in enumerate(results):
+        name = CANDIDATES[result["name"]]
+        mention = MENTIONS[result["mention"]]
+        score = result["score"] * 100. / VOTES
+        print("- {} avec {:.2f}% de mentions {}".format(
+            name, score, mention
+        ))
+```
+
+Puisque je souhaite mettre à l’honneur notre vainqueur, j’ajoute une structure conditionnelle pour créer une chaîne de caractères
+différente :
+
+```python
+def print_results(results):
+    for i, result in enumerate(results):
+        name = CANDIDATES[result["name"]]
+        mention = MENTIONS[result["mention"]]
+        score = result["score"] * 100. / VOTES
+            if i == 0:
+                print("Gagnant: {} avec {:.2f}% de mentions {}".format(
+                    name, score, mention
+                ))
+                continue
+            else:
+                print("- {} avec {:.2f}% de mentions {}".format(
+                    name, score, mention
+                ))
+```
+
+Enfin, mettons à jour notre fonction `main` pour qu’elle exécute cette dernière fonction :
+
+```python
+def main():
+    votes = create_votes()
+    results = results_hash(votes)
+    majoritary_mentions = majoritary_mentions_hash(results)
+    sorted_candidates = sort_candidates_by(majoritary_mentions)
+    print_results(sorted_candidates)
+```
+
+:::note ?
+Alors, qui gagne l’élection ?
+:::
+
+Bonne question ! Chez moi, c’est Hermione (youpi !), mais chez vous, le résultat est certainement différent !
+
+![](https://user.oc-static.com/upload/2017/06/15/14975342038124_Capture%20d%E2%80%99e%CC%81cran%202017-06-15%20a%CC%80%2015.44.29.png)
+
+:::info
+Retrouvez le code de ce chapitre dans son intégralité dans ce dépôt Github : [algorithme de jugement majoritaire](https://github.com/celine-m-s/majoritary-judgment/blob/master/program.py).
+:::
+
+-----
+
+## Plongez dans le monde des algorithmes
+
+[Plongez dans le monde des algorithmes - Découvrez le fonctionnement des algorithmes - OpenClassrooms](https://openclassrooms.com/fr/courses/4366701-decouvrez-le-fonctionnement-des-algorithmes/4385496-plongez-dans-le-monde-des-algorithmes)
+
+<Vimeo vimeoId="213636724" />
+
+<br />
+
+BRAVO ! Vous êtes parvenu·e à la fin de ce cours et vous pouvez être fièr·e de vous !
+
+Néanmoins, votre apprentissage ne s’arrête pas là. Regardez impérativement cette conférence d’exception du Collège de France et mise
+à disposition gratuitement : [L’informatique du temps et des événements, Gérard Berry](http://www.college-de-france.fr/site/gerard-berry/inaugural-lecture-2013-03-28-18h00.htm).
+Vous pourrez par la suite, si vous le souhaitez, suivre l’intégralité du cours sur les algorithmes.
+
+### Mathématiques
+
+Pour aller plus loin, il est important de se remettre un peu aux maths ! Logarithmes, factorielles, fonctions _a minima_. Vous pouvez
+faire ou refaire le programme de première et de terminale scientifique. Je vous conseille les excellents cours de Kartable et notamment
+celui sur [la fonction exponentielle](https://www.kartable.fr/terminale-s/mathematiques/specifique/chapitres-180/la-fonction-exponentielle-10/cours/la-fonction-exponentielle/4325).
+- [Programme de première S](https://www.kartable.fr/premiere-s/mathematiques/specifique/chapitres-177)
+- [Programme de terminale S](https://www.kartable.fr/terminale-s/mathematiques/specifique/chapitres-180)
+
+La Khan Academy contient également de nombreux [cours sur les mathématiques](https://fr.khanacademy.org/math) et FUN a sorti un cours
+intitulé [Socle en Mathématiques](https://www.fun-mooc.fr/courses/itii/119002/session01/about). Choisissez simplement celui dont la
+pédagogie vous attire le plus !
+
+### Algorithmique
+
+[Cours en algorithmique de l’ENS Lyon par Yves Robert](http://graal.ens-lyon.fr/~yrobert/algo/poly-algo.ps)
+
+Cours délivré chez Télécom Bretagne par Vincent Gripon et Bastien Pasdeloup : [Coder une intelligence artificielle - Pyrat](http://formations.telecom-bretagne.eu/pyrat/?page_id=37)
+
+Livre : [Initiation à l’algorithmique et à la programmation en C](http://www.dunod.com/informatique-multimedia/developpement/cc/ouvrages-denseignement/initiation-lalgorithmique-et-la-programmation-en-c)
+
+### S’entraîner
+
+L’algorithmique étant avant tout la recherche de la solution la plus efficace à un problème donné, il est bon de s’entraîner à
+résoudre des challenges régulièrement. Je vous recommande pour cela les plateformes suivantes :
+- [Coding Games](https://www.codingame.com/) 🇬🇧 : apprenez à résoudre des algorithmes en jouant.
+- [France IoI](http://www.france-ioi.org/) : site d’entraînement à la programmation.
+- [HackerRank](https://www.hackerrank.com/) 🇬🇧 : progressez en résolvant des challenges et en lisant les solutions.
+- Livre [Cracking the coding interview](http://www.crackingthecodinginterview.com/) 🇬🇧
+- [Exemple d’un entretien chez Google](https://www.youtube.com/watch?v=XKu_SEDAykw) 🇬🇧
+
+-----
+
+## Quiz : Vers l'infini et au-delà !
+
+[Vers l'infini et au-delà ! - OpenClassrooms](https://openclassrooms.com/fr/courses/4366701-decouvrez-le-fonctionnement-des-algorithmes/exercises/1621)
+
+#### Compétences évaluées
+
+<i class="bi bi-check2-circle"></i> Créer des fonctions récursives<br />
+
+<i class="bi bi-check2-circle"></i> Calculer la complexité d'un algorithme
+
+-----
+
+#### Question 1 : Le tri à bulles est un algorithme qui compare les données par paires et les intervertit au besoin.
+
+<i class="bi bi-record-circle"></i> Vrai<br />
+<i class="bi bi-circle"></i> Faux<br />
+<br />
+
+-----
+
+#### Question 2 : Le tri à bulles est un des algorithmes les plus efficaces qui soit, notamment dans le cas d'une masse importante de données.
+
+<i class="bi bi-circle"></i> Vrai<br />
+<i class="bi bi-record-circle"></i> Faux<br />
+<br />
+
+-----
+
+#### Question 3 : La complexité algorithmique est un outil qui sert à :
+
+<i class="bi bi-circle"></i> déterminer si un algorithme est compliqué à comprendre.<br />
+<i class="bi bi-record-circle"></i> comparer les algorithmes entre eux pour déterminer celui qui est le plus efficace.<br />
+<br />
+
+-----
+
+#### Question 4 : La complexité algorithmique se représente grâce à la notation de Landau (_O(n)_).
+
+<i class="bi bi-record-circle"></i> Vrai<br />
+<i class="bi bi-circle"></i> Faux<br />
+<br />
+
+-----
+
+#### Question 5 : La complexité en temps est :
+
+<i class="bi bi-record-circle"></i> un ordre de grandeur qui sert à estimer le temps nécessaire au fonctionnement d'un algorithme.<br />
+<i class="bi bi-circle"></i> le calcul du temps nécessaire au fonctionnement d'un algorithme. Elle s'exprime en secondes et est extrêmement précise.<br />
+<br />
+
+-----
+
+#### Question 6 : La complexité en mémoire est :
+
+<i class="bi bi-circle"></i> le calcul de la mémoire nécessaire au fonctionnement d'un algorithme. Elle est très précise et s'exprime en octets.<br />
+<i class="bi bi-record-circle"></i> un ordre de grandeur de la mémoire nécessaire au fonctionnement d'un algorithme.<br />
+<br />
+
+-----
+
+#### Question 7 : Une fonction qui s'appelle elle-même est :
+
+<i class="bi bi-circle"></i> une fonction schizophrène<br />
+<i class="bi bi-record-circle"></i> une fonction récursive<br />
+<i class="bi bi-circle"></i> une fonction inutile<br />
+<br />
+
+-----
+
+#### Question 8 : Trouvez la fonction récursive :
+
+<i class="bi bi-circle"></i>
+
+```python
+def fibo(n):
+    a,b = 0,1
+    for i in range(1, n+1):
+        c = a + b
+        print(b)
+        a = b
+        b = c
+```
+
+<i class="bi bi-record-circle"></i>
+
+```python
+def fibo(n):
+    if n <= 1:
+        return 1
+    else:
+        return fibo(n-1) + fibo(n-2)
+```
+
+-----
+
+#### Question 9 : Utiliser une fonction récursive ne pose aucune problématique en termes de mémoire.
+
+<i class="bi bi-circle"></i> Vrai<br />
+<i class="bi bi-record-circle"></i> Faux<br />
+<br />
+
+-----
+
+#### Question 10 : Un algorithme naïf est :
+
+<i class="bi bi-circle"></i> un algorithme un peu simplet.<br />
+<i class="bi bi-record-circle"></i> le premier algorithme qui vient à l'esprit quand nous cherchons une solution à un problème.<br />
+<i class="bi bi-circle"></i> un algorithme très poussé qui est le fruit de plusieurs années de recherches à la NASA.<br />
+

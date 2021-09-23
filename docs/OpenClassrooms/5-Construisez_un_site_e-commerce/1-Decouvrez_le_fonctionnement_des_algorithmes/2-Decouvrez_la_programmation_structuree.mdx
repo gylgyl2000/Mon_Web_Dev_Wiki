@@ -1,0 +1,583 @@
+---
+id: OpenClassrooms-Decouvrez_le_fonctionnement_des_algorithmes-2-Decouvrez_la_programmation_structuree
+title: Découvrez la programmation structurée
+---
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+import { Vimeo } from 'mdx-embed';
+
+
+## Posez les fondations
+
+[Posez les fondations - Découvrez le fonctionnement des algorithmes - OpenClassrooms](https://openclassrooms.com/fr/courses/4366701-decouvrez-le-fonctionnement-des-algorithmes/4384884-posez-les-fondations)
+
+<Vimeo vimeoId="213635981" />
+
+<br />
+
+Comment se construit un programme ? Comme tout bâtiment : brique après brique et pas à pas.
+
+La première étape est de découper notre grand problème en sous-problèmes. Imaginons que vous vouliez réaliser votre propre château
+en Lego. Vous avez toutes les pièces sous les yeux, mais vous ne savez pas encore dans quel ordre les assembler. Plutôt que de
+chercher à tout construire en même temps, ce qui serait impossible, vous commencez par un angle. Peut-être commencerez-vous par les
+fondations, ou par les fenêtres, ou pourquoi pas par le toit ? De toute manière, vous allez décomposer le château en plusieurs
+sous-ensembles.
+
+C’est exactement ce que nous ferons dans ce chapitre en réfléchissant aux différentes règles de notre tout nouveau mode de scrutin.
+
+### Règles du programme
+
+Voici les règles de notre programme :
+- Chaque candidat a une mention entre "Excellent" et "À rejeter". Il y en a 7 en tout.
+- La mention majoritaire de chaque candidat est calculée sur une médiane et non sur une moyenne. 50% au moins des votants trouvent
+cette mention valable.
+- En cas d’égalité de mentions majoritaires : celle ou celui ayant le pourcentage le plus important de mentions supérieures à la
+mention majoritaire est le mieux classé.
+
+Oublions l’ordinateur un moment et réfléchissons à la manière dont nous pourrions traiter les résultats à la main. Un algorithme
+n’étant qu’une solution à un problème, nous pouvons nous passer de nos amis les robots quelques instants.
+
+### Découper un problème en sous-problèmes
+
+Quelles sont les opérations à réaliser ? Listons-les en bloc :
+- Dépouillement (traiter les bulletins de vote) : création d’un premier tableau, vide, qui sera ensuite rempli en fonction du
+contenu des différents bulletins.
+- Calcul de la mention médiane de chaque candidat : la mention médiane est la mention minimale qui représente, pour au moins 50%
+des votants, la capacité du candidat à exercer ses fonctions.
+- Tri des candidats par mention : celui ayant la meilleure mention arrivera en haut du classement et celui ayant la moins bonne
+arrivera en bas.
+
+Parfait. Nous avons une bonne feuille de route !
+
+Décomposons le premier sous-problème : le dépouillement. Avez-vous déjà assisté à une [session de dépouillement](https://www.youtube.com/watch?v=ayg0NjYKYuY) ?
+Si oui, vous savez que c’est assez long, mais intéressant (si si ! Ce suspense haletant qui n’en finit pas, votre cœur qui bat la
+chamade à l’annonce du candidat pour lequel vous avez voté et la satisfaction sur le visage du ou de la maire lorsque tout est
+terminé ! Incomparable.). Non ? Eh bien, vous allez voir ce que c’est tout de suite !
+
+Nous avons 10 votants. Chacun a jugé chaque candidat selon sa capacité à exercer cette fonction en lui attribuant une mention.
+Commençons par créer un tableau qui recense les mentions de chaque candidat.
+
+|             | Balou | Hermione | Chuck Norris | Elsa | Gandalf | Beyonce |
+|-------------|-------|----------|--------------|------|---------|---------|
+| Excellent   |       |          |              |      |         |         |
+| Très bien   |       |          |              |      |         |         |
+| Bien        |       |          |              |      |         |         |
+| Assez bien  |       |          |              |      |         |         |
+| Passable    |       |          |              |      |         |         |
+| Insuffisant |       |          |              |      |         |         |
+| À rejeter   |       |          |              |      |         |         |
+
+Comment allons-nous le remplir ?
+
+Nous prenons un bulletin, le lisons et ajoutons 1 dans le tableau dans la case qui relie un candidat à la bonne mention. Exemple
+avec le bulletin suivant :
+
+_Hermione : Insuffisant, Balou : Passable, Chuck Norris : Assez bien, Elsa : Bien, Gandalf : Très bien, Beyonce : Excellent._
+
+|             | Balou | Hermione | Chuck Norris | Elsa | Gandalf | Beyonce |
+|-------------|-------|----------|--------------|------|---------|---------|
+| Excellent   |       |          |              |      |         | 1       |
+| Très bien   |       |          |              |      | 1       |         |
+| Bien        |       |          |              | 1    |         |         |
+| Assez bien  |       |          | 1            |      |         |         |
+| Passable    | 1     |          |              |      |         |         |
+| Insuffisant |       | 1        |              |      |         |         |
+| À rejeter   |       |          |              |      |         |         |
+
+Le vote suivant nous amène à réaliser la même action sur le tableau :
+
+_Hermione : Insuffisant, Balou : Bien, Chuck Norris : Très bien, Elsa : Bien, Gandalf : Très bien, Beyonce : Excellent._
+
+|             | Balou | Hermione | Chuck Norris | Elsa | Gandalf | Beyonce |
+|-------------|-------|----------|--------------|------|---------|---------|
+| Excellent   |       |          |              |      |         | 2       |
+| Très bien   |       |          | 1            |      | 2       |         |
+| Bien        | 1     |          |              | 2    |         |         |
+| Assez bien  |       |          | 1            |      |         |         |
+| Passable    | 1     |          |              |      |         |         |
+| Insuffisant |       | 2        |              |      |         |         |
+| À rejeter   |       |          |              |      |         |         |
+
+Et ainsi de suite jusqu’au dernier vote de l’urne.
+
+Arrêtons-nous un instant, car nous venons en fait de voir plusieurs concepts dans cette simple action. Vous ne vous en êtes pas
+rendu compte, mais en fait nous pourrions découper ce sous-problème en d’autres micro-tâches :
+- créer un tableau ;
+- prendre un bulletin ;
+- en ressortir la première information (mention "insuffisant" pour la candidate Hermione) ;
+- ajouter cette information dans le tableau ;
+- répéter l’action jusqu’à ce qu’il n’y ait plus de bulletins.
+
+Que ferait un ordinateur ? Exactement la même chose. Il créerait un tableau, accèderait à la première information d’une liste, etc.
+La seule différence est qu’_il faut dire à l’ordinateur de le faire_ (de la même manière que vous formeriez un nouveau membre de
+l’équipe).
+
+Comment communiquer avec un ordinateur ? À travers un langage de programmation, pardi !
+
+<Vimeo vimeoId="213636034" />
+
+<br />
+
+### Communiquer avec un ordinateur
+
+Pour communiquer avec un ordinateur, vous avez d’abord besoin d’un langage. Entre humains, il existe beaucoup de langues différentes
+qui ont chacune leur usage. Nous avons d’ailleurs plusieurs [familles de langues](https://fr.wikipedia.org/wiki/Langues_par_famille)
+organisées souvent autour d’un alphabet : les langues indo-européennes (dont le français, l’espagnol ou l’anglais), les langues
+sino-tibétaines (dont le mandarin), les langues sémitiques (dont l’arabe), etc.
+
+Ces langues partagent très souvent bien plus qu’un alphabet. Vous voyez où je veux en venir : je parle bien sûr de grammaire ou de
+structure de phrase. Alors, ne vous inquiétez pas, je ne vais pas vous faire un cours de grammaire. Mais je vais prendre l’exemple
+du français, que nous connaissons tous, et des différents éléments. Nous utilisons des verbes quand nous voulons exprimer une action.
+On utilise aussi des noms pour désigner les objets ou les personnes : une chaise, un tableau, une fille.
+
+Les langages de programmation utilisent une logique très semblable. Dans ce cours, nous nous intéresserons à la
+[programmation structurée](https://fr.wikipedia.org/wiki/Programmation_structur%C3%A9e) qui est un des
+[paradigmes de programmation](https://fr.wikipedia.org/wiki/Paradigme_(programmation)) les plus connus.
+
+:::note ?
+Un paradigme est une manière de concevoir une situation à la fois dans ses problématiques et dans les différentes solutions à
+apporter.
+:::
+
+En programmation structurée, nous découpons un problème en micro-tâches indépendantes les unes des autres et modulaires. C’est
+exactement ce que nous sommes en train de faire !
+
+### Les noms : les variables
+
+Une variable est une manière de faire référence à un objet. Dans le langage courant, c’est exactement ce que nous appelons "nom".
+Qu’est-ce qu’un mot, sinon une étiquette que nous avons collée sur un objet pour pouvoir y faire référence plus tard ?
+
+Bergson, dans [_Le Rire_](https://fr.wikipedia.org/wiki/Le_Rire_(Henri_Bergson)), disait d’ailleurs : _"Pour tout dire, nous ne
+voyons pas les choses mêmes ; nous nous bornons, le plus souvent, à lire des étiquettes collées sur elles."_
+[Lire l’extrait](http://lvc.philo.free.fr/CONSC3TEXTES.pdf).
+
+Afin d’illustrer notre propos, créons un tableau et associons-le à la variable "résultats".
+
+![Résultats](https://user.oc-static.com/upload/2017/04/06/14914863321022_Capture%20d%E2%80%99e%CC%81cran%202017-04-06%20a%CC%80%2015.44.35.png)
+
+Résultats
+
+Nous allons interagir avec lui grâce à des _instructions_. Qu’allons-nous réaliser sur ce tableau ? Écrivons-le à l’infinitif :
+- prendre un bulletin ;
+- en ressortir la première information (mention "insuffisant" pour le candidat Hermione) ;
+- ajouter cette information dans le tableau "résultats".
+
+### Les verbes : les fonctions
+
+À présent, je souhaite effectuer exactement le même ensemble d’instructions pour tous mes bulletins. Comment faire ? Commençons par
+regrouper ces instructions sous un seul et même nom, comme si nous les mettions dans des boîtes.
+
+ajoute_un_vote :
+- prendre un bulletin ;
+- en ressortir la première information ;
+- ajouter cette information dans le tableau "résultats".
+
+Désormais, lorsque je dirai 'ajoute_un_vote', la personne en face de moi saura de quoi je parle !
+
+C’est ce que nous appelons, en programmation, une _fonction_. Il s’agit d’un bloc qui regroupe plusieurs actions. Vous pouvez
+réutiliser ce bloc autant de fois que vous le voulez en invoquant son nom (comme les esprits !).
+
+En langage informatique, la création d’une fonction est ce que nous appelons une _déclaration_. Son utilisation est son _exécution_.
+
+Une fonction peut aussi être vue comme une moulinette qui va prendre des informations, les traiter et en renvoyer d’autres en sortie.
+Comme une râpe à fromage quand vous avez envie de gruyère sur vos pâtes ! Vous lui donnez un morceau de gruyère et la râpe le
+transforme en filaments prêts à être mangés.
+
+:::info
+Une fonction ne _modifie_ pas toujours les informations qui lui sont passées, cela dépend du paradigme de programmation choisi. En
+programmation fonctionnelle pure, par exemple, les informations d’origine ne sont pas modifiées.
+:::
+
+Comment exécuter notre fonction pour chaque bulletin de l’urne ? Voyons cela tout de suite dans le prochain chapitre !
+
+-----
+
+## Ajoutez une boucle
+
+[Ajoutez une boucle - Découvrez le fonctionnement des algorithmes - OpenClassrooms](https://openclassrooms.com/fr/courses/4366701-decouvrez-le-fonctionnement-des-algorithmes/4384913-ajoutez-une-boucle)
+
+<Vimeo vimeoId="213636108" />
+
+<br />
+
+Comment faire pour réaliser une même action plusieurs fois ? Dans le cas de notre système, nous souhaitons qu’une personne
+`ajoute_un_vote` jusqu’à ce que l’urne soit vide.
+
+Laissez-moi vous présenter les _boucles_ ! Une boucle est une structure qui répète la même action plusieurs fois de suite.
+Exactement comme lorsque vous écoutez un morceau de musique en boucle.
+
+Comment cela se présente-t-il ? Nous intégrons les actions à effectuer au sein d’un bloc "boucle" :
+
+```text
+pour chaque bulletin présent dans l'urne :
+    ajoute_un_vote
+```
+
+### Condition d’arrêt
+
+Nous voyons dans cet exemple que la boucle s’arrête quand il n’y a plus de bulletins dans l’urne. De même, un lecteur audio lira
+toutes les chansons d’un album jusqu’à la fin.
+
+Mais que se passe-t-il si vous demandez à lire en boucle une chanson ? Elle pourra être jouée, potentiellement, jusqu’à la nuit des
+temps, car l’ordinateur ne sait pas quand il doit s’arrêter. C’est ce que nous appelons une **boucle infinie** !
+
+Lorsque vous créez une boucle, pensez donc à y intégrer une condition d’arrêt afin qu’elle ne tourne pas à l’infini !
+
+### Types de boucles
+
+Il existe trois grands types de boucles :
+- `jusqu’à` (`until`) : fais cette action _jusqu’à_ ce que la corbeille de bulletins soit vide.
+- `tant que` (`while`) : fais cette action _tant qu’_il y a des bulletins dans l’urne.
+- `pour chaque` (`for`) : fais cette action _pour chaque_ bulletin de l’urne.
+
+La différence principale entre ces boucles est leur condition de départ. Qu’est-ce qui fait démarrer la boucle ?
+
+La boucle `tant que` commence par vérifier la condition de départ. Si je dis "tant qu’il y a des bulletins dans la corbeille", je
+commence par poser la question : "Y a-t-il des bulletins dans la corbeille ?" Si oui, je fais un premier tour de boucle. Sinon, je
+ne fais rien du tout.
+
+Les boucles `jusqu’à` et `pour chaque`, elles, ne commencent pas par vérifier une condition. Nous partons du présupposé qu’il y a
+au moins un élément de départ. Si je remplis un verre doseur jusqu’à 50cl, mon minimum est bien 1cl. C’est pourquoi la boucle
+"jusqu’à" fait au moins un tour de boucle tandis que la boucle "tant que" peut très bien ne pas en faire du tout.
+
+Voici l’exemple d’une boucle `pour chaque` en Python, un langage de programmation :
+
+```python
+for vote in votes:
+    ajoute_un_vote()
+```
+
+Exemple d’une boucle `tant que` :
+
+```python
+while len(votes) > 0:
+    ajoute_un_vote()
+```
+
+:::note ?
+Qu’est-ce qu’une condition ? Est-ce spécifique à la programmation ?
+:::
+
+Bonne question Jamy ! Approfondissons justement ce thème dans le chapitre suivant !
+
+-----
+
+## Découvrez les structures conditionnelles
+
+[Découvrez les structures conditionnelles - Découvrez le fonctionnement des algorithmes - OpenClassrooms](https://openclassrooms.com/fr/courses/4366701-decouvrez-le-fonctionnement-des-algorithmes/4384937-decouvrez-les-structures-conditionnelles)
+
+<Vimeo vimeoId="213636173" />
+
+<br />
+
+Revenons à notre programme et imaginons un scénario que nous n’avons pas vu jusqu’à maintenant : le vote blanc. Que faire si un
+électeur ne met aucune mention ? Nous devrions les comptabiliser. Or notre système ne le permet actuellement pas.
+
+### Si... Sinon...
+
+Nous allons appeler à la rescousse une nouvelle structure qui s’appelle la structure conditionnelle et que nous avons déjà un peu
+vue précédemment. Nous l’utilisons tous les jours. Par exemple : si j’ai bien l’électricité chez moi, je pourrai prendre une douche
+chaude !
+
+En quoi est-ce intéressant pour nous ? Tout simplement, nous allons dire à notre algorithme : si le vote est une mention existante,
+dans ce cas, exécute la fonction ; sinon, ajoute 1 à la colonne "vote blanc".
+
+```text
+si mention_existante?
+    tant qu'il y a des votes :
+        ajoute_un_vote
+sinon
+    ajoute_un_vote_blanc
+```
+
+Un exemple en Python :
+
+```python
+if mention_exists:
+    while len(votes) > 0:
+        ajoute_un_vote()
+        enleve_un_vote_de_la_liste()
+else:
+    ajoute_un_vote_blanc()
+```
+
+:::info
+Cette structure est également appelée "if/else", car l’anglais est souvent à la base des noms dans un langage de programmation.
+:::
+
+### Switch
+
+Et si nous avions plusieurs conditions ? En effet, qu’un électeur remplisse mal un bulletin ne signifie pas qu’il vote blanc. Il
+peut très bien avoir mal écrit et notre algorithme a mal compris la réponse. Ou bien il a ajouté un nouveau candidat qu’il considère
+comme bien meilleur que les autres. Que faire dans tous ces cas ?
+
+Vous pouvez ajouter plusieurs conditions à la suite dans un bloc "if" pour les évaluer les unes à la suite des autres. Nous
+pourrions par exemple dire :
+
+```text
+Si (mention existante ?)
+    ajoute la mention dans le tableau
+Sinon, si (vote illisible ?)
+    marquer que le vote est illisible
+    demander un second avis
+Sinon
+    ajoute un à la colonne "vote blanc"
+```
+
+Mais je ne suis toujours pas satisfaite. Je veux vraiment vérifier que le vote est bien blanc avant de l’ajouter. Ce n’est vraiment
+qu’en dernier recours que je veux faire une seconde lecture. Je vais donc avoir plusieurs conditions possibles. Je pourrais écrire
+ceci :
+
+```text
+Si (mention existante ?)
+    ajoute la mention dans le tableau
+Sinon, si (vote illisible ?)
+    marquer que le vote est illisible
+    demander un second avis
+Sinon, si (vote blanc ?)
+    marquer que le vote est blanc
+    ajouter un à la colonne "vote blanc"
+Sinon
+    demander un second avis
+```
+
+Mais en programmation, nous préférons une autre syntaxe : le switch.
+
+Un switch commence par évaluer l’expression qui lui est donnée, puis il va aiguiller notre programme vers le cas correspondant.
+
+Ainsi, nous pourrions écrire :
+
+```text
+switch mention
+    cas "existe ?"
+        ajoute la mention dans le tableau
+    cas "vote illisible ?"
+        marquer que le vote est illisible
+        demander un second avis
+    cas "vote blanc ?"
+        marquer que le vote est blanc
+        ajouter un à la colonne "vote blanc"
+    autre cas
+        demander un second avis
+```
+
+### Entraînez-vous !
+
+Avant de passer à l’étape suivante, prenez quelques minutes pour vous entraîner ! [Sortez vivant d’un labyrinthe](https://blockly-games.appspot.com/maze?lang=fr)
+en créant la structure conditionnelle adéquate.
+
+Bien, notre programme commence à voir le jour ! Nous allons le mettre de côté pendant plus d’une partie, le temps que nous passions
+en revue les types de données les plus fréquents lorsque l’on parle d’algorithmique.
+
+Quand nous reviendrons à notre programme, nous pourrons alors sélectionner les plus adaptés pour le coder en vrai ! Alors,
+accrochez-vous, nous nous détournons un petit moment de notre algorithme phare pour mieux le servir…
+
+À tout de suite !
+
+-----
+
+## Quiz : Les algorithmes et la programmation structurée
+
+[Les algorithmes et la programmation structurée - OpenClassrooms](https://openclassrooms.com/fr/courses/4366701-decouvrez-le-fonctionnement-des-algorithmes/exercises/1619)
+
+#### Compétences évaluées
+
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-checkbox" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#00b341" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <polyline points="9 11 12 14 20 6" />
+  <path d="M20 12v6a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h9" />
+</svg> Mettre en œuvre un algorithme simple<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-checkbox" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#00b341" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <polyline points="9 11 12 14 20 6" />
+  <path d="M20 12v6a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h9" />
+</svg> Sélectionner les bonnes méthodes pour résoudre un problème<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-checkbox" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#00b341" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <polyline points="9 11 12 14 20 6" />
+  <path d="M20 12v6a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h9" />
+</svg> Utiliser les notions basiques en programmation : variables, fonctions, boucles et structures conditionnelles<br />
+
+-----
+
+#### Question 1 : Qu'est-ce qu'un algorithme ?
+
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> Un ensemble de calculs complexes destiné à anéantir l'humanité.<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle-check" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#7bc62d" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M9 12l2 2l4 -4" />
+</svg> Un ensemble d'instructions utilisées par un ordinateur pour résoudre un problème.<br />
+<br />
+
+-----
+
+#### Question 2 : Un programme :
+
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle-check" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#7bc62d" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M9 12l2 2l4 -4" />
+</svg> prend des informations en entrée, les manipule et renvoie des informations en sortie.<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> prend des informations en sortie, les copie et renvoie des informations en entrée.<br />
+<br />
+
+-----
+
+#### Question 3 : En informatique, qu'est-ce qu'une instruction ?
+
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> Une sorte de tunnel entre deux programmes et qui leur permet de s'échanger des informations.<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle-check" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#7bc62d" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M9 12l2 2l4 -4" />
+</svg> Une tâche effectuée par un ordinateur (opération basique, itération, condition...).<br />
+<br />
+
+-----
+
+#### Question 4 : Une fonction est un ensemble d'instructions représentées par un nom.
+
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle-check" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#7bc62d" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M9 12l2 2l4 -4" />
+</svg> Vrai<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> Faux<br />
+<br />
+
+-----
+
+#### Question 5 : Une variable est :
+
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle-check" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#7bc62d" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M9 12l2 2l4 -4" />
+</svg> la représentation d'une idée, d'un objet, par un nom, un symbole, qui nous permet d'y faire référence plus tard.<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> une valeur qui sera obligatoirement amenée à changer un jour. Elle ne peut pas demeurer la même très longtemps.<br />
+<br />
+
+-----
+
+#### Question 6 : Il existe plusieurs types de boucles, notamment :
+
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> les boucles <code>toujours</code>  et  <code>jamais</code><br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle-check" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#7bc62d" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M9 12l2 2l4 -4" />
+</svg> les boucles <code>jusqu'à</code>  et  <code>tant que</code><br />
+<br />
+
+-----
+
+#### Question 7 : Une boucle permet de répéter une action un certain nombre de fois. Elle ne peut jamais être infinie.
+
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> Vrai<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle-check" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#7bc62d" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M9 12l2 2l4 -4" />
+</svg> Faux<br />
+<br />
+
+-----
+
+#### Question 8 : Une structure conditionnelle commence toujours par  `si (condition)`.
+
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> Vrai<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle-check" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#7bc62d" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M9 12l2 2l4 -4" />
+</svg> Faux<br />
+<br />
+
+-----
+
+#### Question 9 : Une structure conditionnelle ne permet de tester qu'une seule condition.
+
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> Vrai<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle-check" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#7bc62d" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M9 12l2 2l4 -4" />
+</svg> Faux<br />
+<br />
+
+-----
+
+#### Question 10 : Trouvez la ou les structures conditionnelles :
+
+*Attention, plusieurs réponses sont possibles.*
+
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-checkbox" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#00b341" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <polyline points="9 11 12 14 20 6" />
+  <path d="M20 12v6a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h9" />
+</svg>
+
+```python
+if full:
+    add_a_vote()
+else:
+    ring_a_bell()
+```
+
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-square" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <rect x="4" y="4" width="16" height="16" rx="2" />
+</svg>
+
+```python
+for vote in votes:
+    add_a_vote(vote)
+```
+
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-checkbox" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#00b341" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <polyline points="9 11 12 14 20 6" />
+  <path d="M20 12v6a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h9" />
+</svg>
+
+```python
+switch(n) {
+    case 0:
+        printf("You typed zero.\n");
+        break;
+    case 8:
+        printf("n is an even number\n");
+        break;
+    default:
+        printf("Only single-digit numbers are allowed\n");
+        break;
+}
+```

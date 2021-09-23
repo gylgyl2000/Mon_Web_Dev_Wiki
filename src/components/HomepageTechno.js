@@ -16,14 +16,30 @@ const TechnoList = [
     Svg: require('../../static/img/JavaScript.svg').default,
   },
   {
+    title: 'Node.js',
+    Svg: require('../../static/img/Nodejs.svg').default,
+  },
+  {
+    title: 'React',
+    Svg: require('../../static/img/react.svg').default,
+  },
+  {
+    title: 'php',
+    Svg: require('../../static/img/PHP.svg').default,
+  },
+  {
     title: 'Python',
     Svg: require('../../static/img/Python.svg').default,
+  },
+  {
+    title: 'Bootstrap',
+    Svg: require('../../static/img/bootstrap.svg').default,
   },
 ];
 
 function Techno({Svg, title}) {
   return (
-    <div className={clsx('col col--3')}>
+    <div className={clsx('col')}>
       <div className="text--center">
         <Svg className={styles.technoSvg} alt={title} />
       </div>

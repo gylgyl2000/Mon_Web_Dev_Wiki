@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunkmon_web_dev_wiki=self.webpackChunkmon_web_dev_wiki||[]).push([[255],{9082:function(e){e.exports=JSON.parse('{"permalink":"/Mon_Web_Dev_Wiki/blog","page":1,"postsPerPage":10,"totalPages":1,"totalCount":4,"previousPage":null,"nextPage":null,"blogDescription":"Blog","blogTitle":"Blog"}')}}]);

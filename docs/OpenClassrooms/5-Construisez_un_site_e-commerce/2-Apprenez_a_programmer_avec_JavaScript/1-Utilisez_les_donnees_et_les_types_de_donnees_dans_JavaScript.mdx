@@ -1,0 +1,753 @@
+---
+id: 1-Utilisez_les_donnees_et_les_types_de_donnees_dans_JavaScript
+title: Utilisez les données et les types de données dans JavaScript
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+import { Vimeo, CodePen } from 'mdx-embed';
+
+# Utilisez les données et les types de données dans JavaScript
+
+[Tirez un maximum de ce cours - Apprenez à programmer avec JavaScript - OpenClassrooms](https://openclassrooms.com/fr/courses/6175841-apprenez-a-programmer-avec-javascript/6278291-tirez-un-maximum-de-ce-cours)
+
+## Tirez un maximum de ce cours
+
+<Vimeo vimeoId="528289662" />
+
+<br />
+
+### Découvrez la structure de ce cours
+
+Je vous conseille de :
+- regarder chaque vidéo pour comprendre **pourquoi** les notions abordées dans chaque chapitre sont importantes ;
+- lire le texte sous la vidéo pour apprendre **comment** vous pouvez utiliser JavaScript pour mettre en pratique ces notions ;
+- pratiquer tout au long les **exercices interactifs**.
+
+Coder est avant tout une histoire de pratique. C'est pour cette raison que vous allez bâtir des fonctionnalités courantes d'une
+application de diffusion vidéo pendant ce cours. De cette façon, les notions que vous apprendrez seront instantanément appliquées au
+monde réel.
+
+Pour tester les extraits de code JavaScript sans avoir à les intégrer dans une page web, vous pouvez utiliser [JS Bin](https://jsbin.com/?js,console) :
+c'est le même outil que j'utiliserai dans plusieurs séquences vidéo pour expliquer les notions et présenter des exemples simples.
+
+:::info
+Dans ce cours, vous allez apprendre une version de JavaScript appelée **ECMAScript 6** (ES6 ou ES2015). Même si ES6 a une compatibilité
+très élevée à la date de création de ce cours, il y a encore quelques situations où certaines des fonctionnalités ne sont pas actives.
+Pour en savoir plus, consultez ce [**tableau de compatibilité**](https://kangax.github.io/compat-table/es6/).
+:::
+
+C'est un tableau impressionnant, mais _ne vous inquiétez pas !_ Même dans les cas où ES6 est incompatible, il y a beaucoup d'outils
+simples qui permettent de transpiler (traduire) du code ES6 automatiquement en code ES5 plus ancien.
+
+### Téléchargez la fiche résumé du cours
+
+![](https://user.oc-static.com/upload/2021/09/06/16309151275577_Fiche%20-%20Javascript.png)
+
+:::info
+Téléchargez la [fiche résumé](https://s3.eu-west-1.amazonaws.com/course.oc-static.com/courses/6175841/Fiche_Apprenez-a-programmer-en-javascript.pdf)
+au format PDF.
+:::
+
+Vous êtes prêt ? Allez, commençons à coder !
+
+-----
+
+## Déclarez des variables et modifiez leurs valeurs
+
+[Déclarez des variables et modifiez leurs valeurs - Apprenez à programmer avec JavaScript - OpenClassrooms](https://openclassrooms.com/fr/courses/6175841-apprenez-a-programmer-avec-javascript/6278392-declarez-des-variables-et-modifiez-leurs-valeurs)
+
+<Vimeo vimeoId="528289795" />
+
+<br />
+
+Pour pouvoir coder dans de bonnes conditions, un certain nombre de notions de base sont indispensables. Commençons par découvrir les
+variables et en modifier les valeurs.
+
+### Qu'est-ce qu'une variable ?
+
+L'objectif d'un programme informatique est de faire quelque chose avec des données. Votre programme utilise des **variables** pour
+enregistrer et manipuler ces données. Plus précisément, une variable est un **contenant** utilisé pour enregistrer une donnée
+spécifique dont votre programme a besoin pour travailler. Un nom d'utilisateur, le nombre de billets restants pour un vol, la
+disponibilité ou non d'un certain produit en stock, toutes ces données sont enregistrées dans des variables.
+
+<figure>
+    <img src="https://user.oc-static.com/upload/2021/03/24/16165856432616_P1C2-1_stockage-des-elements.png"
+         alt="illustration d'un entrepôt avec des cartons posés sur des étagères." />
+    <figcaption>Une variable est comme un entrepôt dans lequel on stocke des éléments</figcaption>
+</figure>
+
+Une donnée placée dans une variable s'appelle une _**valeur**_. Si on reprend l'analogie du "carton dans un entrepôt", des cartons
+différents peuvent enregistrer des valeurs différentes. Vous pouvez par exemple utiliser un carton pour stocker de l'argent pour des
+dépenses courantes, et un autre pour des économies pour une occasion particulière, par exemple un voyage. Vous pouvez aussi vider
+les cartons ou modifier leur contenu, en ajoutant par exemple de l'argent ou en en prélevant.
+
+Pour savoir à quoi sert chaque carton, vous devez les étiqueter. En programmation, c'est la même chose : vous attribuez un **nom**
+à votre variable. Le nom d'une variable doit indiquer ce qui se trouve  à l'intérieur, tout comme les étiquettes sur les cartons.
+Voici quelques règles générales pour la création de noms :
+- **utilisez des noms descriptifs dans l'ensemble de votre code.**<br />
+Avez-vous déjà eu à fouiller dans un ancien classeur, stocké dans un carton étiqueté "Administratif" sur la couverture ? Vous
+rappelez-vous à quel point c'était frustrant ? En étant descriptif et précis dans les noms de variables, la vie devient bien plus
+facile : votre code devient plus facile à lire et à maintenir. Plutôt que `quantity` (ou encore pire, `qty`), ajoutez des détails :
+`quantityInStock`, `currentAccountBalance`, etc. ;
+- **mettez les points sur les i.**<br />
+Évitez d'utiliser des abréviations ou de raccourcir des mots à chaque fois que c'est possible, même si une version plus courte
+semble évidente. Par exemple, `annualRevenue` sera mieux que `annualRev` ;
+- **suivez une convention de nommage constante.**<br />
+La convention de nommage la plus courante est **camel case**. Dans cette convention, les noms sont constitués de plusieurs mots dont
+l'initiale est en capitale. Par exemple `numberOfCats`, `finalAnswer`, `howLongCanThisVariableNameGet`, etc.
+
+### Créez une variable en la déclarant
+
+Pour utiliser une variable dans votre code, vous devez la créer. C'est ce qu'on appelle **_déclarer_** _une variable_.
+
+En JavaScript, la déclaration d'une variable se limite au mot clé _let_, suivi du nom de variable choisi :
+
+```javascript
+let numberOfCats = 2;
+let numberOfDogs = 4;
+```
+
+Ici, nous déclarons (créons) et initialisons (donnons une valeur à) deux variables : `numberOfCats` et `numberOfDogs`.
+
+#### Pratiquez la création de variables
+
+![](https://user.oc-static.com/upload/2021/03/24/16165858025073_A-vous-de-jouer.png)
+
+Je vous propose un exercice permettant de créer et d'initialiser deux variables. Rendez-vous sur cet [exercice CodePen](https://codepen.io/nicolaspatschkowski/pen/KKpRQWw).
+Vous allez créer deux variables qui sont nécessaires pour le fonctionnement d'un composant créé par votre collègue. Ensemble, vous
+êtes en train de créer la page "Liste" des séries télé, et chaque série a besoin d'une variable pour son nombre de saisons, ainsi
+que pour le nombre d'épisodes par saison.
+
+Votre collègue vous demande de nommer ces variables `numberOfSeasons` et `numberOfEpisodes` pour qu'elles soient compatibles avec
+son code. Suivez les étapes suivantes :
+1. Créez une variable appelée `numberOfSeasons` et assignez-lui la valeur 6 entre les lignes créées pour vous dans l'éditeur
+JavaScript (l'onglet appelé "JS"). Pensez à utiliser le mot clé let, et n'oubliez pas le point-virgule en fin de ligne !
+2. Ensuite, créez une variable appelée `numberOfEpisodes` et assignez-lui la valeur 12.
+
+:::info
+J'ai utilisé mon éditeur de code, dont l'interface est légèrement différente de la vôtre. Mais la démarche et la solution restent
+les mêmes ! J'utilise également des lignes de code additionnelles ("export", par exemple) mais ne vous en préoccupez pas, tout ce
+qu'il vous est nécessaire de **modifier se trouve entre les "==="**.
+:::
+
+<CodePen codePenId="KKpRQWw" />
+
+##### Solution
+
+Vous avez terminé ? [Voici un nouveau CodePen avec une solution](https://codepen.io/nicolaspatschkowski/pen/dyorGbO) à l’exercice.
+
+<CodePen codePenId="dyorGbO" />
+
+:::caution !
+Attention : dans beaucoup de démonstrations JavaScript, vous pourrez croiser le mot clé `var` plutôt que `let`. Bien qu'il y ait une
+différence subtile entre les deux (que nous détaillerons dans le chapitre sur la portée), pour l'instant vous pouvez simplement voir
+`var` comme l'ancienne version de `let` : c'est une autre façon de créer une variable.
+:::
+
+### Modifiez la valeur d'une variable
+
+La façon la plus simple de modifier la valeur d'une variable est simplement de la réaffecter :
+
+```javascript
+let numberOfCats = 3;
+numberOfCats = 4;
+```
+
+Ici, nous déclarons la variable `numberOfCats` et l'initialisons à la valeur 3. Nous lui réaffectons ensuite la valeur 4 (sans le
+mot clé `let`, parce que la variable a déjà été déclarée).
+
+Néanmoins, si c'était la seule façon de modifier une valeur de variable, vous ne pourriez pas en faire grand-chose. Voyons
+maintenant quelques **opérateurs**.
+
+#### Opérateurs arithmétiques – travail sur des nombres
+
+Les opérateurs arithmétiques vous permettent d'effectuer des opérations mathématiques de base telles que l'addition, la soustraction,
+la multiplication et la division. Toutes ces opérations peuvent être extrêmement utiles, même en dehors des contextes mathématiques.
+
+##### Addition et soustraction
+
+Pour ajouter deux variables, utilisez le signe `+` :
+
+```javascript
+let totalCDs = 67;
+let totalVinyls = 34;
+let totalMusic = totalCDs + totalVinyls;
+```
+
+À l'inverse, la soustraction utilise le signe `-` :
+
+```javascript
+let cookiesInJar = 10;
+let cookiesRemoved = 2;
+let cookiesLeftInJar = cookiesInJar - cookiesRemoved;
+```
+
+Pour ajouter ou soustraire un nombre d'une variable, vous pouvez utiliser les opérateurs `+=` et `-=` :
+
+```javascript
+let cookiesInJar = 10;
+/* manger deux cookies */
+cookiesInJar -= 2; //il reste 8 cookies
+/* cuisson d'un nouveau lot de cookies */
+cookiesInJar += 12; // il y a maintenant 20 cookies dans la boîte
+```
+
+Enfin, vous pouvez utiliser `++` ou `--` pour ajouter ou soustraire 1 (incrément ou décrément) :
+
+```javascript
+let numberOfLikes = 10;
+numberOfLikes++; // cela fait 11
+numberOfLikes--; // et on revient à 10... qui n'a pas aimé mon article ?
+```
+
+##### Multiplication et division
+
+Les opérations de multiplication et de division utilisent les opérateurs `*` et `/` :
+
+```javascript
+let costPerProduct = 20;
+let numberOfProducts = 5;
+let totalCost = costPerProduct * numberOfProducts;
+let averageCostPerProduct = totalCost / numberOfProducts;
+```
+
+Comme pour l'addition et la soustraction, il existe aussi les opérateurs `*=` et `/=` pour multiplier ou diviser un nombre :
+
+```javascript
+let numberOfCats = 2;
+numberOfCats *= 6; // numberOfCats vaut maintenant 2*6 = 12;
+numberOfCats /= 3; // numberOfCats vaut maintenant 12/3 = 4;
+```
+
+#### Pratiquez l'utilisation des opérateurs
+
+![](https://user.oc-static.com/upload/2021/03/24/16165858155766_A-vous-de-jouer.png)
+
+Pour vous entraîner à créer des constantes, rendez-vous sur cet [exercice CodePen](https://codepen.io/nicolaspatschkowski/pen/BaNxgzN).
+
+Ajoutons maintenant un nouvel élément à notre composant de série : le temps total de visionnage d'une série (info essentielle pour
+les adeptes du binge-watching !).
+1. Dans l'éditeur JavaScript, créez deux variables, `episodeTime` et `commercialTime` ("temps de l'épisode" et "temps des pubs"),
+avec des valeurs appropriées (45 et 5, par exemple).
+2. À l'aide des deux variables de temps que vous venez de créer, ainsi que du nombre d'épisodes et du nombre de saisons (variables
+préexistantes), créez une variable nommée `totalShowTime` qui contient le temps de visionnage total de cette série.
+
+Les variables `numberOfSeasons` et `numberOfEpisodes` ont déjà été déclarées pour vous.
+
+<CodePen codePenId="BaNxgzN" />
+
+##### Solution
+
+[Voici un nouveau CodePen avec une solution](https://codepen.io/nicolaspatschkowski/pen/jOPJWJO) à l’exercice.
+
+<CodePen codePenId="jOPJWJO" />
+
+:::info
+Sachez qu'il existe beaucoup d'autres façons de manipuler les variables, et vous en verrez beaucoup dans le reste de ce cours !
+:::
+
+#### Mutabilité des variables
+
+Une variable est de base mutable c'est-à-dire qu’elle peut changer au cours du temps. On la déclare avec le mot clé `let` suivi d’un
+nom de variable et on lui affecte une valeur de départ. Par la suite, on va pouvoir changer la valeur de cette variable autant de
+fois que l’on souhaite.
+
+> On crée un compteur à 0. Et, à chaque fois qu’on clique sur un bouton on augmente la valeur de 1 pour connaître à tout instant le
+nombre de clics réalisés, depuis le début de l'exécution du code.
+
+Exemple :
+
+```javascript
+let compteur = 0;
+compteur++;
+compteur = 10;
+```
+
+### Découvrez les constantes
+
+Dans de nombreux programmes, certaines données ne seront pas modifiées pendant l'exécution du programme. C'est le cas par exemple
+du nom d'une entreprise, de la date de naissance d'un utilisateur, ou du nombre d'heures dans une journée. Pour s'assurer de ne pas
+réaffecter par inadvertance de nouvelles valeurs à ces données, vous allez utiliser des **constantes**.
+
+Ce sont simplement des variables qui ne seront **pas mutables**. On donnera une valeur de départ et on ne pourra plus changer la
+valeur par la suite. Ainsi s’il y a une erreur de logique dans votre code changeant la valeur du variable (constante) qui ne devait
+pas changer, javascript retournera une erreur.
+
+Par exemple :
+
+```javascript
+const nombrePostParPage = 20;
+nombrePostParPage = 30; // Retournera une erreur dans la console car on ne peut plus changer sa valeur
+```
+
+:::info
+Ne vous inquiétez pas, vous retrouverez ce terme à la fin du cours dans [le glossaire](https://openclassrooms.com/fr/courses/6175841-apprenez-a-programmer-avec-javascript/6280131-memorisez-le-vocabulaire-avec-le-glossaire?status=draft).
+:::
+
+### Pratiquez les constantes
+
+![](https://user.oc-static.com/upload/2021/03/24/16165858262132_A-vous-de-jouer.png)
+
+C'est le moment de mettre en œuvre ce que vous avez appris sur les opérateurs ! Rendez-vous sur cet [exercice CodePen](https://codepen.io/nicolaspatschkowski/pen/ExjLBQe).
+
+Voici un composant qui déconstruit une journée en heures, minutes et secondes.
+
+Tout ce que vous avez à faire, c'est de créer les trois constantes qui donnent le nombre d'heures par jour, le nombre de minutes par
+heure, et le nombre de secondes par minute.
+
+Jouez un peu avec ces valeurs, et vous verrez vite l'importance d'avoir les bonnes valeurs constantes dans une application !
+
+Dans l'espace alloué, créez les trois constantes suivantes :
+- `hoursPerDay` : heures par jour
+- `minutesPerHour` : minutes par heure
+- `secondsPerMinute` : secondes par minute
+
+Initialisez-les avec les valeurs correctes.
+
+<CodePen codePenId="ExjLBQe" />
+
+##### Solution
+
+[Voici un nouveau CodePen avec une solution](https://codepen.io/nicolaspatschkowski/pen/XWbGXjb) à l’exercice.
+
+<CodePen codePenId="XWbGXjb" />
+
+### En résumé
+
+Dans ce chapitre, vous avez appris les bases des variables en JavaScript. Vous savez désormais :
+- **déclarer** les variables par le mot clé _let_ et un nom en "camel case", et les **initialiser** avec l'opérateur = ;
+- **modifier** le contenu d'une variable en la réaffectant, ou avec des opérateurs ;
+- utiliser des **constantes** pour éviter le remplacement d'éléments de données essentiels.
+
+Dans le chapitre qui suit, nous verrons un attribut important des variables : leur **type**.
+
+_Dans le chapitre suivant, vous découvrirez comment enregistrer vos données avec des types de données._
+
+-----
+
+## Enregistrez vos données avec des types de données
+
+[Enregistrez vos données avec des types de données - Apprenez à programmer avec JavaScript - OpenClassrooms](https://openclassrooms.com/fr/courses/6175841-apprenez-a-programmer-avec-javascript/6278450-enregistrez-vos-donnees-avec-des-types-de-donnees)
+
+<Vimeo vimeoId="528289892" />
+
+<br />
+
+Une variable est composée de plusieurs éléments. Découvrons le type !
+
+### Qu'est-ce qu'un type ?
+
+Le **type** d'une variable ou d'une constante est tout simplement le genre des données qu'elle enregistre. En JavaScript, il y a
+trois types primitifs principaux :
+- number (nombre) ;
+- string (chaîne de caractères) ;
+- boolean (valeur logique).
+
+:::note ?
+_Qu'est-ce qu'un type primitif ?_
+:::
+
+Les types primitifs sont les briques de base de chaque structure de données en JavaScript. Peu importe la complexité finale de votre
+application, à sa base se trouveront ces trois types primitifs.
+
+Bien qu'il ne soit pas nécessaire de déclarer le type d'une variable en JavaScript (plus de détails à ce sujet un peu plus tard), il
+est important de comprendre leur existence et leur importance.
+
+### Découvrez le type "number"
+
+Toutes les variables que vous avez créées jusqu'à maintenant dans ce cours étaient du type `number` (_nombre_, en français). Comme
+vous l'avez vu, elles peuvent être manipulées de nombreuses façons.
+
+Les variables de type `number` peuvent être positives ou négatives. Elles peuvent aussi être des nombres entiers (1, 2, 3, etc.) ou
+décimaux (1,4 ; 67,34 ; etc.).
+
+:::info
+En programmation, les nombres entiers sont aussi appelés **_entiers_ ou _integers_** ; les nombres avec des chiffres après la
+virgule sont aussi appelés _nombres en_ **_virgule flottante_ ou _floating-point_**.
+:::
+
+#### Attention à l'arithmétique en virgule flottante !
+
+L'arithmétique en virgule flottante peut déclencher des erreurs très gênantes dans tous les langages de programmation :
+
+```javascript
+let integerCalculation = 1 + 2; // donne 3
+let weirdCalculation = 0.1 + 0.2;  // on attend 0.3, réponse réelle 0.30000000000000004
+```
+
+Chaque fois que c'est possible, utilisez plutôt des calculs entiers (pour le calcul de prix, vous pouvez par exemple calculer en
+centimes, et non pas en euros ou en dollars).
+
+#### Appréhendez les valeurs logiques
+
+Les valeurs logiques (booleans) sont le plus simple des types primitifs : elles ne peuvent avoir que deux valeurs, `true` ou `false`
+(vrai ou faux). Elles s'utilisent dans toutes sortes de cas : pour indiquer si un utilisateur est connecté ou non, si une case est
+cochée ou non, ou si un ensemble de conditions particulières est réuni.
+
+Les variables de type boolean peuvent avoir une des deux valeurs `true` ou `false`.
+
+```javascript
+let userIsSignedIn = true;
+let userIsAdmin = false;
+```
+
+### Découvrez les chaînes de caractères
+
+Les chaînes de caractères (chaînes, ou _strings_, en anglais) sont la façon d'enregistrer du **texte** dans des variables JavaScript.
+On peut enregistrer dans une variable de type string n'importe quelle chaîne de caractères, allant d'une seule lettre à un très
+grand nombre de lettres (plus de 134 millions, même dans des navigateurs anciens).
+
+Les variables de type string sont encadrées par des guillemets simples ou doubles – `'` ou `"` :
+
+```javascript
+let firstName = "Will";
+let lastName = 'Alexander';
+```
+
+Les chaînes peuvent aussi être **concaténées** (ajoutées à la fin l'une de l'autre) par l'opérateur `+` :
+
+```javascript
+let wholeName = firstName + " " + lastName;  // valeur: "Will Alexander"
+```
+
+Il est possible depuis quelques années d’utiliser une nouvelle écriture qui simplifie la concaténation des variables et des chaînes
+de caractère : **la string interpolation**. Pour créer une string interpolation on écrit du texte encadrée par le signe `` ` `` et si on
+veut injecter une variable dans ce code on utilise l’expression `${maVariable}`.
+
+Un exemple vaut mieux que de longs discours :
+
+```javascript
+const myName = `Alexander`;
+const salutation = `Bienvenue sur mon site ${myName}!`;
+console.log(salutation); //retournera “Bienvenue sur mon site Alexander!”
+```
+
+:::info
+Il existe d'autres opérateurs plus évolués pour les chaînes ; nous les explorerons dans les chapitres suivants.
+:::
+
+#### Pratiquez les types de données
+
+![](https://user.oc-static.com/upload/2021/03/24/16165858591896_A-vous-de-jouer.png)
+
+Entraînez-vous sur les types primitifs nombres, chaînes et valeurs logiques, avec cet [exercice CodePen](https://codepen.io/nicolaspatschkowski/pen/LYVmKvw).
+
+Maintenant que vous avez terminé le composant pour la série, il est temps de travailler sur le composant pour les épisodes
+individuels.
+
+Ce composant affichera le titre de l'épisode, sa durée en minutes, et si l'utilisateur a déjà regardé l'épisode ou non.
+1. Créez une variable nommée `episodeTitle` qui contient une chaîne de caractères correspondant au titre de votre épisode (employez
+votre créativité !).
+2. Créez une variable appelée `episodeDuration` qui contient un nombre correspondant à la durée de votre épisode en minutes.
+3. Enfin, créez une variable booléenne nommée `hasBeenWatched` qui indique si l'utilisateur a déjà regardé l'épisode ou non.
+
+Vérifiez si le composant fonctionne correctement. N'hésitez pas à modifier vos valeurs pour vérifier que le composant réagit comme
+prévu. N'oubliez pas, votre code ira entre les commentaires "===" sur l'exercice.
+
+<CodePen codePenId="LYVmKvw" />
+
+##### Solution
+
+Vous avez terminé ? [Voici un nouveau CodePen avec une solution](https://codepen.io/nicolaspatschkowski/pen/YzXgyOG) à l’exercice.
+
+<CodePen codePenId="YzXgyOG" />
+
+### Comprenez les types en JavaScript
+
+JavaScript est un langage dit _à types dynamiques et à_ **_typage faible_**. Cela signifie que vous pouvez initialiser une variable
+en tant que nombre, puis la réaffecter comme chaîne, ou tout autre type de variable. Ceci offre une grande souplesse, mais peut aussi
+conduire à un comportement inattendu si vous opérez sans précaution.
+
+La morale de l'histoire : prenez garde aux types de vos variables, et en général, utilisez des constantes chaque fois que c'est
+possible.
+
+### En résumé
+
+Dans ce chapitre, vous avez découvert les trois principaux types de données primitifs en JavaScript :
+- number (nombre) ;
+- boolean (valeur logique) ;
+- string (chaîne de caractères).
+
+Il existe d'autres types de données plus complexes.
+
+_Nous commencerons d'ailleurs à nous intéresser à un type très utile dans le chapitre suivant : les objets._
+
+Techniquement, il y a trois autres types de données primitifs dans JavaScript : `null`, `undefined` et `symbol`. Vous croiserez les
+deux premiers dans ce cours, mais les symboles sortiraient du sujet. Pour en savoir plus, consultez les [**docs MDN**](https://developer.mozilla.org/fr/docs/Web/JavaScript/Structures_de_donn%C3%A9es)
+pour les types.
+
+-----
+
+## Définissez des objets et leurs attributs avec des classes
+
+[Définissez des objets et leurs attributs avec des classes - Apprenez à programmer avec JavaScript - OpenClassrooms](https://openclassrooms.com/fr/courses/6175841-apprenez-a-programmer-avec-javascript/6278564-definissez-des-objets-et-leurs-attributs-avec-des-classes)
+
+<Vimeo vimeoId="528289965" />
+
+<br />
+
+Vous avez probablement entendu auparavant le terme **_objet_** dans un contexte de programmation. Mais qu'est-ce que cela signifie
+vraiment ? Commençons par nous intéresser à quelques objets du monde réel, comme les stylos, les livres, les smartphones, les
+ordinateurs, etc.
+
+<figure>
+    <img src="https://user.oc-static.com/upload/2021/03/23/1616524847718_image4.jpg" alt="Photos de stylos plumes posés sur une table" />
+    <figcaption>Un stylo est un type d'objet</figcaption>
+</figure>
+
+Vous reconnaissez tous les stylos – à piston, à bille, feutre, gel, etc. – comme faisant partie du type d'objet : stylos. Vous pouvez
+écrire avec, ils utilisent de l'encre et peuvent se tenir à une main.
+
+C'est la même chose pour les livres : ils ont une couverture, un certain nombre de pages, un titre, et un ou plusieurs auteurs.
+
+Vous remarquez des points communs entre différents objets et vous notez ces informations pour créer une représentation mentale d'une
+catégorie d'objets.
+
+Cette liste mentale d'attributs sert de **modèle** pour cet objet. En programmation, on l'appelle une **classe**. Pour créer une
+classe, vous pouvez choisir le nom de votre choix. C'est pour cela qu'on l'appelle un **_type nommé_**. Vous le verrez, les classes
+permettent aussi de regrouper beaucoup de détails ; c'est pourquoi elles s'appellent aussi des **_types complexes_**.
+
+Avant de plonger dans les classes, observons un type JavaScript complexe : l'objet.
+
+### Découvrez les objets
+
+Les objets JavaScript sont écrits en **JSON (JavaScript Object Notation)**. Ce sont des séries de **paires clés-valeurs** séparées par
+des virgules, entre des accolades. Les objets peuvent être enregistrés dans une variable :
+
+```javascript
+let myBook = {
+    title: 'The Story of Tau',
+    author: 'Will Alexander',
+    numberOfPages: 250,
+    isAvailable: true
+};
+```
+
+Chaque clé est une chaîne (title, author, numberOfPages...), et les valeurs associées peuvent avoir tout type de données (nombre, chaîne,
+etc.).
+
+Construire des objets présente un avantage essentiel : cela permet de regrouper les attributs d'une _chose_ unique à un même emplacement,
+que ce soit un livre, un profil d'utilisateur ou la configuration d'une application, par exemple.
+
+#### Pratiquez la création d'un objet
+
+![](https://user.oc-static.com/upload/2021/03/24/16165859048525_A-vous-de-jouer.png)
+
+Dans un exercice précédent, vous avez créé trois variables pour décrire l'épisode d'une série. On dirait la situation parfaite pour
+créer un seul objet `episode` : créons-le maintenant !
+
+Rendez-vous sur cet [exercice CodePen](https://codepen.io/nicolaspatschkowski/pen/NWqMQvM).
+
+- Créez un objet (Object, en anglais) et stockez-le dans une variable appelée `episode`. Utilisez bien des accolades `{}` et mettez les
+trois attributs suivants :
+   - `title` : le titre de l'épisode ;
+   - `duration` : la durée de l'épisode ;
+   - `hasBeenWatched` : si l'épisode a été visionné ou non.
+
+Associez des valeurs appropriées à chaque attribut.
+
+N'oubliez pas d'utiliser des paires clé-valeur séparées par des virgules. Votre code ira entre les commentaires "===" sur l'exercice.
+
+Si vous n'y arrivez pas du premier coup, ne vous découragez pas, poursuivez vos efforts ! L'apprentissage de la programmation se fait en
+pratiquant et en apprenant de ses erreurs. 😎
+
+<CodePen codePenId="NWqMQvM" />
+
+##### Solution
+
+[Voici un nouveau CodePen avec une solution](https://codepen.io/nicolaspatschkowski/pen/qBdvRdw) à l’exercice.
+
+<CodePen codePenId="qBdvRdw" />
+
+#### Accédez aux données d'un objet
+
+Maintenant que vous savez comment créer un objet en JavaScript, voyons comment accéder aux données dans un objet avec la **notation
+pointée (_dot notation_)**, expliquée ci-dessous.
+
+Une fois qu'un objet est enregistré dans une variable, vous pouvez accéder à ses données comme dans l'exemple ci-dessous.
+
+```javascript
+let myBook = {
+    title: "L'Histoire de Tao",
+    author: "Will Alexander",
+    numberOfPages: 250,
+    isAvailable: true
+};
+let bookTitle = myBook.title; // "L'Histoire de Tao"
+let bookPages = myBook.numberOfPages  // 250
+```
+
+Pour cela, utilisez le nom de la variable qui contient l'objet, un point (`.`), puis le nom de la clé dont vous souhaitez récupérer la
+valeur.
+
+#### La notation bracket (_bracket notation_)
+
+Pour accéder à un sous élément vous pouvez utiliser les brackets avec la valeur du sous élément. Par exemple :
+
+```javascript
+let myBook = {
+    title: "L'Histoire de Tao",
+    author: "Will Alexander",
+    numberOfPages: 250,
+    isAvailable: true
+};
+let bookTitle = myBook["title"]; // "L'Histoire de Tao"
+let bookPages = myBook["numberOfPages"];  // 250
+```
+
+L'intérêt ici c’est qu’on va pouvoir mettre entre bracket une variable qui contient en string le nom de la propriété que l’on souhaite
+atteindre. Par exemple :
+
+```javascript
+let myBook = {
+    title: "L'Histoire de Tao",
+    author: "Will Alexander",
+    numberOfPages: 250,
+    isAvailable: true
+};
+let propertyToAccess = "title"
+let bookTitle = myBook[propertyToAccess];  // "L'Histoire de Tao"
+```
+
+#### Pratiquez la récupération de valeurs depuis un object
+
+![](https://user.oc-static.com/upload/2021/03/24/16165859048525_A-vous-de-jouer.png)
+
+Voici une occasion de mettre en pratique la _dot notation_. Rendez-vous sur cet [éditeur CodePen](https://codepen.io/nicolaspatschkowski/pen/oNXdKqL).
+
+Dans l’exercice précédent, quand vous avez construit l'Object `episode`, le code de votre collègue en a extrait les données pour les
+afficher dans son composant. Maintenant, c'est à vous d'extraire les informations pour les fournir au composant avec la notation `.`
+ou "dot".
+
+- Créez les trois variables suivantes :
+   - `episodeTitle` : le titre de l'épisode (string) ;
+   - `episodeDuration` : la durée de l'épisode (number) ;
+   - `episodeHasBeenWatched` : si l'épisode a été regardé ou non (boolean).
+
+Assignez-y les valeurs correspondantes de l'objet `episode` en utilisant la notation "dot".
+
+<CodePen codePenId="oNXdKqL" />
+
+##### Solution
+
+[Voici un nouveau CodePen avec une solution](https://codepen.io/nicolaspatschkowski/pen/WNvmRRZ) à l’exercice.
+
+<CodePen codePenId="WNvmRRZ" />
+
+### Manipulez des classes
+
+La construction d'un objet à la main, par la notation à accolades vue précédemment, convient bien à des objets simples et uniques. Mais
+vous aurez souvent besoin de beaucoup d'objets du même type. C'est là que les **classes** sont utiles.
+
+<figure>
+    <img src="https://user.oc-static.com/upload/2021/03/23/16165254885732_image6.jpg" alt="Photo de plan d'architecte sur une table" />
+    <figcaption>La classe est comme un plan</figcaption>
+</figure>
+
+Comme expliqué précédemment, une classe est un **modèle** pour un objet dans le code. Elle permet de construire plusieurs objets du
+même type (appelés **_instances_** _de la même classe_) plus facilement, rapidement et en toute fiabilité.
+
+Voyons comment construire une classe dans le code.
+
+Pour créer une classe dans JavaScript, utilisez le mot clé `class`, suivi par un nom. Encadrez ensuite le code de la classe entre
+accolades :
+
+```javascript
+class Book {
+}
+```
+
+Pour cette classe, nous souhaitons que chaque `Book` ait un titre, un auteur et un nombre de pages. Pour cela, vous utilisez ce qu'on
+appelle un **_constructor_**.
+
+:::info
+Le constructor d'une classe est la fonction qui est appelée quand on crée une nouvelle instance de cette classe avec le mot clé `new`.
+:::
+
+```javascript
+class Book {
+    constructor(title, author, pages) {
+    }
+}
+```
+
+Il y a un ensemble d'instructions à suivre à l'intérieur du constructor pour créer une instance de la classe `Book`. Pour attribuer le
+titre, l'auteur et le nombre de pages reçus à cette instance, utilisez le mot clé `this` et la notation dot.
+
+```javascript
+class Book {
+    constructor(title, author, pages) {
+        this.title = title;
+        this.author = author;
+        this.pages = pages;
+    }
+}
+```
+
+Ici, le mot clé `this` fait référence à la nouvelle instance. Donc, il utilise la notation dot pour attribuer les valeurs reçues aux
+clés correspondantes.
+
+Maintenant que la classe est terminée, vous pouvez créer des instances par le mot clé `new` :
+
+```javascript
+let myBook = new Book("L'Histoire de Tao", "Will Alexander", 250);
+/* Cette ligne crée l'objet suivant : */
+{
+    title: "L'Histoire de Tao",
+    author: "Will Alexander",
+    pages: 250
+}
+```
+
+Avec une classe `Book`, vous pouvez créer facilement et rapidement de nouveaux objets `Book`.
+
+:::info
+Gardez cette notion de classe en tête, on y reviendra un peu plus loin en abordant la notion de propriété de classe et les méthodes
+d’instance.
+:::
+
+#### Pratiquez les classes
+
+![](https://user.oc-static.com/upload/2021/03/24/16165859048525_A-vous-de-jouer.png)
+
+La meilleure façon d'apprendre les classes est d'en créer une vous-même. Rendez-vous sur cet [éditeur CodePen](https://codepen.io/nicolaspatschkowski/pen/vYOjoPJ).
+
+Maintenant que vous savez créer des classes, il est temps d'en profiter pour notre composant épisode. Cette fois-ci, il y a trois
+composants épisodes, donc la manière logique de procéder serait de créer une classe `Episode`, et puis en créer trois instances – une
+pour chaque épisode.
+1. Créez une classe `Episode` avec le mot clé `class`.
+2. Créez un constructor pour votre classe `Episode` qui devra accepter trois arguments :
+- `title` : le titre de l'épisode (string) ;
+- `duration` : la durée de l'épisode (number) ;
+- `hasBeenWatched` : si l'épisode a été regardé ou non (boolean).
+
+En utilisant le mot clé `this`, assignez les propriétés `title`, `duration` et `hasBeenWatched` via un constructor.
+
+Avec le mot clé `new`, créez trois instances de la classe `Episode` :
+- `firstEpisode` ;
+- `secondEpisode` ;
+- `thirdEpisode`.
+
+N'oubliez pas de passer des arguments appropriés à chaque instance.
+
+<CodePen codePenId="vYOjoPJ" />
+
+##### Solution
+
+Vous avez terminé ? [Voici un nouveau CodePen avec une solution](https://codepen.io/nicolaspatschkowski/pen/qBdvRVW) à l’exercice. 
+
+<CodePen codePenId="qBdvRVW" />
+
+### En résumé
+
+Vous avez fait beaucoup de chemin dans ce chapitre ! Vous avez découvert :
+- les objets avec les paires clés-valeurs en notation JSON. Ils permettent d'enregistrer plusieurs éléments de données associés dans
+une même variable ;
+- la notation pointée (dot) qui donne accès aux valeurs d'un objet et à la possibilité de les modifier ;
+- les classes, et comment l'utilisation de classes peut vous permettre de créer des objets plus facilement et de façon plus lisible.
+
+_Nous allons maintenant voir comment regrouper plusieurs variables avec les collections._
+
+-----
+

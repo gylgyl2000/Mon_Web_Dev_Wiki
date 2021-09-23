@@ -41,3 +41,96 @@ html[data-theme='dark'] .docusaurus-highlight-code-line {
   background-repeat: no-repeat;
   filter: invert(1) sepia(0) saturate(0) hue-rotate(0deg);
 }
+
+/* Page de menu */
+
+.accueil-col {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  align-items: center;
+  align-content: space-around;
+  height: 300px;
+}
+
+.accueil-col img {
+  width: 20vw;
+  max-height: 7vh;
+}
+
+.backgroundColor-white {
+  background-color: white;
+}
+
+/* Images */
+
+figure {
+  margin: 0 16px;
+  width: auto;
+  display: block;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+figure img {
+  display: inline-block;
+  vertical-align: middle;
+  max-width: 100%;
+  width: 100%;
+  border: none;
+}
+
+figure figcaption {
+  display: block;
+  position: static;
+  width: 70%;
+  margin: 8px auto;
+  font-size: 0.75rem;
+  border-top: 1px solid #E0E0E0;
+  text-align: center;
+  padding-top: 4px;
+  line-height: 1.375rem;
+}
+
+/* Courriel */
+
+.courriel-container {
+    border: 1px solid;
+    border-radius: 15px;
+    padding: 20px 20px 0 20px;
+}
+
+.courriel-header {
+    background-color: #4E4E4E;
+    color: #ffffff;
+    border-radius: 15px 15px 0 0;
+    margin: -20px;
+    padding: 20px 20px 1px 20px;
+}
+
+.courriel-main {
+    padding-top: 40px;
+}
+
+/* Icons quiz */
+
+.bi-check2-circle {
+  font-size: 1.5em;
+  font-weight: bold;
+  color: #00b341;
+}
+
+.bi-check-square-fill,
+.bi-record-circle {
+  color: #7451eb;
+  font-size: 1.2em;
+  padding-right: 0.5em;
+}
+
+.bi-circle,
+.bi-square {
+  font-size: 1.2em;
+  padding-right: 0.5em;
+}
