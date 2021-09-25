@@ -751,3 +751,474 @@ _Nous allons maintenant voir comment regrouper plusieurs variables avec les coll
 
 -----
 
+## Regroupez vos données avec les tableaux et les objets
+
+[Regroupez vos données avec les tableaux et les objets - Apprenez à programmer avec JavaScript - OpenClassrooms](https://openclassrooms.com/fr/courses/6175841-apprenez-a-programmer-avec-javascript/6278664-regroupez-vos-donnees-avec-les-tableaux-et-les-objets)
+
+<Vimeo vimeoId="528290128" />
+
+<br />
+
+Imaginez que vous soyez responsable de la communication d'un théâtre à la mode. Une de vos responsabilités essentielles est la gestion
+du premier rang, qui revient à s'assurer que les amis et connaissances des artistes, ainsi que d'autres VIP, aient la meilleure vision
+du spectacle.
+
+Si vous n'aviez à gérer que deux invitations pour l'artiste principal, vous pourriez imaginer utiliser seulement deux variables avec
+les noms des invités. Le code pourrait se présenter comme ceci :
+
+```javascript
+let firstFrontRowGuest;
+let secondFrontRowGuest;
+```
+
+Ensuite, quand l'artiste vous donne l'information, vous pourriez vous contenter d'affecter un nom à chaque variable. Par exemple, vous
+pourriez avoir :
+
+```javascript
+firstFrontRowGuest = "Sarah Kate";
+secondFrontRowGuest = "Audrey Simon";
+```
+
+Mais si le premier rang a 30 sièges ? Ne serait-il pas plus facile d'utiliser une seule variable contenant toutes ces informations ?
+
+Il existe un type pour cela en JavaScript : le **tableau (array)**.
+
+### Utilisez un tableau pour enregistrer une liste ordonnée d'éléments
+
+Pour créer un tableau vide et l'enregistrer dans une variable, utilisez une paire de crochets :
+
+```javascript
+let guests = [];
+```
+
+Vous pouvez aussi créer un tableau rempli en plaçant les éléments voulus à l'intérieur de ces crochets :
+
+```javascript
+let guests = ["Sarah Kate", "Audrey Simon", "Will Alexander"];
+```
+
+Vous pouvez ensuite accéder aux éléments de ce tableau par leur indice :
+
+```javascript
+let firstGuest = guests[0]; // "Sarah Kate"
+let thirdGuest = guests[2]; // "Will Alexander"
+let undefinedGuest = guests[12] // undefined
+```
+
+:::caution !
+N'oubliez pas de démarrer à l'indice 0 !
+:::
+
+#### Pratiquez la création d'un array
+
+![16165859048525_A-vous-de-jouer.png](https://user.oc-static.com/upload/2021/03/24/16165859048525_A-vous-de-jouer.png)
+
+Entraînez-vous à créer un tableau pour enregistrer les épisodes de votre série télé avec cet [éditeur CodePen](https://codepen.io/nicolaspatschkowski/pen/LYVrPZL).
+
+Dans un exercice précédent, vous avez créé trois instances de la classe `Episode` dans des variables séparées. Dans cet exercice, vous
+allez regrouper ces variables dans un seul tableau (Array).
+1. Créez un Array stocké dans une variable episodes, et peuplez-le avec les trois variables `firstEpisode`, `secondEpisode` et
+`thirdEpisode`.
+2. Essayez de changer l'ordre dans lequel vous avez ajouté les épisodes, et regardez ce qu'il se passe lorsque vous rafraîchissez.
+
+N'oubliez pas, votre code ira entre les commentaires "===" sur l'exercice.
+
+<CodePen codePenId="LYVrPZL" />
+
+##### Solution
+
+[Voici un nouveau CodePen avec une solution](https://codepen.io/nicolaspatschkowski/pen/NWqJdBy) à l’exercice.
+
+<CodePen codePenId="NWqJdBy" />
+
+### Utilisez des valeurs plutôt que des références
+
+En JavaScript, les types primitifs tels que les nombres, les valeurs logiques et les chaînes sont passés par **valeur**. Ceci signifie que
+quand vous faites quelque chose comme :
+
+```javascript
+let numberOfGuests = 20;
+let totalNumberOfGuests = numberOfGuests; // 20
+```
+
+... c'est la **valeur** 20 qui est copiée dans la nouvelle variable (totalNumberOfGuests), et aucun lien n'est maintenu entre les deux variables.
+
+Ce n'est pas le cas avec les objets et tableaux, qui sont passés par **référence**. Si vous n'y prenez pas garde, cela peut conduire à des
+comportements inattendus. Par exemple :
+
+```javascript
+let artistProfile = {
+    name: "Tao Perkington",
+    age: 27,
+    available: true
+};
+let allProfiles = [artistProfile]; // nouveau tableau contenant l'objet ci-dessus
+artistProfile.available = false; // modification de l'objet
+console.log(allProfiles) // affiche { nom: "Tao Perkington", âge: 27, disponible: false }
+```
+
+Bien que nous ayons créé le tableau et passé l'objet **avant** la modification de cet objet, vous la voyez dans le tableau. C'est parce que
+quand on utilise des tableaux et des objets, on passe des **références** aux objets plutôt que la valeur des données qu'ils contiennent. Les
+variables `artistProfile` et `allProfiles` présentées ci-dessus contiennent des références à l'objet et au tableau en mémoire.
+
+Cela peut sembler un peu compliqué à comprendre, mais avec la pratique, vous vous y ferez !
+
+:::info
+Pour en savoir plus sur les types à passage par valeur et les types à passage par référence en JavaScript, [**voici un article**](https://codeburst.io/explaining-value-vs-reference-in-javascript-647a975e12a0)
+(en anglais) que je trouve très bien écrit et facile à comprendre.
+:::
+
+### Travaillez sur les tableaux
+
+Les tableaux en JavaScript sont très puissants et ont beaucoup d'attributs et de méthodes très utiles. Voici une brève introduction à
+quelques-uns d'entre eux.
+
+#### Le comptage d'éléments
+
+La propriété `length` d'un tableau indique le nombre d'éléments qu'il contient :
+
+```javascript
+let guests = ["Will Alexander", "Sarah Kate", "Audrey Simon"];
+let howManyGuests = guests.length; // 3
+```
+
+Utilisez la notation dot pour accéder à la propriété `length` de votre tableau. Ce n'est peut-être pas très utile dans cet exemple (parce que
+nous savons combien nous avons mis d'invités dans le tableau !), mais dans beaucoup de cas, vous ne saurez pas à l'avance combien il y a
+d'éléments dans un tableau.
+
+#### L'ajout et la suppression d'éléments
+
+Pour ajouter un élément à la fin d'un tableau, utilisez sa méthode push :
+
+```javascript
+guests.push("Tao Perkington"); // ajoute "Tao Perkington" à la fin de notre tableau guests
+```
+
+Vous pouvez utiliser la notation dot pour accéder à la méthode `push` du tableau, et placer l'élément à ajouter entre parenthèses.
+
+Pour ajouter votre élément au début du tableau plutôt qu'à la fin, utilisez la méthode `unshift` :
+
+```javascript
+guests.unshift("Tao Perkington"); // "Tao Perkington" est ajouté au début du tableau guests
+```
+
+Pour supprimer le dernier élément d'un tableau, appelez sa méthode `pop`, sans passer aucun argument :
+
+```javascript
+guests.pop(); // supprimer le dernier élément du tableau
+```
+
+#### Pratiquez le travail avec les arrays
+
+![16165859048525_A-vous-de-jouer.png](https://user.oc-static.com/upload/2021/03/24/16165859048525_A-vous-de-jouer.png)
+
+Rendez-vous sur cet [éditeur CodePen](https://codepen.io/nicolaspatschkowski/pen/bGdKbgZ) et suivez les étapes suivantes. 
+
+Dans cet exercice, un Array vide `episodes` a déjà été créé.
+1. En utilisant la méthode `push` du tableau `episodes`, ajoutez les épisodes un par un. Ajoutez deux fois le troisième épisode.
+2. Avec la méthode `pop`, retirez l'épisode superflu du tableau `episodes`.
+3. Créez une variable appelée `numberOfEpisodes` qui contient la `length` du tableau `episodes`.
+4. Amusez-vous à ajouter et retirer des épisodes, et vérifiez que tout fonctionne correctement.
+
+<CodePen codePenId="bGdKbgZ" />
+
+##### Solution
+
+[Voici un nouveau CodePen avec une solution](https://codepen.io/nicolaspatschkowski/pen/QWbodVr) à l’exercice.
+
+<CodePen codePenId="QWbodVr" />
+
+### En résumé
+
+Dans ce chapitre :
+- vous avez appris à connaître les **collections** ;
+- vous avez exploré la collection la plus courante en JavaScript : le **tableau** ;
+- vous avez appris à _créer_ des tableaux, à les _remplir_, et vu certains outils de base pour les _manipuler._
+
+_Retrouvez au chapitre suivant, un résumé de cette première partie du cours._
+
+-----
+
+## Résumé de la partie 1
+
+[Résumé de la partie 1 - Apprenez à programmer avec JavaScript - OpenClassrooms](https://openclassrooms.com/fr/courses/6175841-apprenez-a-programmer-avec-javascript/6278676-resume-de-la-partie-1)
+
+<Vimeo vimeoId="528290257" />
+
+<br />
+
+Félicitations, vous avez terminé la première partie de ce cours ! Jusqu'à présent, vous avez appris les briques de la programmation en
+JavaScript. Vous avez découvert :
+- ce que sont les **variables** et les **constantes**, et à quoi elles servent ;
+- pourquoi le **type** est important, et comment utiliser les différents types ;
+- ce que sont les **objets**, et comment utiliser les **classes** pour les construire facilement et de façon fiable ;
+- l'utilité des **tableaux**, et les bases de leur manipulation.
+
+_C'est déjà un énorme premier pas ! N'hésitez pas à revenir en arrière pour vous entraîner sur des exercices qui vous sembleraient difficiles,
+et quand vous serez prêt, tentez le questionnaire de la partie 1 !_
+
+-----
+
+## Quiz : Vérifiez ce que vous avez appris sur les données et les types !
+
+[Vérifiez ce que vous avez appris sur les données et les types ! - OpenClassrooms](https://openclassrooms.com/fr/courses/6175841-apprenez-a-programmer-avec-javascript/exercises/3497)
+
+#### Compétences évaluées
+
+<i class="bi bi-check2-circle"></i> Utiliser les données et les types de données dans JavaScript
+
+-----
+
+#### Question 1 : Parmi les propositions suivantes, laquelle correspond à une déclaration et une initialisation de variable valable ?
+
+<i class="bi bi-circle"></i>
+
+```javascript
+let my variable = 12;
+```
+
+<i class="bi bi-record-circle"></i>
+
+```javascript
+let myVariable = 12;
+```
+
+<i class="bi bi-circle"></i>
+
+```javascript
+variable myVariable = 12;
+```
+
+<i class="bi bi-circle"></i>
+
+```javascript
+let 12 = myVariable;
+```
+
+*La déclaration et l'initialisation de variables valables nécessite le mot-clé `let`, le nom de la variable (en un seul mot), l'opérateur
+d'assignation `=`, la valeur souhaitée pour la variable, et un point-virgule `;`, dans cet ordre.*
+
+-----
+
+#### Question 2 : Quelles propositions correspondent à des types primitifs en JavaScript ?
+
+*Attention, plusieurs réponses sont possibles.*
+
+<i class="bi bi-check-square-fill"></i> String<br />
+<i class="bi bi-square"></i> Array<br />
+<i class="bi bi-check-square-fill"></i> Number<br />
+<i class="bi bi-check-square-fill"></i> Boolean<br />
+<i class="bi bi-square"></i> Object<br />
+<i class="bi bi-square"></i> Class<br />
+<br />
+
+*Les trois types primitifs les plus courants en JavaScript sont string, number et boolean. Les objets (object) et tableaux (array) sont des
+types complexes, et class n'est même pas un type !*
+
+-----
+
+#### Question 3 : Quelle est la valeur attendue de la variable numberOfCats à la fin de cet extrait de code ?
+
+```javascript
+let numberOfCats = 10;
+numberOfCats += 5;
+numberOfCats /= 3;
+numberOfCats++;
+```
+
+<i class="bi bi-circle"></i> 4<br />
+<i class="bi bi-circle"></i> 5<br />
+<i class="bi bi-record-circle"></i> 6<br />
+<i class="bi bi-circle"></i> 7<br />
+<br />
+
+*On initialise numberOfCats avec la valeur 10. Ensuite on y ajoute 5 (15), on divise par 3 (5), et on l'incrémente de 1 avec l'opérateur `++`,
+ce qui donne une valeur finale de 6.*
+
+-----
+
+#### Question 4 : Quelles phrases ci-dessous sont vraies au sujet des constantes ?
+
+*Attention, plusieurs réponses sont possibles.*
+
+<i class="bi bi-check-square-fill"></i> Une fois déclarées, leur valeur ne peut être modifiée.<br />
+<i class="bi bi-square"></i> On peut déclarer une constante sans l'initialiser.<br />
+<i class="bi bi-check-square-fill"></i> Elles peuvent être utiles pour éviter les erreurs et comportements inattendus.<br />
+<i class="bi bi-square"></i> Leur type peut être modifié après déclaration.<br />
+<br />
+
+*Les constantes peuvent aider à éviter les erreurs et comportements inattendus, car elles ne peuvent pas être modifiées accidentellement. On
+ne peut pas déclarer une constante sans l'initialiser, et son type ne peut être modifié.*
+
+-----
+
+#### Question 5 : En JavaScript, un object est déclaré comme une liste de paires clé/valeur entre…
+
+<i class="bi bi-record-circle"></i> <code>&#123;&#125;</code> accolades.<br />
+<i class="bi bi-circle"></i> <code>[]</code> crochets.<br />
+<i class="bi bi-circle"></i> <code>()</code> parenthèses.<br />
+<i class="bi bi-circle"></i> aucune des réponses ci-dessus.<br />
+<br />
+
+*Les objects sont déclarés entre accolades `{}`.*
+
+-----
+
+#### Question 6 : Comment accéderiez-vous à la propriété  `title`  de cet objet  `book`  ?
+
+```javascript
+let book = {
+    title: "L'Histoire de Tao",
+    numberOfPages: 250
+};
+```
+
+<br />
+
+<i class="bi bi-circle"></i>
+
+```javascript
+let title = book[title];
+```
+
+<i class="bi bi-circle"></i>
+
+```javascript
+let title = book.get('title');
+```
+
+<i class="bi bi-record-circle"></i>
+
+```javascript
+let title = book.title;
+```
+
+<i class="bi bi-circle"></i>
+
+```javascript
+let title = title.book;
+```
+
+*Pour accéder à une propriété sur un objet, on utilise la notation pointée, ou dot `.`, avec la notation `Object.Property`.*
+
+-----
+
+#### Question 7 : Considérez la classe ci-dessous :
+
+```javascript
+class Movie {
+    constructor(title, director, duration) {
+        this.title = title;
+        this.director = director;
+        this.duration = duration;
+    }
+}
+```
+
+**Quelle solution crée correctement une nouvelle instance de cette classe ?**
+
+<i class="bi bi-circle"></i>
+
+```javascript
+let firstMovie = Movie("L'Histoire de Tao", "Will Alexander", 90);
+```
+
+<i class="bi bi-record-circle"></i>
+
+```javascript
+let firstMovie = new Movie("L'Histoire de Tao", "Will Alexander", 90);
+```
+
+<i class="bi bi-circle"></i>
+
+```javascript
+let firstMovie = class Movie("L'Histoire de Tao", "Will Alexander", 90);
+```
+
+<i class="bi bi-circle"></i>
+
+```javascript
+let firstMovie("L'Histoire de Tao", "Will Alexander", 90);
+```
+
+*Pour créer une nouvelle instance d'une classe, on utilise le mot-clé `new`.*
+
+-----
+
+#### Question 8 : On déclare un array (tableau) comme une liste d'éléments, séparés par des virgules, entre…
+
+<i class="bi bi-circle"></i> <code>&#123;&#125;</code> accolades.<br />
+<i class="bi bi-record-circle"></i> <code>[]</code> crochets.<br />
+<i class="bi bi-circle"></i> <code>()</code> parenthèses.<br />
+<i class="bi bi-circle"></i> aucune des réponses ci-dessus.<br />
+<br />
+
+*On déclare un array entre crochets `[]`.*
+
+-----
+
+#### Question 9 : Quelle instruction permet d'ajouter un nouvel invité à la fin de l'array ci-dessous ?
+
+```javascript
+let guests = ["Sarah Kate", "Audrey Simon", "Will Alexander"];
+```
+
+<br />
+
+<i class="bi bi-record-circle"></i>
+
+```javascript
+guests.push("Tau Perkington");
+```
+
+<i class="bi bi-circle"></i>
+
+```javascript
+guests.unshift("Tau Perkington");
+```
+
+<i class="bi bi-circle"></i>
+
+```javascript
+guests.pop("Tau Perkington");
+```
+
+<i class="bi bi-circle"></i>
+
+```javascript
+guests.add("Tau Perkington");
+```
+
+*La méthode `push()` ajoute un élément à la fin d'un array. La méthode `unshift()` ajoute l'élément au début de l'array. La méthode `pop()`
+retire le dernier élément d'un array, et la méthode `add()` n'existe pas.*
+
+-----
+
+#### Question 10 : Comment feriez-vous pour calculer le nombre d'éléments dans l'array `onlineUsers` ?
+
+<i class="bi bi-circle"></i>
+
+```javascript
+let numberOfUsers = onlineUsers.size;
+```
+
+<i class="bi bi-circle"></i>
+
+```javascript
+let numberOfUsers = onlineUsers.quantity;
+```
+
+<i class="bi bi-circle"></i>
+
+```javascript
+let numberOfUsers = onlineUsers.index;
+```
+
+<i class="bi bi-record-circle"></i>
+
+```javascript
+let numberOfUsers = onlineUsers.length;
+```
+
+*La propriété `length` d'un array correspond au nombre d'éléments qu'il contient.*
+

@@ -51,12 +51,12 @@ html[data-theme='dark'] .docusaurus-highlight-code-line {
   justify-content: space-around;
   align-items: center;
   align-content: space-around;
-  height: 300px;
 }
 
 .accueil-col img {
-  width: 14vw;
+  width: 12em;
   max-height: 7vh;
+  margin-bottom: 2em;
 }
 
 .backgroundColor-white {
