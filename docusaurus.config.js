@@ -56,6 +56,18 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
             position: 'right',
             label: 'Menu',
           },
+          {
+            type: 'doc',
+            docId: 'Aide-memoire/menu',
+            position: 'right',
+            label: 'Aide-mémoire',
+          },
+          {
+            type: 'doc',
+            docId: 'Algorithmes/menu',
+            position: 'right',
+            label: 'Algorithmes',
+          },
           /* {to: '/blog', label: 'Blog', position: 'left'}, */
           {
             href: 'https://github.com/gylgyl2000/Mon_Web_Dev_Wiki',

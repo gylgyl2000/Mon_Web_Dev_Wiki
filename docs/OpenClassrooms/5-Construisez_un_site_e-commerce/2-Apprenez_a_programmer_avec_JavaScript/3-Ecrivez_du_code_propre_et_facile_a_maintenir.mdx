@@ -1,0 +1,1734 @@
+---
+id: 3-Ecrivez_du_code_propre_et_facile_a_maintenir
+title: Écrivez du code propre et facile à maintenir
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+import { Vimeo, CodePen } from 'mdx-embed';
+
+# Écrivez du code propre et facile à maintenir
+
+## Travaillez sur les fonctions
+
+[Travaillez sur les fonctions - Apprenez à programmer avec JavaScript - OpenClassrooms](https://openclassrooms.com/fr/courses/6175841-apprenez-a-programmer-avec-javascript/6279223-travaillez-sur-les-fonctions)
+
+<Vimeo vimeoId="528290872" />
+
+<br />
+
+Dans la deuxième partie de ce cours, vous avez découvert des notions de base en développement. Poursuivons avec les fonctions.
+
+### Comprenez les fonctions
+
+Une **fonction** est un bloc de code auquel vous attribuez un nom. Quand vous **appelez** cette fonction, vous exécutez le code qu'elle
+contient. Par exemple, dans les vidéos d'enregistrement d'écrans, vous m'avez vu appeler la fonction `console.log()`, qui contient du code
+permettant d'imprimer sur la console mais vous pouvez créer n’importe quelle fonction vous même :
+
+```javascript
+// On définit la fonction
+function afficherDeuxValeurs(valeur1, valeur2) {
+    console.log('Première valeur:' + valeur1);
+    console.log('Deuxième valeur:' + valeur2);
+}
+
+// On exécute la fonction
+afficherDeuxValeurs(12, 'Bonjour');
+
+// On obtient dans la console
+// > Première valeur:12
+// > Deuxième valeur:Bonjour
+```
+
+Beaucoup de fonctions ont besoin de variables pour effectuer leur travail. Quand vous créez ou **déclarez** une fonction, vous indiquez la
+liste des variables dont elle a besoin pour effectuer son travail : vous définissez les **paramètres** de la fonction.
+
+Ensuite, à l'appel de la fonction, vous lui attribuez des **valeurs** pour ses paramètres. Les valeurs sont les **arguments** d'appel.
+
+Enfin, votre fonction peut vous donner un résultat : une **valeur de retour**. Supposons que vous ayez une fonction qui compte le nombre de
+mots dans une chaîne :
+- le paramètre sera une chaîne dont vous allez compter les mots ;
+- l'argument sera toute chaîne attribuée à votre fonction quand vous l'appelez ;
+- la valeur de retour sera le nombre de mots.
+
+Commençons par une fonction très simple qui ajoute des nombres.
+
+#### Pratiquez la note moyenne
+
+![16165901356926_A-vous-de-jouer.png](https://user.oc-static.com/upload/2021/03/24/16165901356926_A-vous-de-jouer.png)
+
+Rendez-vous sur cet [éditeur CodePen](https://codepen.io/nicolaspatschkowski/pen/jOPKPaO). 
+
+Avant de commencer l’exercice, nous allons juste revoir deux notions : le calcul d’une moyenne et comment parcourir un tableau.
+
+##### _Calculer une moyenne_
+
+Lorsque l’on a un ensemble de valeurs, le calcul de la moyenne se fait en 3 étapes :
+- on fait la somme de toutes les valeurs (qu’on nommera `sommeValeurs`) ;
+- on compte le nombre de valeurs que l’on a (qu’on nommera `nombreValeurs`) ;
+- on calcule la moyenne en faisant `moyenne = sommeValeurs / nombreValeurs`.
+
+##### _Parcourir un tableau_
+
+Lorsque l’on a un tableau (par exemple `monTableau`) on utilise la boucle `for of`.
+
+Par exemple :
+
+```javascript
+for (let elementDeTableau of monTableau) {
+    console.log(elementDeTableau); // Affiche chaque élément individuellement
+}
+```
+
+Vous pouvez manipuler `elementDeTableau` comme bon vous semble (par exemple, l’ajouter dans un autre tableau, l'additionner avec une variable
+globale, etc.).
+
+Votre application de streaming permet aux utilisateurs de noter les séries sur 5 étoiles. Votre collègue a construit le composant pour afficher
+la note moyenne pour chaque série, mais elle a besoin que vous écriviez la fonction qui va calculer cette moyenne.
+
+Elle vous explique que la fonction doit prendre un tableau de nombres comme argument, et retourner un nombre qui correspond à la note moyenne
+calculée.
+
+Suivez les étapes suivantes :
+1. Au bon endroit dans la déclaration de fonction, choisissez un nom pour le paramètre de votre fonction. N'oubliez pas, ce sera un tableau de
+nombres.<br />
+Pour calculer une moyenne, on ajoute toutes les valeurs ensemble, puis on divise par le nombre de valeurs.
+2. Créez une variable qui stockera la somme de tous les nombres du tableau. Initialisez-la avec la valeur zéro.
+3. Sachant que le paramètre reçu est un tableau de nombres, utilisez une boucle `for` pour ajouter chaque nombre du tableau à votre variable
+`somme`.
+4. Créez une constante qui contient le résultat de la somme finale divisée par le nombre de valeurs dans le tableau reçu en argument.
+5. Faites en sorte que la fonction retourne le résultat final.
+6. BONUS : La troisième série, _Les Insectes de L'Isla Clara_, n'a pas l'air de fonctionner correctement. En fait, elle n'a pas encore reçu de
+note, donc le tableau passé ne contient aucune valeur.
+
+```javascript
+const calculateAverageRating = (tableau) => {
+  let nombre = tableau.length;
+  let valeur = 0;
+  for (let i in tableau) {
+    valeur = valeur + tableau[i];
+  }
+  let moyenne = valeur / nombre;
+  return moyenne;
+}
+
+const tauRatings = [5, 4, 5, 5, 1, 2];
+const colinRatings = [5, 5, 5, 4, 5];
+
+const tauAverage = calculateAverageRating(tauRatings); // 3.7
+const colinAverage = calculateAverageRating(colinRatings); // 4.8
+```
+
+<CodePen codePenId="jOPKPaO" />
+
+##### Solution
+
+Vous avez terminé ? [Voici un nouveau CodePen avec une solution](https://codepen.io/nicolaspatschkowski/pen/MWwxpvg) à l’exercice.
+
+<CodePen codePenId="MWwxpvg" />
+
+```javascript
+const calculateAverageRating = (ratings) => {
+    if(ratings.length === 0) {
+        return 0;
+    }
+    let sum = 0;
+    for (let rating of ratings) {
+        sum += rating;
+    }
+    return sum / ratings.length;
+}
+
+const tauRatings = [5, 4, 5, 5, 1, 2];
+const colinRatings = [5, 5, 5, 4, 5];
+
+const tauAverage = calculateAverageRating(tauRatings);
+const colinAverage = calculateAverageRating(colinRatings);
+```
+
+Voici quelques explications supplémentaires :
+
+La fonction commence par le code suivant :
+
+```javascript
+if (ratings.length === 0) {
+    return 0;
+}
+```
+
+Explication : on souhaite faire la moyenne des valeurs présentes dans le tableau `ratings`. Mais dans le cas où le tableau est vide, on
+souhaite retourner la valeur 0. La propriété `length` de `ratings` permet donc de connaître la longueur du tableau et de faire alors une
+condition en conséquence.
+
+Ensuite nous avons le code suivant :
+
+```javascript
+let sum = 0;
+for (let rating of ratings) {
+    sum += rating;
+}
+```
+
+Explication : Ce code a pour objectif de faire la somme de tous les éléments du tableau. Pour cela, on crée une variable `sum` avec comme
+valeur initiale 0. Ensuite on parcourt le tableau `ratings` et pour chaque élément on additionne la valeur avec la valeur de `sum` et le
+résultat est stocké dans `sum`. Une fois l’ensemble de ce code exécuté, `sum` contient donc la somme de toutes les valeurs du tableau.
+
+Pour finir, nous avons le code suivant :
+
+```javascript
+return sum / ratings.length;
+```
+
+Explication : Nous disposons maintenant de la variable `sum` qui contient la somme de tous les éléments du tableau, et de l’expression
+`ratings.length` qui donne le nombre d'éléments du tableau. Avec ces éléments, nous retournons le calcul de la moyenne.
+
+### En résumé
+
+Dans ce chapitre, vous avez appris :
+- ce qu'est une fonction, comment en déclarer une et comment en appeler une ;
+- ce que sont les paramètres, les arguments et les valeurs de retour ;
+- à écrire une fonction qui parcourt un tableau de nombres pour calculer leur moyenne ;
+
+_Dans le chapitre suivant, nous allons nous intéresser à un type de fonction associé à une classe : les méthodes._
+
+-----
+
+## Définissez des méthodes d'instance et des propriétés
+
+[Définissez des méthodes d'instance et des propriétés - Apprenez à programmer avec JavaScript - OpenClassrooms](https://openclassrooms.com/fr/courses/6175841-apprenez-a-programmer-avec-javascript/6279381-definissez-des-methodes-dinstance-et-des-proprietes)
+
+<Vimeo vimeoId="528290966" />
+
+<br />
+
+**Rappel sur la notion de propriété de classe**
+
+Avant d'aborder la notion de méthode d'instance, sur laquelle nous allons nous concentrer dans ce cours, il est important d’expliquer la notion
+de propriété de classe. C’est une variable interne à cette classe que l’on peut définir par défaut et faire évoluer au fur et à mesure de
+l’exécution de notre code. Il n’est pas rare d’utiliser le terme “attribut” au lieu de "propriété", mais cela représente bien la même chose.
+
+Prenons l’exemple d’une classe qui représenterait un compte bancaire, et que l’on appellerait du coup `BankAccount`. On pourrait trouver comme
+propriétés `owner` (permettant d’identifier le propriétaire du compte) et `balance` (permettant de connaître le montant disponible sur le
+compte). Ainsi, lorsque que l’on crée une instance de `BankAccount` avec un propriétaire et un montant initial en argument, on pourra exploiter
+par la suite ces propriétés pour afficher leurs valeurs, les utiliser pour des calculs, les modifier, etc.
+
+### Tirez parti des classes avec des méthodes d'instance
+
+Si vous revenez au chapitre sur les classes, nous les avons utilisées pour créer des objets ayant certaines propriétés. Maintenant que vous avez
+commencé à découvrir les fonctions, vous pouvez ajouter des **méthodes d'instance** à ces classes, pour augmenter leur puissance et leur
+utilité.
+
+Une méthode d'instance est une fonction faisant partie d'une classe, et qui agit sur une instance de cette classe. Reprenons notre exemple de
+classe `BankAccount` (compte bancaire) :
+
+```javascript
+class BankAccount {
+    constructor(owner, balance) {
+        this.owner = owner;
+        this.balance = balance;
+    }
+}
+```
+
+Vous pouvez ensuite créer une instance de cette classe appelée `newAccount` (nouveau compte) :
+
+```javascript
+const newAccount = new BankAccount("Will Alexander", 500);
+```
+
+:::caution !
+N'oubliez pas qu'un objet (une instance d'une classe est un objet) est un type par référence, donc vous pouvez toujours apporter des
+modifications à l'instance de `newAccount` – la partie _constante_ désigne une **référence** à cette instance.
+:::
+
+Telle quelle, l'instance n'est pas très utile. Vous pourriez afficher son solde à la console par `newAccount.balance`, mais si on pensait
+plutôt à ajouter une mise en forme ? Vous pouvez pour cela ajouter une méthode à la classe !
+
+```javascript
+class BankAccount {
+    constructor(owner, balance) {
+        this.owner = owner;
+        this.balance = balance;
+    }
+    showBalance() {
+        console.log("Solde: " + this.balance + " EUR");
+    }
+}
+```
+
+La nouvelle méthode ci-dessus, déclarée par son nom suivi par (), utilise le mot clé `this` pour accéder à la propriété `balance` de l'instance,
+et l'afficher sur la console avec une mise en forme supplémentaire. Ceci signifie que vous pouvez utiliser la notation dot sur l'instance
+`newAccount` pour appeler sa méthode `showBalance()` :
+
+```javascript
+const newAccount = new BankAccount("Will Alexander", 500);
+
+newAccount.showBalance(); // imprime "Solde: 500 EUR" à la console
+```
+
+Vous pouvez aussi ajouter des méthodes capables de modifier les propriétés de l'instance. Dans ce cas, ajoutez les méthodes `deposit()` (dépôt)
+et `withdraw()` (retrait) à la classe, en n'oubliant pas que les deux ont besoin d'un paramètre `amount` (montant) (parce que vous devez savoir
+combien déposer ou retirer !) :
+
+```javascript
+class BankAccount {
+    constructor(owner, balance) {
+        this.owner = owner;
+        this.balance = balance;
+    }
+    showBalance() {
+        console.log("Solde: " + this.balance + " EUR");
+    }
+    deposit(amount) {
+        console.log("Dépôt de " + amount + " EUR");
+        this.balance += amount;
+        this.showBalance();
+    }
+    withdraw(amount) {
+        if (amount > this.balance) {
+            console.log("Retrait refusé !");
+        } else {
+            console.log("Retrait de " + amount + " EUR");
+            this.balance -= amount;
+            this.showBalance();
+        }
+    }
+}
+```
+
+La méthode `deposit()` affiche le montant du dépôt sur la console, ajoute le montant au solde de l'instance, puis appelle la méthode
+`showBalance()` de l'instance, imprimant ainsi le nouveau solde sur la console.
+
+:::info
+Dans le corps d'une classe, le mot clé _this_ fait référence à l'**instance** créée de la classe. Dans cet exemple, il fait référence à
+`newAccount`.
+:::
+
+La méthode `withdraw()` vérifie si le montant demandé est supérieur au solde actuel. Si c'est le cas, il refuse le retrait ; sinon, il
+l'autorise, en soustrayant le montant du solde et en affichant le nouveau solde sur la console.
+
+#### Pratiquez les méthodes instance
+
+![16165901356926_A-vous-de-jouer.png](https://user.oc-static.com/upload/2021/03/24/16165901356926_A-vous-de-jouer.png)
+
+Voyons maintenant comment utiliser des méthodes d'instance pour enregistrer l'application de diffusion vidéo.
+
+Rendez-vous sur cet [éditeur CodePen](https://codepen.io/nicolaspatschkowski/pen/eYNKJmP).
+
+Plutôt que d'utiliser une fonction pour calculer la note moyenne pour une série, on a décidé que la classe Show (ou "Série") devrait gérer les
+nouvelles notes automatiquement.
+
+Comme vous pouvez le constater, la classe `Show` contient un `Array ratings`, pour les notes, qui est initialisé vide, et une propriété
+`averageRating` (note moyenne) de zéro.
+1. Déclarez une méthode instance dans la classe `Show` appelée `addRating()`. Elle prendra une `rating` (la note), qui sera un nombre entre 1
+et 5, comme paramètre.
+2. La méthode `addRating()` doit :    
+   - ajouter la note reçue au tableau `ratings` de l'instance ;
+   - recalculer la valeur `averageRating` de l'instance.
+
+Cliquez sur le bouton "Check ratings" pour vérifier si les séries se mettent à jour correctement. Vous pouvez cliquer plusieurs fois sur le
+bouton pour voir l'évolution des notes moyennes.
+
+<CodePen codePenId="eYNKJmP" />
+
+##### Solution
+
+[Voici un nouveau CodePen avec une solution](https://codepen.io/nicolaspatschkowski/pen/poJYedM) à l’exercice.
+
+<CodePen codePenId="poJYedM" />
+
+```javascript
+class Show {
+  constructor(title, numberOfSeasons) {
+    this.title = title;
+    this.numberOfSeasons = numberOfSeasons;
+    this.ratings = [];
+    this.averageRating = 0;
+  }
+  
+  addRating(rating) {
+    this.ratings.push(rating);
+    let sum = 0;
+    for (let rating of this.ratings) {
+      sum += rating;
+    }
+    
+    this.averageRating = sum / this.ratings.length;
+  }
+}
+```
+
+### Découvrez les méthodes statiques
+
+Il existe un type spécial de méthode pouvant être ajoutée à une classe : la méthode **statique**. Elle est différente des méthodes d'instance
+parce qu'elle n'est **pas** liée à une instance particulière d'une classe, mais à la classe elle-même. Utilisez-la pour créer des **méthodes
+utilitaires** (helper en anglais) où vous n'aurez pas besoin d'une instance d'une classe pour les utiliser. Vous pourrez vous en servir comme
+boîte à outils de fonctions que vous utiliserez souvent.
+
+Par exemple, en JavaScript, l'objet `Math` contient beaucoup de méthodes utiles :
+
+```javascript
+const randomNumber = Math.random(); // crée un nombre aléatoire sur l'intervalle \[0, 1\]
+
+const roundMeDown = Math.floor(495.966); // arrondit vers le bas à l'entier le plus proche, renvoie 495
+```
+
+Vous n'avez pas besoin de créer par `new` une instance de l'objet `Math` pour utiliser ces méthodes ; il suffit de les appeler sur l'objet
+`Math` global.
+
+Ces deux méthodes ont été utilisées dans l'exercice précédent en arrière-plan, pour créer un nombre aléatoire d'évaluations pour les composants
+de la série !
+
+Vous pouvez créer vos propres méthodes statiques par le mot clé `static` !
+
+Observons la classe suivante :
+
+```javascript
+class BePolite {
+    static sayHello() {
+        console.log("Hello!");
+    }
+    static sayHelloTo(name) {
+        console.log("Hello " + name + "!");
+    }
+    static add(firstNumber, secondNumber) {
+        return firstNumber + secondNumber;
+    }
+}
+
+BePolite.sayHello(); // imprime "Hello!"
+
+BePolite.sayHelloTo("Will"); // imprime "Hello Will!"
+
+const sum = BePolite.add(2, 3); // sum = 5
+```
+
+Vous n'avez pas besoin d'ajouter un `constructor` à votre classe, car vous n'allez pas l'instancier. Vous avez une méthode qui :
+- imprime un message générique ;
+- accepte un argument et l'utilise pour créer un message ;
+- renvoie une valeur à partir des arguments que vous lui envoyez.
+
+Toutes ces fonctionnalités pourraient être des **fonctions**, mais l'avantage d'utiliser des méthodes de classe statiques est par exemple de
+pouvoir les regrouper par catégorie ou par type.
+
+### En résumé
+
+Dans ce chapitre, nous nous sommes intéressés à deux types de méthodes de classe :
+- les méthodes d'**instance**, qui agissent sur les instances individuelles d'une classe ;
+- les méthodes **statiques**, qui ne s'appuient pas sur une instance d'une classe.
+
+_Dans le chapitre qui suit, nous allons voir comment écrire des fonctions, et du code propre qui soit facile à lire, à maintenir et à adapter !_
+
+-----
+
+## Écrivez des fonctions propres
+
+[Écrivez des fonctions propres - Apprenez à programmer avec JavaScript - OpenClassrooms](https://openclassrooms.com/fr/courses/6175841-apprenez-a-programmer-avec-javascript/6279785-ecrivez-des-fonctions-propres)
+
+<Vimeo vimeoId="528291060" />
+
+<br />
+
+### Pourquoi la propreté du code est-elle importante ?
+
+Avant de plonger dans les méthodes de codage propre, voyons pourquoi il est important de garder votre code aussi propre que possible.
+
+<figure>
+    <img src="https://user.oc-static.com/upload/2021/03/23/16165081788266_image7.jpg" alt="Photo d'une personne qui code et qui se fait aider par une autre" />
+    <figcaption>Coder proprement</figcaption>
+</figure>
+
+Pensez au lieu le plus désordonné et le moins rangé de votre domicile. Il peut s'agir d'un tiroir, d'un placard ou même d'une pièce entière. À
+quel point est-ce difficile de trouver quelque chose à cet endroit ? Si vous l'avez récemment utilisé, ce n'est peut-être pas si difficile,
+mais si c'était il y a longtemps, les choses peuvent devenir complexes.
+
+C'est la même chose, ou même pire, avec le code. Si vous n'y avez pas jeté un œil depuis quelques mois et que vous ne l'avez pas écrit
+proprement, il peut être très long de se rappeler ce que fait quelle fonction, et comment les choses s'organisent entre elles.
+
+Imaginez maintenant que vous ayez hérité du tiroir, du placard ou de la chambre mal rangée de quelqu'un d'autre, qui ne vivrait plus ici. C'est
+à cela que ressemble le travail sur le code d'une personne qui ne l'a pas maintenu propre !
+
+:::info
+Proverbe de développeur : codez toujours comme si la personne qui devra maintenir ce code était un psychopathe violent sachant où vous vivez.
+:::
+
+Maintenant que vous savez **pourquoi** vous devez coder proprement, voyons **comment** faire !
+
+### Être une fonction ou ne pas être
+
+:::note ?
+Quand devrait-on utiliser des fonctions ? Combien faut-il en écrire ? Quelle devrait être leur longueur ?
+:::
+
+Jetons un œil à quelques situations où les fonctions contribuent à la propreté de votre code.
+
+#### Ne vous répétez pas
+
+Si vous vous trouvez à écrire plusieurs fois le même code, vous devriez probablement le **refactoriser** dans une **fonction.**
+
+La **refactorisation** du code consiste à modifier la **structure** d'un élément de code sans changer son comportement.
+
+Observons le code suivant :
+
+```javascript
+if (firstUser.online) {
+    if (firstUser.accountType === "normal") {
+        console.log("Hello " + firstUser.name + "!");
+    } else {
+        console.log("Welcome back premium user " + firstUser.name + "!");
+    }
+}
+if (secondUser.online) {
+    if (secondUser.accountType === "normal") {
+        console.log("Hello " + secondUser.name + "!");
+    } else {
+        console.log("Welcome back premium user " + secondUser.name + "!");
+    }
+}
+if (thirdUser.online) {
+    if (thirdUser.accountType === "normal") {
+        console.log("Hello " + thirdUser.name + "!");
+    } else {
+        console.log("Welcome back premium user " + thirdUser.name + "!");
+    }
+}
+```
+
+Nous répétons ici la même tâche plusieurs fois pour des utilisateurs différents. C'est une bonne occasion de factoriser votre code dans une
+fonction :
+
+```javascript
+const sendWelcomeMessageToUser = (user) => {
+    if (user.online) {
+        if (user.accountType === "normal") {
+            console.log("Hello " + user.name + "!");
+        } else {
+            console.log("Welcome back premium user " + user.name + "!");
+        }
+    }
+}
+sendWelcomeMessageToUser(firstUser);
+
+sendWelcomeMessageToUser(secondUser);
+
+sendWelcomeMessageToUser(thirdUser);
+```
+
+Nous avons créé une fonction `sendWelcomeMessageToUser` (un nom qui exprime clairement ce que fait la fonction) et l'avons appelée pour chaque
+utilisateur. Dans ce cas, nous avons réduit la quantité de code de 23 lignes à 13, tout en le rendant plus lisible. Grâce à un nom de fonction
+descriptif, vous pouvez indiquer que nous envoyons un message de bienvenue à trois utilisateurs.
+
+**DRY** – **_D_**_on't_ **_R_**_epeat_ **_Y_**_ourself_ (Ne vous répétez pas) – est un principe de programmation qui réduit au minimum la
+répétition du code.
+
+#### Pratiquez le principe DRY
+
+![16165901356926_A-vous-de-jouer.png](https://user.oc-static.com/upload/2021/03/24/16165901356926_A-vous-de-jouer.png)
+
+Voici une activité où vous devrez trouver où le code nécessite une factorisation, et comment le faire.
+
+Rendez-vous sur cet [éditeur CodePen](https://codepen.io/nicolaspatschkowski/pen/NWqzNrJ). Ce code importe des séries depuis la base de
+données, en génère les informations pour les composants du site, et les met dans un tableau à exporter.
+
+Cependant, pour l'instant, le même code est répété pour chaque série. L'endroit parfait pour une fonction !
+1. Créez une fonction qui vous permet de refactoriser ce code, afin de le raccourcir et de le rendre plus lisible.
+2. Appelez votre nouvelle fonction pour chaque série pour créer le composant correspondant, en passant les arguments appropriés.
+
+<CodePen codePenId="NWqzNrJ" />
+
+**Solution**
+
+Vous avez terminé ? Alors [voici un nouveau CodePen avec une solution](https://codepen.io/nicolaspatschkowski/pen/ExjMWdN) à l’exercice.
+
+<CodePen codePenId="ExjMWdN" />
+
+```javascript
+const generateComponent = (show) => {
+  const titleText = show.title;
+  const seasonsText = show.numberOfSeasons + ' seasons';
+  const episodesText = show.episodesPerSeason + ' episodes per season';
+  return {
+    titleText,
+    seasonsText,
+    episodesText
+  };
+}
+
+const tauComponent = generateComponent(tau);
+const meldrumComponent = generateComponent(meldrum);
+const claraComponent = generateComponent(clara);
+
+const showComponents = [tauComponent, meldrumComponent, claraComponent];
+```
+
+#### Quelqu'un sait-il ce que fait ce truc ?
+
+Avec des fonctions qui ne font qu'une seule chose (et dont le nom décrit ce qu'elles font), vous pouvez rendre votre code bien plus propre et
+plus facile à comprendre :
+
+Voyons la fonction suivante :
+
+```javascript
+const printStringStats = (stringToTest) => {
+    const wordArray = stringToTest.split(" ");
+    const wordCount = wordArray.length;
+    let letterCount = 0;
+    for (let word of wordArray) {
+        word.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g, "");
+        letterCount += word.length;
+    }
+    const averageWordLength = parseFloat((letterCount / wordCount).toFixed(2));
+    const stringStats = {
+        wordCount: wordCount,
+        letterCount: letterCount,
+        averageWordLength: averageWordLength
+    };
+    console.log(stringStats);
+}
+```
+
+Bien qu'il y ait un nom descriptif, et que vous puissiez voir qu'il s'agit d'imprimer le nombre de mots, le nombre de lettres et la longueur
+moyenne des mots d'une chaîne, il se passe tellement de choses qu'il est difficile de suivre si vous ne comprenez pas chaque ligne. Cette
+fonction fait trop de choses d'un coup.
+
+Voyons maintenant cette refactorisation :
+
+```javascript
+const getWordCount = (stringToTest) => {
+    const wordArray = stringToTest.split(" ");
+    return wordArray.length;
+}
+const getLetterCount = (stringToTest) => {
+    const wordArray = stringToTest.split(" ");
+    let totalLetters = 0;
+    for (let word of wordArray) {
+        word.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g, "");
+        totalLetters += word.length;
+    }
+    return totalLetters;
+}
+const getAverageWordLength = (stringToTest) => {
+    return parseFloat((getLetterCount(stringToTest) / getWordCount(stringToTest)).toFixed(2));
+}
+const printStringStats = (stringToTest) => {
+    console.log({
+        wordCount: getWordCount(stringToTest),
+        letterCount: getLetterCount(stringToTest),
+        averageWordLength: getAverageWordLength(stringToTest)
+    })
+}
+```
+
+Bien que cette version soit plus longue, il y a trois fonctions – `getWordCount` (qui renvoie le nombre de mots), `getLetterCount` (qui renvoie
+le nombre de lettres) et `getAverageWordLength` (qui renvoie la longueur moyenne des mots)  – appelées par la fonction `printStringStats` (qui
+imprime les statistiques de la chaîne de caractères).
+
+Vous pouvez ne pas comprendre la complexité de chaque fonction, mais vous pouvez bien comprendre ce qui se passe parce qu'**elles ne font
+qu'une seule chose**, mentionnée dans leur nom. Vous pourriez utiliser les fonctions individuelles sans avoir besoin de savoir ce qui se passe
+sous le capot.
+
+:::info
+"La première règle des fonctions est qu'elles devraient être petites. La deuxième règle des fonctions est qu'elles devraient être encore plus
+petites."
+
+– _Robert C. Martin, Clean Code: A Handbook of Agile Software Craftsmanship_
+:::
+
+### Laissez des commentaires
+
+C'est en apprenant à laisser des commentaires clairs et cohérents que vous brillerez en tant que développeur. Néanmoins, ne commentez pas
+chaque ligne ou fonction. Les commentaires doivent clarifier ce qui n'est pas immédiatement apparent à la lecture du code.
+
+Il y a deux types de commentaires – sur une seule ligne et sur plusieurs lignes – et chacun a sa place. Ajoutons des commentaires à notre
+exemple précédent :
+
+```javascript
+const getWordCount = (stringToTest) => {
+    const wordArray = stringToTest.split(' ');
+    return wordArray.length;
+}
+const getLetterCount = (stringToTest) => {
+    const wordArray = stringToTest.split(' ');
+    let totalLetters = 0;
+    for (let word of wordArray) {
+        // retire la ponctuation pour ne compter que les lettres
+        word.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g, "");
+        totalLetters += word.length;
+    }
+    return totalLetters;
+}
+/* renvoie la longueur moyenne des mots
+** arrondie à deux chiffres après la virgule */
+const getAverageWordLength = (stringToTest) => {
+    return parseFloat((getLetterCount(stringToTest) / getWordCount(stringToTest)).toFixed(2));
+}
+const printStringStats = (stringToTest) => {
+    console.log({
+        wordCount: getWordCount(stringToTest),
+        letterCount: getLetterCount(stringToTest),
+        averageWordLength: getAverageWordLength(stringToTest)
+    })
+}
+```
+
+Comme vous pouvez le voir, toutes les fonctions ou lignes n'ont pas de commentaire :
+- le commentaire sur une seule ligne explique la raison de l'appel, d'apparence complexe, à `replace` ;
+- le commentaire sur plusieurs lignes explique que la longueur moyenne du mot sera renvoyée à 2 décimales près, car ce n'est pas immédiatement
+apparent.
+
+Laisser juste le nombre correct de commentaires est une forme d'art, mais vous y arriverez en pratiquant ! Assurez-vous donc de commenter
+votre code !
+
+### Écrivez du code avec style
+
+Adopter un style **cohérent** est nécessaire pour que le code reste propre, et bien qu'il n'y ait pas de **bonne façon** absolue de faire les
+choses, il y a un certain nombre de conventions qui peuvent vous faciliter la vie.
+
+#### Qu'y a-t-il dans un nom ?
+
+##### Utilisez les conventions de nommage
+
+Comme vous l'avez vu jusqu'à présent, les noms de variable et de fonction dans JavaScript sont généralement écrits en "camel case" minuscule
+(`getWordCount`, `numberOfCats`), alors que les noms de classe sont écrits en "camel case" majuscule (`PremiumAccount`, `SpecialGuest`). Vous
+n'êtes pas obligé d'utiliser cette convention ; néanmoins, elle facilite la lecture de votre code car elle est respectée par la grande
+majorité des développeurs.
+
+##### Choisissez un nom
+
+:::info
+"Vous devriez choisir un nom de variable avec le même soin que pour votre premier enfant."
+
+– _Robert C. Martin, Clean Code: A Handbook of Agile Software Craftsmanship_
+:::
+
+Des noms clairs et descriptifs pour les variables et les fonctions sont plus faciles à lire que des noms raccourcis, obscurs ou aléatoires.
+Voyez par exemple la fonction :
+
+```javascript
+const lc = (s) => {
+    const w = s.split(' ');
+    let l = 0;
+    for (let wel of w) {
+        wel.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g, "");
+        l += wel.length;
+    }
+    return l;
+}
+```
+
+Cette fonction fait parfaitement ce qu'elle est censée faire. Mais que fait-elle ?
+
+100 points si vous l'avez reconnue comme la fonction de comptage de lettres de notre exemple précédent !
+
+```javascript
+const getLetterCount = (stringToTest) => {
+    const wordArray = stringToTest.split(' ');
+    let totalLetters = 0;
+    for (let word of wordArray) {
+        // retire la ponctuation pour ne compter que les lettres
+        word.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g, "");
+        totalLetters += word.length;
+    }
+    return totalLetters;
+}
+```
+
+Choisissez vos noms avec attention, et votre code sera clair et facile à lire (et vous n'aurez plus à écrire autant de commentaires !).
+
+#### Mettez en forme votre code
+
+Le terme **_mise en forme du code_** recouvre beaucoup de domaines ; en voici quelques-uns :
+- **mise en retrait**<br />
+Tabulations ou espaces ? Deux espaces ou quatre ? Quel que soit votre choix, gardez le même style partout :
+
+```javascript
+if (userOnline) {
+    for (let message of user.messages) {
+message.send();
+}
+
+sendNotification();
+}
+```
+
+- **Espacement**<br />
+Les versions ci-dessous ont le même fonctionnement :
+
+```javascript
+if(condition) {
+    let i=0;
+i+=condition.thing;
+    let j=i-3;
+}
+
+if (condition) {
+
+    let i = 0;
+
+i += condition.thing;
+
+    let j = i - 3;
+
+}
+```
+
+En général, en ajoutant un peu d'espace, vous rendez le code plus facile à lire, mais les deux sont techniquement corrects. Vous ne pouvez
+néanmoins en choisir qu'un !
+
+- **Positionnement des accolades**
+
+```javascript
+if (condition) {
+doTheThing();
+} else {
+doTheOtherThing();
+}
+
+if (condition)
+{
+doTheThing();
+}
+
+else
+{
+doTheOtherThing();
+}
+```
+
+La mise en forme du code est source de nombreuses discussions entre les développeurs, et dépend souvent du reste de votre équipe. Pour écrire
+votre propre code, choisissez le style que vous préférez et **tenez-vous-y** !
+
+#### Pratiquez l’écriture de code propre
+
+![16165901356926_A-vous-de-jouer.png](https://user.oc-static.com/upload/2021/03/24/16165901356926_A-vous-de-jouer.png)
+
+Voici un code js avec plusieurs fonctions et différentes mauvaises pratiques rendant le code pas propre. Votre objectif est de créer une
+fonction pour alléger votre code.
+
+:::info
+Avant de commenter le code, vous pourrez trouver le code pas propre sur le [CodePen à cette adresse](https://codepen.io/quentin-laurent/pen/gOLJzMo).
+
+Tentez de rendre le code propre par vous-même, et vous pourrez ensuite comparer avec le code propre sur le [CodePen à cette adresse](https://codepen.io/quentin-laurent/pen/abBrGjB).
+:::
+
+##### Correction expliquée de l’exercice
+
+L’exercice est coupé en 3 parties :
+
+##### Code non DRY
+
+_Code avant correction :_
+
+```javascript
+//variable de différentes personnes
+let personne1 = "Jean";
+let personne2 = "Paul";
+let person3 = "Marcel";
+
+//On met la première lettre en majuscule, on salue la première personne et on donne le nombre de lettre dans son prénom
+personne1 = personne1[0].toUpperCase() + personne1.substr(1);
+const longueurPrenom1 = personne1.length;
+console.log(`Bonjour ${personne1}, ton prénom contient ${longueurPrenom1} lettres`);
+
+//On met la première lettre en majuscule, on salue la deuxième personne et on donne le nombre de lettre dans son prénom
+personne2 = personne2[1].toUpperCase() + personne2.substr(1);
+const longueurPrenom2 = personne2.length;
+console.log(`Bonjour ${personne2}, ton prénom contient ${longueurPrenom2} lettres`);
+
+//On met la première lettre en majuscule, on salue la troisième personne et on donne le nombre de lettre dans son prénom
+personne3 = personne3[2].toUpperCase() + personne3.substr(1);
+const longueurPrenom3 = personne3.length;
+console.log(`Bonjour ${personne3}, ton prénom contient ${longueurPrenom3} lettres`);
+```
+
+ _Code après correction :_
+
+```javascript
+//variable de différentes personnes
+let personne1 = "Jean";
+let personne2 = "Paul";
+let personne3 = "Marcel";
+
+function saluer(prenom) {
+    //On met la première lettre en majuscule, on salue la personne et on donne le nombre de lettre dans son prénom
+    const monPrenom = prenom[0].toUpperCase() + prenom.substr(1);
+    const longueurPrenom = monPrenom.length;
+    console.log(`Bonjour ${monPrenom}, ton prénom contient ${longueurPrenom} lettres`);
+}
+
+//On salue les 3 personnes
+saluer(personne1);
+saluer(personne2);
+saluer(personne3);
+```
+
+_Explication :_
+
+Ici, on exécute trois lignes de traitement pour chacune des 3 personnes (`person1`, `person2` et `person3`). Le code est donc répété 3 fois
+avec juste une variable qui change. Dans ce cas-là, on crée une fonction unique `saluer(prenom)` qui va faire ce traitement basé sur la
+variable `prenom`. Il ne reste plus qu’à appeler la fonction 3 fois avec les 3 personnes en paramètre.
+
+##### Code mal nommé
+
+_Code avant correction :_
+
+```javascript
+//tableau des âges des élèves dans la classe
+
+const lrf = [14, 14, 15, 14, 16, 14, 14, 13];
+
+// Nombre d'élèves
+
+const kf = lrf.length;
+
+// variable pour calculer la somme des âges
+
+let mf = 0;
+
+for(let df of lrf){
+
+mf += df;
+
+}
+
+//moyenne d'âge dans la classe
+
+const mld = mf / kf;
+
+console.log('Il y a ' + kf + " élèves dans la classe et la moyenne d'âge est " + mld);
+```
+
+_Code après correction :_
+
+```javascript
+//tableau des âges des élèves dans la classe
+
+const agesElevesDeClasse = [14, 14, 15, 14, 16, 14, 14, 13];
+
+// Nombre d'élèves
+
+const nombreEleves = agesElevesDeClasse.length;
+
+// variable pour calculer la somme des âges
+
+let sommeAges = 0;
+
+for(let age of agesElevesDeClasse){
+
+sommeAges += age;
+
+}
+
+//moyenne d'âge dans la classe
+
+const moyenneAgesDeClasse = sommeAges / nombreEleves;
+
+console.log('Il y a ' + nombreEleves + " élèves dans la classe et la moyenne d'âge est " + moyenneAgesDeClasse);
+```
+
+_Explication :_
+
+Ici on a un code qui compte et calcule la moyenne d'âge d’une classe. Les variables choisies ne sont pas pertinentes, elles n’ont que 2 ou 3
+lettres qui ne veulent rien dire de particulier. L’idéal est de nommer les variables pour comprendre à quoi elles servent.
+
+Après correction on peut voir que l’on nomme les variables avec des noms explicites. Maintenant, juste en lisant les variables on comprend la
+logique du code.
+
+##### Code mal mis en forme
+
+_Code avant correction :_
+
+```javascript
+const temperature = 25;
+
+
+
+if(temperature < 10){ console.log("Il fait très froid"); }
+
+else if(temperature < 0){
+
+console.log(
+
+"Il fait froid"
+
+);
+
+}else if(temperature < 10){
+
+console.log(            "Il fait frais");
+
+}else if(temperature < 20){
+
+console.log("Il fait doux");
+
+}else if(temperature < 30){
+
+console.log("Il fait bon");
+
+
+
+
+
+
+
+}else{
+
+
+
+
+
+
+
+console.log("Il fait chaud");
+
+}
+```
+
+_Code après correction :_
+
+```javascript
+const temperature = 25;
+
+
+
+
+if(temperature < 10){
+
+console.log("Il fait très froid"); }
+
+else if(temperature < 0){
+
+console.log("Il fait froid");
+
+}else if(temperature < 10){
+
+console.log("Il fait frais");
+
+}else if(temperature < 20){
+
+console.log("Il fait doux");
+
+}else if(temperature < 30){
+
+console.log("Il fait bon");
+
+}else{
+
+console.log("Il fait chaud");
+
+}
+```
+
+_Explication :_
+
+Ici on a appliqué une bonne indentation, on a bien mis en forme les sauts de ligne pour les blocs et les brackets `({})` et on a évité les
+espaces et sauts de ligne superflus.
+
+### En résumé
+
+Dans ce chapitre, nous avons étudié quelques techniques et meilleures pratiques de codage propre :
+- **refactorisation** du code en fonctions – quand du code se répète, ou quand une fonction fait trop de choses ;
+- les fonctions qui ne font qu'**une seule chose** sont souvent plus claires que les fonctions à plusieurs usages ;
+- laisser des **commentaires** appropriés rend votre code beaucoup plus facile à comprendre ;
+- il est très important d'avoir une **convention de nommage** stricte avec des **noms clairs et descriptifs** ;
+- vous avez vu des exemples de **mise en forme du code**, et différents choix possibles.
+
+_Dans le chapitre suivant, nous allons nous intéresser à la façon de tester les fonctions pour éviter les surprises !_
+
+-----
+
+## Testez qu'une fonction fait ce qu'elle dit
+
+[Testez qu'une fonction fait ce qu'elle dit - Apprenez à programmer avec JavaScript - OpenClassrooms](https://openclassrooms.com/fr/courses/6175841-apprenez-a-programmer-avec-javascript/6279919-testez-quune-fonction-fait-ce-quelle-dit)
+
+<Vimeo vimeoId="528291212" />
+
+<br />
+
+### Comprenez l'importance des tests
+
+Il y a environ un an, j'ai été appelé dans une start-up pour les aider à terminer un développement à temps pour leur date de déploiement. Le
+produit de cette société traite un grand nombre de petites transactions, donc l'exactitude était essentielle.
+
+Je travaillais sur l'interface, mais j'ai immédiatement remarqué un problème : les calculs ne correspondaient pas. En lançant quelques
+centaines de transactions, les totaux étaient faux de plusieurs dizaines d'euros. Quelque chose allait sérieusement de travers.
+
+Ce projet était grand, complexe et très ambitieux (l'interface elle-même avait plus de 600 000 lignes de code !), mais cette start-up n'avait
+pas mis en place d'architecture de test. Pour localiser le problème, il nous a fallu plus d'une semaine avec de plus en plus de frustration
+et de panique. Il y avait un quart de million d'euros en jeu, et cela seulement pour un client.
+
+L'histoire s'est bien terminée, mais il a fallu une **semaine entière** pour rechercher **une erreur**, qui aurait été décelée s'il y avait
+eu un système décent de test. Nous aurions pu perdre tellement d'argent que la société aurait mis la clé sous la porte.
+
+:::info
+TL;DR – **Le test est vraiment important !**
+:::
+
+### Qu'est-ce que le test?
+
+Eh bien, cela dépend ! Il y en a trois types essentiels.
+
+#### Créez des tests unitaires
+
+Le test unitaire vérifie des unités individuelles (en général des fonctions uniques ou des classes) en leur fournissant une entrée et en
+s'assurant qu'elles donnent la sortie attendue.
+
+:::caution !
+C'est une autre raison pour écrire des fonctions courtes qui n'ont qu'un seul usage : il est plus facile d'écrire des tests pour elles !
+:::
+
+En général, chaque unité est testée sur un cas simple, puis sur un ou plusieurs cas limites.
+
+Si par exemple, vous prenez quelques fonctions du chapitre précédent :
+
+```javascript
+const getWordCount = (stringToTest) => {
+    const wordArray = stringToTest.split(' ');
+    return wordArray.length;
+}
+const getLetterCount = (stringToTest) => {
+    const wordArray = stringToTest.split(' ');
+    let totalLetters = 0;
+    for (let word of wordArray) {
+        word.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g, "");
+        totalLetters += word.length;
+    }
+    return totalLetters;
+}
+```
+
+Quels cas testeriez-vous pour chaque fonction ici ?
+- `getWordCount` – Vous pourriez vérifier une chaîne dont vous connaissez le nombre de mots (cas simple), puis peut-être une chaîne vide, et
+une chaîne qui ne contiendrait que des espaces (cas limite).
+- `getLetterCount` – Vous pourriez vérifier une chaîne dont vous connaissez le nombre de lettres (cas simple), puis essayer une chaîne ne
+contenant que des signes de ponctuation (cas limite).
+
+Vous pourriez écrire ces tests comme code accessoire :
+
+```javascript
+const testSimpleWordCount = () => {
+    const testString = 'I have four words!';
+    if (getWordCount(testString) !== 4) {
+        console.error('Simple getWordCount failed!');
+    }
+}
+
+const testEdgeWordCount = () => {
+    const testString = ' ';
+    if (getWordCount(testString) !== 0) {
+        console.error('Edge getWordCount failed!');
+    }
+}
+
+const testSimpleLetterCount = () => {
+    const testString = 'I have twenty one letters!';
+    if (getLetterCount(testString) !== 21) {
+        console.error('Simple getLetterCount failed!');
+    }
+}
+
+const testEdgeLetterCount = () => {
+    const testString = '")(&;//!!';
+    if (getLetterCount(testString) !== 0) {
+        console.error('Edge getLetterCount failed!');
+    }
+}
+```
+
+:::info
+J'ai utilisé `console.error()` plutôt que `console.log()` pour faire afficher les messages comme erreurs sur la console.
+:::
+
+Ce sont des tests simples, et ils peuvent convenir pour des vérifications rapides, mais il est généralement préférable d'utiliser une
+**architecture de test**.
+
+Les architectures et bibliothèques de test permettent d'écrire automatiquement des suites de tests complètes de votre code, à l'aide de
+fonctions et de syntaxe spécifiques. Voici à quoi pourraient ressembler les deux tests ci-dessus dans certaines architectures :
+
+```javascript
+describe('getWordCount()', function() {
+    it('should find four words', function() {
+        expect(getWordCount('I have four words!').to.equal(4));
+    });
+    it('should find no words', function() {
+        expect(getWordCount(' ').to.equal(0));
+    });
+});
+```
+
+Les tests unitaires constituent généralement entre 60 et 80 % de l'ensemble des tests des projets JavaScript. Mais il existe d'autres tests,
+comme les tests d'intégration.
+
+### Découvrez les tests d'intégration
+
+
+<figure>
+    <img src="https://user.oc-static.com/upload/2021/03/23/16165163394556_image3.png" alt="Photo de meubles de cuisine mal installé où l'on ne peut ouvrir un tiroir à cause d'un autre placard qui gêne" />
+    <figcaption>"Pas de tests d'intégration"</figcaption>
+</figure>
+
+Les **tests d'intégration** vérifient les multiples fonctions ou classes pour s'assurer qu'elles **travaillent ensemble** comme elles sont
+censées le faire. L'image ci-dessus montre ce qui se passe quand les unités individuelles fonctionnent correctement (les deux tiroirs
+s'ouvrent correctement séparément), mais que leur intégration dans le système qui les entoure cause un problème de fonctionnement.
+
+### Appréhendez les tests fonctionnels
+
+Les **tests fonctionnels**, aussi appelés **_de bout en bout_ (E2E)**, vérifient des scénarios complets en contexte. Par exemple, un
+utilisateur se connecte à votre application, ouvre ses notifications et les marque toutes comme lues. Ces tests vérifient aussi les
+ressources externes que votre projet peut utiliser, par exemple un système de paiement tiers.
+
+#### Comment ça se passe dans la pratique ?
+
+Pratiquer les tests unitaires demande un peu d'expérience et d’utiliser des outils dédiés. Il existe différents frameworks dédiés aux tests
+unitaires et fonctionnels pour les applications JavaScript frontend et/ou backend. On retrouve souvent les frameworks [Jasmine](https://jasmine.github.io/),
+[mocha.js](https://mochajs.org/), [Mocha](https://karma-runner.github.io/), etc.
+
+Pour utiliser ces outils, il est souvent nécessaire de mettre en place une configuration particulière et un système de compilation de votre
+code. Il vous est donc nécessaire d’appréhender plus largement JavaScript avant de pratiquer les tests. Une fois que vous aurez une bonne
+compréhension du JavaScript et un peu d'expérience, vous pourrez consulter le cours [Testez l’interface de votre site](https://openclassrooms.com/fr/courses/3504461-testez-linterface-de-votre-site).
+
+### En résumé
+
+Dans ce chapitre, nous vous avons présenté les trois types de tests :
+- les tests unitaires ;
+- les tests d'intégration ;
+- les tests fonctionnels (E2E).
+
+Vous avez aussi vu que, bien que des tests manuels sur du code accessoire puissent fonctionner, il existe des architectures automatisées qui
+rendent les tests plus faciles et fiables.
+
+_Dans le chapitre suivant, nous allons voir comment corriger du code quand tout va mal : le_ **_débogage_** _!_
+
+-----
+
+## Déboguez votre fonction
+
+[Déboguez votre fonction - Apprenez à programmer avec JavaScript - OpenClassrooms](https://openclassrooms.com/fr/courses/6175841-apprenez-a-programmer-avec-javascript/6279979-deboguez-votre-fonction)
+
+<Vimeo vimeoId="528291321" />
+
+<br />
+
+:::note ?
+Pourquoi cela ne fonctionne pas ?!
+:::
+
+Quand quelque chose ne va pas dans votre projet, il peut être difficile de savoir ce qui s'est passé. Voici quelques techniques qui, je
+l'espère, devraient vous aider à remettre les choses d'aplomb !
+
+### Affichez la console
+
+La console est un outil incroyablement utile pour le débogage du code. Observons une version défectueuse d'une fonction d'un chapitre
+précédent :
+
+```javascript
+const getWordCount = (stringToTest) => {
+    const wordArray = stringToTest.split('');
+    return wordArray.length;
+}
+```
+
+Pour une raison quelconque, cette fonction renvoie des valeurs curieuses. Utilisons un affichage de console pour voir ce qui se passe :
+
+```javascript
+const getWordCount = (stringToTest) => {
+    const wordArray = stringToTest.split('');
+    console.log("Word array in getWordCount: ");
+    console.log(wordArray);
+    return wordArray.length;
+}
+```
+
+Maintenant, à l'appel suivant, nous obtenons le résultat suivant sur la console :
+
+```javascript
+getWordCount('I am a fish');
+/* la console montre :
+"Word array in getWordCount:"
+["I", " ", "a", "m", " ", "a", " ", "f", "i", "s", "h"]
+*/
+```
+
+Plutôt que de répartir la chaîne en mots, elle la répartit en lettres ! Une observation plus attentive de la fonction montre une erreur à
+l'appel de `split` : ce devrait être `stringToTest.split(' ')`, et non pas `stringToTest.split('')`.
+
+L'utilisation de la console convient bien dans les cas simples et isolés comme celui-ci, mais dans les projets plus complexes, ce serait
+beaucoup plus difficile et plus chronophage. Dans ce cas, il faut des armes plus puissantes.
+
+:::info
+Je connais beaucoup de développeurs qui utilisent toujours la technique de l'affichage de console. Cela fonctionne, mais c'est lent.
+L'apprentissage d'outils plus évolués vous aidera à déboguer plus rapidement, pour passer plus de temps sur les choses amusantes !
+:::
+
+### Utilisez des outils pour développeur
+
+Pour écrire du JavaScript pour des sites web, vous pouvez utiliser les outils pour développeur intégrés dans les quatre navigateurs essentiels :
+Chrome, Firefox, Safari et Edge. Chaque navigateur contient un système qui vous permet d'ajouter des **points d'arrêt pas-à-pas** (breakpoints)
+à votre code. Quand le navigateur arrive sur un point d'arrêt de votre code, il met **l'exécution en pause**, ce qui vous permet de
+**parcourir** l'exécution ligne après ligne, en vérifiant les valeurs des variables à chaque étape. Vous pouvez même **ignorer** certains
+morceaux de code si vous souhaitez voir comment votre appli y réagit.
+
+La plupart des **environnements de développement intégrés** comportent aussi un **débogueur**, qui vous permet de tout déboguer dans votre
+espace de travail. Cela peut être pratique, en particulier si votre code ne doit pas s'exécuter sur une page web et ne peut pas être vérifié
+dans le navigateur. Les environnements de développement intégrés les plus courants sont notamment [Visual Studio Code](https://code.visualstudio.com/)
+(gratuit) et [WebStorm](https://www.jetbrains.com/fr-fr/webstorm/) (abonnement mensuel, gratuit pour certains étudiants).
+
+:::info
+Si vous voulez en savoir plus sur Visual Studio Code, vous pouvez suivre ce cours, "[**Adoptez Visual Studio Code comme environnement de développement**](https://openclassrooms.com/fr/courses/5641796-adoptez-visual-studio-comme-environnement-de-developpement)".
+:::
+
+L'affichage de console, c'est bien, les débogueurs, c'est mieux, mais quand tout le reste a échoué, il existe une dernière solution.
+
+### Déboguez avec un canard en plastique
+
+<figure>
+    <img src="https://user.oc-static.com/upload/2021/03/23/16165171104718_image1.jpg" alt="Photo avec un canard en plastique face à un écran d'ordinateur où l'on voit du code informatique" />
+    <figcaption>Quand tout va mal, parle au canard !</figcaption>
+</figure>
+
+Quand votre code a un bug que vous ne pouvez pas trouver et expliquer, vous pouvez parler à un **canard en plastique** que vous conservez sur
+votre bureau. Vous expliquez votre code ligne par ligne en termes simples, que le canard peut comprendre. La réflexion à voix haute et
+l'explication de votre code en termes simples vous permettra souvent de voir finalement : "Comment n'ai-je pas vu ça ? Il y a un bug !".
+
+Même si cette section est un peu humoristique, le raisonnement sur votre code, à voix haute et en termes simples, peut être utile pour le
+débogage et la factorisation !
+
+### Pratiquez les `console.log`
+
+![](https://user.oc-static.com/upload/2021/03/24/16165941115605_A-vous-de-jouer.png)
+
+Il est important de savoir utiliser les `consoles.log` et de bien analyser les différentes variables. L’objectif est de comprendre quelle est
+l’erreur de logique qui pose souci.
+
+Rendez-vous sur le [CodePen à cette adresse](https://codepen.io/quentin-laurent/pen/gOLEmey). Le code a pour objectif de convertir des années
+en mois (dans une année, il y a 12 mois). Si on saisit 10 ans dans le champ Année et qu’on clique sur Convertir, on se retrouve avec une phrase
+nous indiquant que dans 10 années il y a 80 mois, ce qui est faux car la bonne réponse est 120 mois.
+
+Le calcul des mois se fait à la ligne 25, et on souhaite comprendre ce qui ne va pas dans le calcul.
+
+Votre mission ici est de faire des console.log au niveau des lignes 27 à 31 pour analyser les variables utilisées pour le calcul de la ligne 25.
+Suite à l'analyse, vous pourrez comprendre ce qui ne va pas et effectuer la correction nécessaire.
+
+<CodePen codePenId="gOLEmey" />
+
+#### Correction
+
+```javascript
+const espaceMessage = document.getElementById("message"); // On pointe sur l'élément de message
+const bouton = document.getElementById("bouton"); // On pointe sur l'élément de bouton
+const anneeInput = document.getElementById("annee"); // On pointe sur l'élément de champ de saisie de l'année
+
+let params = [];
+for (let i = 20; i > 0; i--) {
+    params.push(i);
+}
+
+let annee; // On défini la variage année qu'on utilisera et un variable définissant l'age de la majorité
+
+function onConvert() {
+    annee = parseInt(anneeInput.value); // On récupère la saisie de l'année et on transforme le texte en nombre entier
+    if (isNaN(annee)) { // Si la saisie n'est pas un nombre, on affiche un message d'erreur
+        alert("Ceci n'est pas un nombre");
+        return;
+    }
+    const mois = annee * params[8];
+  
+    // ANALYSER ICI AVEC CONSOLE LOG
+    console.log('annee', annee); // Analyser la variable annee
+    console.log('params', params); // Analyser la variable params
+    console.log('mois', mois); // Analyser la variable mois
+    // FIN ANALYSE
+  
+    espaceMessage.innerHTML = annee + " années font " + mois + " mois ";
+}
+bouton.addEventListener('click', onConvert); // On écoute l'action de click sur le onConvert et on appelle la fonction onConvert
+```
+
+À la ligne 28, nous ajoutons le code suivant :
+
+```javascript
+console.log('annee', annee);
+
+console.log('params', params);
+```
+
+Ce qui donnera dans la console, si on simule une conversion pour la valeur 10 :
+
+```javascript
+> annee 10
+
+> params (20) [20, 19, 18, 17, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1]
+```
+
+On en déduit que la valeur de `annee` est cohérente. En ce qui concerne `params`, on observe que c’est un tableau de valeur allant de 20 à 1.
+Dans notre calcul, on souhaite récupérer la valeur du tableau qui vaut 12. On trouve cette valeur à l’index 8.
+
+Si on reprend le calcul de mois :
+
+```javascript
+const mois = annee * params[12];
+```
+
+On constate que l’on récupère l’index 12 de `params`, et non le 8. Donc on remplace la ligne 25 par :
+
+```javascript
+const mois = annee * params[8];
+```
+
+Maintenant notre application donne des valeurs cohérentes.
+
+#### Conclusion de l’exercice
+
+Cet exercice n’était pas une grosse application, mais la démarche a permis de démontrer l'intérêt des console.log dans notre code pour bien
+comprendre les valeurs réelles pendant l'exécution du programme. Il ne faut pas avoir peur de faire des console.log pour avoir une vision plus
+large de la logique, mais attention à ne pas oublier de supprimer ces lignes de votre code avant une mise en ligne.
+
+### En résumé
+
+Dans ce chapitre, vous avez appris trois techniques de débogage différentes :
+- affichage de console – parfait pour des erreurs petites, simples et isolées, mais pas idéal dans des projets plus grands et plus complexes ;
+- utilisation d'outils pour développeur – qu'il s'agisse des outils intégrés dans la plupart des navigateurs, ou du débogueur de votre
+environnement de développement intégré, c'est à coup sûr la façon fiable de déboguer du code ;
+- débogage avec un canard en plastique – quand les choses vont terriblement mal.
+
+_Dans le chapitre suivant, nous allons nous intéresser à un type de fonction qui, utilisé correctement, peut améliorer spectaculairement les
+performances d'un projet._
+
+-----
+
+## Découvrez la récursivité : l'appel de fonctions à l'intérieur d'elles-mêmes
+
+[Découvrez la récursivité : l'appel de fonctions à l'intérieur d'elles-mêmes - Apprenez à programmer avec JavaScript - OpenClassrooms](https://openclassrooms.com/fr/courses/6175841-apprenez-a-programmer-avec-javascript/6280087-decouvrez-la-recursivite-lappel-de-fonctions-a-linterieur-delles-memes)
+
+<Vimeo vimeoId="528291456" />
+
+<br />
+
+**Une fonction qui s'appelle elle-même**
+
+Une **fonction récursive** est une fonction qui s'appelle elle-même d'une façon ou d'une autre.
+
+Prenons l'exemple que je décris dans la vidéo de ce chapitre : la recherche binaire.
+
+Le but de l'exercice : chercher un élément dans un array trié pour savoir s'il s'y trouve.
+
+Une approche basique (et plutôt lente) serait la suivante :
+
+```javascript
+const findElement = (array, thingToFind) => {
+    for (let element of array) {
+        if (element === thingToFind) {
+            return true;
+        }
+    }
+    return false;
+}
+```
+
+On avance, élément par élément, dans le tableau. Si on trouve un élément qui correspond à ce que l'on recherche, la fonction renvoie `true`.
+Si on arrive à la fin du tableau sans l'avoir trouvé, on passe à la ligne suivante et la fonction renvoie `false`.
+
+C'est plutôt clair comme approche, mais c'est lent ! Le temps pris pour chaque recherche se prolonge de manière linéaire avec des listes plus
+longues !
+
+Imaginons une autre approche.
+
+```javascript
+const binarySearch = (array, thingToFind, start, end) => {
+}
+```
+
+On sait que le tableau est trié, donc on peut savoir, pour un élément donné, si ce que l'on recherche risque de se trouver plus haut ou plus
+bas dans la liste. Par exemple, si on recherche le nombre 42 et que l'on tombe sur 32, on sait qu'il faudra chercher plus bas.
+
+Du coup, commençons par analyser l'élément médian de la liste. On peut faire la somme de l'index de début et de l'index de fin, et diviser par
+deux pour trouver cet élément (arrondissons vers le bas pour nous assurer de trouver un nombre entier :
+
+```javascript
+const binarySearch = (array, thingToFind, start, end) => {
+    let mid = Math.floor((start + end) / 2);
+}
+```
+
+:::note ?
+Mais pourquoi utiliser les index de début et de fin plutôt que la propriété `length` du tableau ?
+:::
+
+Utiliser les index nous permettra de réutiliser le même code sur des sélections de plus en plus petites du tableau, comme vous allez vite le
+découvrir !
+
+Maintenant que l'on a l'élément médian du tableau, vérifions si, par chance, on est tombé juste.
+
+```javascript
+const binarySearch = (array, thingToFind, start, end) => {
+    let mid = Math.floor((start + end) / 2);
+    if (array[mid] === thingToFind) {
+        return true;
+    }
+}
+```
+
+La fonction retournera `true` si on a trouvé l'élément.
+
+Si on n'a pas eu de chance, ce n'est pas grave : puisque le tableau est trié, on sait dans quelle moitié du tableau chercher ! Du coup, on a
+juste à exécuter exactement la même fonction sur la partie en question ! Il suffit de modifier soit l'index de fin (pour chercher dans la
+première moitié) soit l'index de début (pour chercher dans la deuxième moitié) :
+
+```javascript
+const binarySearch = (array, thingToFind, start, end) => {
+    let mid = Math.floor((start + end) / 2);
+    if (array[mid] === thingToFind) {
+        return true;
+    }
+    if (thingToFind < array[mid]) {
+        // il faut rechercher dans la première moitié
+        return binarySearch(array, thingToFind, start, mid - 1);
+        // on utilise (mid - 1) car on sait que l'on n'a pas besoin de l'élément mid, il a déjà été vérifié !
+    } else {
+        // il faut rechercher dans la deuxième moitié
+        return binarySearch(array, thingToFind, mid + 1, end);
+    }
+}
+```
+
+La fonction continuera à s'appeler elle-même jusqu'à trouver ce que l'on recherche. Mais il manque quelque chose ! Qu'est-ce qui se passe si
+ce que l'on recherche n'existe pas dans le tableau ? Il faut ce que l'on appelle un _cas de base_, ou **_base case_**, pour dire à la fonction
+de s'arrêter.
+
+:::note ?
+Quel est le base case dans cet algorithme ?
+:::
+
+On saura que l'algorithme est arrivé au bout si on a essayé de l'appeler avec un index de début qui est **supérieur** à l'index de fin.
+
+Pourquoi ? Eh bien parce que peu à peu, on divise le tableau, encore et encore, jusqu'à tomber sur une sélection d'un seul élément : on aura
+donc `start = mid = end`. Du coup, quand la fonction se rappellera encore, elle utilisera soit `start = mid + 1`, soit `end = mid - 1`, selon
+notre recherche. On aura donc `start > end`, et la fonction peut retourner `false`, car on sait qu'elle est arrivée au bout sans trouver ce
+que l'on recherche.
+
+On met donc ce base case au début de la fonction pour vérifier s'il s'agit du dernier appel :
+
+```javascript
+const binarySearch = (array, thingToFind, start, end) => {
+    if (start > end) {
+        return false;
+    }
+    let mid = Math.floor((start + end) / 2);
+    if (array[mid] === thingToFind) {
+        return true;
+    }
+    if (thingToFind < array[mid]) {
+        return binarySearch(array, thingToFind, start, mid - 1);
+    } else {
+        return binarySearch(array, thingToFind, mid + 1, end);
+    }
+}
+```
+
+Et voilà ! Une fonction récursive, qui s'appelle elle-même, qui effectue une recherche d'élément dans un tableau trié, et qui renvoie `true`
+si l'élément s'y trouve, ou `false` s'il ne s'y trouve pas (grâce au base case) !
+
+:::caution
+ATTENTION ! Sans base case (ou avec un base case incorrect), vos fonctions récursives peuvent causer des **infinite loops** et des **stack
+overflows**, car elles vont continuer à s'appeler à l'infini, donc faites bien attention !
+:::
+
+Cet algorithme s'appelle la _recherche binaire_, et il s'agit d'un exercice qui est souvent demandé en entretien d'embauche, donc vous venez
+de faire un pas de plus vers votre premier emploi de développeur !
+
+:::info
+N'hésitez pas également à explorer d'autres exemples courants d'algorithme récursif : merge sort, index sort, tree traversal… il y en a
+énormément !
+:::
+
+### Pratiquez la récursivité
+
+![16165941115605_A-vous-de-jouer.png](https://user.oc-static.com/upload/2021/03/24/16165941115605_A-vous-de-jouer.png)
+
+Quand on parle de récursivité, il y a une fonction qui fait vraiment partie des grands classiques : la fonction mathématique “factorielle” !
+Concrètement, la factorielle d'un nombre `n` est définie comme `n` fois la factorielle du nombre `n-1`, et la factorielle de `1` est `1`.
+
+Voici la décomposition de la factorielle de 3 pour mieux comprendre :
+
+`factorielle(3) = 3 * factorielle(3 - 1)`
+
+`factorielle(3) = 3 * factorielle(2) =  3 * ( 2 * factorielle(2 - 1) )`
+
+`factorielle(3) = 3 * factorielle(2) =  3 * ( 2 * factorielle(1) ) = 3 * 2 * 1 = 6`
+
+C’est finalement une fonction simple à comprendre car très visuelle :
+
+`factorielle(7) = 7 * 6 * 5 * 4 * 3 * 2 * 1 = 5040`
+
+`factorielle(4) = 4 * 3 * 2 * 1 = 24`
+
+Quand on regarde la décomposition de factorielle(3), on constate qu’on appelle de nouveau la factorielle avec la valeur n-1, donc on est bien
+dans de la récursivité.
+
+Rendez-vous sur le [CodePen à cette adresse](https://codepen.io/quentin-laurent/pen/QWGRKMo). Votre mission est de coder la fonction
+factorielle ligne 13 avec en paramètre `number`. Point important : on considère que la factorielle fonctionne pour les nombres supérieurs à 1,
+sinon la factorielle vaudra 1.
+
+<CodePen codePenId="QWGRKMo" />
+
+##### Correction
+
+Rendez-vous sur le [CodePen à cette adresse](https://codepen.io/quentin-laurent/pen/oNYVwbb) pour voir la correction.
+
+<CodePen codePenId="oNYVwbb" />
+
+La solution tient donc en seulement 2 lignes :
+
+```javascript
+if (number <= 1) return 1;
+```
+
+Comme il était expliqué en “point important”, si notre nombre n’est pas supérieur à 1, la factorielle retourne 1.
+
+```javascript
+else return (number * factorielle(number-1));
+```
+
+Sinon (si le nombre est supérieur à 1, donc) on retourne le nombre multiplié par la factorielle du nombre moins 1.
+
+### En résumé
+
+Dans ce chapitre, vous avez vu :
+- que les **fonctions récursives** sont des fonctions qui s'appellent elles-mêmes ;
+- qu'une fonction récursive a besoin d'un cas de base, ou _**base case**_, pour qu'elle puisse savoir quand son travail est terminé ;
+- un exemple de fonctionnement du code ;
+- un exercice de pratique avec la fonction mathématique factorielle.
+
+_Retrouvez au chapitre suivant, un résumé de ce que vous avez appris au cours de cette partie 3._
+
+-----
+
+## Résumé de la partie 3
+
+[Résumé de la partie 3 - Apprenez à programmer avec JavaScript - OpenClassrooms](https://openclassrooms.com/fr/courses/6175841-apprenez-a-programmer-avec-javascript/6280101-resume-de-la-partie-3)
+
+<Vimeo vimeoId="528291704" />
+
+<br />
+
+Voyons ce que vous avez appris dans cette partie du cours :
+- vous avez étudié les **fonctions** et leurs entrées (**paramètres** et **arguments**) ainsi que leurs sorties (**valeur de retour**) ;
+- vous avez découvert les **méthodes d'instance**, et la puissance supplémentaire qu'elles peuvent ajouter à vos classes ;
+- vous avez vu comment écrire du **code propre** pour rendre vos applis plus faciles à comprendre et à maintenir ;
+- vous avez eu un aperçu des **tests** pour vous assurer que votre code fonctionne, et des **techniques de débogage** quand ce n'est pas le
+cas ;
+- enfin, vous avez exploré les **fonctions récursives,** qui s'appellent elles-mêmes pour travailler sur des structures de données arborescentes.
+
+_Félicitations ! Vous êtes maintenant prêt à mettre en_ _**pratique**_ _tout ce que vous avez appris avec le quiz que j'ai préparé pour vous !_
+
+-----
+
+## Quiz : Aidez à créer une application de suivi de livres pour les lecteurs !
+
+[Aidez à créer une application de suivi de livres pour les lecteurs ! - OpenClassrooms](https://openclassrooms.com/fr/courses/6175841-apprenez-a-programmer-avec-javascript/exercises/3801)
+
+#### Compétences évaluées
+
+<i class="bi bi-check2-circle"></i> Écrire du code propre et facile à maintenir à l'aide de méthodes en JavaScript
+
+#### Description
+
+##### Comment compléter cette activité
+
+Cette activité est une super opportunité pour mettre en pratique certains éléments importants de ce que vous avez appris pendant ce cours, et
+de voir comment ces éléments peuvent être utilisés dans une vraie application. Pour suivre l'activité, rendez-vous sur [cet exercice interactif Next.tech](https://api.next.tech/api/v1/publishable_key/2A9CAA3419124E3E8C3F5AFCE5306292?content_id=e8174309-e22c-48d8-a368-1154d36270cc)
+et suivez les instructions. Ecrivez sur le fichier `Book.js` pour remplir les tâches demandées. Actualisez la page sur le navigateur intégré
+pour voir vos changements prendre forme.
+
+:::info
+Quand vous aurez accompli ces tâches, le navigateur intégré devrait afficher une alerte qui contient un mot. Ce mot est la réponse à la seule
+question dans ce quiz !
+:::
+
+#### Votre mission, si vous l'acceptez
+
+:::info
+Voici ce que vous devrez faire dans cet exercice. Vous retrouverez les instructions sur l'exercice Next.tech.
+:::
+
+Suite à votre travail sur le site de streaming, on vous demande de créer une app appelée **RestfulReading**, qui permettra aux utilisateurs de
+suivre les livres qu'ils sont en train de lire/qu'ils ont lus.
+
+Votre tâche est de créer la classe `Book` (Livre) et de peupler la base de données de développement de trois ou quatre livres pour vous assurer
+que l'interface fonctionne correctement (vous travaillerez avec le fichier `Book.js`).
+
+La classe `Book` doit contenir les champs suivants :
+- `title` - `string` - le titre du livre
+- `author` - `string` - l'auteur du livre
+- `description` - `string` - une description du livre
+- `pages` - `number` - le nombre total de pages
+- `currentPage` - `number` - la page où se trouve l'utilisateur actuellement (entre 1 et `pages`)
+- `read` - `boolean` - si l'utilisateur a lu ou non le livre (par défaut: `false`)
+
+La classe `Book` doit aussi contenir la méthode instance suivante :
+- `readBook(page)`
+    - permet à l'utilisateur de dire à quelle page il se trouve actuellement
+    - si l'argument `page` est inférieur à un ou supérieur au nombre total de pages du livre, readBook retourne `0`
+    - si l'argument `page` est supérieur ou égal à 1 et inférieur au nombre total de pages du livre, `readBook` modifie le champ `currentPage`
+    de l'instance pour être égal à la valeur de l'argument passé, et retourne 1
+    - si l'argument `page` est égal au nombre total de pages du livre, `readBook` modifie le champ `currentPage` de l'instance pour être égal
+    à la valeur de l'argument passé, modifie le champ `read` de l'instance en `true`, et retourne `1`
+
+Quand vous aurez créé la classe `Book`, vous en créerez au moins trois instances valables et vous les mettrez dans le tableau `books` qui est
+exporté par `Book.js`. Pour vérifier votre travail, actualisez le navigateur Codevolve intégré : vos instances `Book` devraient être visibles
+dans le carousel de l'interface **RestfulReading**.
+
+Pour tester votre méthode instance `readBook`, suivez ces instructions pour trois livres (sans rafraîchir la page) :
+- mettez à jour la page actuelle avec une page valable qui est inférieure au nombre total de pages
+- mettez à jour la page actuelle avec exactement le nombre de pages total du livre (le livre devrait disparaître du carousel et apparaître dans
+la liste "Lus")
+
+-----
+
+```javascript
+export class Book {
+  constructor(title, author, description, pages, currentPage, read) {
+    this.title = title;
+    this.author = author;
+    this.description = description;
+    this.pages = pages;
+    this.currentPage = currentPage;
+    this.read = read;
+  }
+  readBook(page) {
+    if (page < 1 || page > this.pages) {
+      return 0;
+    }
+    if (page > 1 && page < this.pages) {
+      this.currentPage = page;
+      return 1;
+    }
+    if (page = this.pages) {
+      this.currentPage = page;
+      this.read = true;
+      return 1;
+    }
+  }
+}
+
+const newBook1 = new Book("Lundi", "Albert", "Livre 1", 100, 1, false);
+const newBook2 = new Book("Mardi", "Bertrand", "Livre 2", 150, 1, false);
+const newBook3 = new Book("Mercredi", "Camille", "Livre 3", 200, 1, false);
+export const books = [newBook1, newBook2, newBook3];
+```
+
+-----
+
+<embed style={{width: "100%", height: "667px" }} src="https://nt.dev/s/c005a0ee2274"></embed>
+
+-----
+
+#### Question 1 : Lequel des mots suivants apparaît dans l'alerte navigateur une fois l'exercice terminé ?
+
+<i class="bi bi-circle"></i>chats<br />
+<i class="bi bi-circle"></i>chiens<br />
+<i class="bi bi-circle"></i>chatons<br />
+<i class="bi bi-record-circle"></i> chiots<br />
+<i class="bi bi-circle"></i>chèvres<br />
+<i class="bi bi-circle"></i>moutons<br />
+<br />

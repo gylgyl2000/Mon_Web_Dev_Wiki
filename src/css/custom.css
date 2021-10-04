@@ -44,7 +44,7 @@ html[data-theme='dark'] .docusaurus-highlight-code-line {
 
 /* Page de menu */
 
-.accueil-col {
+/* .accueil-col {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
@@ -61,7 +61,7 @@ html[data-theme='dark'] .docusaurus-highlight-code-line {
 
 .backgroundColor-white {
   background-color: white;
-}
+} */
 
 /* Images */
 

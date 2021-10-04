@@ -1,0 +1,1100 @@
+---
+id: 1-Manipulez_le_DOM
+title: Manipulez le DOM
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+import { Vimeo, CodePen } from 'mdx-embed';
+
+# Manipulez le DOM
+
+## Comprenez ce qu'est le DOM
+
+[Comprenez ce qu'est le DOM - Écrivez du JavaScript pour le web - OpenClassrooms](https://openclassrooms.com/fr/courses/5543061-ecrivez-du-javascript-pour-le-web/5543068-comprenez-ce-quest-le-dom)
+
+<Vimeo vimeoId="539127592" />
+
+<br />
+
+Bonjour et bienvenue dans ce cours !
+
+Nous allons découvrir ensemble comment écrire du JavaScript pour le web. Commençons tout de suite avec le DOM.
+
+### Qu'est-ce que le DOM ?
+
+Le DOM, qui signifie **Document Object Model** (c'est-à-dire "modèle d'objet de document", en français), est une **interface de programmation**
+qui est une représentation du HTML d'une page web et qui permet d'accéder aux éléments de cette page web et de les modifier avec le langage
+JavaScript.
+
+Il faut voir le DOM comme un **arbre** où chaque élément peut avoir zéro ou plusieurs enfants, qui peuvent avoir eux-mêmes zéro ou plusieurs
+enfants, qui peuvent avoir zéro ou plusieurs... enfin je pense que vous comprenez le principe. ![;)](https://openclassrooms.com/bundles/common/images/smiley/clin.png)
+
+Dans le DOM, on commence toujours par un élément racine qui est le point de départ du document : la balise `<html>`. Celle-ci a pour enfants
+les balises `<head>` et `<body>` qui ont donc un parent commun : la balise `<html>` ! Vous trouverez ensuite le contenu de votre page dans la
+balise `<body>` sous forme de liens, boutons, blocs, etc.
+
+
+<figure>
+    <img src="https://user.oc-static.com/upload/2021/04/20/1618926723843_1c1_arbre-DOM.png"
+         alt="Le DOM commence avec un head et un body puis un arbre de balises se forme à l'intérieur du body pour représenter le document" />
+    <figcaption>Le DOM est comme un arbre</figcaption>
+</figure>
+
+### Concrètement, à quoi va nous servir le DOM ?
+
+Avec une interface de programmation nous permettant de parcourir le DOM, nous allons pouvoir **interagir** avec lui. Ces interactions
+comprennent :
+- La modification du contenu d'un élément précis ;
+- La modification du style d'un élément ;
+- La création ou la suppression d'éléments ;
+- L'interaction avec les utilisateurs, afin de repérer des clics sur un élément ou encore de récupérer leur nom dans un formulaire ;
+- Etc.
+
+### En résumé
+
+Dans ce chapitre vous avez appris que :
+- le DOM est une représentation d’une page HTML
+- il permet d’accéder aux différents éléments de la page grâce au langage JavaScript.
+
+_Maintenant que vous savez ce qu’est un DOM et à quoi il sert, nous allons apprendre à le dompter dans ce cours. Vous êtes prêts ? À vos
+claviers ! Apprenez dans le chapitre suivant à accéder aux éléments du DOM_
+
+-----
+
+## Accédez aux éléments du DOM
+
+[Accédez aux éléments du DOM - Écrivez du JavaScript pour le web - OpenClassrooms](https://openclassrooms.com/fr/courses/5543061-ecrivez-du-javascript-pour-le-web/5577476-accedez-aux-elements-du-dom)
+
+<Vimeo vimeoId="539127622" />
+
+<br />
+
+Chaque élément du DOM est un **objet JavaScript** avec ses propriétés et ses fonctions pour le manipuler. Mais avant de commencer les
+manipulations, nous allons voir les différentes façons de retrouver des éléments dans notre page.
+
+### Le document
+
+Tout commence avec le `document`. Cet objet, auquel vous avez directement accès dans votre code JavaScript, est le **point de départ** du DOM.
+Il représente votre page (votre document) entière.
+
+C'est donc lui qui contient les fonctions dont vous aurez besoin pour retrouver les éléments que vous cherchez.
+
+Nous allons voir ensemble les principales fonctions de recherche d'éléments du DOM.
+
+#### `document.getElementById()`
+
+C'est sûrement la méthode la plus utilisée pour retrouver un élément, car c'est aussi la seule qui nous permette de retrouver facilement un
+**élément précis**.
+
+Comme son nom l'indique, elle va rechercher un élément grâce à son `id`. Rappelez-vous qu'il ne doit y avoir qu'un seul élément avec un `id`
+donné, cette méthode est donc une candidate parfaite pour retrouver un élément particulier.
+
+`getElementById(<id>)` prend en paramètre l'`id` de l'élément que vous recherchez et vous retournera cet élément s'il a été trouvé.
+
+Par exemple, si l'on part du code HTML suivant : `<p id="my-anchor">My content</p>`, on pourra trouver cet élément avec le code JavaScript
+suivant :
+
+```javascript
+const myAnchor = document.getElementById('my-anchor');
+```
+
+:::info
+Vous trouverez toute la [documentation sur le site de Developper Mozilla](https://developer.mozilla.org/fr/docs/Web/API/Document/getElementById).
+:::
+
+#### `document.getElementsByClassName()`
+
+Cette méthode fonctionne de la même manière que la précédente, mais fera sa recherche sur la `class` des éléments et retournera la liste des
+éléments qui correspondent.
+
+:::info
+Pour un rappel de ce qu'est une classe, vous pouvez retourner voir le cours [Apprenez à créer votre site web avec HTML5 et CSS3](https://openclassrooms.com/fr/courses/1603881-apprenez-a-creer-votre-site-web-avec-html5-et-css3/1605060-mettre-en-place-le-css#/id/r-1604993).
+:::
+
+`getElementsByClassName(<classe>)` prend en paramètre la `classe` des éléments à rechercher et vous retournera une liste d'éléments
+correspondants.
+
+Par exemple, si l'on part du code HTML suivant :
+
+```html
+<div>
+    <div class="content">Contenu 1</div>
+    <div class="content">Contenu 2</div>
+    <div class="content">Contenu 3</div>
+</div>
+```
+
+on pourra retrouver la liste des éléments ayant la classe `content` avec le code JavaScript suivant :
+
+```javascript
+const contents = document.getElementsByClassName('content');
+const firstContent = contents[0];
+```
+
+:::info
+Vous trouverez [la documentation correspondante sur le site Developper Mozilla.](https://developer.mozilla.org/fr/docs/Web/API/Document/getElementsByClassName)
+:::
+
+#### `document.getElementsByTagName()`
+
+Avec cette méthode, vous rechercherez tous les éléments avec un **nom de balise** bien précis (par exemple tous les liens (`a`), tous les
+boutons (`button`)...).
+
+De la même manière que la méthode précédente, vous récupérerez la liste des éléments correspondants.
+
+`getElementsByTagName(<name>)` prend en paramètre le nom de la balise à rechercher et vous retournera la liste des éléments correspondants.
+
+Si l'on part du code HTML suivant :
+
+```html
+<div>
+    <article>Contenu 1</article>
+    <article>Contenu 2</article>
+    <article>Contenu 3</article>
+</div>
+```
+
+on pourra retrouver la liste des éléments de type `article` avec le code JavaScript suivant :
+
+```JAVASCRIPT
+const articles = document.getElementsByTagName('article');
+const thirdArticle = articles[2];
+```
+
+:::info
+Pour retrouver la documentation correspondante, [rendez-vous sur le site Developper Mozilla.](https://developer.mozilla.org/fr/docs/Web/API/Document/getElementsByTagName)
+:::
+
+#### `document.querySelector()`
+
+Cette méthode est plus complexe, mais aussi beaucoup plus puissante car elle vous permet de faire une recherche complexe dans le DOM, en
+mélangeant plusieurs procédés. Il s'agit en fait d'un sélecteur qui permet de cibler certains éléments.
+
+Par exemple, `document.querySelector("#myId p.article > a")` fera une recherche dans l'élément ayant pour id `#myId`, les éléments de type `<p>`
+qui ont pour classe `article`, afin de récupérer le lien (`<a>`) qui est un enfant direct (pas des enfants de ses enfants).
+
+Ainsi, avec le code HTML suivant :
+
+```html
+<div id="myId">
+    <p>
+        <span><a href="#">Lien 1</a></span>
+        <a href="#">Lien 2</a>
+        <span><a href="#">Lien 3</a></span>
+    </p>
+    <p class="article">
+        <span><a href="#">Lien 4</a></span>
+        <span><a href="#">Lien 5</a></span>
+        <a href="#">Lien 6</a>
+    </p>
+    <p>
+        <a href="#">Lien 7</a>
+        <span><a href="#">Lien 8</a></span>
+        <span><a href="#">Lien 9</a></span>
+    </p>
+</div>
+```
+
+la recherche JavaScript suivante :
+
+```javascript
+const elt = document.querySelector("#myId p.article > a");
+```
+
+nous retournera uniquement `Lien 6`.
+
+Si vous êtes à l'aise avec le CSS, les sélecteurs doivent vous parler. Si ce n'est pas le cas, ce n'est pas grave, on peut déjà faire beaucoup
+de choses avec les autres fonctions, et puis vous pourrez toujours approfondir vos connaissances en CSS quand vous en aurez besoin.
+
+:::info
+Voici le lien vers le [cours sur le HTML et le CSS](https://openclassrooms.com/fr/courses/1603881-apprenez-a-creer-votre-site-web-avec-html5-et-css3).
+:::
+
+`querySelector()` ne renvoie pas une liste des résultats, mais le premier élément qui correspond à la recherche.
+
+`querySelector(<selector>)` prend en paramètre le sélecteur et vous retournera le premier élément trouvé, ou `null` si aucun élément n'a été
+trouvé.
+
+:::info
+La [documentation correspondante est à retrouver sur le site Developper Mozilla](https://developer.mozilla.org/fr/docs/Web/API/Document/querySelector).
+
+Pour retourner une liste de résultats qui correspondent à la recherche que vous souhaitez faire il faudra utiliser la fonction `querySelectorAll`,
+qui fonctionne de la même manière. ![:D](https://openclassrooms.com/bundles/common/images/smiley/heureux.png)
+:::
+
+### Les recherches depuis un élément
+
+Il n'y a pas qu'avec `document` que vous pouvez rechercher des éléments. Comme nous l'avons vu au début du chapitre, chaque élément est un
+objet JavaScript avec ses propriétés et ses fonctions. Et parmi ces dernières, il en existe pour parcourir les enfants et le parent de chaque
+élément !
+- `element.children` : cette propriété nous retourne la liste des enfants de cet élément ;
+- `element.parentElement` : cette propriété nous retourne l'élément parent de celui-ci ;
+- `element.nextElementSibling` / `element.previousElementSibling` : ces propriétés nous permettent de naviguer vers l'élément suivant / précédent
+de même niveau que notre élément.
+
+Par exemple, avec le code HTML suivant :
+
+```html
+<div id="parent">
+    <div id="previous">Précédent</div>
+    <div id="main">
+        <p>Paragraphe 1</p>
+        <p>Paragraphe 2</p>
+    </div>
+    <div id="next">Suivant</div>
+</div>
+```
+
+et si l'on considère que nous avons le code JavaScript suivant :
+
+```javascript
+const elt = document.getElementById('main');
+```
+
+nous aurons ceci :
+- `elt.children` nous retournera les éléments de type `p` qui sont les enfants de l'élément `#main`
+- `elt.parentElement` nous retournera la `div` qui a l'id `parent`
+- `elt.nextElementSibling` nous retournera l'élément qui a l'id `next`
+- `elt.previousElementSibling` nous retournera l'élément qui a l'id `previous`
+
+### À vous de jouer !
+
+![](https://user.oc-static.com/upload/2021/04/20/16189267631776_A-vous-de-jouer%20%282%29.png)
+
+Vous connaissez maintenant plusieurs techniques pour accéder aux éléments du DOM. Il est temps de mettre en pratique ces connaissances avec un
+exercice !
+
+Entrainez-vous dans l'éditeur de code Javascript de cet [éditeur en ligne CodePen](https://codepen.io/nicolaspatschkowski/pen/OJVOyXZ) à
+accomplir les tâches ci-dessous.
+1. Récupérez l'élément ayant pour ID `main-content` grâce à son ID ;
+2. Récupérez les éléments ayant pour classe `important` ;
+3. Récupérez les éléments de type `article` ;
+4. Récupérez les éléments de type `li` qui sont dans une liste `ul` ayant la classe `important`. Cette liste doit elle-même être dans un
+article (`article`) ;
+5. En reprenant le résultat de la tâche précédente, récupérez l'élément `li` suivant de la liste `ul`.
+
+<CodePen codePenId="OJVOyXZ" />
+
+1. Récupérez l'élément ayant pour ID `main-content` grâce à son ID
+
+```javascript
+console.log("#main-content", document.getElementById("main-content"));
+```
+
+```sh
+"#main-content" <p id="main-content">Ce contenu est spécial.</p>
+```
+
+2. Récupérez les éléments ayant pour classe `important`
+
+```javascript
+console.log(".important", document.getElementsByClassName("important"));
+```
+
+```sh
+".important" // [object HTMLCollection]
+{
+    "0": {},
+    "1": {},
+    "2": {},
+}
+```
+
+3. Récupérez les éléments de type `article`
+
+```javascript
+console.log("article", document.getElementsByTagName("article"));
+```
+
+```sh
+"article" // [object HTMLCollection]
+{
+    "0": {},
+    "1": {},
+    "2": {},
+}
+```
+
+4. Récupérez les éléments de type `li` qui sont dans une liste `ul` ayant la classe `important`. Cette liste doit elle-même être dans un
+article (`article`)
+
+```javascript
+const liItem = document.querySelector("article ul.important > li");
+console.log("article ul.important > li", liItem);
+```
+
+```sh
+"article ul.important > li" <li>Elément 4</li>
+```
+
+5. En reprenant le résultat de la tâche précédente, récupérez l'élément `li` suivant de la liste `ul`
+
+```javascript
+const liItem = document.querySelector("article ul.important > li");
+console.log("nextElementSibling", liItem.nextElementSibling);
+```
+
+```sh
+"nextElementSibling" <li>Elément 5</li>
+```
+
+:::info
+Alors, avez-vous réussi ?
+
+Je vous propose de comparer votre exercice avec la solution que vous retrouverez ici dans [un nouveau CodePen](https://codepen.io/fabienhenon/pen/rNWPGXE).
+:::
+
+<CodePen codePenId="rNWPGXE" />
+
+### En résumé
+
+Dans ce chapitre, vous avez appris :
+- Ce qu'est le `document`
+- À utiliser plusieurs fonctions comme `getElementById`, `getElementsByClassName`, `getElementsByTagName` et `querySelector`.
+- À parcourir les enfants et le parent d'un élément.
+
+_Nous savons maintenant retrouver des éléments dans le DOM, mais on ne sait pas encore comment modifier leur contenu. C'est donc ce que nous
+allons voir dans le prochain chapitre !_
+
+-----
+
+## Modifiez le DOM
+
+[Modifiez le DOM - Écrivez du JavaScript pour le web - OpenClassrooms](https://openclassrooms.com/fr/courses/5543061-ecrivez-du-javascript-pour-le-web/5577491-modifiez-le-dom)
+
+<Vimeo vimeoId="539127658" />
+
+<br />
+
+Maintenant que l'on sait comment accéder aux éléments du DOM, nous allons apprendre à les modifier !
+
+### Modifiez le contenu d'un élément
+
+Pour commencer, voyons déjà les propriétés permettant de modifier directement le contenu de notre élément. Les deux principales sont :
+`innerHTML` et `textContent`.
+
+`innerHTML` demande à ce que vous entriez du texte représentant un contenu HTML. Par exemple :<br />
+`"<p>Voici un exemple de contenu pour <strong>innerHTML</strong></p>"`.
+
+La propriété `textContent`, quant à elle, demande un simple texte qui ne sera pas interprété comme étant du HTML. Si on reprend l'exemple du
+dessus, le mot _innerHTML_ ne sera pas en gras, et les balises HTML seront visibles comme le reste du texte.
+
+:::info
+Pour en savoir plus sur [innerHTML](https://developer.mozilla.org/fr/docs/Web/API/Element/innertHTML) et sur [textContent](https://developer.mozilla.org/fr/docs/Web/API/Node/textContent).
+:::
+
+:::caution !
+Définir une valeur à innerHTML ou textContent remplace directement le contenu actuel de l'élément par celui que vous précisez.
+:::
+
+Par exemple, avec le code JavaScript suivant :
+
+```javascript
+let elt = document.getElementById('main');
+elt.innerHTML = "<ul><li>Elément 1</li><li>Elément 2</li></ul>";
+```
+
+l'élément qui a l'id 'main' aura un nouveau contenu ; le HTML deviendra donc :
+
+```html
+<div id="main">
+    <ul>
+        <li>Elément 1</li>
+        <li>Elément 2</li>
+    </ul>
+</div>
+```
+
+### Modifiez des classes
+
+Il est aussi possible d'accéder directement à la liste des classes d'un élément avec la propriété `classList`.
+
+Cette propriété `classList` fournit aussi une série de fonctions permettant de modifier cette liste de classes. En voici quelques-unes :
+- `add(<string>, [<string>, ...] )` ([doc](https://developer.mozilla.org/fr/docs/Web/API/Element/classList#M%C3%A9thodes)) : ajoute la ou les
+classes spécifiées ;
+- `remove(<string>, [<string>, ...] )` ([doc](https://developer.mozilla.org/fr/docs/Web/API/Element/classList#M%C3%A9thodes)) : supprime la ou
+les classes spécifiées ;
+- `contains(<string> )` ([doc](https://developer.mozilla.org/fr/docs/Web/API/Element/classList#M%C3%A9thodes)) : vérifie si la classe spécifiée
+est contenue par cet élément ;
+- `replace(<old>, <new> )` ([doc](https://developer.mozilla.org/fr/docs/Web/API/Element/classList#M%C3%A9thodes)) : remplace l'ancienne classe
+par la nouvelle classe.
+
+Voici quelques exemples :
+
+```javascript
+elt.classList.add("nouvelleClasse"); // Ajoute la classe nouvelleClasse à l'élément
+elt.classList.remove("nouvelleClasse"); // Supprime la classe nouvelleClasse que l'on venait d'ajouter
+elt.classList.contains("nouvelleClasse"); // Retournera false car on vient de la supprimer
+elt.classList.replace("oldClass", "newClass"): // Remplacera oldClass par newClass si oldClass était présente sur l'élément
+```
+
+### Changez les styles d'un élément
+
+Avec la propriété `style`, vous pouvez récupérer et modifier les différents styles d'un élément.
+
+`style` est un objet qui a une propriété pour chaque style existant. Par exemple, pour modifier la couleur d'arrière-plan d'un élément, vous
+ferez : `element.style.backgroundColor = '#000';`.
+
+Voici quelques exemples :
+
+```javascript
+elt.style.color = "#fff"; // Change la couleur du texte de l'élément à blanche
+elt.style.backgroundColor = "#000"; // Change la couleur de fond de l'élément en noir
+elt.style.fontWeight = "bold"; // Met le texte de l'élément en gras
+```
+
+:::info
+Pour en savoir plus sur les styles, [rendez-vous sur le site Developper Mozilla](https://developer.mozilla.org/fr/docs/Web/API/HTMLElement/style).
+:::
+
+### Modifiez les attributs
+
+Pour définir ou remplacer les attributs d'un élément, vous pouvez utiliser la fonction `setAttribute`.
+
+`element.setAttribute(<name>, <value> )` ([doc](https://developer.mozilla.org/fr/docs/Web/API/Element/setAttribute)) prend en paramètres le nom
+de l'attribut et sa valeur et ne retourne rien.
+
+:::info
+Vous pouvez utiliser les fonctions [getAttribute](https://developer.mozilla.org/fr/docs/Web/API/Element/getAttribute) et [removeAttribute](https://developer.mozilla.org/fr/docs/Web/API/Element/removeAttribute)
+pour avoir encore plus de contrôle sur les attributs.
+:::
+
+Voici quelques exemples avec `elt` faisant référence à un élément de type `input` :
+
+```javascript
+elt.setAttribute("type", "password"); // Change le type de l'input en un type password
+elt.setAttribute("name", "my-password"); // Change le nom de l'input en my-password
+elt.getAttribute("name");               // Retourne my-password
+```
+
+### Créez de nouveaux éléments
+
+Modifier des éléments c'est bien, mais si on ne pouvait pas en créer des nouveaux, on serait bien limité.
+
+C'est pourquoi la fonction `document.createElement` existe. Elle va nous permettre de créer un nouvel élément du type spécifié, puis nous
+pourrons l'insérer dans notre DOM.
+
+`document.createElement(<tag>)` ([doc](https://developer.mozilla.org/fr/docs/Web/API/Document/createElement)) prend en paramètre le nom de la
+balise de notre élément et nous renvoie l'élément nouvellement créé.
+
+```javascript
+const newElt = document.createElement("div");
+```
+
+:::caution !
+Un élément créé avec cette fonction ne fait pas encore partie du document, vous ne le verrez donc pas sur votre page. Pour le voir, il va
+d'abord falloir l'ajouter en tant qu'enfant à un élément.
+:::
+
+### Ajoutez des enfants
+
+Il existe plusieurs façons d'ajouter un élément dans notre page. La plus connue est `appendChild`. Cette fonction permet d'ajouter un élément à
+la liste des enfants du parent depuis lequel la fonction est appelée.
+
+`parentNode.appendChild(<element>)` ([doc](https://developer.mozilla.org/fr/docs/Web/API/Node/appendChild)) prend en paramètre l'élément à
+ajouter en tant qu'enfant. L'élément depuis lequel on appelle cette fonction devient donc le parent de notre élément.
+
+Voici un exemple :
+
+```javascript
+const newElt = document.createElement("div");
+let elt = document.getElementById("main");
+elt.appendChild(newElt);
+```
+
+Avec le code ci-dessus, nous venons de créer un nouvel élément de type `div`, mais qui n'est pas encore rattaché au DOM. Nous avons ensuite
+récupéré l'élément ayant pour id `main`. Enfin, nous avons ajouté notre nouvel élément dans les enfants de l'élément `#main`.
+
+### Supprimez et remplacez des éléments
+
+Il existe les fonctions `removeChild` et `replaceChild`, afin de respectivement supprimer et remplacer un élément.
+
+`parentNode.removeChild(<element>)` ([doc](https://developer.mozilla.org/fr/docs/Web/API/Node/removeChild)) prend en paramètre l'élément à
+supprimer du parent et retourne cet élément.
+
+`parentNode.replaceChild(<newElement>, <oldElement>)` ([doc](https://developer.mozilla.org/fr/docs/Web/API/Node/replaceChild)) prend en
+paramètres le nouvel élément ainsi que l'élément à remplacer, et retourne ce dernier.
+
+Voici quelques exemples :
+
+```javascript
+const newElt = document.createElement("div");
+let elt = document.getElementById("main");
+elt.appendChild(newElt);
+elt.removeChild(newElt); // Supprime l'élément newElt de l'élément elt
+elt.replaceChild(document.createElement("article"), newElt);    // Remplace l'élément newElt par un nouvel élément de type article
+```
+
+### À vous de jouer !
+
+![16189267631776_A-vous-de-jouer%20%282%29.png](https://user.oc-static.com/upload/2021/04/20/16189267631776_A-vous-de-jouer%20%282%29.png)
+
+Il est temps de s'exercer à modifier le contenu des éléments du DOM !
+
+Entrainez-vous dans l'éditeur de code Javascript de [cet exercice CodePen](https://codepen.io/nicolaspatschkowski/pen/bGdYVmJ) à accomplir les
+tâches ci-dessous :
+1. Créez un nouvel élément de type paragraphe `p` ;
+2. Ajoutez votre nouvel élément dans l'élément ayant pour id `main` ;
+3. Ajoutez ce contenu HTML dans l'élément que vous avez créé lors de la première tâche : `Mon <strong>grand</strong> contenu` ;
+4. Ajoutez la classe `important` à l'élément que vous avez créé lors de la première tâche ;
+5. Votre élément est maintenant rouge, mais on voudrait qu'il soit vert. Modifiez les styles de votre élément (en JavaScript) pour qu'il soit
+vert.
+
+<CodePen codePenId="bGdYVmJ" />
+
+```javascript
+// 1. Créez un nouvel élément de type paragraphe `p`
+const nouveauParagraphe = document.createElement("p");
+// 2. Ajoutez votre nouvel élément dans l'élément ayant pour id `main`
+let principal = document.getElementById("main");
+principal.appendChild(nouveauParagraphe);
+// 3. Ajoutez ce contenu HTML dans l'élément que vous avez créé lors de
+//    la première tâche : `Mon <strong>grand</strong> contenu`
+nouveauParagraphe.innerHTML = "Mon <strong>grand</strong> contenu";
+// 4. Ajoutez la classe `important` à l'élément que vous avez créé lors
+//    de la première tâche
+nouveauParagraphe.classList.add("important");
+// 5. Votre élément est maintenant rouge, mais on voudrait qu'il soit vert.
+//    Modifiez les styles de votre élément (en JavaScript) pour qu'il soit vert
+nouveauParagraphe.style.color = "green";
+```
+
+:::info
+Comment ça s’est passé ? Je vous donne la solution dans [ce CodePen](https://codepen.io/fabienhenon/pen/ZEBwaYN) pour comparer avec votre
+exercice.
+:::
+
+<CodePen codePenId="ZEBwaYN" />
+
+```javascript
+let p = document.createElement("p");
+
+document.getElementById("main").appendChild(p);
+
+p.innerHTML = "Mon <strong>grand</strong> contenu";
+p.classList.add("important");
+p.style.color = "green";
+```
+
+### En résumé
+
+Dans ce chapitre, vous avez appris :
+- À modifier le contenu et à manipuler un élément ;
+- À changer les styles et à définir les attributs d'un élément ;
+- À créer de nouveaux éléments et à ajouter des enfants à un élément ;
+- À supprimer et remplacer un élément par un autre.
+
+_Nous savons maintenant comment modifier le DOM. Il ne nous reste plus qu'à apprendre comment interagir avec l'utilisateur, via la souris ou
+encore des formulaires._
+
+-----
+
+## Écoutez des événements
+
+[Écoutez des événements - Écrivez du JavaScript pour le web - OpenClassrooms](https://openclassrooms.com/fr/courses/5543061-ecrivez-du-javascript-pour-le-web/5578156-ecoutez-des-evenements)
+
+<Vimeo vimeoId="539127691" />
+
+<br />
+
+Afin de réagir lors d'un clic sur un bouton par un utilisateur, nous allons devoir écouter les événements.
+
+### Qu'est-ce qu'un événement ?
+
+Un événement est une **réaction** à une **action** émise par l'utilisateur, comme le clic sur un bouton ou la saisie d'un texte dans un
+formulaire.
+
+Un événement en JavaScript est représenté par un nom (`click`, `mousemove`...) et une fonction que l'on nomme une `callback`. Un événement est
+par défaut _propagé,_ c'est-à-dire que si nous n'indiquons pas à l'événement que nous le traitons, il sera transmis à l'élément parent, et ainsi
+de suite jusqu'à l'élément racine.
+
+Cette fonction `callback`, c'est nous qui allons la spécifier. Elle sera appelée à chaque fois que l'action que l'on désire suivre est exécutée.
+Cela signifie que si l'on désire suivre le clic sur un élément, notre fonction sera appelée à chaque fois que l'utilisateur cliquera sur cet
+élément.
+
+### Réagissez lors d'un clic sur un élément
+
+Afin de réagir lors d'un clic sur un élément, il faut _écouter_ cet événement. Pour cela, nous avons à notre disposition la fonction
+`addEventListener()`. Cette fonction nous permet d'écouter tous types d'événements (pas que le clic).
+
+:::info
+Réagir à un événement, c'est faire une action lorsque celui-ci se déclenche. Écouter, c'est vouloir être averti quand l'événement se déclenche.
+:::
+
+`addEventListener(<event>, <callback>)` ([doc](https://developer.mozilla.org/fr/docs/Web/API/EventTarget/addEventListener)) prend en paramètres
+le nom de l'événement à écouter ([voici la liste des événements existants](https://developer.mozilla.org/fr/docs/Web/Events)), et la fonction à
+appeler dès que l'événement est exécuté.
+
+Voyons un exemple avec l'événement "clic sur la souris".
+
+#### L'événement `onclick`
+
+Admettons que vous vouliez réagir au clic sur un lien. Vous allez tout d'abord devoir récupérer l'élément qui correspond à votre lien, comme
+nous l'avons vu précédemment. Ensuite, vous allez appeler la méthode `element.addEventListener('click', onClick);` directement sur cet élément.
+
+`onClick` correspond à la fonction que vous allez définir et qui sera appelée à chaque fois que l'utilisateur cliquera sur votre lien. C'est
+donc vous qui choisissez ce que vous souhaitez faire : récupérer des informations depuis un serveur, afficher un message, etc. Le comportement
+par défaut de l'élément _actionné_ sera tout de même exécuté. Ainsi, s'il y a un clic sur un lien, vous pouvez, dans votre fonction de _callback_,
+faire en sorte d'afficher un message, mais le navigateur va ouvrir le lien. De la même manière, si le clic se fait sur un bouton de validation
+de formulaire, celui-ci sera envoyé. Il est possible de _désactiver_ ce comportement par défaut, c'est ce que nous allons voir juste après. 😀
+
+Mais avant, voyons un petit exemple :
+
+```javascript
+const elt = document.getElementById('mon-lien'); // On récupère l'élément sur lequel on veut détecter le clic
+elt.addEventListener('click', function() { // On écoute l'événement click
+    elt.innerHTML = "C'est cliqué !"; // On change le contenu de notre élément pour afficher "C'est cliqué !"
+});
+```
+
+#### `preventDefault()`
+
+Comme vous avez pu le voir si vous avez essayé de réagir aux clics sur votre lien, votre fonction est bien appelée, mais la page change. En
+effet, il s'agit d'un lien, et dès que l'on clique sur un lien, le navigateur nous redirige sur la page vers laquelle il pointe.
+
+:::note ?
+Mais si on ne souhaite pas avoir ce comportement, afin de pouvoir faire autre chose à la place, comme afficher un message, comment faire ?
+:::
+
+Il y a quelque chose dont je ne vous ai pas encore parlé. Vous vous rappelez de votre fonction de callback ? Celle qui est appelée lorsque
+l'utilisateur clique sur le lien ? Eh bien, en fait elle prend un paramètre. Ce dernier correspond au contenu de l'événement qui vient de se
+produire, et il nous met à disposition quelques fonctions et propriétés intéressantes.
+
+Nous verrons plus en détail comment fonctionne cet objet dans le prochain chapitre, mais sachez déjà qu'il contient une fonction
+`preventDefault()` qui fait exactement ce que l'on veut !
+
+En appelant cette fonction dans votre callback, vous demandez au gestionnaire des événements de ne pas exécuter le comportement par défaut de
+votre élément (qui est la redirection vers une autre page pour un lien). Et cela marche aussi pour d'autres types d'éléments que le lien. Cette
+même fonction exécutée pendant un événement `onsubmit` sur un formulaire empêchera le formulaire de s'envoyer au serveur, par exemple.
+
+Si on reprend notre exemple précédent, voici comment empêcher que notre navigateur ne change de page quand on clique sur le lien :
+
+```javascript
+// On récupère l'élément sur lequel on veut détecter le clic
+const elt = document.getElementById('mon-lien');
+// On écoute l'événement click, notre callback prend un paramètre que
+// nous avons appelé event ici
+elt.addEventListener('click', function(event) {
+    // On utilise la fonction preventDefault de notre objet event pour empêcher
+    // le comportement par défaut de cet élément lors du clic de la souris
+    event.preventDefault();
+});
+```
+
+#### `stopPropagation()`
+
+De la même manière que `preventDefault()`, `stopPropagation()` est une fonction de l'objet que votre fonction reçoit en paramètre. Son rôle est
+par contre très différent, car il nous permet d'empêcher la propagation de l'événement vers son parent. En effet, lorsqu'un événement est
+déclenché, il est d'abord reçu par l'élément cible, mais il est ensuite remonté vers les éléments parents qui sont aussi dans la cible.
+
+Avec `stopPropagation()`, vous pouvez ainsi empêcher que d'autres éléments reçoivent l'événement.
+
+Admettons par exemple que nous ayons un élément pour lequel nous voulons afficher un message lorsque l'on clique dessus. Mais à l'intérieur de
+cet élément, nous avons aussi un autre élément qui doit nous afficher un autre message lorsque l'on clique dessus.
+
+Par défaut, si nous cliquons dans l'élément intérieur, le message va s'afficher, puis notre élément parent va lui aussi recevoir l'événement du
+clic et encore changer le message. Pour éviter cela, nous devons stopper la propagation de l'événement.
+
+Ainsi, dans l'élément intérieur, nous ferons ceci :
+
+```javascript
+elementInterieur.addEventListener('click', function(event) {
+    event.stopPropagation();
+    elementAvecMessage.innerHTML = "Message de l'élément intérieur";
+});
+```
+
+De cette manière, lorsque l'on clique sur l'élément intérieur, l'élément parent ne recevra plus le clic, et seul l'élément intérieur affichera
+son message. Par contre, en cliquant directement dans l'élément parent, sans être dans l'élément intérieur, l'élément parent recevra bien
+l'événement et affichera bien son message.
+
+### À vous de jouer !
+
+![16189267631776_A-vous-de-jouer%20%282%29.png](https://user.oc-static.com/upload/2021/04/20/16189267631776_A-vous-de-jouer%20%282%29.png)
+
+Voyons maintenant quelques cas d'utilisation pour mettre en pratique ces nouvelles connaissances.
+
+Entraînez-vous sur [cet éditeur automatique CodePen](https://codepen.io/nicolaspatschkowski/pen/yLNvXMx) en réalisant l'exercice suivant :
+Nous souhaitons lancer une bataille de clics ! Nous avons un article qui correspond à notre _parent_ (ID `parent`), et nous avons un lien
+(balise `a`) qui correspond à notre _enfant_ (ID `child`). Le but est de cliquer soit dans le parent, soit dans l'enfant et d'afficher le
+nombre de clics dans chaque élément directement dans les éléments `#parent-count` et `#child-count`.
+1. Commencez par écouter les événements click depuis l'élément `#parent`. Puis affichez le nombre de clics dans l'élément `#parent-count`.
+2. Faites la même chose mais avec l'élément `#child`. Il faudra afficher le nombre de clics sur cet élément dans l'élément `#child-count`.
+Maintenant, dès que vous cliquez sur le parent ou l'enfant les compteurs se mettent à jour. Mais vous avez sans doute remarqué que lorsque
+vous cliquez sur l'enfant, le compteur du parent se met aussi à jour ?
+3. Maintenant, faites de sorte à ce que lorsque vous cliquez sur l'enfant, seul le compteur de l'enfant se mette à jour. _N'oubliez pas que
+l'élément enfant se trouve à l'intérieur de l'élément parent._ Ça ne se voit pas ici car nous sommes dans un environnement protégé, mais en
+réalité, `#child` est un lien. Et en sa qualité de lien, lorsque l'on clique dessus, le navigateur doit changer de page.
+4. Évitez qu'un clic sur le lien ne vous fasse changer de page : supprimez ce comportement par défaut.
+
+<CodePen codePenId="yLNvXMx" />
+
+```javascript
+let parentClicks = 0;
+let childClicks = 0;
+
+document
+  .getElementById("parent")
+  .addEventListener("click", function() {
+  document
+    .getElementById("parent-count")
+    .innerText = (++parentClicks) + '';
+});
+
+document
+  .getElementById("child")
+  .addEventListener("click", function(e) {
+  e.preventDefault();
+  e.stopPropagation();
+  
+  document
+    .getElementById("child-count")
+    .innerText = (++childClicks) + '';
+});
+```
+
+:::info
+Retrouvez la solution dans ce [nouveau CodePen](https://codepen.io/fabienhenon/pen/MWbLOyd) et comparez avec ce que vous avez fait.
+:::
+
+<CodePen codePenId="MWbLOyd" />
+
+### En résumé
+
+Dans ce chapitre, nous avons appris :
+- Ce qu'est un événement ;
+- À écouter un événement ;
+- À annuler le comportement par défaut d'un événement ;
+- À stopper la propagation d'un événement.
+
+_Nous venons de voir comment gérer les événements simples, c'est-à-dire ceux qui n'ont pas de données (comme un clic). Mais vous devez vous
+demander comment gérer des événements plus complexes, comme un événement de mouvement de souris pour lequel on a besoin de connaître sa position
+sur la page._
+
+_C'est ce que nous allons voir dans le prochain chapitre !_
+
+-----
+
+## Récupérez des données utilisateurs avec les événements
+
+[Récupérez des données utilisateurs avec les événements - Écrivez du JavaScript pour le web - OpenClassrooms](https://openclassrooms.com/fr/courses/5543061-ecrivez-du-javascript-pour-le-web/5578181-recuperez-des-donnees-utilisateurs-avec-les-evenements)
+
+<Vimeo vimeoId="539127729" />
+
+<br />
+
+Nous savons écouter un événement, mais on ne sait pas encore comment récupérer la position de la souris, ni même le texte saisi dans un
+formulaire. C'est ce que nous allons voir maintenant avec les données liées aux événements.
+
+### Comprenez ce que sont les données liées à un événement
+
+Comme nous l'avons vu brièvement dans le chapitre précédent, lorsque l'on reçoit un événement, notre fonction callback reçoit un paramètre
+contenant des informations sur cet événement.
+
+Ces informations sont reçues sous la forme d'un objet qui dépendra du type d'événement reçu.
+
+De plus, chaque événement implémente l'objet `Event`. C'est-à-dire que chaque événement a au minimum les mêmes fonctions et propriétés que
+l'objet `Event`.
+
+Cela comprend entre autres :
+- `preventDefault()` : empêche l'exécution du comportement par défaut de l'élément quand il reçoit l'événement ;
+- `stopPropagation()` : empêche la propagation de l'événement vers d'autres éléments ;
+- _D'autres propriétés en fonction du type d'événement._
+
+:::info
+Pour avoir une liste exhaustive de ce que propose l'interface `Event`, vous pouvez aller voir sa [documentation](https://developer.mozilla.org/fr/docs/Web/API/Event).
+:::
+
+Mais cela ne nous dit toujours pas comment on peut récupérer la position de la souris quand elle bouge !
+
+### Détectez le mouvement de la souris
+
+Afin de détecter le mouvement de la souris, il nous faut écouter l'événement `mousemove` ([doc](https://developer.mozilla.org/fr/docs/Web/Events/mousemove)).
+Cet événement nous fournit un objet de type `MouseEvent`. C'est-à-dire que dès que la souris bouge, notre fonction callback sera appelée avec
+un paramètre de type `MouseEvent`, qui contient les données sur le mouvement de la souris.
+
+Voici, entre autres, ce que cet objet nous permet de récupérer :
+- `clientX` / `clientY` : position de la souris dans les coordonnées locales (contenu du DOM) ;
+- `offsetX` / `offsetY` : position de la souris par rapport à l'élément sur lequel on écoute l'événement ;
+- `pageX` / `pageY` : position de la souris par rapport au document entier ;
+- `screenX` / `screenY` : position de la souris par rapport à la fenêtre du navigateur ;
+- `movementX` / `movementY` : position de la souris par rapport à la position de la souris lors du dernier événement `mousemove`.
+
+Voici un exemple illustrant tout ça :
+
+```javascript
+elt.addEventListener('mousemove', function(event) {
+    const x = event.offsetX; // Coordonnée X de la souris dans l'élément
+    const y = event.offsetY; // Coordonnée Y de la souris dans l'élément
+});
+```
+
+### Lisez le contenu d'un champ texte
+
+Je pense que vous commencez à comprendre comment récupérer les données d'un événement, alors voyons un dernier exemple : la lecture du contenu
+d'un champ texte lorsque l'utilisateur le modifie.
+
+Prenons quelques minutes pour revoir la [liste des événements](https://developer.mozilla.org/fr/docs/Web/Events) et essayons de trouver quels
+événements pourraient correspondre à ce que l'on souhaite faire, c'est-à-dire détecter les changements dans notre champ texte.
+
+Après une brève recherche, on peut voir qu'il existe un événement `change`. Si on regarde sa [documentation](https://developer.mozilla.org/en-US/docs/Web/Events/change),
+on peut voir que c'est un événement qui fonctionne avec les éléments de type `<input>`, `<select>` et `<textarea>`. Cet événement est déclenché
+lorsque le champ perd le focus, c'est-à-dire lorsque l'utilisateur passe à autre chose en cliquant ailleurs et qu'il a fini sa saisie pour ce
+champ. Cet événement fonctionne aussi pour les cases à cocher (`checkbox`) et les cases à choix unique (`radio`).
+
+<figure>
+    <img src="https://user.oc-static.com/upload/2018/11/19/1542643692623_Capture%20d%E2%80%99e%CC%81cran%202018-11-19%20a%CC%80%2017.05.45%20copie.jpg"
+         alt="La documentation de l'événement change qui nous indique comment l'utiliser." />
+    <figcaption>La documentation de l'événement 'change'</figcaption>
+</figure>
+
+C'est donc un événement qui semble parfait pour notre cas, car il nous permet exactement de détecter que le texte saisi dans le champ a changé.
+
+Et comme la documentation est bien faite, nous disposons d'exemples d'utilisation !
+
+<figure>
+    <img src="https://user.oc-static.com/upload/2018/11/19/15426438734542_Capture%20d%E2%80%99e%CC%81cran%202018-11-19%20a%CC%80%2017.10.31%20copie.jpg"
+         alt="La documentation nous montre quelques exemples d'utilisation de l'événement" />
+    <figcaption>Exemple d'utilisation de `onchange`</figcaption>
+</figure>
+
+Ainsi, on apprend que pour récupérer la valeur de notre champ une fois qu'il a été modifié, il suffit d'accéder à la valeur de l'élément cible :
+`event.target.value`. En effet, ici `target` correspond à l'élément sur lequel s'est produit l'événement, c'est-à-dire un champ de type `<input>`
+dans notre cas. Or, ce type d'élément contient une propriété `value` qui permet de récupérer ou définir la valeur du champ. C'est aussi simple
+que ça !
+
+`change` c'est bien, mais si je veux pouvoir avoir la valeur dès que l'utilisateur ajoute ou supprime une lettre, comment je fais ?
+
+Pour gérer ce cas, il existe aussi l'événement `input` ([doc](https://developer.mozilla.org/en-US/docs/Web/Events/input)), qui fonctionne comme
+`change`, sauf qu'il est déclenché dès que le contenu du champ est modifié, même si l'utilisateur n'a pas encore fini de saisir ce qu'il
+souhaite.
+
+```javascript
+input.addEventListener('input', function(event) {
+    output.innerHTML = event.target.value;
+});
+```
+
+### À vous de jouer !
+
+![16189267631776_A-vous-de-jouer%20%282%29.png](https://user.oc-static.com/upload/2021/04/20/16189267631776_A-vous-de-jouer%20%282%29.png)
+
+Essayons maintenant de gérer un formulaire au travers de quelques exercices. Rendez-vous sur [cet éditeur CodePen](https://codepen.io/nicolaspatschkowski/pen/MWwQoQZ)
+pour réaliser l'exercice suivant:
+Nous avons ici un formulaire et nous aimerions restituer les réponses de notre formulaire dans l'élément du dessous. De plus, nous voudrions
+afficher la position de la souris quand elle se trouve dans cet élément.
+1. Écoutez les événements `input` sur l'élément `#name` afin de savoir quand le contenu du champ texte est changé. Affichez le contenu actuel
+dans l'élément `#res-name`.
+2. Maintenant nous voulons écouter l'événement du changement de choix du genre (`#gender`), et afficher le résultat dans l'élément `#res-gender`.
+3. Nous souhaitons maintenant afficher les coordonnées de la souris à l'intérieur de l'élément `#result` dès que celle-ci passe par dessus. Ce
+que nous voulons, c'est avoir les coordonnées relatives au coin en haut à gauche de l'élément `#result`.
+
+<CodePen codePenId="MWwQoQZ" />
+
+```javascript
+document
+  .getElementById("name")
+  .addEventListener("input", function(e) {
+    document
+      .getElementById("res-name")
+      .innerText = e.target.value;
+});
+
+document
+  .getElementById("gender")
+  .addEventListener("change", function(e) {
+    document
+      .getElementById("res-gender")
+      .innerText = e.target.value;
+});
+
+document
+  .getElementById("result")
+  .addEventListener("mousemove", function(e) {
+    document
+      .getElementById("mouse-x")
+      .innerText = e.offsetX;
+    document
+      .getElementById("mouse-y")
+      .innerText = e.offsetY;
+});
+```
+
+:::info
+Et voici [la solution !](https://codepen.io/fabienhenon/pen/KKNJyaE)
+:::
+
+<CodePen codePenId="KKNJyaE" />
+
+:::info
+Comme nous l'avons fait durant ce chapitre, je ne peux que vous conseiller d'aller voir la documentation lorsque vous avez un doute. Elle peut
+vous être d'une très grande aide pour trouver ce que vous recherchez. Sinon, une simple recherche sur votre moteur de recherche favori suffit
+dans 99% des cas. ![;)](https://openclassrooms.com/bundles/common/images/smiley/clin.png)
+:::
+
+### En résumé
+
+Dans ce chapitre, vous avez appris :
+- De quoi était composé un événement ;
+- À utiliser les données de l'événement pour récupérer la position de la souris ;
+- À utiliser les données de l'événement pour récupérer le texte d'un champ.
+
+Nous venons de voir comment gérer des événements plus complexes qui contiennent des données. Vous savez maintenant tout ce qu'il faut pour
+manipuler le DOM et interagir avec vos utilisateurs.
+
+_Il est maintenant temps d'aller plus loin en apprenant à communiquer avec un serveur pour y lire ou y stocker des données (et pourquoi pas les
+données que vous avez récupérées de vos utilisateurs !)._
+
+-----
+
+## Quiz : Manipulez le DOM
+
+[Manipulez le DOM - OpenClassrooms](https://openclassrooms.com/fr/courses/5543061-ecrivez-du-javascript-pour-le-web/exercises/3133)
+
+#### Compétences évaluées
+
+<i class="bi bi-check2-circle"></i> Capter les événements du DOM<br />
+<i class="bi bi-check2-circle"></i> Récupérer et modifier des éléments du DOM
+
+-----
+
+#### Question 1 : Qu'est-ce que le DOM ?
+
+<i class="bi bi-circle"></i> Un pays d'outre-mer<br />
+<i class="bi bi-record-circle"></i> Une interface de programmation qui permet d'accéder aux éléments d'une page web<br />
+<i class="bi bi-circle"></i> Une interface de programmation pour faire des requêtes à un service web<br />
+<i class="bi bi-circle"></i> Un nouveau langage de programmation<br />
+<br />
+
+*Le DOM est une interface de programmation qui permet d'accéder aux éléments d'une page web. Il peut être vu comme un arbre avec 0 ou plusieurs
+enfants qui sont chacun des éléments de la page web.*
+
+-----
+
+#### Question 2 : Que permet de rechercher cet extrait ?
+
+```javascript
+document.getElementById(“ma-liste”)
+```
+
+<i class="bi bi-circle"></i> Tous les éléments ayant pour nom “ma-liste”<br />
+<i class="bi bi-circle"></i> Tous les éléments ayant pour classe “ma-liste”<br />
+<i class="bi bi-record-circle"></i> L’élément ayant pour ID “ma-liste”<br />
+<br />
+
+_Le nom de la fonction est assez explicite : `get` `element` `by` `id` , soit `obtenir un élément via son ID`._
+
+_Gardez en tête que les ID sont uniques dans une page web et qu'il est donc normal de n'avoir qu'**UN** seul élément en retour. ![;)](https://openclassrooms.com/bundles/common/images/smiley/clin.png)_
+
+-----
+
+### Question 3 : Que permet de rechercher cette requête ?
+
+```javascript
+document.querySelector("article.important p")
+```
+
+<i class="bi bi-record-circle"></i> Le premier paragraphe trouvé se trouvant dans un <code>article</code> ayant la classe <code>important</code>.<br />
+<i class="bi bi-circle"></i> Tous les <code>articles</code> ayant la classe <code>important</code> qui sont dans des paragraphes.<br />
+<i class="bi bi-circle"></i> Tous les paragraphes ayant la classe <code>important</code> et se trouvant dans un <code>article</code>.<br />
+<i class="bi bi-circle"></i> Le premier article ayant la classe <code>important</code> et se trouvant dans un <code>article</code>.<br />0
+<br />
+
+*Pour que ce soit plus facile, un sélecteur CSS se lit de droite à gauche. Ainsi, quand on décompose, on obtient : on veut le paragraphe
+(`p`) qui est dans l'`article` avec la classe `important`.*
+
+-----
+
+#### Question 4 : Que permet de faire cet extrait ?
+
+```javascript
+element.innerHTML = "<strong>Salut !</strong>";
+```
+
+<i class="bi bi-circle"></i> Modifier le contenu de <code>element</code> sous forme de texte<br />
+<i class="bi bi-record-circle"></i> Modifier le contenu de <code>element</code> sous forme de HTML<br />
+<i class="bi bi-circle"></i> Ce code affichera une erreur car il n’est pas possible de définir du HTML dans le contenu d’un élément<br />
+<i class="bi bi-circle"></i> Remplacer <code>element</code> par le contenu HTML <code><strong>Salut !</strong></code><br />
+<br />
+
+_La propriété `innerHTML` permet bien de modifier le contenu HTML de l'élément. Si on avait utilisé `textContent`, on aurait aussi modifié le
+contenu d'un élément mais uniquement avec du texte, pas du HTML._
+
+-----
+
+#### Question 5 : Que fait cet extrait ?
+
+```javascript
+element.classList.add("hello")
+```
+
+<i class="bi bi-circle"></i> Il supprime la classe "hello" à <code>element</code><br />
+<i class="bi bi-circle"></i> Il remplace la classe actuellement de <code>element</code> par "hello"<br />
+<i class="bi bi-record-circle"></i> Il ajoute une classe "hello" à <code>element</code><br />
+<br />
+
+_La gestion des classes d'un élément se fait via la propriété `classList`. La fonction pour ajouter une classe est `add`. Cette fonction
+permet donc d’ajouter une nouvelle classe à l’élément._
+
+_On pourra aussi, depuis l’objet `classList`, supprimer une classe (avec `remove`), et activer/désactiver une classe (avec `toggle`). Pour
+plus d’informations, je vous invite à lire la [documentation de classList](https://developer.mozilla.org/fr/docs/Web/API/Element/classList)._
+
+-----
+
+#### Question 6 : Que fait cet extrait ?
+
+```javascript
+document.getElementById("parent").appendChild(document.createElement("article"))
+```
+
+<i class="bi bi-record-circle"></i> Il crée un élément de type <code>article</code> dans un élément ayant pour ID "parent"<br />
+<i class="bi bi-circle"></i> Il crée un élément de type <code>parent</code> dans un élément ayant pour ID "article"<br />
+<i class="bi bi-circle"></i> Il n’est pas valide<br />
+<br />
+
+_On ajoute un élément de type `article` nouvellement créé, dans un élément ayant pour ID `parent`._
+
+_Décomposons ce code :_
+- _On sélectionne l’élément ayant pour ID `parent` (`getElementById`)._
+- _On crée un nouvel élément de type `article` (`createElement`)._
+- _On ajoute cet élément à notre `parent` (`appendChild`)._
+
+-----
+
+#### Question 7 : Que fait cet extrait, sachant que myLink est un élément de type `a` ?
+
+```javascript
+myLink.addEventListener("click", function(e) {
+    e.preventDefault();
+});
+```
+
+<i class="bi bi-circle"></i> Il écoute le clic sur myLink et empêche sa propagation à son parent<br />
+<i class="bi bi-record-circle"></i> Il écoute le clic sur myLink et annule son comportement par défaut<br />
+<i class="bi bi-circle"></i> Il ne fait rien, le nom de l’événement n’est pas bon<br />
+<i class="bi bi-circle"></i> Il ne fait rien,  `preventDefault()`  n’est pas une fonction qui existe<br />
+<i class="bi bi-circle"></i> Il écoute le clic sur myLink puis redirige la page vers l’URL du lien<br />
+<br />
+
+_La fonction pour annuler un comportement par défaut est `preventDefault()`. On écoute bien l'événement `click` pour savoir si on a cliqué sur
+un élément._
+
+-----
+
+#### Question 8 : Que fait cet extrait, sachant que mySelect est un élément de type `select` et que `result` est une simple `div` ?
+
+```javascript
+mySelect.addEventListener("change", function(e) {
+    result.innerHTML = e.target.value;
+});
+```
+
+<i class="bi bi-record-circle"></i> Il récupère la valeur de la liste de sélection dès qu’elle change, et la met en contenu de l’élément result<br />
+<i class="bi bi-circle"></i> Il ne fait rien, l’événement “change” n’existe pas pour les select<br />
+<i class="bi bi-circle"></i> Il copie l’élément select dans l’élément result<br />
+<br />
+
+*L’événement qui est appelé à chaque changement de valeur dans nos formulaires est bien `change`. Il est appelé dès qu'un élément dans un
+`select` est sélectionné. Ensuite on modifie bien le contenu de `result` en récupérant la valeur sélectionnée grâce à `e.target.value`.*
+

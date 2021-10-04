@@ -1,0 +1,786 @@
+---
+id: 2-Communiquez_via_une_API_avec_un_service_web
+title: Communiquez via une API avec un service web
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+import { Vimeo, CodePen } from 'mdx-embed';
+
+# Communiquez via une API avec un service web
+
+## Comprenez ce que sont des API et un service web
+
+[Comprenez ce que sont des API et un service web - Écrivez du JavaScript pour le web - OpenClassrooms](https://openclassrooms.com/fr/courses/5543061-ecrivez-du-javascript-pour-le-web/5577576-comprenez-ce-que-sont-des-api-et-un-service-web)
+
+<Vimeo vimeoId="539127771" />
+
+<br />
+
+Les services web et les API sont des éléments essentiels aux applications web. N’importe quel site sur lequel vous naviguez est un service web,
+et il fournit une API pour communiquer avec.
+
+:::note ?
+Mais qu’est-ce que c’est exactement ?
+:::
+
+#### Qu'est-ce qu'un service web ?
+
+Un service web est un programme s'exécutant sur un serveur accessible depuis Internet et fournissant un service.
+
+Par exemple, Google est un service web qui vous permet de rechercher des sites web. Une application météo communique avec un service web qui
+fournit la météo. Un réseau social est un service web qui permet de retrouver ses amis et de communiquer avec.
+
+Le but d’un service web est donc de fournir un service à celui qui le demande. Et pour ce faire, il met à disposition une **API**.
+
+#### Qu’est-ce qu’une API ?
+
+Une API, ou _Application Programming Interface_, est une interface de communication. Il en existe différents types, mais celle qui nous
+intéresse est celle qui permet de communiquer avec les services web.
+
+L’API correspond à l’ensemble des demandes que l’on peut faire à un service web. Ces demandes sont appelées des **requêtes**.
+
+Par exemple, demander la météo actuelle est une requête. Faire une demande d’ami sur un réseau social est une requête. Ou encore, envoyer un
+message via une application de messagerie est une requête.
+
+:::note ?
+Mais à quoi ressemble une requête ?
+:::
+
+C'est une question intéressante, mais aussi complexe. En effet, il a bien fallu se mettre d'accord sur le **langage** à utiliser pour
+communiquer via les API. Mais voilà, un service d'envoi de mails ne fait pas du tout le même travail qu'un service nous renvoyant les pages
+d'un site Internet. Il semble donc évident que la manière de communiquer ne sera pas la même pour ces deux services. Des **protocoles de
+communication** ont donc été mis en place afin de standardiser la communication entre services faisant la même chose.
+
+Les **requêtes** sont des données qui respectent le protocole de communication et qui sont envoyées au serveur.
+
+Nous avons donc un protocole pour l'envoi de mail (_SMTP_), la réception de mail (_IMAP_), les requêtes liées à des ressources web (_HTTP),_
+aux transferts de fichiers (_FTP_), etc.
+
+Le protocole qui va nous intéresser est le protocole nous permettant de communiquer avec l’API d’un site Internet : le protocole **HTTP**.
+Grâce à lui, nous allons pouvoir récupérer et sauvegarder des données sur un service web, ce qui nous permettra de dynamiser le contenu de nos
+pages web.
+
+#### Qu'est-ce que le protocole HTTP ?
+
+**_HTTP_** signifie _HyperText Transfer Protocol._ C'est un protocole qui permet de **communiquer** avec un site Internet. Il va permettre de
+charger des **pages HTML**, des **styles CSS**, des **polices de caractères**, des **images**, etc. Mais ce n'est pas tout, le protocole HTTP
+nous permet aussi d'envoyer des formulaires et de récupérer et d'envoyer toutes sortes de données depuis ou vers un serveur implémentant ce
+protocole grâce à son API !
+
+Nous n'allons pas entrer dans le détail du format des requêtes HTTP_,_ car [de nombreuses références](https://www.google.fr/search?q=http) le
+font déjà très bien. Tout ce que vous avez besoin de savoir c’est que plusieurs informations se trouvent dans une requête HTTP :
+- **La méthode**. Il s’agit de l’action que l’on souhaite faire : récupérer une ressource, la supprimer, etc. Voici les méthodes HTTP les plus
+courantes :
+   - **GET** : permet de **récupérer** des ressources, comme par exemple le temps actuel sur un service de météo ;
+   - **POST** : permet de **créer** ou **modifier** une ressource, comme la création d'un nouvel utilisateur sur votre application ;
+   - **PUT** : permet de **modifier** une ressource, comme le nom de l'utilisateur que vous venez de créer avec _POST_ ;
+   - **DELETE** : Permet de **supprimer** une ressource, comme un commentaire dans un fil de discussion.
+- **L’URL**. C’est l’adresse sur le service web que vous souhaitez atteindre. Un peu comme un identifiant unique afin que le web service
+comprenne ce que vous voulez.
+- **Les données**. Lorsqu’on fait une requête pour enregistrer des données (par exemple un formulaire) il faut pouvoir envoyer ces données au
+service web.
+
+Une fois votre requête envoyée et traitée par le service web, celui-ci va vous répondre avec, entre autres, les informations suivantes :
+- **Les données**. Les données que vous avez demandées : une page HTML, etc.
+- **Le code HTTP**. Il s’agit d’un code numérique qui vous indique comment s’est déroulée la requête. Voici les plus courants :
+    - **200** : indique que tout s’est bien passé
+    - **400** : indique que votre requête n’est pas conforme à ce qui est attendu
+    - **401** : indique que vous devez être authentifié pour faire cette requête
+    - **403** : indique que vous êtes bien authentifié mais que vous n’êtes pas autorisé à faire cette requête
+    - **404** : indique que la ressource demandée n’existe pas
+    - **500** : indique une erreur avec le service web
+    - [Voici une liste exhaustive des codes HTTPs](https://fr.wikipedia.org/wiki/Liste_des_codes_HTTP)
+
+:::info
+Il s'agit surtout d'une convention. Rien n'oblige un service web à créer une ressource lors d'une requête _POST_  par exemple, mais c'est
+généralement le cas.
+:::
+
+### En résumé
+
+Dans ce chapitre, vous avez appris :
+- Qu’un service web est une application sur internet qui répond à un besoin : Google qui permet de faire des recherches, Facebook qui permet de
+garder contact avec ses amis, etc. ;
+- Qu’une API est une interface de communication entre un service web et le navigateur;
+- Qu’un protocole de communication permet de définir comment communiquer avec un service. Comme la définition des normes, que tout le monde
+peut utiliser.
+- Que le protocole HTTP est le protocole de communication utilisé par les services web.
+
+_Avec ce que vous venez d'apprendre, vous êtes maintenant en mesure de communiquer avec un service web. Il ne vous reste plus qu'à savoir
+comment on fait ça en JavaScript, et c'est justement ce que nous allons voir dans le chapitre suivant !_
+
+-----
+
+## Récupérez des données d'un service web
+
+[Récupérez des données d'un service web - Écrivez du JavaScript pour le web - OpenClassrooms](https://openclassrooms.com/fr/courses/5543061-ecrivez-du-javascript-pour-le-web/5577591-recuperez-des-donnees-dun-service-web)
+
+<Vimeo vimeoId="539127809" />
+
+<br />
+
+Maintenant que nous savons ce qu'est une **requête HTTP**, il ne nous reste plus qu'à apprendre à en créer une en JavaScript pour récupérer des
+données, comme la météo. C'est là que l’API **Fetch** entre en jeu !
+
+### Qu'est-ce que Fetch ?
+
+Fetch est un **ensemble d'objets et de fonctions** mis à disposition par le langage JavaScript, afin d'exécuter des requêtes HTTP de manière
+asynchrone.
+
+:::info
+Nous verrons en détail ce qu'_asynchrone_ signifie dans la prochaine partie, retenez simplement pour l’instant que cela permet d'exécuter du
+code (une requête ici), sans bloquer l'exécution de la page, en attendant la réponse du service web.
+:::
+
+L’API Fetch  va nous permettre d'exécuter des requêtes HTTP sans avoir besoin de recharger la page du navigateur. Cela a plusieurs avantages :
+- **Avoir un site plus réactif** car on n'a pas besoin de recharger toute la page dès qu'on a besoin de mettre à jour une partie du contenu ;
+- **Améliorer l'expérience utilisateur** avec du nouveau contenu qui se charge au fur et à mesure qu'on le découvre, par exemple.
+
+### Envoyez une première requête
+
+Voyons maintenant comment on peut construire et envoyer une requête HTTP.
+
+Si vous vous souvenez du chapitre précédent, vous devez avoir deviné que nous allons créer une requête HTTP avec la méthode GET, afin de
+récupérer des données. C'est parti !
+
+```javascript
+fetch("http://url-service-web.com/api/users");
+```
+
+Ce code nous permet d'envoyer une requête HTTP de type _GET_ au service web se trouvant à l'adresse `http://url-service-web.com/api/users`.
+
+### Récupérez les données au format JSON
+
+Maintenant que nous savons comment construire et envoyer une requête HTTP, il faut récupérer et interpréter son résultat.
+
+Un service web peut choisir le format qu'il veut pour nous renvoyer des données, mais le plus courant et le plus simple est le **format _JSON_**.
+
+#### Qu'est-ce que le format JSON ?
+
+_JSON_ signifie _JavaScript Object Notation_. Il s'agit d'un **format textuel** (contrairement à un format binaire plus léger mais impossible à
+lire à l'œil humain), se rapprochant en termes de syntaxe de celui des objets dans le langage JavaScript.
+
+Ainsi, l'objet JavaScript suivant :
+
+```javascript
+const obj = {
+    name: "Mon contenu",
+    id: 1234,
+    message: "Voici mon contenu",
+    author: {
+        name: "John"
+    },
+    comments: [
+        {
+            id: 45,
+            message: "Commentaire 1"
+        },
+        {
+            id: 46,
+            message: "Commentaire 2"
+        }
+    ]
+};
+```
+
+sera retranscrit ainsi en JSON :
+
+```json
+{
+    "name": "Mon contenu",
+    "id": 1234,
+    "message": "Voici mon contenu",
+    "author": {
+        "name": "John"
+    },
+    "comments": [
+        {
+            "id": 45,
+            "message": "Commentaire 1"
+        },
+        {
+            "id": 46,
+            "message": "Commentaire 2"
+        }
+    ]
+}
+```
+
+Vous pouvez voir comme la syntaxe est similaire entre les 2. Alors qu'en JavaScript il n'est pas nécessaire de mettre les propriétés (comme
+`name`, `id`, `message`, etc.), entre guillemets, cela l'est en JSON. En JavaScript, votre objet est assigné à une variable, alors qu'en JSON
+on ne fait que décrire une structure.
+
+Le gros avantage de ce format lorsqu'il est utilisé avec le langage JavaScript est qu'il n'y a pas besoin de le _**parser**_ comme on le ferait
+avec du _XML_ par exemple. En effet, lorsque l'on manipule un format de données comme le _XML_, (que vous pouvez comparer à du HTML dans sa
+forme) il est nécessaire de le _parser_. C'est-à-dire que notre application doit le **lire** et le **comprendre** afin d'en faire ce qu'on veut.
+C'est une opération généralement complexe que l'on laisse à du code externe développé et éprouvé par d'autres personnes, afin de gagner du
+temps et d'éviter les erreurs. Mais pour le JSON c'est différent, car c'est une syntaxe qui vient des **objets en JavaScript**. Ainsi, votre
+navigateur sait directement le lire et le transformer en objets JavaScript. Si l'on reprend l'exemple de JSON précédent, il nous fournira donc
+un objet JavaScript comme celui du premier échantillon de code ci-dessus.
+
+Le deuxième avantage de ce format est sa **légèreté** par rapport à un format comme le _XML,_ qui reste bien plus verbeux, c'est-à-dire avec
+plus de texte. C'est un gros avantage lorsqu'on communique avec un service web, car cela permet d'optimiser les temps de réponse. En effet, un
+nombre plus faible d'octets a besoin de transiter dans le réseau.
+
+#### Récupérez le résultat de la requête
+
+Avec tout ce que l'on vient d'apprendre, il n'est plus très difficile d'utiliser le résultat de la requête pour en faire ce que l'on veut. Pour
+cela Fetch va nous renvoyer une **Promise**.
+
+:::info
+Pour faire simple : la _Promise_ est un objet qui fournit une fonction _then_ qui sera exécutée quand le résultat aura été obtenu, et une
+fonction _catch_ qui sera appelée s’il y a une erreur qui est survenue lors de la requête (Nous verrons tout cela plus en détail dans la partie
+3).
+:::
+
+Voici comment procéder avec un service qui fait un simple echo :
+
+```javascript
+fetch("https://mockbin.com/request")
+    .then(function(res) {
+        if (res.ok) {
+            return res.json();
+        }
+    })
+    .then(function(value) {
+        console.log(value);
+    })
+    .catch(function(err) {
+        // Une erreur est survenue
+    });
+```
+
+Vous pouvez voir dans l'exemple ci-dessus que l'URL passée à la fonction `fetch()` a changé et correspond à l’URL de notre service web. Le type
+de requête est GET (ce qui est le cas par défaut avec _Fetch_) car nous voulons récupérer les données.
+
+Ensuite nous appelons la fonction `then()` pour récupérer le résultat de la requête au format _json_ en ayant vérifié au préalable que la
+requête s’était bien passée avec `res.ok`. Ce résultat _json_ étant lui aussi une _Promise_, nous le retournons et récupérons sa vraie valeur
+dans la fonction `then()` suivante.
+
+Voici ce que nous obtenons de l’API à l’heure où j’écris ces lignes :
+
+<figure>
+    <img src="https://user.oc-static.com/upload/2021/04/04/16175573146865_image8.png"
+         alt="Un extrait JSON de la réponse à la requête" />
+    <figcaption>Extrait JSON</figcaption>
+</figure>
+
+### À vous de jouer !
+
+![16189267631776_A-vous-de-jouer%20%282%29.png](https://user.oc-static.com/upload/2021/04/20/16189267631776_A-vous-de-jouer%20%282%29.png)
+
+Exercez-vous maintenant avec ce que nous venons d'apprendre.
+
+Rendez-vous dans [cet éditeur CodePen](https://codepen.io/fabienhenon/pen/vYxYjpJ) pour réaliser l'exercice suivant :
+Dans cet exercice nous voulons récupérer les salutations et les afficher dès que nous cliquons sur le bouton _"Bien le bonjour"_
+- **Etape 1** : Nous allons commencer par la création d'une fonction `askHello` qui va créer une requête avec fetch de type `GET` vers le
+service web avec l'URL `https://mockbin.com/request?greetings=salut.`
+- **Etape 2** : Maintenant, nous voudrions récupérer la réponse du service web et l'afficher dans l'élément ayant pour ID `hello-result`.
+Modifiez donc notre fonction `askHello` afin de récupérer la réponse du service web dès que tout s'est bien passé. Le service web vous
+retournera une réponse au format JSON, et vous aurez besoin d'afficher la propriété greetings se trouvant dans l'objet `queryString`.
+
+Voici à quoi ressemble la réponse JSON :
+
+```json
+{
+    "queryString": {
+        "greetings": "Salut",
+        ...
+    },
+    ...
+}
+```
+
+- **Etape 3** : Enfin, nous voulons afficher la salutation (et donc appeler notre fonction `askHello`) dès que nous cliquons sur le bouton
+ayant pour ID `ask-hello`.
+
+<CodePen codePenId="vYxYjpJ" />
+
+```javascript
+function askHello() {
+  fetch("https://mockbin.com/request?greetings=salut")
+  .then(function(res) {
+    if (res.ok) {
+      return res.json();
+    }
+  })
+  .then(function(value) {
+    document
+        .getElementById("hello-result")
+        .innerText = value.queryString.greetings;
+  })
+  .catch(function(err) {
+    // Une erreur est survenue
+  });
+}
+
+document
+  .getElementById("ask-hello")
+  .addEventListener("click", askHello);
+```
+
+:::info
+Vous avez essayé ? Voici la [correction CodePen](https://codepen.io/fabienhenon/pen/RwovXJd).
+:::
+
+<CodePen codePenId="RwovXJd" />
+
+### En résumé
+
+Dans ce chapitre, vous avez appris :
+- Que l’API Fetch permet de faire des requêtes HTTP vers un service web ;
+- Comment l'utiliser pour faire une requête simple à un service web ;
+- Que le format JSON est très utilisé dans la communication avec les API des services web car il est très proche des objets JavaScript ;
+- Comment récupérer les données envoyées par un service web.
+
+_Maintenant que nous savons faire une requête de type GET pour récupérer des données du service web, nous allons voir comment faire une requête
+POST pour envoyer des données au service web. Mais avant ça, voyons comment préparer nos données à être envoyées au service web._
+
+-----
+
+## Validez les données saisies par vos utilisateurs
+
+[Validez les données saisies par vos utilisateurs - Écrivez du JavaScript pour le web - OpenClassrooms](https://openclassrooms.com/fr/courses/5543061-ecrivez-du-javascript-pour-le-web/5577611-validez-les-donnees-saisies-par-vos-utilisateurs)
+
+<Vimeo vimeoId="539127837" />
+
+<br />
+
+Avant d'envoyer nos données à un service web, il est nécessaire de les **valider**. C'est-à-dire que nous allons vérifier leur **cohérence**
+par rapport à ce que le service web attend.
+
+Les données que l'on souhaite envoyer à un service web viennent généralement de ce que l'utilisateur saisit dans un formulaire ; or, ce n'est
+pas parce que vous lui avez explicitement demandé d'entrer un numéro de téléphone qu'il va le faire...
+
+### Never trust user input!
+
+Ce qui se traduit littéralement par : **Ne faites jamais confiance aux données saisies par vos utilisateurs !**
+
+Il est bon de le rappeler :
+
+:::caution
+Ne faites jamais confiance à vos utilisateurs !
+:::
+
+Bon, maintenant je pense qu'il est temps d'expliquer pourquoi il faut être si méfiant envers vos utilisateurs, et pourquoi c'est si important.
+
+Certains de vos utilisateurs peuvent être **malveillants** ou ils peuvent **ne pas bien comprendre** ce que vous souhaitez qu'ils fassent. Bref,
+ils ne vont pas toujours entrer les données que vous attendez d'eux. Or, cela peut se révéler désastreux pour votre site web, et ce, de
+plusieurs façons :
+- Si l'utilisateur ne comprend pas ce que vous attendez de lui, il peut entrer quelque chose qui ne vous convient pas. Votre service web ne
+fera pas ce qu'il faut et l'utilisateur ne comprendra pas pourquoi ça ne marche pas. Vous risquez de **perdre** cet utilisateur parce que vous
+n'avez pas validé les données saisies et affiché un message d'erreur indiquant que les données ne sont pas celles attendues ;
+- Pire encore, l'utilisateur pourrait **attaquer** votre service web en entrant des **données malveillantes** dans un champ alors que vous
+attendiez simplement un nom, par exemple. Dans ce cas, il pourrait prendre le contrôle de votre service web, collecter des données utilisateurs,
+se faire passer pour un administrateur, et j'en passe... (il existe des tonnes de ressources sur Internet donnant des exemples de ces types
+d'attaques. Si cela vous intéresse, je vous encourage à faire quelques recherches) ;
+- De la même manière, l'utilisateur pourrait **faire planter** votre application s'il entrait du texte dans un champ où vous attendiez un nombre.
+
+Nous allons apprendre ici à valider les données utilisateur sur votre site web avant de les envoyer à votre service web. Cela constitue un
+premier rempart face aux problèmes cités plus haut, même si ce n'est pas suffisant, **il faudra toujours avoir une validation poussée des
+données utilisateurs sur le service web**.
+
+:::caution
+C'est important, car rien n'empêchera un utilisateur malveillant d'utiliser un logiciel pour envoyer directement les requêtes HTTP malveillantes
+à votre service web. De cette manière, elles ne passeront pas par la case validation côté site web...
+:::
+
+### Validez les données suite à des événements
+
+Afin de valider les données utilisateurs, vous pouvez vous aider des événements du _DOM_. Ainsi, vous pouvez écouter l'événement `onChange` pour
+vérifier la donnée, dès que l'utilisateur a fini de l'éditer. Ou bien vous pouvez écouter l'événement `onInput` pour vérifier la donnée à chaque
+nouveau caractère.
+
+Par exemple, vous pouvez vérifier que ce qui est saisi commence par `Hello` avec le code suivant :
+
+```javascript
+myInput.addEventListener('input', function(e) {
+    var value = e.target.value;
+    if (value.startsWith('Hello ')) {
+        isValid = true;
+    } else {
+        isValid = false;
+    }
+});
+```
+
+### Faites une validation plus complexe avec les Regex
+
+Si vous n'avez jamais entendu parlé des _**Regex**,_ sachez qu'il s'agit d'un format spécial qui permet de _matcher_ du texte, c'est-à-dire de
+vérifier qu'un texte corresponde à une _description_ que l'on a définie. Ainsi, si l'on veut savoir si notre texte commence par la lettre `e` et
+est suivi d'au moins 3 chiffres, on écrira la _regex_ suivante :
+
+```javascript
+function isValid(value) {
+    return /^e[0-9]{3,}$/.test(value);
+}
+```
+
+Cela peut paraître barbare comme notation, mais c'est très puissant et très pratique !
+
+:::info
+Pour en savoir plus, [un peu de documentation](https://regexr.com/) ne fait pas de mal. 😉
+:::
+
+### Découvrez les contraintes HTML5
+
+Depuis _HTML_ version 5, il est possible d'ajouter de la validation **directement** dans le code HTML, sans avoir besoin d'écrire la moindre
+ligne de JavaScript.
+
+Pour cela, différents **attributs** sont ajoutés et permettent d'**empêcher la soumission d'un formulaire** si toutes les validations ne sont
+pas respectées.
+
+#### L'attribut type pour les inputs
+
+Pour valider les informations saisies dans une balise `input`, il est possible d'utiliser l'attribut `type`.
+
+L'attribut `type` de la balise `input` ne prend pas seulement comme valeurs `text` et `password`. Cela peut aussi être `email`, `tel`, `URL`,
+`date` et bien d'autres.
+
+Lorsque vous ajoutez un élément `input` avec un attribut `type="email"`, le navigateur empêchera la soumission du formulaire si ce n'est pas
+une adresse email correcte.
+
+#### Les attributs de validation simples
+
+En fonction du `type` de l'`input`, vous pouvez utiliser différents attributs pour **perfectionner** votre validation :
+- `min` / `max` : fonctionne avec des champs de type _**nombre**_ ou _**date**_. Cela permet de définir une valeur minimum et une valeur
+maximum autorisées ;
+- `required` : fonctionne avec à peu près **tous les types de champs**. Cela rend obligatoire le remplissage de ce champ ;
+- `step` : fonctionne avec les **dates** ou les **nombres**. Cela permet de définir une valeur d'incrément lorsque vous changez la valeur du
+champ via les flèches ;
+- `minlength` / `maxlength` : fonctionne avec les **champs textuels** (`text`, `url`, `tel`, `email`...). Cela permet de définir un nombre de
+caractères minimum et maximum autorisé.
+
+#### Les patterns
+
+Nous avons vu qu'il était possible d'avoir une validation complexe grâce aux Regex en JavaScript. Eh bien c'est aussi possible directement en
+HTML5 avec l'attribut `pattern`. Il suffit de définir une Regex dans cet attribut, et vous obligez la valeur du champ correspondant à la
+respecter.
+
+Par exemple, si on prend le code suivant :
+
+```html
+<input type="text" pattern="[0-9]{,3}" />
+```
+
+il empêchera un utilisateur d'entrer autre chose que des chiffres, et limitera leur nombre à 3 chiffres.
+
+:::info
+Pour en savoir plus, vous pouvez aller faire un tour sur [MDN](https://developer.mozilla.org/en-US/docs/Web/Guide/HTML/HTML5/Constraint_validation)
+(documentation en anglais).
+:::
+
+### À vous de jouer !
+
+![16189267631776_A-vous-de-jouer%20%282%29.png](https://user.oc-static.com/upload/2021/04/20/16189267631776_A-vous-de-jouer%20%282%29.png)
+
+Voici quelques exercices pour vous faire les dents sur la validation 😎. Rendez-vous sur [cet éditeur CodePen](https://codepen.io/nicolaspatschkowski/pen/GRJQvGY)
+et réalisez les étapes suivantes:
+1. Nous souhaitons dans un premier temps valider le champ `Code` du formulaire. A chaque lettre saisie dans le champ ayant pour ID `code` nous
+voulons vérifier que la valeur du champ commence bien par `CODE-` grâce à une _Regex_ que voici : `/^CODE-/`. Si la valeur commence bien par
+`CODE-` alors nous affichons dans l'élément ayant pour ID `code-validation` : `Code valide`, sinon nous affichons dans cet élément
+`Code invalide`.
+2. Maintenant que nous savons si notre code est valide ou non, nous voudrions griser (grâce à l'attribut `disabled`) le bouton de soumission
+(L'input de type `submit` ayant pour ID `submit-btn`) quand le code est invalide, et le dégriser quand le code est valide.<br />
+Cela signifie que nous allons devoir ajouter un attribut `disabled="true"` au bouton de soumission quand le code est invalide. Et supprimer cet
+attribut `disabled` quand le code est valide (Rappelez-vous du cours sur la modification du DOM pour définir et supprimer des attributs).
+3. Finalement, nous avons un champ `Email` et nous voudrions le rendre obligatoire et obliger l'utilisateur à entrer une adresse email valide.
+Il faudra aussi empêcher le formulaire de se soumettre s'il n'est pas valide.<br />
+Mais nous voudrions faire tout ça uniquement avec le HTML5, sans utiliser de code JavaScript.<br />
+Vous pouvez changer le `type` du champ email plutôt que d'utiliser une Regex via `pattern` ![;)](https://openclassrooms.com/bundles/common/images/smiley/clin.png)
+
+<CodePen codePenId="GRJQvGY" />
+
+```javascript
+document
+  .getElementById("code")
+  .addEventListener("input", function(e) {
+    if (/^CODE-/.test(e.target.value)) {
+      document.getElementById("code-validation").innerText = "Code valide";
+      document.getElementById("submit-btn").removeAttribute("disabled");
+    } else {
+      document.getElementById("code-validation").innerText = "Code invalide";
+      document.getElementById("submit-btn").setAttribute("disabled", true);
+    }
+});
+```
+
+```html
+<label>Email : <input type="email" name="email" required /></label>
+```
+
+Vous avez terminé ? Voici la [solution CodePen](https://codepen.io/fabienhenon/pen/JjbxgaZ) !
+
+<CodePen codePenId="JjbxgaZ" />
+
+### En résumé
+
+Dans ce chapitre, vous avez appris :
+- Qu'il ne faut jamais faire confiance à l'utilisateur ;
+- À valider des données lors d'événements ;
+- À utiliser les Regex pour valider les données ;
+- À utiliser les attributs fournis par HTML pour valider les données.
+
+_Maintenant qu'on peut protéger notre site web de nos utilisateurs, et leur afficher de beaux messages d'erreur quand les données saisies ne
+sont pas celles attendues, nous allons pouvoir sauvegarder nos données sur notre service web !_
+
+-----
+
+## Sauvegardez des données sur le service web
+
+[Sauvegardez des données sur le service web - Écrivez du JavaScript pour le web - OpenClassrooms](https://openclassrooms.com/fr/courses/5543061-ecrivez-du-javascript-pour-le-web/5577626-sauvegardez-des-donnees-sur-le-service-web)
+
+<Vimeo vimeoId="539127891" />
+
+<br />
+
+### Envoyez des données, comment ça marche ?
+
+Nous avons vu précédemment que grâce au protocole HTTP, nous pouvions demander à récupérer des données de notre service web.
+
+Eh bien, c'est aussi possible d'en envoyer au service web en les ajoutant à notre requête !
+
+Cependant, cela ne se fait pas avec toutes les méthodes (qu'on appelle aussi des _verbs_) HTTP. En effet, la méthode **GET** est seulement
+faite pour récupérer des données, alors que des méthodes comme **POST** et **PUT** sont faites pour en envoyer et en recevoir.
+
+Le fonctionnement d'un verb à l'autre est très similaire. Avec les verbs **POST** et **PUT**, nous allons simplement ajouter des données dans
+le corps de notre requête.
+
+### Envoyez des données avec une requête POST
+
+Afin d'envoyer des données à un service web avec la méthode **POST** via AJAX, nous allons devoir passer par la méthode `send()` en lui passant
+en paramètres les données à envoyer.
+
+```javascript
+fetch("http://url-service-web.com/api/users", {
+    method: "POST",
+    headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(jsonBody)
+});
+```
+
+Comme vous pouvez le voir, nous avons passé le contenu à envoyer au service web à notre fonction `fetch()`. Étant donné que l'on souhaite
+**envoyer du JSON** à notre service web, nous avons d'abord besoin de transformer notre objet JavaScript en JSON (qui, rappelons-le, est un
+format textuel, c'est-à-dire que c'est simplement du texte, contrairement à un objet JavaScript qui est une structure complexe du langage).
+
+Pour faire cette transformation, nous utilisons la fonction `JSON.stringify(json)`. Toujours parce que l'on souhaite envoyer du JSON à notre
+service web, il faut alors le prévenir qu'il va **recevoir du JSON**. Cela se fait grâce à des **headers**, qui sont des en-têtes envoyés en
+même temps que la requête pour donner plus d'informations sur celle-ci. Les headers en question sont  :
+- `Content-Type`, avec la valeur  application/json,
+- `Accept`, avec la valeur application/json .
+
+Ces options sont envoyées avec la requête grâce au second paramètre de la fonction _fetch()_. Ce paramètre est un objet qui permet de définir : 
+- la **méthode HTTP**, le **body**, c’est à dire les données qu’on souhaite envoyer,
+- les **headers** qui donnent un peu plus d’information sur notre requête.
+
+:::info
+_PUT_ fonctionne exactement de la même manière que _POST_.
+:::
+
+### À vous de jouer !
+
+![16189267631776_A-vous-de-jouer%20%282%29.png](https://user.oc-static.com/upload/2021/04/20/16189267631776_A-vous-de-jouer%20%282%29.png)
+
+Voici un petit exercice, à réaliser sur [cet éditeur CodePen](https://codepen.io/nicolaspatschkowski/pen/OJVQjBq).
+
+Dans cet exercice nous voulons pouvoir entrer du texte dans le formulaire et l'envoyer vers un service web. Ce service web va simplement nous
+renvoyer notre contenu en plus d'autres informations et nous allons afficher le contenu renvoyé par le serveur.
+1. Nous allons commencer par créer une fonction appelée `send` et qui va créer notre requête.<br />
+Nous souhaitons créer une requête de type `POST` vers l'adresse suivante : `https://mockbin.com/request`, et y envoyer un contenu JSON ayant
+une propriété `value` qui contiendra la valeur du champ de saisie de la page (avec l'ID `value`). Par exemple :
+`{value: document.getElementById("value").value}`.<br />
+Nous souhaitons aussi, lorsque la requête s'est bien envoyée, afficher le résulat renvoyé par le service web. Pour ce faire, nous allons
+afficher ce qui se trouve dans `postData.text` de la réponse dans le contenu HTML de l'élément ayant pour ID `result`.
+2. Maintenant nous voulons envoyer notre requête, et donc appeler notre fonction `send` dès que nous soumettons le formulaire ayant pour ID
+`form`.
+
+N'oubliez pas d'annuler le comportement par défaut de la soumission du formulaire, sinon votre page va se recharger.
+
+<CodePen codePenId="OJVQjBq" />
+
+```javascript
+function send(e) {
+  e.preventDefault();
+  fetch("https://mockbin.com/request", {
+    method: "POST",
+    headers: {
+      'Accept': 'application/json', 
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({value: document.getElementById("value").value})
+  })
+  .then(function(res) {
+    if (res.ok) {
+      return res.json();
+    }
+  })
+  .then(function(value) {
+      document
+        .getElementById("result")
+        .innerText = value.postData.text;
+  });
+}
+
+document
+  .getElementById("form")
+  .addEventListener("submit", send);
+```
+
+Voici le [CodePen avec la solution](https://codepen.io/fabienhenon/pen/GRNepeG) pour vous corriger. 😉
+
+<CodePen codePenId="GRNepeG" />
+
+### En résumé
+
+Dans ce chapitre, vous avez appris :
+- Que l'envoi de données en HTTP se fait via certains verbs : `POST` ou `PUT`.
+- À envoyer des données en HTTP.
+
+_Vous savez comment envoyer des requêtes à un service web pour lui demander des ressources ou en créer de nouvelles. Dans la partie suivante,
+nous aborderons l'asynchronisme en JavaScript afin d'exécuter du code en "parallèle"._
+
+-----
+
+## Quiz : Communiquez avec un service web
+
+[Communiquez avec un service web - OpenClassrooms](https://openclassrooms.com/fr/courses/5543061-ecrivez-du-javascript-pour-le-web/exercises/3182)
+
+#### Compétences évaluées
+
+<i class="bi bi-check2-circle"></i> Communiquer avec un service web
+
+-----
+
+#### Question 1 : Qu'est-ce que le HTTP ?
+
+<i class="bi bi-circle"></i> Un protocole permettant de communiquer avec tout ce qu'on veut<br />
+<i class="bi bi-record-circle"></i> Un protocole permettant de communiquer avec un service web<br />
+<i class="bi bi-circle"></i> Un objet JavaScript permettant de communiquer avec tout ce qu'on veut<br />
+<i class="bi bi-circle"></i> Un objet JavaScript permettant de communiquer avec un service web<br />
+<br />
+
+_HTTP est un protocole permettant de communiquer avec des services web. Il signifie **HyperText Transfer Protocol**._
+
+-----
+
+#### Question 2 : Quel objet permet de créer des requêtes HTTP en JavaScript ?
+
+<i class="bi bi-circle"></i><code>HttpRequest</code><br />
+<i class="bi bi-circle"></i><code>FetchRequest</code><br />
+<i class="bi bi-circle"></i><code>HttpFetch</code><br />
+<i class="bi bi-record-circle"></i><code>Fetch</code><br />
+<br />
+
+_C'est `Fetch` qui permet de faire des requêtes HTTP vers un service web en JavaScript._
+
+_Elle prend en paramètre l’URL de destination ainsi que des options liées au paramétrage de la requête HTTP, et elle nous renverra une
+`Promise` contenant la réponse du service web. Pour plus d’informations, je vous invite à lire la [documentation de Fetch](https://developer.mozilla.org/fr/docs/Web/API/Fetch_API/Using_Fetch)._
+
+-----
+
+#### Question 3 : Qu'est-ce que le JSON ?
+
+<i class="bi bi-circle"></i> Un format de données binaire, illisible et difficile à parser<br />
+<i class="bi bi-record-circle"></i> Un format textuel, peu verbeux et très proche de la syntaxe des objets JavaScript<br />
+<i class="bi bi-circle"></i> Un format textuel, très verbeux, mais que l'on peut tout de même utiliser en JavaScript<br />
+<br />
+
+_JSON signifie : **JavaScript Object Notation**. Il s'agit d'un format textuel très simple et peu verbeux, que JavaScript comprend très
+facilement car il est proche de sa syntaxe objet (d'où son nom)._
+
+-----
+
+#### Question 4 : Que fait cet extrait ?
+
+```javascript
+JSON.parse(value)
+```
+
+<i class="bi bi-record-circle"></i> Il transforme un contenu JSON en objet JavaScript<br />
+<i class="bi bi-circle"></i> Il transforme un objet JavaScript en contenu JSON<br />
+<i class="bi bi-circle"></i> La fonction  `parse`  n’existe pas<br />
+<br />
+
+_`JSON.parse(value)` permet bien de transformer du texte JSON en un objet JavaScript._
+
+-----
+
+#### Question 5 : Que fait cet extrait ?
+
+```javascript
+JSON.stringify(value)
+```
+
+<i class="bi bi-circle"></i> Il transforme un contenu JSON en objet JavaScript<br />
+<i class="bi bi-record-circle"></i> Il transforme un objet JavaScript en contenu JSON<br />
+<i class="bi bi-circle"></i> La fonction stringify n’existe pas<br />
+<br />
+
+_`JSON.stringify(value)` va transformer un objet JavaScript passé en paramètre en un texte au format JSON._
+
+-----
+
+#### Question 6 : Que va afficher cet extrait dans la console ?
+
+```javascript
+fetch("http://url-de-mon-service")
+    .then(function(res) {
+        console.log(res.json());
+    });
+```
+
+<i class="bi bi-circle"></i> Une Promise qui sera résolue avec le contenu au format JSON de la réponse à la requête GET<br />
+<i class="bi bi-record-circle"></i> Une Promise qui sera résolue avec l’objet JavaScript qui correspond à la réponse à la requête GET (parsée
+depuis du JSON)<br />
+<i class="bi bi-circle"></i> Le contenu de la réponse à la requête GET au format JSON<br />
+<i class="bi bi-circle"></i> Le contenu de la réponse à la requête GET directement en objet JavaScript<br />
+<br />
+
+_Il s'agit de la 2e réponse. En effet, la fonction `json()` permet de transformer du contenu JSON en objet JavaScript. Mais elle ne retourne
+pas directement l’objet, elle retourne une Promise, qui devra être résolue._
+
+-----
+
+#### Question 7 : Comment sera traité ce champ ?
+
+```html
+<input type=”email” required />
+```
+
+<i class="bi bi-record-circle"></i> Il sera obligatoire et devra être au format d’un e-mail<br />
+<i class="bi bi-circle"></i> Il sera obligatoire mais pourra contenir n’importe quoi, dont une adresse e-mail<br />
+<i class="bi bi-circle"></i> Il n’est pas obligatoire mais doit contenir une adresse e-mail<br />
+<i class="bi bi-circle"></i> Il n’est obligatoire que s’il contient une adresse e-mail<br />
+<br />
+
+_Pour forcer le champ à être une adresse e-mail, il faut que son `type` soit `email`. Pour obliger l'utilisateur à entrer une valeur dans ce
+champ, il faut lui ajouter l'attribut `required`._
+
+-----
+
+#### Question 8 : Que fait cet extrait ?
+
+```javascript
+fetch("http://url-service-web", {
+    method: “POST”,
+    headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({foo: “bar”})
+});
+```
+
+<i class="bi bi-circle"></i> Il fait une requête de type GET avec le contenu JSON <code>"&#123;"foo": "bar"}"</code><br />
+<i class="bi bi-record-circle"></i> Il fait une requête de type POST avec le contenu JSON <code>"&#123;"foo": "bar"}"</code><br />
+<i class="bi bi-circle"></i> Il fait une requête de type GET avec le contenu JSON <code>&#123;foo: "bar"}</code><br />
+<i class="bi bi-circle"></i> Il fait une requête de type POST avec le contenu JSON <code>&#123;foo: "bar"}</code><br />
+<br />
+
+_Faites bien attention au fait que la fonction JSON.stringify transforme notre objet JavaScript en JSON, et que le JSON n’est rien d’autre que
+du texte. Dans notre exemple, la réponse 4 n’est pas valide car `{foo: "bar”}` est du JavaScript et non du JSON._
+

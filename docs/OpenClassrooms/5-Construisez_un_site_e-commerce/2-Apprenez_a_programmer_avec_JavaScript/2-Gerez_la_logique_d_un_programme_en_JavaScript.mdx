@@ -18,7 +18,7 @@ import { Vimeo, CodePen } from 'mdx-embed';
 
 <br />
 
-### **Découvrez l'avantage de JavaScript : un langage, de nombreux environnements**
+### Découvrez l'avantage de JavaScript : un langage, de nombreux environnements
 
 L'avantage du JavaScript, c'est que ce langage vous permet de programmer dans de nombreux environnements différents. Gardez cependant en tête
 que la façon d'exécuter le code est légèrement différente dans chaque environnement. Nous allons ici explorer brièvement trois environnements
@@ -426,4 +426,615 @@ Félicitations pour l'achèvement de ce chapitre ! Nous avons traité beaucoup d
 _Dans le chapitre suivant, nous allons nous intéresser à la répétition de tâches avec des_ **_boucles._**
 
 -----
+
+## Utilisez la bonne boucle pour répéter les tâches (for, while)
+
+[Utilisez la bonne boucle pour répéter les tâches (for, while) - Apprenez à programmer avec JavaScript - OpenClassrooms](https://openclassrooms.com/fr/courses/6175841-apprenez-a-programmer-avec-javascript/6279104-utilisez-la-bonne-boucle-pour-repeter-les-taches-for-while)
+
+<Vimeo vimeoId="528290517" />
+
+<br />
+
+En programmation, il y a des ensembles d'instructions à répéter plusieurs fois. Parfois, vous connaîtrez à l'avance le nombre de répétitions,
+d'autres fois non. Il est aussi possible que le nombre de fois n'importe pas, et que vous souhaitiez répéter le code jusqu'à atteindre une
+certaine condition. Pour tous ces cas, nous utiliserons des **boucles**.
+
+### Utilisez la boucle for pour savoir "combien de fois ?"
+
+Supposons que vous ayez à faire embarquer 10 passagers, et que pour l'instant vous n'accordiez pas d'importance à l'ordre de leur embarquement.
+Utilisez une boucle `for` pour les embarquer un par un jusqu'à atteindre 10 :
+
+```javascript
+const numberOfPassengers = 10;
+for (let i = 0; i < numberOfPassengers; i++) {
+    console.log("Passager embarqué !");
+}
+```
+
+Pour cette boucle `for`, créez une variable d'indice `i` qui sert de compteur pour le nombre d'exécutions de la boucle. C'est pour cette raison
+qu'elle démarrera à zéro, car on n'a pas encore parcouru la boucle.
+
+La deuxième commande dans les parenthèses `for` est la condition de poursuite de la boucle : dès qu'elle s'évalue comme `false`, on quitte la
+boucle. Dans ce cas, vous souhaitez l'exécuter autant de fois qu'il y a de passagers, donc quand l'indice `i` atteint 10 (après 10 boucles),
+vous souhaitez l'arrêter, car il n'y a plus de passager.
+
+<figure>
+    <img src="https://user.oc-static.com/upload/2021/03/29/16170342117078_P2C3_programmation.png"
+         alt="Schéma récapitulatif du paragraphe précédent sur la boucle For" />
+    <figcaption>Le principe de la boucle For</figcaption>
+</figure>
+
+La troisième commande demande à la boucle `for` d'incrémenter `i` (ajouter 1) à chaque exécution. C'est ce qui permet de suivre le nombre
+d'exécutions de la boucle.
+
+JavaScript termine la boucle avant d'exécuter tout autre code, donc si vous deviez écrire ceci :
+
+```javascript
+const numberOfPassengers = 10;
+for (let i = 0; i < numberOfPassengers; i++) {
+    console.log("Passager embarqué !");
+}
+console.log("Tous les passagers sont embarqués !");
+```
+
+... la dernière sortie de console s'imprimerait _après_ l'embarquement des 10 passagers.
+
+Le travail sur des indices, c'est bien, mais si vous souhaitiez utiliser un tableau de passagers pour les embarquer dans un ordre précis ?
+
+### Travaillez sur des tableaux : `for… of` et `for… in`
+
+Dans beaucoup de cas, vous aurez un tableau et devrez le parcourir, pour faire quelque chose sur chaque élément. Il peut s'agir de mettre à jour
+les prix sur un menu, de traiter les données d'une base de données, ou d'embarquer des passagers dans l'ordre.
+
+L'ancienne façon de parcourir un tableau dans une boucle était d'utiliser la boucle `for` vue précédemment avec sa propriété `length`. Par
+exemple, avec un tableau appelé `passengers` :
+
+```javascript
+for (let i = 0; i < passengers.length; i++) {
+    console.log("Passager embarqué !");
+}
+```
+
+Bien que ceci fonctionne, il y a deux façons plus faciles de parcourir en boucle des tableaux (ou de faire une itération sur leurs éléments).
+
+#### La boucle `for… in`
+
+La boucle `for… in` est très comparable à l'exemple de boucle `for` normale, mais elle est plus facile à lire, et effectue tout le travail
+d'itération pour vous :
+
+```javascript
+const passengers = [
+    "Will Alexander",
+    "Sarah Kate'",
+    "Audrey Simon",
+    "Tao Perkington"
+]
+for (let i in passengers) {
+    console.log("Embarquement du passager " + passengers[i]);
+}
+```
+
+Comme dans l'exemple précédent, `i` démarre automatiquement à zéro, et s'incrémente à chaque boucle. Vous imprimez donc `passengers[0]`, puis
+`passengers[1]`, puis `passengers[2]`, etc., jusqu'à terminer l'itération sur tous les passagers. Vous pouvez bien sûr imprimer chaque élément
+sur la console, car chacun est une chaîne contenant le nom du passager.
+
+#### La boucle `for… of`
+
+Pour les cas où l'indice précis d'un élément n'est pas nécessaire pendant l'itération, vous pouvez utiliser une boucle `for… of` :
+
+En reprenant l'exemple précédent et en utilisant à la place une boucle `for… of`, vous obtenez :
+
+```javascript
+const passengers = [
+    "Will Alexander",
+    "Sarah Kate",
+    "Audrey Simon",
+    "Tao Perkington"
+]
+for (let passenger of passengers) {
+    console.log("Embarquement du passager " + passenger);
+}
+```
+
+Ceci produit exactement le même résultat, mais de façon plus lisible, car vous n'avez pas à vous inquiéter des indices et des tableaux : vous
+recevez simplement chaque élément dans l'ordre. C'est encore plus utile si le tableau est un peu plus complexe et contient par exemple des
+objets :
+
+```javascript
+const passengers = [
+    {
+        name: "Will Alexander",
+        ticketNumber: 209542
+    },
+    {
+        name: "Sarah Kate",
+        ticketNumber: 169336
+    },
+    {
+        name: "Audrey Simon",
+        ticketNumber: 779042
+    },
+    {
+        name: "Tao Perkington",
+        ticketNumber: 703911
+    }
+]
+for (let passenger of passengers) {
+    console.log('Embarquement du passager ' + passenger.name + ' avec le ticket numéro ' + passenger.ticketNumber);
+}
+```
+
+#### Pratiquez les boucles `for`
+
+![16165901356926_A-vous-de-jouer.png](https://user.oc-static.com/upload/2021/03/24/16165901356926_A-vous-de-jouer.png)
+
+Voici un entraînement qui utilise des tableaux et des boucles `for`.
+
+Rendez-vous sur cet [éditeur CodePen](https://codepen.io/nicolaspatschkowski/pen/ZEGRGpG). Le composant épisode a été restructuré, et les
+épisodes sont maintenant importés depuis une base de données.
+
+Maintenant, vous devez implémenter du code qui remettra à zéro l'information de visionnage pour tous les épisodes. Vous allez accomplir cette
+tâche en itérant le tableau `episodes` en assignant la valeur false à la propriété `hasBeenWatched` de chaque épisode.
+
+Le tableau `episodes` a déjà été déclaré pour vous.
+1. Itérez le tableau `episodes` et assignez la valeur false à la propriété `hasBeenWatched` de chaque épisode, en utilisant une boucle for,
+for… in ou for… of.
+2. Maintenant, faites en sorte que tous les épisodes soient considérés comme ayant été vus. Cela fonctionne-t-il également ?
+
+N'oubliez pas, votre code ira entre les commentaires "===" sur l'exercice.
+
+<CodePen codePenId="ZEGRGpG" />
+
+##### Solution
+
+[Voici un nouveau CodePen avec une solution](https://codepen.io/nicolaspatschkowski/pen/dyorvOv) à l’exercice.
+
+<CodePen codePenId="dyorvOv" />
+
+Ces types de boucles fonctionnent très bien pour un nombre fixe d'itérations. Mais vous ne pouvez pas toujours savoir combien de fois une
+boucle doit être exécutée.
+
+### Utilisez la boucle `while` 
+
+Une boucle `while` vérifie si une condition est vraie. Si c'est le cas, la boucle se poursuit ; sinon elle s'arrête. En revenant à l'exemple
+de l'embarquement d'avion : supposons que vous ayez des variables représentant le nombre de sièges restants et le nombre de passagers restants.
+Vous souhaitez continuer l'embarquement jusqu'à l'épuisement du nombre de sièges ou de passagers :
+
+```javascript
+let seatsLeft = 10;
+let passengersStillToBoard = 8;
+let passengersBoarded = 0;
+while (seatsLeft > 0 && passengersStillToBoard > 0) {
+    passengersBoarded++; // un passager embarque
+    passengersStillToBoard--; // donc il y a un passager de moins à embarquer
+    seatsLeft--; // et un siège de moins
+}
+console.log(passengersBoarded); // imprime 8, car il y a 8 passagers pour 10 sièges
+```
+
+Cette boucle `while` poursuit son exécution jusqu'à ce que l'un des nombres `seatsLeft` et `passengersStillToBoard` atteigne zéro, et à ce
+point elle se termine.
+
+### En résumé
+
+Dans ce chapitre, vous avez abordé deux façons de répéter les tâches :
+- la boucle `for`, pour un nombre d'itérations fixe ;
+- la boucle `while`, quand le nombre d'itérations nécessaires est inconnu.
+
+_Dans le chapitre suivant, nous allons nous intéresser à ce qu'on peut faire quand les choses ne se passent pas comme prévu._
+
+-----
+
+## Gérez des erreurs et des exceptions dans votre programme
+
+[Gérez des erreurs et des exceptions dans votre programme - Apprenez à programmer avec JavaScript - OpenClassrooms](https://openclassrooms.com/fr/courses/6175841-apprenez-a-programmer-avec-javascript/6279176-gerez-des-erreurs-et-des-exceptions-dans-votre-programme)
+
+<Vimeo vimeoId="528290624" />
+
+<br />
+
+Ne pas faire d'erreur lorsque l'on code est pratiquement impossible. Dans ce chapitre, vous allez découvrir les différents types d'erreur.
+
+### Découvrez trois types d'erreur
+
+En JavaScript, comme dans beaucoup d'autres langages de programmation, on distingue généralement trois types d'erreur.
+
+<figure>
+    <img src="https://user.oc-static.com/upload/2021/03/24/16165750121307_image2.jpg"
+         alt="Photo avec différentes data sur un écran" />
+    <figcaption>Du code avec une erreur</figcaption>
+</figure>
+
+#### Appréhendez les erreurs de syntaxe
+
+Les erreurs de **syntaxe** (ou _erreurs d'_**_analyse_**) surviennent quand vous avez fait une faute d'écriture dans votre code. Il peut s'agir
+de l'oubli ou de l'ajout d'un crochet ou d'une accolade, d'une faute d'orthographe sur un mot clé, _else_ ou _switch_, par exemple. Elles sont
+généralement assez faciles à corriger (même si vous pouvez passer beaucoup de temps à retrouver les parenthèses manquantes !), et beaucoup
+d'éditeurs de texte ou d'environnements de développement intégrés mettent automatiquement en évidence les erreurs de syntaxe.
+
+:::info
+Un environnement de développement intégré ou **_IDE_** (**I**ntegrated **D**evelopment **E**nvironment) est un logiciel fournissant un ensemble
+d'outils aux développeurs. Il est généralement spécifique à un langage, à une architecture ou à un domaine, et certains sont gratuits (par
+exemple Visual Studio Code), alors que d'autres ne le sont pas (par exemple la suite JetBrains).
+:::
+
+Voici quelques exemples d'erreurs de syntaxe – pourrez-vous les trouver ?
+
+```javascript
+if (seatsRemaining) {
+    passengersBoarded+;
+}
+
+while (seatsRemaining > 0 {
+    passengersBoarded++;
+}
+
+if (seatsRemaining > 0) {
+    passengersBoarded++;
+} else {
+    passengersStillToBoard = 0;
+```
+
+:::info
+Solutions : 1) il manque un +, 2) la parenthèse n'est pas fermée, 3) l'accolade n'est pas fermée !
+:::
+
+#### Découvrez les erreurs logiques
+
+Les erreurs logiques sont un peu plus vicieuses. Elles surviennent quand vous avez fait des erreurs dans la logique de votre programme. Voici
+quelques exemples :
+- affectation d'une valeur erronée à une variable ;
+- mélange de conditions dans les instructions `if` ;
+- ordre incorrect d'écriture des lignes ou des blocs de code.
+
+Avec ce genre d'erreur, votre programme pourra avoir un comportement inattendu dans le meilleur des cas, ou planter dans le pire des cas ! Les
+erreurs logiques sont aussi plus difficiles à trouver et à corriger parce que le code n'est pas faux ; il ne fait simplement pas ce que vous
+souhaitez qu'il fasse !
+
+Exemple d’un code avec une erreur de logique :
+
+```javascript
+//On simule avoir 22 ans donc être majeur
+const monAge = 22;
+if (monAge < 18) {
+    console.log("vous êtes majeur");
+} else {
+    console.log("vous êtes mineur");
+}
+```
+
+Le code a pour objectif d’afficher “vous êtes majeur” quand vous avez 18 ans ou plus, ou alors “vous êtes mineur” si vous avez moins de 18 ans.
+Mais ce code comporte une erreur de logique sur la condition if et affiche “vous êtes mineur” alors que l'âge de comparaison est 22 ans. La
+difficulté ici est que rien ne vous indiquera que c’est une erreur de logique. Seules l’analyse et la relecture de votre code permettront de
+déceler le souci.
+
+#### Gérez les erreurs d'exécution
+
+Les erreurs d'exécution sont un peu différentes. Elles tendent à survenir quand quelque chose d'inattendu se produit dans votre application. Il
+s'agit souvent de quelque chose associé aux ressources extérieures (connexions réseau, appareils physiques, etc.) ou à une saisie/erreur
+humaine.
+
+Mais il y a des situations où vous savez par avance que ce type d'erreur est susceptible de survenir. Dans ces situations, vous pouvez prévoir
+du code de **traitement d'erreur**. De cette façon, une erreur ne fera pas planter votre programme, et pourra être corrigée.
+
+Une façon de traiter les erreurs potentielles consiste à utiliser une instruction `if` / `else` pour vérifier la validité des données :
+
+```javascript
+if (dataExists && dataIsValid) {
+    // utiliser les données ici
+} else {
+    // gérer l'erreur ici
+}
+```
+
+Vous pouvez aussi utiliser des blocs `try` / `catch` pour essayer (**try**) un code pouvant potentiellement renvoyer une erreur, et détecter
+(**catch**) les erreurs éventuelles survenues :
+
+```javascript
+try {
+    // code susceptible à l'erreur ici
+} catch (error) {
+    // réaction aux erreurs ici
+}
+```
+
+:::info
+Retrouvez un autre exemple d'utilisation de `try` / `catch` dans [le glossaire](https://openclassrooms.com/fr/courses/6175841-apprenez-a-programmer-avec-javascript/6280131-memorisez-le-vocabulaire-avec-le-glossaire).
+:::
+
+Quand vous aurez plus d'expérience en développement JavaScript, vous saurez où les erreurs peuvent survenir, et comment vous y préparer et les
+traiter correctement.
+
+### En résumé
+
+Dans ce chapitre, vous avez appris les trois types d'erreurs de programmation :
+- les erreurs de syntaxe – erreurs dans l'utilisation de JavaScript : fautes d'orthographe, crochets manquants, nombre de guillemets incorrect,
+etc. ;
+- les erreurs logiques – erreurs dans l'application du déroulement du programme, par exemple erreurs dans les conditions des instructions `if`
+ou oubli d'incrémentation de l'indice d'une boucle, pouvant potentiellement conduire à une boucle infinie ;
+- les erreurs d'exécution – erreurs souvent causées par des ressources externes telles que réseaux, bases de données ou utilisateurs ; elles
+peuvent être traitées en sachant où elles peuvent survenir, et par des techniques de traitement d'erreur telles que les blocs `try` / `catch`.
+
+_Dans le chapitre suivant, retrouvez une synthèse de ce que vous avez appris dans cette seconde partie._
+
+-----
+
+## Résumé de la partie 2
+
+[Résumé de la partie 2 - Apprenez à programmer avec JavaScript - OpenClassrooms](https://openclassrooms.com/fr/courses/6175841-apprenez-a-programmer-avec-javascript/6279188-resume-de-la-partie-2)
+
+<Vimeo vimeoId="528290767" />
+
+<br />
+
+Dans cette partie du cours, nous avons parlé de la **logique de programme**. Nous avons vu :
+- certains **environnements** où JavaScript peut être utilisé, et la façon dont son **exécution** peut être différente d'un environnement à
+l'autre ;
+- les instructions conditionnelles telles que **if/else** et **switch** ;
+- les **boucles** pour des sections répétitives de code, telles que for et while ;
+- les différents types d'**erreurs**, et comment les **traiter**.
+
+_Dans la partie suivante du cours, nous allons nous intéresser à différentes meilleures pratiques de méthodologie de programmation, telles que
+les_ **_fonctions_** _et les_ **_méthodes_**_._
+
+-----
+
+## Quiz : Vérifiez ce que vous avez appris sur la logique informatique !
+
+[Vérifiez ce que vous avez appris sur la logique informatique ! - OpenClassrooms](https://openclassrooms.com/fr/courses/6175841-apprenez-a-programmer-avec-javascript/exercises/3498)
+
+#### Compétences évaluées
+
+<i class="bi bi-check2-circle"></i> Gérer la logique d'un programme en JavaScript
+
+-----
+
+#### Question 1 : Quelle est la valeur de `message` à la fin de cet extrait ?
+
+```javascript
+let online = true;
+let message = "";
+if (online) {
+    message = "Utilisateur en ligne !";
+} else {
+    message = "Utilisateur hors ligne !";
+}
+```
+
+<i class="bi bi-circle"></i><code>""</code><br />
+<i class="bi bi-record-circle"></i><code>"Utilisateur en ligne !"</code><br />
+<i class="bi bi-circle"></i><code>"Utilisateur hors ligne !"</code><br />
+<br />
+
+*La condition online renvoie `true`, donc le code du bloc `if` est exécuté, le code du bloc `else` n'est pas exécuté.*
+
+-----
+
+#### Question 2 : Quelle est la valeur de `passengersBoarded` à la fin de cet extrait ?
+
+```javascript
+let passengersBoarded = 0;
+if (passengersBoarded <= 10) {
+    passengersBoarded += 10;
+} else {
+passengersBoarded -= (passengersBoarded - 10);
+}
+```
+
+<i class="bi bi-circle"></i><code>0</code><br />
+<i class="bi bi-circle"></i><code>-10</code><br />
+<i class="bi bi-record-circle"></i><code>10</code><br />
+<br />
+
+*La variable `passengersBoarded` est initialisée à zéro, donc le code du bloc `if` est exécuté, le code du bloc `else` ne l'est pas.*
+
+-----
+
+#### Question 3 : De quelle condition a besoin cette instruction `if` pour que `continueBoarding` devienne `true` ?
+
+```javascript
+let passengersRemaining = true;
+let planeIsFull = false;
+let continueBoarding = false;
+if (/* la condition va ici */) {
+    continueBoarding = true;
+}
+```
+
+<i class="bi bi-circle"></i><code>passengersRemaining && planeIsFul</code><br />
+<i class="bi bi-circle"></i><code>passengersRemaining && continueBoarding</code><br />
+<i class="bi bi-record-circle"></i><code>passengersRemaining || planeIsFull</code><br />
+<i class="bi bi-circle"></i><code>planeIsFull || continueBoarding</code><br />
+<br />
+
+*L'opérateur logique OR || permet de vérifier si une condition **ou** l'autre est vraie.*
+
+-----
+
+#### Question 4 : Quelle est la valeur de `welcomeMessage` à la fin de cet extrait ?
+
+```javascript
+const user = {
+    name: "Will Alexander",
+    nationality: "Scottish",
+    accountLevel: "premium",
+};
+
+let welcomeMessage = "";
+
+switch (user.accountLevel) {
+    case "Will Alexander":
+        welcomeMessage = "Hi Will!";
+        break;
+    case "Scottish":
+        welcomeMessage = "Och aye the noo!";
+        break;
+    case "normal":
+        welcomeMessage = "Welcome back!";
+        break;
+    case "premium":
+        welcomeMessage = "Welcome power user!";
+        break;
+    default:
+        welcomeMessage = "Hello there!";
+}
+```
+
+<i class="bi bi-circle"></i><code>"Hi Will!"</code><br />
+<i class="bi bi-circle"></i><code>"Och aye the noo!"</code><br />
+<i class="bi bi-record-circle"></i><code>"Welcome power user!"</code><br />
+<i class="bi bi-circle"></i><code>"Hello there!"</code><br />
+<br />
+
+*L'instruction `switch` vérifie la valeur de la propriété `accountLevel` de l'objet `user`, qui a la valeur `"premium"`. C'est donc ce `case`
+qui est exécuté.*
+
+-----
+
+#### Question 5 : Quelle est la valeur de  `vipStatus`  à la fin de cet extrait ?
+
+```javascript
+let vipStatus = "";
+let guest = {
+    name: "Sarah Kate",
+    age: 21,
+    ticket: true,
+    guestType: "artist"
+};
+
+switch (guest.guestType) {
+    case "artist":
+        vipStatus = "Normal";
+    case "star":
+        vipStatus = "Important";
+        break;
+    case "presidential":
+        vipStatus = "Mega-important";
+        break;
+    default:
+        vipStatus = "None";
+}
+```
+
+<i class="bi bi-circle"></i><code>"Normal"</code><br />
+<i class="bi bi-record-circle"></i><code>"Important"</code><br />
+<i class="bi bi-circle"></i><code>"Mega-imporant"</code><br />
+<i class="bi bi-circle"></i><code>"None"</code><br />
+<br />
+
+*N'oubliez pas d'utiliser des instructions `break` ! Le manque de `break` à la fin du cas `"artist"` fait que le `switch` **cascade** vers le
+cas suivant. On exécute les lignes jusqu'à ce qu'on trouve un break. `vipStatus` prend donc la valeur `"Important"` avant que le `switch` se
+termine avec l'instruction `break`.*
+
+-----
+
+#### Question 6 : Combien de fois la phrase `"Oh hey!"` sera affichée dans la console ?
+
+```javascript
+for (let i = 0; i < 5; i++) {
+    console.log('Oh hey!');
+}
+```
+
+<i class="bi bi-circle"></i> 4<br />
+<i class="bi bi-record-circle"></i> 5<br />
+<i class="bi bi-circle"></i> 6<br />
+<br />
+
+*La boucle sera exécutée 5 fois, car `i` commence à zéro et s'arrête à 5.*
+
+-----
+
+#### Question 7 : Quelle est la valeur de `passengersBoarded` à la fin de cet extrait ?
+
+```javascript
+const passengers = [
+    "Will Alexander",
+    "Sarah Kate",
+    "Audrey Simon",
+    "Tao Perkington"
+];
+
+let passengersBoarded = 10;
+
+for (let i in passengers) {
+    passengersBoarded++;
+}
+```
+
+<i class="bi bi-circle"></i> 6<br />
+<i class="bi bi-circle"></i> 10<br />
+<i class="bi bi-record-circle"></i> 14<br />
+<i class="bi bi-circle"></i> 15<br />
+<br />
+
+*`passengersBoarded` est initialisé à 10, et la boucle est exécutée 4 fois. Le résultat final est donc 14.*
+
+-----
+
+#### Question 8 : Quelle sera la valeur de `vips` à la fin de cet extrait ?
+
+```javascript
+const guests = [
+    {
+        name: "Will Alexander",
+        vip: false
+    },
+    {
+        name: "Sarah Kate",
+        vip: true
+    },
+    {
+        name: "Audrey Simon",
+        vip: true
+    },
+    {
+        name: "Tao Perkington",
+        vip: false
+    }
+];
+
+let vips = 0;
+let normies = 0;
+
+for (let guest of guests) {
+    if (guest.vip) {
+        vips++;
+    }
+}
+```
+
+<i class="bi bi-circle"></i> 0<br />
+<i class="bi bi-circle"></i> 1<br />
+<i class="bi bi-record-circle"></i> 2<br />
+<i class="bi bi-circle"></i> 4<br />
+<br />
+
+*Il y aura 2 `vips`, car la boucle est exécutée une fois pour chaque invité, et vérifie sa propriété `vip`.*
+
+-----
+
+#### Question 9 : Quelle sera la valeur de `guestsSeated` à la fin de cet extrait ?
+
+```javascript
+let guestsSeated = 5;
+
+let seatsRemaining = 10;
+let guestsRemaining = 7;
+
+while (seatsRemaining > 0 && guestsRemaining > 0) {
+    guestsSeated++;
+    seatsRemaining--;
+    guestsRemaining--;
+}
+```
+
+<i class="bi bi-circle"></i> 5<br />
+<i class="bi bi-circle"></i> 7<br />
+<i class="bi bi-circle"></i> 10<br />
+<i class="bi bi-record-circle"></i> 12<br />
+<br />
+
+*`guestsSeated` est initialisé à 5. La boucle est ensuite exécutée jusqu'à ce que `guestsRemaining` passe à zéro (ce qui arrive avant que
+`seatsRemaining` passe à zéro) ; ce qui ajoute 7 invités, pour un résultat final de 12.*
 

@@ -1,0 +1,18 @@
+.doc {
+    padding: 2rem 0;
+    width: 100%;
+}
+
+.docRow {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    align-items: center;
+}
+    
+.docSvg {
+    max-height: 12em;
+    width: 12em;
+
+}

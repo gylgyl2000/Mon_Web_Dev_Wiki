@@ -1,0 +1,296 @@
+---
+id: 4-Retenez-les-notions-du-cours
+title: Retenez les notions du cours
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+import { Vimeo, CodePen } from 'mdx-embed';
+
+# Retenez les notions du cours
+
+## Résumé du cours
+
+[Résumé du cours - Apprenez à programmer avec JavaScript - OpenClassrooms](https://openclassrooms.com/fr/courses/6175841-apprenez-a-programmer-avec-javascript/6280131-resume-du-cours)
+
+<Vimeo vimeoId="528291765" />
+
+<br />
+
+Félicitations pour l'achèvement de ce cours ambitieux ! Vous avez vraiment fait beaucoup de chemin :
+
+- **les briques de base d'une appli :**
+    - variables et leurs types,
+    - objets et classes,
+    - tableaux et collections ;
+- **logique de programmation :**
+    - instructions conditionnelles et boucles,
+    - traitement des erreurs et des exceptions ;
+- **meilleures pratiques :**
+    - comment écrire du code propre,
+    - comment tester et déboguer.
+
+Avec tout ce que vous avez appris ici, vous êtes prêt à passer à l'étape suivante dans le monde de JavaScript. Vous pourriez vous intéresser au
+monde du développement d'interface ou _**frontend**_, écrire du JavaScript pour des interfaces web et d'applis mobiles. Vous pouvez aussi
+apprendre à coder pour les fonctions d'arrière-plan ou _**backend**_, et bâtir des serveurs web et bases de données complètes.
+
+Quoi qu'il en soit, j'espère que vous avez apprécié ce cours autant que j'ai eu de plaisir à l'écrire. Je vous souhaite bonne chance pour la
+suite, et beaucoup de plaisir dans le codage !
+
+### Mémorisez le vocabulaire avec le glossaire
+
+Une variable permet d’associer un nom à une valeur. La valeur peut prendre plusieurs formes (texte, nombre, boolean, etc.). On la déclare avec
+le mot clé `let.
+
+_Exemple_ :
+
+```javascript
+let maVariable = “Contenu de la variable”;
+```
+
+#### Constante
+
+Une constante est une variable qui a la particularité de ne pas pouvoir changer de valeur dans le temps. On la déclare avec le mot clé `const`.
+
+_Exemple_ :
+
+```javascript
+const maConstant = “Production”;
+```
+
+#### Type
+
+Un type correspond à la nature des valeurs que peut prendre une donnée (string, number, array, etc).
+
+_Exemple_ :
+
+```javascript
+let monTableau = [‘a’,’b’,’c’]; let monNombre = 123:
+```
+
+Selon son type on peut appliquer divers actions sur une variable :
+- Les variables `number` pourront s’additionner, multiplier, etc.
+- Les variables `string` pourront être converties en majuscule avec la fonction `maString.toUpperCase()`
+- Les autres types ont chacun des fonctionnalités associées.
+
+#### Programmation orientée Objet (POO)
+
+La programmation orientée objet est un paradigme (concept) de programmation qui consiste à définir et faire interagir des éléments qu’on
+appelle “objets”. Un “objet” est un concept, une représentation, une idée qui se rattache au monde physique. Par exemple, un livre, une page
+de livre, une lettre, etc.
+
+#### Classe
+
+En POO, une classe regroupe les méthodes et propriétés (attributs) qui se rapportent à un objet. Elle définit ce qu’est un objet et ce que l’on
+peut faire avec.
+
+_Exemple_ :
+
+```javascript
+class MaClass{ }
+```
+
+#### Instance de classe
+
+L’instance de classe est la création d’un objet unique basée sur la définition d’une classe. Une instance est donc un élément unique créé à
+partir d’une classe. Par exemple, à partir d’une classe Maison, on peut créer 2 instances qui seront 2 maisons différentes mais basées sur les
+mêmes plans de construction.
+
+_Exemple_ :
+
+```javascript
+let monInstance = new MaClass();
+```
+
+#### Propriété/attribut de classe
+
+La propriété (dite aussi _attribut_) de classe est une variable interne à une classe qui pourra évoluer. Par exemple, un objet maison a un
+nombre de portes de base, mais cette valeur peut évoluer selon les actions appliquées sur cette maison (des travaux, par exemple).
+
+_Exemple_ :
+
+```javascript
+class Maison {
+    constructor(couleur) {
+        this.couleur = couleur;
+    }
+}
+let maMaison = new Maison(‘rouge’);
+console.log(maMaison.couleur) // Donnera “rouge”
+```
+
+#### Méthode de classe
+
+La méthode de classe est une fonction interne à la classe qui permet d'exécuter des actions au sein de la classe instanciée. Par exemple, la
+méthode “peindre(couleur)” peut changer la propriété “couleur” de l’objet maison.
+
+_Exemple_ :
+
+```javascript
+class Maison {
+    constructor(couleur) {
+        this.couleur = couleur;
+    }
+    changerCouleur(nouvelleCouleur) {
+        this.couleur = nouvelleCouleur;
+    }
+}
+let maMaison = new Maison(‘rouge’);
+console.log(maMaison.couleur) // Donnera “rouge”
+maMaison.changerCouleur(‘bleu’)
+console.log(maMaison.couleur) // Donnera “bleu”
+```
+
+#### Collection
+
+Les collections sont des types de données qui permettent de ranger un ensemble de données dans une seule variable (comme ranger de la donnée
+dans un tableau). On trouve principalement deux types de collection : les Array et les Object.
+
+#### Collection de type Array
+
+Une collection de type Array permet de créer une liste ordonnée d’éléments. On accède à l’un de ces éléments par son index. Il faut savoir que
+le premier index est 0 et non pas 1.
+
+_Exemple_ :
+
+```javascript
+let monArray = [‘a’,’b’,’c’];
+console.log(monArray[0]); // donnera ‘a’ car c’est le premier élément du tableau
+```
+
+#### Collection de type Object
+
+Une collection de type Object est une liste non ordonnée qui ne fonctionne pas à partir d’index mais à partir de clé à laquelle est rattachée
+une valeur. Donc pour récupérer une valeur, on doit renseigner la clé de cette valeur.
+
+_Exemple_ :
+
+```javascript
+let monObject = { nom: “Jean”, prenom: “Dupond”, age: 26};
+console.log(monObject.age); // donnera 26
+console.log(monObject[‘age’]); // donnera aussi 26
+```
+
+#### Bloc de code
+
+Un bloc de code est une partie du code commençant par un crochet ouvrant `{` et terminant par un crochet fermant `}.`
+
+_Exemple_ :
+
+```javascript
+if(condition) {
+    // Dans le bloc if
+}
+```
+
+#### Indentation
+
+C’est la mise en forme des lignes de code pour rendre la lecture plus simple et explicite.
+
+La règle est de mettre le code en retrait par rapport à la ligne précédente pour signifier que la ligne d’un niveau inférieur. Dans le cas de
+l’écriture d’un bloc de code, cela permet de mieux comprendre où commence et où s'arrête chaque bloc.
+
+_Exemple_ :
+
+```javascript
+if(condition) {
+    console.log(“Cette ligne est bien indentée”);
+console.log(“Cette ligne est mal indentée”);
+}
+```
+
+#### Opérateurs logiques
+
+Ce sont des caractères spéciaux qui permettent de faire des conditions plus complexes en liant plusieurs conditions, ou en faisant des
+comparaisons de valeurs. On retrouve les caractères suivants : &&, ||, <, >, >=, <=, ==, ===, != et !.
+
+_Exemple_ :
+
+```javascript
+if(condition1 && !condition2) {
+    console.log(“Cette ligne s’affiche si condition1 est vrai ET si condition2 n’est pas vrai”);
+}
+```
+
+#### Exception
+
+Dès qu’il y a une erreur liée à un défaut d'exécution, une erreur est soulevée en JavaScript, on appelle cela une Exception. On le remarque
+souvent dans la console en rouge. Une Exception contient des informations permettant de comprendre les raisons du problème, et on peut
+facilement récupérer cette Exception au sein du code pour faire un traitement personnalisé grâce au bloc `try { }` `catch(e){  }`.
+
+_Exemple_ :
+
+```javascript
+try {
+    fonctionQuiRetourneUneException();
+} catch(e) {
+    console.log(“il y a une Exception: “+e.getMessage());
+}
+```
+
+#### Paramètre de fonction
+
+Un paramètre est une valeur qu’une fonction attend en entrée. On lui donne un nom comme une variable qui servira au sein de la fonction pour
+le traitement. Il peut bien sûr y avoir plusieurs paramètres dans une fonction.
+
+_Exemple_ :
+
+```javascript
+function maFonction(parametre1) {
+    console.log(parametre1) // On a affiche la valeur du paramètre
+    // Traitement
+}
+```
+
+#### Argument de fonction
+
+L’argument d’une fonction est la valeur qu’on va injecter en entrée d’une fonction au moment de l'exécution. Ce concept est lié directement à
+la notion de paramètre de fonction, car en général pour chaque paramètre d’une fonction, on devra apporter un argument.
+
+_Exemple_ :
+
+Avec la fonction maFonction écrite au dessus, on pourra faire :
+
+```javascript
+let monArgument: “Bonjour”;
+maFonction(monArgument); // On obtient un log disant “Bonjour”
+```
+
+#### Valeur de retour
+
+Lors de l'exécution d’une fonction, il y a plusieurs traitements réalisés en son sein, et une valeur finale pourra être retournée avec le mot
+clé “return”. Cela permet de récupérer la valeur retournée par la fonction dans une variable, par exemple, et de l’exploiter dans le reste du
+code.
+
+_Exemple_ :
+
+```javascript
+function additionner(valeur1, valeur2) {
+    return valeur1 + valeur2; // la fonction additionner va retourner la somme de valeur1 et valeur2
+}
+let resultat = additionner(12, 13); // resultat vaudra 25
+```
+
+#### Récursivité
+
+La récursivité est un concept dans lequel un élément fait appel à lui-même. Par exemple, une fonction récursive est une fonction qui s'appelle
+elle-même d'une façon ou d'une autre.
+
+_Exemple_ :
+
+```javascript
+function factorielle(number) {
+    if(number <= 1) return 1;
+    else return (number * factorielle(number-1));
+}
+```
+
+### Téléchargez la fiche résumé du cours
+
+:::info
+Téléchargez la [fiche résumé](https://s3.eu-west-1.amazonaws.com/course.oc-static.com/courses/6175841/Fiche_Apprenez-a-programmer-en-javascript.pdf)
+au format PDF.
+:::
+
+![](https://user.oc-static.com/upload/2021/09/06/16309151275577_Fiche%20-%20Javascript.png)
+
