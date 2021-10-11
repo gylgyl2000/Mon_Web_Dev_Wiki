@@ -12,7 +12,8 @@
 }
     
 .algorithmesSvg {
-    max-height: 12em;
-    width: 12em;
-
+    max-height: 5em;
+    width: 5em;
+    border: 1px solid white;
+    border-radius: 10px;
 }

@@ -13,7 +13,7 @@ const AlgorithmesList = [
 function Algorithmes({Svg, title, Url}) {
   return (
     <div className={clsx('col')}>
-      <div className="text--center">
+      <div>
         <a href={Url}>
           <Svg className={styles.algorithmesSvg} alt={title} />
         </a>

@@ -1,0 +1,99 @@
+---
+id: Sauvegardez_des_donnees_sur_le_service_web
+title: Sauvegardez des données sur le service web
+---
+
+import styles from '/src/css/algorithmes.css';
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+import { Vimeo, CodePen } from 'mdx-embed';
+
+# Sauvegardez des données sur le service web
+
+Dans cet exercice nous voulons pouvoir entrer du texte dans le formulaire et l'envoyer vers un service web. Ce service web va simplement nous
+renvoyer notre contenu en plus d'autres informations et nous allons afficher le contenu renvoyé par le serveur.
+
+:::info instructions
+1 - Nous allons commencer par créer une fonction appelée `send` et qui va créer notre requête.
+
+Nous souhaitons créer une requête de type `POST` vers l'adresse suivante : `https://mockbin.com/request`, et y envoyer un contenu JSON ayant
+une propriété `value` qui contiendra la valeur du champ de saisie de la page (avec l'ID `value`). Par exemple :
+`{value: document.getElementById("value").value}`.
+
+Nous souhaitons aussi, lorsque la requête s'est bien envoyée, afficher le résulat renvoyé par le service web. Pour ce faire, nous allons
+afficher ce qui se trouve dans `postData.text` de la réponse dans le contenu HTML de l'élément ayant pour ID `result`.
+
+2 - Maintenant nous voulons envoyer notre requête, et donc appeler notre fonction `send` dès que nous soumettons le formulaire ayant pour ID
+`form`.
+
+N'oubliez pas d'annuler le comportement par défaut de la soumission du formulaire, sinon votre page va se recharger.
+:::
+
+<nav id="algorithmes-nav">
+<div id="algorithmes-nav-code">
+
+```html
+<!DOCTYPE html>
+<html>
+<style>
+form {
+   max-width: 300px;
+   margin: auto;
+   margin-top: 30px;
+}
+input[type="submit"] {
+   margin-top: 20px;
+   margin-bottom: 20px;
+}
+#result {
+   margin-top: 40px;
+   text-align: center;
+}
+</style>
+<body>  
+   <form id="form">
+      <label>Saisissez une valeur
+         <input type="text" id="value" />
+      </label>
+      <br />
+      <input type="submit" value="Envoyer" />
+   </form>
+   <div id="result"></div>
+
+<script type="text/javascript">
+function send(e) {
+   e.preventDefault();
+   fetch("https://mockbin.com/request", {
+      method: "POST",
+      headers: {
+         'Accept': 'application/json', 
+         'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({value: document.getElementById("value").value})
+   })
+   .then(function(res) {
+      if (res.ok) {
+         return res.json();
+      }
+   })
+   .then(function(value) {
+      document
+         .getElementById("result")
+         .innerText = value.postData.text;
+   });
+}
+document
+   .getElementById("form")
+   .addEventListener("submit", send);
+</script>
+</body>
+</html>
+```
+
+</div>
+<div id="algorithmes-nav-html">
+
+<iframe src="/static/algo/OpenClassrooms/Sauvegardez_des_donnees_sur_le_service_web/index.html"></iframe>
+
+</div>
+</nav>

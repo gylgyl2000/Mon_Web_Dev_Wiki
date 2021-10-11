@@ -1,0 +1,107 @@
+---
+id: Validez_les_donnees_saisies_par_vos_utilisateurs
+title: Validez les données saisies par vos utilisateurs
+---
+
+import styles from '/src/css/algorithmes.css';
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+import { Vimeo, CodePen } from 'mdx-embed';
+
+# Validez les données saisies par vos utilisateurs
+
+:::info instructions
+1 -  Nous souhaitons dans un premier temps valider le champ `Code` du formulaire. A chaque lettre saisie dans le champ ayant pour ID `code` nous
+voulons vérifier que la valeur du champ commence bien par `CODE-` grâce à une _Regex_ que voici : `/^CODE-/`. Si la valeur commence bien par
+`CODE-` alors nous affichons dans l'élément ayant pour ID `code-validation` : `Code valide`, sinon nous affichons dans cet élément
+`Code invalide`.
+
+2 - Maintenant que nous savons si notre code est valide ou non, nous voudrions griser (grâce à l'attribut `disabled`) le bouton de soumission
+(L'input de type `submit` ayant pour ID `submit-btn`) quand le code est invalide, et le dégriser quand le code est valide.
+
+Cela signifie que nous allons devoir ajouter un attribut `disabled="true"` au bouton de soumission quand le code est invalide. Et supprimer cet
+attribut `disabled` quand le code est valide (Rappelez-vous du cours sur la modification du DOM pour définir et supprimer des attributs).
+
+3 - Finalement, nous avons un champ `Email` et nous voudrions le rendre obligatoire et obliger l'utilisateur à entrer une adresse email valide.
+Il faudra aussi empêcher le formulaire de se soumettre s'il n'est pas valide.
+
+Mais nous voudrions faire tout ça uniquement avec le HTML5, sans utiliser de code JavaScript.
+
+Vous pouvez changer le `type` du champ email plutôt que d'utiliser une Regex via `pattern` ![;)](https://openclassrooms.com/bundles/common/images/smiley/clin.png)
+:::
+
+<nav id="algorithmes-nav">
+<div id="algorithmes-nav-code">
+
+```html
+<!DOCTYPE html>
+<html>
+<style>
+form {
+   margin: auto;
+   max-width: 300px;
+   margin-top: 40px;
+}
+.result {
+   text-align: center;
+}
+</style>
+<body>  
+   <form id="form-to-check">
+      <p>
+         <label>Code : 
+            <input type="text" name="code" id="code" />
+         </label>
+         <br />
+         <div class="result" id="code-validation"></div>
+      </p>
+      <p>
+         <label>Email : 
+            <input type="email" name="email" required />
+         </label>
+      </p>
+      <p>
+         <input type="submit" value="Vérifier" id="submit-btn" />
+      </p>
+   </form>
+
+<script type="text/javascript">
+function getCodeValidation() {
+  return document.getElementById("code-validation");
+}
+
+function disableSubmit(disabled) {
+  if (disabled) {
+    document
+      .getElementById("submit-btn")
+      .setAttribute("disabled", true);
+  } else {
+    document
+      .getElementById("submit-btn")
+      .removeAttribute("disabled");
+  }
+}
+
+document
+  .getElementById("code")
+  .addEventListener("input", function(e) {
+  if (/^CODE-/.test(e.target.value)) {
+    getCodeValidation().innerText = "Code valide";
+    disableSubmit(false);
+  } else {
+    getCodeValidation().innerText = "Code invalide";
+    disableSubmit(true);
+  }
+});
+</script>
+</body>
+</html>
+```
+
+</div>
+<div id="algorithmes-nav-html">
+
+<iframe src="/static/algo/OpenClassrooms/Validez_les_donnees_saisies_par_vos_utilisateurs/index.html"></iframe>
+
+</div>
+</nav>
