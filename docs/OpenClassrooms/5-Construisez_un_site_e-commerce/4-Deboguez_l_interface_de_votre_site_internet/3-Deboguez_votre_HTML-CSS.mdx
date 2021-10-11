@@ -1,0 +1,589 @@
+---
+id: 3-Deboguez_votre_HTML-CSS
+title: Déboguez votre HTML/CSS
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+import { Vimeo, CodePen } from 'mdx-embed';
+
+# Déboguez votre HTML/CSS
+
+## Détectez des bugs HTML et CSS
+
+[Détectez des bugs HTML et CSS - Déboguez l’interface de votre site internet - OpenClassrooms](https://openclassrooms.com/fr/courses/7159296-deboguez-l-interface-de-votre-site-internet/7281851-detectez-des-bugs-html-et-css)
+
+<Vimeo vimeoId="566960188" />
+
+<br />
+
+Maintenant que vous avez vu les différents outils à votre disposition ainsi qu’une méthodologie de débogage, vous pouvez désormais passer à
+l’action et résoudre votre premier type de bug : **les bugs d’intégration** !
+
+Dans ce chapitre, nous allons nous concentrer sur **les causes** des bugs d’intégration et nous allons les analyser. Nous verrons dans le
+prochain chapitre comment nous servir de l’inspecteur pour les résoudre.
+
+### Identifiez les bugs d’intégration
+
+**Les bugs d’intégration correspondent aux bugs que nous pouvons rencontrer côté HTML et CSS**. Ces derniers s'avèrent souvent assez compliqués
+à résoudre. En effet, à la différence du JavaScript, les erreurs d’intégration ne soulèvent pas d’erreurs dans la console ou ne font pas
+"planter" l’intégralité de votre application.
+
+Ils peuvent être causés par de nombreuses raisons et ça tombe bien, nous allons justement voir ces raisons dès maintenant !
+
+#### 1. Les erreurs liées au HTML
+
+Côté HTML, la cause la plus fréquente d’erreur est souvent **l’oubli de fermeture d’une balise**. Ne rigolez pas, cela arrive beaucoup plus
+souvent que vous le pensez, et à moi le premier !
+
+**Une balise non fermée peut entraîner un comportement un peu bizarre côté navigateur** : ce dernier va s'emmêler les pinceaux et votre
+affichage risque de "sauter".
+
+<figure>
+    <img src="https://user.oc-static.com/upload/2021/06/17/16239091814087_image45.png"
+         alt="Page d'accueil de la page des capteurs" />
+    <figcaption>Les blocs des différents capteurs sont mal positionnés sur la page</figcaption>
+</figure>
+
+Autre erreur classique : l’utilisation d’une **balise dépréciée ou expérimentale**. 
+
+:::info
+Les balises dépréciées sont des balises qui ont été remplacées par d’autres et qui sont amenées à disparaître. Par exemple, le tag `u`
+permettant de souligner un élément a été remplacé par la propriété css `text-decoration`.
+
+À contrario, une balise expérimentale est une balise qui n’est pas encore supportée par l’ensemble des navigateurs. Dans ce type de cas, vous
+devrez enquêter grâce aux outils d’analyse que nous allons voir juste après.
+:::
+
+#### 2. Les erreurs liées au comportement du CSS
+
+**Est-ce que vous vous souvenez de la signification du terme CSS ?** Cascading Style Sheets, ou Feuille de style en cascade en bon français. Et
+concrètement, qu’est-ce que cela veut dire ? Autre question : est-ce que vous vous souvenez de la règle des priorités (on dit aussi spécificités)
+en CSS ?
+
+Si je vous rappelle ces deux règles, **c’est parce que de très nombreux bugs côté CSS surviennent parce qu’elles ne sont pas respectées.** Face
+à un bug côté CSS, il convient donc que vous preniez bien le temps de regarder si une propriété CSS n’est pas surchargée par une autre !
+
+<figure>
+    <img src="https://user.oc-static.com/upload/2021/06/18/16240211234233_Capture%20d%E2%80%99e%CC%81cran%202021-06-18%20a%CC%80%2014.56.42%20copie.png"
+         alt="À gauche, le texte de la fenêtre du capteur s'affiche en couleur corail. A droite, dans l'inspecteur, on remarque que la couleur corail est surchargée" />
+    <figcaption>Dans l’exemple ci-dessus, vous pouvez voir une erreur de CSS pour le texte. L'inspecteur, dans le screenshot de droite, nous indique la ligne ainsi, que le fichier, à laquelle la couleur est surchargée (ici, la ligne 179).</figcaption>
+</figure>
+
+L’autre cas de bug très classique, et très sournois aussi, est la **mauvaise sélection d’un élément HTML** auquel vous faites appel dans votre
+CSS, par exemple une faute de typographie dans le nom de la classe sélectionnée.
+
+```css
+/* Sensor Detail Page */
+.sensor-detail-main { /* Le bug de sélection est ici */
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 1024px;
+    width: 80%;
+}
+```
+
+```html
+<main class="sensor-details-main">
+    <div ckass="sensor-details-main-top-header">
+        <h2 class="section-tile">Details du capteur #7</h2>
+    </div>
+    <div class="sensor-details-wrapper">
+        <div class="sensor-details-img-gallery-wrapper">
+            <img class="sensor-details-img" src="" alt="" />
+                <ul class="pagination-list">
+                    <li class="pagination-list-item prev-item">
+                        <a href="#"><<</a>
+                    </li>
+                    <li class="pagination-list-item next-item">
+                        <a href="#">>></a>
+                    </li>
+                </ul>
+        </div>
+    </div>
+</main>
+```
+
+Dans l’exemple ci-dessus, une balise HTML a été mal sectionnée. Cela provoque une cassure du design comme vous pouvez le voir dans l’image
+ci-dessous. Dans ce type de cas, vous allez devoir chercher à la main avec l’inspecteur d’où peut provenir l’erreur.
+
+<figure>
+    <img src="https://user.oc-static.com/upload/2021/06/17/16239099184577_image31.png"
+         alt="Screenshot de la page d'un capteur, où l'on voit le visuel de la façade à gauche mal s'afficher" />
+    <figcaption>Le visuel de la façade à gauche, s'affiche mal</figcaption>
+</figure>
+
+:::info
+Vous pouvez trouver [le code source contenant le bug sur la branche suivante.](https://github.com/OpenClassrooms-Student-Center/debuggez-l-interface-de-votre-site/tree/partie-2/chapitre-1%2Fsection-1)
+:::
+
+#### 3. Les erreurs liées aux navigateurs
+
+**Il arrive régulièrement que des bugs puissent être liés à des incompatibilités navigateurs**. Par exemple, pendant très longtemps, Firefox ne
+supportait pas l’input date : Chrome affichait un DatePicker alors que Firefox n’affichait rien ; on devait alors passer par une librairie
+JavaScript pour harmoniser ce comportement.
+
+<figure>
+    <img src="https://user.oc-static.com/upload/2021/06/18/16240216559893_P2C1-agenda.png"
+         alt="L'affichage du calendrier sous Firefox et Chrome" />
+    <figcaption>Les input de type date sous Firefox et Chrome</figcaption>
+</figure>
+
+:::info
+Plus d'info sur l'`<input type ="datetime">` [sur le site du MDN](https://developer.mozilla.org/fr/docs/Web/HTML/Element/Input/datetime).
+:::
+
+Heureusement, l’époque de la forte incompatibilité entre les navigateurs est derrière nous. Cela dit, il existe encore des moments où vous
+allez devoir gérer ce cas de figure. Par exemple, si vous souhaitez réaliser des animations CSS. Dans ce type de cas, vous allez devoir passer
+par les "Vendor Prefix".
+
+```css
+/* ici des vendors prefix utilisés pour la propriété CSS: transition */
+.card {
+    -webkit-transition: all 4s ease;
+    -moz-transition: all 4s ease;
+    -ms-transition: all 4s ease;
+    -o-transition: all 4s ease;
+    transition: all 4s ease;
+}
+```
+
+Dans le snippet de code ci-dessus, vous pouvez voir la propriété transition avec un vendor prefix.
+
+:::info
+Les "Vendor Prefix", ou [préfixe vendeur selon le MDN](https://developer.mozilla.org/fr/docs/Glossary/Vendor_Prefix), correspondent à des
+mots-clés que vous allez utiliser devant certaines règles CSS, jugées expérimentales ou non standardisées.
+:::
+
+Vous avez peut-être déjà vu `-webkit-`, `-moz-` ou même `-ms-` dans une base de code CSS ? Il s’agissait d’un "Vendor Prefix" et il était là
+pour gérer la compatibilité entre les navigateurs.
+
+:::info
+Retrouvez plus d’informations sur les préfixes dans [ce chapitre du cours "Simplifiez-vous le CSS avec Sass"](https://openclassrooms.com/fr/courses/6106181-simplifiez-vous-le-css-avec-sass/6612156-utilisez-autoprefixer-pour-creer-du-code-adapte-a-tous-les-navigateurs).
+:::
+
+### Analysez votre bug
+
+#### Utiliser l’inspecteur
+
+Je ne vous présente plus l’inspecteur ! 😉
+
+:::info
+Si toutefois vous aviez oublié ce que c’est, je vous invite à relire la première partie du cours avant de revenir ici.
+:::
+
+Ce formidable outil va nous permettre d’**analyser votre code HTML et CSS** et plus particulièrement :
+- de changer la résolution ;
+- de changer le type de devices ;
+- d’inspecter les modèles de boite, ou Box Model, et de voir précisément les margin et padding utilisés ;
+- de voir si certaines règles CSS sont surchargées ou ne sont pas appliquées.
+
+<figure>
+    <img src="https://user.oc-static.com/upload/2021/06/18/16240220358467_P2C1-modele%20boite.png"
+         alt="En haut de l'image le header du site Facadia où apparaissent les margins. Dessous, le modèle de boîte correspondant où on voit les valeurs des margins, border et padding." />
+    <figcaption>Un exemple du modèle de boite sous Firefox, pour le header de notre site Façadia.</figcaption>
+</figure>
+
+:::info
+Vous entendrez parfois parler de "reset" et de "normalization" CSS. Ces fichiers vous permettent de gommer les différences entre les
+navigateurs. Par exemple, les "margin" appliquées sur les titres pour Chrome ne sont pas les mêmes que sous Firefox. J’ai tendance à utiliser
+[Normalize](https://necolas.github.io/normalize.css/) pour tous mes projets.
+:::
+
+#### Utiliser un validateur HTML et CSS
+
+**Recourir à un validateur peut parfois être une solution miracle**. En effet, il arrive d’être totalement coincé devant un bug : on ne
+comprend pas d’où il vient et comment le résoudre. On a essayé l’inspecteur, on a parcouru notre code une bonne dizaine de fois mais rien n’y
+fait.
+
+Dans ce type de cas, je vous invite à copier/coller votre code dans un [validateur HTML](https://validator.w3.org/) et/ou dans un
+[validateur CSS](https://jigsaw.w3.org/css-validator/) et voir si des erreurs et warnings remontent. Les validateurs pourront vous montrer des
+éléments que vous n’aviez pas vus, comme, par exemple, une balise HTML qui n’est pas correctement fermée :
+
+<figure>
+    <img src="https://user.oc-static.com/upload/2021/06/17/16239107028789_image50.png"
+         alt="Screenshot d'un message du validateur suite à une balise mal fermée" />
+    <figcaption>Message du validateur suite à une balise mal fermée</figcaption>
+</figure>
+
+Le validateur HTML me montre que j’ai oublié de fermer la balise `header` dans mon code HTML.
+
+Testons à présent ce bout de code dans le validateur CSS :
+
+```css
+.main-wrapper {
+    background-color: #eee;
+    padding: 8px;
+}
+.main-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.main-content {
+
+.main-section {
+    margin-bottom: 16px;
+}
+.section-title {
+    color: blue;
+}
+```
+
+Il manque une accolade pour le sélecteur `.main-content`.
+
+Regardons à présent le message d’erreur, que m’affiche le validateur CSS :
+
+<figure>
+    <img src="https://user.oc-static.com/upload/2021/06/17/1623910840532_image32.png"
+         alt="Le message d’erreur dans le validateur CSS" />
+    <figcaption>Le message d’erreur dans le validateur CSS</figcaption>
+</figure>
+
+Comme vous pouvez le constater, le message d’erreur du validateur n’est pas très clair et ne nous donne pas beaucoup d’informations sur l'erreur :
+il ne m’indique pas clairement qu’une accolade est manquante.
+
+Je vous invite dès à présent à coder quelques lignes de HTML et CSS, vous pouvez même prendre le code du projet Façadia et le modifier : essayez
+de mal fermer des balises, d'oublier des points virgules sur des propriétés CSS, d’employer des propriétés CSS inconnues et regardez comment le
+validateur se comporte.
+
+:::info
+En plus des validateurs, il existe une autre solution : les linters. Ces outils directement intégrés à votre éditeur de texte vont vous
+permettre de voir des erreurs de style ainsi que des oublis.
+
+Le plus connu dans le monde du développement front-end est EsLint. Vous pouvez en apprendre un peu plus sur [les linters dans le cours Écrivez du JavaScript pour le web](https://openclassrooms.com/fr/courses/5543061-ecrivez-du-javascript-pour-le-web/5577726-optimisez-votre-code).
+:::
+
+#### Utiliser CanIUse
+
+Parfois les validateurs ne vont pas vous remonter des erreurs, mais des **warnings** ! Et ces warnings peuvent être super intéressants pour
+analyser votre code et comprendre ce qui ne va pas.
+
+**Par exemple, peut-être que votre propriété CSS a besoin de "Vendor Prefix" et que vous avez oublié de le mettre dans votre projet**. Ou alors,
+vous vous servez peut-être d’une propriété qui, soit n’est plus utilisée, soit est peu supportée par les navigateurs.
+
+Dans ce cas-là, [le site CanIUse](https://caniuse.com/) est votre ami. Il va vous permettre d’analyser la propriété en détail : son pourcentage
+d’utilisation, les versions de navigateur supportées, etc.
+
+:::info
+Dans le cours "Apprenez à créer votre site web avec HTML5 et CSS3", Mathieu Nebra vous [parle plus précisément de la compatibilité navigateur et vous présente le site CanIUse.](https://openclassrooms.com/fr/courses/1603881-apprenez-a-creer-votre-site-web-avec-html5-et-css3/1605060-mettez-en-place-le-css#/id/r-1609915)
+:::
+
+### À vous de jouer !
+
+![](https://user.oc-static.com/upload/2021/06/18/16240223458734_A-vous-de-jouer%20%281%29.png)
+
+C’est l’heure de l’exercice et de mettre en application tout ce que vous avez vu dans ce chapitre ! Vous allez détecter un bug d'affichage.
+
+Changez la branche de votre projet pour vous mettre sur la **[partie-2/chapitre-1/section-3/exercice](https://github.com/OpenClassrooms-Student-Center/debuggez-l-interface-de-votre-site/tree/partie-2/chapitre-1%2Fsection-3%2Fexercice).**
+Il semblerait que notre tableau contenant les données d’un capteur soit cassé et ne s’affiche pas comme il faut. Utilisez les outils que nous
+avons vu durant cette partie pour analyser le problème.
+
+Dans la vidéo ci-dessous, je vais vous montrer comment je l’analyse.
+
+<Vimeo vimeoId="566589127" />
+
+<br />
+
+### En résumé
+
+- Les bugs d’intégration peuvent être liés à des erreurs côté HTML, CSS et navigateurs. Le plus souvent, ces erreurs seront dites "silencieuses. Elles ne feront pas planter votre application.
+- Les "Vendor Prefix" correspondent aux préfixes dédiés à chaque navigateur. Ils vous permettent d’implémenter des propriétés CSS non
+standardisées.
+- Pour analyser une erreur, servez-vous des validateurs HTML et CSS et du site CanIUse. Cela peut parfois être une solution miracle.
+- L’inspecteur va vous aider à mieux comprendre comment se comporte votre CSS, par exemple au niveau du modèle de boite (Box Model).
+
+_Maintenant que vous connaissez les outils pour analyser les bugs, il est temps d’apprendre à les résoudre._
+
+-----
+
+[Tirez parti de l’inspecteur pour résoudre vos bugs - Déboguez l’interface de votre site internet - OpenClassrooms](https://openclassrooms.com/fr/courses/7159296-deboguez-l-interface-de-votre-site-internet/7282026-tirez-parti-de-l-inspecteur-pour-resoudre-vos-bugs)
+
+## Tirez parti de l’inspecteur pour résoudre vos bugs
+
+![](https://user.oc-static.com/upload/2021/06/18/16240224112451_P2C2_Tirez-parti-de-linspecteur-pour-re%CC%81soudre-vos-bugs.png)
+
+C’est maintenant l’heure de gloire de l’inspecteur ! 😎
+
+### Inspectez votre HTML
+
+:::info
+Avant de nous lancer dans comment utiliser l’inspecteur pour déboguer, [je vous invite à regarder la présentation de l’inspecteur HTML par Will Alexander.](https://openclassrooms.com/fr/courses/6943241-mettez-en-place-votre-environnement-front-end/7056021-testez-votre-code-avec-les-devtools-chrome-et-firefox#/id/video_Player_2)
+:::
+
+Maintenant que vous savez comment ouvrir l’inspecteur sous Chrome et Firefox et visualiser votre HTML, nous allons pouvoir nous intéresser à
+comment déboguer avec ce dernier !
+
+En effet, grâce à l’inspecteur, vous avez la possibilité d’éditer directement votre code HTML depuis l’outil. Vous allez pouvoir enlever ou
+ajouter une classe, modifier le contenu d’un `div`, etc.
+
+Cette méthode va vous permettre de tester rapidement une hypothèse pour un débogage. Par exemple, si vous ajoutez une classe à un élément,
+comment ce dernier se comporte-t-il ?
+
+Cela va, par exemple, vous permettre de résoudre des bugs de sélection CSS.
+
+Cela dit, en pratique, on n’utilise cet outil que pour modifier **quelques** lignes ou **quelques** éléments dans votre page. Si vous devez,
+par exemple, ajouter une vingtaine de lignes pour tester votre hypothèse, il peut être plus malin de le faire sur votre code source plutôt que
+directement sur votre page web.
+
+:::caution
+Si vous rafraîchissez la page, les modifications que vous avez réalisées n'apparaîtront plus. En effet, il n’y a pas de système de sauvegarde
+quand vous modifiez votre HTML.
+:::
+
+### Inspectez votre CSS
+
+:::info
+Si vous n’avez pas visualisé, en partie 1 du cours, [la vidéo d’introduction de Will Alexander à l’inspecteur côté CSS](https://openclassrooms.com/fr/courses/6943241-mettez-en-place-votre-environnement-front-end/7056021-testez-votre-code-avec-les-devtools-chrome-et-firefox#/id/video_Player_3),
+je vous invite à la regarder avant de passer à la suite.
+:::
+
+Dans la vidéo de Will, vous voyez comment inspecter les règles CSS qui sont appliquées et aussi comment les modifier en direct. En plus de ce
+panel d'outils, l’inspecteur peut vous donner la ligne précise où est définie une règle CSS. Cela va vous être particulièrement utile pour
+déboguer ce dernier.
+
+<figure>
+    <img src="https://user.oc-static.com/upload/2021/06/18/16240225909672_P2C2.png"
+         alt="Montage de screenshot avec haut un extrait de la page d'accueil de Façadia, puis le code HTML correspondant et CSS." />
+    <figcaption>Un extrait de la page d'accueil de Façadia, le code HTML correspondant et le CSS</figcaption>
+</figure>
+
+Ci-dessus, voici un exemple de la page d’accueil du projet. Vous voyez que la classe `main-title` est stylisée dans notre fichier `main.css` à
+la ligne 108. C’est quelque chose de particulièrement pratique pour déboguer ![:)](https://openclassrooms.com/bundles/common/images/smiley/smile.png).
+
+:::info
+**Environnement de développement et environnement de production** :
+Si vous inspectez le CSS d’un site, par exemple celui d’AirBnb, le CSS va parfois être écrit en inline et non dans un fichier séparé. Cela est
+dû aux technologies que nous utilisons côté front-end.
+
+L’environnement de développement, c’est-à-dire celui sur lequel vous codez votre projet, a pour objectif de vous donner le plus d’informations
+possible (et de ne pas être optimisé niveau chargement). L’environnement de production, à contrario, a pour objectif d’être le plus optimisé
+possible et n’est donc pas là pour vous donner des informations sur votre code.
+:::
+
+Dans le chapitre précédent, je vous ai aussi parlé du **modèle de boite**. Grâce à l’inspecteur CSS, vous allez pouvoir observer comment ce
+dernier se comporte. Cela peut s’avérer particulièrement utile quand vous avez des bugs d’espacement.
+
+<figure>
+    <img src="https://user.oc-static.com/upload/2021/06/18/16240227275204_P2C2-2.png"
+         alt="Screenshot avec le formulaire de connexion comportant un bug au niveau du bouton" />
+    <figcaption>Le formulaire de connexion avec un bug au niveau du bouton "se connecter" et le modèle de boîte correspondante</figcaption>
+</figure>
+
+Ci-dessus, vous voyez un bug côté CSS : le bouton "Se Connecter" est décalé sur la gauche. En utilisant le modèle de boite de l’inspecteur CSS,
+je constate qu’un margin de -100px est appliqué. Pratique comme outil, n’est-ce pas ?
+
+Avant de passer à la pratique, dernière chose !
+
+Dans le chapitre précédent, vous avez vu que le CSS pouvait générer des bugs d’intégration dus à son comportement en cascade. Là encore,
+l’inspecteur peut nous aider à traquer cela.
+
+<figure>
+    <img src="https://user.oc-static.com/upload/2021/06/17/16239138692522_image42.png"
+         alt="Screenshot d'un exemple de code HTML (à gauche), avec sa feuille de style associée (au centre) et le résultat sur le site web (à droite)" />
+    <figcaption>Un exemple de code HTML (à gauche), avec sa feuille de style associée (au centre) et le résultat sur le site web (à droite)</figcaption>
+</figure>
+
+<figure>
+    <img src="https://user.oc-static.com/upload/2021/06/17/16239139381835_image25.png"
+         alt="Screenshot de l'inspecteur par rapport à notre CSS" />
+    <figcaption>Et le résultat de ce qu’affiche l’inspecteur par rapport à notre CSS</figcaption>
+</figure>
+
+Dans les deux screenshots ci-dessus, vous pouvez voir une règle surchargée. Les trois `div` ayant la classe `box` sont bleues au lieu d’être
+couleur tomate. L’inspecteur nous montre que la propriété tomate a été surchargée.
+
+### À vous de jouer !
+
+![](https://user.oc-static.com/upload/2021/06/18/16240228318515_A-vous-de-jouer%20%281%29.png)
+
+Maintenant que vous avez vu comment utiliser l'inspecteur pour résoudre des bugs d’affichage, passons à la pratique !
+
+Nous allons repartir sur le bug de notre projet Façadia que vous avez vu dans le chapitre précédent. Voici le nom de la branche :
+[partie-2/chapitre-1/section-3/exercice](https://github.com/OpenClassrooms-Student-Center/debuggez-l-interface-de-votre-site/tree/partie-2/chapitre-1%2Fsection-3%2Fexercice)
+
+<Vimeo vimeoId="566588684" />
+
+<br />
+
+La solution se trouve sur la branche : [partie-2/chapitre-1/section-3/exercice-solution](https://github.com/OpenClassrooms-Student-Center/debuggez-l-interface-de-votre-site/tree/partie-2/chapitre-1%2Fsection-3%2Fexercice-solution)
+
+### En résumé
+
+- Les bugs d’intégration peuvent être liés à des erreurs côté HTML, CSS et navigateurs. Le plus souvent, ces erreurs seront dites "silencieuses".
+Elles ne feront pas planter votre application.
+- Les "Vendor Prefix" correspondent aux préfixes dédiés à chaque navigateur. Ils vous permettent d’implémenter des propriétés CSS non
+standardisées.
+- Pour analyser une erreur, servez-vous des validateurs HTML et CSS et du site CanIUse. Cela peut parfois être une solution miracle.
+- L’inspecteur va vous aider à mieux comprendre comment se comporte votre CSS, par exemple au niveau du modèle de boite (Box Model)
+
+_Félicitations, vous avez appris à résoudre des bugs d’intégration et vous êtes maintenant fin prêt à passer à l’étape d’après : les bugs
+concernant le JavaScript et le DOM !_
+
+-----
+
+## Quiz : Déboguez votre HTML/CSS
+
+[Déboguez votre HTML/CSS - OpenClassrooms](https://openclassrooms.com/fr/courses/7159296-deboguez-l-interface-de-votre-site-internet/exercises/4153)
+
+#### Compétences évaluées
+
+<i class="bi bi-check2-circle"></i> Déboguer du HTML et CSS
+
+-----
+
+#### Question 1 : Vous avez ci-dessous une liste des attributs possibles pour la balise `input`. Lequel de ces attributs est déprécié ?
+
+<i class="bi bi-circle"></i> <code>hidden</code><br />
+<i class="bi bi-circle"></i> <code>month</code><br />
+<i class="bi bi-circle"></i> <code>search</code> <br />
+<i class="bi bi-record-circle"></i> <code>datetime</code><br />
+<br />
+
+_La bonne réponse est l’attribut `datetime`._
+
+_Il est toujours important de consulter le MDN pour avoir plus d’informations concernant une balise ou un attribut. Dans notre cas, vous pouvez
+vous rendre sur la page suivante : [https://developer.mozilla.org/fr/docs/Web/HTML/Element/Input](https://developer.mozilla.org/fr/docs/Web/HTML/Element/Input)._
+
+-----
+
+#### Question 2 : Que nous permettent les Vendor Prefix ?
+
+<i class="bi bi-circle"></i> Corriger des incompatibilités JavaScript.<br />
+<i class="bi bi-circle"></i> Corriger des incompatibilités réseaux.<br />
+<i class="bi bi-circle"></i> Corriger des incompatibilités HTML.<br />
+<i class="bi bi-record-circle"></i> Corriger des incompatibilités CSS.<br />
+<br />
+
+_Les Vendor Prefix, ou prefixes vendeurs, vous permettent de gérer les incompatibilités CSS entre les navigateurs. Vous les utilisez le plus
+souvent pour des propriétés CSS non standardisées._
+
+-----
+
+#### Question 3 : Pour cette question, vous aurez besoin de changer de branche. ![:)](https://openclassrooms.com/bundles/common/images/smiley/smile.png)
+
+**Commencez par faire un `git checkout partie-2/quiz/question-3` [partie-2/quiz/question-3](https://github.com/OpenClassrooms-Student-Center/debuggez-l-interface-de-votre-site/tree/partie-2/quiz%2Fquestion-3),
+ouvrez le projet avec l’extension LiveServer et rendez-vous sur la page de connexion.**
+
+**Aie ! Il semblerait que la page de connexion soit totalement cassée et qu’elle ne s’affiche plus correctement. En utilisant l’inspecteur,
+essayez de trouver ce qui a pu casser la page.**
+
+<i class="bi bi-record-circle"></i> <code>jurify-content: center</code>  - il y a une erreur de typo sur cette propriété.<br />
+<i class="bi bi-circle"></i> <code>display: flex</code>  - on devrait utiliser un <code>display-block</code>.<br />
+<i class="bi bi-circle"></i> On ne doit pas utiliser <code>display: flex</code>  et <code>align-items: center</code> ensemble.<br />
+<i class="bi bi-circle"></i> Le problème vient de l'utilisation des variables CSS, mal supportées sur l’ensemble des navigateurs.<br />
+<br />
+
+_Ici, il ne s’agit que d’une simple typo. ![:)](https://openclassrooms.com/bundles/common/images/smiley/smile.png) On doit utiliser
+`justify-content` et non`jurify-content` qui n’existe pas._
+
+-----
+
+#### Question 4 : Pour cette question, vous aurez besoin de changer de branche. ![:)](https://openclassrooms.com/bundles/common/images/smiley/smile.png)
+
+**Commencez par faire un `git checkout partie-2/quiz/question-4` [partie-2/quiz/question-4](https://github.com/OpenClassrooms-Student-Center/debuggez-l-interface-de-votre-site/tree/partie-2/quiz%2Fquestion-4),
+ouvrez le projet avec l’extension LiveServer et rendez-vous sur la page de connexion.**
+
+**Cela fait maintenant plus de 2 heures que vous vous prenez la tête sur votre code et que vous n’arrivez pas à voir d’où provient le bug.**
+
+**Copiez coller votre code HTML et CSS dans un navigateur pour voir d’où cela peut venir.**
+
+<i class="bi bi-circle"></i> Eureka ! Il s’agit de la balise <code>header</code> qui est mal fermée.<br />
+<i class="bi bi-circle"></i> Eureka ! Il s’agit d’une accolade manquante pour <code>.main-header</code>.<br />
+<i class="bi bi-circle"></i> Eureka ! Il s’agit de la balise <code>nav</code> qui est mal fermée.<br />
+<i class="bi bi-record-circle"></i> Eureka ! Il s’agit d’une accolade manquante pour <code>.main-nav</code>.<br />
+<br />
+
+_Il s’agit d’une erreur côté CSS : il manque une accolade pour `.main-nav`. Merci cher validateur CSS. ![:)](https://openclassrooms.com/bundles/common/images/smiley/smile.png)_
+
+-----
+
+#### Question 5 : Pour cette question, vous aurez besoin de changer de branche. ![:)](https://openclassrooms.com/bundles/common/images/smiley/smile.png)
+
+**Commencez par faire un `git checkout partie-2/quiz/question-5` [partie-2/quiz/question-5](https://github.com/OpenClassrooms-Student-Center/debuggez-l-interface-de-votre-site/tree/partie-2/quiz%2Fquestion-5),
+ouvrez le projet avec l’extension LiveServer et rendez-vous sur la page de connexion.**
+
+**En utilisant l’inspecteur, ajoutez la classe "active" sur l’un des éléments HTML ayant la classe `.main-nav-item`. Que permet de faire cette
+classe sur l’élément HTML ?**
+
+<i class="bi bi-record-circle"></i> Ajouter une propriété <code>background-color</code> de couleur tomate.<br />
+<i class="bi bi-circle"></i> Ajouter une propriété <code>font-weight</code> à <code>bold</code>.<br />
+<i class="bi bi-circle"></i> Ajouter une propriété <code>text-decoration</code> à <code>none</code>.<br />
+<i class="bi bi-circle"></i> Ajouter une propriété <code>color</code> à gris.<br />
+<br />
+
+_Bien qu’il soit tout à fait possible de répondre à cette question en regardant le code source, je vous invite à tester la solution en utilisant
+l’inspecteur !_
+
+-----
+
+#### Question 6 : Pour cette question, vous aurez besoin de changer de branche. ![:)](https://openclassrooms.com/bundles/common/images/smiley/smile.png)
+
+**Commencez par faire un `git checkout partie-2/quiz/question-6` [partie-2/quiz/question-6](https://github.com/OpenClassrooms-Student-Center/debuggez-l-interface-de-votre-site/tree/partie-2/quiz%2Fquestion-6),
+ouvrez le projet avec l’extension LiveServer et rendez-vous sur la page d’accueil des capteurs.**
+
+**Il semblerait que l’affichage en grille des capteurs soit cassé et ne fonctionne plus comme prévu. En utilisant l’inspecteur et/ou un
+validateur CSS, retrouvez le bug.**
+
+<i class="bi bi-circle"></i> Il y a une erreur de typographie pour la propriété <code>grid-template-columns</code>: il est écrit <code>gird-template-columns</code>.<br />
+<i class="bi bi-circle"></i> <code>grid-template-columns</code> est mal utilisé : il devrait y avoir plus de "1fr".<br />
+<i class="bi bi-record-circle"></i> On utilise  <code>display:block</code> au lieu de <code>display:grid</code>.<br />
+<i class="bi bi-circle"></i> Il y a une accolade qui est mal fermée à la ligne 169.<br />
+<br />
+
+_L’erreur provient du `display` qui est mal utilisé. On utilise un `display:block` au lieu d’un `display:grid`. Comme vous pouvez le constater,
+quand il n’y a aucune erreur en console, vous devrez chercher manuellement la source du bug. ![:)](https://openclassrooms.com/bundles/common/images/smiley/smile.png)_
+
+-----
+
+#### Question 7 : Pour cette question, vous aurez besoin de changer de branche. ![:)](https://openclassrooms.com/bundles/common/images/smiley/smile.png)
+
+**Commencez par faire un `git checkout partie-2/quiz/question-7` [partie-2/quiz/question-7](https://github.com/OpenClassrooms-Student-Center/debuggez-l-interface-de-votre-site/tree/partie-2/quiz%2Fquestion-7),
+ouvrez le projet avec l’extension LiveServer et rendez-vous sur la page d’accueil des capteurs.**
+
+**On dirait que la page est totalement cassée niveau design et impossible de savoir si ça vient du HTML ou du CSS. En vous servant des outils
+que nous avons dans le cours, trouvez l’origine du bug.**
+
+<i class="bi bi-record-circle"></i> Le problème vient de la balise <code>header</code> : elle est mal fermée.<br />
+<i class="bi bi-circle"></i> Le problème vient de la classe <code>"home-page-main-wrapper"</code>. Aucun style n’est utilisé dessus.<br />
+<i class="bi bi-circle"></i> Le problème vient du CSS du <code>header</code>. On utilise <code>display:flex</code> au lieu d’utiliser <code>display:grid</code>.<br />
+<i class="bi bi-circle"></i> Le problème vient de la balise <code>main</code> : il y a une erreur typographique pour sa fermeture.<br />
+<br />
+
+_Nous sommes ici face un bug très typique de HTML : on a mal fermé une balise et tout le site saute. Pour le découvrir, il n’y a pas d’autres
+choix que de passer par l’inspecteur._
+
+_Pour la petite histoire, ce bug est arrivé à l’un de mes étudiants la semaine où j’ai réalisé ce quiz . ![:)](https://openclassrooms.com/bundles/common/images/smiley/smile.png)_
+
+-----
+
+#### Question 8 : Pour cette question, vous aurez besoin de changer de branche. ![:)](https://openclassrooms.com/bundles/common/images/smiley/smile.png)
+
+**Commencez par faire un `git checkout partie-2/quiz/question-8` [partie-2/quiz/question-8](https://github.com/OpenClassrooms-Student-Center/debuggez-l-interface-de-votre-site/tree/partie-2/quiz%2Fquestion-8),
+ouvrez le projet avec l’extension LiveServer et rendez-vous sur la page de connexion.**
+
+<figure>
+    <img src="https://user.oc-static.com/upload/2021/06/18/16240232248627_P2-quiz.png"
+         alt="À gauche, l'encadré du formulaire de connexion et sur fond noir. À droite, l'encadré est orange" />
+    <figcaption>Il semblerait que la couleur de fond ne soit plus la même comme en témoignent ces deux screenshots ci-dessous.</figcaption>
+</figure>
+
+**D’où peut venir ce bug ?**
+
+<i class="bi bi-circle"></i> Il s’agit de la balise <code>form</code> qui est mal fermée.<br />
+<i class="bi bi-record-circle"></i> On a surchargé la couleur de <code>background</code> de la classe <code>sign-in-main-wrapper</code>.<br />
+<i class="bi bi-circle"></i> On a surchargé la couleur de <code>background</code> de la classe <code>sign-in-form</code>.<br />
+<i class="bi bi-circle"></i> On a ajouté une classe <code>bg-color</code> à la div ayant la classe <code>sign-in-form-wrapper</code>.<br />
+<br />
+
+_La deuxième proposition est la bonne réponse._
+
+_N’oubliez pas que l’inspecteur est votre meilleur ami pour ce genre de bug. Une fois ouvert, vous pouvez survoler la zone en question et
+regarder les propriétés CSS utilisées._
+
+<figure>
+    <img src="https://user.oc-static.com/upload/2021/06/17/1623942353619_image11.png"
+         alt="Screenshot de l'inspecteur" />
+    <figcaption>L’inspecteur nous montre ici que la couleur du background est surchargée</figcaption>
+</figure>
+

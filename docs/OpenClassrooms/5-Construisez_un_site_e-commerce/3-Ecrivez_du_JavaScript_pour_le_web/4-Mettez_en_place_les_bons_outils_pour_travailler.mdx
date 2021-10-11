@@ -1,0 +1,751 @@
+---
+id: 4-Mettez_en_place_les_bons_outils_pour_travailler
+title: Mettez en place les bons outils pour travailler
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+import { Vimeo, CodePen } from 'mdx-embed';
+
+# Mettez en place les bons outils pour travailler
+
+## Optimisez votre code
+
+[Optimisez votre code - Écrivez du JavaScript pour le web - OpenClassrooms](https://openclassrooms.com/fr/courses/5543061-ecrivez-du-javascript-pour-le-web/5577726-optimisez-votre-code)
+
+<Vimeo vimeoId="539128194" />
+
+<br />
+
+Maintenant que vous savez développer une application web, nous allons voir comment l'**optimiser** !
+
+### Linter, minifier, bundler, transpiler
+
+:::note ?
+_Qu'est-ce que c'est que ces mots barbares ?!_ 🤔
+:::
+
+Ces mots "barbares" venus de l'anglais nous seront en fait très utiles ! Voyons ensemble ce que représente chacun d'entre eux.
+
+#### Linter
+
+Le _linter_ est un programme qui va **analyser** notre code et **détecter** les erreurs de syntaxe, les variables non utilisées, les variables
+qui n'existent pas, la mauvaise organisation du code, le non-respect des bonnes pratiques d'écriture de code...
+
+Le JavaScript étant un langage **non compilé**, vous ne verrez les erreurs de syntaxe de votre code que lors de l'exécution du code concerné.
+C'est-à-dire que si une de vos fonctions utilise une variable qui n'est pas définie, vous ne le saurez que lorsque votre fonction sera exécutée.
+Autant dire que pour certaines fonctions peu utilisées, vous pouvez très facilement laisser des erreurs "d'inattention" passer en production. 😫
+
+Un linter pourra donc vous aider à **régler ces erreurs** avant que vos utilisateurs n'en subissent les conséquences (les tests sont aussi un
+très bon moyen complémentaire au linter pour éviter les erreurs, mais ce n'est pas l'objet de ce cours). Il pourra aussi vous aider à
+**optimiser** un peu votre code et vous sera d'une grande aide pour définir des **bonnes pratiques d'écriture** de code lorsque vous
+travaillerez en équipe !
+
+> Voici quelques exemples de linters : [JSLint](https://www.jslint.com/), [ESLint](https://eslint.org/).
+
+#### Minifier
+
+Rappelez-vous, votre code JavaScript est **chargé** par votre navigateur. Cela signifie que votre navigateur va demander à votre serveur votre
+code JavaScript afin de l'exécuter. Il est alors évident que moins votre code sera lourd (en termes de taille de fichier), plus votre navigateur
+pourra le récupérer et le charger rapidement.
+
+Un _minifier_ est donc un programme responsable de la _minification_ de votre code. C'est-à-dire qu'il va essayer de rendre votre **code le
+plus léger possible** en retirant les espaces et retours à la ligne inutiles, en renommant vos variables avec des noms plus courts, en
+supprimant le code non utilisé, en supprimant les commentaires, en optimisant certains bouts de code pour les réécrire avec une syntaxe plus
+légère, etc.
+
+:::info
+Malgré les bonnes connexions Internet qui se développent de plus en plus, la minification du code n'est pas quelque chose à négliger, car si
+vous avez un site web avec beaucoup de trafic, c'est autant de requêtes qui sont faites pour récupérer votre code. Chaque octet compte afin
+d'alléger la charge des serveurs et de donner à vos utilisateurs une réponse la plus rapide possible !
+:::
+
+> Voici quelques exemples de minifiers : [node-minify](https://github.com/srod/node-minify), [UglifyJS](https://github.com/mishoo/UglifyJS2#readme).
+
+#### Bundler
+
+De la même manière qu'il est important d'avoir un code le plus léger possible, il est aussi important de **réduire au maximum le nombre de
+fichiers** qui composent votre code !
+
+C'est donc le rôle du _bundler_. Il va se charger de **_packager_** votre code pour qu'il tienne dans un seul fichier. Ainsi, vous continuez à
+coder dans plusieurs fichiers pour plus de clarté dans votre code, mais le navigateur n’aura besoin de charger d’un seul fichier lorsqu’un
+visiteur ira sur votre site.
+
+> Voici un exemple de bundler : [Webpack](https://webpack.js.org/).
+
+#### Transpiler
+
+Vous devez vous en douter, le langage JavaScript **évolue**. À l'heure actuelle, nous en sommes à la version _ECMAScript 2018 _ (ES9), mais
+déjà la version _ECMAScript 2015_ (ES6) n'est plus supportée dans son intégralité tous les navigateurs. Et c'est bien dommage, car les
+nouvelles versions peuvent offrir des choses intéressantes (`async` / `await` par exemple).
+
+:::info
+Depuis la publication de cette mise à jour, JavaScript a sorti la version _ECMAScript 2021 (ES12)._ À priori la version _ECMAScript 2018 (ES9)_
+reste supportée par la plupart des navigateurs.
+:::
+
+Mais alors comment coder avec la dernière version de JavaScript tout en étant **compatible** avec tous les navigateurs ? Avec un _transpiler_ !
+
+> Voici un exemple de transpiler : [Babel](https://babeljs.io/).
+
+### En résumé
+
+Dans ce chapitre, vous avez appris :
+- Qu'un linter va vous permettre de trouver des erreurs dans votre code et de mettre en place des conventions de code ;
+- Qu'un minifier va vous permettre de réduire la taille de votre code pour que les navigateurs le chargent plus vite ;
+- Qu'un bundler va regrouper tous vos fichiers en un seul afin que le navigateur soit plus rapide à charger votre code ;
+- Qu'un transpiler va vous permettre d’utiliser les nouvelles fonctionnalités du langage JavaScript tout en restant compatible avec tous les
+navigateurs.
+
+_Vous savez maintenant quels outils nous allons avoir besoin. Il est temps de voir comment les ajouter à votre projet._
+
+-----
+
+[Gérez vos dépendances - Écrivez du JavaScript pour le web - OpenClassrooms](https://openclassrooms.com/fr/courses/5543061-ecrivez-du-javascript-pour-le-web/5577746-gerez-vos-dependances)
+
+## Gérez vos dépendances
+
+<Vimeo vimeoId="539128226" />
+
+<br />
+
+:::note ?
+C'est bien beau d'avoir tous ces outils disponibles pour optimiser son développement, mais comment en profiter ?
+:::
+
+Avec NPM !
+
+### Découvrez NPM
+
+:::info
+NPM est un **gestionnaire de paquets** (_package manager_ en anglais). C'est un programme qui vous permet d'installer très facilement des
+_modules_ pour le JavaScript, et cela comprend les outils dont nous avons parlé dans les chapitres précédents.
+:::
+
+:::note ?
+Qu'est-ce qu'un module ?
+:::
+
+Un _module_ est un bout de code écrit par quelqu'un (peut-être bientôt par vous !) et qui résout une problématique commune à beaucoup de
+développeurs : comme un parser XML, un générateur d'_uuid_ (des identifiants uniques), un router, un framework de rendu _HTML_, etc.
+
+Afin qu'ils puissent être utilisés par tout le monde, ces modules sont publiés dans un gestionnaire de paquets, en l'occurrence ici, NPM.
+Voyons comment cela fonctionne...
+
+#### Installez NPM
+
+NPM est compris dans _Node.js_, qui est un programme permettant d'écrire des applications en JavaScript. Il suffit donc de se rendre sur
+[la page de téléchargement de Node.js](https://nodejs.org/en/) et d'installer Node.js afin de profiter de NPM.
+
+:::info
+Installez Node.js et voyons comment exécuter des commandes de NPM depuis votre terminal !
+:::
+
+### Initialisez votre projet
+
+NPM nécessite un fichier nommé `package.json` afin d'avoir des informations sur votre projet : son nom, sa version, les modules à installer,
+etc.
+
+Vous pouvez le créer manuellement ou bien utiliser la commande suivante pour le créer plus facilement :
+
+```shell
+npm init
+```
+
+### Installez un module
+
+Pour installer un nouveau module c'est très simple, il suffit de faire :
+
+```shell
+npm install <module_name> --save-dev
+```
+
+`--save-dev` signifie que l'on souhaite que NPM sauvegarde cette dépendance dans le fichier `package.json` en tant que dépendance de
+développement. Il existe aussi `--save` qui ajoute la dépendance en tant que dépendance de production.
+
+Lorsque vous clonez votre projet pour la première fois depuis un repository git, vous pourrez exécuter :
+
+```shell
+npm install
+```
+
+Cette commande va installer toutes les dépendances de votre projet qui ont été ajoutées dans le fichier `package.json`. Ce fichier est très
+utile pour mémoriser et installer tous les modules dont dépend votre projet !
+
+### En résumé
+
+Dans ce chapitre, vous avez appris :
+- Qu’un module vous permet de séparer votre code dans d’autres fichiers afin de pouvoir le réutiliser plus facilement ;
+- Que vous allez pouvoir intégrer des dépendances à votre projet avec NPM ;
+- Comment installer NPM ;
+- Comment installer des dépendances avec NPM.
+
+_Maintenant que vous comprenez mieux comment on peut gérer nos dépendances, passons à la pratique pour optimiser notre code !_
+
+-----
+
+## Compilez et exécutez votre code
+
+[Compilez et exécutez votre code - Écrivez du JavaScript pour le web - OpenClassrooms](https://openclassrooms.com/fr/courses/5543061-ecrivez-du-javascript-pour-le-web/5577766-compilez-et-executez-votre-code)
+
+<Vimeo vimeoId="539128249" />
+
+<br />
+
+Comme nous l'avons vu plus tôt, _Webpack_ est un **bundler**, il va vous permettre de compiler votre code et de tout packager en un seul fichier,
+mais ça ne s'arrête pas là !
+
+Webpack peut aussi **gérer vos ressources** (images, styles css, etc.) avec ce qu'on appelle des _loaders,_ et il va vous permettre de gérer
+différentes phases que nous avons vues lors de l'optimisation : bundler, minifier et transpiler.
+
+### Préparation du terrain
+
+Une fois que vous avez exécuté `npm init` dans votre répertoire pour initialiser votre projet avec NPM, nous pouvons mettre en place les outils.
+
+#### Installation de Webpack
+
+Pour installer Webpack, il suffit d'exécuter cette commande :
+
+```shell
+npm install webpack webpack-cli --save-dev
+```
+
+#### Projet de base
+
+Pour ce chapitre, nous allons partir sur une base de code très simple. Voici les fichiers dont nous allons avoir besoin :
+
+```shell
+project
+|- package.json
+|- index.html
+|- src
+    |- index.js
+    |- query.js
+```
+
+Voici le contenu des différents fichiers :
+
+**package.json**
+
+```json
+{
+    "name": "my-project",
+    "version": "1.0.0",
+    "description": "",
+    "private": true,
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "author": "",
+    "license": "ISC",
+    "devDependencies": {
+        "webpack": "^4.21.0",
+        "webpack-cli": "^3.1.2"
+    },
+        "dependencies": {
+    }
+}
+```
+
+**index.html**
+
+```html
+<!doctype html>
+<html>
+<head>
+    <title>My project</title>
+</head>
+<body>
+    <script src="./dist/app.bundle.js"></script>
+</body>
+</html>
+```
+
+**src/index.js**
+
+```javascript
+import retrieveContent from './query.js';
+
+async function showContent() {
+    try {
+        const content = await retrieveContent();
+
+        let elt = document.createElement('div');
+        elt.innerHTML = content.join('<br />');
+
+        document.getElementsByTagName('body')[0].appendChild(elt);
+    } catch (e) {
+        console.log('Error', e);
+    }
+}
+
+showContent();
+```
+
+**src/query.js**
+
+```javascript
+export default async function retrieveContent() {
+    const url = "https://baconipsum.com/api/?type=all-meat&paras=2&start-with-lorem=1";
+
+    const response = await fetch(url);
+    return response.json();
+}
+```
+
+:::info
+Vous noterez qu’on a, ici, utilisé _`fetch()`_ avec _`await`_, car comme on l’a vu, lorsqu’il y a des _Promise_ on peut utiliser _`async` /
+`await`_ ![;)](https://openclassrooms.com/bundles/common/images/smiley/clin.png)
+:::
+
+### Compilation du projet avec Webpack
+
+Maintenant que nous avons une base de code, voyons comment compiler notre projet.
+
+Nous allons créer un fichier `webpack.config.js` à la **racine** du projet. C'est le fichier qui servira de configuration à Webpack pour savoir
+comment il doit compiler notre projet.
+
+**webpack.config.js**
+
+```javascript
+const path = require('path');
+
+module.exports = {
+    mode: "production",
+    entry: {
+        app: "./src/index.js"
+    },
+    output: {
+        filename: "[name].bundle.js",
+        path: path.resolve(__dirname, "dist")
+    }
+};
+```
+
+Ce fichier nous indique principalement que Webpack va se servir de notre `./src/index.js` comme **point d'entrée** de notre application et
+bundler notre code dans un fichier final : `./dist/app.bundle.js` (`[name]` étant une **variable** qui sera remplacée ici par `app`, car c'est
+le nom que l'on a indiqué pour notre fichier `index.js`).
+
+Avec notre fichier de configuration prêt, il ne nous reste plus qu'à **exécuter** Webpack. Pour cela, nous allons utiliser une des
+fonctionnalités de NPM : les commandes.
+
+Nous allons modifier le fichier `package.json` pour ajouter dans les `"scripts": {....}` la ligne suivante :
+
+```json
+"scripts": {
+    "test": "...",
+    "build": "webpack"
+}
+```
+
+Tout ce qui se trouve dans `scripts` peut être exécuté avec la commande `npm run <script_name>`. Ainsi, nous pouvons exécuter `npm run build`
+qui va exécuter la commande `webpack`.
+
+Pourquoi ne pas exécuter directement la commande `webpack`, me direz-vous ? Eh bien, parce qu'en réalité cette application se trouve dans le
+dossier `./node_modules/.bin/webpack`. Or, l'avantage de NPM est qu'il va **automatiquement** chercher dans ce dossier pour exécuter des
+commandes, ainsi on s'épargne le chemin entier (oui, le développeur est bien un fainéant 😊).
+
+Nous pouvons donc compiler un projet avec :
+
+```shell
+npm run build
+```
+
+Si tout se passe bien, un fichier `app.bundle.js` devrait être généré dans le dossier `dist/`. Notre projet a bien été packagé en **un seul
+fichier**, alors que nous en avions 2 à l'origine (`index.js` et `query.js`). Alors, par quelle magie est-ce que Webpack a su où aller chercher
+tous nos fichiers à partir de notre fichier `index.js` ?
+
+Grâce aux `import` et `export`. Ces 2 mots clés permettent respectivement d'importer un autre fichier (qui est appelé un _module_) et d'exporter
+des choses (fonctions, variables...).
+
+Nous pouvons, en effet, voir que dans notre fichier `index.js`, nous avons importé le module `query.js` sous le nom `retrieveContent`. Et dans
+notre fichier `query.js`, nous pouvons voir que nous avons exporté la fonction `retrieveContent` (ce qui la rend disponible à l'import). Ainsi,
+quand Webpack analyse votre code, il retrouve toutes ces dépendances et se crée un graph en interne afin d'être capable de tout remettre dans
+l'ordre dans un seul fichier.
+
+Mais ce n'est pas encore suffisant. En effet, nous utilisons `async` et `await` qui sont apparus dans une version récente de JavaScript que
+tous les navigateurs ne supportent pas encore. Ainsi, en fonction du navigateur, le code affichera une erreur. De quoi avons-nous besoin alors ?
+D'un transpiler afin de rendre notre code JavaScript compatible avec les navigateurs les moins récents !
+
+### Transpiler avec Babel
+
+Afin d'utiliser Babel, nous allons devoir l'installer. Mais nous aurons aussi besoin d'installer le **loader** Babel qui permet de l'intégrer à
+Webpack. Il est en effet possible d'étendre les capacités de Webpack avec des [plugins](https://webpack.js.org/plugins/) et des [loaders](https://webpack.js.org/loaders/#transpiling).
+
+```shell
+npm install --save-dev babel-loader @babel/core @babel/preset-env babel-polyfill
+```
+
+Il va falloir ajouter Babel à la configuration de Webpack. Pour cela, il faut y ajouter ce qu'on appelle des `rules`. Les `rules` sont des
+règles de Webpack indiquant les loaders à utiliser pour les types de fichiers que l'on souhaite. Cela veut dire que dès que l'on va importer un
+module dans notre code, Webpack va regarder dans la liste des `rules` s'il y en a une qui correspond à ce type de fichier, et il va lui
+appliquer les loaders qui correspondent.
+
+Dans notre cas, nous voulons exécuter Babel pour tous les fichiers JavaScript de notre projet (sauf ceux qui se trouvent dans le dossier
+`node_modules`, car ce sont les dépendances NPM et nous ne sommes pas censés modifier leur code).
+
+**webpack.config.js**
+
+```javascript
+const path = require('path');
+
+module.exports = {
+    mode: "production",
+    entry: {
+        polyfill: "babel-polyfill",
+        app: "./src/index.js"
+    },
+    output: {
+        filename: "[name].bundle.js",
+        path: path.resolve(__dirname, "dist")
+    },
+    module: {
+        rules: [
+            {
+                test: /\.js$/,
+                exclude: /node_modules/,
+                use: {
+                    loader: "babel-loader",
+                    options: {
+                        presets: ["@babel/preset-env"]
+                    }
+                }
+            }
+        ]
+    }
+};
+```
+
+Vous pouvez passer des options aux loaders. Ainsi, pour Babel, vous pourriez lui demander de charger d'autres plugins pour gérer des syntaxes
+qui ne sont encore que des propositions pour de futures versions de JavaScript. Ici, nous chargeons le preset de base qui va nous permettre de
+transpiler notre code.
+
+Vous remarquerez aussi que nous avons ajouté une entrée dans l'objet `entry` : `polyfill: "babel-polyfill"`. Cela veut dire que lorsque nous
+compilons notre code, deux fichiers vont être générés : notre code depuis notre fichier `index.js` et le polyfill de Babel. Le polyfill permet
+à Babel d'apporter des modifications au code lors de son exécution. Cela peut être nécessaire pour certaines choses, et c'est le cas de `async`
+/ `await`. Afin de prendre en compte ce fichier de polyfill, il va falloir mettre à jour le fichier `index.html` afin de le charger aussi
+(avant notre code) :
+
+**index.html**
+
+```html
+<!doctype html>
+<html>
+    <head>
+        <title>My project</title>
+    </head>
+    <body>
+        <script src="./dist/polyfill.bundle.js"></script>
+        <script src="./dist/app.bundle.js"></script>
+    </body>
+</html>
+```
+
+Avec ça, tous les navigateurs devraient afficher la page et exécuter correctement le code généré par `npm run build`.
+
+:::info
+Si un jour vous avez la curiosité de regarder à quoi ressemble un code généré par Webpack, vous verrez que ce n'est pas très lisible. Voici par
+exemple un tout petit échantillon de ce que ça peut donner :
+:::
+
+:::note javascript
+!function(e){var t=window.webpackHotUpdate;window.webpackHotUpdate=function(e,n){!function(e,t){if(!D[e]||!w[e])return;
+for(var n in w[e]=!1,t)Object.prototype.hasOwnProperty.call(t,n)&&(h[n]=t[n]);0==--y&&0===g&&k()}(e,n),t&&t(e,n)};
+var n,r=!0,o="a220c62656b2d8bce261",a={},i=[],u=[];function s(e){var t=O[e];if(!t)return _;var r=function(r)
+{return t.hot.active?(O[r]?-1===O[r].parents.indexOf(e)&&O[r].parents.push(e):(i=[e],n=r),-1===t.children.indexOf(r)&&t
+.children.push(r)):(console.warn("[HMR] unexpected require("+r+") from disposed module "+e),i=[]),_(r)},o=function(e)
+{return{configurable:!0,enumerable:!0,get:function(){return _[e]},set:function(t){_[e]=t}}};
+for(var a in _)Object.prototype.hasOwnProperty.call(_,a)&&"e"!==a&&"t"!==a&&Object.defineProperty(r,a,o(a));
+return r.e=function(e){return"ready"===f&&d("prepare"),g++,_.e(e).then(t,(function(e){throw t(),e}));
+function t(){g--,"prepare"===f&&(b[e]||x(e),0===g&&0===y&&k())}},r.t=function(e,t){return 1&t&&(e=r(e)),_.t(e,-2&t)},r}
+function c(t){var r={_acceptedDependencies:{},_declinedDependencies:{},_selfAccepted:!1,_selfDeclined:!1,
+_selfInvalidated:!1,_disposeHandlers:[],_main:n!==t,active:!0,accept:function(e,t){if(void 0===e)r._selfAccepted=!0;
+else if("function"==typeof e)r._selfAccepted=e;else if("object"==typeof e)for(var n=0;n<e.length;n++)r.
+_acceptedDependencies[e[n]]=t||function(){};else r._acceptedDependencies[e]=t||function(){}},decline:function(e){
+if(void 0===e)r._selfDeclined=!0;else if("object"==typeof e)for(var t=0;t<e.length;t++)r._declinedDependencies[e[t]]=!0;
+else r._declinedDependencies[e]=!0},dispose:function(e){r._disposeHandlers.push(e)},addDisposeHandler:
+function(e){r._disposeHandlers.push(e)},removeDisposeHandler:function(e){var t=r._disposeHandlers.indexOf(e);
+t>=0&&r._disposeHandlers.splice(t,1)},invalidate:function(){switch(this._selfInvalidated=!0,f){
+case"idle":(h={})[t]=e[t],d("ready");break;case"ready":T(t);break;
+:::
+
+:::info
+Pas terrible n’est-ce pas ? Eh bien c'est à cause de la minification du code ! Webpack, dans sa version actuelle, compresse le code
+automatiquement lorsque vous le paramétrez avec mode: 'production', ce qui est le cas ici !
+:::
+
+### Webpack serve
+
+Nous avons maintenant un environnement optimisé qui vous permet :
+- De minifier votre code ;
+- De packager votre code ;
+- De séparer très facilement votre code en plusieurs fichiers afin de bien l'organiser ;
+- D'utiliser très facilement des bibliothèques développées par la communauté grâce à NPM ;
+- De transpiler votre code pour pouvoir utiliser les versions next gen de JavaScript ;
+
+Que demander de plus ?
+
+Un serveur pour tester votre code et qui recharge automatiquement votre navigateur dès que vous modifiez votre code ?
+
+Alors allons-y ! C'est exactement ce que _webpack serve_ permet de faire. ![:soleil:](https://openclassrooms.com/bundles/common/images/smiley/soleil.png)
+
+Il faut tout d'abord installer le module :
+
+```shell
+npm install webpack-serve --save-dev
+```
+
+Ensuite, je vous conseille d'ajouter une nouvelle commande au fichier `package.json` :
+
+```json
+"scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "webpack",
+    "start": "webpack serve"
+}
+```
+
+`start` est une commande un peu spéciale car elle est exécutée avec un simple `npm start` (vous noterez l'absence de `run` après `npm` ).
+
+Enfin, _webpack serve_ va considérer que les fichiers générés par Webpack sont à la racine du server, il nous faut donc mettre à jour notre
+fichier `index.html` :
+
+**index.html**
+
+```html
+<!doctype html>
+<html>
+    <head>
+        <title>My project</title>
+    </head>
+    <body>
+        <script src="/polyfill.bundle.js"></script>
+        <script src="/app.bundle.js"></script>
+    </body>
+</html>
+```
+
+Une fois que tout ça est fait, il suffit de lancer le serveur de développement :
+
+```shell
+npm start
+```
+
+La commande indique que l'application est disponible à l'adresse [http://localhost:8080/](http://localhost:8080/). Il suffira de vous y rendre
+pour voir votre application.
+
+Tant que cette commande est active, toute modification du code source activera Webpack qui recompilera le code automatiquement et rafraîchira
+le navigateur, montrant ainsi vos modifications. ![:)](https://openclassrooms.com/bundles/common/images/smiley/smile.png)
+
+### En résumé
+
+Dans ce chapitre, vous avez appris :
+- À installer Webpack ;
+- À configurer Webpack pour votre projet ;
+- À compiler votre projet ;
+- À installer Babel pour transpiler votre code ;
+- À utiliser `webpack serve` pour tester votre application et mettre à jour votre navigateur à chaque modification de votre code.
+
+### Conclusion
+
+<Vimeo vimeoId="539128272" />
+
+<br />
+
+Ça y est, vous savez tout ce qu'il faut pour travailler dans de bonnes conditions.
+
+:::info
+Dans ce cours, vous avez appris à :
+- Récupérer et modifier des éléments du DOM ;
+- Capter les événements du DOM ;
+- Communiquer avec un service web ;
+- Utiliser des méthodes asynchrones ;
+- Utiliser un environnement de développement.
+:::
+
+Félicitation pour votre travail. Pensez à réaliser le dernier quiz pour valider vos compétences !
+
+_Sachez que malgré tout, nous n'avons fait qu'effleurer la surface. Il y a tant de choses possibles, que je vous invite à aller faire un tour
+dans les différentes documentations des modules que nous avons vus !_
+
+-----
+
+## Quiz : Mettez en place les bons outils pour travailler
+
+[Mettez en place les bons outils pour travailler - OpenClassrooms](https://openclassrooms.com/fr/courses/5543061-ecrivez-du-javascript-pour-le-web/exercises/4097)
+
+#### Compétences évaluées
+
+<i class="bi bi-check2-circle"></i> Utiliser un environnement de développement
+
+-----
+
+#### Question 1 : Vous travaillez en équipe avec 3 autres développeurs, sur un même projet. Vous remarquez que d’un développeur à l’autre, la syntaxe du code n’est pas la même. Que pouvez-vous mettre en place pour remédier à ce problème ?
+
+<i class="bi bi-record-circle"></i> Un Linter<br />
+<i class="bi bi-circle"></i> Un Minifier<br />
+<i class="bi bi-circle"></i> Un Bundler<br />
+<i class="bi bi-circle"></i> Un Transpiler<br />
+<br />
+
+_Le Linter est un outil permettant de vérifier le code. Il permet de détecter des erreurs de syntaxe, et de faire en sorte que tous les
+développeurs d’une équipe respectent les mêmes conventions d’écriture._
+
+-----
+
+#### Question 2 : Vous remarquez que votre site Internet met du temps à charger. En investiguant un peu plus, vous vous rendez compte que c’est le téléchargement de votre code JavaScript qui est le plus long. Qu’est-ce que vous pourriez envisager pour améliorer cela ?
+
+*Attention, plusieurs réponses sont possibles.*
+
+<i class="bi bi-check-square-fill"></i> Utiliser le Minifier<br />
+<i class="bi bi-check-square-fill"></i> Utiliser un Bundler<br />
+<i class="bi bi-square"></i>  Utiliser un Transpiler<br />
+<br />
+
+_Le Minifier est un outil permettant de compresser le code. Il va renommer toutes vos variables afin que leur nom soit court, et il va
+supprimer tous les espaces et les retours à la ligne de votre code. Cela permet de charger votre site web plus rapidement._
+
+_Quant au Bundler, c’est un outil permettant de regrouper tous les fichiers de code de votre projet en un seul fichier. Cela permet aux
+navigateurs de n’avoir qu’un seul fichier à charger, et ainsi d’aller plus vite également._
+
+-----
+
+#### Question 3 : Vous avez beau vous tenir au courant des nouvelles versions de JavaScript, vous savez que d’un navigateur à l’autre, les conventions peuvent être différentes. Pour vous éviter des erreurs, que mettez-vous en place ?
+
+<i class="bi bi-circle"></i> Le Minifier<br />
+<i class="bi bi-circle"></i> Un Bundler<br />
+<i class="bi bi-record-circle"></i> Un Transpiler<br />
+<br />
+
+_Le Transpiler est un outil permettant de rendre votre code compatible avec tous les navigateurs. Cela vous permet d’utiliser les syntaxes de
+JavaScript les plus récentes, sans avoir à vous soucier que le navigateur de votre visiteur les comprenne._
+
+-----
+
+#### Question 4 : Vous avez trouvé sur Internet un super module JavaScript qui vous permettrait de générer des UUID. Comment pourriez-vous l’intégrer à votre projet ?
+
+<i class="bi bi-circle"></i> En utilisant un Bundler<br />
+<i class="bi bi-circle"></i> En utilisant un Transpiler<br />
+<i class="bi bi-record-circle"></i> En utilisant NPM<br />
+<br />
+
+_NPM est un outil permettant de gérer les dépendances à d’autres modules JavaScript. Cela vous permet d’utiliser du code écrit par d’autres
+développeurs et qui peut être utile à votre projet. Il permet également d’écrire vos propres modules à partager avec la communauté de JavaScript._
+
+-----
+
+#### Question 5 : Que fait cet extrait ?
+
+```shell
+npm install babel-loader --save-dev
+```
+
+<i class="bi bi-circle"></i> Il installe le module <i>babel-loader</i><br />
+<i class="bi bi-record-circle"></i> Il installe le module <i>babel-loader</i> et l’ajoute dans votre fichier <i>package.json</i><br />
+<i class="bi bi-circle"></i> Il vérifie que <i>babel-loader</i> est bien installé dans votre projet<br />
+<i class="bi bi-circle"></i> Il installe le module <i>babel-loader</i> globalement dans votre système<br />
+<br />
+
+_Cela vous permet d’installer le module babel-loader et de l’enregistrer dans votre fichier package.json._
+
+-----
+
+#### Question 6 : Étant donné ce fichier package.json :
+
+```json
+{
+    "name": "mon-projet",
+    "scripts": {
+        "build": "echo 'Salut'",
+        "start": "echo ‘Coucou’",
+    },
+    "version": "1.0.0",
+    "devDependencies": {},
+    "dependencies": {}
+}
+```
+
+**Que fait cette commande ?**
+
+```shell
+npm run build
+```
+
+<i class="bi bi-circle"></i> Elle affiche "Coucou"<br />
+<i class="bi bi-record-circle"></i> Elle affiche "Salut"<br />
+<i class="bi bi-circle"></i> Elle transpile notre projet<br />
+<i class="bi bi-circle"></i> Elle lance notre projet<br />
+<br />
+
+_Elle affiche "Salut". En effet, npm run build va lancer la commande build contenue dans les scripts. Ici elle fait un simple echo ‘Salut’,
+mais ça aurait pu être n’importe quelle commande._
+
+-----
+
+#### Question 7 : Vous aimeriez utiliser dans votre projet un minifier, un bundler et un transpiler. Que pourriez-vous mettre en place ?
+
+<i class="bi bi-record-circle"></i> webpack<br />
+<i class="bi bi-circle"></i> Babel<br />
+<i class="bi bi-circle"></i> NPM<br />
+<br />
+
+_À l’origine, webpack est un bundler, mais grâce à ses loaders et ses plugins, il vous permet de faire bien plus de choses :_
+- _minifier_
+- _transpiler_
+- _charger du CSS_
+- _…_
+
+-----
+
+#### Question 8 : En considérant le fichier webpack.config.js suivant :
+
+```javascript
+const path = require('path');
+
+module.exports = {
+    mode: "production",
+    entry: {
+        openclassrooms: "./src/index.js"
+    },
+    output: {
+        filename: "[name].my-app.js",
+        path: path.resolve(__dirname, "prod")
+    },
+    module: {
+        rules: [
+            {
+                test: /\.js$/,
+                exclude: /node_modules/,
+                use: {
+                    loader: "babel-loader",
+                    options: {
+                        presets: ["@babel/preset-env"]
+                    }
+                }
+            }
+        ]
+    }
+};
+```
+
+**Que se passera-t-il quand on exécutera la commande suivante : `webpack` ?**
+
+<i class="bi bi-circle"></i> On va créer un linter pour le fichier <code>src/index.js</code>.<br />
+<i class="bi bi-record-circle"></i> On va bundler notre programme en partant du fichier <code>src/index.js</code> et en l’enregistrant dans le
+fichier <code>prod/openclassrooms.my-app.js</code>. On utilisera au passage le transpiler Babel pour rendre nos fichiers JavaScript compatibles
+avec tous les navigateurs.<br />
+<i class="bi bi-circle"></i> On va bundler notre programme en partant du fichier <code>src/index.js</code> et en l’enregistrant dans le fichier
+<code>dist/app.bundle.js</code>. On utilisera au passage le transpiler Babel pour rendre nos fichiers JavaScript compatibles avec tous les
+navigateurs.<br />
+<i class="bi bi-circle"></i> On va bundler notre programme en partant du fichier <code>src/index.js</code> et en l’enregistrant dans le fichier
+<code>dist/test.bundle.js</code>.<br />
+<br />
+
+_En effet, comme on peut le voir dans l’objet `entry`, on va chercher le fichier `src/index.js` qui s’appellera dans webpack `openclassrooms`._
+
+_On peut aussi voir dans l’objet `output` que le chemin de destination (`path`) sera le répertoire actuel auquel on ajoutera le dossier `prod`.
+On peut aussi voir que le fichier de destination (`filename`) sera `[name].my-app.js`, c’est-à-dire que `[name]` sera remplacé par le nom du
+fichier `entry` : `openclassrooms`, soit au final : `openclassrooms.my-app.js.`_
+
+_Enfin, on peut voir qu’on va utiliser un loader qui va s’exécuter sur tous les fichiers `.js` à l’exception de ceux qui se trouvent dans
+`node_modules`._

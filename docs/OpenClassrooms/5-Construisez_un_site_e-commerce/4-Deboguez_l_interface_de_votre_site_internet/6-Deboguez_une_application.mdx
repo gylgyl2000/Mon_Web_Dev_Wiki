@@ -1,0 +1,403 @@
+---
+id: 6-Deboguez_une_application
+title: Déboguez une application
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+import { Vimeo, CodePen } from 'mdx-embed';
+
+# Déboguez une application
+
+## Découvrez un bug complexe
+
+[Découvrez un bug complexe - Déboguez l’interface de votre site internet - OpenClassrooms](https://openclassrooms.com/fr/courses/7159296-deboguez-l-interface-de-votre-site-internet/7282821-decouvrez-un-bug-complexe)
+
+<Vimeo vimeoId="566960406" />
+
+<br />
+
+Félicitations, vous voici arrivé au terme de ce cours. Maintenant que vous savez comment déboguer des bugs d’intégration et de JavaScript, il
+est temps de tout combiner.
+
+### Donnez du contexte à un bug
+
+:::note ?
+C’est-à-dire ? Tout combiner ? On va traiter plusieurs bugs à la fois ?
+:::
+
+Tout à fait !
+
+En effet, quand vous rencontrez une erreur que vous devez déboguer, il y a deux types de situation :
+- **soit le bug est "tout seul"**. Autrement dit, il y a un bug, d’affichage par exemple, qui n’influe que sur l’affichage du projet sur une
+page spécifique. Dans ce type de cas, vous pouvez appliquer les méthodes de débogage que nous avons vues ensemble dans les parties précédentes.
+- **soit le bug engendre un autre bug** qui engendre un autre bug (qui engendre… bref, je pense que vous avez compris ![:)](https://openclassrooms.com/bundles/common/images/smiley/smile.png)).
+Et dans la plupart des cas, c’est ce qui se produit. En effet, dans le cas d’applications complexes réalisant beaucoup de traitements, comme
+des appels API, de l’affichage dynamique sur le DOM, l’erreur qui apparaît, dans votre console par exemple, ne peut être que la face visible de
+l’iceberg.
+
+Il est aussi important de préciser que le bug peut venir de chez vous mais pas que !
+
+:::note ?
+Euhhh, c'est-à-dire ? Le bug pourrait venir d’où ?
+:::
+
+Il peut aussi venir du **serveur**, l’API peut être boguée, les données que vous demandez à la base de données peuvent être incorrectes, etc.
+Le plus souvent, c’est l’analyse du code qui va vous permettre de voir d’où il peut venir.
+
+J’ai récemment travaillé sur un projet Python où je devais insérer des données d’une certaine façon dans une table. C’est la donnée la plus
+récente qui devait être entrée mais il s’avérait que ce n’était pas tout le temps le cas. Il m’a bien fallu une journée pour comprendre d’où
+pouvait provenir le bug : les données étaient modifiées à plusieurs endroits de l’application. Bref, ce n’était pas très drôle. ![:)](https://openclassrooms.com/bundles/common/images/smiley/smile.png)
+
+Lors de la rédaction de ce cours, j’ai eu la chance de pouvoir travailler avec **Quentin Laurent,** développeur tout comme moi et mentor : il
+m’a aidé à la relecture de ce cours et m’a aussi donné quelques bonnes idées pour le projet fil rouge. Il a aussi dû faire face à des bugs
+marquants, et en voici un en particulier :
+
+> Je me souviens d'un bug particulièrement bloquant lié à Firebase. Pour faire simple, Firebase permet, entre autres, de gérer la partie
+authentification d'un projet. Quand on travaille côté web, on doit l'utiliser en ajoutant un script côté code et c'est ce que je faisais.
+>
+> Seulement voilà, ça ne marchait pas ! L'objet Firebase était bien présent dans ma console mais pas il refusait de fonctionner. En cherchant
+un peu, j'ai découvert que j'avais des problèmes de traitement asynchrone en cascade dans mon programme : c'était un véritable enfer à déboguer !
+
+Bref, comme vous pouvez le constater, quel que soit votre niveau et votre expérience, nous rencontrons tous des bugs qui peuvent parfois être
+difficiles à résoudre. C’est l’un des éléments les plus challengeants de votre travail de développeur. Cela dit, pas de panique, vous serez
+rarement seul à travailler dessus. ![:)](https://openclassrooms.com/bundles/common/images/smiley/smile.png)
+
+### Analysez la situation
+
+#### Tirez parti des méthodes vues dans les chapitres précédents pour résoudre le bug
+
+Est-ce que vous vous souvenez de notre méthodologie de débogage vue dans le premier chapitre du cours ?
+
+:::note
+Euhhhh…
+:::
+
+Si vous ne vous en souvenez plus, ces étapes étaient :
+- Observer le ou les bugs ;
+- Écrire un test répétable ;
+- Élaborer et tester votre théorie ;
+- Résoudre le bug (ou réitérer les étapes précédentes).
+
+Il est important que vous essayiez de suivre ces étapes au début de votre apprentissage du code et du débogage. Après quelques années
+d’expérience, vous le ferez de façon instinctive et n’y penserez même plus.
+
+:::info
+C’est d’ailleurs quelque chose que j’ai rencontré au moment de l’écriture du cours. Il a fallu que je réfléchisse aux méthodes que j’utilisais
+inconsciemment.
+:::
+
+N’hésitez d’ailleurs pas à prendre une feuille de papier et un crayon pour réfléchir à votre bug. Je me servais de cette méthode il y a
+quelques années quand j’ai appris déboguer. Elle me permettait de poser mes idées avant de passer par la phase code.
+
+#### Apprenez à isoler un bug majeur
+
+Un de mes amis a dernièrement eu des problèmes d’envoi d’e-mails. Il utilisait un site sous WordPress pour un comparateur de prix. Quand ses
+prospects remplissaient leur formulaire, il souhaitait être prévenu par mail qu’un client venait de saisir ses coordonnées. Sauf que les
+e-mails ne partaient pas et il n’arrivait pas à voir d’où pouvait venir le problème. Je lui ai donc demandé de me fournir l’ensemble des
+informations qu’il avait, à savoir :
+- le message d’erreur ;
+- le plugin utilisé ou au moins le code Php relatif à ce plugin ;
+- l’URL du WordPress ;
+
+J’ai assez rapidement pu voir que la librairie qui était utilisée pour envoyer les e-mails était PhpMailer. Avec l’aide d’un script Php, j’ai
+pu m’envoyer un e-mail de test avec la librairie PhpMailer via mon compte gmail. Cela m’a permis d’avoir un script qui marchait.
+
+J’ai ensuite changé les informations de connexion pour remplacer mes identifiants par les siens et là, patatra, ça ne marchait pas. Cela dit,
+ça m’a permis de savoir que c’était possiblement un problème de configuration de l’email et non un problème dû à la librairie ou au WordPress :
+j’ai donc isolé le problème.
+
+En cherchant un peu sur Internet, j’ai vu que le serveur Smtp était mal configuré, je l’ai donc modifié et le problème a été réglé. J’ai pu
+ensuite appliquer la solution sur son WordPress.
+
+**La morale de cette histoire est qu’il est important, face à un bug complexe, d'isoler le problème** : il ne faut surtout pas essayer de tout
+déboguer à la fois, c’est le meilleur moyen de perdre du temps et de ne pas comprendre d’où le problème vient. En y réfléchissant bien, le
+problème de mon ami aura pu venir de plein d’endroits : de la configuration du WordPress, de son serveur, du serveur Smtp, des identifiants de
+connexion, de la librairie, etc.
+
+### À vous de jouer !
+
+![](https://user.oc-static.com/upload/2021/06/18/16240266474009_A-vous-de-jouer%20%281%29.png)
+
+Bon, c’est l’heure pour vous d’affronter le boss final ! Le projet Façadia semble avoir un bug bien gênant et vous allez devoir l’analyser
+grâce à la méthodologie de débogage.
+
+Comme pour les exemples précédents, voici :
+- l’issue du bug : [https://github.com/tdimnet/debuggez-l-interface-de-votre-site/issues/5](https://github.com/tdimnet/debuggez-l-interface-de-votre-site/issues/5)
+- la branche contenant le bug : [partie-5/chapitre-1/bug-complexe](https://github.com/OpenClassrooms-Student-Center/debuggez-l-interface-de-votre-site/tree/partie-5/chapitre-1%2Fbug-complexe)
+
+Comme je le disais un peu plus haut, n'hésitez pas à prendre une feuille de papier et un crayon et notez vos idées. Essayez d’observer et de
+créer un test répétable pour le bug.
+
+Une fois que vous pensez avoir identifié le bug, vous pouvez me rejoindre dans la vidéo ci-dessous. ![:)](https://openclassrooms.com/bundles/common/images/smiley/smile.png)
+
+<Vimeo vimeoId="566590081" />
+
+<br />
+
+### En résumé
+
+- Un bug peut soit arriver tout seul, soit arriver en chaîne. Essayez toujours d’analyser la situation avant d’écrire votre code.
+- N’oubliez pas la méthode que nous avons vue dans le premier chapitre pour résoudre les bugs : observez le ou les bugs, puis écrivez un test
+répétable, élaborez et testez votre théorie puis enfin résolvez le bug (ou réitérez les étapes précédentes).
+- Quand un bug gênant se produit, essayez toujours de l’isoler pour comprendre sa source.
+
+_Maintenant que vous avez vu comment analyser et répliquer un bug complexe, vous pouvez vous intéresser à sa résolution._
+
+-----
+
+## Résolvez un bug complexe
+
+[Résolvez un bug complexe - Déboguez l’interface de votre site internet - OpenClassrooms](https://openclassrooms.com/fr/courses/7159296-deboguez-l-interface-de-votre-site-internet/7283131-resolvez-un-bug-complexe)
+
+![](https://user.oc-static.com/upload/2021/06/18/16240267276108_P5C2_Re%CC%81solvez-un-bug-complexe.png)
+
+Dans ce chapitre, vous allez revenir sur les outils qui ont été abordés durant ce cours (je ferai un bref récapitulatif de leur utilité) puis
+enfin, nous nous servirons de ces outils pour résoudre notre bug.
+
+### Utilisez les outils à votre disposition
+
+Chaque bug dispose d’un outil qui lui est adapté et qui permet de l’observer et de vous aider à le résoudre plus facilement.
+- L’inspecteur est souvent utilisé pour le débogage du HTML et du CSS. Vous pouvez voir les propriétés CSS qui sont utilisées, celles qui sont
+surchargées. Vous pouvez aussi voir le modèle de boite qui s’applique.
+- La console va vous permettre de déboguer du code JavaScript. Elle peut vous permettre d’exécuter des fonctions, de récupérer des variables.
+Vous pouvez aussi depuis votre code utiliser des console.log pour suivre l’état de votre application.
+- Le débogueur est un outil dédié au débogage du JavaScript. Grâce à des breakpoints, vous allez pouvoir suivre l’état de votre code, les
+variables et valeurs contenues dans les fonctions exécutées, etc. Vous pouvez aussi bien l’utiliser dans le navigateur qu’avec l’extension
+VsCode que nous avons vue durant le cours.
+- L’onglet Network vous permet d’en savoir un peu plus sur les requêtes et réponses HTTP reçues quand vous consultez une page. Vous pouvez voir
+le poids des fichiers reçus, les requêtes réalisées, etc.
+
+:::info
+Ces quatre outils vont vous permettre de désamorcer la plupart des situations. Les connaître vous permet de devenir un meilleur développeur. ![:)](https://openclassrooms.com/bundles/common/images/smiley/smile.png)
+:::
+
+### Réfléchissez à l’implémentation de la solution
+
+Une fois que vous avez isolé votre bug et que vous avez codé votre solution, il est important de vous poser ces questions :
+- Est-ce que cette solution va couvrir d’autres cas d’erreur ? Est-ce qu’elle va engendrer d’autres bugs ?
+- Comment faire pour éviter que cette erreur ne se reproduise ?
+
+:::note ?
+Pourquoi est-ce qu’on se pose autant de questions ? Après tout, le bug est résolu, non ?
+:::
+
+Eh bien, c’est en partie vrai.
+
+En effet, ce n’est pas parce que vous avez réglé votre bug à un endroit que le code ne va pas casser à un autre endroit. Il est donc toujours
+important de "faire le tour du propriétaire" avant de passer à autre chose.
+
+Si je vous dis ça, c’est en connaissance de cause. Il n’y a pas si longtemps, une développeuse avec qui je travaillais avait la fâcheuse
+habitude de mettre à jour les librairies du projet en oubliant de regarder si rien n’avait cassé. Dans les faits, mettre à jour les librairies
+est toujours une bonne idée. Seulement, voilà, elle manquait parfois de rigueur et oubliait de tout regarder, ce qui fait que le projet
+plantait parfois.
+
+:::note ?
+Mais il n’existe pas d’autres solutions ? Ça risque d’être un peu compliqué de faire le tour du propriétaire si mon projet comprend plusieurs
+dizaines de pages.
+:::
+
+C’est vrai. ![:)](https://openclassrooms.com/bundles/common/images/smiley/smile.png)
+
+C’est pour ça que dans des projets d’envergure, vous passerez par des tests automatisés ainsi que des outils de "monitoring" pour traquer votre
+application. D’ailleurs, je pense que c’est l’étape d’après dans votre apprentissage : une fois que vous avez compris comment déboguer, vous
+pouvez vous intéresser à comment bien tester une application !
+
+### À vous de jouer !
+
+![](https://user.oc-static.com/upload/2021/06/18/16240267735412_A-vous-de-jouer%20%281%29.png)
+
+C’est l’heure de résoudre le bug. Revenez sur la branche du chapitre précédente avec la commande : `git checkout nomDeLaBranche`.
+
+Utilisez les outils à votre disposition pour corriger le bug et faites une proposition de solution. Une fois votre proposition écrite, regardez
+si le reste de l’application continue de fonctionner correctement.
+
+:::info
+Une fois la proposition de solution écrite et le bug corrigé, vous pouvez regarder la vidéo ci-dessous, pour voir ma proposition de solution.
+:::
+
+**Avant**
+
+```javascript title="js/pages/facadeDetails.js"
+const main = () => {
+    const sensorData = retrieveSensorData()
+
+    const weatherForecastData = retrieveWeatherForecastData(sensorData.coordinates, true)
+
+    fillSensorTable(sensorData)
+    handleSensorImagesGallery(sensorData)
+
+    fillWeatherForecastTable(weatherForecastData)
+}
+```
+
+**Après**
+
+```javascript {1,2,4} title="js/pages/facadeDetails.js"
+const main = async () => {
+    const sensorData = await retrieveSensorData()
+
+    const weatherForecastData = await retrieveWeatherForecastData(sensorData.coordinates, true)
+
+    fillSensorTable(sensorData)
+    handleSensorImagesGallery(sensorData)
+
+    fillWeatherForecastTable(weatherForecastData)
+}
+```
+
+<Vimeo vimeoId="566590220" />
+
+<br />
+
+### En résumé
+
+- Servez-vous des outils que nous avons durant le cours pour analyser et résoudre votre bug. Ces derniers composent votre boîte à outils.
+- Une fois le bug résolu, il est important que vous fassiez le tour du reste de votre application pour voir si rien n’a cassé.
+
+_Vous voici officiellement à la fin de ce cours sur le débogage ! Félicitation ![:)](https://openclassrooms.com/bundles/common/images/smiley/smile.png)
+Je vous invite à lire la section de conclusion ci-après et à réaliser le dernier quiz, pour évaluer le compétence._
+
+### Faites le point sur le cours
+
+Dans ce cours, vous avez vu beaucoup de choses : une méthode de débogage, des outils, des cas pratiques, des retours d’expérience
+professionnelle, etc.
+
+Il est possible qu’au sortir de ce cours, vous vous demandiez où aller, quel autre cours commencer. Voici quelques conseils :
+- N’hésitez pas à revenir sur ce cours d’ici quelques mois. Certes, je n’explique aucune nouvelle notion dans ce cours, mais vous y apprendrez
+certainement encore quelque chose.
+- N’hésitez pas non plus à partager ce cours et à l'utiliser si vous devez mentorer des pairs. En tout cas, de mon côté, je vais utiliser ce
+cours comme ressource pédagogique lors de mes formations. ![:)](https://openclassrooms.com/bundles/common/images/smiley/smile.png)
+- Sachez aussi que j’écris régulièrement sur Médium : [https://tdimnet.medium.com/](https://tdimnet.medium.com/). Chaque article est anglais et
+en français. Je profite souvent de mes posts pour reprendre des thématiques vues dans mes cours : ils me permettent d’aller plus loin et de
+proposer des cas pratiques.
+
+J’ai été votre compagnon de route et d’apprentissage sur quatre parties et une petite dizaine de chapitres et je suis sincèrement ravi que vous
+ayez suivi mon cours. ![:)](https://openclassrooms.com/bundles/common/images/smiley/smile.png)<br />
+Je vous remercie de votre temps et de votre attention. N’hésitez surtout pas à me contacter sur LinkedIn pour me donner du feedback sur le
+cours et plus précisément ce qui vous a plu et déplu.
+
+À bientôt !
+
+-----
+
+## Quiz : Déboguez une application
+
+[Déboguez une application - OpenClassrooms](https://openclassrooms.com/fr/courses/7159296-deboguez-l-interface-de-votre-site-internet/exercises/4156)
+
+#### Compétences évaluées
+
+<i class="bi bi-check2-circle"></i> Déboguer une application
+
+-----
+
+#### Question 1 : Vrai ou faux : Un bug peut-il provenir du serveur/back-end ?
+
+<i class="bi bi-record-circle"></i> Vrai. Et oui, il n’y a pas que le front-end qui contient des bugs, l’API avec laquelle vous travaillez peut
+contenir des bugs.<br />
+<i class="bi bi-circle"></i> Faux. Les bugs viennent du front et jamais du serveur. Un bug côté serveur empêcherait le serveur de fonctionner.<br />
+<br />
+
+_N’oubliez jamais que quand vous déboguez, l’erreur peut venir de votre code mais pas que. Il peut aussi venir de l’API ou de la librairie que
+vous utilisez. N’oubliez pas cela, c’est important ![:)](https://openclassrooms.com/bundles/common/images/smiley/smile.png)._
+
+-----
+
+#### Question 2 : Ça y est l’application est une fois de plus cassée ! Comment vous y prenez-vous pour le résoudre ?
+
+<i class="bi bi-circle"></i> Observer le ou les bugs, élaborer et tester votre théorie, écrire un test répétable, résoudre le bug.<br />
+<i class="bi bi-circle"></i> Écrire un test répétable, observer le ou les bugs, élaborer et tester votre théorie, résoudre le bug.<br />
+<i class="bi bi-record-circle"></i> Observer le ou les bugs, écrire un test répétable, élaborer et tester votre théorie, résoudre le bug.<br />
+<br />
+
+_Quand vous apprenez à déboguer, il est important de mettre en place cette méthodologie. Plus vous allez l’utiliser, moins vous aurez besoin
+d’y penser, et déboguer deviendra une seconde nature chez vous._
+
+_Si vous avez répondu la mauvaise réponse, n’hésitez pas à refaire un tour sur la première partie du cours. ![:)](https://openclassrooms.com/bundles/common/images/smiley/smile.png)_
+
+-----
+
+#### Question 3 : J’ai un bug côté HTML : une classe n’applique pas le style que je lui demande. Quel outil va me permettre d’analyser le bug ?
+
+<i class="bi bi-circle"></i> Le débogueur ! Il va me permettre d’ajouter des breakpoints sur mon CSS. De ce fait, je pourrai regarder comment
+se comporte mon CSS à un instant "T".<br />
+<i class="bi bi-record-circle"></i> L’inspecteur ! Il va me permettre d’ajouter et de supprimer des classes HTML. De ce fait, je pourrai
+regarder si le style est bien appliqué.<br />
+<i class="bi bi-circle"></i> La console ! Elle va me permettre d’exécuter du code HTML pour ajouter et supprimer à la volée des éléments de mon
+CSS.<br />
+<i class="bi bi-circle"></i> L’onglet Network ! Il va me permettre de savoir quelle(s) classe(s) CSS sont chargées lors de l’exécution de mon
+programme.<br />
+<br />
+
+_On utilise l’inspecteur pour surveiller son CSS et son HTML. On peut ajouter des classes directement depuis le HTML pour observer les
+comportements mais aussi ajouter directement du CSS._
+
+-----
+
+#### Question 4 : Vrai ou faux : est-ce une bonne pratique de faire le tour du propriétaire une fois un bug résolu ?
+
+<i class="bi bi-record-circle"></i> Vrai<br />
+<i class="bi bi-circle"></i> Faux<br />
+<br />
+
+_Bon, cela peut sembler du bon sens de faire le tour du propriétaire une fois le bug résolu mais ce n’est pas tout le temps le cas, loin de là !
+Alors s’il vous plaît, soyez rigoureux et faites le tour de votre code et de votre projet une fois le bug résolu._
+
+-----
+
+#### Question 5 : Pour cette question, vous aurez besoin de changer de branche. ![:)](https://openclassrooms.com/bundles/common/images/smiley/smile.png)
+
+**Commencez par faire un `git checkout partie-5/quiz/question-5` [partie-5/quiz/question-5](https://github.com/OpenClassrooms-Student-Center/debuggez-l-interface-de-votre-site/tree/partie-5/quiz%2Fquestion-5),
+ouvrez le projet avec l’extension LiveServer et rendez-vous sur la page contenant l’ensemble des capteurs. Il semblerait que le statut inactif
+ne fonctionne plus comme souhaité : la couleur affichée n’est plus la bonne.**
+
+<figure>
+    <img src="https://user.oc-static.com/upload/2021/06/18/16240270705405_P5-quiz.png"
+         alt="La couleur affichée devrait être le rouge, alors qu’ici, à droite elle s’affiche en blanc" />
+    <figcaption>La couleur affichée devrait être le rouge, alors qu’ici, à droite elle s’affiche en blanc</figcaption>
+</figure>
+
+**En utilisant les outils du code couleur, trouvez l’origine du bug.**
+
+<i class="bi bi-record-circle"></i> Le bug vient du JavaScript : on utilise la mauvaise classe.<br />
+<i class="bi bi-circle"></i> Le bug vient du CSS. La classe css`off`a été surchargée.<br />
+<i class="bi bi-circle"></i> Le bug vient du HTML. On ne charge pas le bon fichier CSS.<br />
+<i class="bi bi-circle"></i> Le bug vient des données contenues dans le JSON : elles sont mal formatées.<br />
+<br />
+
+_Il y a une erreur avec la classe appliquée sur la balise `span` : on ajoute une classe qui n’existe pas._
+
+-----
+
+#### Question 6 : Pour cette question, vous aurez besoin de changer de branche. ![:)](https://openclassrooms.com/bundles/common/images/smiley/smile.png)
+
+**Commencez par faire un `git checkout partie-5/quiz/question-6` [partie-5/quiz/question-6](https://github.com/OpenClassrooms-Student-Center/debuggez-l-interface-de-votre-site/tree/partie-5/quiz%2Fquestion-6),
+ouvrez le projet avec l’extension LiveServer et rendez-vous sur la page contenant l’ensemble des capteurs.**
+
+**On dirait que les capteurs ne s’affichent plus et que nous n’avons pas d’erreur en console. C’est assez bizarre parce que la requête pour le
+fichier JSON est réalisée et fonctionne.**
+
+**En utilisant les outils à votre disposition, découvrez l’origine du bug !**
+
+<i class="bi bi-circle"></i> Il s’agit d’un problème avec le fichier JSON. Ce dernier contient des erreurs à l’intérieur.<br />
+<i class="bi bi-circle"></i> Il s’agit d’un problème avec le DOM. Les éléments du DOM sont mal sélectionnés.<br />
+<i class="bi bi-circle"></i> Il s’agit d’un problème avec le DOM. Les éléments du DOM sont mal ajoutés sur ce dernier.<br />
+<i class="bi bi-record-circle"></i> Il s’agit d’un problème de code asynchrone. Le fichier est bien chargé mais n’a pas le temps de s’afficher.<br />
+<br />
+
+_Nous sommes face à un problème classique de code asynchrone. Vous allez devoir rajouter un `async` et un `await` dans la fonction main pour
+que le code fonctionne._
+
+```javascript
+const main = async () => {
+    const sensorsData = await retrieveSensorsData()
+    createPagination(sensorsData.length)
+    const offset = calculateOffset()
+    for (let i = offset; i < ITEMS_PER_PAGE + offset; i++) {
+        if (sensorsData[i]) {
+            $sensorsWrapper.appendChild(createSensorCard(sensorsData[i]))
+        }
+    }
+}
+```
+

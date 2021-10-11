@@ -1,0 +1,611 @@
+---
+id: 5-Solutionnez_des_bugs_sur_l_API
+title: Solutionnez des bugs sur l’API
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+import { Vimeo, CodePen } from 'mdx-embed';
+
+# Solutionnez des bugs sur l’API
+
+## Récupérez des données sur une API externe
+
+[Récupérez des données sur une API externe - Déboguez l’interface de votre site internet - OpenClassrooms](https://openclassrooms.com/fr/courses/7159296-deboguez-l-interface-de-votre-site-internet/7282431-recuperez-des-donnees-sur-une-api-externe)
+
+<Vimeo vimeoId="566960324" />
+
+<br />
+
+**Quand on est développeur ou développeuse front-end, on travaille quotidiennement avec des API**. On s’en sert pour récupérer des données, par
+exemple, des données météo ou des séances de cinéma, mais aussi pour communiquer avec des fonctionnalités du navigateur, pour se géolocaliser
+par exemple.
+
+:::info
+Si le concept d’API vous est étranger, je vous invite à regarder le cours "[Adoptez les API REST pour vos projets web](https://openclassrooms.com/fr/courses/6573181-adoptez-les-api-rest-pour-vos-projets-web)",
+sur les API, avant de revenir ici. ![;)](https://openclassrooms.com/bundles/common/images/smiley/clin.png)
+:::
+
+Dans cette partie, nous allons voir ensemble comment **déboguer une API externe**, autrement dit quand on fait une requête à un service externe,
+mais aussi comment **déboguer une API interne**, c’est-à-dire une API intégrée au navigateur.
+
+### Récupérez des données météo
+
+Notre projet Façadia comporte une page dédiée à chaque capteur. Sur cette page, nous faisons semblant de récupérer les données d’une API
+interne via le fichier `data/facade-detail-data.json`. En plus de cet appel, nous faisons aussi un deuxième appel API pour récupérer les
+données météo.
+
+:::note ?
+Nous faisons l’appel en direct ou nous passons par un fichier là-aussi ?
+:::
+
+Bonne question !
+
+En fait, nous faisons les deux :
+- j’ai créé un fichier `weather-api-mocked-data.json` qui correspond aux données renvoyées par l’API. Cela m’évite de dépasser le quota et
+surtout de donner ma clé d’API en public.
+- un fichier existe et nous permet d’appeler l’API directement. Nous verrons ensemble comment le faire fonctionner prochainement. ![:)](https://openclassrooms.com/bundles/common/images/smiley/smile.png)
+
+Donc, pour revenir à Façadia, voici la page dédiée aux capteurs :
+
+<figure>
+    <img src="https://user.oc-static.com/upload/2021/06/17/16239231874186_image3.png"
+         alt="Le premier tableau contient les données du capteur, le deuxième les données du bulletin Météo" />
+    <figcaption>Le premier tableau contient les données du capteur, le deuxième les données du bulletin Météo</figcaption>
+</figure>
+
+Pour récupérer les données météo, je passe par une API : [WeatherStack](https://weatherstack.com/).
+
+:::note ?
+Comment fonctionne cette dernière ?
+:::
+
+Les prochains paragraphes vont être dédiés à la prise en main de l’API et à son fonctionnement.
+
+:::info
+Nous allons utiliser Postman pour comprendre comment fonctionne l’API. Si vous n’êtes pas à l’aise avec l’outil, regardez le cours
+"[Adoptez les API REST pour vos projets web](https://openclassrooms.com/fr/courses/6573181-adoptez-les-api-rest-pour-vos-projets-web)" de
+Kassandre Pedro où vous découvrirez le concept d’API REST et comment fonctionne Postman.
+:::
+
+#### Découvrez l’API WeatherStack
+
+<figure>
+    <img src="https://user.oc-static.com/upload/2021/06/17/16239232552792_image18.png"
+         alt="Screenshot, page d'accueil de l'API WeatherStack" />
+    <figcaption>WeatherStack est une API météo complète et gratuite. Plutôt cool, non ?</figcaption>
+</figure>
+
+Avant de se lancer dans le code pour voir comment cette API est intégrée, une bonne pratique de développement est de [découvrir l’API avec Postman et de parcourir la documentation](https://weatherstack.com/).
+
+:::note ?
+Pourquoi est-ce que nous avons d’abord utilisé l’API via Postman avant de l’utiliser directement via le JavaScript ?
+
+N’est-ce pas plus rapide de le faire directement via le JavaScript ?
+:::
+
+C’est une bonne question. ![:)](https://openclassrooms.com/bundles/common/images/smiley/smile.png)
+
+Découvrir une API via Postman vous permet le plus souvent de bien comprendre comment elle fonctionne avant de vous lancer dans le code. Par
+exemple, si l’API que vous utilisez ne fonctionne pas, préférez-vous perdre quelques minutes sur Postman ou plusieurs heures sur le JavaScript ?
+Ça arrive beaucoup plus souvent qu’on peut le croire. ![:)](https://openclassrooms.com/bundles/common/images/smiley/smile.png)
+
+De plus, cela va souvent vous permettre de tester les requêtes et de découvrir le format de réponse. Il arrive parfois que les réponses ne
+correspondent pas totalement aux attentes.
+
+Dans la vidéo ci-dessous, nous allons voir ensemble comment prendre en main l’API et notamment :
+- créer un compte ;
+- parcourir la documentation ;
+- faire une requête via Postman et découvrir le format de réponse.
+
+<Vimeo vimeoId="566589667" />
+
+<br />
+
+Avant de passer à la suite, je vous invite à continuer à tester l’API avec Postman. Parcourez la documentation et tentez des choses. Cela vous
+permettra de bien comprendre comment l’API fonctionne. ![:)](https://openclassrooms.com/bundles/common/images/smiley/smile.png)
+
+#### Découvrez l’intégration de l’API WeatherStack sur notre projet fil rouge
+
+Maintenant que vous avez vu comment requêter l’API WeatherStack et le format de ses réponses, nous allons pouvoir nous intéresser à son
+intégration côté JavaScript.
+
+:::info
+Dans ce cours, nous allons utiliser la méthode fetch ainsi que les promesses. Si vous n’êtes pas familier avec elles, la partie 2 du cours
+"[Écrivez du JavaScript pour le web](https://openclassrooms.com/fr/courses/5543061-ecrivez-du-javascript-pour-le-web)” vous permettra
+d’acquérir les bases. ![:)](https://openclassrooms.com/bundles/common/images/smiley/smile.png)
+:::
+
+Comme je vous le précisais précédemment, j’ai deux manières de récupérer les données météo :
+- soit via le fichier de données "mockées" que j’utilise. Il m’évite de faire trop de requêtes quand je fais mes tests.
+- soit via une fonction dédiée qui va requêter l’API en fonction des données géographiques du capteur.
+
+<figure>
+    <img src="https://user.oc-static.com/upload/2021/06/17/16239236573998_image38.png"
+         alt="Screenshot avec les données du fichier `data/weahter-api-mocked-data.json`" />
+    <figcaption>Le fichier <code>data/weahter-api-mocked-data.json</code></figcaption>
+</figure>
+
+Dans la vidéo ci-dessous, vous allez découvrir où sont réalisées ces deux requêtes et mieux comprendre leur fonctionnement. ![:)](https://openclassrooms.com/bundles/common/images/smiley/smile.png)
+
+<Vimeo vimeoId="566589712" />
+
+<br />
+
+### Comprenez les messages d’erreur d’une API externe
+
+Vous savez désormais comment vous servir de l’API de WeatherCast. Il est maintenant temps de se pencher sur les messages d’erreur. En effet,
+pour bien déboguer une API interne, il est important de comprendre :
+- les codes HTTP renvoyés par l’API ;
+- les messages renvoyés par l’API en cas d’erreurs.
+
+:::info
+Les codes et en-têtes HTTP sont la base du web et ces derniers remontent de nombreuses informations. Si vous ne vous sentez pas totalement à
+l’aise et que vous avez besoin d’un rappel, [relisez ce chapitre du cours "Écrivez du JavaScript pour le web"](https://openclassrooms.com/fr/courses/5543061-ecrivez-du-javascript-pour-le-web/5577576-comprenez-ce-que-sont-des-api-et-un-service-web)
+et revenez ici. ![:)](https://openclassrooms.com/bundles/common/images/smiley/smile.png)
+:::
+
+#### Découvrez les messages d’erreur provenant d’une API
+
+Quand on développe une API et qu’on souhaite la rendre publique, autrement dit, la mettre à disposition d’autres développeurs externes à notre
+structure, il y a souvent des règles à respecter :
+- Il est important d’utiliser des noms au lieu des verbes pour chaque endpoint (cela correspond à l’URL appelé). Ce sont les méthodes HTTP
+(GET, POST, PUT, etc.) qui vont préciser l’action à réaliser.
+- les status code HTTP doivent vous permettre de traiter les erreurs de façon propre. Par exemple, un status code 400 correspond à des données
+côté client non valides, 403 à une erreur d’authentification, etc.
+- l’API doit contenir sa version dans son URL. Cela permet d’aider les développeurs utilisant cette API à réaliser des montées de versions.
+
+:::info
+Ce cours n’est pas dédié à la création d’une API Rest. Cela dit, si vous souhaitez en apprendre plus, je vous invite à lire ce
+[blog post de Stackoverflow](https://stackoverflow.blog/2020/03/02/best-practices-for-rest-api-design/) pour en apprendre un peu plus sur les
+bonnes pratiques dans la conception d’API.
+:::
+
+:::note ?
+J’ai cru voir un statut code de 200 tout à l’heure sur l’API alors qu’il y avait une erreur. C’est normal ?
+:::
+
+Bonne remarque !
+
+En effet, bien que les développeurs derrière les API essayent de vous faciliter la vie en affichant des messages d’erreur explicites. Les
+bonnes pratiques ne sont pas toujours respectées et il faut parfois faire avec.
+
+<figure>
+    <img src="https://user.oc-static.com/upload/2021/06/17/16239240995224_image8.png"
+         alt="Screenshot d'un message d'erreur sur l'API" />
+    <figcaption>Exemple de message d’erreur de l’API WeatherStack</figcaption>
+</figure>
+
+Dans la capture d’écran ci-dessus, j’ai volontairement modifié mon `access_key` pour faire en sorte d’avoir une erreur. Vous pouvez noter que :
+- Le corps (body) du message d’erreur est assez explicite. La clé d’API est invalide.
+- Le statut de la requête est 200 (alors qu’il devrait plutôt être 401). Comme je vous le disais, il n’y a pas précisément de règles.
+
+Avant de passer à la suite, faisons une deuxième erreur dans notre requête. Ici, je vais mal orthographier le paramètre `query` en le nommant
+`qery`.
+
+<figure>
+    <img src="https://user.oc-static.com/upload/2021/06/17/16239241781212_image29.png"
+         alt="Screenshot du message d'erreur sur l'API" />
+    <figcaption>Message d'erreur sur l'API</figcaption>
+</figure>
+
+Ici, le message d’erreur nous dit qu’il manque le paramètre query et on nous demande de spécifier une position valide en utilisant le paramètre
+"query".
+
+Une fois encore, le message d’erreur est plutôt compréhensible même si le code HTTP reste à 200.
+
+:::info
+Il est important de tester de mauvaises requêtes sur votre API et là encore, le meilleur moyen est de le faire via Postman.
+:::
+
+Cela vous donnera une meilleure compréhension de l’API. ![:)](https://openclassrooms.com/bundles/common/images/smiley/smile.png)
+
+### À vous de jouer !
+
+![](https://user.oc-static.com/upload/2021/06/24/16245418386149_A-vous-de-jouer%20%281%29.png)
+
+Vous venez de voir que les messages d’erreur des API n’étaient pas uniformisés entre les API. Mais alors, comment pouvez-vous les déboguer ?
+
+#### Simplifiez vos problèmes en les isolant
+
+Ce conseil ne s’applique d’ailleurs pas que pour le débogage de vos API. De manière générale, il est toujours important d’essayer de **tester
+de façon isolée** les différentes parties de votre code. C’est ce que nous venons justement de faire pour notre API externe. Nous avons d’abord
+testé les requêtes de l’API via Postman avant de les intégrer à notre code.
+
+#### Utilisez l’onglet réseau du navigateur
+
+Au début du cours, vous avez pu découvrir tous les outils dédiés au débogage. Vous avez pu prendre en main la console, le débogueur,
+l’inspecteur, il ne manquait plus que la partie réseau. ![:)](https://openclassrooms.com/bundles/common/images/smiley/smile.png)
+
+Cet onglet peut vous donner des informations très intéressantes sur les appels API comme, par exemple, la requête réalisée, la réponse reçue
+par l’API et les en-têtes HTTP. Cet outil vous permet de rapidement **voir si une de vos requêtes échoue**.
+
+Avant de poursuivre sur la vidéo, je vais vous raconter une petite anecdote. Au moment de réaliser ce cours, j’ai eu un bug avec l’API
+WeatherCast et j’ai mis un peu de temps à comprendre d’où il venait. J’ai utilisé la console et l’onglet Network pour essayer de voir d’où il
+venait. Au final, c’était un bug assez bête mais comme quoi, ça arrive à tout le monde et tout le temps. ![:)](https://openclassrooms.com/bundles/common/images/smiley/smile.png)
+
+:::info
+Avant de regarder la vidéo avec la solution ci-dessous, essayez de trouver la solution par vous-même. Le bug se trouve sur la branche
+[partie-4/chapitre-1-section-3/exercise](https://github.com/OpenClassrooms-Student-Center/debuggez-l-interface-de-votre-site/tree/partie-4/chapitre-1-section-3%2Fexercise).
+:::
+
+<Vimeo vimeoId="566589776" />
+
+<br />
+
+:::caution !
+Il semble que ce bug se reproduise parfois aussi quand la page se recharge directement avec LiveServer. Si ça vous arrive, faites un
+rechargement de la page en vidant le cache (cmd + shift + R sous Mac et … sur Windows).
+:::
+
+#### Attrapez vos erreurs
+
+Dernier point avant de passer au prochain chapitre. Pensez à **traiter vos messages d’erreur**. Quand vous travaillez avec la méthode fetch,
+vous travaillez avec des promesses. Les promesses ont plusieurs statuts :
+- Pending (en cours),
+- Resolve (résolue),
+- et Reject (rejetée).
+
+:::info
+Si vous avez oublié les statuts des promesses, [je vous invite à relire le cours "Écrivez du JavaScript pour le web"](https://openclassrooms.com/fr/courses/5543061-ecrivez-du-javascript-pour-le-web/5866911-parallelisez-plusieurs-requetes-http)
+avant de revenir ici.
+:::
+
+La méthode fetch traite les erreurs de la manière suivante :
+
+```javascript
+const _retrieveWeatherForecastMockedData = () => fetch('/data/weather-api-mocked-data.json')
+    .then(res => res.json()) /* Ici, le cas de succès */
+    .catch(err => console.log("Oh no", err)) /* Ici, le cas d'erreur */
+```
+
+Dans le snippet de code ci-dessous, le `.catch` correspond au traitement de l’erreur dans le cadre de la méthode fetch.
+
+Dans la vidéo ci-dessous, nous allons voir ensemble comment attraper les erreurs de l’API météo aussi bien avec les données mockées qu’avec les
+données de l’API.
+
+<Vimeo vimeoId="566589825" />
+
+<br />
+
+Vous êtes maintenant paré pour déboguer des API externes !
+
+### En résumé
+
+- Avant de vous lancer dans l’intégration d’une API côté code, essayez toujours de passer par Postman pour tester votre API.
+- Les API externes respectent le plus souvent des bonnes pratiques dans leur conception : status code, versionnement, etc.<br />
+Une connaissance de ces bonnes pratiques peut vous permettre de comprendre et déboguer plus rapidement une API. Cela dit, il arrive parfois que
+les API ne respectent pas les bonnes pratiques.
+- L’onglet Network vous permet d’analyser la requête et la réponse renvoyées par les API.
+
+_Vous savez maintenant comment déboguer une API externe. Il est temps de vous intéresser au débogage des API internes !_
+
+-----
+
+## Récupérez des données sur une API interne
+
+[Récupérez des données sur une API interne - Déboguez l’interface de votre site internet - OpenClassrooms](https://openclassrooms.com/fr/courses/7159296-deboguez-l-interface-de-votre-site-internet/7282651-recuperez-des-donnees-sur-une-api-interne)
+
+![](https://user.oc-static.com/upload/2021/06/18/16240257152166_P4C2_Re%CC%81cupe%CC%81rez-des-donne%CC%81es-sur-une-API-interne.png)
+
+Avant de commencer ce chapitre, petit rappel : **une API n’est pas forcément liée à un webservice**. Votre navigateur comporte de très
+nombreuses API internes :
+- Le LocalStorage utilise l’API du Web Storage pour stocker des informations sur votre navigateur ;
+- L’API Canvas fournit un moyen de dessiner via le JavaScript et le HTML.
+
+:::info
+Le [MDN vous fournit la liste de toutes les API possibles](https://developer.mozilla.org/fr/docs/Web/API).
+
+Certaines sont utilisées, d’autres sont dépréciées. Cela dit, ça vous donne une bonne idée de ce qui est possible. ![:)](https://openclassrooms.com/bundles/common/images/smiley/smile.png)
+:::
+
+### Récupérez des données de géolocalisation
+
+Dans le cadre du projet Façadia, nous allons utiliser l’API de géolocalisation sur la page de création d’un formulaire. Vous pouvez trouver
+[la documentation de cette API sur le MDN](https://developer.mozilla.org/fr/docs/Web/API/Geolocation_API).
+
+<figure>
+    <img src="https://user.oc-static.com/upload/2021/06/17/16239386604874_image26.png"
+         alt="Screenshot de la page du MDN concernant l’API de Géolocalisation" />
+    <figcaption>La page du MDN concernant l’API de Géolocalisation</figcaption>
+</figure>
+
+Cela dit, comme toujours, avant de se lancer pleinement dans le code, il est important de découvrir comment fonctionne cette API en dehors du
+projet. Une fois cette API bien comprise, vous pourrez voir comment elle a été intégrée au projet.
+
+#### Découvrez l’API de géolocalisation
+
+J’ai une bonne nouvelle à vous annoncer. ![:)](https://openclassrooms.com/bundles/common/images/smiley/smile.png)
+
+La documentation du MDN sur l’API de géolocalisation est très **très** claire ! Elle va vous montrer comment l’intégrer facilement au projet,
+comment gérer les cas d’erreurs et elle comporte même un exemple : c’est un peu le rêve du développeur !
+
+Dans la vidéo ci-dessous, je vais vous montrer comment utiliser l’API. Voici la branche relative à cette partie : [partie-4/chapitre-2/section-1](https://github.com/OpenClassrooms-Student-Center/debuggez-l-interface-de-votre-site/tree/partie-4/chapitre-2%2Fsection-1).
+La page de test se trouve dans le [dossier pages/geolocation.html](https://github.com/OpenClassrooms-Student-Center/debuggez-l-interface-de-votre-site/blob/partie-4/chapitre-2/section-1/pages/geolocation.html)
+
+<Vimeo vimeoId="566589933" />
+
+<br />
+
+Quelques éléments à retenir sur l’API avant de poursuivre :
+- L’API de géolocalisation se trouve dans l’objet `navigator.geolocation`. Tous les navigateurs ne la prennent pas en charge.
+- Une fois que vous avez pu tester si elle était disponible, la méthode `getCurrentPosition` vous permet de récupérer votre position actuelle.
+C’est cette méthode que nous allons utiliser dans le projet Façadia.
+- Vous pouvez aussi suivre l’évolution de la position grâce à la méthode `watchPosition`.
+
+:::note ?
+Dans le cadre de l’API de WeatherStack, on avait mocké les données. Ce n'est pas fait ici, est-ce gênant ?
+:::
+
+Bonne question !
+
+Dans le cas de cette API, il n’y a pas de limite de consommation : vous pouvez demander votre position autant de fois que vous le souhaitez. Il
+n’y a donc pas vraiment besoin de mocker les données. ![:)](https://openclassrooms.com/bundles/common/images/smiley/smile.png)
+
+#### Intégrez l’API de géolocalisation dans le projet fil rouge
+
+Maintenant que l’API de géolocalisation n’a plus de secrets pour vous, il est temps de s’intéresser à son intégration dans notre projet Façadia !
+Pour rappel, nous nous servons de cette API sur la page de création d’un capteur.
+
+<figure>
+    <img src="https://user.oc-static.com/upload/2021/06/17/16239388980081_image48.png"
+         alt="Screenshot de la page de création d’un capteur" />
+    <figcaption>La page de création d’un capteur, avec la géolocalisation</figcaption>
+</figure>
+
+Dans la vidéo ci-dessous, je vais vous montrer comment l’API est intégrée sur notre projet. J’utiliserai le code source de la branche main.
+
+<Vimeo vimeoId="566589988" />
+
+<br />
+
+Maintenant que vous avez vu comment l’API fonctionnait et était utilisée dans notre projet Façadia, nous pouvons nous intéresser aux messages
+d’erreur. ![:)](https://openclassrooms.com/bundles/common/images/smiley/smile.png)
+
+### Comprenez les messages d’erreur d’une API interne
+
+J’ai une bonne et une mauvaise nouvelle !
+
+La mauvaise nouvelle, c’est que la gestion des erreurs des API internes n’est pas la même d’une API à l’autre. Les messages d’erreur ne seront
+pas les mêmes ainsi que les cas d’erreur.
+
+Cela dit, et c’est la bonne nouvelle, la documentation du MDN sur les API internes sera souvent d’excellente facture ; elle vous permettra de
+bien comprendre comment utiliser l’API et comment traiter les erreurs de façon élégante.
+
+Nous allons voir ici un exemple d’API pour justement vous permettre de mieux comprendre et parcourir la documentation. Je vous invite d’ailleurs
+à aller en voir d’autres (n’oubliez pas que [cette page vous donne toutes les API internes possibles](https://developer.mozilla.org/fr/docs/Web/API))
+et à essayer de comprendre comment les erreurs sont gérées.
+
+#### Découvrez comment les erreurs sont gérées sur l’API de géolocalisation
+
+Si vous vous rendez sur [la documentation de cette API sur le MDN](https://developer.mozilla.org/fr/docs/Web/API/Geolocation_API), vous
+trouverez un paragraphe appelé "Gérer les erreurs".
+
+On vous y explique que vous allez devoir passer une callback dans la méthode getCurrentPosition. Cela vous donnera donc le code suivant :
+
+```javascript
+/* Ma callback de succès */
+function success(position) {
+    /* J'ai récupéré la position et les coordonnées GPS, je peux faire quelque chose avec */
+}
+/* Ma callback d'erreur */
+function error() {
+    /* Quelque chose n'a pas marché : je traite de façon élégante l'erreur */
+}
+/* La méthode getCurrentPosition */
+navigator.geolocation.getCurrentPosition(success, error);
+```
+
+Plutôt pratique, non ?
+
+:::note ?
+Est-ce obligatoire de traiter les cas d’erreur ?
+:::
+
+Oui et même deux fois oui !
+
+L’absence de traitement d’un cas d’erreur peut vous causer de gros soucis : votre programme peut planter et il peut planter de façon silencieuse
+ce qui sera un cauchemar à déboguer. Donc, s'il vous plaît, faites-vous une fleur et rajoutez la gestion des messages d’erreur. ![:)](https://openclassrooms.com/bundles/common/images/smiley/smile.png)
+
+### À vous de jouer !
+
+![16245418386149_A-vous-de-jouer%20%281%29.png](https://user.oc-static.com/upload/2021/06/24/16245418386149_A-vous-de-jouer%20%281%29.png)
+
+Avant de passer à la dernière partie de ce cours, c’est l’heure du cas pratique ! Il semblerait que la géolocalisation soit cassée et ne
+fonctionne plus correctement comme semble l’indiquer [cette issue Github](https://github.com/tdimnet/debuggez-l-interface-de-votre-site/issues/4).
+Prenez le temps de la regarder et d’essayer de trouver le bug par vous-même avant de regarder la vidéo ci-dessous. 
+
+:::info
+Le bug se trouve sur la branche [partie-4/chapitre-2/exercise](https://github.com/OpenClassrooms-Student-Center/debuggez-l-interface-de-votre-site/tree/partie-4/chapitre-2%2Fexercise).
+:::
+
+<Vimeo vimeoId="566590024" />
+
+<br />
+
+:::info
+Vous pouvez trouver la solution au bug sur cette branche : [partie-4/chapitre-2/exercise-solution](https://github.com/OpenClassrooms-Student-Center/debuggez-l-interface-de-votre-site/tree/partie-4/chapitre-2%2Fexercise-solution).
+:::
+
+### En résumé
+
+- Comme les API externes, les API internes ont aussi une façon de traiter les erreurs. Le meilleur moyen de découvrir comment elles sont
+traitées est de parcourir la documentation.
+- Le MDN est une excellente source d’information pour comprendre comment fonctionne une API et comment elle gère les cas d’erreur.
+- Il est important de traiter vos messages d’erreur ! En effet, un message d’erreur non traité peut compliquer très fortement le débogage.
+
+_Vous savez maintenant déboguer des API externes et internes, félicitations ! Il est maintenant temps de passer à la dernière partie du cours :
+déboguer des applications._
+
+-----
+
+## Quiz : Solutionnez des bugs sur l’API
+
+[Solutionnez des bugs sur l’API - OpenClassrooms](https://openclassrooms.com/fr/courses/7159296-deboguez-l-interface-de-votre-site-internet/exercises/4155)
+
+#### Compétences évaluées
+
+<i class="bi bi-check2-circle"></i> Déboguer des bugs sur l’API
+
+-----
+
+#### Question 1 : Qu’appelle-t-on le "mocking" quand on parle d’API ?
+
+<i class="bi bi-circle"></i> C’est le fait de désigner l’API Rest : quelles vont être les routes utilisées, à quelles ressources vont-elles
+correspondre, etc.<br />
+<i class="bi bi-circle"></i> C’est le fait de tester une API Rest : est-ce que les routes appelées retournent bien les bonnes données, s’il y
+a des erreurs, etc.<br />
+<i class="bi bi-circle"></i> C’est le fait de consommer une API : on va récupérer les informations désirées en fonction des ressources appelées
+pour les afficher dans son interface front-end.<br />
+<i class="bi bi-record-circle"></i> C’est le fait de simuler un call API : on va sauvegarder les réponses dans un fichier pour éviter de
+dépasser le quota de requêtes autorisées.<br />
+<br />
+
+_"Mocker" permet de ne pas dépasser les quotas/limites d’une API. On va enregistrer la réponse dans un fichier à part (un fichier json) et
+simuler le call API._
+
+-----
+
+#### Question 2 : Dans cette question, vous allez devoir utiliser Postman et réaliser un call HTTP auprès de l’API de WeatherStack.
+
+**Réalisez une requête GET sur cette URL : [http://api.weatherstack.com/current?access\_key=ajouteIciVotreAccessKey&uery=Paris](http://api.weatherstack.com/current?access_key=931f119b9236cc4743d277b1e73b6e77&uery=Paris)**
+
+**Pensez bien à ajouter votre accès key.**
+
+**Quel est le status code retourné ?**
+
+<i class="bi bi-circle"></i> 101<br />
+<i class="bi bi-record-circle"></i> 200<br />
+<i class="bi bi-circle"></i> 403<br />
+<i class="bi bi-circle"></i> 601<br />
+<br />
+
+_Le message retourné est un status code 200 bien qu’une erreur soit aussi présente dans le "body" de la réponse._
+
+<figure>
+    <img src="https://user.oc-static.com/upload/2021/06/17/16239642798087_image14.png"
+         alt="Screencast du message retourné avec le status code 200." />
+    <figcaption>Le message retourné</figcaption>
+</figure>
+
+-----
+
+#### Question 3 : Pour cette question, vous allez peut-être devoir faire [un tour sur le MDN](https://developer.mozilla.org/fr/docs/Web/HTTP/Status)
+
+**À quoi correspond le status code 401 ?**
+
+<i class="bi bi-record-circle"></i> Une authentification est nécessaire pour accéder à la ressource.<br />
+<i class="bi bi-circle"></i> Requête traitée avec succès. La réponse dépendra de la méthode de requête utilisée.<br />
+<i class="bi bi-circle"></i> Document déplacé de façon permanente.<br />
+<i class="bi bi-circle"></i> Service temporairement indisponible ou en maintenance.<br />
+<br />
+
+_Vous n’avez pas besoin de connaître tous les status code : il y en a beaucoup trop. Cela dit, il est important de connaître les principaux
+pour éviter d’avoir à chercher leur signification trop régulièrement ![:)](https://openclassrooms.com/bundles/common/images/smiley/smile.png).
+Le MDN est une ressource à avoir toujours à portée de main !_
+
+-----
+
+#### Question 4 : Pour cette question, vous aurez besoin de changer de branche. ![:)](https://openclassrooms.com/bundles/common/images/smiley/smile.png)
+
+**Commencez par faire un `git checkout partie-4/quiz/question-4` [partie-4/quiz/question-4](https://github.com/OpenClassrooms-Student-Center/debuggez-l-interface-de-votre-site/tree/partie-4/quiz%2Fquestion-4),
+ouvrez le projet avec l’extension LiveServer et rendez-vous sur la page concernant le détail d’un capteur.**
+
+**Il semblerait que les données météo ne se mettent plus à jour. À l’aide des outils à votre disposition (console, inspecteur, network),
+découvrez le bug.**
+
+**Pensez à bien ajouter votre access key dans le fichier `weatherStackAPI` avant de vous lancer dans le débogage.**
+
+<i class="bi bi-circle"></i> Il y a une erreur de typographie pour le paramètre query.<br />
+<i class="bi bi-circle"></i> Les coordonnées géographiques ne sont pas passées comme il faut.<br />
+<i class="bi bi-record-circle"></i> Il y a une erreur de typographie pour le paramètre access_key.<br />
+<i class="bi bi-circle"></i> On doit passer le nom de la ville et non les coordonnées GPS.<br />
+<br />
+
+_Essayez d’aller regarder dans la réponse de l’API : vous y verrez un message d’erreur indiquant que l’access_key est manquante._
+
+<figure>
+    <img src="https://user.oc-static.com/upload/2021/06/17/16239648765844_image7.png"
+         alt="Screencast du message d’erreur" />
+    <figcaption>Le message d’erreur</figcaption>
+</figure>
+
+-----
+
+#### Question 5 : Quand on travaille avec une API Interne au navigateur, telle que l’API de WebStorage, de canvas ou celle de géolocalisation, les messages d’erreur sont-ils les mêmes ?
+
+<i class="bi bi-circle"></i> Oui. Il est important que les messages d’erreur soient les mêmes entre les API. Cela permet de garder de la
+consistance entre les API.<br />
+<i class="bi bi-record-circle"></i> Non. Les messages d’erreur ne sont pas les mêmes et il faut lire la documentation de chaque API avant de
+devoir les utiliser.<br />
+<br />
+
+_Les messages d’erreur entre les API ne peuvent pas être les mêmes étant donné qu’elles ne font pas la même chose. Au moment de découvrir une
+API interne, vous allez devoir passer par la case documentation._
+
+_Cela dit, pas de panique, le MDN fournit des documentations très détaillées de chaque API : [https://developer.mozilla.org/en-US/docs/Web/API](https://developer.mozilla.org/en-US/docs/Web/API)._
+
+-----
+
+#### Question 6 : Pour cette question, vous aurez besoin de changer de branche. ![:)](https://openclassrooms.com/bundles/common/images/smiley/smile.png)
+
+**Commencez par faire un `git checkout partie-4/quiz/question-6` [partie-4/quiz/question-6](https://github.com/OpenClassrooms-Student-Center/debuggez-l-interface-de-votre-site/tree/partie-4/quiz%2Fquestion-6),
+ouvrez le projet avec l’extension LiveServer et rendez-vous sur la page d’ajout d’un capteur.**
+
+**On dirait que la géolocalisation est encore cassée. En utilisant les méthodes vues dans le cours, résolvez le bug.**
+
+<i class="bi bi-record-circle"></i> Il y a une erreur de typographie pour la géolocalisation.<br />
+<i class="bi bi-circle"></i> On a inversé la callback de succès et la callback d’erreur : le formulaire n’est jamais rempli.<br />
+<i class="bi bi-circle"></i> On n’utilise pas la bonne API de géolocalisation : elle n’est jamais exécutée.<br />
+<i class="bi bi-circle"></i> Il y a une erreur de typographie pour la sélection des éléments sur le DOM. On complète des noeuds qui n’existent
+pas.<br />
+<br />
+
+_Il y a une erreur de typographie dans le code : on utilise `geolocatio` au lieu de `geolocation`. Comme `geolocatio` n’existe pas dans l’objet
+`navigator`, le code n’est jamais exécuté._
+
+-----
+
+#### Question 7 : Pour cette question, vous aurez besoin de changer de branche. ![:)](https://openclassrooms.com/bundles/common/images/smiley/smile.png)
+
+**Commencez par faire un `git checkout partie-4/quiz/question-7` [partie-4/quiz/question-7](https://github.com/OpenClassrooms-Student-Center/debuggez-l-interface-de-votre-site/tree/partie-4/quiz%2Fquestion-7),
+ouvrez le projet avec l’extension LiveServer et rendez-vous sur la page d’accueil connectée.**
+
+**Aïe ! On dirait qu’on n’arrive plus à afficher les capteurs. On a bien une erreur en console mais cela ne ressemble pas à une erreur d’API.**
+
+**Les capteurs n’apparaissent pas sur la page, à gauche.**
+
+**En utilisant les techniques de débogage vues dans le cours, trouvez la bonne réponse.**
+
+<i class="bi bi-circle"></i> Il s’agit d’un problème de requête asynchrone. On n’attend pas d’avoir reçu le résultat pour lancer les traitements.<br />
+<i class="bi bi-circle"></i> Il s’agit d’un problème avec le fichier. On n’appelle pas le bon fichier pour réaliser la requête.<br />
+<i class="bi bi-circle"></i> Il s’agit d’un problème lors de la récupération des données. On retourne mal les données contenues dans les capteurs.<br />
+<i class="bi bi-record-circle"></i> Il s’agit d’un problème avec la méthode fetch. On appelle la méthode <code>.json</code> de la mauvaise façon.<br />
+<br />
+
+_On appelle la méthode `res.json` et non `res.json()`. Le `.catch` n’est pas complété. On n’a aucune information concernant l’erreur lors du
+fetch._
+
+-----
+
+#### Question 8 : Pour cette question, vous aurez besoin de changer de branche. ![:)](https://openclassrooms.com/bundles/common/images/smiley/smile.png)
+
+**Commencez par faire un `git checkout partie-4/quiz/question-8` [partie-4/quiz/question-8](https://github.com/OpenClassrooms-Student-Center/debuggez-l-interface-de-votre-site/tree/partie-4/quiz%2Fquestion-8),
+ouvrez le projet avec l’extension LiveServer et rendez-vous sur la page concernant le détail d’un capteur.**
+
+**On dirait bien que les données météo ne sont plus récupérées auprès de WeatherStack. Pensez bien à ajouter votre clé d’API à la ligne 1 du
+fichier `weatherStackAPI.js`.**
+
+**D’où le bug peut-il venir ?**
+
+<i class="bi bi-circle"></i> L’API de WeatherStack est mal appelée : on ne lui passe pas le bon paramètre <code>query</code>.<br />
+<i class="bi bi-circle"></i> On utilise les données mockées au lieu d’utiliser les données de l’API. Cela donne une erreur de compatibilité.<br />
+<i class="bi bi-record-circle"></i> L’API de WeatherStack est mal appelée : on utilise https au lieu de http.<br />
+<i class="bi bi-circle"></i> Il y a une erreur de typo dans l’URL de l’API où on utilise <code>ap.weatherstack.com</code> au lieu de
+<code>api.weatherstack.com</code><br />
+<br />
+
+_On utilise `https` au lieu de `http` et comme la callback d’erreur n’est pas complétée aucune erreur ne s’affiche à l’écran._
+
+_Pour rappel, nous ne pouvons pas utiliser le `https` car nous utilisons la version gratuite de l’API._
+

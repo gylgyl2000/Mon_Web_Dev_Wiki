@@ -1,5 +1,5 @@
 ---
-sidebar_position: 1
+sidebar_position: 2
 ---
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
@@ -7,114 +7,167 @@ import { Vimeo } from 'mdx-embed';
 
 # Mission
 
-[Construisez un site e-commerce - OpenClassrooms](https://openclassrooms.com/fr/paths/185/projects/675/assignment)
+## Scénario
 
-### Scénario
+[Construisez un site e-commerce en JavaScript - OpenClassrooms](https://openclassrooms.com/fr/paths/185/projects/675/assignment)
 
-Félicitations ! Vous avez été recruté en tant que développeur front-end par Orinoco, une entreprise de commerce en ligne. 
+Vous êtes en poste dans une agence de développement web depuis quelques semaines maintenant. Après avoir réalisé avec succès l’intégration de
+quelques sites web (HTML/CSS), on vous confie une nouvelle mission.
 
-[![Le logo d'Orinoco](https://user.oc-static.com/upload/2019/09/04/15675819263013_image1.png)](https://user.oc-static.com/upload/2019/09/04/15675819263013_image1.png)
+Votre client est Kanap, une marque de canapés qui vend ses produits depuis sa boutique exclusivement. Aujourd’hui, celle-ci souhaiterait avoir
+une plateforme de e-commerce en plus de sa boutique physique pour vendre ses produits sur Internet.
 
-Le logo d'Orinoco
+<figure>
+    <img src="https://user.oc-static.com/upload/2021/09/29/16329291678171_image2.png"
+         alt="Un canapé avec une lampe et marqué Kanap" />
+    <figcaption>Logo de Kanap</figcaption>
+</figure>
 
-Son credo ? Se démarquer des grands site e-commerce comme Amazon en créant des applications thématiques ne vendant qu’un seul groupe de
-produits. Il y a par exemple Oribook pour les livres ou Oritextil pour les vêtements.
+Dans le cadre de cette mission, vous travaillez avec une équipe constituée de :
+- Corinne, le CTO de l’agence ;
+- Frank, le développeur front-end qui s’est chargé d’intégrer la maquette statique du site ;
+- Bilal, le développeur back-end qui implémente l’API à laquelle est connecté le front-end.
 
-Vos compétences en développement web et votre personnalité ont plu à Paul, le fondateur de l’entreprise.
-
-Dans un premier temps, Paul souhaite créer un premier MVP pour démontrer le fonctionnement de ses applications à ses investisseurs.
-
-L’équipe est constituée de Jeanne, développeuse back-end travaillant sur les API et vous, pour la partie front-end.
-
-À votre arrivée, vous trouvez un mail de Paul dans votre boîte mail.
+Corinne vous envoie un e-mail pour vous briefer sur la mission :
 
 <div class="courriel-container">
     <div class="courriel-header">
 
-De: Paul 
-
-À: vous
+<strong>De</strong> : Corinne<br />
+<strong>À</strong> : Vous<br />
+<strong>Objet</strong> : Site e-commerce Kanap<br />
+<br />
 
 </div>
 <div class="courriel-main">
 
------------------------------------------------------------------------------------
+Hello !
 
-**Objet : Bienvenue !**
+Comme on en a discuté hier, voici les informations pour que tu puisses démarrer l’implémentation du site de Kanap de manière dynamique.
 
-Bonjour et bienvenue chez Orinoco ! J’espère que tu te plairas parmi nous. J’ai vraiment hâte de montrer ce MVP aux investisseurs. Il
-faut qu’on les rassure car ils misent sur nous. ![:)](https://oc-images.imgix.net/imgix/smile.png?auto=compress,format&q=80 ":)")
+Voici les différentes tâches que tu vas devoir mener à bien :
+- Unifier les travaux déjà réalisés par l’équipe en intégrant dynamiquement les éléments de l’API dans les différentes pages web avec JavaScript.
+Le code du front-end et de l’API est disponible sur <a href="https://github.com/OpenClassrooms-Student-Center/P5-Dev-Web-Kanap">ce repo</a>.
+- Mettre en place un plan de test d’acceptation à partir de ce <a href="https://s3.eu-west-1.amazonaws.com/course.oc-static.com/projects/DWJ_FR_P5/DW+P5+-+Modele+plan+tests+acceptation.xlsx">
+template</a> que nous avons pour habitude d’utiliser.
 
-Jeanne s’occupera du back-end et toi du front.
-
-Avec l’équipe, on a déjà pas mal bossé sur le cahier du MVP. Cela te fera une bonne base pour avancer. Tu trouveras en pièce jointe les
-spécifications.
+Pour plus de précisions, voici les <a href="https://s3.eu-west-1.amazonaws.com/course.oc-static.com/projects/DWJ_FR_P5/DW+P5+-+Specifications+fonctionnelles.pdf">
+spécifications techniques et fonctionnelles</a> du projet. Tu pourras y trouver tous les détails de celui-ci, les attentes pour chaque page du
+site web et les détails de l’API.
 
 N'hésite pas à venir me voir si tu as la moindre question, ma porte est toujours ouverte.
 
-Paul
+Bonne journée,
 
-Fondateur de Orinoco
+<strong>Corinne</strong><br />
+<br />
 
-[Spécifications Orinoco](https://s3-eu-west-1.amazonaws.com/course.oc-static.com/projects/DWJ_FR_P5/P5_Spe%CC%81cifications+fonctionnelles+Orinoco.pdf)
+</div>
+</div>
+<br />
+<br />
+Un peu plus tard, Frank vous envoie un e-mail pour vous apporter quelques précisions complémentaires sur son travail :<br />
+<br />
+
+<div class="courriel-container">
+    <div class="courriel-header">
+
+<strong>De</strong> : Frank<br />
+<strong>À</strong> : Vous<br />
+<strong>Objet</strong> Maquettes statiques du site de Kanap<br />
+<br />
+
+</div>
+<div class="courriel-main">
+
+Salut,
+
+Visiblement c’est le moment pour toi de rejoindre le projet ! Je viens donc te donner quelques informations sur la partie que j’ai pu réaliser,
+pour t’aider lors de ton développement.
+
+4 pages ont été mises en place : page d’accueil, page Produit, page Panier et la page Confirmation. Sur l’ensemble des pages, toutes les parties
+statiques sont en place, elles sont donc prêtes à recevoir le contenu dynamique.
+
+Aussi, sur chaque page, un exemple de la partie dynamique est systématiquement donné ; de cette façon, tu n’as pas à t’occuper de la mise en
+place de la structure HTML ni du style CSS, tout est déjà fait. Tu n’as plus qu’à t’occuper d’intégrer ces éléments dynamiquement grâce à JS et
+l’API.
+
+Enfin, dans le code HTML j’ai intégré des "id" dans différentes balises, cela devrait t’aider à intégrer les éléments dynamiques. Avec tout ça,
+normalement tu n’auras pas besoin de toucher au code HTML/CSS.
+
+Bon développement !
+
+<strong>Frank</strong><br />
+<br />
 
 </div>
 </div>
 
 <br />
 <br />
+Ça y est, vous avez toutes les informations pour démarrer votre projet. Bon courage !<br />
+<br />
 
-Paul vous envoie également des messages sur le système de messagerie instantanée de l’entreprise pour vous apporter quelques précisions
-complémentaires.
+-----
 
-<figure>
-    <img src="https://user.oc-static.com/upload/2019/09/04/15675840760147_image3.png" alt="La conversation instantanée entre Paul et vous" />
-    <figcaption>La conversation instantanée entre Paul et vous </figcaption>
-</figure>
+**Repo GitHub :** [https://github.com/gylgyl2000/P5-Dev-Web-Kanap](https://github.com/gylgyl2000/P5-Dev-Web-Kanap)
 
-Vous gardez en tête toutes ces informations et attaquez le développement immédiatement.
+**Les spécifications techniques et fonctionnelles du projet**
 
-### Livrables
+<embed style={{width: "100%", height: "667px" }} src="/static/pdf/DW+P5+-+Specifications+fonctionnelles.pdf"></embed>
 
-- Le **lien** vers un dépôt Git public contenant le code de l'application web.
-    - Le mentor et l'évaluateur doivent être en mesure de cloner le référentiel, d'ouvrir index.html, d'utiliser l'application
-    entièrement opérationnelle et de confirmer que n’importe quel input utilisateur est validé.
-- Un **plan de tests.**
+-----
 
-:::info
-Pour faciliter votre passage au jury, déposez sur la plateforme, dans un dossier nommé “_P5_nom_prenom_”, tous les livrables du projet.
-Chaque livrable doit être nommé avec le numéro du projet et selon l'ordre dans lequel il apparaît, par exemple “_P5_01_lienGithub_”,
-“_P5_02_plantests_”, et ainsi de suite.
+:::caution !
+Pour ce projet, **vous ne pouvez utiliser que du code JavaScript pur**. L'utilisation de tout framework ou librairie JavaScript (React, Angular,
+Vue ou jQuery, par exemple) est interdite pour ce projet.
 :::
 
-### Soutenance
+:::info
+Pour vous aider à réaliser ce projet, [voici un exemple de découpage](https://s3.eu-west-1.amazonaws.com/course.oc-static.com/projects/DWJ_FR_P5/DW+P5+-+Etapes+cles.pdf)
+des étapes à suivre. Vous y trouverez des conseils pour chaque étape, ainsi que sur l’utilisation des ressources pour ce projet.
+:::
 
-La soutenance, d’une durée maximum de 30 minutes, se déroulera en deux parties :
+<embed style={{width: "100%", height: "667px" }} src="/static/pdf/DW+P5+-+Etapes+cles.pdf"></embed>
 
-**Partie 1 – 20 minutes : Simulation d'une réunion professionnelle.**
+## Livrables
 
-_L’évaluateur jouera le rôle de Paul, le fondateur d’Orinoco (il pourra vous interrompre pour vous poser des questions)._
+- Un fichier ZIP contenant le **code fonctionnel du site web**, nommé P5_nom_code.zip (en remplaçant “nom” par votre nom).
+- Le **plan de test** au format PDF, nommé P5_nom_plan_test.pdf.
 
-- [~ 20 minutes] Vous réaliserez une présentation de votre application.
+:::caution !
+Pour faciliter votre passage devant le jury, déposez sur la plateforme, dans un dossier nommé “P5_prenom_nom”, tous les livrables du projet.
+:::
 
-**Partie 2 – 10 minutes : Retour sur la soutenance**
+## Soutenance (30 min)
 
-- Échange de questions/réponses : l’évaluateur pourra revenir sur certains points pour vous questionner sur vos choix.
-- L’évaluateur vous fera un retour sur votre prestation en soutenance.
+Durant la présentation orale, l’évaluateur interprétera le rôle de Corinne. La soutenance est structurée de la manière suivante :
+- **Présentation des livrables (15 minutes)**
+    - Pendant 10 à 12 minutes, vous allez devoir présenter le site web dans lequel vous avez intégré les éléments dynamiques, ainsi que le code
+    JavaScript réalisé.
+    - Puis, pendant 3 à 5 minutes, vous devrez présenter le plan de test mis en place.
+- **Discussion (10 min)**
+    - L’évaluateur, qui pour rappel jouera le rôle de Corinne, vous challengera sur les différents points techniques du projet. Par exemple
+    (mais pas uniquement) :
+       - l’utilisation de l’API (GET, POST) ;
+       - le DOM (ajout, suppression et modification d’éléments) ;
+       - l’utilisation de URLSearchParams ;
+       - l’utilisation de localStorage.
+- **Débriefing (5 minutes)**
+- À la fin de la soutenance, l'évaluateur arrêtera de jouer le rôle de Corinne pour vous permettre de débriefer ensemble.
 
-Vous vous demandez par où commencer ? Suivez nos conseils dans cette video pour vous organiser et faire le point avant votre première
-session de mentorat !
+:::caution !
+Votre présentation devrait durer 15 minutes (+/- 5 minutes). Puisque le respect de la durée des présentations est important en milieu
+professionnel, les présentations en dessous de 10 minutes ou au-dessus de 20 minutes peuvent être refusées.
+:::
 
-<Vimeo vimeoId="486452404" />
+## Compétences évaluées
 
+<i class="bi bi-pencil-square"></i> Créer un plan de test pour une application<br />
+<i class="bi bi-pencil-square"></i> Interagir avec un web service avec JavaScript<br />
+<i class="bi bi-pencil-square"></i> Valider des données issues de sources externes<br />
+<i class="bi bi-pencil-square"></i> Gérer des événements JavaScript<br />
 <br />
-
-### Compétences évaluées
-
-- Créer un plan de test pour une application
-- Interagir avec un web service avec JavaScript
-- Valider des données issues de sources externes
-- Gérer des événements JavaScript
 
 -----
 
@@ -126,7 +179,7 @@ Ces cours peuvent vous aider dans la réussite de votre projet. Ils ne sont pas 
 
 - [Apprenez à programmer avec JavaScript](https://openclassrooms.com/fr/courses/6175841-apprenez-a-programmer-avec-javascript)
 - [Écrivez du JavaScript pour le web](https://openclassrooms.com/fr/courses/5543061-ecrivez-du-javascript-pour-le-web)
-- [Créez des sites web responsive avec Bootstrap 4](https://openclassrooms.com/fr/courses/6391096-creez-des-sites-web-responsive-avec-bootstrap-4)
+- [Déboguez l’interface de votre site internet](https://openclassrooms.com/fr/courses/7159296-deboguez-l-interface-de-votre-site-internet)
 
 -----
 
@@ -136,12 +189,40 @@ Ces cours peuvent vous aider dans la réussite de votre projet. Ils ne sont pas 
 
 ### Contenu exclusif
 
+#### Enoncé du webinaire : Utilisez JavaScript pour réaliser un site dynamique
+
+<embed style={{width: "100%", height: "667px" }} src="/static/pdf/Webinaire+JavaScript+P5+DevWeb+Enonce+et+Correction.pdf"></embed>
+
+#### Webinaire : Utilisez JavaScript pour réaliser un site dynamique
+
+<video
+  height="auto"
+  width="100%"
+  controls>
+    <source
+      src="/static/video/Webinaire-Utilisez_JavaScript_pour_realiser_un_site_dynamique.mp4"
+      type="video/mp4"
+    />
+</video>
+
+#### Corrigé du webinaire : Utilisez JavaScript pour réaliser un site dynamique
+
+[Jsnews-final](https://github.com/mostuf/Jsnews-final)
+
 * * *
 
 ### Site web
 
+[Toxicode](http://compute-it.toxicode.fr/)
+
 * * *
 
 ### Défi
+
+**Créez un plan de test**
+
+Apprenez à créer un plan de test étape par étape
+
+<embed style={{width: "100%", height: "667px" }} src="/static/pdf/Défi+_+Créez+un+plan+de+test.pdf"></embed>
 
 * * *

@@ -1,0 +1,617 @@
+---
+id: 2-Identifiez_les_differents_types_de_bug_de_votre_interface_Front-End
+title: Identifiez les différents types de bug de votre interface Front-End
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+import { Vimeo, CodePen } from 'mdx-embed';
+
+# Identifiez les différents types de bug de votre interface Front-End
+
+## Découvrez les sources de bug potentielles
+
+[Découvrez les sources de bug potentielles - Déboguez l’interface de votre site internet - OpenClassrooms](https://openclassrooms.com/fr/courses/7159296-deboguez-l-interface-de-votre-site-internet/7277136-decouvrez-les-sources-de-bug-potentielles)
+
+<Vimeo vimeoId="566960129" />
+
+<br />
+
+### Découvrez l'origine des bugs Front-End
+
+**Tous les sites web ont des bugs !** Certains en contiennent plus que d'autres mais le site parfait n’existe pas, et il est de notre devoir,
+en tant que développeurs, de **corriger ces bugs** : c’est une partie essentielle de notre travail.
+
+Dans ce cours, nous allons nous intéresser aux bugs qui peuvent survenir sur **la partie front-end d’un site** et à comment les **résoudre de
+manière efficace**.
+
+**Quand vous travaillez sur la partie front-end d’un site, il n’existe pas un seul bug type** (ce serait trop simple !) En effet, c’est une
+interface assez complexe et vous allez réaliser un grand nombre d’opérations différentes où :
+- les données peuvent s’afficher et se modifier de façon dynamique,
+- le contenu doit s’adapter à la taille de l’écran,
+- etc.
+
+De ce fait, certains bugs vont être détectables via des erreurs, dans la console par exemple, alors que d’autres vont être un petit peu plus
+sournois, comme un problème d’affichage sur un navigateur.
+
+<figure>
+    <img src="https://user.oc-static.com/upload/2021/06/18/16240106047057_P1C1%20copie.png"
+         alt="À gauche, la page d'accueil originale de Facadia, sans bug où on a un encadré noir autour du formulaire de connexion. A droite, une version  avec un bug d’affichage CSS, où l'encadré noir n'apparaît pas." />
+    <figcaption>Ci-dessus l’original (sans bug, à gauche) et une version (à droite) avec un bug d’affichage CSS</figcaption>
+</figure>
+
+<figure>
+    <img src="https://user.oc-static.com/upload/2021/06/12/16235295094953_Sans%20titre1.png"
+         alt="Screenshot de la console présentant un message d'erreur" />
+    <figcaption>Ci-dessus une erreur JavaScript présente dans la console</figcaption>
+</figure>
+
+:::info
+Ces deux exemples de bug se trouvent sur la branche [partie-1/chapitre-1/section-1](https://github.com/OpenClassrooms-Student-Center/debuggez-l-interface-de-votre-site/tree/partie-1/chapitre-1/section-1).
+:::
+
+Prenons un moment pour réfléchir à toutes les sources potentielles de bug côté front :
+- **Côté HTML** - on peut avoir oublié de fermer une balise ou alors avoir utilisé la mauvaise classe (et donc que le style appliqué ne soit
+pas le bon).
+- **Côté CSS** - il peut s’agir d’éléments qui s’affichent mal (ou pas du tout) sur un certain type d’appareil ; les smartphones par exemple.
+- **Côté DOM** - les bugs peuvent être liés à la mauvaise sélection, modification ou suppression d’un nœud. Par exemple, on souhaite supprimer
+un nœud qui n’existe pas (parce qu’on l’a mal sélectionné).
+- **Côté API** - dans le cas d’une API interne (l’API de géolocalisation ou de stockage par exemple), il se peut que vous l’utilisiez mal,
+autrement dit que vous n’ayez pas bien compris la documentation.<br />
+Dans le cas d’une API externe (API de météo par exemple), il se peut que vous ne lui envoyiez pas les bonnes informations dans la requête HTTP.
+
+:::info
+Pour finir, il arrive très souvent que les bugs viennent **en cascade**. Par exemple, un bug avec une API externe provoque un bug au niveau de
+la création d’un élément. Dans la dernière partie de ce cours, nous verrons justement ensemble, comment faire face à ce cas de figure !
+:::
+
+### Découvrez le projet fil rouge : le site Façadia
+
+Avant de nous lancer dans le vif du sujet et d’aborder les outils de débogage, nous allons faire un petit détour par notre projet fil rouge :
+le projet Façadia, un site de façades d'immeubles connectées.
+
+Vous pouvez dès à présent récupérer [le code source du projet ici](https://github.com/tdimnet/debuggez-l-interface-de-votre-site/tree/main).
+J’ai aussi utilisé Figma pour réaliser les maquettes de ce projet. Vous pouvez ouvrir le [Figma du projet](https://www.figma.com/file/jhus1mOSv5hnpVRxu2q3mf/Connected-Facades)
+dans un onglet de votre navigateur, nous l’utiliserons durant le cours.
+
+Pour suivre ce cours de manière optimale, il est conseillé d’avoir quelques connaissances sur **Git et Github**. Nous allons utiliser Git pour
+changer de branche à chaque chapitre. De plus, chaque quiz se trouvera lui aussi sur une branche particulière.
+
+Si vous avez suivi le cours sur le [testing d’application en JavaScript](https://openclassrooms.com/fr/courses/7159306-testez-vos-applications-front-end-avec-javascript),
+il est possible que ce projet vous dise quelque chose : c’est normal, c’est le même ! Cela dit, si vous comparez le code source du projet de
+testing et celui-ci, vous verrez que pas mal de choses ont changé côté code. Nous sommes sur **un site statique plus "traditionnel"** :
+- Il y a un dossier `pages` qui comprend toutes les pages HTML du projet, en dehors de la page index.html qui est située à la racine du projet.
+- Le projet n’utilise aucune librairie externe. C’est du JavaScript pur ; on appelle ça aussi du Vanilla JavaScript.
+- Chaque page comprend plusieurs balises script ; elles vous permettent de récupérer les fichiers JavaScript à utiliser pour chaque page.
+
+Le screencast ci-dessous va vous montrer comment prendre en main le projet et nous allons découvrir ensemble les différents fichiers le
+constituant.
+
+<Vimeo vimeoId="566588735" />
+
+<br />
+
+### En résumé
+- Les bugs sur une interface front-end peuvent venir de nombreux endroits : HTML, CSS, DOM, APIs.
+- Les bugs HTML et CSS sont plus compliqués à détecter : ces derniers ne lèvent aucune erreur dans la console.
+- Les bugs relatifs au DOM sont très fréquents. Ils peuvent survenir si un nœud a été mal sélectionné ou supprimé.
+- Les bugs d’API peuvent arriver aussi bien sur les API internes (géolocalisation, LocalStorage) qu’externes (récupération de données météo par
+exemple).
+
+_Vous connaissez maintenant les différentes sources de bug, il est temps de s’intéresser aux outils à votre disposition !_
+
+-----
+
+## Prenez en main les outils de débogage
+
+[Prenez en main les outils de débogage - Déboguez l’interface de votre site internet - OpenClassrooms](https://openclassrooms.com/fr/courses/7159296-deboguez-l-interface-de-votre-site-internet/7278556-prenez-en-main-les-outils-de-debogage)
+
+![](https://user.oc-static.com/upload/2021/06/18/16240102459943_P1C2_Adoptez-les-outils-du-de%CC%81bogage.png)
+
+Dans le chapitre précédent, nous avons vu ensemble les différentes sources de bug possibles sur une interface front-end.
+
+Vous allez maintenant voir comment tirer parti des nombreux outils de votre navigateur pour suivre et traquer les bugs !
+
+### Utilisez un environnement interactif grâce à la console
+
+Première étape de notre tour du monde des outils : **la** **console** ! C’est certainement **l’un des outils les plus intéressants** que vous
+ayez dans le monde du développement front-end.
+
+:::info
+Dans le cours [“Mettez en place votre environnement Front-End”](https://openclassrooms.com/fr/courses/6943241-mettez-en-place-votre-environnement-front-end/7056021-testez-votre-code-avec-les-devtools-chrome-et-firefox),
+Will Alexander vous montre comment accéder à la console aussi bien sur Chrome que sur Firefox. Voici ci-dessous, le screencast correspondant :
+:::
+
+<Vimeo vimeoId="491649218" />
+
+<br />
+
+:::note ?
+Maintenant qu’on sait y accéder, à quoi ça sert et comment s’en servir ?
+:::
+
+Première chose à savoir : **la console est un environnement de programmation interactif** . Grâce à cet environnement, vous allez pouvoir :
+- initialiser et stocker des variables ;
+- analyser les erreurs JavaScript ;
+- afficher (on dit aussi logger) des informations (fonctions, variables, objets, etc.)
+- et même écrire des fonctions pour les exécuter directement.
+
+**Cette dernière va nous être particulièrement utile lors de vos débogages** : elle se prend très facilement en main, est très puissante et
+vous permet de directement coder du JavaScript dans votre navigateur.
+
+Une bonne compréhension de la console est essentielle pour bien déboguer vos applications front-end ; ça tombe bien, vous allez pouvoir
+pratiquer car nous allons l’utiliser énormément dans ce cours !
+
+### Visualisez et éditez vos règles CSS avec l’inspecteur
+
+Deuxième étape dans notre tour du monde des outils du débogage : **l’inspecteur** ! Vous allez principalement vous servir de cet outil pour
+**déboguer** votre CSS et votre HTML ainsi que pour **tester** rapidement une solution (en ajoutant quelques règles CSS directement depuis
+l’outil).
+
+:::info
+Will Alexander vous montre dans le cours Mettez en place votre environnement front-end, [comment parcourir et éditer votre HTML](https://openclassrooms.com/fr/courses/6943241-mettez-en-place-votre-environnement-front-end/7056021-testez-votre-code-avec-les-devtools-chrome-et-firefox#/id/r-7083178),
+[votre CSS](https://openclassrooms.com/fr/courses/6943241-mettez-en-place-votre-environnement-front-end/7056021-testez-votre-code-avec-les-devtools-chrome-et-firefox#/id/r-7083197)
+et aussi [comment activer le mode mobile](https://openclassrooms.com/fr/courses/6943241-mettez-en-place-votre-environnement-front-end/7056021-testez-votre-code-avec-les-devtools-chrome-et-firefox#/id/r-7083217).
+
+Je vous invite dès à présent à découvrir ses vidéos si vous n’êtes pas au point avec l’outil.
+:::
+
+L’un des principaux avantages de l’inspecteur est de pouvoir observer comment se comporte l’interface avec différentes résolutions et/ou
+différents types d'écran.
+
+<figure>
+    <img src="https://user.oc-static.com/upload/2021/06/18/1624009972215_p1c2-1.png"
+         alt="À gauche une tablette avec affiché dans l'écran, la page d'accueil de Façadia centrée . A droite, un smartphone, avec la même page d'accueil affichée. L'espace de connexion prend ici toute la largeur de l'affichage." />
+    <figcaption>La page d'accueil de Façadia sur deux terminaux de taille différente</figcaption>
+</figure>
+
+De plus, l’inspecteur vous donne parfois la **ligne correspondant à la propriété CSS**. Vous pourrez aussi voir si les propriétés sont
+surchargées à certains endroits.
+
+<figure>
+    <img src="https://user.oc-static.com/upload/2021/06/14/16236581141483_image4.png"
+         alt="Screenshot de l'inspecteur qui montre que la propriété color du body est surchargée dans la classe `sign-in-main-wrapper`" />
+    <figcaption>Ici on voit que la propriété color du body est surchargée dans la classe `sign-in-main-wrapper`</figcaption>
+</figure>
+
+Enfin, l’inspecteur vous permet de visualiser les **règles d’espacement** qui sont appliquées au modèle de boite (ou box model en anglais). Cet
+outil de visualisation bien pratique va vous permettre de **traquer pourquoi un contenu dépasse de sa “boite” et entraîne un bug visuel**.
+
+<figure>
+    <img src="https://user.oc-static.com/upload/2021/06/14/16236582018794_image16.png"
+         alt="Un modèle de boîte où l'on voit les différentes règles d'espacement pour les margin, border et pading" />
+    <figcaption>Exemple d'un modèle de boîte avec l'affichage des règles d'espacement</figcaption>
+</figure>
+
+### Suivez étape par étape l’évolution de votre code avec le débogueur
+
+Troisième étape de notre tour du monde des outils de débogage : le célèbre **débogueur** ! Cet outil bien pratique vous permet de **suivre
+l’état de votre code étape par étape**.
+
+En ajoutant des **points de rupture** (ou **breakpoint**), vous allez savoir quelles fonctions vont être appelées, quel sera l’état des
+variables, etc. À la différence du console.log, le débogueur vous permet de comprendre plus finement et plus précisément comment se comporte
+une application.
+
+<Vimeo vimeoId="566588785" />
+
+<br />
+
+Cela dit, avant de vous présenter le dernier outil dédié au débogage, je vous ai réservé une petite surprise ! Dans ce cours, nous allons
+utiliser **VsCode** comme éditeur de texte, car ce dernier dispose [d’une extension particulièrement pratique dédiée au débogage (et au débogueur)](https://code.visualstudio.com/docs/editor/debugging).
+
+Vous allez pouvoir utiliser cette extension avec Google Chrome. [S’il n’est pas installé sur votre ordinateur, je vous invite dès à présent à le faire.](https://www.google.fr/chrome/)
+
+Dans la vidéo ci-dessous, je vous montre comment installer et paramétrer cette extension VsCode sur Chrome.
+
+<Vimeo vimeoId="566588834" />
+
+<br />
+
+:::info
+[Voici le lien Github qui correspond à l’installation de cette extension.](https://github.com/OpenClassrooms-Student-Center/debuggez-l-interface-de-votre-site/tree/partie-1/chapitre-2%2Fscreencast-2)
+:::
+
+### Analysez vos appels réseaux avec l’onglet Network de votre navigateur
+
+Dernière étape de notre tour du monde des outils de débogage : **l’onglet Network** ! C’est l’un des outils dont on parle le moins souvent et
+qui demeure pourtant essentiel pour déboguer.
+
+Cet outil va vous permettre de **traquer toutes les requêtes et réponses reçues par votre navigateur**. Dans ce cours, vous utiliserez
+principalement cet outil pour déboguer nos requêtes HTTP.
+
+:::info
+Le web est basé sur le modèle requête (Request en anglais) et réponse (Response). Si vous n’êtes pas totalement à l’aise avec ce concept (et
+avec celui des requêtes HTTP), Fabien Henon [vous propose une définition plutôt détaillée dans son cours “Écrivez du JavaScript pour le web”](https://openclassrooms.com/fr/courses/5543061-ecrivez-du-javascript-pour-le-web/5577576-comprenez-ce-que-sont-des-api-et-un-service-web#/id/r-7190519).
+:::
+
+Dans la vidéo ci-dessous, je vais vous présenter où se trouve cet outil et comment vous pouvez vous en servir.
+
+<Vimeo vimeoId="566588893" />
+
+<br />
+
+En plus de la partie débogage des API, **l’onglet Réseaux** vous permet de connaître **le poids des fichiers reçus**. Cela peut être
+particulièrement intéressant si vous souhaitez optimiser le chargement de votre site (ou au contraire, comprendre pourquoi ce dernier met du
+temps à charger ![;)](https://openclassrooms.com/bundles/common/images/smiley/clin.png) ).
+
+### En résumé
+
+- La console est un environnement interactif où vous allez pouvoir créer des variables et des fonctions, exécuter du code ou afficher des
+informations sur l’état de votre application.
+- L’inspecteur vous permet de consulter votre HTML et votre CSS. Vous pourrez modifier votre code HTML (en ajoutant des classes par exemple)
+mais aussi activer et désactiver des règles CSS.
+- Le débogueur vous permet de suivre le déroulement de votre code étape par étape grâce à des breakpoints (ou points de rupture). À chaque
+breakpoint, votre code se stoppe et vous permet de consulter l’état de votre application.
+- L’onglet Network (ou réseau en français) est utilisé tant pour analyser des requêtes HTTP que pour optimiser le chargement de votre site.
+
+_Vous êtes maintenant prêt à vous lancer dans le débogage de vos projets ! Dans le prochain chapitre, nous allons parler des étapes à suivre
+pour déboguer vos applications._
+
+-----
+
+## Adoptez la logique de débogage
+
+[Adoptez la logique de débogage - Déboguez l’interface de votre site internet - OpenClassrooms](https://openclassrooms.com/fr/courses/7159296-deboguez-l-interface-de-votre-site-internet/7278716-adoptez-la-logique-de-debogage)
+
+![](https://user.oc-static.com/upload/2021/06/18/16240108795454_P1C3_Adoptez-la-logique-de-de%CC%81bogage.png)
+
+Félicitations, vous connaissez à présent les outils de débogage. Vous allez pouvoir enquêter sur vos bugs comme un enquêteur le fait sur une
+scène de crime !
+
+:::note ?
+Què ? Je crois que l’auteur du cours est devenu fou...
+:::
+
+Mais non, rassurez-vous, je ne suis pas devenu fou (du moins, pas encore). Par contre, je trouve la comparaison intéressante ! En effet,
+résoudre un bug, c’est un peu comme résoudre une scène de crime, mais en moins grave bien sûr. ![:)](https://openclassrooms.com/bundles/common/images/smiley/smile.png)
+
+Pour résoudre une scène de crime, les enquêteurs utilisent souvent une **méthodologie** pour les aider dans leurs investigations. C’est
+justement ce que vous allez faire dans ce cours : vous utiliserez une méthodologie pour résoudre vos bugs. Cette dernière vous permettra de
+bien décomposer la résolution de votre bug.
+
+Allez, c’est parti mon cher Watson !
+
+### Découvrez la méthodologie de débogage
+
+Pour résoudre un bug, comme pour résoudre une scène de crime, il est important de **procéder par étape**.
+
+Chaque étape va vous permettre de voir les questions à vous poser ainsi que l’attitude à adopter. **Une fois l’étape assimilée, vous pourrez
+l’expérimenter sur notre projet fil rouge.**
+
+Les étapes de la méthodologie sont les suivantes :
+
+<figure>
+    <img src="https://user.oc-static.com/upload/2021/06/18/16240109259739_p1c3-1.png"
+         alt="1, observer le(s) bug(s) ; 2, écrire un test répétable ; 3, élaborer et tester votre théorie ; 4, résoudre le bug." />
+    <figcaption>Les 4 étapes de la méthodologie de débogage</figcaption>
+</figure>
+
+:::info
+Il peut parfois arriver qu’un bug qui entraîne un autre qui en entraîne un autre qui en entraîne un autre… Bref, vous voyez de quoi je parle. ![;)](https://openclassrooms.com/bundles/common/images/smiley/clin.png)
+:::
+
+Dans ce type de cas, il va vous falloir **répéter cette méthodologie jusqu’à résolution complète** du ou des bugs. C’est quelque chose qui se
+produit très régulièrement quand on code.
+
+### Observez le bug
+
+> Watson, un crime terrible a eu lieu ! Le Colonel Moutarde a été assassiné !
+
+Désolé d’avoir dû tuer le Colonel Moutarde pour notre exemple, mais sachez que sa mort ne sera pas vaine !
+
+Quand on enquête sur un bug, **il est important de ne pas plonger directement dans le code**. Vous devez essayer de **prendre du recul**,
+d’observer la situation, et donc le bug, et de vous poser des questions !
+
+Essayez, par exemple, de vous demander :
+- Où se trouve le bug ? S’agit-il d’un bug d’affichage et donc potentiellement d’un bug côté CSS ou d’un bug côté JavaScript ?
+- Y a-t-il une erreur dans la console ? La comprenez-vous ? À quelle ligne de votre code cette erreur se produit-elle ?
+- Si le bug se trouve côté JavaScript, quel type de bug est-ce à première vue ? S’agit-il d’un bug plutôt lié à une API ou plutôt lié au DOM ?
+Ou peut-être les deux ?
+- Si le bug se trouve côté CSS, apparaît-il sur un appareil en particulier, par exemple sur un iPhone et pas sur un Android ?
+- Quel parcours précis je fais pour générer le bug ? Quel support j'utilise ?
+
+:::caution !
+Il est important que vous gardiez en tête que le bug peut être l’arbre qui cache la forêt. Par exemple, un bug d’affichage, une div absente de
+l'écran, peuvent être liés à un problème côté API.
+:::
+
+Pour en revenir à notre comparaison avec l’assassinat du Colonel Moutarde, observer un bug, c’est un peu comme observer une scène de crime.
+
+> En effet, sur une scène de crime, l’enquêteur se pose des questions et observe, par exemple :
+> - dans quel sens se tient le cadavre ? Tient-il quelque chose à la main ?
+> - s’il y a des éclats de verre sur le sol ? Peut-être que le coupable est entré dans la pièce par la porte ? Ou par la fenêtre ?
+> - l’arme du crime. Est-elle visible ? Est-ce qu’elle correspond à la blessure ?
+> - Qui sont les témoins ? Où se trouvaient-ils au moment du meurtre ?
+
+À cette étape, il est important d’aller du **macroscopique vers le microscopique** : regardez et observez le bug dans son ensemble puis essayez
+de zoomer sur certaines parties de votre code pour voir si ces dernières sont en relation avec ce dernier.
+
+Dans la vidéo ci-dessous, nous allons nous intéresser à un bug présent sur la page d’accueil de notre projet Façadia.
+[Voici le code source correspondant à cette vidéo](https://github.com/OpenClassrooms-Student-Center/debuggez-l-interface-de-votre-site/tree/partie-1/chapitre-3%2Fscreencast-1).
+Il semblerait que le bouton se connecter ne fonctionne plus.
+
+Vous en savez désormais un peu plus sur le bug, il est temps d’apprendre à créer un **test répétable**.
+
+<Vimeo vimeoId="566588944" />
+
+<br />
+
+### Écrivez un test répétable
+
+Écrire un test répétable est souvent la **partie la plus complexe** car reproduire un bug n’est pas toujours chose aisée. En effet, le bug peut
+se produire dans des **circonstances particulières**, sur l’ordinateur d’un certain type d’utilisateur mais pas sur le vôtre.
+
+Votre première mission pour cette étape va donc être de reproduire le bug sur votre ordinateur et dans votre environnement de développement.
+Être en mesure de le répéter va vous permettre de comprendre son contexte d'exécution.
+
+Si le bug se produit sur votre ordinateur, essayez de noter le parcours d’exécution de ce dernier : quelles sont les étapes qui amènent à ce bug
+et quel est le parcours utilisateur ?
+
+Si le bug se produit sur l’ordinateur d’un collègue, ou pire, d’un utilisateur, il est important que vous ayez les informations suivantes :
+- Quel type d’appareil votre utilisateur a-t-il ? Utilise-t-il un ordinateur portable, une tablette, un téléphone ?
+- Quel système d’exploitation (Windows, Mac, Linux, iOS, Android) votre utilisateur a-t-il au moment où survient le bug ? De quelle version
+dispose-t-il ?
+- Quel navigateur est utilisé ? Quelle est sa version ?
+
+Pour finir, vous devrez parfois écrire du code pour répliquer les conditions du bug. Cela vous permettra de tester automatiquement la
+fonctionnalité buggée et de travailler dessus.
+
+:::info
+Une fois que vous avez regroupé toutes ces informations, vous pouvez vous lancer dans la réalisation du test et essayer de le répéter.
+:::
+
+Dans notre comparaison avec la scène de crime, cela pourrait se rapprocher du moment où Sherlock est dans son labo et analyse les pièces à sa
+disposition :
+- il va regrouper les témoignages ;
+- il va essayer de collecter des indices sur les pièces à conviction ;
+- et il va reproduire dans son laboratoire la scène de crime !
+
+Grâce à la vidéo précédente, vous avez vu comment et où se produisait le bug. Nous allons donc maintenant essayer de reproduire ce dernier et
+tester des cas de figure. Essayez de tester de votre côté avant de regarder la vidéo ![:)](https://openclassrooms.com/bundles/common/images/smiley/smile.png).
+
+<Vimeo vimeoId="566588985" />
+
+<br />
+
+:::info
+Une fois que vous avez bien compris où se situait le bug et comment le répéter, vous pouvez commencer à réfléchir à votre théorie !
+:::
+
+### Élaborez une théorie concernant le bug et testez-la
+
+> C’est maintenant l’heure d’émettre des hypothèses quant à l’assassinat du Colonel Moutarde !
+
+Si vous résumez les étapes précédentes, vous pouvez voir qu’on commence à avoir une idée assez précise du bug. Vous savez notamment :
+- d’où il peut venir ; du CSS ou du JavaScript par exemple ;
+- comment le reproduire ;
+- à quel moment ce dernier survient.
+
+Toutes ces informations vont vous permettre d’**élaborer une théorie** et de la **tester**. Cela dit, attention, tester une théorie, et plus
+particulièrement, si cette dernière fonctionne **ne veut pas dire que le bug est résolu** : cela veut surtout dire que vous avez compris d’où
+il venait.
+
+:::info
+[La Règle du Boy Scout](https://reefact.net/craftsmanship/clean-code/la-regle-des-boy-scouts/) vise à ce que les développeurs laissent le code
+le plus propre possible une fois qu’ils sont intervenus dessus. Cela équivaut aussi pour les bugs : si vous trouvez un bug dans votre code en
+en corrigeant un autre, il est de votre devoir de le corriger aussi !
+:::
+
+Si, par contre, votre théorie échoue, pas de panique, **ce n’est pas grave** : ces choses-là arrivent constamment ! Cela veut peut-être dire
+que vous êtes passé à côté de quelque chose d’important. Essayez alors de regarder les indices un à un et de comprendre ce qui n’a pas marché.
+N’hésitez surtout pas à demander à un collègue, il pourra aussi vous apporter son éclairage.
+
+Dans la vidéo ci-dessous, nous allons repartir de notre bug du projet fil rouge et essayer de tester la théorie. Avant de vous lancer dans la
+vidéo, essayez de vous servir d’un des outils que nous avons vus ensemble dans le chapitre précédent pour tester votre théorie, cela pourra
+peut-être vous aider. ![:)](https://openclassrooms.com/bundles/common/images/smiley/smile.png)
+
+<Vimeo vimeoId="566589038" />
+
+<br />
+
+Comme vous pouvez le voir, il est important de se servir des outils à votre disposition. Ici, grâce au débogueur, j’ai pu séquencer l’exécution
+de mon code. ![:)](https://openclassrooms.com/bundles/common/images/smiley/smile.png)
+
+:::info
+Une fois que la théorie a été testée et qu’elle a fonctionné, vous pouvez maintenant faire une proposition de solution.
+:::
+
+### À vous de jouer !
+
+![16245418386149_A-vous-de-jouer%20%281%29.png](https://user.oc-static.com/upload/2021/06/24/16245418386149_A-vous-de-jouer%20%281%29.png)
+
+La résolution du bug va souvent être la seule étape où vous allez devoir **écrire du code**. Une fois le code écrit, il est très important :
+- d’essayer de reproduire à nouveau le bug pour voir si ce dernier survient. Essayez de changer de navigateur, de taille d’écran, etc.
+- de tester les autres fonctionnalités de votre site et plus particulièrement celles qui auraient pu être impactées par votre solution.
+
+J'insiste particulièrement sur le deuxième point : il est très fréquent que les développeurs manquent de rigueur à cette étape. Le plus souvent,
+ils voient que leur code fonctionne, que le bug est résolu, mais ils ne prennent pas le temps d’aller regarder si autre chose a cassé.
+
+:::info
+Si votre projet est important et comprend de nombreuses fonctionnalités et pages, le point ci-dessus peut être difficile à mettre en place.
+C’est pour cette raison que nous recourrons le plus souvent possible aux **tests automatisés**. Ces derniers vous aident à savoir que le code
+que vous venez de rédiger n’a pas cassé une autre fonctionnalité.
+:::
+
+Dans la vidéo ci-dessous, vous allez voir comment le bug de notre projet Façadia est résolu. Avant de vous lancer dans la vidéo, essayez de
+résoudre le bug de votre côté et de tester tous les cas de figure. ![:)](https://openclassrooms.com/bundles/common/images/smiley/smile.png)
+
+<Vimeo vimeoId="566589081" />
+
+<br />
+
+Comme je vous le disais, cette étape vous permet d’implémenter la solution mais pas que ! Il est important que vous testiez votre code et les différents cas de figure pour voir si tout fonctionne comme prévu. ![:)](https://openclassrooms.com/bundles/common/images/smiley/smile.png)
+
+[Le code de la solution se trouve sur cette branche Github.](https://github.com/OpenClassrooms-Student-Center/debuggez-l-interface-de-votre-site/tree/partie-1/chapitre-3%2Fscreencast-1-solution)
+
+```javascript title="js/pages/signIn.js"
+$signInForm.addEventListener('submit', function() {
+    if (isFormValid()) {
+        window.location = 'http://127.0.0.1:5500/pages/homepage.html'
+    }
+})
+```
+
+```javascript {2} title="js/pages/signIn.js"
+$signInForm.addEventListener('submit', function(e) {
+    e.preventDefault()
+
+    if (isFormValid()) {
+        window.location = 'http://127.0.0.1:5500/pages/homepage.html'
+    }
+})
+```
+
+### En résumé
+
+- La première étape lors de la résolution d’un bug est son observation : essayez de comprendre où le bug survient, côté CSS ? Côté JavaScript ?
+Etc.
+- La deuxième étape est d’écrire un test répétable. Autrement dit, vous allez devoir créer les conditions pour pouvoir reproduire ce bug autant
+que possible.
+- Ensuite, vous pouvez élaborer et tester votre théorie. C’est le moment de voir ce qui marche et ce qui ne marche pas.
+- Enfin, vous pouvez rédiger votre code en proposant une solution au bug.
+
+_Vous connaissez maintenant les principaux outils du débogage ainsi qu’une méthodologie à mettre en pratique. Il est maintenant temps de
+pratiquer !_
+
+_Testez vos premières compétences dans le quiz qui suit, et retrouvez-moi dans la partie 2, où nous apprendrons concrètement à déboguer du code
+HTML/CSS._
+
+-----
+
+## Quiz : Identifiez les différents types de bug de votre interface Front-End
+
+[Identifiez les différents types de bug de votre interface Front-End - OpenClassrooms](https://openclassrooms.com/fr/courses/7159296-deboguez-l-interface-de-votre-site-internet/exercises/4151)
+
+#### Compétences évaluées
+
+<i class="bi bi-check2-circle"></i> Identifier le type de bug
+
+-----
+
+#### Question 1 : Qu’est-ce qu'il n’est PAS possible de faire via l’inspecteur ?
+
+<i class="bi bi-circle"></i> Afficher les règles CSS<br />
+<i class="bi bi-record-circle"></i> Analyser la qualité du code JavaScript (variables non utilisées, fonctions appelées plusieurs fois, etc.)<br />
+<i class="bi bi-circle"></i> Modifier du HTML<br />
+<i class="bi bi-circle"></i> Éditer des règles CSS<br />
+<br />
+
+_L’inspecteur est un outil fabuleux ; nous l’utiliserons d’ailleurs dès la prochaine partie. Il permet de visualiser et d’éditer des règles CSS,
+il permet de modifier du HTML et vous donne des informations sur le modèle de boîte._
+
+_Cela dit, vous ne pourrez pas utiliser l’inspecteur pour exécuter directement des fonctions JavaScript. C’est la console qui vous permettra de
+réaliser ces actions._
+
+-----
+
+#### Question 2 : Que vous permet de faire l’onglet Network ?
+
+*Attention, plusieurs réponses sont possibles.*
+
+<i class="bi bi-check-square-fill"></i> Connaître les requêtes HTTP réalisées sur votre page<br />
+<i class="bi bi-square"></i> Savoir quels noeuds sont liés à un event listener<br />
+<i class="bi bi-check-square-fill"></i> Savoir la taille des fichiers chargés<br />
+<i class="bi bi-square"></i> Exécuter du code JavaScript à la demande<br />
+<i class="bi bi-check-square-fill"></i> Connaître le temps de chargement de votre page<br />
+<i class="bi bi-square"></i> Connaître les règles CSS utilisées pour votre fichier<br />
+<br />
+
+_L’onglet Network vous permet aussi bien de connaître la taille (on dit aussi le poids) des fichiers chargés que les requêtes HTTP réalisées sur
+votre page. Vous utiliserez l’onglet réseau aussi bien pour déboguer vos API que pour optimiser vos pages web._
+
+-----
+
+#### Question 3 : Pour cette question, vous aurez besoin de changer de branche. ![:)](https://openclassrooms.com/bundles/common/images/smiley/smile.png)
+
+**Commencez par faire un `git checkout partie-1/quiz/question-4` [partie-1/quiz/question-4](https://github.com/OpenClassrooms-Student-Center/debuggez-l-interface-de-votre-site/tree/partie-1/quiz%2Fquestion-4),
+ouvrez le projet avec l’extension LiveServer et affichez la console. J’aimerais que vous me disiez à quoi correspond la variable `quizAnswerFive`.**
+
+<i class="bi bi-circle"></i> "Bonjour les amis, nous sommes à la question 4"<br />
+<i class="bi bi-circle"></i> 42<br />
+<i class="bi bi-circle"></i> "Si vous êtes gentil, vous aurez du gâteau"<br />
+<i class="bi bi-record-circle"></i> "The cake is a lie"<br />
+<br />
+
+_Si vous n’avez pas réussi à trouver "The cake is a lie", ce n’est pas grave. Je vous invite à revenir sur le chapitre précédent avant de
+continuer : vous aurez besoin de savoir comment utiliser la console pour la suite du cours. ![:)](https://openclassrooms.com/bundles/common/images/smiley/smile.png)_
+
+_La console vous permet de récupérer les valeurs des variables mais aussi d’exécuter les fonctions. On s’en sert régulièrement pour déboguer._
+
+-----
+
+#### Question 4 : Pour cette question, vous aurez besoin de changer de branche. ![:)](https://openclassrooms.com/bundles/common/images/smiley/smile.png)
+
+**Commencez par faire un `git checkout partie-1/quiz/question-5` [partie-1/quiz/question-5](https://github.com/OpenClassrooms-Student-Center/debuggez-l-interface-de-votre-site/tree/partie-1/quiz%2Fquestion-5),
+ouvrez le projet avec l’extension LiveServer et affichez la console. J’aimerais que vous exécutiez la fonction `quizAnswerSix` et que vous me
+donniez ce qu’elle renvoie.**
+
+<i class="bi bi-record-circle"></i> "It’s a trap"<br />
+<i class="bi bi-circle"></i> undefined<br />
+<i class="bi bi-circle"></i> "Hello, World"<br />
+<i class="bi bi-circle"></i> 42<br />
+<br />
+
+_Si vous n’avez pas réussi à trouver "It’s a trap", ce n’est pas grave. Je vous invite à revenir sur le chapitre précédent avant de continuer :
+vous aurez besoin de savoir comment utiliser la console pour la suite du cours. ![:)](https://openclassrooms.com/bundles/common/images/smiley/smile.png)_
+
+_La console vous permet d’exécuter des fonctions à la demande et de connaître les valeurs de retour utilisées. ![:)](https://openclassrooms.com/bundles/common/images/smiley/smile.png)_
+
+-----
+
+#### Question 5 : Pour cette question, vous aurez à nouveau besoin de changer de branche. ![:)](https://openclassrooms.com/bundles/common/images/smiley/smile.png)
+
+**Commencez par faire un `git checkout partie-1/quiz/question-6` [partie-1/quiz/question-6](https://github.com/OpenClassrooms-Student-Center/debuggez-l-interface-de-votre-site/tree/partie-1/quiz%2Fquestion-6),
+ouvrez le projet avec l’extension LiveServer et rendez-vous sur la page de connexion.**
+
+**Quelle est la police utilisée pour le bouton "Se connecter" ?**
+
+<i class="bi bi-circle"></i> Roboto<br />
+<i class="bi bi-circle"></i> Sans serif<br />
+<i class="bi bi-circle"></i> Helvetica<br />
+<i class="bi bi-record-circle"></i> Open Sans<br />
+<br />
+
+_La police utilisée pour le bouton "Se Connecter" est Open Sans. Vous pouvez la trouver juste en-dessous du modèle de boite._
+
+<figure>
+    <img src="https://user.oc-static.com/upload/2021/06/17/16239077195426_image1.png"
+         alt="Extrait du code CSS où on retrouve en font-family la valeur Open Sans" />
+    <figcaption>On retrouve en font-family la valeur Open Sans</figcaption>
+</figure>
+
+-----
+
+#### Question 6 : Un collègue vient vous voir parce qu’il a trouvé un bug sur notre projet de capteurs de façades. Quelles questions pourriez-vous lui poser pour être en mesure de créer un test répétable ?
+
+*Attention, plusieurs réponses sont possibles.*
+
+<i class="bi bi-check-square-fill"></i> Quel navigateur utilise-t-il ?<br />
+<i class="bi bi-check-square-fill"></i> Sur quelle page se produit le bug ?<br />
+<i class="bi bi-check-square-fill"></i> Est-il sur un téléphone portable ou sur son ordinateur quand le bug se produit ?<br />
+<i class="bi bi-square"></i> Quel clavier utilise-t-il ?<br />
+<i class="bi bi-check-square-fill"></i> Quel est son système d’exploitation (Windows, Mac, Linux) ?<br />
+<br />
+
+_En dehors du clavier, toutes les réponses sont bonnes. ![:)](https://openclassrooms.com/bundles/common/images/smiley/smile.png)_
+
+_N’oubliez pas que cette phase vise à comprendre les conditions durant lesquelles surviennent le bug. Il est donc important que vous ayez le
+maximum d’informations pour pouvoir répéter autant que possible ce dernier._
+
+-----
+
+#### Question 7 : Félicitations, vous venez de résoudre votre premier bug sur le projet de façades connectées. Que devez-vous faire une fois le bug résolu ?
+
+*Attention, plusieurs réponses sont possibles.*
+
+<i class="bi bi-check-square-fill"></i> Refactoriser le code s’il y a besoin.<br />
+<i class="bi bi-square"></i> Continuer à coder l’application sur les éléments en cours de développement.<br />
+<i class="bi bi-check-square-fill"></i> Essayer de voir si d’autres endroits de l’application n’ont pas cassé.<br />
+<i class="bi bi-check-square-fill"></i> Voir si le bug existe encore et si vous pouvez le reproduire.<br />
+<i class="bi bi-check-square-fill"></i> Demander à l’utilisateur ayant trouvé le code s’il peut le reproduire.<br />
+<br />
+
+_Ici, seule la réponse 2 est fausse. En effet, il est important, une fois le bug corrigé, que vous preniez le temps de regarder si le reste du
+projet fonctionne correctement ! Trop souvent, on essaye d’aller trop vite et on ne regarde pas si le reste de l’application n’est pas cassé._
+
+_Soyez rigoureux et faites cela et vous deviendrez d’excellents développeurs ! ![:)](https://openclassrooms.com/bundles/common/images/smiley/smile.png)_
+

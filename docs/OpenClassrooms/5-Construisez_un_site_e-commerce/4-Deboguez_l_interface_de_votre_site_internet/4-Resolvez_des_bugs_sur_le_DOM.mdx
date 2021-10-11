@@ -1,0 +1,614 @@
+---
+id: 4-Resolvez_des_bugs_sur_le_DOM
+title: Résolvez des bugs sur le DOM
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+import { Vimeo, CodePen } from 'mdx-embed';
+
+# Résolvez des bugs sur le DOM
+
+## Découvrez les différents bugs du DOM
+
+[Découvrez les différents bugs du DOM - Déboguez l’interface de votre site internet - OpenClassrooms](https://openclassrooms.com/fr/courses/7159296-deboguez-l-interface-de-votre-site-internet/7282111-decouvrez-les-differents-bugs-du-dom)
+
+<Vimeo vimeoId="566960261" />
+
+<br />
+
+Dans la partie précédente, nous avons vu ensemble comment détecter et résoudre des bugs d’intégration. Dans cette partie, nous allons nous
+attaquer au JavaScript et aux bugs de DOM.
+
+:::caution !
+Si les termes de DOM, de nœuds et d’éléments HTML ne vous parlent pas, je vous invite à lire le cours [Écrivez du JavaScript pour le web](https://openclassrooms.com/fr/courses/5543061-ecrivez-du-javascript-pour-le-web).
+Il est important que vous connaissiez déjà ces notions.
+:::
+
+### Découvrez les bugs liés à la sélection de noeuds
+
+#### Initiez-vous aux bugs de sélection les plus courants
+
+Imaginez-vous en train de coder votre application : vous avez ajouté le HTML et le CSS, les fichiers JavaScript sont bien reliés à votre page
+avec la balise `script` et vous souhaitez écouter un événement, par exemple, un clic de souris sur un bouton.
+
+Et là, patatra ! Ça ne marche pas ! Vous avez soit une **erreur de référence**, autrement dit l’élément sélectionné n’existe pas, soit pire
+encore une **erreur silencieuse**.
+
+:::info
+Les erreurs silencieuses sont un peu la bête noire du développeur lorsqu’il débogue, car ces dernières n’affichent pas de messages d’erreur.
+Elles sont donc souvent plus complexes à comprendre et à déboguer.
+:::
+
+Elles peuvent arriver via le DOM mais aussi via des API (et nous verrons ensemble comment les éviter).
+
+#### Le type des objets et les méthodes `querySelector` et `querySelectorAll`
+
+Ce qui m’amène sur un autre bug très fréquent : la mauvaise compréhension des méthodes **`querySelector`** et **`querySelectorAll`**.
+- `querySelector` ne vous retourne toujours qu’**UN seul élément** même si la page en comporte plusieurs similaires. Par exemple, si vous
+sélectionnez une classe, l’élément retourné sera toujours la première occurrence à votre sélection.
+- `querySelectorAll` vous retourne toujours une **NodeList** (autrement dit, une liste de noeuds) HTML **MÊME** si votre page n’en contient
+qu’un. Autrement dit, vous aurez d’abord besoin d’extraire le, ou les, nœud(s) de votre tableau avant de pouvoir utiliser une méthode
+spécifique.
+
+<figure>
+    <img src="https://user.oc-static.com/upload/2021/06/18/16240236909686_P3C1-1.png"
+         alt="Screenshot de message d'erreur dans la console" />
+    <figcaption>Message d'erreur dans la console</figcaption>
+</figure>
+
+Dans la capture d’écran ci-dessus, j’ai modifié la ligne 3 de `querySelector` à `querySelectorAll`. J’ai une erreur de type dans ma console.
+Cette dernière me dit que la propriété `value` n’est pas définie sur la variable `$userEmailInput`.
+
+:::note ?
+Quel est le type de variables qu'on manipule ?
+:::
+
+:::info
+C’est LA question que je pose à mes étudiants quand ils ont des problèmes pour déboguer. Et je vous conseille de vous la poser régulièrement :
+comprendre le type des chaînes de caractère, des tableaux, etc., de données que vous manipulez est essentiel pour bien déboguer ![:)](https://openclassrooms.com/bundles/common/images/smiley/smile.png).
+:::
+
+### Découvrez les bugs liés à la création de noeuds
+
+Lors du développement d’une application, vous allez parfois vouloir ajouter des **éléments dynamiques** sur votre site en passant, par exemple,
+par une **API**. Cette dernière va vous permettre de récupérer des données, créer une liste avec ces données et les afficher.
+
+<figure>
+    <img src="https://user.oc-static.com/upload/2021/06/17/16239159908077_image46.png"
+         alt="Screenshot de la page d'accueil des façades et leurs capteurs sur Façadia" />
+    <figcaption>La page d'accueil des façades et leurs capteurs sur Façadia</figcaption>
+</figure>
+
+Dans le cadre de Façadia, je crée chacune des fiches de capteur de façon dynamique et je les injecte après dans le projet.
+
+:::info
+À ce moment-là, vous devrez souvent créer de nouveaux nœuds HTML directement depuis le JavaScript : vous pourrez alors être confrontés à des
+bugs de création.
+:::
+
+#### Initiez-vous aux bugs de création les plus courants
+
+Les bugs de création arrivent le plus souvent parce que vous avez mal créé ou mal ajouté un élément sur votre DOM. Il peut aussi parfois
+arriver que vous ayez un bug parce que vous avez mal sélectionné un élément (ce dernier n’existe pas) et vous ne pouvez donc pas l’ajouter ![:)](https://openclassrooms.com/bundles/common/images/smiley/smile.png).
+
+Ça ne vous rappelle rien ?
+
+<figure>
+    <img src="https://user.oc-static.com/upload/2021/06/18/16240237605662_P3C1-2.png"
+         alt="Screenshot du bug sur le site de Façadia, le message d'erreur associé et le code concerné" />
+    <figcaption>Le bug sur le site de Façadia où les capteurs ne s'affiche pas, le message d'erreur associé et le code concerné</figcaption>
+</figure>
+
+Dans l’exemple ci-dessus, j’ai mal sélectionné l’élément `.sensors-wrapper` en oubliant le “R” de `.sensors-wrapper`. Au moment d’ajouter
+chacune des `div` créées, j’ai une erreur de type : la variable `$sensorsWrapper` est alors nulle.
+
+:::caution !
+Autre chose, évitez d’utiliser les méthodes **`innerHTML`** ou **`insertAdjacentHTML`**. Ces méthodes peuvent être, certes, bien pratiques,
+mais elles font le plus souvent trop de choses à la fois : vous créez un, voire plusieurs nouveaux nœuds HTML, vous ajoutez du texte, vous avez
+des classes.
+:::
+
+Le mieux à faire dans ce type de cas est de bien réaliser la création de votre noeud :
+- utilisez `createElement` pour créer votre noeud ;
+- puis, servez-vous de `textContent` pour lui ajouter un contenu textuel (si c’est possible) ;
+- puis, tirez parti de l’objet `classList` pour ajouter, lister ou enlever une classe ;
+- et enfin, ajoutez le noeud nouvellement créé à son nœud "parent" via `appendChild`.
+
+Le plus souvent, c’est quand vous essayez de tout faire à la fois que vous risquez de vous prendre les pieds dans le tapis. Je sais que cela
+peut sembler contre-intuitif : on a souvent tendance à dire que les développeurs sont feignants. Cela dit, les développeurs aiment aussi le
+"beau" code, celui qui est robuste et compréhensible pour tous ![;)](https://openclassrooms.com/bundles/common/images/smiley/clin.png).
+
+:::info
+L’un des autres avantages de cette méthode est qu’elle est plus facilement testable via des tests automatisés. Ce n’est pas le but de ce cours
+mais il est important que vous l’ayez en tête ![;)](https://openclassrooms.com/bundles/common/images/smiley/clin.png).
+:::
+
+#### La méthode `appendChild` et ses messages d’erreur
+
+Dans le cadre de la méthode `appendChild`, vous serez susceptible d’avoir deux grands types de messages d’erreur :
+- la `TypeError` (ou erreur de type) (que vous avez vue un peu plus haut). Cette erreur sera le plus souvent présente quand vous aurez mal
+sélectionné un élément sur le DOM.
+- la `ReferenceError` (ou erreur de référence) qui correspondra à une variable non définie. Dans l’exemple ci-dessous, je supprime délibérément
+une lettre (la lettre l de title) sur ma variable `sensorInfoTitle`.
+
+<figure>
+    <img src="https://user.oc-static.com/upload/2021/06/17/16239165372858_image1.png"
+         alt="Screenshot du message d’erreur suite à la faute d’orthographe" />
+    <figcaption>Le message d’erreur suite à la faute d’orthographe</figcaption>
+</figure>
+
+### Découvrez les bugs liés à la modification de noeuds existants
+
+Côté bug et modification des nœuds existants, le bug le plus courant est celui où vous essayez d’utiliser une propriété ou une méthode qui
+n’existe pas sur le nœud sélectionné. Une fois encore, il est important de connaître le type de variable que vous manipulez et de comprendre
+le message d’erreur associé ![:)](https://openclassrooms.com/bundles/common/images/smiley/smile.png).
+
+#### Utilisez le CSS pour ajouter du style à vos éléments
+
+Il est important que nous revenions sur un sujet particulier : le CSS et le DOM. Admettons que vous soyez en train de travailler sur un
+formulaire de contact et que vous souhaitiez gérer les cas où le champ de votre formulaire est correct et incorrect. Comment le feriez-vous ?
+
+Il existe deux solutions :
+- vous utilisez le JavaScript pour ajouter et supprimer des classes, par exemple ; chaque classe étant liée à un sélecteur CSS et se chargeant
+d’ajouter le style.
+- OU vous ajoutez directement du style via le JavaScript sur le nœud HTML avec la propriété `.style`.
+
+```javascript
+const checkUserPasswordInput = () => {
+    const isUserPasswordValid = $userPasswordInput.value === USER_PASSWORD
+
+    if (isUserPasswordValid) {
+        /* J'ajoute une classe HTML "hidden" à mon noeud userPasswordErrorMsg,
+        elle a pour règle css un display: none */
+        $userPasswordErrorMsg.classList.add('hidden')
+    } else {
+        /* J'enlève une classe HTML "hidden" à mon noeud userPasswordErrorMsg,
+        elle a pour règle css un display: none */
+        $userPasswordErrorMsg.classList.remove('hidden')
+    }
+    return isUserPasswordValid
+}
+```
+
+Dans le code ci-dessus, vous avez la première solution. Ici, j’ajoute (ou supprime une classe) en fonction de la condition (si le mot de passe
+de l’utilisateur est valide).
+
+Voici la deuxième solution ; on injecte directement du style depuis le JavaScript dans le HTML :
+
+```javascript
+const checkUserEmailInput = () => {
+    const isUserEmailValid = $userEmailInput.value.toLowerCase() === USER_EMAIL
+
+    if (isUserEmailValid) {
+        $userEmailErrorMsg.style.display = "none"
+    } else {
+        $userEmailErrorMsg.style.display = "block"
+    }
+    return isUserEmailValid
+}
+```
+
+Personnellement, j’ai tendance à utiliser la première solution. Mais pourquoi ?
+- D’une part, parce qu’il y a une **violation des responsabilités** : le HTML est là pour le contenu, le CSS est là pour la mise en page et le
+JavaScript pour gérer les interactions.
+- D’autre part, parce que vous multipliez les sources "de vérité", à savoir là où les règles s’appliquent. C’est une source de bug très très
+commune ![:)](https://openclassrooms.com/bundles/common/images/smiley/smile.png).
+
+:::note ?
+Euhhhh c’est quoi la violation des responsabilités ?
+:::
+
+Bonne question !
+
+Cela vient du principe de responsabilité unique qui dit que chaque fonction ou module ne devrait avoir qu’une responsabilité. Dans le cadre du
+trio HTML, CSS et JavaScript : le HTML a la responsabilité du contenu, le CSS de la mise en page et le JavaScript des interactions.
+
+Dans ce type, tirez parti de [l’excellent objet classList](https://developer.mozilla.org/fr/docs/Web/API/Element/classList) et de ses méthodes
+`.toogle()`, `.add()`, `.remove()`, etc.
+
+### Découvrez les bugs liés à la suppression de noeuds
+
+Dernier focus avant de passer à la pratique : la **suppression de nœuds**. 
+
+Vous est-il parfois arrivé d’avoir envie de masquer un nœud en le supprimant plutôt qu’en le masquant côté CSS ? Le plus souvent, les bugs liés
+à la suppression de noeuds viendront du fait qu’on a **supprimé** le nœud du DOM au lieu de simplement le masquer ou alors d’une mauvaise
+utilisation de la méthode `removeChild()`.
+
+En effet, la méthode `removeChild()` permet de supprimer un nœud enfant contenu dans un nœud parent. Cela dit, si vous ne sélectionnez pas
+directement le noeud parent mais un autre noeud, vous pouvez avoir une erreur comme ci-dessous :
+
+<figure>
+    <img src="https://user.oc-static.com/upload/2021/06/17/16239195206219_image49.png"
+         alt="Screenshot du message d'erreur" />
+    <figcaption>Le message d'erreur</figcaption>
+</figure>
+
+### À vous de jouer !
+
+![](https://user.oc-static.com/upload/2021/06/18/16240240803991_A-vous-de-jouer%20%281%29.png)
+
+C’est l’heure de la pratique !
+
+Avant de regardez la vidéo ci-dessous, mettez-vous sur la branche `partie-3/chapitre-1/section-5` [partie-3/chapitre-1/section-5](https://github.com/tdimnet/debuggez-l-interface-de-votre-site/tree/partie-3/chapitre-1%2Fsection-5)
+et essayez de traquer les bugs de DOM sur notre projet Façadia. J’ai créé une issue par bug sur le repository Github. Nous nous intéresserons
+dans le prochain chapitre à la résolution de ces bugs.
+- L’issue de création : [https://github.com/tdimnet/debuggez-l-interface-de-votre-site/issues/2](https://github.com/tdimnet/debuggez-l-interface-de-votre-site/issues/2)
+- L’issue de modification : [https://github.com/tdimnet/debuggez-l-interface-de-votre-site/issues/3](https://github.com/tdimnet/debuggez-l-interface-de-votre-site/issues/3)
+
+<Vimeo vimeoId="566589365" />
+
+<br />
+
+### En résumé
+
+- Les bugs de sélection d’éléments sont souvent dus à des éléments mal sélectionnés. Cela peut parfois vous donner des erreurs silencieuses ou
+des erreurs de référence ou de type.
+- Attention à ne pas trop recourir à la méthode `insertAdjacentHTML` qui peut parfois être moins lisible et plus source de bugs que la méthode
+`createElement`.
+- Si vous devez modifier le style d’un nœud, essayez le plus souvent de passer par l’objet `classList` et ses méthodes `add`, `remove` ou
+`toggle`. Cela vous permettra d’éviter des bugs liés à la modification de votre DOM.
+- Lors de la suppression d’un nœud, posez-vous toujours la question de le masquer via le CSS ou de le supprimer définitivement du DOM. Dans le
+cadre d’un formulaire de contact, il peut être plus intéressant de le masquer.
+
+_Maintenant que vous connaissez les sources de bug possibles sur le DOM, vous allez pouvoir apprendre à utiliser des outils pour les déboguer
+plus facilement. ![:)](https://openclassrooms.com/bundles/common/images/smiley/smile.png)_
+
+-----
+
+## Servez-vous des outils dédiés au débogage
+
+[Servez-vous des outils dédiés au débogage - Déboguez l’interface de votre site internet - OpenClassrooms](https://openclassrooms.com/fr/courses/7159296-deboguez-l-interface-de-votre-site-internet/7282296-servez-vous-des-outils-dedies-au-debogage)
+
+![](https://user.oc-static.com/upload/2021/06/18/1624024165865_P3C2_Servez-vous-des-outils-de%CC%81die%CC%81s-au-de%CC%81bogage.png)
+
+Maintenant que vous avez découvert tous les types de bugs côté DOM, il est temps d’aller plus loin avec la **console** et le **débogueur**.
+Dans ce chapitre, vous allez apprendre à vous servir de ces outils pour déboguer votre code.
+
+### Utilisez la console pour déboguer votre DOM
+
+Le premier outil que je vais vous présenter est la console. Normalement, vous connaissez déjà cet outil : nous nous en sommes déjà servi pour
+déboguer dans les chapitres précédents. Cela dit, dans ce chapitre, nous allons aller plus loin et découvrir de nombreuses fonctionnalités de
+la console.
+
+#### Initialisez et accédez à des variables dans votre console.
+
+L’une des principales fonctionnalités est de pouvoir créer et récupérer des variables. Cela dit, vous pouvez le faire uniquement si cette
+variable est accessible globalement, autrement dit si elle est déclarée en dehors d’une fonction.
+
+:::note ?
+Mais, on parle-t-on de variables stockées dans le code source du projet ou on peut le faire dans la console ?
+:::
+
+Bonne question !
+
+En fait, la console nous permet de faire les deux :
+- il est tout à fait possible d’initialiser de nouvelles variables dans la console.
+- il est aussi possible de récupérer une variable déjà existante et qui a été déclarée dans le code.
+
+Dans l’exemple ci-dessous, j’utilise ma console pour créer une constante firstName qui contiendra mon prénom. Je peux ensuite directement
+l’afficher.
+
+<figure>
+    <img src="https://user.oc-static.com/upload/2021/06/17/16239207452936_image47.png"
+         alt="Screenshot extrait de la console" />
+    <figcaption>Extrait de la console</figcaption>
+</figure>
+
+:::info
+Si vous réalisez cet exemple en même temps que moi, vous pourrez voir que la console propose de l’**auto-completion**. Une fonctionnalité bien
+pratique quand on ne connaît pas forcément le nom des variables qu’on utilise !
+:::
+
+L’un des principaux intérêts de cette fonctionnalité est de pouvoir :
+- tester rapidement un bout de code.
+- connaître l’état d’une variable durant l’exécution d’un programme.
+
+#### Analysez des erreurs JavaScript
+
+Comme vous avez pu le voir dans les chapitres précédents, je me suis déjà servi plusieurs fois de la console pour avoir des informations comme
+par exemple un message d’erreur :
+
+<figure>
+    <img src="https://user.oc-static.com/upload/2021/06/17/16239208154665_image36.png"
+         alt="Screenshot du message d'erreur" />
+    <figcaption>Ici, nous sommes face à une erreur de Reference. Autrement dit, la variable appelée n’existe pas.</figcaption>
+</figure>
+
+C’est une méthode bien pratique pour comprendre où une erreur se produit et pourquoi. Ici, l’importance va être de bien comprendre les messages
+d’erreur et à quelle ligne ils surviennent.
+
+:::note ?
+Mais faut-il vraiment connaître tous les messages d’erreur ?
+:::
+
+C’est une question d’habitude. ![:)](https://openclassrooms.com/bundles/common/images/smiley/smile.png) Plus vous allez être confronté à une
+erreur, plus vous serez capable de comprendre d’où elle provient.
+
+#### Affichez et filtrez des informations dans votre console
+
+En plus d’initialiser des variables, vous pouvez aussi vous servir de la console pour afficher des informations (via le célèbre console.log et
+ses déclinaisons) ainsi que pour filtrer les différents niveaux d’information.
+
+<figure>
+    <img src="https://user.oc-static.com/upload/2021/06/17/16239209097261_image19.png"
+         alt="Screenshot depuis la console" />
+    <figcaption>Ici j’ai activé la possibilité de recevoir des mises en garde côté CSS.</figcaption>
+</figure>
+
+Il peut être intéressant de filtrer vos informations si vous souhaitez afficher uniquement des informations relatives aux erreurs sur votre
+page ou aux requêtes HTTP par exemple.
+
+Je me sers très souvent du console.log pour déboguer mon code : j’affiche chaque variable qui me semble poser problème et je me pose la question
+du type de variable que je manipule. Il me permet aussi de voir si le code passe aux endroits requis pour exécuter le code. ![:)](https://openclassrooms.com/bundles/common/images/smiley/smile.png)
+
+#### Écrivez puis exécutez des fonctions
+
+La console peut aussi vous permettre d’écrire et d'exécuter des fonctions. Cela peut être utile si vous souhaitez tester un bout de code
+rapidement et voir si ce dernier fonctionne.
+
+<figure>
+    <img src="https://user.oc-static.com/upload/2021/06/17/16239211174227_image12.png"
+         alt="Screenshot extrait de la console" />
+    <figcaption>Extrait de la console</figcaption>
+</figure>
+
+#### À vous de jouer !
+
+![](https://user.oc-static.com/upload/2021/06/18/16240243073881_A-vous-de-jouer%20%281%29.png)
+
+Vous vous souvenez de notre bug du projet fil rouge, Façadia, dans le chapitre précédent ? Celui sur le bouton "Voir les détails" ? Nous allons
+utiliser le débogueur pour le résoudre. ![:)](https://openclassrooms.com/bundles/common/images/smiley/smile.png)
+
+:::info
+Avant de regarder la vidéo ci-dessous qui vous montrera comment utiliser la console, essayez de corriger par vous-même le bug sur Façadia !
+:::
+
+<Vimeo vimeoId="566589420" />
+
+<br />
+
+En plus du console.log classique, vous pouvez aussi parfois passer le console.group et le console.groupEnd. Cela va vous permettre d’afficher
+des blocks de message ensemble. Voici ci-dessous un exemple d’utilisation :
+
+```javascript
+console.group()
+console.log("Une variable")
+console.log("Une autre variable")
+console.groupEnd() /* J'ai besoin d'ajouter le groupEnd ici pour faciliter la lecture des éléments */
+```
+
+### Tirez parti du débogueur
+
+En plus de la console, nous avons vu ensemble au début de ce cours qu’il y avait un autre outil à votre disposition : le **débogueur**.
+
+:::info
+Nous n’allons pas revenir sur comment l’utiliser dans cette section. Pour ça, je vous invite à revenir à la première partie. Dans cette section,
+nous allons voir l’utilisation du débogueur en pratique. ![:)](https://openclassrooms.com/bundles/common/images/smiley/smile.png) Nous allons
+voir dans un premier temps comment régler un bug avec le débogueur du navigateur puis dans un deuxième temps avec le débogueur de notre
+extension VsCode. Cela vous permettra de comparer les deux méthodes afin de voir laquelle vous préférez. ![:)](https://openclassrooms.com/bundles/common/images/smiley/smile.png)
+:::
+
+#### Prenez en main le débogueur (sans l’extension VsCode)
+
+Nous allons ici nous concentrer sur cette issue : [https://github.com/tdimnet/debuggez-l-interface-de-votre-site/issues/2](https://github.com/tdimnet/debuggez-l-interface-de-votre-site/issues/2).
+Vous pouvez vous mettre sur la branche `partie-3/chapitre-1/section-5`.
+
+Avant de regarder cette vidéo, essayez de prendre en main le débogueur de votre côté et réfléchissez à comment vous pourriez l’utiliser pour
+déboguer votre page.
+
+<Vimeo vimeoId="566589492" />
+
+<br />
+
+Comme vous pouvez le voir, le débogueur permet d’aller un peu plus vite que les console.log. C’est un outil vraiment puissant et qui est souvent
+assez peu utilisé.
+
+#### Prenez en main le débogueur (avec l’extension VsCode)
+
+Petit bonus avant de passer à la prochaine partie : vous allez découvrir comment déboguer avec l’extension VsCode que je vous ai présentée en
+début de chapitre. ![:)](https://openclassrooms.com/bundles/common/images/smiley/smile.png) Après cette vidéo, vous n’aurez plus aucune excuse
+pour mal vous servir du débogueur !
+
+Pour cette vidéo, vous aurez besoin de vous mettre sur la branche  `partie-3/chapitre-1/section-5-extension`.
+
+<Vimeo vimeoId="566589554" />
+
+<br />
+
+### À vous de jouer !
+
+![](https://user.oc-static.com/upload/2021/06/18/16240244624108_A-vous-de-jouer%20%281%29.png)
+
+Vous connaissez et savez maintenant utiliser la console et le débogueur pour résoudre vos bugs. Nous allons donc en profiter pour travailler
+sur un exercice pratique. ![:)](https://openclassrooms.com/bundles/common/images/smiley/smile.png) Voici le bug sur lequel nous allons
+travailler : [https://github.com/tdimnet/debuggez-l-interface-de-votre-site/issues/3](https://github.com/tdimnet/debuggez-l-interface-de-votre-site/issues/3)
+
+Comme toujours avant de regarder la vidéo ci-dessous, essayez de le trouver et de le résoudre de votre côté. Tirez parti de la console et du
+débogueur pour le résoudre. Cela va vous permettre de continuer à bien prendre en main ces deux outils. ![:)](https://openclassrooms.com/bundles/common/images/smiley/smile.png)
+
+<Vimeo vimeoId="566589617" />
+
+<br />
+
+### En résumé
+
+- La console est un outil très pratique côté front-end. Vous pouvez déclarer des variables, exécuter du code JavaScript et appeler des fonctions.
+- Quand on débogue via la console, on va souvent ajouter des console.log aux endroits possibles du bug. Cela nous permettra de remonter le fil
+pour découvrir l’origine de ce dernier.
+- Le débogueur est un outil complémentaire de la console. Vous pouvez l’utiliser pour connaître l’état des variables.
+
+_Vous connaissez désormais les sources de bug possibles côté DOM et les outils à votre disposition pour les traquer et les résoudre, il est
+temps de nous intéresser aux bugs d’API._
+
+-----
+
+## Quiz : Résolvez des bugs sur le DOM
+
+[Résolvez des bugs sur le DOM - OpenClassrooms](https://openclassrooms.com/fr/courses/7159296-deboguez-l-interface-de-votre-site-internet/exercises/4154)
+
+#### Compétences évaluées
+
+<i class="bi bi-check2-circle"></i> Déboguer des bugs sur le DOM
+
+-----
+
+#### Question 1 : Quelle est la différence entre la méthode querySelector et querySelectorAll ?
+
+<i class="bi bi-circle"></i> La méthode querySelector retourne plusieurs noeuds alors que la méthode querySelectorAll n’en renvoie qu’un seul.<br />
+<i class="bi bi-record-circle"></i> La méthode querySelectorAll retourne une liste de noeuds alors que querySelector ne retourne qu’un noeud.<br />
+<br />
+
+_QuerySelectorAll retournera toujours une liste de nœuds (ou NodeList en anglais), même s’il n’y a qu’un seul nœud correspondant._
+
+-----
+
+#### Question 2 : Que signifie une TypeError ?
+
+<i class="bi bi-circle"></i> Il s’agit d’une erreur CSS : cela peut arriver quand on a une erreur typographique côté CSS.<br />
+<i class="bi bi-circle"></i> Il s’agit d’une erreur JavaScript : cela peut arriver si nous avons oublié de déclarer une variable.<br />
+<i class="bi bi-circle"></i> Il s’agit d’une erreur HTML : elle arrive quand on a oublié de déclarer le Doctype.<br />
+<i class="bi bi-record-circle"></i> Il s’agit d’une erreur JavaScript : cela peut arriver si on utilise la mauvaise propriété ou méthode sur un type d’objets.<br />
+<br />
+
+_[Selon le MDN](https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Global_Objects/TypeError), une TypeError représente une erreur
+qui intervient lorsque la valeur n’est pas du type attendu, autrement dit qu’une propriété ou méthode est utilisée sur un élément incompatible
+avec le type attendu._
+
+<figure>
+    <img src="https://user.oc-static.com/upload/2021/06/17/16239426466463_image4.png"
+         alt="Screenshot d'un message d'erreur" />
+    <figcaption>Pour rappel, voici un exemple de TypeError</figcaption>
+</figure>
+
+-----
+
+#### Question 3 : Pourquoi n’est-il pas conseillé d’ajouter du CSS directement depuis le JavaScript grâce à l’objet `nomDuNoeud.style` ?
+
+<i class="bi bi-record-circle"></i> Parce qu’on prend le risque d’écrire son CSS à deux endroits : via le JavaScript et via le fichier CSS.<br />
+<i class="bi bi-circle"></i> Parce qu’on prend le risque d’utiliser des propriétés CSS inconnues.<br />
+<i class="bi bi-circle"></i> Parce que certains navigateurs ne comprennent pas cette règle. Cet objet est encore assez expérimental.<br />
+<i class="bi bi-circle"></i> C’est faux. En vrai, c’est une technique très courante et tout à fait conseillée !<br />
+<br />
+
+_De manière générale, il n’est pas conseillé d’ajouter du style avec le JavaScript : cela accroît le risque de bug côté CSS (puisque vous le
+modifiez à deux endroits de votre code)._
+
+_Si vous devez modifier du style, essayez d’ajouter ou d’enlever des classes. Ces classes seront ensuite utilisées par le CSS pour appliquer un
+style._
+
+-----
+
+#### Question 4 : Pour cette question, vous aurez besoin de changer de branche. ![:)](https://openclassrooms.com/bundles/common/images/smiley/smile.png)
+
+**Commencez par faire un `git checkout partie-3/quiz/question-4` [partie-3/quiz/question-4](https://github.com/OpenClassrooms-Student-Center/debuggez-l-interface-de-votre-site/tree/partie-3/quiz%2Fquestion-4),
+ouvrez le projet avec l’extension LiveServer et rendez-vous sur la page dédiée à un capteur.**
+
+**Il semblerait que la fonction `getSensorId` retourne une erreur. Laquelle ?**
+
+<i class="bi bi-circle"></i> ReferenceError<br />
+<i class="bi bi-circle"></i> NetworkError<br />
+<i class="bi bi-circle"></i> SyntaxError<br />
+<i class="bi bi-record-circle"></i> TypeError<br />
+<br />
+
+_La fonction getSensorId retourne une TypeError. En effet, la constante `$sensorTrueId` créée dans la fonction n’existe pas. Vous ne pouvez
+donc pas utiliser la propriété style sur un nœud nul._
+
+<figure>
+    <img src="https://user.oc-static.com/upload/2021/06/17/16239623574827_image6.png"
+         alt="Screenshot d'un message d'erreur" />
+    <figcaption>Voici la typeError que la fonction <code>getSensorId</code> retourne</figcaption>
+</figure>
+
+-----
+
+#### Question 5 : Pour cette question, vous aurez besoin de changer de branche. ![:)](https://openclassrooms.com/bundles/common/images/smiley/smile.png)
+
+**Commencez par faire un `git checkout partie-3/quiz/question-5` [partie-3/quiz/question-5](https://github.com/OpenClassrooms-Student-Center/debuggez-l-interface-de-votre-site/tree/partie-3/quiz%2Fquestion-5),
+ouvrez le projet avec l’extension LiveServer et rendez-vous sur la page dédiée à un capteur.**
+
+**J’ai créé une constante `$questionQuiz`. Quel est le type de variable stocké ?**
+
+<i class="bi bi-record-circle"></i> Un tableau de noeuds<br />
+<i class="bi bi-circle"></i> Une String (ou chaîne de caractères)<br />
+<i class="bi bi-circle"></i> Un noeud<br />
+<i class="bi bi-circle"></i> Un tableau de String<br />
+<br />
+
+_On utilise la méthode querySelectorAll qui retourne un tableau de nœuds même s’il n’y a qu’un seul élément retourné. Il est essentiel de bien
+comprendre cette méthode pour passer à la suite._
+
+<figure>
+    <img src="https://user.oc-static.com/upload/2021/06/17/16239627366485_image2.png"
+         alt="Screenshot d'un NodeList" />
+    <figcaption>Dans le screenshot ci-dessus, on voit bien que notre NodeList ne contient qu’un noeud : l’input <code>user-email</code></figcaption>
+</figure>
+
+-----
+
+#### Question 6 : Selon vous, que permet de faire le débogueur JavaScript ?
+
+<i class="bi bi-circle"></i> Il permet de suivre l’état des variables CSS dans votre code.<br />
+<i class="bi bi-record-circle"></i> Il permet d'avancer pas à pas dans du code JavaScript et de l’examiner ou de le modifier.<br />
+<i class="bi bi-circle"></i> Il permet de savoir si une balise HTML a bien été fermée.<br />
+<i class="bi bi-circle"></i> Il permet de savoir si une propriété CSS existe.<br />
+<br />
+
+_On utilise le débogueur pour retrouver et corriger les bugs. Je vous invite à vous rendre sur la [page dédié au débogueur sur le MDN](https://developer.mozilla.org/fr/docs/Tools/Debugger),
+pour bien comprendre son fonctionnement._
+
+-----
+
+#### Question 7 : Pour cette question, vous aurez besoin de changer de branche. ![:)](https://openclassrooms.com/bundles/common/images/smiley/smile.png)
+
+**Commencez par faire un `git checkout partie-3/quiz/question-7` [partie-3/quiz/question-7](https://github.com/OpenClassrooms-Student-Center/debuggez-l-interface-de-votre-site/tree/partie-3/quiz%2Fquestion-7),
+ouvrez le projet avec l’extension LiveServer et rendez-vous sur la page de connexion.**
+
+**On dirait que la page de connexion est encore cassée et qu’on ne peut plus se connecter.**
+
+**En utilisant les outils à votre disposition, débogueur et console, trouvez la solution.**
+
+<i class="bi bi-circle"></i> On n’écoute pas le bon événement dans l’addEventListener du formulaire.<br />
+<i class="bi bi-record-circle"></i> Les identifiants, login et mot de passe, sont incorrects.<br />
+<i class="bi bi-circle"></i> La fonction <code>isFormValid</code> contenue dans le fichier <code>signIn.js</code> n’est pas bonne.<br />
+<i class="bi bi-circle"></i> On utilise une balise <code>div</code> au lieu d’une balise <code>form</code>.<br />
+<br />
+
+_Il semblerait que le développeur qui a codé l’application se soit trompé de balise. Même si l’événement écouté est le bon, on ne peut pas
+écouter l'événement submit sur une div, on peut l’écouter uniquement sur un formulaire._
+
+-----
+
+#### Question 8 : Pour cette question, vous aurez besoin de changer de branche. ![:)](https://openclassrooms.com/bundles/common/images/smiley/smile.png)
+
+**Commencez par faire un `git checkout partie-3/quiz/question-8` [partie-3/quiz/question-8](https://github.com/OpenClassrooms-Student-Center/debuggez-l-interface-de-votre-site/tree/partie-3/quiz%2Fquestion-8),
+ouvrez le projet avec l’extension LiveServer et rendez-vous sur la page regroupant tous les capteurs.**
+
+**Il semblerait que la page principale soit cassée et qu’aucun capteur ne soit visible, comme le montre cette capture d’écran :**
+
+<figure>
+    <img src="https://user.oc-static.com/upload/2021/06/17/16239635022248_image12.png"
+         alt="Screenshot de la page des capteurs sur le site Façadia." />
+    <figcaption>Les capteurs n’apparaissent pas sur la page</figcaption>
+</figure>
+
+**En utilisant les outils à votre disposition, trouvez l’origine du bug !**
+
+<i class="bi bi-record-circle"></i> Cela vient de la fonction <code>calculateOffset</code>. La méthode de calcul n’est pas la bonne.<br />
+<i class="bi bi-circle"></i> Cela vient de la constante <code>ITEMS_PER_PAGE</code>. On doit augmenter le nombre d’éléments par page.<br />
+<i class="bi bi-circle"></i> Cela vient de la façon dont sont récupérées les données auprès du fichier JSON.<br />
+<i class="bi bi-circle"></i> Cela vient de la méthode <code>createPagination</code>. On lui passe le mauvais nombre de capteurs.<br />
+<br />
+
+_Ici, la méthode de calcul devrait être :_
+
+```javascript
+return (Number(pageParams) - 1) * ITEMS_PER_PAGE
+```
+
+_Et non :_
+
+```javascript
+return (Number(pageParams) + 1) * ITEMS_PER_PAGE
+```

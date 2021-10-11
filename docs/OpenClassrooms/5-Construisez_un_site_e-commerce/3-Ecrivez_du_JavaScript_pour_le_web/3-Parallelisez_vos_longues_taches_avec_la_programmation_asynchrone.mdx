@@ -1,0 +1,705 @@
+---
+id: 3-Parallelisez_vos_longues_taches_avec_la_programmation_asynchrone
+title: Parallélisez vos longues tâches avec la programmation asynchrone
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+import { Vimeo, CodePen } from 'mdx-embed';
+
+# Parallélisez vos longues tâches avec la programmation asynchrone
+
+## Comprenez comment fonctionne l'asynchrone en JS
+
+[Comprenez comment fonctionne l'asynchrone en JS - Écrivez du JavaScript pour le web - OpenClassrooms](https://openclassrooms.com/fr/courses/5543061-ecrivez-du-javascript-pour-le-web/5577651-comprenez-comment-fonctionne-lasynchrone-en-js)
+
+<Vimeo vimeoId="539128094" />
+
+<br />
+
+Saviez-vous que JavaScript est synchrone et n'a qu'un seul _thread_ d'exécution ?
+
+:::note ?
+... qu'est-ce que tu nous racontes là ?
+:::
+
+### JavaScript est synchrone et mono-thread
+
+:::note ?
+Qu'est-ce que ça veut dire ?
+:::
+
+Eh bien, tout simplement qu'il n'y a qu'**un seul fil d'exécution** du code source. Cela signifie que lorsque vous écrivez du code, chaque
+ligne sera exécutée **l'une après l'autre** en attendant la fin de l'exécution de la ligne précédente. Il n'y a pas d'autre code qui pourra
+être exécuté en parallèle. Il ne peut faire qu'une seule chose à la fois.
+
+Mais dans le titre du chapitre tu parles de faire de l'asynchrone en JavaScript, et là tu nous dis que ce n'est plus possible ?
+
+Eh bien, en fait il est possible et même très facile de faire de l'asynchrone en JavaScript, mais l'exécution restera synchrone...
+
+🧐
+
+Bon, essayons de clarifier tout ça maintenant...
+
+Si du code **synchrone** est du code qui s'exécute ligne après ligne en attendant la **fin de l'exécution** de la ligne précédente, alors on
+peut facilement en déduire que du code **asynchrone** va s'exécuter ligne après ligne, mais la ligne suivante **n'attendra pas** que la ligne
+asynchrone ait fini son exécution. Prenons cet exemple :
+
+```javascript
+let productId = 1;
+let productPrice = getProductPriceAsync(productId);
+doSomething(productPrice);
+```
+
+En admettant que la fonction `getProductPriceAsync()` soit asynchrone, alors la ligne suivante sera exécutée avant la fin de l'exécution de la
+fonction asynchrone, mais il ne sera pas encore possible d'utiliser la valeur de `productPrice` (nous verrons dans le chapitre suivant comment
+nous pouvons nous en servir).
+
+Mais comment peut-on faire ça avec un langage synchrone ?
+
+Avec ce qu'on appelle l'_event loop_ !
+
+### L'event loop
+
+En JavaScript, chaque ligne de code est exécutée de façon synchrone, mais il est possible de demander à exécuter du code de manière asynchrone.
+Et lorsque l'on demande à exécuter une fonction de façon asynchrone, la fonction en question est placée dans une sorte de **file d'attente**
+qui va exécuter toutes les fonctions qu'elle contient les unes après les autres. C'est ce qu'on appelle l'_**event loop**._ Tout le cœur du
+langage fonctionne autour de ça.
+
+:::info
+Ainsi, le code n'est pas réellement exécuté en parallèle car il est mis en file d'attente, mais il ne bloque pas l'exécution du code depuis
+lequel il a été appelé.
+:::
+
+### Jouez avec l'event loop
+
+Maintenant que vous comprenez un peu mieux ce qu'est l'event loop, voyons concrètement comment demander à exécuter du code de manière asynchrone.
+
+#### La fonction setTimeout
+
+`setTimeout` est la fonction **la plus répandue** lorsque l'on veut exécuter du code asynchrone sans bloquer le fil d'exécution en cours. Cette
+fonction prend 2 paramètres :
+- La **fonction à exécuter** de manière asynchrone (qui sera donc ajoutée à la file d'attente de l'event loop) ;
+- Le **délai**, en millisecondes, avant d'exécuter cette fonction.
+
+```javascript
+setTimeout(function() {
+    console.log("I'm here!")
+}, 5000);
+console.log("Where are you?");
+```
+
+Dans l'exemple ci-dessus, le texte `Where are you?` s'affichera avant `I'm here!`, qui ne sera affiché qu'au bout de 5 secondes.
+
+La fonction `setTimeout` nous retourne une valeur permettant d'identifier le code asynchrone que l'on veut exécuter. Il est possible de passer
+cet identifiant en paramètre à la fonction `clearTimeout`, si vous souhaitez annuler l'exécution asynchrone de la fonction avant qu'elle ne
+soit exécutée.
+
+:::info
+Pour en savoir plus sur la fonction setTimeout, vous trouverez la documentation [ici, sur le site de W3school](https://www.w3schools.com/jsref/met_win_settimeout.asp).
+:::
+
+#### Les autres méthodes
+
+Il existe d'autres méthodes un peu moins répandues, voire très peu utilisées :
+- `setInterval` ([documentation à retrouver ici](https://www.w3schools.com/jsref/met_win_setinterval.asp)) : elle fonctionne exactement comme
+`setTimeout`, à ceci près qu'elle exécute la fonction passée en paramètre **en boucle** à une **fréquence déterminée** par le temps en
+millisecondes passé en second paramètre. Il suffira de passer la valeur de retour de `setInterval` à `clearInterval` pour **stopper**
+l'exécution en boucle de la fonction ;
+- `setImmediate` ([documentation à retrouver ici](https://developer.mozilla.org/en-US/docs/Web/API/Window/setImmediate)). Cette fonction prend
+en seul paramètre la fonction à exécuter de façon synchrone.  La fonction en question sera placée dans la **file d'attente** de l'event loop,
+mais va **passer devant** toutes les autres fonctions, sauf certaines spécifiques au Javascript : les événements (les mêmes qu'on a vus au
+premier chapitre, et qui sont donc exécutés de façon asynchrone 😉), le rendu, et l'I/O. Il existe aussi `nextTick`, qui permet, là, de
+court-circuiter tout le monde. À utiliser avec précaution, donc...
+
+### Le cas de l'I/O
+
+L'I/O correspond aux événements liés à l'_**input**_(les flux d'entrée) et l'_**output**_(les flux de sortie). Cela correspond notamment à la
+lecture/écriture des fichiers, aux requêtes HTTP, etc.
+
+Vous avez dû remarquer que lorsque l'on exécutait la fonction `fetch()` lors d'une requête HTTP, celle-ci ne bloquait pas l'exécution du code.
+On n'attend pas que la requête soit envoyée et une réponse reçue avant d'exécuter le reste du code. C'est donc une **fonction asynchrone**.
+
+D’ailleurs, _`fetch()`_ retourne une _Promise_ qui est une autre façon de faire de l’asynchrone car les fonctions _`then()`_ et _`catch()`_ sont
+appelées plus tard lorsque le travail (dans ce qu’on a vu dans le chapitre précédent il s’agissait d’une requête HTTP) est terminé. Et de la
+même manière, tout ce qui touche à l'I/O peut être exécuté de manière asynchrone. Et c'est tant mieux, car leur exécution peut prendre du temps. 😎
+
+### En résumé
+
+Dans ce chapitre, vous avez appris :
+- Que le JavaScript est synchrone et mono-thread ;
+- Que l’event loop est le moteur de JavaScript qui exécute les fonctions JavaScript asynchrones sous forme d’événements ;
+- Comment utiliser la méthode  setTimeout ;
+- Qu'il existe d'autres méthodes asynchrones : _setInterval_, _setImmediate_ ;
+- Que l'I/O est géré de manière asynchrone avec JavaScript.
+
+Vous savez maintenant comment exécuter du code de manière asynchrone, mais on ne sait pas comment profiter du résultat de ce code depuis celui
+qui l'a exécuté.
+
+_Vous vous rappelez de notre exemple de code avec la fonction `getProductPriceAsync` ? Eh bien, avec ce que nous venons d'apprendre nous ne
+sommes pas en mesure de renvoyer le résultat de notre code dans la variable `productPrice`. Et c'est justement dans le prochain chapitre que
+nous allons voir ça !_
+
+-----
+
+## Gérez du code asynchrone
+
+[Gérez du code asynchrone - Écrivez du JavaScript pour le web - OpenClassrooms](https://openclassrooms.com/fr/courses/5543061-ecrivez-du-javascript-pour-le-web/5577676-gerez-du-code-asynchrone)
+
+<Vimeo vimeoId="539128130" />
+
+<br />
+
+Nous allons maintenant voir comment on peut exécuter du code asynchrone et renvoyer le résultat que l'on souhaite à celui qui a lancé le code.
+
+### Callbacks
+
+C'est la méthode la plus "vieille" mais toujours utilisée par beaucoup de modules JavaScript (nous verrons ce que sont les modules dans la
+dernière partie de ce cours). Une _**callback**_ est simplement une fonction que vous définissez. Le principe de la callback est de la
+**passer en paramètre** d'une fonction asynchrone. Une fois que la fonction asynchrone a fini sa tâche, elle va appeler notre fonction
+_callback_ en lui passant un **résultat**. Ainsi, le code que nous mettons dans notre fonction _callback_ sera exécuté de manière asynchrone.
+Cela ne vous rappelle pas quelque chose ? Les **événements** ! Les événements sont un exemple typique de fonction asynchrone à laquelle on
+passe une fonction _callback_.
+
+```javascript
+element.addEventListener('click', function(e) {
+    // Do something here ...
+});
+```
+
+Dans l'exemple ci-dessus, la fonction qui est envoyée à `addEventListener` est une callback. Elle n'est pas appelée tout de suite, elle est
+appelée plus tard, dès que l'utilisateur clique sur l'élément. Ça ne bloque donc pas l'exécution du code et c'est donc asynchrone. 😁
+
+Les callbacks sont la **base de l'asynchrone** en JavaScript et sont très utilisées.
+
+> Par exemple, la fonction que nous passons en paramètre à `setTimeout` est une callback.
+
+Les callbacks sont faciles à comprendre et à utiliser, mais elles souffrent d'un gros problème de lisibilité du code, via ce qu'on appelle le
+_callback hell_. En effet, on se retrouve régulièrement dans des situations où on va imbriquer plusieurs couches de callbacks, rendant le code
+difficile à lire et pouvant générer des erreurs.
+
+```javascript
+elt.addEventListener('click', function(e) {
+    mysql.connect(function(err) {
+        mysql.query(sql, function(err, result) {
+            fs.readFile(filePath, function(err, data) {
+                mysql.query(sql, function(err, result) {
+                    // etc.
+                });
+            });
+        });
+    });
+});
+```
+
+Ce code, qui n'est pas facile à lire, pourrait pourtant correspondre à un cas d'utilisation concret des callbacks : dès que l'utilisateur
+clique sur un élément, on ouvre une connexion _MySQL_, puis on récupère des données depuis la base de données, on lit un contenu dans un
+fichier et on fait une nouvelle requête _MySQL_, etc.
+
+C'est bien beau de gérer du code asynchrone, mais rien ne vous garantit que tout se soit bien passé. Il nous faut donc un mécanisme pour savoir
+si une erreur est survenue !
+
+#### Gérez des erreurs callbacks
+
+Pour gérer les erreurs avec les callbacks, la méthode la plus utilisée est de prendre **2 paramètres** dans notre callback. Le 2e paramètre
+est notre donnée et le 1er est l'erreur. Si elle n'est pas _**null**_ ou _**undefined**_,  elle contiendra un message d'erreur indiquant qu'une
+erreur est intervenue.
+
+Si on reprend l'exemple ci-dessus, on voit par exemple que la lecture d'un fichier avec le module `fs` peut nous retourner une erreur :
+
+```javascript
+fs.readFile(filePath, function(err, data) {
+    if (err) {
+        throw err;
+    }
+    // Do something with data
+});
+```
+
+### Promise
+
+Les _**promise**_, ou _promesses_ en français, sont un peu plus complexes mais bien plus puissantes et faciles à lire que les callbacks.
+
+Lorsque l'on exécute du code asynchrone, celui-ci va immédiatement nous retourner une "promesse" qu'un résultat nous sera envoyé prochainement.
+
+Cette promesse est en fait un objet `Promise` qui peut être `resolve` avec un résultat, ou `reject` avec une erreur.
+
+Lorsque l'on récupère une `Promise`, on peut utiliser sa fonction `then()` pour exécuter du code dès que la promesse est résolue, et sa fonction
+`catch()` pour exécuter du code dès qu'une erreur est survenue.
+
+Voyons avec un exemple concret pour mieux comprendre :
+
+```javascript
+functionThatReturnsAPromise()
+    .then(function(data) {
+        // Do something with data
+    })
+    .catch(function(err) {
+        // Do something with error
+    });
+```
+
+Dans l'exemple ci-dessus, la fonction `functionThatReturnsAPromise` nous renvoie une `Promise`. On peut donc utiliser sa fonction `then()` en
+lui passant une fonction qui sera exécutée dès qu'un résultat sera reçu (avec le résultat en question passé à notre fonction). On peut aussi
+utiliser sa fonction `catch()` en lui passant une fonction qui sera exécutée si une erreur est survenue (avec l'erreur en question passée à
+notre fonction).
+
+Le gros avantage est que l'on peut aussi **chaîner** les `Promise`. Ainsi, la valeur que l'on retourne dans la fonction que l'on passe à
+`then()` est transformée en une nouvelle `Promise` résolue, que l'on peut utiliser avec une nouvelle fonction `then()`. Si notre fonction
+retourne par contre une exception, alors une nouvelle `Promise` rejetée est créée et on peut l'intercepter avec la fonction `catch()`. Mais si
+la fonction que l'on a passée à `catch()` retourne une nouvelle valeur, alors on a à nouveau une `Promise` résolue que l'on peut utiliser avec
+une fonction `then()`, etc.
+
+Voici un exemple qui vous montre comment on peut profiter des `Promise` pour chaîner notre code asynchrone :
+
+```javascript
+returnAPromiseWithNumber2()
+    .then(function(data) { // Data is 2
+        return data + 1;
+    })
+    .then(function(data) { // Data is 3
+        throw new Error('error');
+    })
+    .then(function(data) {
+        // Not executed
+    })
+    .catch(function(err) {
+        return 5;
+    })
+    .then(function(data) { // Data is 5
+        // Do something
+    });
+```
+
+Dans l'exemple ci-dessus, la fonction `returnAPromiseWithNumber2` nous renvoie une `Promise` qui va être résolue avec le nombre `2`.
+- La première fonction `then()` va récupérer cette valeur.
+- Puis, dans cette fonction on retourne `2 + 1`, ce qui crée une nouvelle `Promise` qui est immédiatement résolue avec `3`.
+- Puis, dans le `then()` suivant, nous retournons une erreur.
+
+De ce fait, le `then()` qui suit ne sera pas appelé et c'est le `catch()` suivant qui va être appelé avec l'erreur en question. Lui-même
+retourne une nouvelle valeur qui est transformée en Promise qui est immédiatement résolue avec la valeur `5`. Le dernier `then()` va être
+exécuté avec cette valeur.
+
+:::info
+L’API `Fetch` utilise les `Promise` pour gérer les réponses aux requêtes HTTP, comme nous l’avons vu dans la partie précédente.
+:::
+
+#### Gérez des erreurs Promise
+
+Nous avons déjà vu comment se gèrent les erreurs avec les `Promise`. Une erreur correspond à une **exception** qui a été lancée, et il est
+possible de l'intercepter en appelant la fonction `catch()` de la `Promise`.
+
+### Async/await
+
+`async` et `await` sont 2 nouveaux mots clés qui permettent de gérer le code asynchrone de manière beaucoup plus intuitive, en bloquant
+l'exécution d'un code asynchrone jusqu'à ce qu'il retourne un résultat.
+
+```javascript
+async function fonctionAsynchrone1() {/* code asynchrone */}
+async function fonctionAsynchrone2() {/* code asynchrone */}
+
+async function fonctionAsynchrone3() {
+    const value1 = await fonctionAsynchrone1();
+    const value2 = await fonctionAsynchrone2();
+    return value1 + value2;
+}
+```
+
+Dans cet exemple, nous avons un total de 3 fonction asynchrones : `fonctionAsynchrone1`, `fonctionAsynchrone2`, `fonctionAsynchrone3`. Quand
+on utilise `async` et `await`, une fonction asynchrone doit avoir le mot clé `async` avant la fonction. Ensuite, dans le code, nous pouvons
+faire appel à des fonctions asynchrones et attendre leur résultat grâce au mot clé `await` que l'on met devant l'appel de la fonction.
+
+:::caution !
+`async` / `await` utilisent les Promise en arrière-plan, il est donc possible d'utiliser les 2 en même temps.
+:::
+
+#### Gérez des erreurs async/await
+
+`async` / `await` utilisant les Promise, la levée d'une erreur se fait aussi par une **exception**.
+
+Pour intercepter cette erreur, par contre, il suffit d'exécuter notre code asynchrone dans un bloc `try {} catch (e) {}`, l'erreur étant
+envoyée dans le `catch`.
+
+### À vous de jouer !
+
+![16189267631776_A-vous-de-jouer%20%282%29.png](https://user.oc-static.com/upload/2021/04/20/16189267631776_A-vous-de-jouer%20%282%29.png)
+
+Rendez-vous sur [cet éditeur CodePen](https://codepen.io/nicolaspatschkowski/pen/NWqyaKP) pour réaliser l'exercice suivant.
+
+Dans cet exercice j'ai créé 2 fonctions asynchrones (avec le mot clé `async`) `getNumber1()` et `getNumber2()`.
+1. Dans un premier temps nous allons créer une fonction asynchrone (avec `async`) qui s'appelle `compute` et qui va récupérer les résultats des
+2 fonctions asynchrones `getNumber1()` et `getNumber2()` (avec `await`) et renvoyer la somme des 2 valeurs récupérées.
+2. Maintenant nous allons appeler notre fonction `compute()` et utiliser sa valeur de retour comme une `Promise` pour finalement afficher le
+résultat de la promesse dans le contenu HTML de l'élément ayant pour ID `result`.
+
+<CodePen codePenId="NWqyaKP" />
+
+```javascript
+async function getNumber1() {
+  return 10;
+}
+async function getNumber2() {
+  return 4;
+}
+async function compute() {
+  const number1 = await getNumber1();
+  const number2 = await getNumber2();
+  return number1 + number2;
+}
+compute() 
+  .then(function(value) {
+    document
+      .getElementById("result")
+      .innerText = value + '';
+});
+```
+
+Vous avez terminé ? Voici la [solution CodePen](https://codepen.io/fabienhenon/pen/XWNGgvd).
+
+<CodePen codePenId="XWNGgvd" />
+
+### En résumé
+
+Dans ce chapitre, vous avez appris :
+- Qu'une callback est une fonction appelée "plus tard" ;
+- Que les `Promise` sont des objets qui nous fournissent les fonctions _`then()`_ et _`catch()`_ pour gérer le code asynchrone ;
+- Que `async` et `await` permettent de faire de l’asynchrone avec une syntaxes plus naturelle, et qu’ils utilisent en arrière plan les
+_Promise._
+
+_Nous connaissons maintenant 3 techniques pour faire du code asynchrone et pouvoir utiliser sa valeur ; voyons maintenant comment ça peut nous
+servir dans le cas de plusieurs requêtes HTTP !_
+
+-----
+
+## Parallélisez plusieurs requêtes HTTP
+
+[Parallélisez plusieurs requêtes HTTP - Écrivez du JavaScript pour le web - OpenClassrooms](https://openclassrooms.com/fr/courses/5543061-ecrivez-du-javascript-pour-le-web/5866911-parallelisez-plusieurs-requetes-http)
+
+<Vimeo vimeoId="539128158" />
+
+<br />
+
+Dans ce chapitre, nous allons voir comment **enchaîner** les requêtes HTTP en exécutant 2 requêtes GET en même temps (en parallèle), puis 1
+requête POST une fois que les 2 requêtes précédentes sont terminées (en séquence). Pour cela, nous allons avoir besoin des techniques
+asynchrones vues au chapitre précédent.
+
+### Enchaînez des requêtes avec les callbacks
+
+Voyons ensemble comment faire nos 2 requêtes **en parallèle**, suivies d'une requête **en séquence** avec les callbacks. Et vous verrez, ça
+peut vite devenir complexe !
+
+> Pour cet exemple, nous partons du principe que nous avons accès à 2 fonctions (`get` et `post`). Elles font respectivement une requête `GET`
+et une requête `POST` et elles prennent en paramètre :
+> - l'URL de la requête,
+> - une callback à exécuter quand on a le résultat (avec une variable d'erreur en premier paramètre).
+
+```javascript
+var GETRequestCount = 0;
+var GETRequestResults = [];
+function onGETRequestDone(err, result) {
+    if (err) throw err;
+    GETRequestCount++;
+    GETRequestResults.push(result);
+    if (GETRequestCount == 2) {
+        post(url3, function(err, result) {
+            if (err) throw err;
+            // We are done here !
+        });
+    }
+}
+
+get(url1, onGETRequestDone);
+get(url2, onGETRequestDone);
+```
+
+Comme vous pouvez le voir, le code est assez particulier à lire. Il y a d'autres façons d'écrire ce code, mais ça reste une des façons les plus
+simples et rapides à écrire.
+
+Afin d'exécuter 2 requêtes `GET` en même temps, nous pouvons appeler 2 fois la fonction `get()`. Étant donné que cette fonction est
+**asynchrone**, elle ne bloquera pas l'exécution du code. Ainsi l'autre fonction `get()` sera aussi appelée alors que la première ne sera pas
+encore terminée. C'est comme ça qu'on peut avoir 2 requêtes en parallèle.
+
+Par contre, nous voulons exécuter une requête `POST` une fois que les **2 requêtes `GET` sont terminées**, et pas avant ! Pour ce faire, nous
+devons savoir si les requêtes `GET` sont terminées. C'est pour ça que la variable `GETRequestCount` est créée. On va l'**incrémenter** dans la
+fonction _callback_ que l'on a envoyée aux appels à `get()`, et si on atteint 2 (le nombre de requêtes `GET` qu'on a faites), alors on va
+exécuter la requête `POST`.
+
+:::info
+`GETRequestResults` sert à conserver les réponses des requêtes `GET`, car on ne les a pas toutes les 2 en même temps.
+:::
+
+### Enchaînez des requêtes avec les Promise
+
+Grâce à la fonction `Promise.all`, voyons comment exécuter nos requêtes en parallèle et en séquence avec les `Promise`.
+
+> Pour cet exemple, nous partons du principe que nous avons accès à 2 fonctions (`get` et `post`) qui font respectivement une requête `GET` et
+une requête `POST` quand on leur passe en paramètre l'URL de la requête. Ces fonctions retourneront une `Promise` avec le résultat de la
+requête.
+
+```javascript
+Promise.all([get(url1), get(url2)])
+    .then(function(results) {
+        return Promise.all([results, post(url3)]];
+    })
+    .then(function(allResults) {
+        // We are done here !
+    });
+```
+
+Ici, nous utilisons la fonction `Promise.all` qui prend en paramètre une liste de `Promise` (cela peut aussi être de simples valeurs qui sont
+alors transformées en `Promise` résolues), et qui permet de toutes les exécuter en parallèle et de retourner une nouvelle `Promise` qui sera
+résolue quand toutes les `Promise` seront résolues.
+
+Ainsi, la fonction `then()` recevra les résultats de toutes les `Promise` sous forme d'un tableau.
+
+Afin d'exécuter notre requête `POST` une fois que les requêtes `GET` sont terminées, nous l'exécutons donc dans la fonction `then()`.
+
+:::info
+Notez que dans la fonction `then()`, nous faisons encore une fois appel à la fonction `Promise.all` en lui passant les résultats des requêtes
+`GET` et notre requête `POST`. Étant donné que `Promise.all` considère les simples valeurs comme des `Promise` résolues, cela nous permet, dans
+le prochain `then()`, de récupérer une liste qui contient les résultats des requêtes `GET` et le résultat de la requête `POST` :
+`allResults = [ [ getResult1, getResult2 ], postResult ]`.
+:::
+
+### Enchaînez des requêtes avec async/await
+
+Finalement, voyons comment exécuter le même code mais avec `async` / `await`.
+
+> Pour cet exemple, nous partons du principe que nous avons accès à 2 fonctions (`get` et `post`) qui font respectivement une requête `GET` et
+une requête `POST` quand on leur passe en paramètre l'URL de la requête. Ces fonctions sont asynchrones (avec le mot clé `async`).
+
+```javascript
+async function requests() {
+    var getResults = await Promise.all([get(url1), get(url2)]);
+    var postResult = await post(url3);
+    return [getResults, postResult\];
+}
+requests().then(function(allResults) {
+    // We are done here !
+});
+```
+
+Nous utilisons aussi la fonction `Promise.all` dans ce code, car c'est comme ça que l'on peut exécuter des fonctions asynchrones en parallèle
+(rappelez-vous que `async` correspond en arrière-plan à une `Promise`).
+
+Par contre, ici, nous utilisons `await` devant `Promise.all` afin d'attendre la fin de l'exécution des 2 requêtes `GET`, puis nous utilisons
+`await` devant la requête `POST` afin d'attendre son résultat. Puis nous renvoyons un tableau avec tous les résultats.
+
+Lorsque nous appelons la fonction `requests()`, ici, nous utilisons `then()` pour récupérer tous les résultats (mais vous auriez aussi pu
+utiliser `await` au sein d'une autre fonction avec le mot clé `async`).
+
+### En résumé
+
+Dans ce chapitre, vous avez appris :
+- À enchaîner des requêtes avec la méthode des callbacks ;
+- À enchaîner des requêtes avec la méthode des `Promise` ;
+- À enchaîner des requêtes avec la méthode `async` / `await`.
+
+_Vous connaissez maintenant 3 techniques pour exécuter du code asynchrone et vous savez les mettre en situation. À vous maintenant de vous
+faire votre propre avis sur celle que vous préférez utiliser. Il est temps maintenant de passer à la prochaine partie où nous verrons comment
+coder en JavaScript dans un environnement plus efficace.  😎_
+
+-----
+
+## Quiz : Parallélisez vos longues tâches avec la programmation asynchrone
+
+[Parallélisez vos longues tâches avec la programmation asynchrone - OpenClassrooms](https://openclassrooms.com/fr/courses/5543061-ecrivez-du-javascript-pour-le-web/exercises/3197)
+
+#### Compétences évaluées
+
+<i class="bi bi-check2-circle"></i> Utiliser des méthodes asynchrones
+
+-----
+
+#### Question 1 : Que peut-on dire du langage JavaScript ?
+
+<i class="bi bi-circle"></i> Qu'il est asynchrone et mono-thread<br />
+<i class="bi bi-record-circle"></i> Qu'il est synchrone et mono-thread<br />
+<i class="bi bi-circle"></i> Qu'il est asynchrone et multi-thread<br />
+<i class="bi bi-circle"></i> Qu'il est synchrone et multi-thread<br />
+<br />
+
+*Le JavaScript est un langage synchrone et mono-thread. L'asynchrone se fait grâce à l'event loop en envoyant des fonctions dans sa file
+d'attente.*
+
+-----
+
+#### Question 2 : Qu'est-ce que l'event loop ?
+
+<i class="bi bi-record-circle"></i> Un gros tunnel mono-thread dans lequel sont empilées des fonctions qui vont être exécutées les unes après
+les autres<br />
+<i class="bi bi-circle"></i> Un gros tunnel multi-thread dans lequel les fonctions vont être parallélisées pour être exécutées de manière
+asynchrone<br />
+<i class="bi bi-circle"></i> Une simple boucle  `for`  dans laquelle on exécute généralement des événements<br />
+<i class="bi bi-circle"></i> Cela n'existe pas<br />
+<br />
+
+*On peut voir l'event loop comme étant un tunnel mono-thread dans lequel on va mettre en file d'attente des fonctions pour décaler leur
+exécution.*
+
+-----
+
+#### Question 3 : Qu’affiche cet extrait ?
+
+```javascript
+setTimeout(function() {
+    console.log("Prems");
+});
+console.log("Deuz");
+```
+
+<i class="bi bi-circle"></i><code>Prems</code>, puis <code>Deuz</code><br />
+<i class="bi bi-record-circle"></i><code>Deuz</code>, puis <code>Prems</code><br />
+<br />
+
+_`setTimeout` sert à retarder l'exécution d'une fonction du temps indiqué. Il va ajouter la fonction passée en paramètre à l'event loop, et
+demander à attendre un certain temps avant de l'exécuter. Si aucun temps n’est passé à la fonction (comme dans notre exemple), alors notre
+callback sera exécutée au prochain tour de l’event loop, et donc après `Deuz`._
+
+-----
+
+#### Question 4 : Qu'est-ce qu'une callback ?
+
+<i class="bi bi-circle"></i> Une fonction qui va exécuter une autre fonction lorsqu'elle a terminé ce qu'elle devait faire<br />
+<i class="bi bi-record-circle"></i> Une fonction qui sera exécutée par une autre fonction lorsque cette dernière aura terminé ce qu'elle devait
+faire<br />
+<i class="bi bi-circle"></i> Une fonction qui va récupérer toutes les informations de navigation d'un utilisateur<br />
+<br />
+
+*La différence est subtile : une callback est une fonction (appelons-la `cb`) que l'on passe en paramètre à une autre fonction (appelons-la
+`fn`). C'est `fn` qui va exécuter `cb` lorsqu'elle aura fini ce qu'elle doit faire.*
+
+-----
+
+#### Question 5 : Qu'est-ce qu'une `Promise` ?
+
+<i class="bi bi-circle"></i> Une promesse que l'on ne tient jamais (comme toutes les promesses)<br />
+<i class="bi bi-circle"></i> Un objet JavaScript qui n'aura jamais de valeur<br />
+<i class="bi bi-record-circle"></i> Un objet JavaScript dédié aux traitements asynchrones<br />
+<i class="bi bi-circle"></i> Une fonction qui promet d'exécuter du code dans un délai imparti<br />
+<br />
+
+_Une `Promise` est un objet JavaScript utilisé pour réaliser des traitements asynchrones tels que des appels API (GET, POST, etc.). Elle
+dispose de plusieurs statuts :_
+- _"pending". La requête est en train d’être réalisée._
+- _"resolve". La requête a été réalisée et aucune erreur n’a eu lieu. La fonction `then()` est appelée._
+- _"reject". Une erreur est survenue et le traitement asynchrone a échoué. La fonction `catch()` est appelée._
+
+-----
+
+#### Question 6 : Qu’affiche ce code ?
+
+```javascript
+async function num1() { return 42; }
+async function num2() { return Promise.resolve(3); }
+
+async function compute() {
+    const n1 = await num1();
+    const n2 = await num2();
+    return n1 + n2;
+}
+
+compute()
+    .then(function(res) {
+        console.log(res);
+    })
+    .catch(function() {
+        console.log(“Erreur”);
+});
+```
+
+<i class="bi bi-record-circle"></i> 45<br />
+<i class="bi bi-circle"></i> Une <i>Promise</i><br />
+<i class="bi bi-circle"></i> "Erreur"<br />
+<br />
+
+_`async` et `await` sont des mots clés du langage JavaScript qui permettent de créer du code asynchrone qui utilisera les `Promise` en
+arrière-plan. Dans notre exemple, la fonction `compute` récupère le résultat des fonctions `num1` et `num2` en attendant que leur `Promise`
+soit résolue (ce qui est immédiatement le cas de nos 2 fonctions car l’une renvoie directement une valeur numérique, et l’autre utilise
+`Promise.resolve()` qui indique que la `Promise` est résolue)._
+
+_`compute` renvoie donc une `Promise` qui vaudra 45. Lorsqu’on l’appelle, ici, on utilise la fonction `then()` car `async` et `await` sont des
+`Promise` en arrière-plan, et on affiche le résultat (45) dans la console._
+
+-----
+
+#### Question 7 : Sachant que promise1 sera résolue avec la valeur "Salut", et que promise2 sera résolue avec "toi", qu’affiche cet extrait ?
+
+```javascript
+Promise.all([promise1, promise2])
+.then(function(values) {
+    console.log(values.join(" "));
+});
+```
+
+<i class="bi bi-circle"></i> ["Salut", "toi"]<br />
+<i class="bi bi-record-circle"></i> "Salut toi"<br />
+<i class="bi bi-circle"></i> "Salut"<br />
+<i class="bi bi-circle"></i> "toi"<br />
+<br />
+
+_`Promise.all` prend en paramètre une liste de `Promise` et retourne une nouvelle `Promise` qui sera résolue une fois que toutes les `Promise`
+seront résolues. Cette `Promise` contiendra le résultat de toutes les `Promise` sous forme de liste et en conservant l’ordre dans la fonction
+`all()`. Ainsi, notre code affichera "Salut toi"._
+
+-----
+
+#### Question 8 : Que fait cet extrait ?
+
+```javascript
+setInterval(callback, 1000);
+```
+
+<i class="bi bi-circle"></i> Il exécute la callback au bout de 1 seconde<br />
+<i class="bi bi-circle"></i> Il exécute la callback au bout de 1 000 secondes<br />
+<i class="bi bi-record-circle"></i> Il exécute la callback toutes les 1 seconde<br />
+<i class="bi bi-circle"></i> Il exécute la callback toutes les 1 000 secondes<br />
+<br />
+
+_`setInterval` permet d'exécuter une fonction de callback toutes les X ms. La fonction prend le délai en millisecondes et non en secondes._
+
+-----
+
+#### Question 9 : Que fait ce code et que contient la variable `promiseRes` ?
+
+**(Dans cet extrait nous utilisons la fonction `reduce` . Elle permet de parcourir une liste et de la réduire à une seule valeur :
+l’accumulateur. Pour en savoir plus, n’hésitez pas à aller faire un tour sur la [documentation de la fonction](https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Global_Objects/Array/Reduce)).**
+
+```javascript
+async function func1() {
+    return 3;
+}
+
+async function func2() {
+    return 4;
+}
+
+var promiseRes =
+    Promise
+        .all([func1(), func2()])
+        .then(function(results) {
+            return results.reduce(function(acc, res) {
+                return acc * res;
+            }, 2);
+        })
+        .then(function(time) {
+            return setTimeout(callback, time * 1000);
+        });
+```
+
+<i class="bi bi-record-circle"></i><code>promiseRes</code> vaut une promesse résolue avec l'identifiant de la fonction <code>setTimeout</code>,
+et la callback est appelée après 24 secondes<br />
+<i class="bi bi-circle"></i><code>promiseRes</code> vaut un identifiant de <code>setTimeout</code>, et la callback est appelée après 12 secondes<br />
+<i class="bi bi-circle"></i><code>promiseRes</code> vaut un identifiant de <code>setTimeout</code>, et la callback est appelée après 24 secondes<br />
+<i class="bi bi-circle"></i><code>promiseRes</code> vaut une promesse résolue avec l'identifiant de la fonction <code>setTimeout</code>, et la
+callback est appelée après 12 secondes<br />
+<br />
+
+_Ici nous exécutons 2 fonctions asynchrones en parallèle avec `Promise.all`. La première fonction `then()` va appeler `reduce` sur la liste de
+résultats (3, et 4) et multiplier les valeurs entre elles avec une valeur initiale de 2, soit : `2 * 3 * 4 = 24`._
+
+_Le résultat est passé à la prochaine fonction `then()`, qui va appeler une callback après `time` secondes, `time` correspondant ici à 24, le
+résultat du précédent `then()`._
+
+_Enfin, on retourne le résultat de la fonction `setTimeout()`, `promiseRes` contient donc une `Promise` qui sera résolue avec l'identifiant de
+la fonction `setTimeout` retourné._
