@@ -1,23 +1,23 @@
 
-.algorithmes-nav {
+#algorithmes-nav {
   display: flex;
 }
 
-.algorithmes-nav-code {
+#algorithmes-nav-code {
   width: 50%;
   height: 500px;
 }
 
-.algorithmes-nav-html {
+#algorithmes-nav-html {
   width: 50%;
   height: 500px;
 }
 
-.algorithmes-nav pre {
+#algorithmes-nav pre {
   height: 500px;
 }
 
-.algorithmes-nav iframe {
+#algorithmes-nav iframe {
   width: 100%;
   height: 100%;
   background-color: white;
