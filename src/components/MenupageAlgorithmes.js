@@ -6,7 +6,7 @@ const AlgorithmesList = [
   {
     title: 'JavaScript',
     Svg: require('../../static/img/JavaScript.svg').default,
-    Url: './JavaScript/menu',
+    Url: './JavaScript/accueil',
   },
 ];
 

@@ -1,0 +1,1381 @@
+---
+id: OpenClassrooms-Decouvrez_les_metiers_de_developpeur-2-Explorez_les_differents_metiers_de_developpeur
+title: Explorez les différents métiers de développeur
+---
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+import { Vimeo } from 'mdx-embed';
+
+# Explorez les différents métiers de développeur
+
+## Découvrez comment fonctionne chaque corps de métier
+
+[Découvrez comment fonctionne chaque corps de métier - Découvrez les métiers de développeur - OpenClassrooms](https://openclassrooms.com/fr/courses/6817086-decouvrez-les-metiers-de-developpeur/6954217-decouvrez-comment-fonctionne-chaque-corps-de-metier)
+
+<Vimeo vimeoId="451412367" />
+
+<br />
+
+Comme je vous le disais dans la première partie du cours, _développeur_ est un terme très vaste qui englobe beaucoup de métiers.
+
+Il est important de spécifier que **toute équipe technique n’a pas forcément une personne pour assurer chaque spécialité**. Dans ce cas,
+certains développeurs devront assurer **plusieurs rôles**.
+
+En effet, toutes les entreprises n’ont pas les ressources financières nécessaires pour faire intervenir une personne différente par
+spécialité. Pour multiplier vos chances de trouver un emploi, **devenez à l’aise avec les notions qui complèteront votre spécialité**,
+car vous serez parfois contraint de les mettre en pratique pour arriver au bout d’un projet.
+
+_Je vous propose de découvrir comment une équipe technique travaille sur un projet._
+
+> Nous voici dans l’entreprise **MeetonCoach** spécialisée dans la mise en relation de coaches sportifs avec des personnes en recherche
+d’un accompagnement. Cette entreprise dispose d’un site web qu’elle a réalisée elle-même, permettant aux personnes qui recherchent un
+accompagnement de les contacter par e-mail.
+
+Une fois qu’une personne recherchant un accompagnement contacte l’entreprise, l’entreprise appelle cette personne pour comprendre ses
+besoins, puis la met en relation avec un coach disponible, adapté à ses besoins et présent dans sa zone géographique.
+
+L’entreprise grossit de plus en plus et ressent une nécessité : **automatiser cette mise en relation** pour que les coachs puissent être
+listés sur une plateforme, et que les personnes en recherche de coach puissent les trouver et réserver leur coaching directement.
+
+:::info
+L’entreprise connaît très bien le processus car elle le pratique déjà depuis longtemps. Elle a confié cette mission à l’équipe suivante :
+- un designer ;
+- un développeur front-end ;
+- un développeur back-end ;
+- un développeur mobile ;
+- un développeur full-stack ;
+- un chef de projet.
+:::
+
+<figure>
+    <img src="/static/img/OpenClassrooms/15988799603526_0793-05.jpg"
+         alt="Une équipe de développement logiciel typique" />
+    <figcaption>Une équipe de développement logiciel typique</figcaption>
+</figure>
+
+Nous voici au jour 1 du premier sprint. Le chef de projet est en charge de l’équipe, il dispose de toutes les informations concernant le
+projet et estime la réalisation à un mois.
+
+Voici les maquettes du site :
+
+<figure>
+    <img src="/static/img/OpenClassrooms/15991413928706_15988807750107_image5.png"
+         alt="Côté visiteur, un écran de page d'accueil avec une recherche mène à une carte des environ avec les coaches qui s'affichent ? Côté coach, un écran de connexion mène au tableau de bord du coach." />
+    <figcaption>Maquettes de l'application</figcaption>
+</figure>
+
+:::info
+Les **maquettes**, faites par le designer, permettent de représenter le site avant qu'il soit développé, afin que tout le monde sache
+vers quel rendu l'équipe doit aller.
+:::
+
+Globalement, l’utilisateur se retrouvera sur la page d’accueil. Il entrera la ville dans laquelle il se trouve et pourra affiner sa recherche.
+Il sera ensuite dirigé vers une carte sur laquelle il retrouvera les différents coachs, avant de pouvoir réserver sa séance et payer en ligne.
+
+Il y a d’autres facettes de ce projet à appréhender, comme une partie réservée aux coachs ou aux administrateurs, afin de pouvoir gérer la
+plateforme.
+
+L’entreprise souhaite également mettre en place une application mobile. Le comportement de l’utilisateur doit être le même.
+
+<figure>
+    <img src="/static/img/OpenClassrooms/15991417415778_Group7.png"
+         alt="Écran du dashboard au format mobile." />
+    <figcaption>Version mobile du site</figcaption>
+</figure>
+
+Puisque l'équipe travail en mode **agile**, le projet sera divisé en **4 sprints de 5 jours**. Le premier servira à **mettre en place tout
+l’environnement de travail**, les deux suivants à la réalisation, et le dernier pour les **tests**. À la fin de chaque sprint, l’avancée du
+projet sera présentée à l’entreprise pour qu’elle donne son avis et que l’équipe puisse adapter en fonction.
+
+Le designer a créé les **maquettes** avant que les sprints commencent. Le designer est présent en appui pour accompagner le front-end et le
+développeur mobile, qui s’occuperont de la partie site web et application.
+
+Le développeur back-end est en charge de toute la partie qui ne sera pas visuelle, pour que le front-end et le mobile puissent avoir les
+bonnes informations au bon moment pour les afficher.
+
+Le full-stack est là pour aider chacun des 3 développeurs en cas de besoin, et interviendra en cas de retard. Il s’occupe de l’architecture
+du projet et de la mise en production en bout de course.
+
+### Résumé
+
+Dans ce chapitre, vous avez vu un exemple d'application sur laquelle pourrait travailler une équipe de développement :
+- C'est une équipe de **6 métiers différents** dont 4 spécialités de développeurs, un designer et un chef de projet ;
+- L'équipe travaille selon les **méthodes agiles**, elle organise donc son travail en **sprints** ;
+- Vous avez vu à quoi ressemblent les **maquettes** du site, représentation visuelle statique du rendu final du site.
+
+_Je vous propose de voir plus en détail le rôle de chacun des développeurs dans les chapitres suivants. Commençons par le métier de développeur front-end._
+
+-----
+
+## Identifiez les activités d’un développeur front-end
+
+[Identifiez les activités d’un développeur front-end - Découvrez les métiers de développeur - OpenClassrooms](https://openclassrooms.com/fr/courses/6817086-decouvrez-les-metiers-de-developpeur/6954234-identifiez-les-activites-d-un-developpeur-front-end)
+
+<Vimeo vimeoId="451412770" />
+
+<br />
+
+**Tout ce que vous voyez sur un site web**, y compris le cours que vous êtes en train de lire, a été créé par un développeur front-end.
+C’est lui qui réalise les **interactions** et **l’expérience d’un utilisateur** sur une plateforme.
+
+Le front-end est le pont entre les UI/UX designers et les développeurs back-end :
+- le designer imagine un résultat final pour que le front-end l’intègre ;
+- une fois les éléments intégrés, le front-end doit interagir avec le back-end pour lui envoyer des informations, comme celles d’un formulaire,
+par exemple.
+
+<figure>
+    <img src="/static/img/OpenClassrooms/15988810108371_0793-02.jpg"
+         alt="Connexion front end / back end" />
+    <figcaption>Connexion front end / back end</figcaption>
+</figure>
+
+Si nous reprenons l’exemple de la plateforme de **MeetonCoach**, voici à quoi ressemblerait la partie front-end sans la partie back-end :
+
+<figure>
+    <img src="/static/img/OpenClassrooms/15991416293623_Group6.png"
+         alt="Résultat du site si le back-end ne fonctionnait pas" />
+    <figcaption>Résultat du site si le back-end ne fonctionnait pas</figcaption>
+</figure>
+
+Tous les champs qui contiennent habituellement vos informations ne sont que des **variables** sans valeur.  
+En plus de n’avoir aucune de vos informations sur la page, aucune action n’est possible, car elle requiert un traitement de la part du
+développeur back-end. 
+
+:::info
+Nous désignons généralement par _front-end_, ou _frontend_, la partie d’une application **côté client** (ou utilisateur), opposée au
+_back-end_, **côté serveur**. Par extension, le _développeur front-end_ est le développeur chargé de cette partie. Par abus de langage,
+il arrive de trouver simplement _le front-end_ pour désigner le développeur.
+:::
+
+Il est à noter qu’il existe deux types de sites web. Les **sites web statiques** et les **sites web dynamiques**.
+
+Un site web statique n’aura pas besoin d’un back-end pour fonctionner, car son contenu ne bougera pas. La plateforme de MeetonCoach, tout
+comme votre profil Facebook, est un site web dynamique.
+
+### Les missions principales du développeur front-end
+
+Le développeur front-end traduit les maquettes que le designer crée. S'il n’y a pas de designer dans l’équipe, il peut être responsable de
+la partie design.
+
+> En même temps… c’est son travail. Ni celui du designer, ni celui d’une autre personne !
+
+**En ligne directe avec l’utilisateur**, son objectif est de créer un site sur lequel les utilisateurs voient les informations dans un format
+facile à lire et pertinent.
+
+Le front-end est en relation directe avec le designer, le back-end et le chef de projet. Il est responsable de :
+- transformer une **maquette en code** ;
+- faire fonctionner correctement sa plateforme sur n’importe quel appareil (ordinateur, tablettes et téléphones mobiles) ;
+- respecter les bonnes pratiques en **référencement web ou SEO**, pour être le plus haut possible dans les résultats de recherche Google,
+de manière naturelle ;
+- développer des fonctionnalités pour améliorer l’**expérience de l’utilisateur** sur le site web ;
+- optimiser des pages web pour une **rapidité maximale** ;
+- **tester** sa plateforme et réparer les **bugs**.
+
+### Découvrez les compétences du développeur front-end
+
+Les développeurs front-end doivent au minimum maîtriser ces **3 langages de programmation** pour créer des sites web visuels. Car ce sont
+les seuls langages compris par votre navigateur web :
+- le HTML ;
+- le CSS ;
+- Le JavaScript.
+
+Le **HTML**, ou _Hyper Text Markup Language_, est le langage standard du web. Il permet d’**afficher du contenu** **noir sur blanc** et de
+structurer une page web.
+
+Le **CSS**, ou _Cascading Style Sheet_, s’ajoute au HTML pour le **mettre en page**. Le CSS vous permettra de changer la forme, la taille,
+la couleur ou le style de chaque élément HTML.
+
+:::info
+Vous souhaitez en savoir plus sur **HTML** et **CSS** ? Suivez notre cours [_Apprenez à créer votre site web avec HTML5 et CSS3_](https://openclassrooms.com/fr/courses/1603881-apprenez-a-creer-votre-site-web-avec-html5-et-css3)
+accessible à tous !
+:::
+
+Le **JavaScript** est un des langages de programmation les plus connus. Souvent abrégé en _JS_, c’est un langage plus compliqué qui permet
+de rendre le HTML et le CSS **interactifs**.
+
+:::info
+Vous souhaitez en savoir plus sur le language **JavaScript** ? Si vous êtes déjà un peu avancé en programmation, vous pouvez suivre notre
+cours _[Apprenez à programmer avec JavaScript](https://openclassrooms.com/fr/courses/6175841-apprenez-a-programmer-avec-javascript)._
+:::
+
+### Les langages de programmation du développeur front-end
+
+Vous avez vu les 3 langages indispensables au développeur front-end : le HTML, le CSS et le JavaScript.
+
+En plus de cela, le développeur front-end doit absolument maîtriser certains **frameworks** et **bibliothèques**. 
+
+:::info
+Une notion en plus, encore ? Oui, mais une notion importante !<br />
+Une **bibliothèque**, ou **_library_**, est un ensemble d’extensions et de programmes prêts à l’emploi pour faciliter la réalisation de
+fonctionnalités répétitives et routinières. Elles sont enregistrées dans votre code.
+:::
+
+Un **framework**, ou _infrastructure logicielle_, regroupe un ensemble de composants permettant de créer les fondations ainsi que les
+grandes lignes d’un logiciel/site web/application mobile.
+
+Les bibliothèques sont ajoutées à votre code, alors que votre code est ajouté à un framework.
+
+#### La bibliothèque jQuery
+
+jQuery est une **library JavaScript**. Elle rassemble des extensions et des programmes prêts à l’emploi, pour rendre le développement
+JavaScript plus rapide et plus simple.
+
+Au lieu d’avoir à tout écrire depuis zéro, vous pourrez utiliser les éléments contenus dans la librairie jQuery, puis les personnaliser
+à votre convenance avec du JavaScript. D’où l’importance du JS.
+
+#### Un framework JavaScript comme AngularJS, ReactJS ou VueJS
+
+Les frameworks JS offrent une **structure prête à l’emploi** pour votre code JavaScript.
+
+Il existe plusieurs types de frameworks JS en fonction de vos besoins, de vos préférences ou de ceux que votre entreprise utilise. Les 3
+mentionnés sont les plus connus. Ils vous offrent une **rapidité et un confort** de développement. Ils peuvent être utilisés avec jQuery
+pour minimiser au maximum le code que vous devrez écrire depuis zéro.
+
+#### Un framework CSS comme Bootstrap, Materialize ou Semantic UI
+
+Les frameworks CSS servent également de fondation à votre code, mais pour la partie CSS (souvenez-vous, celle qui permet d’ajouter du style
+à votre page HTML). Ils sont très utilisés et permettent de travailler plus rapidement vos visuels.
+
+<figure>
+    <img src="/static/img/OpenClassrooms/15988813217812_0793-01.jpg"
+         alt="Les framework servent de support au code, les librairies viennent s'y intégrer" />
+    <figcaption>Les framework servent de support au code tandis que les bibliothèques viennent s'y intégrer</figcaption>
+</figure>
+
+**Bootstrap** est un des framework les plus connus. Grâce à Bootstrap, tous vos éléments CSS seront **déjà construits** ; comme vos boutons,
+cartes, barres latérales, popups, etc. Vous n’aurez plus qu’à les personnaliser grâce à du CSS additionnel.
+
+L’utilisation d’un framework CSS est **fortement recommandée**. Elle vous permettra de respecter tous les classiques actuels en design et
+architecture de page responsive. Le tout sans avoir à tout réécrire depuis zéro !
+
+:::info
+**_Responsive_**, c’est le terme que l’on utilise pour dire que notre site web est adaptable à toutes les tailles d’écrans et à tous les
+navigateurs.
+:::
+
+### En résumé
+
+<figure>
+    <img src="/static/img/OpenClassrooms/16012844518565_0793-03.png"
+         alt="Fiche métier du développeur front-end" />
+    <figcaption>Fiche métier du développeur front-end</figcaption>
+</figure>
+
+- N’importe quelle page que vous visitez sur un site web, y compris celle-ci, a été créée par un **développeur front-end**.
+- Le front-end est un **développeur** qui crée les parties **visuelles** d’un site web et/ou traduit les maquettes d’un designer.
+- Il doit maîtriser au minimum **3 langages de programmation** : le HTML, le CSS et le JavaScript.
+- Ces 3 langages sont les seuls qu’un **navigateur**, comme Google Chrome, comprend.
+- Le développeur front-end doit maîtriser certaines **bibliothèques** et certains **frameworks** comme jQuery, React.js et Bootstrap.
+- Les bibliothèques et frameworks servent à **faciliter la vie** d’un développeur. Ils vous offrent des structures ou des petites fonctions
+**prêtes à l’emploi**.
+- Le développeur front-end doit faire très attention à bien **adapter son site web à toutes les tailles d’écran** (ordinateur/tablette/mobile).
+
+_Dans le chapitre suivant, nous allons découvrir le métier de développeur mobile, l'équivalent du front-end mais côté smartphone._
+
+-----
+
+## Identifiez les activités d’un développeur mobile
+
+[Identifiez les activités d’un développeur mobile - Découvrez les métiers de développeur - OpenClassrooms](https://openclassrooms.com/fr/courses/6817086-decouvrez-les-metiers-de-developpeur/6954316-identifiez-les-activites-d-un-developpeur-mobile)
+
+<Vimeo vimeoId="451413409" />
+
+<br />
+
+Toutes les entreprises ayant un site Internet ou un service en ligne peuvent avoir recours à la création d’une **application mobile**.
+Il existe néanmoins des services disponibles seulement sur des applications mobiles, comme les applications de livraison de nourriture
+ou certains jeux vidéo.
+
+**Le mobile est le front-end de vos applications Android ou iOS**. Il est également le pont entre un designer et un développeur back-end :
+- le développeur mobile intègre les maquettes du designer ;
+- une fois celles-ci intégrées, il doit interagir avec le back-end pour lui envoyer des informations, comme celles d’un formulaire, par
+exemple.
+
+:::info
+Le front-end, lui aussi, réalise des interfaces consultables sur téléphone. À la seule différence que le front-end travaille sur un
+**navigateur web** comme Google Chrome, alors que le développeur mobile travaille directement sur les **applications**, comme celles
+que vous pouvez télécharger sur Google Play ou l’App Store, appelées _applications natives_.
+:::
+
+Tout comme la partie front-end, voici à quoi ressemblerait la page sur application mobile sans la partie back-end.
+
+<figure>
+    <img src="/static/img/OpenClassrooms/15991418278474_Group7(1).png"
+         alt="Interface mobile s'il n'y avait pas de back end" />
+    <figcaption>Interface mobile s'il n'y avait pas de back end</figcaption>
+</figure>
+
+Il n’a toujours aucune information sur la page, aucune action n’est possible car elle requiert un traitement de la part du développeur
+back-end.
+
+Lors de la réalisation du projet pour **MeetonCoach**, le développeur mobile réalisera l’application Android et IOS de l’entreprise. Il
+devra respecter les maquettes du designer, et être en constante interaction avec le développeur back-end afin de relier chaque petite partie
+de l’application.
+
+### Les missions principales du développeur mobile
+
+Le terrain de jeu du développeur mobile, ce sont les applications que vous utilisez sur votre smartphone. Que ce soit pour Android, Apple
+ou Windows Phone, **le développeur mobile façonne vos applications**. C’est le développeur qui travaille sur vos téléphones.
+
+Très proche de la description d’un développeur front-end, il est également en relation directe avec le designer, le back-end et le chef
+de projet. Il est responsable de :
+- rendre agréable l’**expérience de l’utilisateur sur l’application** ;
+- veiller à ce que les applications anciennes et nouvelles répondent aux **normes de qualité** ;
+- respecter les règles imposées par les **magasins d’applications**. Il en est entièrement dépendant, contre quoi son application pourrait
+ne jamais voir le jour ;
+- faire fonctionner correctement son application ;
+- prendre en compte tous les **avis des utilisateurs** ;
+- **tester** son application, réparer les **bugs** et la **mettre à jour**.
+
+### Découvrez les compétences du développeur mobile
+
+Les développeurs mobile doivent avoir des bases solides en HTML, CSS et JavaScript, mais pas que !
+
+Il existe plusieurs types de développeurs mobile :
+- les développeurs mobile **natif** ;
+- les développeurs mobile **hybride**.
+
+#### Les développeurs mobile natif
+
+> Les "développeurs natifs" ? Mais… nous avons dit dans la première partie que personne ne naît développeur !
+
+En effet, **personne ne naît développeur**. Ils utilisent simplement les langages proposés par défaut, autrement dit “**nativement**” par
+les différents créateurs de systèmes d’exploitation.
+
+:::info
+Un **système d’exploitation**, ou **OS** pour _Operating System_, représente l’ensemble des programmes qui pilotent votre appareil
+informatique. Il est l’interface qui vous permet d’interagir avec votre appareil. _L’OS d’un iPhone est iOS ; Windows 10 est un OS pour
+ordinateurs_.
+:::
+
+Deux OS mobile se distinguent aujourd’hui ; à savoir : **Android** (Google) et **iOS** (Apple).
+
+**Android est le système d’exploitation développé par Google**. On le retrouve principalement sur des tablettes ou téléphones. C’est le
+système d’exploitation le plus utilisé par les téléphones mobiles. Lorsqu’on développe sur Android, c’est le langage **Java** qui règne.
+
+Passons aux **développeurs iOS** ! Ce sont les spécialistes des applications sur iPhone, iPad, Apple Watch et… en fait, tous les produits
+**Apple**. Les développeurs qui travaillent sur IOS utilisent principalement les langages **Swift** et **Objective-C**.
+
+_Vous l’avez compris : si nous voulons être présent sur Android et sur IOS, il faudra développer l’application deux fois... sauf avec les
+outils de développement_ hybride _!_
+
+#### Les développeurs mobile hybride
+
+Dans le but de faciliter le développement d’applications mobiles destinées à être présentes sur IOS et sur Android, sont nés des outils
+permettant de ne créer **qu’une seule fois** l’application, pour ensuite la dupliquer sur plusieurs OS. Le framework **React Native** est
+un exemple à utiliser, il est tiré du langage JavaScript et offre comme résultat une véritable application native.
+
+:::caution !
+Les technologies hybrides seront toujours **moins performantes** que des technologies natives, et ne correspondent qu’à des besoins simples,
+mais permettent un réel gain de temps de développement.
+:::
+
+### Les langages de programmation du développeur mobile
+
+Ces dernières années, les smartphones ont pris une **très grosse ampleur**, modifiant la façon dont les entreprises fonctionnent dans le
+monde entier.
+
+Pour réaliser une application mobile, il faut savoir sur quelle plateforme vous souhaitez la construire. Ce choix définira le langage de
+programmation que vous utiliserez, en gardant à l’esprit les avantages et inconvénients d’une application **hybride ou native**.
+
+#### Ionic
+
+Ionic est **un des frameworks les plus réputés** dans la réalisation **d’applications hybrides**. Le framework ne contient que des composants
+HTML, CSS et JS favorisant la construction d’applications mobiles interactives.
+
+#### Objective-C
+
+Objective-C est le langage de programmation principal pour les applications iOS. Construit sur un ensemble de langage C pour un résultat
+plus robuste et évolutif, **il est présent dans toutes les applications Apple**.<br />
+Aujourd’hui, il est de plus en plus remplacé par un langage plus puissant, le Swift.
+
+#### Swift
+
+Si Objective-C est le langage de programmation principal d’Apple, Swift est **le dernier à être apparu sur iOS**.
+
+Objective-C est une base, mais aujourd’hui de plus en plus de développeurs se sont tournés vers Swift pour réaliser des applications mobiles
+de pointe sur iOS, tout en réduisant le nombre de vulnérabilités de sécurité possibles avec Objective-C.
+
+#### Java
+
+Le langage Java est le langage le plus utilisé pour le développement d’**applications Android**. Il peut aussi bien être exécuté sur un
+navigateur qu’en tant qu’application mobile.
+
+Plus de **3 milliards d’appareils** numériques à travers le monde utilisent Java. Ce qui fait de lui un des langages de programmation les
+**plus populaires**.
+
+#### React Native
+
+React Native est un framework **créé par Facebook**, tout comme ReactJS. Il a été créé pour construire des applications d’une façon native,
+comme si vous utilisiez **Swift ou Java**.
+
+Vous ne pourrez pas différencier une application React Native d’une application Swift ou Java. Contrairement à une application créée via
+Ionic, par exemple.
+
+Cela est possible car React Native utilise les **mêmes composants** que ceux disponibles pour iOS et Android. La seule différence, c’est
+que vous utilisez du JavaScript !
+
+### En résumé
+
+<figure>
+    <img src="/static/img/OpenClassrooms/16008887842721_0793-V2-02.png"
+         alt="Fiche métier du développeur mobile" />
+    <figcaption>Fiche métier du développeur mobile</figcaption>
+</figure>
+
+- Le développeur mobile est le front-end de vos **applications Android ou iOS** ;
+- Le terrain de jeu des développeurs mobile, ce sont les **smartphones** ;
+- Il existe deux principaux types de développeurs mobile : les développeurs **natif** et **hybride** ;
+- Le natif représente les langages proposés “**nativement**” par les créateurs de **systèmes d’exploitation** comme Android ou IOS ;
+- L’hybride représente les langages permettant de créer une application **une seule fois** pour plusieurs systèmes d’exploitation ;
+- L’hybride peut paraître bien plus pratique, mais sera toujours **moins performant** qu’une application native.
+
+_Dans le chapitre suivant, nous allons découvrir le métier de développeur back-end qui travaille sur la partie "cachée" de l'iceberg d'un
+site web : le serveur et la base de données._
+
+-----
+
+## Identifiez les activités d’un développeur back-end
+
+[Identifiez les activités d’un développeur back-end - Découvrez les métiers de développeur - OpenClassrooms](https://openclassrooms.com/fr/courses/6817086-decouvrez-les-metiers-de-developpeur/6954397-identifiez-les-activites-d-un-developpeur-back-end)
+
+<Vimeo vimeoId="451417268" />
+
+<br />
+
+Tout ce que vous ne **voyez pas** sur un site web ou une application mobile mais qui permet de les faire fonctionner, c’est le développeur
+back-end qui s’en occupe. Il traite toutes les informations présentes sur une plateforme.
+
+Le back-end est en relation directe avec les développeurs front-end et mobile afin de :
+- **recevoir** et **traiter** les informations dont le développeur front-end ou mobile a besoin ;
+- stocker ces informations dans une **base de données** ;
+- envoyer toutes les informations dont les développeurs front-end ou mobile ont besoin.
+
+:::info
+Une **base de données** est un ensemble d'informations structurées, accessibles par le biais d'un logiciel.
+:::
+
+Une fois votre front-end et/ou application mobile relié(s) à votre back-end, vous pourrez **dynamiser** les champs qui n'étaient jusqu’à
+présent que des variables.
+
+En réalité, ce sont toujours des **variables**. Elles ont simplement une valeur, maintenant ! Chaque variable a été remplacée par une
+information vous concernant. Le back-end est juste allé chercher dans la base de données, sur demande du front-end, les informations vous
+concernant.
+
+Lors de la réalisation du projet pour **MeetonCoach**, le développeur back-end sera en charge de prévoir toutes les données qui seront
+présentes dans la base de données. Ces données seront affichées sur la plateforme ou destinées à une partie d’analyse, seulement accessible
+aux administrateurs, pour mesurer la performance de leur entreprise.
+
+Le back-end sera en charge de récupérer toutes les données des formulaires sur la partie mobile ou front-end, et de les traiter. Il devra
+également envoyer des données à chaque fois que le développeur mobile ou front-end le demandera.
+
+### Les missions principales du développeur back-end
+
+Le développement back-end correspond au développement **côté serveur**. 
+
+> Vous avez dit serveur ?
+
+Le navigateur est considéré comme la partie client. C’est le front-end qui s’en occupe. Le back-end, lui, travaille du côté serveur.
+
+<figure>
+    <img src="/static/img/OpenClassrooms/15988842286947_0793-02.jpg"
+         alt="Le Navigateur communique avec le serveur qui communique avec la base de données. Le serveur et la BDD forment le back end." />
+    <figcaption>Communication entre le navigateur et le back end</figcaption>
+</figure>
+
+Tout ce qui se passe côté serveur, l’utilisateur ne le voit pas. Le back-end est donc responsable de :
+- analyser des données et échanger avec une base de données (insérer, modifier, récupérer ou supprimer des données ) ;
+- collaborer avec les développeurs front-end et mobile pour concevoir les codes les plus cohérents pour l’expérience de l’utilisateur ;
+- établir la bonne communication entre les développeurs front-end et mobile, et la base de données ;
+
+Le développeur back-end représente le **cœur d’un projet**. Sans lui, aucune donnée ne transite. Il permet la **bonne communication** entre
+le front-end et la base de données.
+
+### Découvrez les compétences du développeur back-end
+
+Encore une fois, le HTML, le CSS et le JavaScript sont une base à avoir, mais le développeur back-end doit avant tout avoir une
+**bonne logique**, une bonne connaissance des bases de données et d’au moins un langage back-end comme le Python, Node.js, Ruby...
+
+Il doit savoir comment **architecturer un projet**, comprendre comment les serveurs fonctionnent (évidemment), et surtout comment les
+**monitorer**.
+
+:::info
+Monitorer un serveur, c’est **être capable de le gérer**. Poser des petits repères partout pour avoir une vue d’ensemble, et ainsi savoir
+exactement **où regarder en cas de problème**.
+:::
+
+_Nous disions plus tôt que le back-end est le pont entre le front-end et la base de données. Il existe plusieurs manières de créer un
+back-end. La plus réputée actuellement est l’API..._
+
+#### Il doit savoir construire et utiliser une API
+
+Une **API**, ou “interface de programme d’application”, est un logiciel intermédiaire qui permet à deux applications de **communiquer entre
+elles**.
+
+Le développeur construit des API, mais il en utilise aussi ! Une API peut être comparée à un **messager**. Elle récupère une requête, la
+traite et renvoie une réponse.
+
+Facebook, par exemple, dispose d’une API qui permet à chaque développeur de pouvoir l’interroger. Lorsque vous voyez sur un site web un
+bouton “Se connecter avec Facebook”, c’est que l’API Facebook communique avec cette plateforme.
+
+<figure>
+    <img src="/static/img/OpenClassrooms/15988843176445_image2.png"
+         alt="Exemple de site qui proposer de se connecter avec Facebook" />
+    <figcaption>Exemple de site qui proposer de se connecter avec Facebook</figcaption>
+</figure>
+
+En effet, quand vous appuyez sur ce bouton, vous allez autoriser le site web à accéder à vos informations, stockées dans la base de données
+de Facebook. L’API de Facebook, ou le _messager_ de Facebook, permet donc la communication entre le site que vous visitez et vos informations
+personnelles sur la base de données de Facebook. C’est donc ce message, l’API, qui permet également de protéger vos données, en filtrant ce
+à quoi il est possible d'accéder, ou non.
+
+Au final, les API sont partout et rendent votre vie de back-end plus simple. Si vous souhaitez intégrer une **fonctionnalité de paiement sur
+votre site**, vous n’aurez qu’à faire appel à l’**API de Stripe**. Si vous souhaitez autoriser les connexions via Gmail ou Facebook, vous
+n’aurez qu’à faire appel à l’API de Gmail ou Facebook.
+
+Si vous avez une application mobile et un site web qui disposent des mêmes fonctionnalités, ils seront connectés à la même API. **L’API est
+la notion la plus importante** à retenir en tant que back-end, mais aussi en tant que front-end et mobile, car ils doivent communiquer avec
+elle.
+
+<figure>
+    <img src="/static/img/OpenClassrooms/15988847045502_0793-03.jpg"
+         alt="Serveur du site connecté au navigateur, à la BDD et à l'API de Google. L'API de Google communique avec la BDD de Google." />
+    <figcaption>De nombreux site sont fonctionnent en utilisant leur API mais aussi les API de plusieurs sites connexes.</figcaption>
+</figure>
+
+### Les langages de programmation du développeur back-end
+
+Si le développeur mobile est considéré comme le front-end de vos applications, il existe **deux principaux types de développements web** :
+le back-end et le front-end.
+
+:::info
+Petit rappel : il existe deux types de sites web, les sites web statiques et les sites web dynamiques.
+:::
+
+Un **site web statique** et un site dont le contenu **ne change pas**. Il est dit _statique_ car tous les utilisateurs verront la même chose
+sur la page web.
+
+Un **site web dynamique** est à l’inverse un site dont le contenu **change**. Si vous vous connectez sur Facebook, votre profil ne sera pas
+le même que celui de votre ami. Facebook est donc un site dynamique.
+
+**Tous les sites dynamiques ont besoin d’une base de données** pour stocker les informations du site à dynamiser, ainsi qu’un back-end pour
+transmettre les requêtes entre le front-end et la base de données.
+
+_Je vous propose de lister les langages les plus utilisés par les développeurs back-end..._
+
+#### Langages back-end
+
+##### _PHP_
+
+Le **PHP**, ou “Hypertext Preprocessor”, auparavant “Personal Home Page”, est un langage utilisé côté serveur. Il est très populaire et est
+utilisé par les plus grands, comme WordPress ou Facebook.
+
+PHP est cependant un langage assez vieux. Il reste un des **précurseurs du back-end**, mais n’est plus conseillé pour construire des projets
+complexes.
+
+PHP dispose cependant d’un framework très utilisé en ce moment, appelé **Symphony**. Celui-ci permet d’utiliser tous les avantages liés à
+PHP, d’une façon plus optimisée par rapport aux besoins d’aujourd’hui.
+
+##### _JavaScript_
+
+> Ce n’est pas un langage front-end, ça ?
+
+Une chose est à retenir, **JavaScript est partout** ! L’avantage, c’est que si vous êtes à l’aise avec les principes de base de JavaScript,
+vous comprendrez aussi bien la partie back-end que la partie front-end. 
+
+JavaScript est donc **autant un langage front-end que back-end**.
+
+**Node.js** est le principal framework utilisé pour réaliser un back-end en JavaScript. Il est très rapide et vous permet de gérer
+simultanément plein d’actions différentes, contrairement au PHP qui les réalisera une par une.
+
+JavaScript est donc un langage indispensable à connaître aujourd’hui.
+
+##### _Java_
+
+> Ce n’est pas un langage mobile, ça ?
+
+**À différencier de JavaScript** qui est un langage totalement différent, Java est un langage de programmation général. Il n’est pas
+seulement réservé au monde du web. Java est un langage assez simple et basique, une fois que vous avez compris le concept de la
+**programmation orientée objet**.
+
+:::info
+La **programmation orientée objet**, ou **_POO_**, permet de modéliser son application sous la forme d’interactions entre objets. Les objets
+ont des propriétés et peuvent faire des actions. _Un objet, en programmation, peut être considéré comme un objet du monde réel, mais qui ne
+se limite pas qu’au matériel_. Un chien, l’amour, les idées sont également des objets.
+:::
+
+##### _Python_
+
+Si Python est le langage phare en termes d’analyse de données, de machine learning, d'intelligence artificielle… à l’exception du front-end,
+il est comme le JavaScript très présent. Python est un langage de programmation “**haut niveau**”, indépendant de chaque plateforme, orienté
+objet et relativement simple à apprendre, grâce à une syntaxe proche de notre langage.
+
+Python est principalement utilisé en back-end grâce à son framework **Django ou Flask**.
+
+#### Langages de base de données
+
+Le développeur doit absolument connaître au moins un **langage de base de données** pour communiquer avec cette dernière. Ces langages
+permettent d’écrire et manipuler les données d’une base de données.
+
+Il est à noter que désormais, tous les développeurs back-end utilisent des **ORM** (carte relationnelle d’objets). Un ORM a l’avantage de
+**faciliter l’écriture de vos requêtes** vers la base de données. Il vous permet d’écrire plus simplement des requêtes plus complexes dans
+votre langage de programmation préféré.
+
+_Il est néanmoins indispensable de connaître comment fonctionnent les requêtes standard, comme les requêtes_ _SQL ou NoSQL._
+
+### En résumé
+
+<figure>
+    <img src="/static/img/OpenClassrooms/16012845001804_0793-04.png"
+         alt="Fiche métier du développeur back-end" />
+    <figcaption>Fiche métier du développeur back-end</figcaption>
+</figure>
+
+- Le développeur back-end réalise **tout ce que vous ne voyez pas** sur un site web, mais qui permet à celui-ci de fonctionner. C’est
+**la face cachée de l’iceberg**.
+- Il permet la **bonne communication** entre le développeur front-end et la **base de données**.
+- Une **API** est un logiciel intermédiaire permettant à deux applications de communiquer entre elles.
+- Un développeur back-end doit savoir **créer et utiliser des API**.
+- Un site web **statique** est un site web dont le contenu ne **change pas**. Tous les utilisateurs voient la même chose. Il n’y a besoin
+que d’un développeur front-end car il n’y a **pas de base de données**.
+- Un site web **dynamique** est un site sur lequel le contenu va **changer** en fonction de l’utilisateur. Facebook est par exemple un site
+web dynamique, car votre page Profil sera différente de celle de vos amis.
+- Un développeur back-end doit maîtriser au moins un langage back-end, ainsi qu’un **framework**.
+- Il doit également maîtriser un langage de base de données et un **ORM**.
+- Un ORM est un programme permettant de **simplifier les interactions** avec une base de données.
+
+_Dans le chapitre suivant, nous allons découvrir le métier de développeur full-stack, un métier très complet car il couvre toutes les
+parties du développement d'un site web ou logiciel._
+
+-----
+
+## Identifiez les activités d’un développeur full-stack
+
+[Identifiez les activités d’un développeur full-stack - Découvrez les métiers de développeur - OpenClassrooms](https://openclassrooms.com/fr/courses/6817086-decouvrez-les-metiers-de-developpeur/6954481-identifiez-les-activites-d-un-developpeur-full-stack)
+
+<Vimeo vimeoId="451414153" />
+
+<br />
+
+Le développeur full-stack est un développeur qui travaille autant sur la partie front-end et/ou mobile que back-end. **Il peut gérer un
+projet dans son** **intégralité**.
+
+Le full-stack maîtrise tout son environnement. Il est en relation directe avec le designer et le chef de projet :
+- il travaille avec le chef de projet pour bien comprendre le besoin et découper les tâches ;
+- le designer imagine un résultat final pour que le full-stack l’intègre ;
+- Le full-stack s’occupe du reste.
+
+Lors de la réalisation du projet pour **MeetonCoach**, le développeur full-stack agira comme un soutien envers les autres développeurs plus
+spécialisés. Il accompagnera le chef de projet dans la prise de décision et viendra en aide à chaque développeur si un problème intervient.
+
+Il commencera à développer sur le projet si un retard se fait sentir ou qu’une fonctionnalité du projet sort du domaine de compétence des
+développeurs.
+
+### Les missions principales du développeur full-stack
+
+Le développeur full-stack **peut être spécialisé** dans un langage front-end, back-end ou mobile, mais il a appris un ou plusieurs autres
+langages complémentaires qui lui permettent d’être **entièrement autonome** dans la réalisation d’un projet. 
+
+Il connaît les parties serveur et client, et est capable de créer les interfaces visuelles, tout comme la gestion et l’analyse de données
+qu’il y a derrière. Il peut créer un prototype rapidement, aider tous les membres de l’équipe, réduire le coût d’un projet et réduire les
+échanges car **il gère toutes les “stacks” de son projet**.
+
+Le full-stack a également tendance à connaître à la fois la **logique commerciale** et l’**expérience des utilisateurs**, ce qui signifie
+qu’en plus d’être à même de réaliser tout ou partie d’un projet, il peut guider la stratégie d’une entreprise.
+
+_Le full-stack est libre de travailler sur le front-end, le back-end, l’analyse de données, l’architecture d’un projet, les choix techniques
+et même les phases de réflexion autour du projet avec un client._
+
+### Découvrez les compétences du développeur full-stack
+
+De plus en plus d’entreprises recherchent des développeurs full-stack, car elles travaillent bien souvent avec plusieurs langages différents.
+Elles cherchent des développeurs capables de travailler sur chacune des parties, tout en utilisant les meilleurs outils pour chacune d’entre
+elles.
+
+Le full-stack est compétent en HTML, CSS et JavaScript. L’avantage du JavaScript, c’est surtout qu’il dispose d’au moins **un framework dans
+chaque spécialité** (back-end, front-end, mobile).
+
+> C’est pour ça qu’il existe beaucoup de full-stacks JS !
+
+Le full-stack doit maîtriser au moins **un framework front-end et back-end**. Il doit savoir construire une base de données et interagir
+avec, et connaître les bonnes pratiques en sécurité, tout comme en design et expérience utilisateur.
+
+Sa connaissance en **gestion de projet** et en **design** seront un grand plus pour compléter les “**stacks**” déjà acquises. 
+
+S'il travaille seul, le full-stack sera chargé de réaliser le site web dans son **intégralité**, de la phase de réflexion sur le projet
+jusqu’à la mise en production, en passant par les tests, la gestion du projet et la sécurité. S'il travaille en équipe, il pourra se plonger
+sur **n’importe quelle fonctionnalité** en cas de besoin.
+
+### Les langages de programmation du développeur full-stack
+
+Concernant les langages de programmation du développeur full-stack, vous retrouverez généralement un **mélange** de ce que nous avons cité
+dans les chapitres précédents, comme :
+- Le HTML, CSS et JavaScript.
+
+Ce sont les **langages fondamentaux** du web.  Aucun développeur web ne peut s’en passer. Encore moins le full-stack !
+
+- Un ou plusieurs frameworks front-end, comme React.js, Angular.js ou Vue.js.
+
+Il doit connaître **au moins un framework front-end** pour être à l’aise et répondre à la demande des entreprises sur le marché.
+
+- Un ou plusieurs frameworks CSS, comme Bootstrap.
+
+Pour construire des designs plus rapidement, il doit maîtriser au moins un framework CSS. Nous citons Bootstrap, mais il en existe d’autres,
+comme Materialize ou Semantic UI. En plus de permettre un développement **plus simple et rapide**, ils garantissent un **respect des normes**
+en termes de design et de **responsive**.
+
+- Un ou plusieurs langages de programmation back-end comme Ruby, PHP, Python.
+
+Comme nous l’avons vu, il n’est pas que front-end. Il est full-stack ! Pour compléter ses stacks, il doit donc maîtriser **un langage
+back-end**.
+
+- Un ou plusieurs frameworks back-end comme Ruby on Rails, Node.js, Python Django ou PHP Symfony.
+
+Il est aujourd’hui impensable de ne pas s’appuyer sur ces structures de codes très solides.
+
+- Une connaissance en base de données SQL et NoSQL, ainsi que l’ORM associé à son framework back-end.
+
+Qui dit back-end dit **base de données** ! Le back-end permettant de communiquer avec une base de données, le full-stack doit être
+**capable de créer ses interfaces visuelles et de les dynamiser**.
+
+- Une connaissance des bonnes pratiques à mettre en place en termes de sécurité.
+
+S'il est le seul développeur, et dans la plupart des cas, il doit **sécuriser** sa plateforme ! Faire attention aux utilisateurs
+**malveillants** qui chercheraient à soutirer les informations personnelles des autres utilisateurs, ou simplement casser notre belle
+plateforme.
+
+- Une connaissance de la méthode Scrum et des pratiques de base en termes de gestion de projet.
+
+Un stack de plus ne serait pas de refus ! Un vrai full-stack est capable de se **gérer lui-même et surtout les autres**.
+
+- Une connaissance des bonnes pratiques en design d’expérience utilisateur et d’interfaces utilisateurs.
+
+Pour compléter tout son arbre de connaissances : pourquoi ne pas avoir de bonnes bases en design ? Lui permettant de mieux **comprendre
+les enjeux des utilisateurs** finaux pour penser sa plateforme en fonction de ces derniers.
+
+### En résumé
+
+<figure>
+    <img src="/static/img/OpenClassrooms/16008890245365_0793-V2-05.png"
+         alt="Fiche métier du développeur full-stack" />
+    <figcaption>Fiche métier du développeur full-stack</figcaption>
+</figure>
+
+- Le développeur full-stack doit être capable de gérer en autonomie **toutes les parties** d’un projet.
+- Il doit maîtriser au minimum le **front-end et le back-end** et peut se spécialiser dans un langage présent dans les deux parties, comme
+le JavaScript.
+- Le full-stack peut être un développeur précédemment spécialisé en front-end, qui a appris d’autres langages pour **compléter ses
+compétences**.
+- Il doit savoir interagir correctement avec une **base de données**.
+- En plus de pouvoir intervenir d’un point de vue technique sur l’ensemble d’un projet, le full-stack doit avoir de bonnes bases en
+**gestion de projet et design**.
+- Le full-stack connaît la logique commerciale et l’expérience des utilisateurs, lui permettant ainsi de participer à la **stratégie d’une
+entreprise** à forte présence sur le Web.
+
+_Dans le chapitre suivant, nous allons voir quelques autres exemples de spécialités de développeurs : intelligence artificielle, jeux vidéos,
+cybersécurité..._
+
+-----
+
+## Découvrez les autres spécialités de développeurs
+
+[Découvrez les autres spécialités de développeurs - Découvrez les métiers de développeur - OpenClassrooms](https://openclassrooms.com/fr/courses/6817086-decouvrez-les-metiers-de-developpeur/6954555-decouvrez-les-autres-specialites-de-developpeurs)
+
+<Vimeo vimeoId="451414522" />
+
+<br />
+
+Le métier de développeur ne s’arrête pas aux métiers du Web. En effet, il englobe l’ensemble des techniques permettant de créer des
+**programmes**, des **sites web**, des **applications**, des **jeux vidéo**, mais aussi de **sécuriser** toutes ces plateformes, de
+programmer vos **appareils électroménagers** ou de rendre un programme intelligent grâce à l’**intelligence artificielle**.
+
+_Je vous propose ci-dessous une vue d’ensemble de tous les autres métiers de développeurs._
+
+### Les développeurs de jeux vidéo
+
+Les développeurs de jeux vidéo créent les jeux vidéo auxquels vous avez tous joué au moins une fois, comme ceux sur console de jeu,
+ordinateur ou téléphone portable. Développer des jeux vidéo demande plusieurs spécialités, et donc à nouveau plusieurs types de développeurs.
+Certains devront avoir de solides bases en mathématiques et même en physique, afin de recréer des lois physiques dans le monde virtuel ;
+d'autres en intelligence artificielle, d'autres encore en graphisme, etc.
+
+#### Fiche métier
+
+Les développeurs de jeux vidéo peuvent travailler **par eux-mêmes** ou dans de **petites équipes**, en construisant un jeu et en le
+commercialisant par leurs propres soins. Ils peuvent aussi trouver un travail chez les **grands éditeurs** de jeu, comme [Ubisoft](https://www.ubisoft.com/en-us/),
+par exemple.
+
+Il existe de nombreuses manières de produire un jeu vidéo et donc de nombreux métiers qui y participent ; voici quelques exemples :
+- les jeux **Indie** : un petit groupe de personnes qui travaillent ensemble pour concevoir un jeu de façon indépendante, comme Minecraft,
+Rocket League ou Dofus l’ont été ;
+- les jeux **Triple-A** : édités par de grands studios de jeux comme Rockstar Games ou Ubisoft, ils regroupent d'immenses équipes de
+développeurs et designers, et de nombreuses spécialisations ;
+- les jeux “**First Party**” : ce sont des jeux créés par un concepteur de console pour sa propre console, comme Nintendo crée des jeux pour
+la Wii, par exemple.
+
+#### Compétences techniques
+
+Vous pouvez créer des jeux basiques avec du JavaScript et à peu près tous les langages qui existent. Cependant, il existe des langages
+faits pour le développement de jeux vidéo, comme le **Unity** qui est un des plus utilisés. Vous pouvez également réaliser des jeux vidéo
+avec du **C# et du C++**.
+
+### Les développeurs en intelligence artificielle et machine learning
+
+L’**intelligence artificielle** (IA) et le **machine learning** (ML) sont des notions informatiques plus poussées.
+
+_IA_ fait référence à deux mots : “intelligence” et “artificielle” :
+- _intelligence_ peut se résumer à la capacité à **comprendre ou penser** ;
+- _artificielle_ représente quelque chose créé par l’humain, mais **qui n’est pas réel**.
+
+L’intelligence artificielle, c’est entraîner la machine à comprendre et à penser, mais à **penser mieux que l’humain**. Disons que le but
+est de rassembler toutes les capacités d’un ordinateur et celles d’un humain. L’intelligence artificielle ne pourra **jamais dépasser
+l’humain**, mais peut grandement le **compléter** en étant bien plus efficace en termes de puissance de calcul, par exemple.
+
+Le **machine learning** (ML), c’est **permettre à la machine d’apprendre** sans que tous les cas soient programmés. Le ML découle de
+l’application d’intelligence artificielle permettant à un logiciel d’apprendre grâce aux données qu’il stocke.
+
+#### Fiche métier
+
+IA : un développeur en intelligence artificielle travaille sur des logiciels pouvant être utilisés pour **créer des robots** ou des
+**systèmes complexes**. Il peut être en relation directe avec des ingénieurs **hardware**, des ingénieurs en robotique ou tout autre
+type d’ingénieur, pour créer un système utilisant de l’IA.
+
+:::info
+Hard quoi ? Oui, hardware ! _Hardware_ est un anglicisme, comme le mot _software_. _Hardware_ désigne tout ce qui est matériel, comme les
+composants d’un ordinateur, une clé USB… Le software, c’est donc tout ce qui ne l’est pas, comme un logiciel. 🙂
+:::
+
+ML : un développeur en machine learning se rapproche beaucoup d’un expert IA ; il est spécialisé dans l’**utilisation des données**. Il
+réalise, grâce à tous les programmes d’analyse de données qu’il met en place, des applications de **reconnaissance faciale** ou de
+**parole**, des robots d’échange dits “**chatbots**” ou des outils d’**analyse de marchés financiers**, par exemple.
+
+#### Compétences techniques
+
+Les développeurs en intelligence artificielle ou en machine learning doivent tous deux avoir de solides compétences en **Python** (langage
+phare pour l’analyse et le traitement de données) et en **langage R** (un langage créé pour effectuer des statistiques et des graphiques).
+
+### Les développeurs en cybersécurité
+
+Les professionnels de la cybersécurité **protègent les infrastructures numériques** et les **données en ligne** des entreprises.<br />
+Plus une entreprise stocke de données, plus il est important de les sécuriser. La responsabilité des développeurs en cybersécurité augmente
+donc en fonction du nombre d’informations personnelles stockées.
+
+Vous vous souvenez peut-être de [l’attaque qui a eu lieu](https://www.cybersecurity-insiders.com/cyber-attack-on-playstation-and-xbox-users-leaks-4-4-million-user-details/)
+envers PlayStation et Xbox, et qui a permis aux malfaiteurs de récupérer plus de **4 millions d’informations personnelles** ?
+
+En effet, sur Internet **il n’existe pas que des “gentils”** ! Certaines personnes attaquent continuellement les plus grandes entreprises
+pour leur soutirer des informations. Pourquoi ? Parfois ils ont un objectif bien précis, d’autres fois ils peuvent simplement revendre ces
+données. Car **vos données ont de la valeur** ! 😱
+
+> Les grandes entreprises comme les banques, par exemple, font extrêmement attention à cela ! On ne rigole pas avec la sécurité. Imaginez
+si toutes vos données bancaires se retrouvaient en libre accès sur Internet ?<br />
+> Un ami travaillait dans une banque en tant que consultant en sécurité. Il a utilisé son ordinateur personnel une seule fois et s’est fait
+renvoyer sans discuter.
+
+Chaque jour, des **cyberattaques** sont effectuées et leur fréquence ne fait qu’augmenter. Les banques, grands groupes et organismes
+gouvernementaux offrent de nombreux rôles. Vous pouvez être amené à installer des **pare-feu**, créer des **plans de sécurité**, **protéger
+des fichiers**, protéger **un réseau** ou surveiller toutes les activités sur un logiciel pour **intercepter une activité malveillante**.
+
+Voyons plus en détail toutes les carrières possibles en cybersécurité :
+- développeur **cryptographe** : ce type de développeur **crypte des informations sensibles** dans le but de les rendre **indéchiffrables**
+par des personnes malveillantes. Auparavant, le chiffrement était utilisé seulement par le corps militaire. Désormais, il est indispensable
+dans le monde du web pour **protéger toutes les informations** qui y transitent ;
+- **analyste** en sécurité : il vérifie que les programmes ou logiciels installés dans l’entreprise sont conformes aux normes et aux règles
+de sécurité ;
+- **ingénieur** en sécurité : il construit les systèmes de sécurité des entreprises ;
+- **consultant** en sécurité : il conseille et peut aider à la mise en place des systèmes de sécurité ;
+- testeur de pénétration, ou **_pentester_**: le pentester crée des petits programmes appelés _**scripts**_ pour chercher des vulnérabilités
+dans un système numérique interne à l’entreprise. Il est donc embauché par l’entreprise pour **repérer des failles** dans son système.
+
+Il en existe bien d’autres, mais voilà les principaux. Comme vous l’avez vu, le champ des possibles est vaste en tant qu’expert en
+**cybersécurité**. Les missions peuvent varier, mais le but restera toujours de protéger les données personnelles des utilisateurs ou
+clients d’une entreprise.
+
+#### Compétences techniques
+
+Chaque sous-métier lié à la cybersécurité dispose de **spécialisations différentes**. L’avantage, c’est qu’ils ont tous une **base commune**.
+
+Il faut comprendre et maîtriser l’architecture et la gestion de chaque système d’exploitation comme les **différentes distributions de Linux**
+et **Windows**. De plus, il faut maîtriser la **gestion de réseaux** et d’échange de données entre les serveurs.
+
+Concernant les langages de programmation, il faut comprendre les langages de script comme le **PHP, le Python, le Perl et le Shell**.
+
+Étant le développeur le plus proche de la machine, il est indispensable de “**parler le langage de l’ordinateur**” ou les langages les plus
+proches de ce dernier. On parle de _langages bas niveau_ comme l’**assembleur, le C/C++ et le Java**.
+
+### Les développeurs en réalité virtuelle et réalité augmentée
+
+Nous avons décidé de réunir **réalité virtuelle** et **réalité augmentée**, car les compétences nécessaires pour y accéder sont très
+similaires. Étant toutes deux des industries en pleine émergence, les barrières à l’entrée sont encore assez faibles.
+
+Mais qu’est-ce que c’est, concrètement ?
+
+La réalité virtuelle, ou _VR_, a pour but de **transporter l’humain dans des milieux réels et imaginaires**. Vous devez sûrement avoir
+entendu parler des fameux casques VR. Ce sont les développeurs VR qui se cachent derrière.
+
+La réalité augmentée, ou _AR_, a pour but d’**ajouter des éléments numériques à une vue réelle**, le plus souvent en utilisant la caméra
+de votre smartphone. Vous souvenez-vous des pokémons qui apparaissaient dans vos parcs via l’application Pokémon Go ? De l’AR. Utilisez-vous
+les filtres Snapchat ou Instagram ? De l’AR.
+
+#### Fiche métier
+
+Les développeurs VR et AR construisent des outils de **visualisation** et de **simulation**. Ils peuvent travailler sur différents projets
+comme des démonstrations interactives de produits, des prototypes avancés de mécanismes ou des jeux vidéo, par exemple.
+
+Le développement VR/AR n’est pas très différent du développement de jeu vidéo, car ils consistent à **créer des environnements immersifs**
+avec lesquels nous pouvons interagir comme dans la vie réelle, en 3 dimensions. 
+
+#### Compétences techniques
+
+Les développeurs AR/VR doivent avoir des bases en création de jeu vidéo, avec des principes comme la **modélisation** et la **numérisation 3D**,
+les **moteurs de jeu 3D**, des **mathématiques**, de la **géométrie** puis des langages de programmation comme **C/C++ et C#**, ainsi que le
+langage **Unity**.
+
+Pour vous spécialiser, il vous faudra apprendre les principes de la photo et de la vidéo à 360 degrés, ainsi que la conception d’expériences
+pour les utilisateurs en 3D.
+
+Évidemment, il faudra que vous soyez à l’aise avec tous les outils comme les masques VR, ou les fonctionnalités des smartphones à utiliser
+pour mener à bien votre projet.
+
+### Les DevOps
+
+**_DevOps_** est un terme anglais désignant un ensemble de pratiques combinant le **développement** pour la partie Dev et l’**administration
+d’infrastructures informatiques** pour la partie Ops, en particulier l’administration système.
+
+Il est présent dans l’entreprise pour **automatiser les processus des équipes de développement**. Il permet aux développeurs d’un projet
+de **construire, tester et mettre en ligne** des logiciels, applications ou sites web plus **rapidement** et d’une manière plus **fiable**.
+
+Le DevOps est au **cœur des méthodes agiles** que nous avons vues dans la première partie. En apportant le côté **automatisation**, il fait
+le pont entre les développeurs et la mise en ligne sur le marché du produit final. Ce qui permet d’entrer plus facilement dans le principe
+d’intégration continue lié à l’**agilité**.
+
+En quelques mots, c’est le maître de l’**architecture d’un projet**. Il permet de **coordonner l'ensemble des développeurs**, en leur
+fournissant le meilleur environnement de travail possible.
+
+#### Fiche métier
+
+Le DevOps est celui qui **automatise tout ou presque** ! Il facilite la collaboration de toutes les parties prenantes d’un projet, de la
+planification jusqu’à la livraison du produit fini.
+
+Il est responsable de :
+- améliorer la **fréquence de déploiement** : rendre l’intégration des nouvelles fonctionnalités d’un projet rapide, simple, intuitive et
+surtout automatisée ;
+- intégrer les **tests automatiques** au fur et à mesure et de manière automatisée encore une fois : généralement, le DevOps intègre les
+tests dans la phase de déploiement. **Si les tests ne passent pas, le déploiement ne sera pas effectué**. Cela garantit donc plus de
+sécurité, et une version officielle qui fonctionne toujours ;
+- mettre en place des **outils de mesure et de suivi** de toute l’infrastructure logicielle. En effet, nous ne pouvons parler “d’amélioration”
+que si des données concrètes mesurent l’état initial et l’état final d’une solution, ainsi que les évolutions entre les deux états.
+
+Au final, le DevOps permet à l’entreprise d’être **plus performante**, d’avoir des **délais de maintenance bien plus courts** et d’avoir
+bien **moins de défaillances** techniques.
+
+#### Compétences techniques
+
+Il ne réalise que **très peu de code**. Son travail réside dans la **création de scripts** d’automatisation. Il doit donc être à l’aise
+avec les langages de scripting comme **PHP, Python, Perl et Shell**.
+
+Il doit connaître chaque système d’exploitation, comme les différentes distributions de **Linux** et **Windows**, pour faire en sorte que
+l’application s’exécute sur chacun de ces OS (qui disposent de paramètres personnalisés pouvant différer).
+
+Pour ce faire et pour faciliter la **création, l’architecture et le déploiement** de l’application, le DevOps range chaque partie dans
+des **conteneurs** grâce à un outil nommé **Docker**. 
+
+Un conteneur permet de **ranger et empiler toutes les parties d’un projet** pour qu’elles communiquent de la manière la plus optimisée
+possible.
+
+### Les développeurs de systèmes embarqués
+
+Les développeurs de systèmes embarqués créent des programmes qui permettent de faire fonctionner des **appareils industriels**.
+
+Ils se concentrent sur leurs connaissances en **électronique** et **hardware** pour mettre en œuvre des circuits et écrire le code associé.
+
+C’est encore une fois un métier assez **vaste** qui peut intervenir dans **plusieurs domaines** :
+- l’électroménager ;
+- les équipements médicaux ;
+- les composants informatiques ;
+- le transport : automobile, ferroviaire... ;
+- l’impression ;
+- la téléphonie ;
+- l'astronautique ;
+- les banques avec les distributeurs ;
+- le militaire ;
+- le multimédia avec les consoles de jeu, par exemple.
+
+Évidemment, il y en a d’autres, mais vous l’avez compris : Il intervient sur tous les **éléments physiques** qui contiennent de
+l’**électronique**.
+
+_Voyons en quoi consiste son métier..._
+
+#### Fiche métier
+
+Les développeurs de systèmes embarqués travaillent en relation étroite avec les **ingénieurs en matériel** et les **unités de fabrication**.
+
+Sur le plan industriel, leur travail commence par la **conceptualisation** de la solution jusqu’aux tests du produit final. Entre ces deux
+étapes, il participe à la **conception du matériel**, l’**écriture du code** et l’**assemblage** du matériel, par exemple.
+
+Comme il s'agit d'un métier disposant de nombreux sous-domaines et centres d’intérêts, il est difficile d’en donner une description
+particulière. Les missions pourront donc varier en fonction du domaine dans lequel le développeur de systèmes embarqués travaille.
+
+#### Compétences techniques
+
+Le socle de **compétences commun** à tous les développeurs de systèmes embarqués est le suivant :
+- avoir de solides bases en électronique ;
+- maîtriser les langages **C et C++** ;
+- savoir programmer des **microcontrôleurs** et des **processeurs** ;
+- connaître le développement des **interfaces** et des **pilotes des périphériques** ;
+- utiliser **Linux**, savoir le paramétrer et travailler avec ;
+- mettre en place des composants permettant de **déboguer** (trouver l’erreur et la résoudre).
+
+Il faut enfin maîtriser l’environnement dans lequel vous choisissez de vous diriger. Si c’est la téléphonie pour contribuer au développement
+du nouveau routeur Wi-Fi de l’année, vous devrez maîtriser les réseaux et les télécoms sur le bout des doigts !
+
+### En résumé
+
+- Le métier de développeur **ne se limite pas aux métiers du Web**. Il existe en effet bien d’autres disciplines, comme le développement
+de jeux vidéo, la cybersécurité et l’intelligence artificielle, par exemple.
+- Les développeurs de **jeux vidéo** créent les jeux auxquels vous jouez sur téléphone, ordinateur ou console de jeu.
+- Les développeurs en **intelligence artificielle** créent des programmes intelligents ayant pour but de combiner la pensée humaine et
+la puissance de calcul d’un ordinateur.
+- Les développeurs en **machine learning** utilisent l’intelligence artificielle pour permettre à un programme d’apprendre par lui-même,
+grâce à la donnée qu’il accumule.
+- Les développeurs en **cybersécurité** protègent les infrastructures numériques et les données en ligne des entreprises contre les attaques
+malveillantes.
+- Les développeurs en **réalité virtuelle** transportent l’humain dans des milieux réels et imaginaires, via un casque VR, par exemple.
+- Les développeurs en **réalité augmentée** ajoutent des éléments numériques à une vue réelle, comme dans Pokemon Go, par exemple.
+- Les **DevOps** contrôlent l’architecture d’un projet de développement et coordonnent chaque développeur grâce à l’automatisation des
+processus.
+- Les développeurs de **systèmes embarqués** créent des programmes qui permettent de faire fonctionner des appareils industriels, comme
+votre machine à laver, par exemple.
+
+_Ça y est, nous arrivons à la fin de cette deuxième partie. Vous pouvez passer le quiz de validation de vos acquis afin de vérifier que
+vous savez correctement différencier les métiers de développeurs._
+
+_Dans la dernière partie, nous verrons ensemble comment vous pouvez vous former pour devenir développeur, ainsi que comment évoluer dans
+votre carrière. À tout de suite !_
+
+-----
+
+## Quiz : Différenciez les responsabilités de chaque spécialité de développeur
+
+[Différenciez les responsabilités de chaque spécialité de développeur - OpenClassrooms](https://openclassrooms.com/fr/courses/6817086-decouvrez-les-metiers-de-developpeur/exercises/3921)
+
+#### Compétences évaluées
+
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-checkbox" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#00b341" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <polyline points="9 11 12 14 20 6" />
+  <path d="M20 12v6a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h9" />
+</svg> Différencier les responsabilités de chaque spécialité de développeur
+
+-----
+
+#### Question 1 : Lors de la réalisation d’un formulaire de connexion sur un site web, quel(s) développeur(s) intervien(nen)t ?
+
+*Attention, plusieurs réponses sont possibles.*
+    
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-square" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <rect x="4" y="4" width="16" height="16" rx="2" />
+</svg> Le développeur mobile et le développeur back-end<br />        
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-square" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <rect x="4" y="4" width="16" height="16" rx="2" />
+</svg> Le développeur mobile<br />        
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-checkbox" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#00b341" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <polyline points="9 11 12 14 20 6" />
+  <path d="M20 12v6a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h9" />
+</svg> Le développeur front-end<br />        
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-checkbox" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#00b341" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <polyline points="9 11 12 14 20 6" />
+  <path d="M20 12v6a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h9" />
+</svg> Le développeur back-end<br />        
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-checkbox" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#00b341" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <polyline points="9 11 12 14 20 6" />
+  <path d="M20 12v6a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h9" />
+</svg> Le développeur full-stack<br />
+<br />
+
+*Lorsqu’on réalise un formulaire de connexion, il faut insérer ou vérifier des informations dans une base de données. Ce
+travail requiert donc la présence d’un développeur back-end, mais ce dernier ne pourrait pas recevoir de données si le
+front-end n’avait pas créé de formulaire sur la partie client.*<br />
+*Les développeurs qui interviennent dans ce processus de création (sur le web) sont les développeurs front-end, back-end
+et même le full-stack, car il gère les deux parties.* ![:)](https://openclassrooms.com/bundles/common/images/smiley/smile.png)
+
+-----
+
+#### Question 2 : Combien existe-t-il de spécialités en développement ?
+    
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> 3<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> 15<br />        
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> 30<br />        
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> 50<br />        
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle-check" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#7bc62d" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M9 12l2 2l4 -4" />
+</svg> Plus de 50<br />
+<br />
+
+*Comme vous l’avez vu, il existe beaucoup de types de développeurs, et parmi ces types de développeurs il existe encore
+plein de spécialités ! Nous ne pouvons pas réellement les compter mais le champ des possibles est énorme. Dire “Je suis
+développeur” veut tout et rien dire.*
+
+-----
+
+#### Question 3 : Que fait un développeur front-end ?
+    
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> Il crée et maintient des API et des bases de données<br />        
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> Il crée des maquettes graphiques de sites web<br />        
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle-check" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#7bc62d" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M9 12l2 2l4 -4" />
+</svg> Il implémente toute la partie visuelle d'un site web<br />        
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> Il crée des jeux vidéo<br />        
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> Il gère des équipes de développeurs<br />
+<br />
+
+*L’objectif principal du développeur front-end est de façonner toute la partie visuelle d’un site web en traduisant une
+maquette en code. C’est le back-end qui crée et maintient des API, c’est le designer qui crée les maquettes, le développeur
+de jeux vidéo qui crée des jeux vidéo et le chef de projet ou Lead Developer qui gère les équipes de développeurs.*
+
+-----
+    
+#### Question 4 : Qu’est-ce qui caractérise un site web dynamique ?
+    
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> Son contenu ne bouge pas. Tous les utilisateurs voient le même contenu<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle-check" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#7bc62d" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M9 12l2 2l4 -4" />
+</svg> Son contenu change en fonction des informations communiquées par le back-end<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> Son contenu est animé grâce au CSS, il bouge dans tous les sens<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> Son contenu s’affiche quelques millisecondes après que l’utilisateur arrive sur le site web<br />
+<br />
+
+*Le contenu de chaque site web s’affiche après que l’utilisateur arrive sur le site web car il doit se charger. Le CSS permet d’animer le
+contenu d’un site web ; mais ce qui caractérise un site web dynamique est le fait que son contenu soit sous forme de variables et change en
+fonction des informations communiquées par le back-end.*
+
+-----
+
+#### Question 5 : Quels sont les 3 langages de programmation qu’un navigateur interprète ?
+
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> Swift, Objective-C et React Native<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> HTML, CSS et PHP<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> JavaScript, PHP et Node.js<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle-check" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#7bc62d" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M9 12l2 2l4 -4" />
+</svg> HTML, CSS et JavaScript<br />
+<br />
+
+*Le contenu affiché sur un navigateur n’a rien à voir avec le langage utilisé sur la partie serveur. Des langages/frameworks comme PHP ou
+Node.js vont traiter les informations dans la partie back-end puis les envoyer au navigateur qui vous les affichera aux formats HTML, CSS et
+JavaScript qui sont les 3 langages qu’il interprète.*
+
+-----
+
+#### Question 6 : À quoi sert une librairie ou un framework ?
+
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> Mieux communiquer entre équipes de développeurs<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> Mieux gérer une équipe technique<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle-check" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#7bc62d" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M9 12l2 2l4 -4" />
+</svg> Permettre au développeur de gagner en temps et en qualité<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> Éviter d’avoir besoin d’un développeur<br />
+<br />
+
+*Les libraires et les frameworks peuvent être vus comme des surcouches d’un langage, composées de fonctions ou morceaux de code préfabriqués,
+pour vous faire gagner en temps et en qualité. Cela évite de recréer depuis zéro les comportements les plus utilisés.*
+
+-----
+
+#### Question 7 : Comment définissez-vous un développeur full-stack ?
+
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> Un développeur front-end avec plus de 5 ans d’expérience<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle-check" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#7bc62d" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M9 12l2 2l4 -4" />
+</svg> Un développeur capable de gérer toutes les piles d’un projet numérique<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> Un développeur capable de vendre des sites web<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> Un développeur en cybersécurité<br />
+<br />
+
+*Le développeur full-stack n’est pas un expert confirmé dans un seul domaine (même s'il peut). Le développeur full-stack a une connaissance
+et une maîtrise de toutes les piles d’un projet numérique. Il est capable de réaliser un projet dans son intégralité.*
+
+-----
+
+#### Question 8 : Un développeur mobile crée :
+    
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> des systèmes d’exploitation pour smartphones comme Android, iOS ou Windows Phone<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle-check" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#7bc62d" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M9 12l2 2l4 -4" />
+</svg> des applications présentes sur les marchés d’application Android, iOS ou Windows Phone<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> des sites web responsive adaptables sur téléphone mobile<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> des sites web pour faciliter la mobilité des personnes âgées ou handicapées<br />
+<br />
+
+*Le développeur mobile peut être capable de créer des sites web (ce qui est souvent le cas), mais son cœur de métier est de créer des
+applications présentes sur les marchés d’application Android, iOS ou Windows Phone.*
+
+-----
+
+#### Question 9 : Un ORM est un programme permettant de :
+    
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> automatiser la mise en production d’une solution numérique<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> gérer toutes les versions d’un projet numérique<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle-check" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#7bc62d" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M9 12l2 2l4 -4" />
+</svg> faciliter les interactions avec une base de données<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> effectuer des tests sur un projet<br />
+<br />
+
+*L’ORM est le programme indispensable à connaître aujourd’hui pour interagir avec une base de données. Vous avez peut-être entendu parler
+des requêtes SQL, elles sont importantes à connaître mais de moins en moins de personnes les utilisent aujourd’hui, car les ORM facilitent
+littéralement toutes les interactions avec les bases de données.*
+
+-----
+
+#### Question 10 : À quoi sert un DevOps ?
+    
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle-check" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#7bc62d" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M9 12l2 2l4 -4" />
+</svg> À architecturer un projet, automatiser des processus de développement et mettre en place des outils de mesure<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> À commercialiser un projet, gérer la relation avec les clients et gérer les équipes de développeurs<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> À recruter des développeurs, tester des développeurs et rémunérer des développeurs<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> À créer ou connecter des API, récupérer et traiter les requêtes du développeur front-end<br />
+<br />
+
+*Le DevOps n’est pas un commercial, un recruteur ou un développeur back-end. Son rôle est de gérer l’architecture un projet, automatiser
+les processus de développement et mettre en place des outils de contrôle et de mesure.*
+
+-----
+
+#### Question 11 : Dans quels cas fait-on appel à une API ?
+
+*Attention, plusieurs réponses sont possibles.*
+
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-checkbox" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#00b341" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <polyline points="9 11 12 14 20 6" />
+  <path d="M20 12v6a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h9" />
+</svg> Commander en ligne<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-square" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <rect x="4" y="4" width="16" height="16" rx="2" />
+</svg> Charger la partie visuelle d’un site web<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-checkbox" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#00b341" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <polyline points="9 11 12 14 20 6" />
+  <path d="M20 12v6a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h9" />
+</svg> Réserver une place dans un avion<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-checkbox" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#00b341" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <polyline points="9 11 12 14 20 6" />
+  <path d="M20 12v6a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h9" />
+</svg> Se connecter sur un site grâce à Facebook<br />
+<br />
+
+*Aujourd’hui, les API sont partout. Une très grande partie des sites web existants utilisent des API, soit pour leur propre back-end, soit
+pour utiliser les informations venant d’autres interfaces, ou dans les deux cas.*

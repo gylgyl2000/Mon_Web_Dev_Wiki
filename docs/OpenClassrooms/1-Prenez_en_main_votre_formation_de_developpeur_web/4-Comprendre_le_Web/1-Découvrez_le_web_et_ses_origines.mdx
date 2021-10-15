@@ -1,0 +1,475 @@
+---
+sidebar_position: 2
+---
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+import { Vimeo } from 'mdx-embed';
+
+# Découvrez le web et ses origines
+
+## Tirez un maximum de ce cours
+
+[Tirez un maximum de ce cours - Comprendre le Web - OpenClassrooms](https://openclassrooms.com/fr/courses/1946386-comprendre-le-web/6874331-tirez-un-maximum-de-ce-cours)
+
+<Vimeo vimeoId="406139820" />
+
+<br />
+
+Bienvenue dans ce cours pour débutants dans le monde du Web !
+
+Si vous avouez vous-même ne rien y comprendre, quoi de mieux qu’un cours qui vous propose de faire un tour d’horizon de ce monde fascinant
+qu’est le Web ?
+
+Il y aurait tellement à dire qu’il va falloir que nous restions concentrés sur l’essentiel. Mon objectif n’est pas de tout détailler, mais
+de vous mettre en appétit. 😋
+
+Si vous avez ensuite envie d’en savoir plus (et je suis convaincu que cela va arriver !), de nombreux cours d’approfondissement vous attendent
+ensuite !
+
+Dans ce cours, nous allons présenter :
+1. **La naissance du Web :** en particulier, je veux au minimum que vous sachiez faire la différence entre Internet et le Web (deux concepts
+que l’on confond souvent !). En plus, vous repartirez avec une meilleure notion de ce qu’est le _Cloud_ (un concept parfois... nébuleux,
+c’est le cas de le dire !).
+2. **Les langages de programmation :** il s’agit de véritables "langues" informatiques qui permettent de créer les sites web.
+3. **Les réseaux :** sur le Web, nous communiquons en réseau. Il y a beaucoup de mécanismes : IP, noms d’hôte, serveurs, clients, protocoles...
+Sans eux, cela ne tournerait pas et les langages de programmation ne serviraient à rien !
+4. **Les métiers du web :** vous aurez un aperçu du quotidien des différents professionnels du web. Je vous présenterai les développeurs, qui
+écrivent dans les langages de programmation pour créer des sites web, mais aussi les UX designers, les métiers des SI...<br />
+Peut-être que cet aperçu vous donnera envie de vous lancer dans une de ces voies? Et pourquoi pas ?
+
+Voilà un programme court, condensé et, je l’espère, alléchant ! Allons-y !
+
+-----
+
+## Définissez le web
+
+[Définissez le web - Comprendre le Web - OpenClassrooms](https://openclassrooms.com/fr/courses/1946386-comprendre-le-web/6874376-definissez-le-web)
+
+<Vimeo vimeoId="406139844" />
+
+<br />
+
+Commençons par nous représenter le Web sous forme d’une image. Vous pensez peut-être à un surfeur, puisque l’on dit souvent "surfer sur le Web", ou "naviguer sur le Web".
+
+<figure>
+    <img src="/static/img/OpenClassrooms/15859234226006_compo_comprendre_le_web_revemp-01.png"
+         alt="Une personne qui surfe sur la vague" />
+    <figcaption>Une surfeuse</figcaption>
+</figure>
+
+Quelqu’un qui surfe sur le Web ressemble-t-il vraiment à ça ?
+
+Il est vrai que l’on saute de page en page en cliquant sur des liens, comme un surfeur qui passerait d’une vague à une autre. D’ailleurs,
+le lien (on parle de **lien hypertexte**) est probablement la plus grande invention à la base du Web. Le fait d’être sur une page et de
+cliquer sur un mot pour en voir une autre vous paraît peut-être basique aujourd’hui, mais c’est la base d’une vraie révolution !
+
+<figure>
+    <img src="/static/img/OpenClassrooms/15859235194274_compo_comprendre_le_web_revemp-02.png"
+         alt="www." />
+    <figcaption>Un lien hypertexte</figcaption>
+</figure>
+
+Plutôt qu’une image de surfeur, je préfère que vous ayez en tête une image de... toile d’araignée. Après tout, "World Wide Web" (à l’origine
+du "www") signifie "Toile d’araignée mondiale".
+
+Le Web est plutôt une... toile d’araignée.
+
+<figure>
+    <img src="/static/img/OpenClassrooms/15859238066649_compo_comprendre_le_web_revemp-03.png"
+         alt="Toile d'araignée représentant le web" />
+    <figcaption>Toile d'araignée</figcaption>
+</figure>
+
+Le Web devrait plutôt être vu comme une toile d’araignée : on y voit tous les liens qui relient les pages entre elles (par des liens
+hypertextes). C’est comme cela que l’on relie aussi les sites web entre eux.
+
+Voilà l’image que j’aimerais que vous gardiez en tête. 🙂
+
+-----
+
+## Distinguez le web et internet 
+
+[Distinguez le web et internet  - Comprendre le Web - OpenClassrooms](https://openclassrooms.com/fr/courses/1946386-comprendre-le-web/6874966-distinguez-le-web-et-internet)
+
+<Vimeo vimeoId="406139885" />
+
+<br />
+
+On confond souvent Internet et le Web. Or, **Internet a été inventé avant le Web.** On peut voir le Web comme un service _à l’intérieur_
+d’Internet.
+
+### **Les services fournis sur Internet**
+
+Internet, c’est le réseau qui permet de communiquer entre ordinateurs. Sur ce réseau, on trouve plusieurs _services_ :
+- **Le Web** (le plus connu d’entre eux) : vous ouvrez un navigateur web pour y aller, comme Google Chrome, Firefox, Internet Explorer, Edge,
+Safari...
+- **Les e-mails :** pour échanger des messages. Il s’agit tout simplement de courrier électronique.
+- **Les newsgroups :** moins connus, ils sont l’ancêtre des forums et permettent de discuter à plusieurs en postant des messages.
+- **Le FTP :** un moyen d’échanger des fichiers entre ordinateurs.
+- Etc.
+
+On confond souvent le Web avec le reste, car tous ces services _convergent_ vers le Web. Par exemple auparavant, on utilisait obligatoirement
+un logiciel dédié pour les e-mails (Mozilla Thunderbird, Apple Mail, Outlook...). Si ces logiciels existent toujours, aujourd’hui, on passe
+par le Web pour accéder à ses e-mails ! On va sur le site de Gmail, par exemple.
+
+Le Web sert donc de porte d’entrée à la plupart des services aujourd’hui.
+
+### **Le Cloud**
+
+On parle souvent de Cloud... qu’est-ce que cela signifie concrètement ? Ce n’est pas évident, car c’est un terme (très) utilisé en marketing.
+Il y aurait plusieurs définitions possibles !
+
+Pour faire simple, on peut commencer par se dire que ce sont ces fameux services fournis _via_ une interface web dont je vous parlais juste
+à l’instant. En clair, on pourrait dire que Gmail est un service d’e-mail sur le Cloud.
+
+Le Web sert alors de passerelle à de nombreux services, sous la dénomination "cloud".
+
+:::info
+Dans la réalité, c’est un peu plus compliqué que cela : il y a plusieurs types de clouds. On parle de SaaS (Software as a Service) pour
+désigner le cas le plus courant pour le grand public, à savoir un logiciel que l’on utilise à travers une interface web.
+:::
+
+-----
+
+## Retracez l’histoire du web 
+
+[Retracez l’histoire du web  - Comprendre le Web - OpenClassrooms](https://openclassrooms.com/fr/courses/1946386-comprendre-le-web/6875016-retracez-l-histoire-du-web)
+
+<Vimeo vimeoId="406139952" />
+
+<br />
+
+Le Web a une longue histoire derrière lui. Faisons un historique express :
+- 1969 : création de l’ancêtre d’Internet, appelé alors **ARPAnet**. C’est un réseau militaire qui se veut décentralisé (il n’a pas de lieu
+de commande central). Le réseau a ensuite évolué pour devenir un lieu d’échange universitaire avant de devenir progressivement grand public
+sous le nom d’Internet.
+- 1972 : apparition des **e-mails** pour échanger des messages.
+- 1991 : apparition du **Web**, pour afficher des pages d’information.
+
+Comme vous le voyez, Internet est apparu bien avant le Web ! Il était possible de s’échanger des e-mails avant que l’on puisse consulter des
+pages web.
+
+L’inventeur du Web ? Il s’agit de Tim Berners-Lee, un Britannique. Il est le premier à présenter un concept de "page web" avec des "liens
+hypertextes" qui permettent de naviguer d’une page à une autre. Il est aussi à l’origine des bases du langage HTML que l’on utilise toujours
+aujourd’hui pour concevoir des pages web.
+
+<figure>
+    <img src="/static/img/OpenClassrooms/15859239911725_15023667322682_tim.jpeg"
+         alt="Photographie de Tim Berners-Lee" />
+    <figcaption>Tim Berners-Lee, l’inventeur du Web</figcaption>
+</figure>
+
+Tim Berners-Lee était en 1991 chercheur au CERN (un important centre de recherche scientifique à la frontière franco-suisse). C’est là qu’il
+a eu l’idée du Web.
+
+Il a par la suite créé un organisme, le [W3C](https://www.w3.org/) (World Wide Web Consortium) qui a pris le relais pour faire évoluer les
+technologies du web (HTML, CSS, PNG, XML et autres noms barbares).
+
+-----
+
+## En résumé
+
+[En résumé - Comprendre le Web - OpenClassrooms](https://openclassrooms.com/fr/courses/1946386-comprendre-le-web/6874388-en-resume)
+
+<Vimeo vimeoId="406139984" />
+
+<br />
+
+En résumé :
+- Le Web n’est qu’une partie d’Internet. S’il y avait une chose à retenir, ce serait celle-là !
+- Internet a été créé avant le Web pour permettre d’échanger des informations entre ordinateurs.
+- Le Cloud est un terme assez vaste (pour ne pas dire vague), plutôt utilisé pour du marketing. Il signifie essentiellement "un service
+fourni à travers le Web".
+- Le W3C est l’organisme qui guide aujourd’hui l’évolution du Web.
+
+-----
+
+## Entraînez-vous : partez à la recherche des premiers sites web
+
+[Entraînez-vous : partez à la recherche des premiers sites web - Comprendre le Web - OpenClassrooms](https://openclassrooms.com/fr/courses/1946386-comprendre-le-web/6874418-entrainez-vous-partez-a-la-recherche-des-premiers-sites-web)
+
+### À vous de jouer !
+
+:::info
+Pour vous entraîner, réalisez cet exercice. Une fois terminé, vous pouvez comparer votre travail avec les pistes que je vous propose.
+:::
+
+Partez à la recherche des premiers sites web ! Votre mission, si vous l'acceptez, consistera à retrouver les premières versions des sites web
+suivants :
+- la première version de Google ;
+- la première version de W3C ;
+- un moteur de recherche avant Google ;
+- une boutique de vente en ligne comme Amazon ;
+- le tout, tout premier site web créé par Tim lui-même.
+
+C'est à vous de jouer : remontez dans le temps, menez votre recherche, et retrouvez ces cinq sites !
+
+### Vérifiez votre travail
+
+:::info
+Alors, vous êtes allé au bout ? Suivez le guide pour vérifier votre travail !
+:::
+
+Pour réussir cet exercice, il fallait utiliser un outil comme la [Wayback Machine](https://archive.org/web/) qui affiche les anciennes
+versions des sites web.
+
+Vous devriez avoir des liens qui ressemblent à ceux-ci :
+- [Google](https://sdz-upload.s3.amazonaws.com/prod/upload/Cour0.11.PNG)
+- [W3C](https://sdz-upload.s3.amazonaws.com/prod/upload/w3c14.png)
+- [Moteur de recherche avant Google](https://sdz-upload.s3.amazonaws.com/prod/upload/Altavista%20%28Moteur%20de%20Recherche%20Avant%20Google%29.PNG),
+ici par exemple AltaVista
+- [Une boutique de vente en ligne de livres](https://sdz-upload.s3.amazonaws.com/prod/upload/Amazon_1994.jpg), on pense forcément à Amazon
+même si d'autres sites sont acceptables.
+- [Le tout premier site web](https://sdz-upload.s3.amazonaws.com/prod/upload/Cour0.72.PNG)
+
+-----
+
+## Quiz : Testez vos connaissances sur le web et ses origines
+
+[Testez vos connaissances sur le web et ses origines - OpenClassrooms](https://openclassrooms.com/fr/courses/1946386-comprendre-le-web/exercises/3840)
+
+#### Compétences évaluées
+
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-checkbox" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#00b341" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <polyline points="9 11 12 14 20 6" />
+  <path d="M20 12v6a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h9" />
+</svg> Définir le web et ses origines
+
+-----
+
+#### Question 1 : Qu'est-ce qui représente le mieux le Web ?
+
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> Un surfeur<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle-check" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#7bc62d" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M9 12l2 2l4 -4" />
+</svg> Une toile d'araignée<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> Une loupe<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> Un nuage<br />
+<br />
+
+*Le Web devrait plutôt être vu comme une toile d’araignée : on y voit tous les liens qui relient les pages entre elles (par des liens
+hypertextes). C’est comme cela que l’on relie aussi les sites web entre eux.*
+
+-----
+
+#### Question 2 : Aujourd'hui, les services Internet ont tendance à converger vers une interface...
+    
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> E-mail<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> HTTP<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle-check" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#7bc62d" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M9 12l2 2l4 -4" />
+</svg> Web<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> Gopher<br />
+<br />
+
+*On passe de plus en plus par une interface web pour accéder aux différents services internet. Par exemple, auparavant on utilisait
+obligatoirement un logiciel dédié pour accéder à ses e-mails, maintenant on passe directement par le web.*
+
+-----
+
+#### Question 3 : Aujourd'hui, quand on fait du stockage de fichiers à travers une interface web on appelle cela couramment...
+
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> L'Exchange Service<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle-check" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#7bc62d" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M9 12l2 2l4 -4" />
+</svg> Le Cloud<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> Le Spider System<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> Le Wall<br />
+<br />
+
+*Le cloud permet de stocker des fichiers à travers une interface web.*
+
+-----
+
+#### Question 4 : Comment s'appelle l'ancêtre d'Internet ?
+
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> Le Web<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> L'e-mail<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> L'intranet<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle-check" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#7bc62d" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M9 12l2 2l4 -4" />
+</svg> ARPAnet<br />
+<br />
+
+*L'ARPAnet est l'ancêtre d'internet, créé en 1969. Il s'agissait initialement d'un réseau militaire décentralisé, qui s'est progressivement
+transformé pour devenir un lieu d'échange !*
+
+-----
+
+#### Question 5 : Laquelle de ces phrases est vraie ?
+
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> Internet est un service du Web.<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle-check" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#7bc62d" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M9 12l2 2l4 -4" />
+</svg> Le Web est un service d'Internet.<br />
+<br />
+
+*Internet a été inventé avant le Web. On peut voir le Web comme un service _à l’intérieur_ d’Internet.*
+
+-----
+
+#### Question 6 : En quelle année Tim Berners-Lee lance-t-il le Web ?
+
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> 1979<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> 1985<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle-check" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#7bc62d" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M9 12l2 2l4 -4" />
+</svg> 1991<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> 1996<br />
+<br />
+
+*C'était en 1991. Tim Berners-Lee est le premier à présenter un concept de "page web" avec des "liens hypertextes" qui permettent de naviguer
+d’une page à une autre. Il est aussi à l’origine des bases du langage HTML que l’on utilise toujours aujourd’hui pour concevoir des pages web.*
+
+-----
+
+#### Question 7 : Comment s'appelle l'organisme fondé par Tim Berners-Lee ?
+
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> Le WC<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> La Web Chair<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle-check" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#7bc62d" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M9 12l2 2l4 -4" />
+</svg> Le W3C<br />
+<br />
+
+*Il s'appelle W3C : World Wide Web Consortium.*
+
+-----
+
+#### Question 8 : Quel terme représente le mieux le Cloud ?
+
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle-check" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#7bc62d" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M9 12l2 2l4 -4" />
+</svg> Dématérialisation<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> Multiplication<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> Réalisation<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> Visualisation<br />
+<br />
+
+*Le terme "Dématérialisation" définit bien le cloud.*
+
+-----
+
+#### Question 9 : Lequel de ces éléments a été créé en dernier ?
+
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle-check" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#7bc62d" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M9 12l2 2l4 -4" />
+</svg> Les webmails<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> Le Web<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> Les e-mails<br />
+<br />
+
+*Auparavant, l'accès aux e-mails se faisait à travers un logiciel. Désormais, on passe par le Web : les webmails sont apparus plus récemment.*
+
+-----
+
+#### Question 10 : Lequel de ces services permet d'accéder à des fonctionnalités d'e-mail à partir d'une interface web ?
+
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> Prezi<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> Dropbox<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle-check" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#7bc62d" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M9 12l2 2l4 -4" />
+</svg> Gmail<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> Filezilla<br />
+<br />
+
+*Gmail est un de ces services. Il en existe d'autres !*
