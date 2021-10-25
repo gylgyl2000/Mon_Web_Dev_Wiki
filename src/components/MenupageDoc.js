@@ -16,7 +16,7 @@ const DocList = [
   {
     title: 'Codecademy',
     Svg: require('../../static/img/sites/Codecademy.svg').default,
-    Url: '*',
+    Url: '../docs/Codecademy/menu',
   },
   {
     title: 'Udemy',

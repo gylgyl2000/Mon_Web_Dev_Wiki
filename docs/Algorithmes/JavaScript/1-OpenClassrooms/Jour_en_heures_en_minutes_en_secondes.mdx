@@ -1,0 +1,88 @@
+---
+id: Jour_en_heures_en_minutes_en_secondes
+title: Jour en heures, en minutes, en secondes
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+import { Vimeo, CodePen } from 'mdx-embed';
+
+# Jour en heures, en minutes, en secondes
+
+<div className="algorithmes">
+
+:::info instructions
+Voici un composant qui déconstruit une journée en heures, minutes et secondes.
+Tout ce que vous avez à faire, c'est de créer les trois constantes qui donnent le nombre d'heures par jour, le nombre de minutes par
+heure, et le nombre de secondes par minute.
+
+Jouez un peu avec ces valeurs, et vous verrez vite l'importance d'avoir les bonnes valeurs constantes dans une application !
+
+Dans l'espace alloué, créez les trois constantes suivantes :
+- `hoursPerDay` : heures par jour
+- `minutesPerHour` : minutes par heure
+- `secondsPerMinute` : secondes par minute
+
+Initialisez-les avec les valeurs correctes.
+:::
+
+<nav className="algorithmes-nav">
+<div className="algorithmes-nav-code">
+
+```html
+<!DOCTYPE html>
+<html>
+<style>
+body {
+    background-color: #111;
+    color: #EEE;
+    font-family: 'Roboto Slab', serif;
+}
+
+.my-form {
+    padding: 20px;
+}
+</style>
+<body>
+<div class="my-form">
+    <label for="day-input">Number of days</label>
+    <input id="day-input" type="number" min="1">
+    <button id="calculate-button">Calculate!</button>
+    <p id="hours"></p>
+    <p id="minutes"></p>
+    <p id="seconds"></p>
+</div>
+<script type="text/javascript">
+const hoursPerDay = 24;
+const minutesPerHour = 60;
+const secondsPerMinute = 60;
+
+const dayInput = document.querySelector('#day-input');
+const calculateButton = document.querySelector('#calculate-button');
+const hours = document.querySelector('#hours');
+const minutes = document.querySelector('#minutes');
+const seconds = document.querySelector('#seconds');
+
+calculateButton.addEventListener('click', () => {
+    let days = dayInput.value;
+    let calcHours = days * hoursPerDay;
+    let calcMinutes = calcHours * minutesPerHour;
+    let calcSeconds = calcMinutes * secondsPerMinute;
+
+    hours.innerText = `${calcHours} hours`;
+    minutes.innerText = `${calcMinutes} minutes`;
+    seconds.innerText = `${calcSeconds} seconds`;
+});
+</script>
+</body>
+</html>
+```
+
+</div>
+<div className="algorithmes-nav-html">
+
+<iframe src="/Mon_Web_Dev_Wiki/algo/OpenClassrooms/Jour_en_heures_en_minutes_en_secondes/index.html"></iframe>
+
+</div>
+</nav>
+</div>

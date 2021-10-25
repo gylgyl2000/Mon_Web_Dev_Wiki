@@ -183,3 +183,30 @@ article ul li.algo-menu a {
   height: 100%;
   background-color: white;
 }
+
+.docs {
+  width: 100%;
+}
+
+.docs-nav {
+  display: flex;
+  justify-content: space-between;
+}
+
+.docs-nav-code {
+  width: 49%;
+}
+
+.docs-nav-html {
+  width: 49%;
+}
+
+.docs-nav pre {
+  max-height: 460px;
+}
+
+.docs-nav iframe {
+  width: 100%;
+  height: 100%;
+  background-color: white;
+}
