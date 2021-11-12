@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- <script src="https://code.jquery.com/jquery-1.10.2.js"></script> -->
+    <!-- <script src="https://cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script> -->
+    <!-- <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.js"></script> -->
+    <!-- <script src="https://cdn.jsdelivr.net/npm/jquery-ui@1.13.0/ui/widget.min.js"></script> -->
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.0/jquery-ui.js"></script>
+    <script>  
+        /* Ready function runs everytime the page load */
+        $(document).ready(function() {  
+            /* Set local storage */
+            var Countries = [
+                "Afghanistan", "Albania", "Algeria",
+                "Armenia", "Australia", "Bahrain", 
+                "Bangladesh", "Belgium", "Bhutan", 
+                "Brazil", "Canada", "Chile", "China", 
+                "Denmark", "Djibouti", "Egypt", 
+                "Estonia", "Ethiopia", "Finland", 
+                "France", "Germany", "Ghana", "Greece",
+                "Greenland", "Hong Kong", "Hungary", 
+                "Iceland", "India", "Indonesia", "Iran",
+                "Iraq", "Ireland", "Israel", "Italy", 
+                "Japan", "Jersey", "Jordan", "Kazakhstan",
+                "Kuwait", "Kyrgyzstan", "Lebanon", 
+                "Malaysia", "Maldives", "Mexico", "Nepal", 
+                "Netherlands", "New Zealand", "North Korea",
+                "Pakistan", "Palestine", "Philippines", 
+                "Poland", "Qatar", "Russia", "Saudi Arabia",
+                "Singapore", "South Africa", "Swaziland", 
+                "Taiwan", "Thailand", "Turkey", 
+                "United Kingdom", "United States of America",
+                "Uruguay", "Vietnam", "Yemen", "Zimbabwe"
+            ];
+            
+            /* Fetch locally stored Countries */
+            var Countries = window.localStorage.getItem("Countries");
+
+            /* Convert it to a javascript object */
+            Countries = JSON.parse(Countries);
+
+            /* Fetch Country input tag and use JQuery autocomplete function */
+            $("#country_input").autocomplete({
+
+                /* Pass javascript object to autocomplete function */
+                source: Countries,
+                autofocus: true,
+            });
+
+            /* To clear local storage when clear button is clicked */
+            $("#clear").click(function(event) {
+                localStorage.clear();
+            });
+        });
+    </script>
+</head>
+<body>
+    <h2>GeeksforGeeks</h2>
+    <b>Autofilling forms</b>
+
+    <form name="form" id="form">
+        <label for="">Enter Country</label>
+        <input type="text" id="country_input" name="country_input" />
+        <button type="submit">Submit</button>
+        <button id="clear">Clear Local</button>
+    </form>
+</body>
+</html>
