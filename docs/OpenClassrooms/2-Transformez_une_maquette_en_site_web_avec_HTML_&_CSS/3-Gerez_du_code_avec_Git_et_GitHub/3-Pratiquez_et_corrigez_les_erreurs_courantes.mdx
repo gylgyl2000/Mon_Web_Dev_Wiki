@@ -1,0 +1,1037 @@
+---
+sidebar_position: 4
+---
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+import { Vimeo } from 'mdx-embed';
+
+# Pratiquez et corrigez les erreurs courantes
+
+## Pratiquez et corrigez vos erreurs sur un dépôt local
+
+[Pratiquez et corrigez vos erreurs sur un dépôt local - Gérez du code avec Git et GitHub - OpenClassrooms](https://openclassrooms.com/fr/courses/7162856-gerez-du-code-avec-git-et-github/7165663-pratiquez-et-corrigez-vos-erreurs-sur-un-depot-local)
+
+<Vimeo vimeoId="513008007" />
+
+<br />
+
+Git est un outil merveilleux, mais on a vite fait de créer une branche alors qu’on ne le souhaitait pas, de modifier la branche
+principale ou encore d’oublier des fichiers dans ses commits. Mais ne vous inquiétez pas, nous allons voir ensemble que toutes
+ces petites erreurs ne sont pas difficiles à corriger avec **les bonnes techniques**.
+
+Je vous propose de créer un bac à sable pour vous entraîner et mettre en œuvre ce que vous avez vu précédemment.
+
+Tout d’abord, créez un dossier "Test", qui sera notre dépôt Git.
+
+![Screenshot du dépôt local](/img/OpenClassrooms/16140054060237_image11.png)
+
+Créez un dépôt local "Test"
+
+Initialisez le dépôt avec la commande **git init**.
+
+![Screenshot pour l'affichage des dossiers masqués](/img/OpenClassrooms/1614005506792_image54.png)
+
+Affichez les dossiers masqués
+
+Votre dépôt est maintenant initialisé. Si vous faites apparaître les dossiers masqués, vous pouvez voir le dossier .git.
+
+:::info
+Un des avantages majeurs de Git réside dans l’aspect local des travaux réalisés : un dépôt Git gère son cycle de vie localement,
+indépendamment de la connectivité avec son dépôt distant. Tout se passe directement sur votre ordinateur.
+:::
+
+Passons à nos erreurs !  ![](https://user.oc-static.com/upload/2021/02/22/16140055510821_image13.png)
+
+### J’ai créé une branche que je n’aurais pas dû créer
+
+Votre bac à sable est prêt !
+
+<Vimeo vimeoId="517242509" />
+
+<br />
+
+Avant de créer une branche, vous devez créer votre branche principale (main ou master). Pour cela, il vous suffit d’ajouter un
+fichier et de le commiter.
+
+Créez un fichier "PremierFichier.txt" dans votre répertoire Test, et ajoutez-le avec la commande :
+
+```shell
+git add PremierFichier.txt
+git commit
+```
+
+On vous demande alors d'indiquer le message du commit puis de valider. Pour valider le message, une fois que vous l'avez écrit,
+appuyez sur Echap (votre curseur va basculer sur la dernière ligne) et tapez `:x`.
+
+Cette commande va sauvegarder et quitter l'éditeur des messages de commit.
+
+![](/img/OpenClassrooms/16140056136653_image19.png)
+
+Vous allez maintenant créer une branche autre que la branche principale.
+
+```shell
+git branch brancheTest
+```
+
+Cette commande, comme nous l'avons vu précédemment, va créer la branche brancheTest.
+
+Vous pouvez d'ailleurs le vérifier avec la commande :
+
+![](/img/OpenClassrooms/1614067128519_image9.png)
+
+Youppiiii !  ![](https://user.oc-static.com/upload/2021/02/22/16140056557509_image37.png)
+
+Arf... En fait, non, nous voulions ajouter nos fichiers avant de la créer et nous sommes maintenant bloqués avec cette branche
+que nous ne voulions pas tout de suite.  ![](https://user.oc-static.com/upload/2021/02/22/16140057374222_image7.gif)![](https://user.oc-static.com/upload/2021/02/22/16140057225086_image7.gif)![](https://user.oc-static.com/upload/2021/02/22/16140057057111_image7.gif)
+
+Heureusement, il est très simple sous Git de supprimer une branche que nous venons de créer. Pour cela, il suffit d'exécuter la
+commande :
+
+```shell
+git branch -d brancheTest
+```
+
+Tadammm !  ![](https://user.oc-static.com/upload/2021/02/22/16140057943297_image55.png) Notre branche est supprimée et nous
+pouvons ajouter dans un premier temps nos fichiers avant de créer la branche.
+
+![](/img/OpenClassrooms/16140060121083_image44.png)
+
+Si vous avez déjà fait des modifications dans la branche que vous souhaitez supprimer, vous pouvez la supprimer avec la commande :
+
+```shell
+git branch -D brancheTest
+```
+
+:::note !
+La suppression de cette branche entraînera la suppression de tous les fichiers et modifications que nous n'aurez pas commités
+sur cette branche.
+:::
+
+### J’ai modifié la branche principale
+
+L’erreur est humaine et il peut arriver de modifier une branche principale par erreur... Dans ce cas, ne paniquez pas !
+
+Si vous avez modifié votre branche main ou master avant de créer votre branche et que vous n'avez pas fait le commit, ce n’est
+pas bien grave. Il vous suffit de faire **une remise**.
+
+:::info
+La remise permet de mettre vos modifications de côté, le temps de créer votre nouvelle branche et d’appliquer cette remise sur
+la nouvelle branche.
+:::
+
+Voyons maintenant comment cela fonctionne !
+
+<Vimeo vimeoId="517242539" />
+
+<br />
+
+Allez sur votre branche master pour modifier des fichiers.
+
+Vous pouvez à tout moment voir à quel état sont vos fichiers, c’est-à-dire voir les changements qui ont été indexés ou ceux qui
+ne l’ont pas été, avec la commande suivante :
+
+```shell
+git status
+```
+
+Vous pouvez voir vos fichiers modifiés mais qui n'ont pas encore été commités.
+
+![](/img/OpenClassrooms/16140060945354_image1.png)
+
+Créez une remise avec la commande suivante :
+
+```shell
+git stash
+```
+
+Cela vous donne :
+
+![](/img/OpenClassrooms/16140061605247_image35.png)
+
+Assurez-vous que votre branche master est de nouveau propre, en faisant un nouveau  `git status`  .
+
+Vous devriez avoir :
+
+![](/img/OpenClassrooms/16140062020537_image64.png)
+
+Parfait ! C'est exactement ce que nous voulions. Maintenant, créez votre branche "brancheCommit".
+
+```shell
+git branch brancheCommit
+```
+
+Vous obtenez donc :
+
+![](/img/OpenClassrooms/16140064219964_image20.png)
+
+Vous allez basculer sur cette branche.
+
+```shell
+git checkout brancheCommit
+```
+
+Ce qui nous donne :
+
+![](/img/OpenClassrooms/16140063771289_image49.png)
+
+Et finalement, vous pouvez appliquer la remise, afin de récupérer vos modifications sur votre nouvelle branche.
+
+```shell
+git stash apply
+```
+
+![](/img/OpenClassrooms/16140064913347_image53.png)
+
+Cette commande va appliquer la dernière remise qui a été faite.
+
+Si pour une raison ou une autre, vous avez créé plusieurs remises, et que la dernière n'est pas celle que vous souhaitiez
+appliquer, pas de panique, il est possible d'appliquer une autre remise.
+
+En premier lieu, regardez la liste de vos remises avec la commande suivante :
+
+```shell
+git stash list
+```
+
+Cette commande va vous retourner un "tableau" des remises avec des identifiants du style :
+
+![](/img/OpenClassrooms/16140065508003_image36.png)
+
+Il suffira alors d'appeler la commande `git stash` en indiquant l'identifiant.
+
+```shell
+git stash apply stash@{0}
+```
+
+Et voilà, le tour est joué ! ![](https://user.oc-static.com/upload/2021/02/22/16140065802599_image12.png)
+
+#### J’ai modifié la branche après avoir fait un commit
+
+Maintenant, admettons que vous ayez réalisé vos modifications et qu'en plus vous ayez fait le commit. Le cas est plus complexe,
+puisque vous avez enregistré vos modifications sur la branche master, alors que vous ne deviez pas.
+
+Allez-y, modifiez des fichiers, et réalisez le commit. ![](https://user.oc-static.com/upload/2021/02/23/16140674095649_image5.png)
+
+Pour réparer cette erreur, vous devez analyser vos derniers commits avec la fonction `git log`. Vous allez alors récupérer
+l'identifiant du commit que l'on appelle couramment le _hash_. 
+
+Par défaut, `git log` va vous lister par ordre chronologique inversé tous vos commits réalisés.
+
+```shell
+$ git log commit 
+ca83a6dff817ec66f443420071545390a954664949 Author: 
+Marc <Marc@gee-mail.com> Date: Mon Mar 19 21:52:11 
+2019 -0700
+```
+
+Maintenant que vous disposez de votre identifiant, gardez-le bien de côté. Vérifiez que vous êtes sur votre branche master et
+réalisez la commande suivante :
+
+```shell
+git reset --hard HEAD^
+```
+
+Cette ligne de commande va supprimer de la branche master votre dernier commit.  Le HEAD^ indique que c'est bien le dernier commit
+que nous voulons supprimer.
+
+Créez ensuite votre nouvelle branche.
+
+```shell
+git branch brancheCommit
+```
+
+Vous allez basculer sur cette branche.
+
+```shell
+git checkout brancheCommit
+```
+
+Maintenant, vous êtes sur la bonne branche.
+
+Renouvelez la commande `git reset`, qui va appliquer ce commit sur votre nouvelle branche !
+
+:::info
+Il n'est pas nécessaire d'écrire l'identifiant en entier. Seuls les 8 premiers caractères sont nécessaires.
+:::
+
+```shell
+git reset --hard ca83a6df
+```
+
+Et voilà, le tour est joué ! ![](https://user.oc-static.com/upload/2021/02/22/16140080913212_image12.png)
+
+### Le message de mon commit est erroné
+
+Lorsque l'on travaille sur un projet avec Git, il est très important de marquer correctement les modifications effectuées dans
+le message descriptif. Cependant, si vous faites une erreur dans l'un de vos messages de commit, il est possible de changer le
+message après coup. Je vous montre comment dans la vidéo ci-dessous.
+
+<Vimeo vimeoId="517242587" />
+
+<br />
+
+Attention ! Cette commande va fonctionner pour le dernier commit réalisé ! Lorsque l'on travaille sur un projet avec Git, il est
+très important de marquer correctement les modifications effectuées dans le message descriptif. Cependant, si vous faites une
+erreur dans l'un de vos messages de commit, il est possible de changer le message après coup.
+
+Imaginez que vous veniez de faire un commit et que vous ayez fait une erreur dans votre message. L'exécution de cette commande,
+lorsqu'aucun élément n'est encore modifié, vous permet de modifier le message du commit précédent sans modifier son instantané.
+L'option -m permet de transmettre le nouveau message.
+
+```shell
+git commit --amend -m "Votre nouveau message de commit"
+```
+
+Et on vérifie avec `git log` :
+
+![](/img/OpenClassrooms/1614008154147_image41.png)
+
+Elle est pas belle la vie ? ![](https://user.oc-static.com/upload/2021/02/22/16140081783093_image10.png)
+
+### J’ai oublié un fichier dans mon dernier commit
+
+<Vimeo vimeoId="517242617" />
+
+<br />
+
+Imaginez maintenant (je sais, il faut beaucoup d'imagination dans ce cours) ![](https://user.oc-static.com/upload/2021/02/22/16140082131286_image12.png)
+que vous ayez fait votre commit mais que vous réalisiez que vous avez oublié un fichier. Ce n'est pas bien grave ! Il suffit de
+réutiliser la commande `git --amend`, d'une autre manière. La fonction `git --amend`, si vous avez bien compris, permet de modifier
+le dernier commit.
+
+Réutilisez cette fonction **sans le -m** qui permettait de modifier son message.
+
+Dans un premier temps, ajoutez votre fichier, puis réalisez le `git --amend`.
+
+```shell
+git add FichierOublie.txt git commit --amend --no-edit
+```
+
+Votre fichier a été ajouté à votre commit et grâce à la commande `--no-edit` que vous avez ajoutée, vous n'avez pas modifié le
+message du commit.
+
+![](/img/OpenClassrooms/16140083183056_image2.png)
+
+`git commit --amend` vous permet de sélectionner le dernier commit afin d'y ajouter de nouveaux changements en attente. Vous
+pouvez ajouter ou supprimer des changements afin de les appliquer avec `commit --amend`.
+
+Si aucun changement n'est en attente, `--amend` vous permet de modifier le dernier message de log du commit avec -m.
+
+### En résumé
+
+- git branch -d permet de supprimer une branche.
+- git status permet de voir l’état des fichiers.
+- git stash enregistre les modifications non indexées pour une utilisation ultérieure.
+- git log affiche l'historique des commits réalisés sur la branche courante.
+- git reset --hard HEAD^ permet de réinitialiser l'index et le répertoire de travail à l'état du dernier commit.
+- git commit --amend permet de sélectionner le dernier commit pour y effectuer des modifications.
+
+*Vous savez maintenant comment corriger les erreurs les plus courantes sur votre dépôt local. Mais comment procéder si vous vous
+trompez sur votre dépôt distant ? C'est ce que nous allons découvrir dans le prochain chapitre !*
+
+-----
+
+## Corrigez vos erreurs sur votre dépôt distant
+
+[Corrigez vos erreurs sur votre dépôt distant - Gérez du code avec Git et GitHub - OpenClassrooms](https://openclassrooms.com/fr/courses/7162856-gerez-du-code-avec-git-et-github/7165666-corrigez-vos-erreurs-sur-votre-depot-distant)
+
+<Vimeo vimeoId="513008095" />
+
+<br />
+
+### Corrigez vos erreurs en local et à distance
+
+La journée a été difficile et par mégarde **vous avez pushé** des fichiers erronés.
+
+Le problème, c'est que cette erreur concerne aussi les personnes avec qui vous travaillez sur le projet.
+
+:::note ?
+Quelle est la première chose à faire dans ce cas-là ?
+:::
+
+Prévenir vos collaborateurs, bien sûr !! Mais Git a tout de même la solution à votre problème. ![](https://user.oc-static.com/upload/2021/02/22/16140083893876_image4.png)
+
+Il est possible d'annuler son commit public avec la commande **git revert**. L'opération revert annule un commit en créant un
+nouveau commit. C'est une méthode sûre pour annuler des changements, car elle ne risque pas de réécrire l'historique du commit.
+
+```shell
+git revert HEAD^
+```
+
+Nous avons maintenant reverté notre dernier commit public et cela a créé un nouveau commit d'annulation. Cette commande n'a donc
+**aucun impact sur l'historique** ! Par conséquent, il vaut mieux utiliser `git revert` pour annuler des changements apportés à
+une branche publique, et `git reset` pour faire de même, mais sur une branche privée.
+
+:::info
+Gardez à l'esprit que `git revert` sert à annuler des changements commités, tandis que `git reset HEAD` permet d'annuler des
+changements non commités.
+:::
+
+:::note !
+Toutefois, attention, `git revert` peut écraser vos fichiers dans votre répertoire de travail, il vous sera donc demandé de
+commiter vos modifications ou de les remiser.
+:::
+
+### L'accès à distance ne fonctionne pas
+
+Si votre accès à distance ne fonctionne pas, cela peut être dû à un problème d’authentification de votre réseau. Pour le résoudre,
+il vous faut créer une paire de **clés SSH**.
+
+:::info
+Une clé Secure Shell, ou _clé SSH_, permet d’assurer une connexion sécurisée entre votre réseau et un dépôt distant sécurisé.
+C'est très utile quand vous avez besoin de vous authentifier sur une machine tierce, car cela vous évite d’avoir à vous identifier
+systématiquement. N’hésitez pas à aller sur cette [page de cours](https://openclassrooms.com/fr/courses/43538-reprenez-le-controle-a-laide-de-linux/41773-la-connexion-securisee-a-distance-avec-ssh)
+pour en savoir plus !
+:::
+
+Je vous conseille de suivre la vidéo ci-dessous pour ne louper aucune étape et de suivre les indications ci-dessous.
+
+<Vimeo vimeoId="513790744" />
+
+<br />
+
+Nous allons maintenant générer notre duo de clés SSH :
+
+Dans Git Bash, exécutez la commande :
+
+```shell
+$ ssh-keygen -t rsa -b 4096 -C "johndoe@example.com"
+```
+
+Vous obtenez ceci :
+
+![](/img/OpenClassrooms/16140085474531_image46.png)
+
+Vous pouvez soit appuyer sur Entrée, soit indiquer un nom de fichier. Un mot de passe vous est ensuite demandé.
+
+Félicitations ! Vous avez obtenu votre clé SSH !
+
+Pour la trouver, il suffit d'aller à l'adresse : C:\\Users\\VotreNomD'Utilisateur\\, et d'afficher les dossiers masqués.
+
+![Affichez les dossiers masqués](/img/OpenClassrooms/1614008598444_image45.png)
+
+Affichez les dossiers masqués
+
+Dans ce dossier, vous avez donc deux fichiers, votre clé publique et votre clé privée.
+
+La clé id\_rsa.txt est votre **clé privée** alors que la clé id\_rsa.pub est votre **clé publique**. Vous pouvez copier votre clé
+en l'ouvrant dans un bloc-notes.
+
+![Copiez votre clé](/img/OpenClassrooms/16140086655931_image3.png)
+
+Copiez votre clé
+
+Maintenant que vous disposez de votre clé SSH, voyons comment l'ajouter pour GitHub !
+
+### Modifiez vos informations d'identification et supprimez la clé
+
+Ajoutez maintenant la clé à votre compte GitHub.
+
+Connectez-vous à votre espace GitHub, puis allez dans l'angle droit de votre compte et cliquez sur Settings.
+
+![Screenshot de l'espace ](/img/OpenClassrooms/16140087340647_image23.png)
+
+Espace "Settings" dans votre espace GitHub
+
+Cliquez sur SSH and GPG keys :
+
+![Screenshot ](/img/OpenClassrooms/16140090366494_image21.png)
+
+Cliquez sur "SSH and GPG keys"
+
+Puis sur New SSH Key :
+
+![Screenshot ](/img/OpenClassrooms/16140090873498_image16.png)
+
+Cliquez sur "New SSH Key"
+
+Choisissez un titre et collez votre clé SSH :
+
+![Screenshot ](/img/OpenClassrooms/16140091501039_image62.png)
+
+Ajoutez une clé SSH
+
+Vous devrez ensuite confirmer votre mot de passe. Votre clé SSH sera alors ajoutée à votre compte GitHub !
+
+### En résumé
+
+- git revert HEAD^ permet d'annuler un commit en créant un nouveau commit.
+- La commande ssh-keygen permet de générer un duo de clés SSH.
+- Vous pouvez configurer une nouvelle clé SSH sur GitHub.
+
+*Dans le chapitre suivant, vous allez apprendre à utiliser une commande très utile de Git : git reset. À tout de suite !*
+
+-----
+
+## Utilisez git reset
+
+[Utilisez git reset - Gérez du code avec Git et GitHub - OpenClassrooms](https://openclassrooms.com/fr/courses/7162856-gerez-du-code-avec-git-et-github/7165651-utilisez-git-reset)
+
+<Vimeo vimeoId="513008180" />
+
+<br />
+
+Imaginez que votre client vous demande une nouvelle fonctionnalité ; vous travaillez dessus toute la journée et le lendemain,
+finalement, il change d'avis. Catastrophe ! ![](https://user.oc-static.com/upload/2021/02/22/16140092258331_image51.png)
+
+Vous avez perdu une journée à développer une fonctionnalité pour rien, mais en plus il faut que vous trouviez le moyen de revenir
+en arrière ! Heureusement, notre ami Git arrive à notre rescousse avec la commande `git reset` !
+
+![Schéma d'explication du principe de git reset](/img/OpenClassrooms/16146973562516_p3c3-1.png)
+
+Revenez en arrière grâce à git reset
+
+### Les trois types de réinitialisation de Git
+
+La commande `git reset` est un outil complexe et polyvalent pour **annuler les changements**. Elle peut être appelée de trois
+façons différentes, qui correspondent aux arguments de ligne de commande **--soft, --mixed et --hard**.
+
+![Schéma explicatif des 3 types de réinitialisation](/img/OpenClassrooms/16146974090508_p3c3-2.png)
+
+Les 3 types de réinitialisation de Git reset
+
+Nous allons commencer par  `reset --hard`  .
+
+:::note !
+Si vous voulez exécuter cette commande, vérifiez 5 fois avant de la lancer et soyez sûr de vous à 200 %.
+:::
+
+Exécutez la commande :
+
+```shell
+git reset notreCommitCible --hard
+```
+
+Cette commande permet de **revenir à n'importe quel commit** mais en oubliant absolument tout ce qu'il s'est passé après ! Quand
+je dis tout, c'est TOUT ! Que vous ayez fait des modifications après ou d'autres commits, tout sera effacé ! C'est pourquoi il est
+extrêmement important de revérifier plusieurs fois avant de la lancer, vous pourriez perdre toutes vos modifications si elle est
+mal faite.
+
+Cette utilisation de `git reset` constitue une manière simple d'annuler des changements qui n'ont pas encore été partagés. Cette
+commande est incontournable lorsque vous commencez à travailler sur une fonctionnalité, que vous vous êtes trompé et que vous
+voulez recommencer de zéro. Le `git reset --mixed` va permettre de revenir juste après votre dernier commit ou le commit spécifié,
+sans supprimer vos modifications en cours. Il permet aussi, dans le cas de fichiers indexés mais pas encore commités, de désindexer
+les fichiers.
+
+```shell
+git reset HEAD~
+```
+
+Si rien n'est spécifié après `git reset`, par défaut il exécutera un `git reset --mixed HEAD~`.
+
+:::info
+Le **HEAD** est un pointeur, une référence sur votre position actuelle dans votre répertoire de travail Git.
+:::
+
+C’est un peu comme votre ombre : elle vous suit où que vous alliez ! Par défaut, HEAD pointe sur la branche courante, main/master,
+et peut être déplacé vers une autre branche ou un autre commit.
+
+Nous avons enfin `git reset --soft`. Cette commande permet de se placer sur un commit spécifique afin de voir le code à un instant
+donné, ou de créer une branche partant d'un ancien commit. Elle ne supprime aucun fichier, aucun commit, et ne crée pas de HEAD
+détaché.
+
+### Oups, j'ai des conflits !
+
+Nous avons vu dans la deuxième partie de ce cours comment fusionner des branches, en utilisant un exemple assez simple où tout
+s'est bien terminé. Malheureusement, il arrive parfois, même souvent, que cela ne se passe pas aussi bien, et que des conflits
+apparaissent. ![o_O](https://openclassrooms.com/bundles/common/images/smiley/blink.gif)
+
+Si nous reprenons notre exemple de début de cours, vous avez travaillé sur la branche “ameliorationCagnotte” alors que des
+fichiers correspondant à l'amélioration de la fonctionnalité "cagnotte" existent déjà dans la branche principale, et que vous
+modifiez des lignes déjà en place.
+
+Vous avez modifié du code pour afficher le message "Une super cagnotte !" alors qu'était déjà en place le message "Une cagnotte".
+Lorsque vous allez fusionner les deux branches, les choses ne vont donc pas très bien se passer :
+
+```shell
+git checkout main
+git merge ameliorationCagnotte
+Auto-merging cagnotte.php
+CONFLICT (content): merge conflict in cagnotte.php
+Automatic merge failed; fix conflicts and then 
+commit the result
+```
+
+Git va voir que sur la même ligne on essaie de fusionner deux choses différentes. Il ne va pas pouvoir deviner laquelle prendre,
+la ligne "Une cagnotte", ou bien "Une super cagnotte !" ? Il est fort mais pas devin ! ![:magicien:](https://openclassrooms.com/bundles/common/images/smiley/magicien.png)
+Git va donc afficher un conflit sur le fichier cagnotte.php et arrêtera le processus de fusion ou merge. Ce conflit, vous allez
+devoir le résoudre en ouvrant le fichier avec votre éditeur habituel :
+
+```shell
+<<<<<<< HEAD
+Une cagnotte
+=======
+Une super cagnotte !
+>>>>>>> ameliorationCagnotte
+```
+
+Maintenant, réglez les conflits en comparant les deux lignes et en choisissant quelle modification vous voulez garder. Ici, il
+faut garder "Une super cagnotte !", on va donc supprimer les autres lignes et ne garder que celle-ci :
+
+```shell
+Une super cagnotte !
+```
+
+Maintenant que vous avez résolu le conflit, il vous reste à le dire à Git !
+
+```shell
+git add cagnotte.php
+git commit
+```
+
+Git va détecter que vous avez résolu les conflits et va vous proposer un message de commit. Vous pouvez bien entendu le modifier.
+
+### J’ai ajouté le mauvais fichier au commit
+
+Ralalala ! Décidément vous en faites des bêtises !   ![](https://user.oc-static.com/upload/2021/02/22/16140094412648_image12.png)
+Alors comme cela, vous avez fait un commit mais un fichier s'est glissé par "erreur". Ne vous inquiétez pas, avec Git nous avons
+une super fonction qui va **remonter le temps**. La commande **git revert** vous permet de revenir à l'état précédent, tout en
+faisant un deuxième commit.  Au lieu de supprimer le commit de l'historique du projet, elle détermine comment **annuler les
+changements** introduits par le commit et ajoute un nouveau commit avec le contenu ainsi obtenu. Vous allez donc revenir à l'état
+précédent mais avec un nouveau commit. Ainsi, Git ne perd pas l'historique, lequel est important pour l'intégrité de votre
+historique de révision et pour une collaboration fiable.
+
+Quelle est la différence entre git reset et git revert ?
+
+`git reset` va revenir à l'état précédent sans créer un nouveau commit, alors que `git revert` va créer un nouveau commit.
+
+![Schéma explicatif de la différence entre git revert et git reset](/img/OpenClassrooms/16140095008604_image15.jpg)
+
+La différence entre git revert et git reset
+
+Essayons cette super commande en faisant un premier commit que nous allons finalement ne plus vouloir. Une fois votre commit fait,
+écrivez la commande suivante :
+
+```shell
+git revert HEAD
+```
+
+Une fois votre commit "annulé", vous pouvez enlever votre fichier et réaliser de nouveau votre commit. ![](https://user.oc-static.com/upload/2021/02/23/16141079839521_image6.png)
+
+### En résumé
+
+- git reset est une commande puissante. Elle peut être appliquée de 3 façons différentes (--soft; --mixed; --hard).
+- La commande git merge produit un conflit si une même ligne a été modifiée plusieurs fois. Dans ce cas, il faut indiquer à Git
+quelle ligne conserver.
+- git reset permet de revenir à l'état précédent sans créer un nouveau commit.
+- git revert permet de revenir à l'état précédent en créant un nouveau commit.
+
+*Voyons comment corriger un commit raté dans le prochain chapitre !*
+
+-----
+
+## Corrigez un commit raté
+
+[Corrigez un commit raté - Gérez du code avec Git et GitHub - OpenClassrooms](https://openclassrooms.com/fr/courses/7162856-gerez-du-code-avec-git-et-github/7165653-corrigez-un-commit-rate)
+
+<Vimeo vimeoId="513008278" />
+
+<br />
+
+Voilà des semaines que vous développez vos projets et tout se déroule comme sur des roulettes. Sauf qu’un beau matin, votre chef
+de projet vous demande de revenir à une version précédente du projet. Il a aussi besoin de savoir qui a fait quel commit ! ! ![](https://user.oc-static.com/upload/2021/02/22/16140095448529_image51.png)
+
+Heureusement, les techniques de **journalisation** de Git ont été prévues pour répondre à ce genre de situation.
+
+:::info
+La **journalisation** désigne l'enregistrement dans un [fichier](https://fr.wikipedia.org/wiki/Fichier_(informatique)) ou une
+[base de données](https://fr.wikipedia.org/wiki/Base_de_donn%C3%A9es) de tous les événements affectant une application. Le
+**journal** (en anglais _log file_ ou plus simplement _log_), désigne alors le fichier contenant ces enregistrements.
+:::
+
+![Représentation d'un log](/img/OpenClassrooms/16146976003335_p3c4-1.png)
+
+Journal ou log en anglais
+
+### Un trou de mémoire ? git reflog !
+
+<Vimeo vimeoId="517242653" />
+
+<br />
+
+L'objectif d'un gestionnaire de versions est d'enregistrer les changements apportés à votre code. Il vous permet de **consulter
+l'historique de votre projet** pour :
+- savoir qui a contribué à quoi ;
+- déterminer où des bugs ont été introduits ;
+- annuler les changements problématiques.
+
+Peut-être, mais disposer de cet historique est inutile si vous ne savez pas comment l'utiliser !  C'est là que la commande
+`git log` entre en scène !
+
+```shell
+git log
+```
+
+Par défaut, `git log` **énumère en ordre chronologique inversé** les commits réalisés. Cela signifie que les commits les plus
+récents apparaissent en premier. Cette commande affiche chaque commit avec son **identifiant SHA**, l'auteur du commit, la date
+et le message du commit.
+
+:::info
+Le SHA ou _Secure Hash Algorithm_ est un identifiant. C'est ce grand code incompréhensible qui nous permettra de revenir en
+arrière si besoin, à un commit exact.
+:::
+
+Git dispose d'un outil encore plus puissant, poussant le journal de logs à l’extrême.
+
+```shell
+git reflog
+```
+
+`git reflog` va loguer les commits ainsi que toutes les autres actions que vous avez pu faire en local : vos modifications de
+messages, vos merges, vos resets, enfin tout, quoi  ![](https://user.oc-static.com/upload/2021/02/23/16141083726465_image26.png).
+Comme `git log`, `git reflog` affiche un identifiant SHA-1 pour chaque action. Il est donc très facile de revenir à une action
+donnée grâce au SHA. Cette commande, c'est votre joker, elle assure votre survie en cas d'erreur. Pour revenir à une action donnée,
+on prend les 8 premiers caractères de son SHA et on fait :
+
+```shell
+git checkout e789e7c
+```
+
+TADAMMMMMMM ! Vous avez été propulsé dans le temps  ![](https://user.oc-static.com/upload/2021/02/22/16140096603905_image55.png) .
+
+### Qui s’est amusé dans mon dépôt ? git blame
+
+<Vimeo vimeoId="518701667" />
+
+<br />
+
+Si vous découvrez un bug dans votre projet, vous allez avoir besoin d'identifier son origine et de savoir **qui a modifié chaque
+ligne du code**. C'est à ce moment que git blame entre en scène.
+
+La commande `git blame` permet **d’examiner le contenu d’un fichier ligne par ligne** et de déterminer la date à laquelle chaque
+ligne a été modifiée, et le nom de l’auteur des modifications  ![](https://user.oc-static.com/upload/2021/02/22/1614009727408_image52.gif).
+
+```shell
+git blame monFichier.php
+```
+
+`git blame` va afficher pour chaque ligne modifiée :
+- son ID ;
+- l'auteur ;
+- l'horodatage ;
+- le numéro de la ligne ;
+- le contenu de la ligne.
+
+Avec `git blame`, vous devenez un super espion de votre projet !
+
+### Il me faut ce commit ! Vite git cherry-pick
+
+<Vimeo vimeoId="518701703" />
+
+<br />
+
+Lorsque vous travaillez avec une équipe de développeurs sur un projet de moyenne à grande taille, la gestion des modifications
+entre plusieurs branches de Git peut devenir une tâche complexe. Parfois, vous ne voulez pas fusionner une branche entière dans
+une autre et vous n'avez besoin que de choisir un ou deux commits spécifiques. Ce processus s'appelle **cherry-pick** !
+
+:::note !
+`git cherry-pick` n'est pas une commande très appréciée dans la communauté des développeurs car elle duplique **des commits
+existants**. Je vous conseille plutôt de réaliser un merge.
+:::
+
+Admettons que vous travailliez sur une branche "Mes évolutions", et que vous ayez déjà réalisé plusieurs commits. Votre collègue
+a besoin de l'une de ces évolutions pour la livrer au client, mais pas des autres. C'est dans ce cas bien précis que nous allons
+faire appel à `git cherry-pick` ! Cette commande va permettre de sélectionner un ou plusieurs commits grâce à leur SHA (décidément
+ils sont partout) et de les migrer sur la branche master, sans pour autant fusionner toute la branche "Mes évolutions".
+
+```shell
+git cherry-pick d356940 de966d4
+```
+
+Ici, nous prenons les deux commits ayant pour SHA d356940 et de966d4, et nous les ajoutons à la branche master sans pour autant
+les enlever de votre branche actuelle. Nous les dupliquons !
+
+### En résumé
+- git log affiche l'historique des commits réalisés sur la branche courante.
+- git reflog est identique à git log. Cette commande affiche également toutes les actions réalisées en local.
+- git checkout un\_identifiant\_SHA-1 permet de revenir à une action donnée.
+- git blame permet de savoir qui a réalisé telle modification dans un fichier, à quelle date, ligne par ligne.
+- git cherry-pick un\_identifiant\_SHA-1 un\_autre\_identifiant\_SHA-1 permet de sélectionner un commit et de l'appliquer sur la
+branche actuelle.
+
+-----
+
+## Récapitulez ce que vous avez appris
+
+[Récapitulez ce que vous avez appris - Gérez du code avec Git et GitHub - OpenClassrooms](https://openclassrooms.com/fr/courses/7162856-gerez-du-code-avec-git-et-github/7165643-recapitulez-ce-que-vous-avez-appris)
+
+Vous êtes arrivé à la fin de ce cours ! Vous devez maintenant être capable de :
+- installer et configurer Git et GitHub ;
+- utiliser les commandes de base de Git ;
+- corriger les erreurs courantes sur GitHub ;
+
+N'oubliez pas de réaliser les exercices à la fin de chaque partie pour valider ces compétences, et de vous entraîner régulièrement.
+En cas de doute, vous pouvez également consulter l'[aide-mémoire de GitHub](https://training.github.com/downloads/fr/github-git-cheat-sheet.pdf)
+qui récapitule les commandes Git les plus utilisées.
+
+<embed src="/img/OpenClassrooms/github-git-cheat-sheet.pdf" width="100%" height='800' type='application/pdf'/>
+
+C'était un plaisir de vous accompagner tout au long de ce cours.
+
+Je vous souhaite une très bonne continuation dans tous vos projets !
+
+-----
+
+## Quiz : Testez ce que vous avez appris
+
+[Testez ce que vous avez appris - OpenClassrooms](https://openclassrooms.com/fr/courses/7162856-gerez-du-code-avec-git-et-github/exercises/4059)
+
+#### Compétences évaluées
+
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-checkbox" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#00b341" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <polyline points="9 11 12 14 20 6" />
+  <path d="M20 12v6a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h9" />
+</svg> Corriger les erreurs courantes sur GitHub
+
+-----
+
+#### Question 1 : Je suis sur ma Branch1 et je viens d’ajouter un fichier "File2.txt". Je change d’avis : je veux finalement ajouter mon fichier à une nouvelle branche, "BranchFile". Que dois-je faire ?
+
+<svg style={{float: 'left'}} xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg>
+
+```shell
+git status  
+git branch BranchFile  
+git checkout BranchFile  
+git status apply
+```
+
+<svg style={{float: 'left'}} xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg>
+
+```shell
+git status  
+git stash  
+git branch BranchFile  
+git checkout BranchFile  
+git status apply
+```
+
+<svg style={{float: 'left'}} xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle-check" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#7bc62d" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M9 12l2 2l4 -4" />
+</svg>
+
+```shell
+git status  
+git stash  
+git branch BranchFile  
+git checkout BranchFile  
+git stash apply
+```
+
+*Nous abordons ici la remise. Nous allons devoir remiser les changements faits sur Branch1 pour les appliquer ensuite sur la
+nouvelle branche, "BranchFile". `git stash` permet de remiser des modifications et `git stash apply` permet d'appliquer une
+remise sur une branche. Vous allez devoir remiser vos modifications de la branch1 à la branchFile en utilisant plusieurs commandes
+dans un ordre précis :*
+*- git status pour vérifier l’état de vos fichier*<br />
+*- git stash pour remiser vos modifications*<br />
+*- git branch branchFile pour créer une nouvelle branche*<br />
+*- git checkout BranchFile pour basculer sur cette branche*<br />
+*- git stash apply pour appliquer les modifications*<br />
+
+-----
+
+#### Question 2 :
+
+```shell
+git commit --amend -m "Test"
+```
+
+**Cette commande permet de :**
+
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> revenir au commit précédent<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle-check" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#7bc62d" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M9 12l2 2l4 -4" />
+</svg> modifier le message du commit précédent<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> créer un nouveau commit avec le message "Test"<br />
+<br />
+
+*`git commit --amend -m` modifie le message du commit précédent. C'est le -m qui indique que nous allons modifier le message.*
+
+-----
+
+#### Question 3 : Je souhaite revenir sur le commit précédent et modifier son contenu en ajoutant un fichier, que dois-je faire ?
+
+<svg style={{float: 'left'}} xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg>
+
+```shell
+git commit --amend --no edit
+git add monFichierOublié
+git commit
+```
+
+<svg style={{float: 'left'}} xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle-check" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#7bc62d" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M9 12l2 2l4 -4" />
+</svg>
+
+```shell
+git add monFichierOublié
+git commit --amend --no-edit
+```
+
+<svg style={{float: 'left'}} xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg>
+
+```shell
+git commit --amend
+git add monFichierOublié
+git commit
+```
+
+<svg style={{float: 'left'}} xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg>
+
+```shell
+git add monFichierOublié
+git commit --amend
+```
+
+*- `git add monFichierOublié` permet d'ajouter mon fichier.*<br />
+*- `git commit --amend --no-edit` permet de modifier le commit sans changer le message.*
+
+-----
+
+#### Question 4 : La commande git reset peut être appliquée de 3 façons différentes. Lesquelles ?
+
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle-check" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#7bc62d" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M9 12l2 2l4 -4" />
+</svg> <code>Git reset --soft</code> / <code>Git reset --mixed</code> / <code>Git reset --hard</code><br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> <code>Git reset --down</code> / <code>Git reset --middle</code> / <code>Git reset --up</code><br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> <code>Git reset --safe</code> / <code>Git reset --regular</code> / <code>Git reset --risky</code><br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> Git reset n’existe pas.<br />
+<br />
+
+*`git reset` peut être appelée de 3 façons différentes, qui correspondent aux arguments de ligne de commande --soft, --mixed et
+--hard.*
+
+-----
+
+#### Question 5 : Quelle est la différence entre `git revert` et `git reset` ?
+
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> <code>git revert</code> ne réinitialise qu'un commit alors que <code>git reset</code> réinitialise tout.<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle-check" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#7bc62d" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M9 12l2 2l4 -4" />
+</svg> <code>git revert</code> crée un nouveau commit alors que <code>git reset</code>, non.<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> <code>git reset</code> crée un nouveau commit alors que <code>git revert</code>, non.<br />
+<br />
+
+*`git reset` ne crée jamais un nouveau commit alors que `git revert`, oui.*
+
+-----
+
+#### Question 6 : Je souhaite savoir qui a touché à une ligne en particulier dans le fichier test.html. Quelle commande vais-je devoir exécuter ?
+
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> <code>git log</code><br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> <code>git reflog</code><br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle-check" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#7bc62d" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M9 12l2 2l4 -4" />
+</svg> <code>git blame</code><br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> <code>git cherry pick</code><br />
+<br />
+
+*Seule la commande `git blame` permet **d’examiner le contenu d’un fichier ligne par ligne** et de déterminer la date à laquelle
+chaque ligne a été modifiée, et le nom de l’auteur des modifications.*
+
+-----
+
+#### Question 7 : Vous avez deux branches dans votre projet : branch1 et branch2. Sur branch1, dans le fichier “monfichier”, ligne 10, nous avons “titre”.****Sur branch2, dans le fichier “monfichier”, ligne 10, nous avons “titre !”.
+
+**Vous avez voulu fusionner ces deux branches et cela a provoqué un conflit. Que devez-vous faire ?**
+
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle-check" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#7bc62d" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M9 12l2 2l4 -4" />
+</svg> Résoudre ce conflit<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> Forcer la fusion<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> Supprimer une branche<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> Demander à Git de faire un choix<br />
+<br />
+
+*Dans cette situation, il faut résoudre le conflit. Nous avons 2 versions différentes pour la même ligne de code, la seule
+solution possible est donc de faire un choix et de décider laquelle garder.*
+
+-----
+
+#### Question 8 : Qu'est ce qu'un SHA ?
+
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> Un SHA est un numéro aléatoire permettant de se connecter à GitHub<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle-check" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#7bc62d" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M9 12l2 2l4 -4" />
+</svg> Un SHA est un identifiant pour les commits et autres actions gardés en mémoire par Git<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg>  Un SHA est un petit animal qui ronronne<br />
+<br />
+
+*Le SHA, c'est ce grand code qui vous permettra de revenir à un commit exact. C'est l’identifiant de votre action !*

@@ -1,0 +1,697 @@
+---
+sidebar_position: 2
+---
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+import { Vimeo } from 'mdx-embed';
+
+# Créez un serveur Express simple
+
+## Tirez le maximum de ce cours
+
+[Tirez le maximum de ce cours - Passez au Full stack avec Node.js, Express et MongoDB - OpenClassrooms](https://openclassrooms.com/fr/courses/6390246-passez-au-full-stack-avec-node-js-express-et-mongodb/6521356-tirez-le-maximum-de-ce-cours)
+
+<Vimeo vimeoId="373137410" />
+
+<br />
+
+Bienvenue dans ce cours sur Node, Express, et MongoDB !
+
+:::info
+Je suis **William Alexander**, **Développeur full stack** depuis de nombreuses années, et je suis ravi de vous accompagner tout au
+long de votre apprentissage du développement back-end avec Javascript.
+:::
+
+Ce cours est destiné aux développeurs ayant déjà des connaissances en JavaScript. Généralement, on commence l'apprentissage de
+JavaScript par toute la partie **front-end** : la création de pages Web dynamiques, avec manipulations du DOM et interactions
+utilisateur par exemple.
+
+L'objectif de ce cours est de vous aider à appliquer vos connaissances JavaScript sur des technologies **back-end** (Node, Express et
+MongoDB) afin de créer des serveurs complets permettant d'interagir avec des bases de données.
+
+Tout cela dans l'idée de devenir un développeur **full stack**, autrement dit un développeur capable de créer tous les éléments
+nécessaires à une application Web complète : back-end _et_ front-end.
+
+:::info
+Si vous souhaitez en apprendre plus sur le développement Web, allez découvrir notre parcours de [Développeur Web Junior](https://openclassrooms.com/fr/paths/48-developpeur-web-junior) !
+:::
+
+Parlons maintenant de la structure de ce cours afin que vous puissiez en tirer parti au maximum en toute autonomie !
+
+Chaque chapitre de ce cours commence par une **vidéo**, où je donne un aperçu de ce qui sera abordé dans le chapitre, ainsi que
+quelques explications.
+
+Ensuite, dans le **texte** du cours, je vous explique les concepts du chapitre en détail, et je vous guide dans la mise en pratique
+de ces concepts. Vous y trouverez également des **screencasts**, c'est-à-dire des enregistrements vidéo de mon écran, pour vous
+montrer ce que je vous explique dans le chapitre.
+
+:::info
+Je vous encourage à suivre ce cours **en codant**. Le développement étant un métier **pratique**, pratiquer en apprenant est la
+meilleure façon de comprendre et de retenir !
+:::
+
+À la fin de chaque partie du cours, un **quiz** vous permettra de vérifier vos nouvelles connaissances et d'identifier les chapitres
+à revoir si nécessaire.
+
+Vous êtes prêt ? Alors je vous propose de me rejoindre dès maintenant dans le prochain chapitre !
+
+-----
+
+## Configurez votre environnement de développement
+
+[Configurez votre environnement de développement - Passez au Full stack avec Node.js, Express et MongoDB - OpenClassrooms](https://openclassrooms.com/fr/courses/6390246-passez-au-full-stack-avec-node-js-express-et-mongodb/6466206-configurez-votre-environnement-de-developpement)
+
+<Vimeo vimeoId="373138409" />
+
+<br />
+
+Avant de pouvoir commencer à coder, vous devrez installer quelques outils. Commençons par installer le _runtime_ de Node.
+
+### Installez Node
+
+Accédez à [NodeJS.org](https://nodejs.org/en/) pour télécharger puis installer la dernière version de Node. Cela a pour effet
+d'installer le _runtime_ JavaScript de Node, ce qui vous permet par là même d'exécuter les serveurs Node. Cela installe également
+**Node Package Manager** ou `npm`, outil précieux pour l'installation des packages nécessaires à la création de vos projets.
+
+### Installez Angular
+
+Il vous faudra également la **CLI Angular** pour pouvoir faire tourner le serveur de développement sur lequel sera exécuté le code
+du front-end. Pour l'installer, exécutez la commande suivante à partir de votre console :
+
+```sh
+npm install -g @angular/cli
+```
+
+:::caution !
+Les utilisateurs Mac devront peut-être ajouter `sudo` pour que cela fonctionne. Pour plus d'informations sur l'utilisation de `npm`
+sur MacOS, reportez-vous à la page [_Resolving EACCES permissions errors when installing packages globally_](https://docs.npmjs.com/resolving-eacces-permissions-errors-when-installing-packages-globally),
+issue de la documentation de `npm`.
+:::
+
+### Clonez l'application front-end
+
+Il est maintenant temps de créer votre répertoire de travail pour ce cours : vous pouvez le nommer `go-fullstack` par exemple.
+
+Une fois le répertoire créé, il vous faudra cloner [le code pour l'application front-end](https://github.com/OpenClassrooms-Student-Center/go-fullstack-fr-frontend.git)
+dans un sous-répertoire appelé `frontend`. À partir de votre répertoire de travail, entrez la commande ci-dessous :
+
+```sh
+git clone https://github.com/OpenClassrooms-Student-Center/go-fullstack-fr-frontend.git frontend
+```
+
+Vous pouvez ensuite procéder comme suit :
+
+```sh
+cd frontend
+npm install
+ng serve
+```
+
+Cela installera toutes les dépendances requises par l'application front-end et lancera le serveur de développement. Désormais, si
+vous accédez à [http://localhost:4200](http://localhost:4200), vous devriez voir l'interface suivante (en supposant que vous avez
+bien suivi les étapes ci-dessus) :
+
+<figure>
+    <img src="https://user.oc-static.com/upload/2019/09/29/15697612456291_Screenshot%202019-09-29%20at%2014.47.04.png"
+         alt="Page d'accueil de l'application front-end" />
+    <figcaption>Page d'accueil de l'application front-end</figcaption>
+</figure>
+
+N'hésitez pas à explorer le contenu pour avoir un aperçu de ce que nous allons créer. Ça ne représente pas encore beaucoup, mais
+c'est là que vous intervenez !
+
+La dernière étape consiste à créer un second sous-répertoire dans votre répertoire de travail, appelé `backend`. C'est là que vous
+créerez l'application Express.
+
+:::caution !
+Veillez à avoir toujours un terminal qui exécute `ng serve` lorsque vous travaillez sur ce cours. De cette façon, vous pourrez
+toujours tester votre code en temps réel !
+:::
+
+-----
+
+## Démarrez votre serveur Node
+
+[Démarrez votre serveur Node - Passez au Full stack avec Node.js, Express et MongoDB - OpenClassrooms](https://openclassrooms.com/fr/courses/6390246-passez-au-full-stack-avec-node-js-express-et-mongodb/6466231-demarrez-votre-serveur-node)
+
+<Vimeo vimeoId="373138160" />
+
+<br />
+
+### Qu'est-ce que Node ?
+
+Avant de nous lancer dans l'écriture du code, qu'est-ce que Node ? Qu'est-ce qu'Express ? Y-a-t-il une différence ?
+
+**Node** est le _**runtime**_ qui permet d'écrire toutes nos tâches côté serveur, en JavaScript, telles que la logique métier, la
+persistance des données et la sécurité. Node ajoute également des fonctionnalités que le JavaScript du navigateur standard ne
+possède pas, comme par exemple l'accès au système de fichiers local.
+
+**Express** est, pour faire court, un **framework** reposant sur Node qui facilite la création et la gestion des serveurs Node,
+comme vous le verrez à mesure que nous progresserons dans ce cours.
+
+### Initialisez votre projet
+
+À partir de votre dossier `backend`, exécutez la commande de terminal `npm init` pour initialiser votre projet. Vous pouvez utiliser
+les options par défaut ou les modifier si vous le souhaitez. Cependant, votre point d'entrée doit être `server.js`. Vous le créerez
+bientôt.
+
+<Vimeo vimeoId="374617448" />
+
+<br />
+
+Ce processus génère un fichier `package.json` vierge, dans lequel seront enregistrés les détails de tous les packages `npm` que nous
+utiliserons pour ce projet.
+
+À ce stade, vous pouvez initialiser un dépôt Git en exécutant `git init` depuis votre dossier `backend`. N'oubliez pas de créer un
+fichier `.gitignore` contenant la ligne `node_modules` afin de ne pas envoyer ce dossier (qui deviendra volumineux) vers votre dépôt
+distant.
+
+Créez un fichier `server.js` à l'intérieur de votre dossier `backend`. Il contiendra votre premier serveur Node.
+
+### Démarrez un serveur basique
+
+<Vimeo vimeoId="374617465" />
+
+<br />
+
+Pour créer un serveur Node dans votre fichier `server.js`, il vous faudra le code suivant :
+
+```javascript
+const http = require('http');
+
+const server = http.createServer((req, res) => {
+    res.end('Voilà la réponse du serveur !');
+});
+
+server.listen(process.env.PORT || 3000);
+```
+
+Ici, vous importez le package HTTP natif de Node et l'utilisez pour créer un serveur, en passant une fonction qui sera exécutée à
+chaque appel effectué vers ce serveur. Cette fonction reçoit les objets `request` et `response` en tant qu'arguments. Dans cet
+exemple, vous utilisez la méthode `end` de la réponse pour renvoyer une réponse de type `string` à l'appelant.
+
+Dans la dernière ligne, vous configurez le serveur pour qu'il écoute :
+- soit la variable d'environnement du port grâce à `process.env.PORT` : si la plateforme de déploiement propose un port par défaut,
+c'est celui-ci qu'on écoutera ;
+- soit le port 3000, ce qui nous servira dans le cas de notre plateforme de développement.
+
+Démarrez le serveur en exécutant `node server` à partir de la ligne de commande. Pour vérifier qu'il envoie la réponse correcte,
+utilisez une fenêtre de navigateur pour accéder à [http://localhost:3000](http://localhost:3000) (en supposant que vous ayez bien
+suivi les étapes ci-dessus).
+
+Vous pouvez également utiliser un outil de test tel que [Postman](https://www.getpostman.com) pour effectuer une requête GET (ou
+tout autre type de requête d'ailleurs, car notre serveur ne fait actuellement aucune distinction !) vers la même URL :
+[http://localhost:3000](http://localhost:3000) (à nouveau, en supposant que vous ayez bien suivi les étapes ci-dessus).
+
+### Installez nodemon
+
+<Vimeo vimeoId="374617488" />
+
+<br />
+
+Pour simplifier le développement Node, vous souhaiterez peut-être installer `nodemon`. Pour ce faire, exécutez la commande suivante :
+
+```sh
+npm install -g nodemon
+```
+
+Désormais, au lieu d'utiliser `node server` pour démarrer votre serveur, vous pouvez utiliser `nodemon server`. Il surveillera les
+modifications de vos fichiers et redémarrera le serveur lorsqu'il aura besoin d'être mis à jour. Cela vous garantit d'avoir toujours
+la dernière version de votre serveur dès que vous sauvegardez, sans devoir relancer manuellement le serveur ! Vous n'aurez qu'à
+relancer la requête vers votre serveur. Pratique, n'est-ce pas ?
+
+Maintenant que vous savez démarrer un serveur de développement Node, dans le chapitre suivant, nous ajouterons Express au projet
+pour simplifier encore plus la création de notre API.
+
+-----
+
+## Créez une application Express
+
+[Créez une application Express - Passez au Full stack avec Node.js, Express et MongoDB - OpenClassrooms](https://openclassrooms.com/fr/courses/6390246-passez-au-full-stack-avec-node-js-express-et-mongodb/6466277-creez-une-application-express)
+
+<Vimeo vimeoId="373138219" />
+
+<br />
+
+Coder des serveurs Web en Node pur est possible, mais long et laborieux. En effet, cela exige d'analyser manuellement chaque demande
+entrante. L'utilisation du framework Express simplifie ces tâches, en nous permettant de déployer nos API beaucoup plus rapidement.
+Installons-le maintenant.
+
+### Installez Express
+
+<Vimeo vimeoId="374617506" />
+
+<br />
+
+Pour ajouter Express à votre projet, exécutez la commande suivante à partir de votre dossier `backend` :
+
+```sh
+npm install --save express
+```
+
+Créez un fichier `app.js`, où vous placerez votre application Express :
+
+```javascript
+const express = require('express');
+
+const app = express();
+
+module.exports = app;
+```
+
+### Exécutez l'application Express sur le serveur Node
+
+<Vimeo vimeoId="374617323" />
+
+<br />
+
+Revenez à votre fichier `server.js` et modifiez-le comme suit :
+
+```javascript
+const http = require('http');
+const app = require('./app');
+
+app.set('port', process.env.PORT || 3000);
+const server = http.createServer(app);
+
+server.listen(process.env.PORT || 3000);
+```
+
+Effectuer une demande vers ce serveur générera une erreur 404, car notre application n'a encore aucun moyen de répondre. Configurons
+une réponse simple pour nous assurer que tout fonctionne correctement, en effectuant un ajout à notre fichier `app.js` :
+
+```javascript
+const express = require('express');
+
+const app = express();
+
+app.use((req, res) => {
+    res.json({ message: 'Votre requête a bien été reçue !' });
+});
+
+module.exports = app;
+```
+
+Si vous essayez d'effectuer une requête à votre serveur, vous devez récupérer un objet JSON contenant le message que nous avons
+spécifié.
+
+Maintenant que notre serveur Node gère correctement notre application Express, voyons comment nous pouvons ajouter des fonctionnalités
+à l'application.
+
+### Ajoutez des middleware
+
+Une application Express est fondamentalement une série de fonctions appelées **_middleware_**. Chaque élément de _middleware_ reçoit
+les objets `request` et `response`, peut les lire, les analyser et les manipuler, le cas échéant. Le _middleware_ Express reçoit
+également la méthode `next`, qui permet à chaque _middleware_ de passer l'exécution au _middleware_ suivant. Voyons comment tout cela
+fonctionne.
+
+<Vimeo vimeoId="374617346" />
+
+<br />
+
+```javascript
+const express = require('express');
+
+const app = express();
+
+app.use((req, res, next) => {
+    console.log('Requête reçue !');
+    next();
+});
+
+app.use((req, res, next) => {
+    res.status(201);
+    next();
+});
+
+app.use((req, res, next) => {
+    res.json({ message: 'Votre requête a bien été reçue !' });
+    next();
+});
+
+app.use((req, res, next) => {
+    console.log('Réponse envoyée avec succès !');
+});
+
+module.exports = app;
+```
+
+Cette application Express contient quatre éléments de _middleware_ :
+- le premier enregistre « Requête reçue ! » dans la console et passe l'exécution ;
+- le deuxième ajoute un code d'état 201 à la réponse et passe l'exécution ;
+- le troisième envoie la réponse JSON et passe l'exécution ;
+- le dernier élément de _middleware_ enregistre « Réponse envoyée avec succès ! » dans la console.
+
+Il s'agit d'un serveur très simple et qui ne fait pas grand-chose pour l'instant, mais il illustre comment le _middleware_ fonctionne
+dans une application Express.
+
+### Améliorez server.js
+
+Avant d'aller plus loin dans le cours, apportons quelques améliorations à notre fichier `server.js`, pour le rendre plus stable et
+approprié pour le déploiement :
+
+```javascript
+const http = require('http');
+const app = require('./app');
+
+const normalizePort = val => {
+    const port = parseInt(val, 10);
+
+    if (isNaN(port)) {
+        return val;
+    }
+    if (port >= 0) {
+        return port;
+    }
+    return false;
+};
+const port = normalizePort(process.env.PORT || '3000');
+app.set('port', port);
+
+const errorHandler = error => {
+    if (error.syscall !== 'listen') {
+        throw error;
+    }
+    const address = server.address();
+    const bind = typeof address === 'string' ? 'pipe ' + address : 'port: ' + port;
+    switch (error.code) {
+        case 'EACCES':
+            console.error(bind + ' requires elevated privileges.');
+            process.exit(1);
+            break;
+        case 'EADDRINUSE':
+            console.error(bind + ' is already in use.');
+            process.exit(1);
+            break;
+        default:
+            throw error;
+    }
+};
+
+const server = http.createServer(app);
+
+server.on('error', errorHandler);
+server.on('listening', () => {
+    const address = server.address();
+    const bind = typeof address === 'string' ? 'pipe ' + address : 'port ' + port;
+    console.log('Listening on ' + bind);
+});
+
+server.listen(port);
+```
+
+Aperçu rapide de ce qui se passe ici :
+- la fonction `normalizePort` renvoie un port valide, qu'il soit fourni sous la forme d'un numéro ou d'une chaîne ;
+- la fonction `errorHandler` recherche les différentes erreurs et les gère de manière appropriée. Elle est ensuite enregistrée dans
+le serveur ;
+- un écouteur d'évènements est également enregistré, consignant le port ou le canal nommé sur lequel le serveur s'exécute dans la
+console.
+
+Notre serveur de développement Node est à présent opérationnel. Vous pouvez ainsi ajouter les fonctionnalités appropriées à
+l'application Express.
+
+-----
+
+## Créez une route GET
+
+[Créez une route GET - Passez au Full stack avec Node.js, Express et MongoDB - OpenClassrooms](https://openclassrooms.com/fr/courses/6390246-passez-au-full-stack-avec-node-js-express-et-mongodb/6466298-creez-une-route-get)
+
+<Vimeo vimeoId="373138300" />
+
+<br />
+
+Il est temps d'ajouter les fonctionnalités dont notre application front-end a besoin et de regarder le système complet prendre forme !
+
+Votre application front-end doit s'exécuter dans un navigateur. Exécutez donc `ng serve` à partir du répertoire front-end, accédez à
+[http://localhost:4200](http://localhost:4200) avec votre navigateur puis cliquez sur « Parties 1 + 2 ».
+
+### Remettre des articles en vente
+
+<Vimeo vimeoId="374617370" />
+
+<br />
+
+Comme vous avez pu le remarquer, l'application front-end affiche actuellement un _spinner_ et indique une erreur dans la console.
+Cela est dû au fait qu'elle tente d'accéder à notre API (qui n'existe pas encore !) et de récupérer les articles en vente. Essayons
+de rendre ces articles accessibles.
+
+Dans votre fichier `app.js`, remplacez tout le _middleware_ par le suivant :
+
+```javascript
+app.use('/api/stuff', (req, res, next) => {
+    const stuff = [
+        {
+            _id: 'oeihfzeoi',
+            title: 'Mon premier objet',
+            description: 'Les infos de mon premier objet',
+            imageUrl: 'https://cdn.pixabay.com/photo/2019/06/11/18/56/camera-4267692_1280.jpg',
+            price: 4900,
+            userId: 'qsomihvqios',
+        },
+        {
+            _id: 'oeihfzeomoihi',
+            title: 'Mon deuxième objet',
+            description: 'Les infos de mon deuxième objet',
+            imageUrl: 'https://cdn.pixabay.com/photo/2019/06/11/18/56/camera-4267692_1280.jpg',
+            price: 2900,
+            userId: 'qsomihvqios',
+        },
+    ];
+    res.status(200).json(stuff);
+});
+```
+
+La première différence que vous remarquerez est l'argument supplémentaire passé à la méthode `use` : nous lui passons un _string_,
+correspondant à la route pour laquelle nous souhaitons enregistrer cet élément de _middleware_. Dans ce cas, cette route sera
+`http://localhost:3000/api/stuff`, car il s'agit de l'URL demandée par l'application front-end.
+
+Dans ce _middleware_, nous créons un groupe d'articles avec le schéma de données spécifique requis par le front-end. Nous envoyons
+ensuite ces articles sous la forme de données JSON, avec un code 200 pour une demande réussie.
+
+Si vous effectuez une demande GET vers cette route (aussi appelée _endpoint_) à partir de Postman, vous verrez que vous recevrez le
+groupe de `stuff` mais que l'actualisation du navigateur ne semble pas fonctionner. Que se passe-t-il donc exactement ici ?
+
+### Erreurs de CORS
+
+CORS signifie « **Cross Origin Resource Sharing** ». Il s'agit d'un système de sécurité qui, par défaut, bloque les appels HTTP d'être
+effectués entre des serveurs différents, ce qui empêche donc les requêtes malveillantes d'accéder à des ressources sensibles. Dans
+notre cas, nous avons deux origines : `localhost:3000` et `localhost:4200`, et nous souhaiterions qu'elles puissent communiquer entre
+elles. Pour cela, nous devons ajouter des headers à notre objet `response`.
+
+<Vimeo vimeoId="374617404" />
+
+<br />
+
+De retour au fichier `app.js` , ajoutez le _middleware_ suivant avant la route d'API :
+
+```javascript
+app.use((req, res, next) => {
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content, Accept, Content-Type, Authorization');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS');
+    next();
+});
+```
+
+Ces headers permettent :
+- d'accéder à notre API depuis n'importe quelle origine (`'*'`) ;
+- d'ajouter les headers mentionnés aux requêtes envoyées vers notre API (`Origin`, `X-Requested-With`, etc.) ;
+- d'envoyer des requêtes avec les méthodes mentionnées (`GET`, `POST`, etc.).
+
+Comme vous pouvez le voir dans le code, le _middleware_ ne prend pas d'adresse en premier paramètre afin de s'appliquer à toutes les
+routes. Cela permettra à toutes les demandes de toutes les origines d'accéder à votre API. Vous pouvez également ajouter des URL
+d'images valides aux `stuff` renvoyés par l'API, en terminant la route GET. Si vous actualisez à présent l'application front-end,
+vous devriez voir vos articles en vente :
+
+<figure>
+    <img src="https://user.oc-static.com/upload/2019/11/05/15729833197549_Screenshot%202019-11-05%20at%2020.47.56.png"
+         alt="" />
+    <figcaption></figcaption>
+</figure>
+
+Maintenant que vous avez correctement implémenté une route basique pour remettre les `stuff` en vente, voyons comment autoriser les
+utilisateurs à proposer leurs propres articles à la vente.
+
+-----
+
+## Créez une route POST
+
+[Créez une route POST - Passez au Full stack avec Node.js, Express et MongoDB - OpenClassrooms](https://openclassrooms.com/fr/courses/6390246-passez-au-full-stack-avec-node-js-express-et-mongodb/6466326-creez-une-route-post)
+
+<Vimeo vimeoId="373128869" />
+
+<br />
+
+### Recevez des articles de l'application front-end
+
+Bien que nous ne puissions pas, pour le moment, stocker de données envoyées par l'utilisateur, puisque nous n'avons configuré aucune
+base de données, nous pouvons du moins veiller à recevoir correctement les données du front-end. L'application front-end contient un
+formulaire « Vendre un article », qui envoie une demande POST (contenant l'article à vendre) à notre route `api/stuff`. Voyons comment
+nous pouvons capturer ces données.
+
+<Vimeo vimeoId="374617427" />
+
+<br />
+
+Pour gérer la demande POST provenant de l'application front-end, nous devrons être capables d'extraire l'objet JSON de la demande.
+Il nous faudra le package `body-parser`. Installez-le en tant que dépendance de production à l'aide de `npm` :
+
+```sh
+npm install --save body-parser
+```
+
+Importez-le dans votre fichier `app.js` :
+
+```javascript
+const bodyParser = require('body-parser');
+```
+
+Enfin, définissez sa fonction `json` comme _middleware_ global pour votre application, juste après avoir défini les headers de la
+réponse :
+
+```javascript
+app.use(bodyParser.json());
+```
+
+Maintenant, `body-parser` a analysé le corps de la demande. Au lieu de l'écrire dans un _middleware_ `.use()` qui traiterait toutes
+les requêtes, nous allons l'écrire dans un `.post()` qui ne traitera que les requêtes de type POST :
+
+```javascript
+app.post('/api/stuff', (req, res, next) => {
+    console.log(req.body);
+    res.status(201).json({
+        message: 'Objet créé !'
+    });
+});
+```
+
+:::caution !
+Veillez à placer la route POST au-dessus du _middleware_ pour les demandes GET, car la logique GET interceptera actuellement toutes
+les demandes envoyées à votre point de terminaison `/api/stuff`, étant donné qu'on ne lui a pas spécifié de verbe spécifique. Placer
+la route POST au-dessus interceptera les demandes POST, en les empêchant d'atteindre le _middleware_ GET.
+:::
+
+Désormais, si vous remplissez le formulaire dans l'application front-end et que vous l'envoyez, l'objet que vous venez de créer doit
+s'enregistrer dans votre console Node !
+
+### En résumé
+
+Dans cette première partie du cours, vous avez :
+- configuré votre environnement de développement, avec toutes les dépendances requises pour démarrer ;
+- démarré votre premier serveur Node et l'avez utilisé pour gérer votre première application Express ;
+- créé deux routes pour votre application, et vous avez également implémenté CORS pour vous assurer que le front-end pouvait
+effectuer des appels vers votre application en toute sécurité.
+
+Dans la partie suivante du cours, vous ajouterez la couche de base de données MongoDB. Celle-ci est essentielle pour votre
+application et permettra de la rendre entièrement dynamique.
+
+-----
+
+## Quiz : Êtes-vous prêt à créer un serveur Express ?
+
+[Êtes-vous prêt à créer un serveur Express ? - OpenClassrooms](https://openclassrooms.com/fr/courses/6390246-passez-au-full-stack-avec-node-js-express-et-mongodb/exercises/3690)
+
+#### Compétences évaluées
+
+<i class="bi bi-check2-circle"></i> Créer un serveur web simple avec Express
+
+-----
+
+#### Question 1 : En créant un serveur HTTP avec Node, on utilise la fonction `createServer()`. On peut passer une fonction à `createServer()` qui réagira aux requêtes entrantes. Quels arguments reçoit cette fonction passée ?
+
+*Attention, plusieurs réponses sont possibles.*
+
+<i class="bi bi-check-square-fill"></i> L'objet requête<br />
+<i class="bi bi-check-square-fill"></i> L'objet réponse<br />
+<i class="bi bi-square"></i> La fonction <code>next()</code><br />
+<i class="bi bi-square"></i> La variable environnement <code>PORT</code><br />
+<br />
+
+_La fonction passée en argument à `createServer()` recevra les objets requête et réponse comme arguments, généralement raccourcis en
+`req` et `res`. La fonction `next()` existe uniquement à l'intérieur d'une application Express, et la fonction passée ne reçoit pas
+de variables environnement comme arguments._
+
+-----
+
+#### Question 2 : Dans une application Express, que doit faire le dernier middleware pour une route donnée pour empêcher les requêtes d'expirer ?
+
+<i class="bi bi-circle"></i> Modifier le statut de l'objet réponse<br />
+<i class="bi bi-record-circle"></i> Renvoyer la réponse au client<br />
+<i class="bi bi-circle"></i> Modifier les headers de l'objet réponse<br />
+<i class="bi bi-circle"></i> Appeler la fonction <code>next()</code><br />
+<br />
+
+_Le dernier middleware d'une chaîne doit renvoyer la réponse au client pour empêcher la requête d'expirer._
+
+-----
+
+#### Question 3 : À quoi sert la fonction `next()` ?
+
+<i class="bi bi-circle"></i> Elle renvoie la réponse au client<br />
+<i class="bi bi-circle"></i> Elle empêche les erreurs CORS<br />
+<i class="bi bi-record-circle"></i> Elle passe l'exécution au prochain middleware de la chaîne<br />
+<i class="bi bi-circle"></i> Elle analyse le corps de la requête<br />
+<br />
+
+_Un middleware appelle la fonction `next()` pour passer l'exécution au prochain middleware de la chaîne._
+
+-----
+
+#### Question 4 : Un code HTTP de 200 représente généralement :
+
+<i class="bi bi-circle"></i> Une erreur serveur<br />
+<i class="bi bi-record-circle"></i> Une requête réussie<br />
+<i class="bi bi-circle"></i> Une création de données réussie<br />
+<i class="bi bi-circle"></i> Une erreur d'authentification<br />
+<br />
+
+_Un code HTTP de 200 est le code standard pour une requête réussie, surtout pour des requêtes GET._
+
+-----
+
+#### Question 5 : Un code HTTP de 201 représente généralement :
+
+<i class="bi bi-circle"></i> Une erreur serveur<br />
+<i class="bi bi-circle"></i> Une requête réussie<br />
+<i class="bi bi-record-circle"></i> Une création de données réussie<br />
+<i class="bi bi-circle"></i> Une erreur d'authentification<br />
+<br />
+
+_Un code 201 signifie généralement que la requête a réussi, et a causé la création d'une nouvelle ressource._
+
+-----
+
+#### Question 6 : Une erreur CORS peut survenir quand :
+
+<i class="bi bi-circle"></i> Une requête HTTP expire<br />
+<i class="bi bi-circle"></i> Le serveur répond avec une erreur inconnue<br />
+<i class="bi bi-circle"></i> La connexion est perdue pendant un transfert de données<br />
+<i class="bi bi-record-circle"></i> Le serveur et le client ne partagent pas la même origine<br />
+<br />
+
+_La sécurité CORS est une mesure de sécurité par défaut pour empêcher l'utilisation de ressources par des origines non-autorisées._
+
+-----
+
+#### Question 7 : Quelle méthode permet d'empêcher des erreurs CORS ?
+
+<i class="bi bi-record-circle"></i> Configurer des headers spécifiques sur l'objet réponse<br />
+<i class="bi bi-circle"></i> Configurer des headers spécifiques sur l'objet requête<br />
+<i class="bi bi-circle"></i> Utiliser le bon code HTTP<br />
+<i class="bi bi-circle"></i> Envoyer la réponse en format JSON<br />
+<br />
+
+_Configurer les bons headers sur l'objet réponse permet l'envoi et la réception de requêtes et de réponses sans erreurs CORS._
+
+-----
+
+#### Question 8 : Le package `body-parser` :
+
+<i class="bi bi-circle"></i> Permet d'éviter les erreurs CORS<br />
+<i class="bi bi-circle"></i> Permet la persistance de données<br />
+<i class="bi bi-record-circle"></i> Rend les données du corps de la requête exploitable<br />
+<i class="bi bi-circle"></i> Convertit les données de l'objet réponse en JSON<br />
+<br />
+
+_Quand une requête HTTP est reçue par le serveur, son corps est rarement sous forme utile. Le package body-parser analyse le corps
+de la requête et le formate pour en faciliter l'exploitation._

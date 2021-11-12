@@ -1,0 +1,2640 @@
+---
+sidebar_position: 3
+---
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+import { Vimeo } from 'mdx-embed';
+
+# Mettez en forme vos pages avec CSS
+
+## Mettez en place le CSS
+
+[Mettez en place le CSS - Apprenez à créer votre site web avec HTML5 et CSS3 - OpenClassrooms](https://openclassrooms.com/fr/courses/1603881-apprenez-a-creer-votre-site-web-avec-html5-et-css3/1605060-mettez-en-place-le-css)
+
+<Vimeo vimeoId="243805819" />
+
+<br />
+
+Après avoir passé toute une première partie du cours à ne travailler que sur le HTML, nous allons maintenant découvrir le CSS que
+j'avais volontairement mis à l'écart. Le CSS n'est pas plus compliqué que le HTML. Il vient le compléter pour vous aider à mettre
+en forme votre page web.
+
+Dans ce premier chapitre sur le CSS, nous allons voir la théorie sur le CSS : qu'est-ce que c'est ? À quoi cela ressemble-t-il ?
+Où est-ce qu'on écrit du code CSS ? Ces aspects théoriques ne sont pas bien compliqués, mais vous devez obligatoirement les
+connaître car c'est la base du CSS. C'est d'ailleurs la seule chose que je vous demanderai de retenir par cœur en CSS, vous pourrez
+retrouver le reste dans le mémo en annexe.
+
+Allez, ne traînons pas, je vois que vous brûlez d'impatience !
+
+### La petite histoire du CSS
+
+Je vous avais averti dès le début de ce cours : nous allons apprendre deux langages. Nous avons déjà bien entamé notre découverte
+du HTML, même s'il reste encore de nombreuses choses à apprendre (nous y reviendrons dans quelques chapitres). En revanche, il est
+temps maintenant de nous intéresser au CSS.
+
+CSS (_Cascading Style Sheets_), c'est cet autre langage qui vient compléter le HTML.<br />
+Vous vous souvenez de son rôle ? _Gérer la mise en forme de votre site._
+
+#### Petit rappel : à quoi sert CSS ?
+
+CSS ? C'est lui qui vous permet de choisir la couleur de votre texte.<br />
+Lui qui vous permet de sélectionner la police utilisée sur votre site.<br />
+Lui encore qui permet de définir la taille du texte, les bordures, le fond…
+
+Et aussi, c'est lui qui permet de faire la mise en page de votre site. Vous pourrez dire : je veux que mon menu soit à gauche et
+occupe telle largeur, que l'en-tête de mon site soit calé en haut et qu'il soit toujours visible, etc.
+
+Souvenez-vous de ce petit comparatif que nous avions vu dès le premier chapitre (figure suivante).
+
+![La même page HTML, sans et avec CSS (www.csszengarden.com)](https://user.oc-static.com/files/339001_340000/339428.png)
+
+La même page HTML, sans et avec CSS (www.csszengarden.com)
+
+Grâce au HTML, nous avons pu rédiger le contenu de notre site, mais il est brut de décoffrage. Le CSS vient compléter ce code pour
+mettre en forme tout cela et donner au contenu l'apparence que l'on souhaite.
+
+#### CSS : des débuts difficiles
+
+Il faut savoir qu'aux débuts du Web, CSS n'existait pas. En fait, il n'y avait initialement que le langage HTML.<br />
+Le HTML est né en 1991, et CSS en 1996. Alors, vous vous dites sûrement : comment faisait-on la mise en forme, de 1991 à 1996 ? Eh
+bien, uniquement en HTML ! Il y avait en effet des balises HTML dédiées à la mise en forme. `<font color="#aab1c3">`, par exemple,
+permettait de définir la couleur du texte.
+
+Cependant, les pages HTML commençaient à devenir assez complexes. Il y avait de plus en plus de balises et c'était un joyeux
+mélange entre le fond et la forme, qui rendait la mise à jour des pages web de plus en plus complexe. C'est pour cela que l'on a
+créé le langage CSS.
+
+Cependant, le CSS n'a pas été adopté immédiatement par les webmasters, loin de là. Il fallait se défaire de certaines mauvaises
+habitudes et cela a pris du temps. Encore aujourd'hui, on peut trouver des sites web avec des balises HTML de mise en forme
+anciennes et obsolètes, comme `<font>` !
+
+#### CSS : la prise en charge des navigateurs
+
+Tout comme le HTML, le CSS a évolué. Je vous avais indiqué qu'il y avait quatre versions importantes de CSS :
+- CSS 1 ;
+- CSS 2.0 ;
+- CSS 2.1 ;
+- CSS 3.
+
+Ce sont les navigateurs web qui font le travail le plus complexe : ils doivent _lire_ le code CSS et _comprendre_ comment afficher
+la page.
+
+Au début des années 2000, Internet Explorer était le navigateur le plus répandu, mais sa gestion du CSS est longtemps restée assez
+médiocre (pour ne pas dire carrément mauvaise). C'était la grande époque de la version 6 (IE6).
+
+Depuis, de nombreux navigateurs sont arrivés et ont chahuté Internet Explorer : Mozilla Firefox bien sûr, mais aussi Google Chrome.
+Et je ne vous parle pas du succès des Mac et iPhone avec leur navigateur Safari. Cela a incité Microsoft à réagir et publier
+(après une longue période d'inactivité) IE 7, puis IE 8 et IE 9, 10, 11... et maintenant, Edge.
+
+:::note ?
+Bon, ton cours d'histoire, c'est bien joli, mais en quoi cela me concerne-t-il aujourd'hui ?
+:::
+
+_Que faut-il retenir de tout cela ?_ Que les navigateurs ne connaissent pas toutes les propriétés CSS qui existent. Plus le
+navigateur est vieux, moins il connaît de fonctionnalités CSS.
+
+Je vais vous présenter dans ce cours un certain nombre de fonctionnalités de CSS qui ne marchent pas forcément sur les navigateurs
+les plus vieux. Je ne peux pas l'éviter, c'est comme cela : _aucun navigateur ne connaît parfaitement toutes les fonctionnalités
+CSS_ de toute façon ! Au pire, si le navigateur ne connaît pas une propriété CSS, il l'ignore et ne met pas en forme, mais cela ne
+fait pas planter votre page : celle-ci sera donc toujours lisible.
+
+Je vous recommande fortement de mettre dans vos favoris le site [www.caniuse.com](https://www.caniuse.com) qui propose des tables
+de compatibilité des fonctionnalités de HTML et CSS sur différents navigateurs (et sur leurs différentes versions) :
+
+![Table de compatibilité CSS sur caniuse.com](https://s3-eu-west-1.amazonaws.com/sdz-upload/prod/upload/caniuse1.png)
+
+Table de compatibilité CSS sur caniuse.com
+
+:::info
+Pour valider vos compétences avec un diplôme bac+2, suivez la [formation développeur web](https://openclassrooms.com/fr/paths/185-developpeur-web)
+avec OpenClassrooms. 6 mois en moyenne sont nécessaires pour finaliser cette [formation à distance](https://openclassrooms.com/fr/paths),
+qui peut aussi être suivie en [alternance ou contrat d’apprentissage](https://openclassrooms.com/fr/apprenticeship).
+:::
+
+### Où écrit-on le CSS ?
+
+Vous avez le choix car on peut écrire du code en langage CSS à trois endroits différents :
+- dans un fichier `.css`  (_méthode la plus recommandée_) ;
+- dans l'en-tête `<head>`  du fichier HTML ;
+- directement dans les balises du fichier HTML _via_ un attribut `style`  (_méthode la moins recommandée_).
+
+Je vais vous présenter ces trois méthodes, mais sachez d'ores et déjà que la première… est la meilleure.
+
+#### Dans un fichier `.css`  (recommandé)
+
+Comme je viens de vous le dire, on écrit le plus souvent le code CSS dans un fichier spécial ayant l'extension `.css`  (contrairement aux fichiers HTML qui ont l'extension `.html`  ). C'est la méthode la plus pratique et la plus souple. Cela nous évite de tout mélanger dans un même fichier. J'utiliserai cette technique dans toute la suite de ce cours.
+
+Commençons à pratiquer dès maintenant ! Nous allons partir du fichier HTML suivant :
+
+```html
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <link rel="stylesheet" href="style.css" />
+        <title>Premiers tests du CSS</title>
+    </head>
+
+    <body>
+        <h1>Mon super site</h1>
+        
+        <p>Bonjour et bienvenue sur mon site !</p>
+        <p>Pour le moment, mon site est un peu <em>vide</em>. Patientez encore un peu !</p>
+    </body>
+</html>
+```
+
+Vous noterez le contenu de la ligne 5, `<link rel="stylesheet" href="style.css" />` : c'est elle qui indique que ce fichier HTML
+est associé à un fichier appelé `style.css` et chargé de la mise en forme.
+
+Enregistrez ce fichier sous le nom que vous voulez (par exemple, `page.html`). Pour le moment, rien d'extraordinaire à part la
+nouvelle balise que nous avons ajoutée.
+
+Maintenant, créez un _nouveau_ fichier vide dans votre éditeur de texte (par exemple Sublime Text) et copiez-y ce bout de code
+CSS (rassurez-vous, je vous expliquerai tout à l'heure ce qu'il veut dire) :
+
+```css
+p
+{
+    color: blue;
+}
+```
+
+:::info
+Pour obtenir la coloration du code dans Sublime Text, enregistrez bien votre fichier avec l'extension `.css` d'abord.
+:::
+
+Enregistrez le fichier en lui donnant un nom qui se termine par `.css`, comme `style.css`. Placez ce fichier `.css` dans le même
+dossier que votre fichier `.html`.
+
+Dans Sublime Text, vous devriez observer quelque chose de similaire à la figure suivante.
+
+![Fichiers HTML et CSS dans Sublime Text](https://s3-eu-west-1.amazonaws.com/sdz-upload/prod/upload/sublime_text_html_css_files.png)
+
+Fichiers HTML et CSS dans Sublime Text
+
+Dans votre explorateur de fichiers, vous devriez les voir apparaître côte à côte. D'un côté le `.html`, de l'autre le `.css`, comme
+à la figure suivante.
+
+![Fichiers HTML et CSS dans l'explorateur de fichiers](https://s3-eu-west-1.amazonaws.com/sdz-upload/prod/upload/html_css1.png)
+
+Fichiers HTML et CSS dans l'explorateur de fichiers
+
+Ouvrez maintenant votre fichier `page.html` dans votre navigateur pour le tester, comme vous le faites d'habitude. Regardez, c'est
+magique : vos paragraphes sont écrits en bleu, comme dans la figure suivante !
+
+![Le texte est écrit en bleu](https://user.oc-static.com/files/342001_343000/342657.png)
+
+Le texte est écrit en bleu
+
+:::note !
+Il est inutile d'ouvrir directement le fichier `style.css` dans le navigateur. Il faut ouvrir le fichier `page.html` (il fera
+automatiquement appel au fichier `style.css`).
+:::
+
+#### Dans l'en-tête `<head>`  du fichier HTML
+
+Il existe une autre méthode pour utiliser du CSS dans ses fichiers HTML : cela consiste à insérer le code CSS directement dans
+une balise `<style>` à l'intérieur de l'en-tête `<head>`.
+
+Voici comment on peut obtenir exactement le même résultat avec un seul fichier `.html` qui contient le code CSS (lignes 5 à 10) :
+
+```html
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <style>
+            p
+            {
+                color: blue;
+            }
+        </style>
+        <title>Premiers tests du CSS</title>
+    </head>
+
+    <body>
+        <h1>Mon super site</h1>
+        
+        <p>Bonjour et bienvenue sur mon site !</p>
+        <p>Pour le moment, mon site est un peu <em>vide</em>. Patientez encore un peu !</p>
+    </body>
+</html>
+```
+
+Testez, vous verrez que le résultat est le même.
+
+#### Directement dans les balises (non recommandé)
+
+Dernière méthode, à manipuler avec précaution : vous pouvez ajouter un attribut `style` à n'importe quelle balise. Vous insérerez
+votre code CSS directement dans cet attribut :
+
+```html
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <title>Premiers tests du CSS</title>
+    </head>
+
+    <body>
+        <h1>Mon super site</h1>
+        
+        <p style="color: blue;">Bonjour et bienvenue sur mon site !</p>
+        <p>Pour le moment, mon site est un peu <em>vide</em>. Patientez encore un peu !</p>
+    </body>
+</html>
+```
+
+Cette fois, seul le texte du premier paragraphe (ligne 11), dont la balise contient le code CSS, sera coloré en bleu (figure
+suivante).
+
+![Le premier paragraphe est écrit en bleu](https://user.oc-static.com/files/343001_344000/343346.png)
+
+Le premier paragraphe est écrit en bleu
+
+#### Quelle méthode choisir ?
+
+:::note ?
+Je trouve que la première méthode que tu recommandes est plus compliquée que les deux autres ! Pourquoi nous conseilles-tu de
+créer deux fichiers, j'étais bien, moi, avec juste un fichier `.html` !
+:::
+
+Je vous recommande fortement de prendre l'habitude de travailler avec la première méthode parce que c'est celle utilisée par la
+majorité des webmasters… Pourquoi ?
+
+Pour le moment, vous faites vos tests sur un seul fichier HTML. Cependant, votre site sera plus tard constitué de plusieurs pages
+HTML, on est d'accord ?<br  />
+Imaginez : si vous placez le code CSS directement dans le fichier HTML, il faudra copier ce code dans tous les fichiers HTML de
+votre site ! Et si demain vous changez d'avis, par exemple si vous voulez que vos paragraphes soient écrits en rouge et non en
+bleu, il faudra modifier chaque fichier HTML un à un, comme le montre la figure suivante.
+
+![Le code CSS est répété dans chaque fichier HTML](https://user.oc-static.com/files/342001_343000/342651.png)
+
+Le code CSS est répété dans chaque fichier HTML
+
+Si vous travaillez avec un fichier CSS externe, vous n'aurez besoin d'écrire cette instruction qu'une seule fois pour tout votre
+site, comme le montre la figure suivante.
+
+![Le code CSS est donné une fois pour toutes dans un fichier CSS](https://user.oc-static.com/files/342001_343000/342652.png)
+
+Le code CSS est donné une fois pour toutes dans un fichier CSS
+
+### Appliquer un style : sélectionner une balise
+
+Maintenant que nous savons où placer le code CSS, intéressons-nous de plus près à ce code. Je vous ai donné, sans vous l'expliquer,
+un premier bout de code CSS :
+
+```css
+p
+{
+    color: blue;
+}
+```
+
+Dans un code CSS comme celui-ci, on trouve trois éléments différents :
+
+- **des noms de balises** : on écrit les noms des balises dont on veut modifier l'apparence. Par exemple, si je veux modifier
+l'apparence de tous les paragraphes `<p>`, je dois écrire `p` ;
+- **des propriétés CSS** : les « effets de style » de la page sont rangés dans des propriétés. Il y a par exemple la propriété
+`color` qui permet d'indiquer la couleur du texte, `font-size` qui permet d'indiquer la taille du texte, etc. Il y a beaucoup de
+propriétés CSS et, comme je vous l'ai dit, je ne vous obligerai pas à les connaître toutes par cœur ;
+- **les valeurs** : pour chaque propriété CSS, on doit indiquer une valeur. Par exemple, pour la propriété `color`, il faut
+indiquer le nom de la couleur. Pour `font-size`, il faut indiquer quelle taille on veut, etc.
+
+Schématiquement, une feuille de style CSS ressemble donc à cela :
+
+```css
+balise1
+{
+    propriete1: valeur1;
+    propriete2: valeur2;
+    propriete3: valeur3;
+}
+
+balise2
+{
+    propriete1: valeur1;
+    propriete2: valeur2;
+    propriete3: valeur3;
+    propriete4: valeur4;
+}
+
+balise3
+{
+    propriete1: valeur1;
+}
+```
+
+Vous repérez dans cet extrait de code les balises, propriétés et valeurs dont je viens de vous parler.
+
+Comme vous le voyez, on écrit le nom de la balise (par exemple `h1`) et on ouvre des accolades pour, à l'intérieur, mettre les
+propriétés et valeurs que l'on souhaite. On peut mettre autant de propriétés que l'on veut à l'intérieur des accolades. Chaque
+propriété est suivie du symbole « deux-points » ( : ) puis de la valeur correspondante. Enfin, chaque ligne se termine par un
+point-virgule ( ; ).
+
+Je vous apprendrai de nombreuses propriétés dans les chapitres suivants. Pour le moment, dans les exemples, on va juste changer
+la couleur pour s'entraîner.
+
+Le code CSS que nous avons utilisé jusqu'ici :
+
+```css
+p
+{
+    color: blue;
+}
+```
+
+… signifie donc en français : « _Je veux que tous mes paragraphes soient écrits en bleu._ ». Le résultat est visible à la figure
+suivante.
+
+![Paragraphes écrits en bleu](https://user.oc-static.com/files/342001_343000/342657.png)
+
+Paragraphes écrits en bleu
+
+Essayez de changer le nom de la balise affectée par le code CSS. Par exemple, si j'écris `h1`, c'est le titre qui sera écrit en
+bleu. Modifiez votre fichier `style.css` comme ceci :
+
+```css
+h1
+{
+    color: blue;
+}
+```
+
+Maintenant, ouvrez à nouveau votre page HTML (souvenez-vous, c'est la page HTML qu'on ouvre dans le navigateur, pas le fichier
+CSS !) : vous devriez voir son titre s'afficher en bleu (figure suivante) !
+
+![Titre écrit en bleu](https://user.oc-static.com/files/342001_343000/342654.png)
+
+Titre écrit en bleu
+
+#### Appliquer un style à plusieurs balises
+
+Prenons le code CSS suivant :
+
+```css
+h1
+{
+    color: blue;
+}
+
+em
+{
+    color: blue;
+}
+```
+
+Il signifie que nos titres `<h1>` et nos textes importants `<em>` doivent s'afficher en bleu. Par contre, c'est un peu répétitif,
+vous ne trouvez pas ?
+
+Heureusement, il existe un moyen en CSS d'aller plus vite si les deux balises doivent avoir la même présentation. Il suffit de
+combiner la déclaration en séparant les noms des balises par une virgule, comme ceci :
+
+```css
+h1, em
+{
+    color: blue;
+}
+```
+
+Le résultat se trouve à la figure suivante.
+
+![Titre et texte important écrits en bleu](https://user.oc-static.com/files/342001_343000/342656.png)
+
+Titre et texte important écrits en bleu
+
+Cela signifie : « _Je veux que le texte de mes `<h1>` et `<em>` soit écrit en bleu_ ».
+
+Vous pouvez indiquer autant de balises à la suite que vous le désirez.
+
+#### Des commentaires dans du CSS
+
+Comme en HTML, il est possible de mettre des commentaires. Les commentaires ne seront pas affichés, ils servent simplement à
+indiquer des informations pour vous, par exemple pour vous y retrouver dans un looong fichier CSS.
+
+D'ailleurs, vous allez vous en rendre compte, en général le fichier HTML est assez court et la feuille CSS assez longue (si elle
+contient tous les éléments de style de votre site, c'est un peu normal). Notez qu'il est possible de créer plusieurs fichiers CSS
+pour votre site si vous ressentez le besoin de séparer un peu votre code CSS (en fonction des différentes sections de votre site,
+par exemple).
+
+… De quoi on parlait déjà ? Ah oui, les commentaires en CSS.
+
+Donc, pour faire un commentaire, c'est facile ! Tapez `/*`, suivi de votre commentaire, puis `*/` pour terminer votre commentaire.<br />
+Vos commentaires peuvent être écrits sur une ou plusieurs lignes. Par exemple :
+
+```css
+/*
+style.css
+---------
+ 
+Par Mathieu Nebra
+*/
+ 
+p
+{
+    color: blue; /* Les paragraphes seront en bleu */
+}
+```
+
+Il est possible que j'utilise les commentaires dans la suite du cours, pour vous donner des explications à l'intérieur même des
+fichiers `.css`.
+
+### Appliquer un style : class et id
+
+Ce que je vous ai montré jusqu'ici a quand même un défaut : cela implique par exemple que TOUS les paragraphes possèdent la même
+présentation (ici, ils seront donc tous écrits en bleu).<br />
+Comment faire pour que certains paragraphes seulement soient écrits d'une manière différente ? On pourrait placer le code CSS
+dans un attribut `style` sur la balise que l'on vise (c'est la technique que je vous ai présentée un peu plus tôt) mais, comme je
+vous l'ai dit, ce n'est pas recommandé (il vaut mieux utiliser un fichier CSS externe).
+
+Pour résoudre le problème, on peut utiliser ces attributs spéciaux _qui fonctionnent sur toutes les balises_ :
+- l'attribut `class` ;
+- l'attribut `id`.
+
+Que les choses soient claires dès le début : les attributs `class` et `id` sont quasiment identiques. Il y a seulement une petite
+différence que je vous dévoilerai plus bas.<br />
+Pour le moment, et pour faire simple, on ne va s'intéresser qu'à l'attribut `class`.
+
+Comme je viens de vous le dire, c'est un attribut que l'on peut mettre sur n'importe quelle balise, aussi bien titre que paragraphe,
+image, etc.
+
+```html
+<h1 class=""> </h1>
+<p class=""> </p>
+<img class="" />
+```
+
+:::note ?
+Oui, mais que met-on comme valeur à l'attribut `class` ?
+:::
+
+En fait, vous devez écrire un nom qui sert à identifier la balise. Ce que vous voulez, du moment que le nom commence par une lettre.
+
+Par exemple, je vais associer la classe `introduction` à mon premier paragraphe (ligne 12) :
+
+```html
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <link rel="stylesheet" href="style.css" />
+        <title>Premiers tests du CSS</title>
+    </head>
+
+    <body>
+        <h1>Mon super site</h1>
+        
+        <p class="introduction">Bonjour et bienvenue sur mon site !</p>
+        <p>Pour le moment, mon site est un peu <em>vide</em>. Patientez encore un peu !</p>
+    </body>
+</html>
+```
+
+Maintenant que c'est fait, votre paragraphe est identifié. Il a un nom : `introduction`. Vous allez pouvoir réutiliser ce nom dans
+le fichier CSS pour dire : « _Je veux que seules les balises qui ont comme nom 'introduction' soient affichées en bleu_ ».
+
+Pour faire cela en CSS, indiquez le nom de votre classe en commençant par un point, comme ci-dessous :
+
+```css
+.introduction
+{
+    color: blue;
+}
+```
+
+Testez le résultat : seul votre paragraphe appelé `introduction` va s'afficher en bleu (figure suivante) !
+
+![Seul le premier paragraphe s'affiche en bleu](https://user.oc-static.com/files/342001_343000/342660.png)
+
+Seul le premier paragraphe s'affiche en bleu
+
+:::note
+Et l'attribut `id`, alors ?
+:::
+
+Lui, il fonctionne exactement de la même manière que `class`, à un détail près : il ne peut être utilisé _qu'une fois_ dans le
+code.
+
+Quel intérêt ? Il y en a assez peu pour tout vous dire ; cela vous sera utile si vous faites du JavaScript plus tard, pour
+reconnaître certaines balises. D'ailleurs, nous avons déjà vu l'attribut `id` dans le chapitre sur les liens (pour réaliser des
+ancres). En pratique, nous ne mettrons des `id` que sur des éléments qui sont uniques dans la page, comme par exemple le logo :
+
+```html
+<img src="images/logo.png" alt="Logo du site" id="logo">
+```
+
+Si vous utilisez des `id`, lorsque vous définirez leurs propriétés dans le fichier CSS, il faudra faire précéder le nom de l'`id`
+par un dièse (#) :
+
+```css
+#logo
+{
+    /* Indiquez les propriétés CSS ici */
+}
+```
+
+Je ne vous propose pas de le tester, cela fonctionne exactement comme `class`.
+
+:::info
+Si vous vous emmêlez les pinceaux entre `class` et `id`, retenez que deux balises peuvent avoir le même nom avec l'attribut `class`.
+Un nom d'`id` doit en revanche être unique dans la page HTML.
+:::
+
+#### Les balises universelles
+
+Il arrivera parfois que vous ayez besoin d'appliquer une `class` (ou un `id`) à certains mots qui, à l'origine, ne sont pas
+entourés par des balises.
+
+En effet, le problème de `class`, c'est qu'il s'agit d'un attribut. Vous ne pouvez donc en mettre que sur une balise. Si, par
+exemple, je veux modifier uniquement « bienvenue » dans le paragraphe suivant :
+
+```html
+<p>Bonjour et bienvenue sur mon site !</p>
+```
+
+Cela serait facile à faire s'il y avait une balise autour de « bienvenue » , mais malheureusement, il n'y en a pas. Par chance, on
+a inventé… la balise-qui-ne-sert-à-rien.
+
+En fait, on a inventé deux balises dites **_universelles_**, qui n'ont aucune signification particulière (elles n'indiquent pas que
+le mot est important, par exemple). Il y a une différence minime (mais significative !) entre ces deux balises :
+- `<span> </span>` : c'est une balise de type **inline**, c'est-à-dire une balise que l'on place au sein d'un paragraphe de texte
+pour sélectionner certains mots uniquement. Les balises `<strong>` et `<em>` sont de la même famille. Cette balise s'utilise donc
+au milieu d'un paragraphe et c'est celle dont nous allons nous servir pour colorer « bienvenue » ;
+- `<div> </div>` : c'est une balise de type **block**, qui entoure un bloc de texte. Les balises `<p>`, `<h1>`, etc., sont de la
+même famille. Ces balises ont quelque chose en commun : elles créent un nouveau « bloc » dans la page et provoquent donc
+obligatoirement un retour à la ligne. `<div>` est une balise fréquemment utilisée dans la construction d'un design, comme nous le
+verrons plus tard.
+
+Pour le moment donc, nous allons utiliser plutôt la balise `<span>`. On la met autour de « bienvenue », on lui ajoute une classe
+(du nom qu'on veut), on crée le CSS et c'est gagné !
+
+```html
+<p>Bonjour et <span class="salutations">bienvenue</span> sur mon site !</p>
+```
+
+```css
+.salutations
+{
+    color: blue;
+}
+```
+
+Vous pouvez voir le résultat à la figure suivante.
+
+![Le mot « bienvenue » est écrit en bleu](https://user.oc-static.com/files/342001_343000/342661.png)
+
+Le mot « bienvenue » est écrit en bleu
+
+### Appliquer un style : les sélecteurs avancés
+
+En CSS, le plus difficile est de savoir cibler le texte dont on veut changer la forme. Pour cibler (on dit « sélectionner ») les
+éléments de la page à modifier, on utilise ce qu'on appelle des **_sélecteurs_**. Vous en avez déjà utilisé quelques-uns un peu
+plus tôt dans ce chapitre, résumons-les pour commencer.
+
+#### Les sélecteurs que vous connaissez déjà
+
+Ces sélecteurs, que nous avons vus précédemment, sont de loin les plus couramment utilisés. Il faut les connaître par cœur.
+Commençons par la base de la base :
+
+```css
+p
+{
+
+}
+```
+
+… signifie « Je veux toucher tous les paragraphes ». Après, c'est à vous de dire ce que vous faites à ces paragraphes (vous les
+écrivez en bleu, par exemple).
+
+Nous avons aussi vu :
+
+```css
+h1, em
+{
+
+}
+```
+
+… qui signifie « Tous les titres et tous les textes importants ». Nous avons sélectionné deux balises d'un coup.
+
+Et enfin, nous avons vu comment sélectionner des balises précises à qui nous avons donné un nom, grâce aux attributs `class` et
+`id` :
+
+```
+.class
+{
+
+}
+
+#id
+{
+
+}
+```
+
+Vous savez quoi ? Il existe des dizaines d'autres façons de cibler des balises en CSS ! Nous n'allons pas toutes les voir car il y
+en a beaucoup et certaines sont complexes, mais voici déjà de quoi vous permettre d'être plus efficace en CSS !
+
+#### Les sélecteurs avancés
+
+##### * : sélecteur universel
+
+```css
+*
+{
+
+}
+```
+
+Sélectionne toutes les balises sans exception. On l'appelle le _sélecteur universel_.
+
+##### A B : une balise contenue dans une autre
+
+```css
+h3 em
+{
+
+}
+```
+
+Sélectionne toutes les balises `<em>` situées à l'intérieur d'une balise `<h3>`. Notez qu'il n'y a pas de virgule entre les deux
+noms de balises.
+
+Exemple de code HTML correspondant :
+
+```html
+<h3>Titre avec <em>texte important</em></h3>
+```
+
+##### A + B : une balise qui en suit une autre
+
+```css
+h3 + p
+{
+
+}
+```
+
+Sélectionne la première balise `<p>` située après un titre `<h3>`.
+
+Exemple :
+
+```html
+<h3>Titre</h3>
+
+<p>Paragraphe</p>
+```
+
+##### A[attribut] : une balise qui possède un attribut
+
+```css
+a[title]
+{
+
+}
+```
+
+Sélectionne tous les liens `<a>` qui possèdent un attribut `title`.
+
+Exemple :
+
+```html
+<a href="http://site.com" title="Infobulle">
+```
+
+##### A[attribut="Valeur"] : une balise, un attribut et une valeur exacte
+
+```css
+a[title="Cliquez ici"]
+{
+
+}
+```
+
+Idem, mais l'attribut doit en plus avoir exactement pour valeur « Cliquez ici ».
+
+Exemple :
+
+```html
+<a href="http://site.com" title="Cliquez ici">
+```
+
+##### A[attribut*="Valeur"] : une balise, un attribut et une valeur
+
+```css
+a[title*="ici"]
+{
+
+}
+```
+
+Idem, l'attribut doit cette fois contenir dans sa valeur le mot « ici » (peu importe sa position).
+
+Exemple :
+
+```html
+<a href="http://site.com" title="Quelque part par ici">
+```
+
+#### D'autres sélecteurs existent !
+
+Je ne vous ai présenté ici qu'une partie des sélecteurs CSS, mais sachez qu'il en existe beaucoup d'autres. Si vous voulez une
+liste complète, vous pouvez vous renseigner directement à la source : sur le [site du W3C](https://www.w3.org/Style/css3-selectors-updates/WD-css3-selectors-20010126.fr.html#selectors) !
+C'est très complet.
+
+Sachez que nous découvrirons certains de ces autres sélecteurs dans la suite de ce cours !
+
+### En résumé
+
+- CSS est un autre langage qui vient compléter le HTML. Son rôle est de mettre en forme votre page web.
+- Il faut être vigilant sur la compatibilité des navigateurs avec certaines fonctionnalités récentes de CSS3. Quand un navigateur
+ne connaît pas une instruction de mise en forme, il l'ignore simplement.
+- On peut écrire le code CSS à plusieurs endroits différents, le plus conseillé étant de créer un fichier séparé portant
+l'extension `.css` (exemple : `style.css`).
+- En CSS, on sélectionne quelles portions de la page HTML on veut modifier, et on change leur présentation avec des propriétés CSS :
+    
+```css
+balise1
+{
+    propriete1: valeur1;
+    propriete2: valeur2;
+}
+```
+
+- Il existe de nombreuses façons de sélectionner la portion de la page que l'on veut mettre en forme. Par exemple, on peut viser :
+    - toutes les balises d'un même type, en écrivant simplement leur nom ( `h1`  , par exemple) ;
+    - certaines balises spécifiques, auxquelles on a donné des noms à l'aide des attributs `class` ou `id` (`.nomclasse` ou `#nomid`) ;
+    - uniquement les balises qui se trouvent à l'intérieur d'autres balises (`h3 em`).
+    - etc.
+
+-----
+
+## Formatez du texte
+
+[Formatez du texte - Apprenez à créer votre site web avec HTML5 et CSS3 - OpenClassrooms](https://openclassrooms.com/fr/courses/1603881-apprenez-a-creer-votre-site-web-avec-html5-et-css3/1605329-formatez-du-texte)
+
+<Vimeo vimeoId="243805907" />
+
+<br />
+
+Nous arrivons maintenant à un chapitre qui devrait beaucoup vous intéresser.
+
+Non, le « formatage du texte » n'a rien à voir avec la destruction de toutes les données présentes sur votre disque dur ! Cela
+signifie simplement que l'on va modifier l'apparence du texte (on dit qu'on le « met en forme »).
+
+Pas de surprise particulière : nous sommes toujours dans le CSS, et nous allons réutiliser ce que nous venons d'apprendre dans le
+chapitre précédent. Nous allons donc travailler directement au sein du fichier `.css` que nous avons créé.
+
+Ce chapitre va être l'occasion de découvrir de nombreuses propriétés CSS : nous allons voir comment modifier la taille du texte,
+changer la police, aligner le texte…
+
+:::info
+Pour valider vos compétences avec un diplôme bac+2, suivez la [formation Développeur web](https://openclassrooms.com/fr/paths/185-developpeur-web)
+avec OpenClassrooms. 6 mois en moyenne sont nécessaires pour finaliser cette [formation à distance](https://openclassrooms.com/fr/),
+qui peut aussi être suivie en [alternance ou contrat d’apprentissage](https://openclassrooms.com/fr/apprenticeship).
+:::
+
+### La taille
+
+Pour modifier la taille du texte, on utilise la propriété CSS `font-size`. Mais comment indiquer la taille du texte ? C'est là que
+les choses se corsent, car plusieurs techniques vous sont proposées :
+- indiquer une **taille absolue** : en pixels, en centimètres ou millimètres. Cette méthode est très précise, mais il est
+conseillé de ne l'utiliser que si c'est absolument nécessaire, car on risque d'indiquer une taille trop petite pour certains
+lecteurs ;
+- indiquer une **taille relative** : en pourcentage, « em » ou « ex », cette technique a l'avantage d'être plus souple. Elle
+s'adapte plus facilement aux préférences de taille des visiteurs.
+
+#### Une taille absolue
+
+Pour indiquer une taille absolue, on utilise généralement les pixels. Pour avoir un texte de 16 pixels de hauteur, vous devez
+donc écrire :
+
+```css
+font-size: 16px;
+```
+
+Les lettres auront une taille de 16 pixels, comme le montre la figure suivante.
+
+![Une lettre de 16 pixels de hauteur](https://user.oc-static.com/files/5001_6000/5552.jpg)
+
+Une lettre de 16 pixels de hauteur
+
+Voici un exemple d'utilisation (placez ce code dans votre fichier `.css`) :
+
+```css
+p
+{
+    font-size: 14px; /* Paragraphes de 14 pixels */
+}
+h1
+{
+    font-size: 40px; /* Titres de 40 pixels */
+}
+```
+
+Et le résultat est visible à la figure suivante.
+
+![Différentes tailles de texte](https://user.oc-static.com/files/343001_344000/343370.png)
+
+Différentes tailles de texte
+
+:::info
+Si vous le souhaitez, vous pouvez également définir des tailles en centimètres ou millimètres. Remplacez « px » par « cm » ou
+« mm ». Ces unités sont cependant moins bien adaptées aux écrans.
+
+#### Une valeur relative
+
+C'est la méthode recommandée, car le texte s'adapte alors plus facilement aux préférences de tous les visiteurs.
+
+Il y a plusieurs moyens d'indiquer une valeur relative. Vous pouvez par exemple écrire la taille avec des mots en anglais comme
+ceux-ci :
+- `xx-small`  : minuscule ;
+- `x-small`  : très petit ;
+- `small`  : petit ;
+- `medium`  : moyen ;
+- `large`  : grand ;
+- `x-large`  : très grand ;
+- `xx-large`  : euh… gigantesque.
+
+Vous pouvez tester l'utilisation de ces valeurs dans votre code CSS :
+
+```css
+p
+{
+    font-size: small;
+}
+h1
+{
+    font-size: large;
+}
+```
+
+Bon, cette technique a un défaut : il n'y a que sept tailles disponibles (car il n'y a que sept noms). Heureusement, il existe
+d'autres moyens. Ma technique préférée consiste à indiquer la taille en « em ».
+- Si vous écrivez `1em`, le texte a une taille normale.
+- Si vous voulez grossir le texte, vous pouvez inscrire une valeur supérieure à 1, comme `1.3em`.
+- Si vous voulez réduire le texte, inscrivez une valeur inférieure à 1, comme `0.8em`.
+
+Faites attention : pour les nombres décimaux, il faut mettre un point et non une virgule. Vous devez donc écrire « 1.4em » et non
+pas « 1,4em » !
+
+Exemple :
+```css
+p
+{
+    font-size: 0.8em;
+}
+h1
+{
+    font-size: 1.3em;
+}
+```
+
+D'autres unités sont disponibles. Vous pouvez essayer le « ex » (qui fonctionne sur le même principe que le em, mais qui est plus
+petit de base) et le pourcentage (80 %, 130 %…).
+
+### La police
+
+Ah… la police… On touche un point sensible.
+
+En effet, il se pose un problème : pour qu'une police s'affiche correctement, il faut que tous les internautes l'aient. Si un
+internaute n'a pas la même police que vous, son navigateur prendra une police par défaut (une police standard) qui n'aura
+peut-être rien à voir avec ce à quoi vous vous attendiez.
+
+La bonne nouvelle, c'est que depuis CSS 3, il est possible de faire télécharger automatiquement une police au navigateur. Je vous
+expliquerai dans un second temps comment faire cela.
+
+#### Modifier la police utilisée
+
+La propriété CSS qui permet d'indiquer la police à utiliser est `font-family`. Vous devez écrire le nom de la police comme ceci :
+
+```css
+balise
+{
+    font-family: police;
+}
+```
+
+Seulement, pour éviter les problèmes si l'internaute n'a pas la même police que vous, on précise en général _plusieurs_ noms de
+police, séparés par des virgules :
+
+```css
+balise
+{
+    font-family: police1, police2, police3, police4;
+}
+```
+
+Le navigateur essaiera d'abord d'utiliser la `police1`. S'il ne l'a pas, il essaiera la `police2`. S'il ne l'a pas, il passera à
+la `police3`, et ainsi de suite.<br />
+En général, on indique en tout dernier `serif`, ce qui correspond à une police par défaut (qui ne s'applique que si aucune autre
+police n'a été trouvée).
+
+:::info
+Il existe aussi une autre police par défaut appelée `sans-serif`. La différence entre les deux est la présence de petites pattes
+de liaison en bas des lettres, que la police `sans-serif` n'a pas. Oui, c'est subtil.
+:::
+
+Oui, mais quelles sont les polices les plus courantes qu'on a le « droit » d'utiliser, me direz-vous ?<br />
+Voici une liste de polices qui fonctionnent bien sur la plupart des navigateurs :
+- Arial ;
+- Arial Black ;
+- Comic Sans MS ;
+- Courier New ;
+- Georgia ;
+- Impact ;
+- Times New Roman ;
+- Trebuchet MS ;
+- Verdana.
+
+La figure suivante vous montre à quoi ressemblent ces polices.
+
+![Différentes polices](https://user.oc-static.com/files/343001_344000/343371.png)
+
+Différentes polices
+
+Ainsi, si j'écris :
+
+```css
+p
+{
+    font-family: Impact, "Arial Black", Arial, Verdana, sans-serif;
+}
+```
+
+… cela signifie : « _Mets la police Impact ou, si elle n'y est pas, Arial Black, ou sinon Arial, ou sinon Verdana, ou si rien
+n'a marché, mets une police standard (Sans Serif)_ ».
+
+En général, il est bien d'indiquer un choix de trois ou quatre polices (+ Serif ou Sans Serif), afin de s'assurer qu'au moins
+l'une d'entre elles aura été trouvée sur l'ordinateur du visiteur.
+
+:::note !
+Si le nom de la police comporte des espaces, je conseille de l'entourer de guillemets, comme je l'ai fait pour « Arial Black ».
+:::
+
+#### Utiliser une police personnalisée avec `@font-face`
+
+:::note ?
+Je trouve le choix des polices trop limité.<br />
+Comment puis-je utiliser ma police préférée sur mon site web ?
+:::
+
+Pendant longtemps, cela n'était pas possible. Aujourd'hui, avec CSS 3, il existe heureusement un moyen d'utiliser n'importe quelle
+police sur son site. Cela fonctionne bien avec la plupart des navigateurs.
+
+Mais attention, il y a des défauts (ce serait trop beau, sinon) :
+- il faudra que le navigateur de vos visiteurs _télécharge_ automatiquement le fichier de la police, dont le poids peut atteindre,
+voire dépasser 1 Mo… ;
+- la plupart des polices sont soumises au droit d'auteur, il n'est donc _pas légal_ de les utiliser sur son site. Heureusement,
+il existe des sites comme [fontsquirrel.com](http://www.fontsquirrel.com/) et [dafont.com](https://www.dafont.com/fr/) qui
+proposent en téléchargement un certain nombre de polices libres de droits. Je recommande en particulier [fontsquirrel.com](http://www.fontsquirrel.com/),
+car il permet de télécharger des packs prêts à l'emploi pour CSS 3 ;
+- il existe _plusieurs formats_ de fichiers de polices, et ceux-ci ne fonctionnent pas sur tous les navigateurs.
+
+Voici les différents formats de fichiers de polices qui existent et qu'il faut connaître :
+- `.ttf`  : _TrueType Font_. Fonctionne sur IE9 et tous les autres navigateurs ;
+- `.eot`  : _Embedded OpenType_. Fonctionne sur Internet Explorer uniquement, toutes versions. Ce format est propriétaire, produit
+par Microsoft ;
+- `.otf`  : _OpenType Font_. Ne fonctionne pas sur Internet Explorer ;
+- `.svg`  : _SVG Font_. Le seul format reconnu sur les iPhone et iPad pour le moment ;
+- `.woff`  : _Web Open Font Format_. Nouveau format conçu pour le Web, qui fonctionne sur IE9 et tous les autres navigateurs.
+
+En CSS, pour définir une nouvelle police, vous devez la déclarer comme ceci :
+
+```css
+@font-face {
+    font-family: 'MaSuperPolice';
+    src: url('MaSuperPolice.eot');
+}
+```
+
+Le fichier de police (ici _MaSuperPolice.eot_) doit ici être situé dans le même dossier que le fichier CSS (ou dans un
+sous-dossier, si vous utilisez un chemin relatif).
+
+:::note ?
+Je croyais qu'il y avait plusieurs formats de police ?
+:::
+
+Oui, d'ailleurs les `.eot` ne fonctionnent que sur Internet Explorer. L'idéal est de proposer plusieurs formats pour la police :
+le navigateur téléchargera celui qu'il sait lire. Voici comment indiquer plusieurs formats :
+
+```css
+@font-face {
+    font-family: 'MaSuperPolice';
+    src: url('MaSuperPolice.eot') format('eot'),
+        url('MaSuperPolice.woff') format('woff'),
+        url('MaSuperPolice.ttf') format('truetype'),
+        url('MaSuperPolice.svg') format('svg');
+}
+```
+
+Pour tester le fonctionnement, je vous propose de télécharger une police sur Font Squirrel, par exemple [CAC Champagne](https://www.fontsquirrel.com/fonts/CAC-Champagne).
+Cliquez sur « Webfont Kit », cela vous permettra de télécharger un kit prêt à l'emploi avec tous les formats pour cette police.
+N'oubliez pas de cocher toutes les cases (WOFF, TTF, EOT et SVG).
+
+:::info
+La police CAC Champagne n'est plus disponible, mais vous pouvez télécharger une autre police que vous aimez bien ! ![;)](https://openclassrooms.com/bundles/common/images/smiley/clin.png)
+:::
+
+:::note !
+Pour trouver les polices qui vous permettent de télécharger un "pack CSS" comme je le décris ici, activez le filtre "Webfont"
+dans le menu Font Filter.
+:::
+
+Votre fichier CSS ressemblera au final à ceci :
+
+```css
+@font-face { /* Définition d'une nouvelle police nommée CAC Champagne */
+    font-family: 'cac_champagneregular';
+    src: url('cac_champagne-webfont.eot');
+    src: url('cac_champagne-webfont.eot?#iefix') format('embedded-opentype'),
+         url('cac_champagne-webfont.woff') format('woff'),
+         url('cac_champagne-webfont.ttf') format('truetype'),
+         url('cac_champagne-webfont.svg#cac_champagneregular') format('svg');
+}
+
+h1 /* Utilisation de la police qu'on vient de définir sur les titres */
+{
+    font-family: 'cac_champagneregular', Arial, serif;
+}
+```
+
+La première (grosse) section `@font-face` permet de définir un nouveau nom de police qui pourra être utilisé dans le fichier CSS.
+Ensuite, nous utilisons ce nom de police avec la propriété `font-family`, que nous connaissons, pour modifier l'apparence des
+titres `<h1>`. Vous pouvez voir le résultat à la figure suivante.
+
+![Affichage d'une police personnalisée](https://user.oc-static.com/files/343001_344000/343372.png)
+
+Affichage d'une police personnalisée
+
+:::info
+Vous noterez quelques bizarreries dans le CSS généré par le site Font Squirrel. Le but est de pallier certains bugs sur Internet
+Explorer, car les anciennes versions ne comprennent pas quand on définit plusieurs formats. Cela explique donc la présence d'un
+`?#iefix` dans le code.
+
+### Italique, gras, souligné…
+
+Il existe en CSS une série de propriétés classiques de mise en forme du texte. Nous allons découvrir ici comment afficher le
+texte en gras, italique, souligné… et au passage nous verrons qu'il est même possible d'aller jusqu'à le faire clignoter !
+
+#### Mettre en italique
+
+:::note ?
+Attends un peu là ! Je croyais que la balise `<em>` permettait de mettre un texte en italique ?!
+:::
+
+Je n'ai jamais dit cela.<br />
+Retournez voir les chapitres précédents si vous avez des doutes, mais je n'ai _jamais_ dit que la balise `<em>` était faite pour
+mettre le texte en italique (de même que je n'ai jamais dit que `<strong>` était faite pour mettre en gras).
+
+`<em>`, mettez-vous bien cela dans la tête, est faite pour insister sur des mots. Cela veut dire que les mots qu'elle entoure sont
+assez importants.<br />
+Pour représenter cette importance, la plupart des navigateurs choisissent d'afficher le texte en italique, mais ce n'est pas une
+obligation.
+
+Le CSS lui, permet de dire réellement : « Je veux que ce texte soit en italique ». Rien ne vous empêche, par exemple, de décider
+que tous vos titres seront en italique.
+
+Concrètement, en CSS, pour mettre en italique, on utilise `font-style` qui peut prendre trois valeurs :
+- `italic` : le texte sera mis en italique ;
+- `oblique` : le texte sera passé en oblique (les lettres sont penchées, le résultat est légèrement différent de l'italique
+proprement dit) ;
+- `normal` : le texte sera normal (par défaut). Cela vous permet d'annuler une mise en italique. Par exemple, si vous voulez que
+les textes entre `<em>` ne soient plus en italique, vous devrez écrire :
+
+```css
+em
+{
+    font-style: normal;
+}
+```
+
+Ainsi, dans l'exemple suivant, je me sers de `font-style` pour mettre en italique tous mes titres `<h2>` :
+
+```css
+h2
+{
+    font-style: italic;
+}
+```
+
+#### Mettre en gras
+
+Et si nous passions à la mise en gras ?<br />
+Alors, là encore, n'oubliez pas que ce n'est pas `<strong>` qui permet de mettre en gras (son rôle est d'indiquer que le texte
+est important, _donc_ le navigateur l'affiche généralement en gras). La mise en gras en CSS peut par exemple s'appliquer aux
+titres, à certains paragraphes entiers, etc. C'est à vous de voir.
+
+La propriété CSS pour mettre en gras est `font-weight` et prend les valeurs suivantes :
+- `bold` : le texte sera en gras ;
+- `normal` : le texte sera écrit normalement (par défaut).
+
+Voici par exemple comment écrire les titres en gras :
+
+```css
+h1
+{
+    font-weight: bold;
+}
+```
+
+#### Soulignement et autres décorations
+
+La propriété CSS associée porte bien son nom : `text-decoration`. Elle permet, entre autres, de souligner le texte, mais pas
+seulement. Voici les différentes valeurs qu'elle peut prendre :
+- `underline`  : souligné ;
+- `line-through`  : barré ;
+- `overline`  : ligne au-dessus ;
+- `none`  : normal (par défaut).
+
+Ce CSS va vous permettre de tester les effets de `text-decoration` :
+
+```css
+h1
+{
+    text-decoration: blink;
+}
+.souligne
+{
+    text-decoration: underline;
+}
+.barre
+{
+    text-decoration: line-through;
+}
+.ligne_dessus
+{
+    text-decoration: overline;
+}
+```
+
+Et le résultat est visible à la figure suivante.
+
+![Différentes mises en forme du texte](https://user.oc-static.com/files/343001_344000/343381.png)
+
+Différentes mises en forme du texte
+
+### L'alignement
+
+Le langage CSS nous permet de faire tous les alignements connus : à gauche, centré, à droite et justifié.
+
+C'est tout simple. On utilise la propriété `text-align` et on indique l'alignement désiré :
+- `left` : le texte sera aligné à gauche (c'est le réglage par défaut) ;
+- `center` : le texte sera centré ;
+- `right` : le texte sera aligné à droite ;
+- `justify` : le texte sera « justifié ». Justifier le texte permet de faire en sorte qu'il prenne toute la largeur possible sans
+laisser d'espace blanc à la fin des lignes. Les textes des journaux, par exemple, sont toujours justifiés.
+
+Regardez les différents alignements sur cet exemple :
+
+```css
+h1
+{
+    text-align: center;
+}
+p
+{
+    text-align: justify;
+}
+.signature
+{
+    text-align: right;
+}
+```
+
+Le résultat est visible sur la figure suivante.
+
+![Alignements du texte](https://user.oc-static.com/files/343001_344000/343383.png)
+
+Alignements du texte
+
+:::caution !
+Vous ne pouvez pas modifier l'alignement du texte d'une balise _inline_ (comme `<span>`, `<a>`, `<em>`, `<strong>`…). L'alignement
+ne fonctionne que sur des balises de type _block_ ( `<p>`, `<div>`, `<h1>`, `<h2>`…) et c'est un peu logique, quand on y pense :
+on ne peut pas modifier l'alignement de quelques mots au milieu d'un paragraphe !<br />
+C'est donc en général le paragraphe entier qu'il vous faudra aligner.
+:::
+
+### Les flottants
+
+Le CSS nous permet de faire flotter un élément autour du texte. On dit aussi qu'on fait un « habillage ».
+
+Pour que vous voyiez bien de quoi on parle, la figure suivante vous montre ce que nous allons apprendre à faire.
+
+![Une image flottante entourée par du texte](https://user.oc-static.com/files/5001_6000/5646.png)
+
+Une image flottante entourée par du texte
+
+J'imagine que, maintenant, la question qui vous brûle les lèvres est : « _Mais quelle est donc la propriété magique qui fait
+flotter ?_ ».<br />
+La réponse est… `float` (« flottant » en anglais). Cette propriété peut prendre deux valeurs très simples :
+- `left` : l'élément flottera à gauche ;
+- `right` : l'élément flottera… à droite ! Oui, bravo.
+
+L'utilisation des flottants est très simple :
+1. Vous appliquez un `float`  à une balise.
+2. Puis vous continuez à écrire du texte à la suite normalement.
+
+:::info
+On peut aussi bien utiliser la propriété `float` sur des balises _block_ que sur des balises _inline_. Il est courant de faire
+flotter une image pour qu'elle soit habillée par du texte, comme dans l'exemple précédent.
+:::
+
+#### Faire flotter une image
+
+Nous allons apprendre ici à faire flotter une image. Voici le code HTML que nous devons taper dans un premier temps :
+
+```html
+<p>
+    <img src="flash.gif" class="imageflottante" alt="Image flottante" />
+    Ceci est un texte normal de paragraphe, écrit à la suite de l'image et qui l'habillera car l'image est flottante.
+</p>
+```
+
+:::caution !
+Vous devez placer l'élément flottant en premier dans le code HTML. Si vous placez l'image après le paragraphe, l'effet ne
+fonctionnera pas.
+:::
+
+Voici le seul bout de code CSS qu'on ait besoin de taper, qui permet de faire flotter l'image à gauche :
+
+```css
+.imageflottante
+{
+    float: left;
+}
+```
+
+Amusez-vous aussi à faire flotter l'image à droite, c'est tout bête : il suffit d'indiquer la valeur `right`, et le tour est joué !
+
+#### Stopper un flottant
+
+Quand vous mettez en place un flottant, le texte autour l'habille. Mais comment faire si vous voulez qu'au bout d'un moment le
+texte continue _en dessous_ du flottant ? On pourrait enchaîner plusieurs `<br />` à la suite, mais cela ne serait ni élégant ni
+très propre…
+
+En gros, on aimerait pouvoir obtenir le même résultat qu'à la figure suivante.
+
+![Le texte sous l'image ignore la propriété float](https://user.oc-static.com/files/5001_6000/5650.jpg)
+
+Le texte sous l'image ignore la propriété float
+
+Il existe en fait une propriété CSS qui permet de dire : « _Stop, ce texte doit être en-dessous du flottant et non plus à côté_ ».
+C'est la propriété `clear`, qui peut prendre ces trois valeurs :
+- `left` : le texte se poursuit en dessous après un `float: left;`
+- `right` : le texte se poursuit en dessous après un `float: right;`
+- `both` : le texte se poursuit en dessous, que ce soit après un `float: left;` ou après un `float: right;`.
+
+Pour simplifier, on va utiliser tout le temps le `clear: both`, qui marche après un flottant à gauche et après un flottant à
+droite (cela fonctionne donc à tous les coups). Pour illustrer son fonctionnement, on va prendre ce code HTML :
+
+```html
+<p><img src="flash.gif" class="imageflottante" alt="Image flottante" /></p>
+<p>Ce texte est écrit à côté de l'image flottante.</p>
+<p class="dessous">Ce texte est écrit sous l'image flottante.</p>
+```
+
+Et ce code CSS :
+
+```css
+.imageflottante
+{
+    float: left;
+}
+.dessous
+{
+    clear: both;
+}
+```
+
+Et voilà le travail.
+
+On applique un `clear: both;` au paragraphe que l'on veut voir continuer sous l'image flottante, et le tour est joué !
+
+### En résumé
+
+- On modifie la taille du texte avec la propriété CSS `font-size`. On peut indiquer la taille en pixels (16px), en « em » (1.3em),
+en pourcentage (110 %), etc.
+- On change la police du texte avec `font-family`. Attention, seules quelques polices sont connues par tous les ordinateurs. Vous
+pouvez cependant utiliser une police personnalisée avec la directive `@font-face` : cela forcera les navigateurs à télécharger la
+police de votre choix.
+- De nombreuses propriétés de mise en forme du texte existent : `font-style` pour l'italique, `font-weight` pour la mise en gras,
+`text-decoration` pour le soulignement, etc.
+- Le texte peut être aligné avec `text-align`.
+- On peut faire en sorte qu'une image soit habillée (« entourée ») de texte avec `float`.
+
+-----
+
+## Ajoutez de la couleur et un fond
+
+[Ajoutez de la couleur et un fond - Apprenez à créer votre site web avec HTML5 et CSS3 - OpenClassrooms](https://openclassrooms.com/fr/courses/1603881-apprenez-a-creer-votre-site-web-avec-html5-et-css3/1605551-ajoutez-de-la-couleur-et-un-fond)
+
+<Vimeo vimeoId="243806063" />
+
+<br />
+
+Continuons notre tour d'horizon des propriétés CSS existantes. Nous allons nous intéresser ici aux propriétés liées de près ou de
+loin à la couleur. Nous verrons entre autres :
+- comment changer la couleur du texte ;
+- comment mettre une couleur ou une image d'arrière-plan ;
+- comment ajouter des ombres ;
+- comment jouer avec les niveaux de transparence.
+
+Le CSS n'a pas fini de nous étonner !
+
+### Couleur du texte
+
+Passons maintenant au vaste sujet de la couleur.
+
+:::note ?
+Comment ça, « vaste » ?
+:::
+
+Vous connaissez déjà la propriété qui permet de modifier la couleur du texte : il s'agit de `color`. Nous allons nous intéresser
+aux différentes façons d'indiquer la couleur, car il y en a plusieurs.
+
+#### Indiquer le nom de la couleur
+
+La méthode la plus simple et la plus pratique pour choisir une couleur consiste à taper son nom (_in english, of course_).<br />
+Le seul défaut de cette méthode est qu'il n'existe que seize couleurs dites « standard ». D'autres couleurs officieuses existent
+mais, comme elles ne fonctionneront pas forcément de la même manière sur tous les navigateurs, je vais éviter de vous les montrer.
+
+La figure suivante vous montre les seize couleurs que vous pouvez utiliser en tapant simplement leur nom.
+
+![Les seize noms de couleurs utilisables en CSS](https://user.oc-static.com/files/380001_381000/380399.png)
+
+Les seize noms de couleurs utilisables en CSS
+
+Vous pouvez les apprendre par cœur si cela vous chante ; en plus cela vous fera réviser votre anglais.
+
+Pour passer tous les titres en bordeaux, on peut donc écrire :
+
+```css
+h1
+{
+    color: maroon;
+}
+```
+
+Vous trouverez le résultat à la figure suivante.
+
+![Le titre est écrit en marron](https://user.oc-static.com/files/343001_344000/343392.png)
+
+Le titre est écrit en bordeaux
+
+#### La notation hexadécimale
+
+Seize couleurs, c'est quand même un peu limite quand on sait que la plupart des écrans peuvent en afficher seize _millions_.<br />
+D'un autre côté, remarquez, s'il avait fallu donner un nom à chacune des seize millions de couleurs…
+
+Heureusement, il existe en CSS plusieurs façons de choisir une couleur parmi toutes celles qui existent. La première que je vais
+vous montrer est la notation hexadécimale. Elle est couramment utilisée sur le Web, mais il existe aussi une autre méthode que
+nous verrons plus loin.
+
+Un nom de couleur en hexadécimal, cela ressemble à : `#FF5A28`. Pour faire simple, c'est une combinaison de lettres et de chiffres
+qui indiquent une couleur.<br />
+On doit toujours commencer par écrire un dièse (#), suivi de six lettres ou chiffres allant de 0 à 9 et de A à F.<br />
+Ces lettres ou chiffres fonctionnent deux par deux. Les deux premiers indiquent une quantité de rouge, les deux suivants une
+quantité de vert et les deux derniers une quantité de bleu. En mélangeant ces quantités (qui sont les composantes Rouge-Vert-Bleu
+de la couleur) on peut obtenir la couleur qu'on veut.
+
+Ainsi, #000000 correspond à la couleur noire et #FFFFFF à la couleur blanche. Mais maintenant, ne me demandez pas quelle est la
+combinaison qui produit de l'orange couleur « coucher de soleil », je n'en sais strictement rien.
+
+:::info
+Certains logiciels de dessin, comme Photoshop, [Gimp](http://telecharger.tomsguide.fr/The-Gimp,0301-513-214.html) et
+[Paint.NET](http://telecharger.tomsguide.fr/PaintNET,0301-4883.html), vous indiquent les couleurs en hexadécimal. Il vous est
+alors facile de copier-coller le code hexadécimal d'une couleur dans votre fichier CSS.
+
+Voici par exemple comment on fait pour appliquer aux paragraphes la couleur blanche en hexadécimal :
+
+```css
+p
+{
+    color: #FFFFFF;
+}
+```
+
+:::info
+Notez qu'il existe une notation raccourcie : on peut écrire une couleur avec seulement trois caractères. Par exemple : #FA3
+équivaut à écrire #FFAA33.
+:::
+
+#### La méthode RGB
+
+Que signifie RGB ? En anglais, Rouge-Vert-Bleu s'écrit _Red-Green-Blue_, ce qui s'abrège en « RGB ». Comme avec la notation
+hexadécimale, pour choisir une couleur, on doit définir une quantité de rouge, de vert et de bleu.
+
+:::note ?
+Encore cette histoire tordue de quantités de rouge-vert-bleu ?
+:::
+
+Oui mais là, vous allez voir que c'est beaucoup plus pratique et qu'avec un logiciel de dessin tout simple comme Paint, vous
+pouvez trouver la couleur que vous désirez. Voici la marche à suivre :
+1. Lancez le logiciel Paint depuis le menu `Démarrer`.
+2. Rendez-vous dans la section `Modifier les couleurs`, comme indiqué à la figure suivante.
+3. Une fenêtre s'ouvre. Dans la zone qui apparaît à droite, faites bouger les curseurs pour sélectionner la couleur qui vous
+intéresse. Supposons que vous soyez pris d'une envie folle d'écrire vos titres `<h1>` en rose bonbon (supposons seulement).
+Sélectionnez la couleur dans la fenêtre, comme à la figure suivante.
+4. Relevez les quantités de Rouge-Vert-Bleu correspondantes, indiquées en bas à droite de la fenêtre (ici 240-96-204). Recopiez
+ces valeurs dans cet ordre dans le fichier CSS, comme dans le code ci-dessous.
+
+```css
+p
+{
+    color: rgb(240,96,204);
+}
+```
+
+![Modification des couleurs sous Paint](https://user.oc-static.com/files/343001_344000/343395.png)
+
+Modification des couleurs sous Paint
+
+![Sélection d'une couleur dans Paint](https://user.oc-static.com/files/343001_344000/343396.png)
+
+Sélection d'une couleur dans Paint
+
+Comme vous avez pu le constater dans l'exemple, pour utiliser la méthode RGB, il faut taper `rgb(Rouge, Vert, Bleu)` en
+remplaçant « Rouge, Vert, Bleu » par les nombres correspondants. Pour information, ces quantités sont toujours comprises entre 0
+et 255.
+
+#### Et en Bonus Track…
+
+Je vous conseille de taper "Color Picker" sur Google, et vous trouverez plusieurs outils et sites qui vous aident à choisir une
+couleur.
+
+Par exemple, [http://www.colorpicker.com](http://www.colorpicker.com/) permet de trouver la valeur hexadécimale d'une couleur
+très facilement :
+
+![Le site colorpicker.com](https://s3-eu-west-1.amazonaws.com/sdz-upload/prod/upload/colorpicker.png)
+
+Le site ColorPicker.com
+
+C'est tout simple, mais ça fait le travail !
+
+Vous pouvez aussi trouver des extensions de navigateur qui permettent de "récupérer" n'importe quelle couleur qui vous plaît sur
+un site web :
+- [ColorPicker](https://addons.mozilla.org/fr/firefox/addon/colorpicker/) pour Firefox ;
+- [ColorZilla](https://chrome.google.com/webstore/detail/colorzilla/bhlhnicpbhignbdhedgjhgdocnmhomnp) pour Chrome.
+
+### Couleur de fond
+
+Pour indiquer une couleur de fond, on utilise la propriété CSS `background-color`. Elle s'utilise de la même manière que la
+propriété `color`, c'est-à-dire que vous pouvez taper le nom d'une couleur, l'écrire en notation hexadécimale ou encore utiliser
+la méthode RGB.
+
+Pour indiquer la couleur de fond de la page web, il faut travailler sur la balise `<body>`. Eh oui, `<body>` correspond à
+l'ensemble de la page web ; c'est donc en modifiant sa couleur de fond que l'on changera la couleur d'arrière-plan de la page.
+
+Regardez très attentivement ce fichier CSS :
+
+```css
+/* On travaille sur la balise body, donc sur TOUTE la page */
+body
+{
+    background-color: black; /* Le fond de la page sera noir */
+    color: white; /* Le texte de la page sera blanc */
+}
+```
+
+Voici le rendu de ce code :
+
+![Texte en blanc sur fond noir](https://user.oc-static.com/files/343001_344000/343505.png)
+
+Texte en blanc sur fond noir
+
+:::note ?
+Eh, mais tu as demandé à ce que le texte de la balise `<body>` soit écrit en blanc, et tous les paragraphes `<p>` et titres `<h1>`
+ont pris cette couleur. Comment cela se fait-il ?
+:::
+
+Je voulais justement profiter de l'occasion pour vous en parler. Ce phénomène s'appelle **l'_héritage_**. Je vous rassure tout
+de suite, personne n'est mort.
+
+#### Le CSS et l'héritage
+
+En CSS, si vous appliquez un style à une balise, toutes les balises qui se trouvent à l'intérieur prendront le même style.
+
+C'est en fait simple à comprendre et intuitif. La balise `<body>`, vous le savez, contient entre autres les balises de paragraphe
+`<p>` et de titre `<h1>`.
+
+Si j'applique une couleur de fond noire et une couleur de texte blanche à la balise `<body>`, tous mes titres et paragraphes
+auront eux aussi un arrière-plan de couleur noire et un texte de couleur blanche… C'est ce phénomène qu'on appelle _l'héritage_ :
+on dit que les balises qui se trouvent à l'intérieur d'une autre balise « héritent » de ses propriétés.
+
+:::info
+C'est d'ailleurs de là que vient le nom « CSS », qui signifie « _Cascading Style Sheets_ », c'est-à-dire « Feuilles de style en
+cascade ». Les propriétés CSS sont héritées en cascade : si vous donnez un style à un élément, tous les sous-éléments auront le
+même style.
+:::
+
+:::note ?
+Cela veut dire que TOUT le texte de ma page web sera forcément écrit en blanc ?
+:::
+
+Non, pas obligatoirement. Si vous dites par la suite que vous voulez vos titres en rouge, ce style aura la priorité et vos titres
+seront donc en rouge. En revanche, si vous n'indiquez rien de particulier (comme on l'a fait tout à l'heure), alors vos titres
+hériteront de la couleur blanche.<br />
+Cela ne fonctionne pas uniquement pour la couleur, entendons-nous bien. Toutes les propriétés CSS seront héritées : vous pouvez
+par exemple demander une mise en gras dans la balise `<body>`, et tous vos titres et paragraphes seront en gras.
+
+#### Exemple d'héritage avec la balise `<mark>`
+
+On a tendance à croire qu'on ne peut modifier que la couleur de fond de la page. C'est faux : vous pouvez changer le fond de
+n'importe quel élément : vos titres, vos paragraphes, certains mots… Dans ce cas, ils apparaîtront surlignés (comme si on avait
+mis un coup de marqueur dessus).
+
+Vous vous souvenez par exemple de la balise `<mark>` qui permet de mettre en valeur certains mots ? Utilisons-la à nouveau ici :
+
+```html
+<h1>Qui a éteint la lumière ?</h1>
+
+<p>Brr, il fait tout noir sur ce site, c'est un peu <mark>inquiétant</mark> comme ambiance non vous trouvez pas ?</p>
+```
+
+Par défaut, le texte s'affiche sur un fond jaune. Vous pouvez changer ce comportement en CSS :
+
+```css
+body
+{
+    background-color: black;
+    color: white;
+}
+mark
+{
+    /* La couleur de fond prend le pas sur celle de toute la page */
+    background-color: red;
+    color: black;
+}
+```
+
+Sur le texte de la balise `<mark>`, c'est la couleur de fond rouge qui s'applique. En effet, même si le fond de la page est noir,
+c'est la propriété CSS de l'élément le plus précis qui a la priorité (figure suivante).
+
+![Un texte surligné en rouge sur un fond noir](https://user.oc-static.com/files/343001_344000/343509.png)
+
+Un texte surligné en rouge sur un fond noir
+
+Le même principe vaut pour toutes les balises HTML et toutes les propriétés CSS ! Si vous dites :
+- mes paragraphes ont une taille de 1.2 em ;
+- mes textes importants (`<strong>`) ont une taille de 1.4 em ;
+
+… on pourrait penser qu'il y a un conflit. Le texte important fait partie d'un paragraphe, quelle taille lui donner ? 1.2 em ou
+1.4 em ? Le CSS décide que c'est la déclaration la plus précise qui l'emporte : comme `<strong>` correspond à un élément plus
+précis que les paragraphes, le texte sera écrit en 1.4 em.
+
+### Images de fond
+
+Dans les exemples qui suivent, je vais modifier l'image de fond de la page. Cependant, tout comme pour la couleur de fond,
+n'oubliez pas que l'image de fond ne s'applique pas forcément à la page entière. On peut aussi mettre une image de fond derrière
+les titres, paragraphes, etc.
+
+#### Appliquer une image de fond
+
+La propriété permettant d'indiquer une image de fond est `background-image`. Comme valeur, on doit renseigner
+`url("nom_de_l_image.png")`. Par exemple :
+
+```css
+body
+{
+    background-image: url("neige.png");
+}
+```
+
+Ce qui nous donne la figure suivante.
+
+![Une image de fond sur la page](https://user.oc-static.com/files/343001_344000/343524.png)
+
+Une image de fond sur la page
+
+Bien entendu, votre fond n'est pas forcément en PNG, il peut aussi être en JPEG ou en GIF.<br />
+L'adresse indiquant où se trouve l'image de fond peut être écrite en absolu (`http://…`) ou en relatif (`fond.png`).
+
+:::caution !
+Attention lorsque vous écrivez une adresse en relatif dans le fichier CSS ! L'adresse de l'image doit être indiquée _par rapport
+au fichier `.css`_ et non pas par rapport au fichier `.html`. Pour simplifier les choses, je vous conseille de placer l'image de
+fond dans le même dossier que le fichier `.css` (ou dans un sous-dossier).
+:::
+
+#### Options disponibles pour l'image de fond
+
+On peut compléter la propriété `background-image` que nous venons de voir par plusieurs autres propriétés qui permettent de
+changer le comportement de l'image de fond.
+
+##### `background-attachment`  : fixer le fond
+
+La propriété CSS `background-attachment` permet de « fixer » le fond. L'effet obtenu est intéressant, car on voit alors le texte
+« glisser » par-dessus le fond. Deux valeurs sont disponibles :
+- `fixed` : l'image de fond reste fixe ;
+- `scroll` : l'image de fond défile avec le texte (par défaut).
+
+```css
+body
+{
+    background-image: url("neige.png");
+    background-attachment: fixed; /* Le fond restera fixe */
+}
+```
+
+##### `background-repeat`  : répétition du fond
+
+Par défaut, l'image de fond est répétée en mosaïque. Vous pouvez changer cela avec la propriété `background-repeat` :
+- `no-repeat` : le fond ne sera pas répété. L'image sera donc unique sur la page ;
+- `repeat-x` : le fond sera répété uniquement sur la première ligne, horizontalement ;
+- `repeat-y` : le fond sera répété uniquement sur la première colonne, verticalement ;
+- `repeat` : le fond sera répété en mosaïque (par défaut).
+
+Exemple d'utilisation :
+
+```css
+body
+{
+    background-image: url("soleil.png");
+    background-repeat: no-repeat;
+}
+```
+
+##### `background-position`  : position du fond
+
+On peut indiquer où doit se trouver l'image de fond avec `background-position`. Cette propriété n'est intéressante que si elle
+est combinée avec `background-repeat: no-repeat;` (un fond qui ne se répète pas).
+
+Vous devez donner à `background-position` deux valeurs en pixels pour indiquer la position du fond par rapport au coin supérieur
+gauche de la page (ou du paragraphe, si vous appliquez le fond à un paragraphe). Ainsi, si vous tapez :
+
+```css
+background-position: 30px 50px;
+```
+
+… votre fond sera placé à 30 pixels de la gauche et à 50 pixels du haut. Il est aussi possible d'utiliser ces valeurs en anglais :
+- `top` : en haut ;
+- `bottom` : en bas ;
+- `left` : à gauche ;
+- `center` : centré ;
+- `right` : à droite.
+
+Il est possible de combiner ces mots. Par exemple, pour aligner une image en haut à droite, vous taperez :
+
+```css
+background-position: top right;
+```
+
+Ainsi, si je veux afficher un soleil en image de fond (figure suivante), en un unique exemplaire (`no-repeat`), toujours visible
+(`fixed`) et positionné en haut à droite (`top right`), je vais écrire ceci :
+
+```css
+body
+{
+    background-image: url("soleil.png");
+    background-attachment: fixed; /* Le fond restera fixe */
+    background-repeat: no-repeat; /* Le fond ne sera pas répété */
+    background-position: top right; /* Le fond sera placé en haut à droite */
+}
+```
+
+![Un soleil placé en image de fond en haut à droite](https://user.oc-static.com/files/343001_344000/343529.png)
+
+Un soleil placé en image de fond en haut à droite
+
+#### Combiner les propriétés
+
+Si vous utilisez beaucoup de propriétés en rapport avec le fond (comme c'est le cas sur ce dernier exemple), vous pouvez utiliser
+une sorte de « super-propriété » appelée `background`, dont la valeur peut combiner plusieurs des propriétés vues précédemment :
+`background-image`, `background-repeat`, `background-attachment` et `background-position`.
+
+On peut donc tout simplement écrire :
+
+```css
+body
+{
+    background: url("soleil.png") fixed no-repeat top right;
+}
+```
+
+C'est la première « super-propriété » que je vous montre, il y en aura d'autres. Il faut savoir que :
+- l'ordre des valeurs n'a pas d'importance. Vous pouvez combiner les valeurs dans n'importe quel ordre ;
+- vous n'êtes pas obligé de mettre toutes les valeurs. Ainsi, si vous ne voulez pas écrire `fixed`, vous pouvez l'enlever sans
+problème.
+
+#### Plusieurs images de fond
+
+Depuis CSS3, il est possible de donner plusieurs images de fond à un élément. Pour cela, il suffit de séparer les déclarations
+par une virgule, comme ceci :
+
+```css
+body
+{
+    background: url("soleil.png") fixed no-repeat top right, url("neige.png") fixed;
+}
+```
+
+La première image de cette liste sera placée par-dessus les autres (figure suivante). Attention donc, l'ordre de déclaration des
+images a son importance : si vous inversez le soleil et la neige dans le code CSS précédent, vous ne verrez plus le soleil !
+
+![Images de fond multiples](https://user.oc-static.com/files/343001_344000/343531.png)
+
+Images de fond multiples
+
+À noter que les images de fond multiples fonctionnent sur tous les navigateurs sauf sur les anciennes versions d'Internet Explorer,
+qui ne reconnaît cette fonctionnalité qu'à partir de la version 9 (IE9).
+
+:::info
+Une dernière chose avant d'en terminer avec les images de fond : dans tous ces exemples, j'ai appliqué un fond à la page entière
+(`body`). Mais cela ne doit pas vous faire oublier qu'on peut appliquer un fond à n'importe quel élément (un titre, un paragraphe,
+certains mots d'un paragraphe, etc.).<br />
+Je vous conseille donc, pour vous entraîner, d'essayer d'appliquer un fond à vos titres ou paragraphes. Si vous avez un peu de
+goût (contrairement à moi !) vous arriverez certainement à donner une très belle allure à votre page web.
+:::
+
+### La transparence
+
+Le CSS nous permet de jouer très facilement avec les niveaux de transparence des éléments ! Pour cela, nous allons utiliser des
+fonctionnalités de CSS3 : la propriété `opacity` et la notation RGBa.
+
+#### La propriété `opacity`
+
+La propriété `opacity`, très simple, permet d'indiquer le niveau d'opacité (c'est l'inverse de la transparence).
+- Avec une valeur de 1, l'élément sera totalement opaque : c'est le comportement par défaut.
+- Avec une valeur de 0, l'élément sera totalement transparent.
+
+Il faut donc choisir une valeur comprise entre 0 et 1. Ainsi, avec une valeur de 0.6, votre élément sera opaque à 60 %… et on
+verra donc à travers !
+
+Voici comment on peut l'utiliser :
+
+```css
+p
+{
+    opacity: 0.6;
+}
+```
+
+Voici un exemple qui va nous permettre d'apprécier la transparence. Vous en trouverez le rendu à la figure suivante.
+
+```css
+body
+{
+    background: url('neige.png');
+}
+p
+{
+    background-color: black;
+    color: white;
+    opacity: 0.3;
+}
+```
+
+![Un paragraphe transparent](https://user.oc-static.com/files/343001_344000/343538.png)
+
+Un paragraphe transparent
+
+Notez que la transparence fonctionne sur tous les navigateurs récents, y compris Internet Explorer à partir de IE9.
+
+:::note !
+Si vous appliquez la propriété `opacity` à un élément de la page, _tout_ le contenu de cet élément sera rendu transparent (même
+les images, les autres blocs à l'intérieur, etc.). Si vous voulez juste rendre la couleur de fond transparente, utilisez plutôt
+la notation RGBa que nous allons découvrir.
+:::
+
+#### La notation RGBa
+
+CSS3 nous propose une autre façon de jouer avec la transparence : la notation RGBa. Il s'agit en fait de la notation RGB que nous
+avons vue précédemment, mais avec un quatrième paramètre : le niveau de transparence (appelé « canal alpha »). De la même façon
+que précédemment, avec une valeur de 1, le fond est complètement opaque. Avec une valeur inférieure à 1, il est transparent.
+
+```css
+p
+{
+    background-color: rgba(255, 0, 0, 0.5); /* Fond rouge à moitié transparent */
+}
+```
+
+C'est aussi simple que cela. Vous pouvez obtenir exactement le même effet qu'avec `opacity` juste en jouant avec la notation RGBa ;
+essayez !
+
+Cette notation est connue de tous les navigateurs récents, y compris Internet Explorer (à partir de IE9). Pour les navigateurs
+plus anciens, il est recommandé d'indiquer la notation RGB classique en plus de RGBa.<br />
+Pour ces navigateurs, le fond ne sera alors pas transparent mais, au moins, il y aura bien une couleur d'arrière-plan.
+
+```css
+p
+{
+    background-color: rgb(255,0,0); /* Pour les navigateurs anciens */
+    background-color: rgba(255,0,0,0.5); /* Pour les navigateurs plus récents */
+}
+```
+
+### En résumé
+
+- On change la couleur du texte avec la propriété `color`, la couleur de fond avec `background-color`.
+- On peut indiquer une couleur en écrivant son nom en anglais (`black`, par exemple), sous forme hexadécimale (`#FFC8D3`) ou en
+notation RGB (`rgb(250,25,118)`).
+- On peut ajouter une image de fond avec `background-image`. On peut choisir de fixer l'image de fond, de l'afficher en mosaïque
+ou non, et même de la positionner où on veut sur la page.
+- On peut rendre une portion de la page transparente avec la propriété `opacity` ou avec la notation RGBa (identique à la notation
+RGB, avec une quatrième valeur indiquant le niveau de transparence).
+
+-----
+
+## Créez des bordures et des ombres
+
+[Créez des bordures et des ombres - Apprenez à créer votre site web avec HTML5 et CSS3 - OpenClassrooms](https://openclassrooms.com/fr/courses/1603881-apprenez-a-creer-votre-site-web-avec-html5-et-css3/1605694-creez-des-bordures-et-des-ombres)
+
+<Vimeo vimeoId="243806215" />
+
+<br />
+
+Nouveau chapitre, nouveau lot de propriétés CSS. Ici, nous allons nous intéresser aux bordures et aux effets d'ombrage que l'on
+peut appliquer aussi bien sur le texte que sur les blocs qui constituent notre page.
+
+Nous réutiliserons en particulier nos connaissances sur les couleurs pour choisir la couleur de nos bordures et de nos ombres.
+
+Prêt à vous en mettre une nouvelle fois plein la vue ? ![](https://openclassrooms.com/bundles/common/images/smiley/soleil.png)
+
+### Bordures standard
+
+Le CSS vous offre un large choix de bordures pour décorer votre page. De nombreuses propriétés CSS vous permettent de modifier
+l'apparence de vos bordures : `border-width`, `border-color`, `border-style`…
+
+Pour aller à l'essentiel, je vous propose ici d'utiliser directement la super-propriété `border` qui regroupe l'ensemble de ces
+propriétés. Vous vous souvenez de la super-propriété `background` ? Cela fonctionne sur le même principe : on va pouvoir combiner
+plusieurs valeurs.
+
+Pour `border`, on peut utiliser jusqu'à trois valeurs pour modifier l'apparence de la bordure :
+- **la largeur** : indiquez la largeur de votre bordure. Mettez une valeur en pixels (comme `2px`  ) ;
+- **la couleur** : c'est la couleur de votre bordure. Utilisez, comme on l'a appris, soit un nom de couleur (`black`, `red`…),
+soit une valeur hexadécimale (`#FF0000`), soit une valeur RGB (`rgb(198, 212, 37)`) ;
+- **le type de bordure** : là, vous avez le choix. Votre bordure peut être un simple trait, ou des pointillés, ou encore des
+tirets, etc. Voici les différentes valeurs disponibles :
+   - `none` : pas de bordure (par défaut) ;
+   - `solid` : un trait simple ;
+   - `dotted` : pointillés ;
+   - `dashed` : tirets ;
+   - `double` : bordure double ;
+   - `groove` : en relief ;
+   - `ridge` : autre effet relief ;
+   - `inset` : effet 3D global enfoncé ;
+   - `outset` : effet 3D global surélevé.
+
+Ainsi, pour avoir une bordure bleue, en tirets, épaisse de 3 pixels autour de mes titres, je vais écrire :
+
+```css
+h1
+{
+    border: 3px blue dashed;
+}
+```
+
+La figure suivante vous présente les différents styles de bordure que vous pouvez utiliser.
+
+![Les différents types de bordures](https://user.oc-static.com/files/343001_344000/343545.png)
+
+Les différents types de bordures
+
+#### En haut, à droite, à gauche, en bas…
+
+Qui a dit que vous étiez obligé d'appliquer la même bordure aux quatre côtés de votre élément ?<br />
+Taratata, si vous voulez mettre des bordures différentes en fonction du côté (haut, bas, gauche ou droite), vous pouvez le faire
+sans problème. Dans ce cas, vous devrez utiliser ces quatre propriétés :
+- `border-top` : bordure du haut ;
+- `border-bottom` : bordure du bas ;
+- `border-left` : bordure de gauche ;
+- `border-right` : bordure de droite.
+
+:::info
+Il existe aussi des équivalents pour paramétrer chaque détail de la bordure si vous le désirez : `border-top-width` pour modifier
+l'épaisseur de la bordure du haut, `border-top-color` pour la couleur du haut, etc.
+:::
+
+Ce sont aussi des super-propriétés, elles fonctionnent comme `border` mais ne s'appliquent donc qu'à un seul côté.
+
+Pour ajouter une bordure uniquement à gauche et à droite des paragraphes, on écrira donc :
+
+```css
+p
+{
+    border-left: 2px solid black;
+    border-right: 2px solid black;
+}
+```
+
+:::info
+On peut modifier les bordures de n'importe quel type d'élément sur la page. Nous l'avons fait ici sur les paragraphes, mais on
+peut aussi modifier la bordure des images, des textes importants comme `<strong>`, etc.
+:::
+
+### Bordures arrondies
+
+Les bordures arrondies, c'est un peu le Saint Graal attendu par les webmasters depuis des millénaires (ou presque). Depuis que
+CSS3 est arrivé, il est enfin possible d'en créer facilement !
+
+La propriété `border-radius` va nous permettre d'arrondir facilement les angles de n'importe quel élément. Il suffit d'indiquer
+la taille (« l'importance ») de l'arrondi en pixels :
+
+```css
+p
+{
+    border-radius: 10px;
+}
+```
+
+L'arrondi se voit notamment si l'élément a des bordures, comme sur la figure suivante.
+
+![Des bordures arrondies](https://user.oc-static.com/files/343001_344000/343550.png)
+
+Des bordures arrondies
+
+… ou s'il a une couleur de fond, comme sur la figure suivante.
+
+![Un fond aux coins arrondis](https://user.oc-static.com/files/343001_344000/343551.png)
+
+Un fond aux coins arrondis
+
+On peut aussi préciser la forme de l'arrondi pour chaque coin. Dans ce cas, indiquez quatre valeurs :
+
+```css
+p
+{
+    border-radius: 10px 5px 10px 5px;
+}
+```
+
+Les valeurs correspondent aux angles suivants dans cet ordre :
+1. En haut à gauche.
+2. En haut à droite.
+3. En bas à droite.
+4. En bas à gauche.
+
+Enfin, il est possible d'affiner l'arrondi de nos angles en créant des courbes elliptiques (figure suivante). Dans ce cas, il
+faut indiquer deux valeurs séparées par une barre oblique (_slash_, caractère /). Le mieux est certainement de tester pour voir
+l'effet :
+
+```css
+p
+{
+    border-radius: 20px / 10px;
+}
+```
+
+![Bordures arrondies elliptiques](https://user.oc-static.com/files/343001_344000/343560.png)
+
+Bordures arrondies elliptiques
+
+### Les ombres
+
+Les ombres font partie des nouveautés récentes proposées par CSS3. Aujourd'hui, il suffit d'une seule ligne de CSS pour ajouter
+des ombres dans une page !
+
+Nous allons ici découvrir deux types d'ombres :
+- les ombres des boîtes ;
+- les ombres du texte.
+
+#### `box-shadow`  : les ombres des boîtes
+
+La propriété `box-shadow` s'applique à tout le bloc et prend quatre valeurs dans l'ordre suivant :
+1. Le décalage horizontal de l'ombre.
+2. Le décalage vertical de l'ombre.
+3. L'adoucissement du dégradé.
+4. La couleur de l'ombre.
+
+Par exemple, pour une ombre noire de 6 pixels, sans adoucissement, on écrira :
+
+```css
+p
+{
+    box-shadow: 6px 6px 0px black;
+}
+```
+
+Cela donne le résultat illustré à la figure suivante (j'ai ajouté une bordure au paragraphe pour qu'on voie mieux l'effet).
+
+![Une ombre sous le paragraphe](https://user.oc-static.com/files/343001_344000/343563.png)
+
+Une ombre sous le paragraphe
+
+Ajoutons un adoucissement grâce au troisième paramètre (figure suivante). L'adoucissement peut être faible (inférieur au décalage),
+normal (égal au décalage) ou élevé (supérieur au décalage). Essayons un décalage normal :
+
+```css
+p
+{
+    box-shadow: 6px 6px 6px black;
+}
+```
+
+![Une ombre adoucie sous le paragraphe](https://user.oc-static.com/files/343001_344000/343564.png)
+
+Une ombre adoucie sous le paragraphe
+
+On peut aussi rajouter une cinquième valeur facultative : `inset`. Dans ce cas, l'ombre sera placée à l'intérieur du bloc, pour
+donner un effet enfoncé :
+
+```css
+p
+{
+    box-shadow: 6px 6px 6px black inset;
+}
+```
+
+Je vous laisse essayer de voir le résultat.
+
+#### `text-shadow`  : l'ombre du texte
+
+Avec `text-shadow`, vous pouvez ajouter une ombre directement sur les lettres de votre texte ! Les valeurs fonctionnent exactement
+de la même façon que `box-shadow` : décalage, adoucissement et couleur.
+
+```css
+p
+{
+    text-shadow: 2px 2px 4px black;
+}
+```
+
+Le résultat est illustré à la figure suivante.
+
+![Texte ombré](https://user.oc-static.com/files/343001_344000/343566.png)
+
+Texte ombré
+
+### En résumé
+
+- On peut appliquer une bordure à un élément avec la propriété `border`. Il faut indiquer la largeur de la bordure, sa couleur et
+son type (trait continu, pointillés…).
+- On peut arrondir les bordures avec `border-radius`.
+- On peut ajouter une ombre aux blocs de texte avec `box-shadow`. On doit indiquer le décalage vertical et horizontal de l'ombre,
+son niveau d'adoucissement et sa couleur.
+- Le texte peut lui aussi avoir une ombre avec `text-shadow`.
+
+-----
+
+## Créez des apparences dynamiques
+
+[Créez des apparences dynamiques - Apprenez à créer votre site web avec HTML5 et CSS3 - OpenClassrooms](https://openclassrooms.com/fr/courses/1603881-apprenez-a-creer-votre-site-web-avec-html5-et-css3/1605763-creez-des-apparences-dynamiques)
+
+<Vimeo vimeoId="243806584" />
+
+<br />
+
+C'est une de ses forces : le CSS nous permet aussi de modifier l'apparence des éléments de façon dynamique, c'est-à-dire que des
+éléments peuvent changer de forme une fois que la page a été chargée. Nous allons faire appel à une fonctionnalité puissante du
+CSS : les pseudo-formats.
+
+Nous verrons dans ce chapitre comment changer l'apparence :
+- au survol ;
+- lors du clic ;
+- lors du focus (élément sélectionné) ;
+- lorsqu'un lien a été consulté.
+
+Vous allez voir que le langage CSS n'a pas fini de nous étonner !
+
+### Au survol
+
+Nous allons découvrir dans ce chapitre plusieurs pseudo-formats CSS. Le premier que je vais vous montrer s'appelle `:hover`.
+Comme tous les autres pseudo-formats que nous allons voir, c'est une information que l'on rajoute après le nom de la balise (ou
+de la classe) dans le CSS, comme ceci :
+
+```css
+a:hover
+{
+
+}
+```
+
+`:hover` signifie « survoler ». `a:hover` peut donc se traduire par : « Quand la souris est sur le lien » (quand on pointe dessus).
+
+À partir de là, c'est à vous de définir l'apparence que doivent avoir les liens lorsqu'on pointe dessus. Laissez libre cours à
+votre imagination, il n'y a pas de limite.
+
+Voici un exemple de présentation des liens, mais n'hésitez pas à inventer le vôtre :
+
+```css
+a /* Liens par défaut (non survolés) */
+{
+   text-decoration: none;
+   color: red;
+   font-style: italic;
+}
+
+a:hover /* Apparence au survol des liens */
+{
+   text-decoration: underline;
+   color: green;
+}
+```
+
+On a défini ici deux versions des styles pour les liens :
+- pour les liens par défaut (non survolés) ;
+- pour les liens au survol.
+
+Le résultat se trouve à la figure suivante.
+
+![Changement d'apparence au survol de la souris](https://s3-eu-west-1.amazonaws.com/sdz-upload/prod/upload/links_hover1.png)
+
+Changement d'apparence au survol de la souris
+
+Sympa, n'est-ce pas ?
+
+Même si on l'utilise souvent sur les liens, vous pouvez modifier l'apparence de n'importe quel élément. Par exemple, vous pouvez
+modifier l'apparence des paragraphes lorsqu'on pointe dessus :
+
+```css
+p:hover /* Quand on pointe sur un paragraphe */
+{
+
+}
+```
+
+### Au clic et lors de la sélection
+
+Vous pouvez interagir encore plus finement en CSS. Nous allons voir ici que nous pouvons changer l'apparence des éléments lorsque
+l'on clique dessus et lorsqu'ils sont sélectionnés !
+
+#### `:active` : au moment du clic
+
+Le pseudo-format `:active` permet d'appliquer un style particulier _au moment du clic_. En pratique, il n'est utilisé que sur les
+liens.
+
+Le lien gardera cette apparence très peu de temps : en fait, le changement intervient lorsque le bouton de la souris est enfoncé.
+En clair, ce n'est pas forcément toujours bien visible.
+
+On peut par exemple changer la couleur de fond du lien lorsque l'on clique dessus :
+
+```css
+a:active /* Quand le visiteur clique sur le lien */
+{
+    background-color: #FFCC66;
+}
+```
+
+#### `:focus` : lorsque l'élément est sélectionné
+
+Là, c'est un peu différent. Le pseudo-format `:focus` applique un style _lorsque l'élément est sélectionné_.
+
+:::note ?
+C'est-à-dire ?
+:::
+
+Une fois que vous avez cliqué, le lien reste « sélectionné » (il y a une petite bordure en pointillés autour). C'est cela, la
+sélection.
+
+:::info
+Ce pseudo-format pourra être appliqué à d'autres balises HTML que nous n'avons pas encore vues, comme les éléments de formulaires.
+:::
+
+Essayons pour l'instant sur les liens :
+
+```css
+a:focus /* Quand le visiteur sélectionne le lien */
+{
+    background-color: #FFCC66;
+}
+```
+
+:::info
+Sous Google Chrome et Safari, l'effet ne se voit que si l'on appuie sur la touche `Tab`.
+:::
+
+### Lorsque le lien a déjà été consulté
+
+Il est possible d'appliquer un style à un lien vers une page qui a déjà été vue. Par défaut, le navigateur colore le lien en un
+violet assez laid (de mon point de vue, du moins !).
+
+Vous pouvez changer cette apparence avec `:visited` (qui signifie « visité »). En pratique, sur les liens consultés, on ne peut
+pas changer beaucoup de choses à part la couleur (figure suivante).
+
+```css
+a:visited /* Quand le visiteur a déjà vu la page concernée */
+{
+    color: #AAA; /\* Appliquer une couleur grise \*/
+}
+```
+
+![Liens visités en gris](https://s3-eu-west-1.amazonaws.com/sdz-upload/prod/upload/links_visited.png)
+
+Liens visités en gris
+
+Si vous ne souhaitez pas que les liens déjà visités soient colorés d'une façon différente, il vous faudra leur appliquer la même
+couleur qu'aux liens normaux. De nombreux sites web font cela (OpenClassrooms y compris !). Une exception notable : Google… ce
+qui est plutôt pratique, puisque l'on peut voir dans les résultats d'une recherche si on a déjà consulté ou non les sites que
+Google nous présente.
+
+### En résumé
+
+- En CSS, on peut modifier l'apparence de certaines sections dynamiquement, après le chargement de la page, lorsque certains
+évènements se produisent. On utilise pour cela les pseudo-formats.
+- Le pseudo-format `:hover` permet de changer l'apparence au survol (par exemple : `a:hover` pour modifier l'apparence des liens
+lorsque la souris pointe dessus).
+- Le pseudo-format `:active` modifie l'apparence des liens au moment du clic, `:visited` lorsqu'un lien a déjà été visité.
+- Le pseudo-format `:focus` permet de modifier l'apparence d'un élément sélectionné.
+
+-----
+
+## Pratiquez !
+
+[Pratiquez ! - Apprenez à créer votre site web avec HTML5 et CSS3 - OpenClassrooms](https://openclassrooms.com/fr/courses/1603881-apprenez-a-creer-votre-site-web-avec-html5-et-css3/4214566-pratiquez)
+
+<Vimeo vimeoId="243806963" />
+
+<br />
+
+Voici un nouvel exercice pour mettre en pratique vos compétences en CSS3. Ouvrez [cet éditeur CodePen en ligne](https://codepen.io/nicolaspatschkowski/pen/KKpqGbO?editors=1100).
+Nous allons mettre en forme la page ! Pour cela, effectuez les tâches suivantes :
+1. Affichez le titre h1 en rouge.
+2. Agrandissez le titre h1 pour lui donner une taille de 3em.
+3. Centrez la figure (image) et sa description.
+4. Ajoutez une bordure continue de la taille et de la couleur de votre choix autour de la liste à puces.
+5. Ajoutez une ombre au cadre autour de la liste à puces.
+6. Affichez les liens en gras lorsqu'on les survole.
+
+[![CodePen, votre éditeur en ligne](https://user.oc-static.com/upload/2020/03/02/15831467626253_Screen%20Shot%202020-03-02%20at%2011.59.09.png)](https://codepen.io/nicolaspatschkowski/pen/KKpqGbO?editors=1100)
+
+CodePen, votre éditeur en ligne
+
+```html
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <title>Les cupcakes</title>
+    </head>
+
+    <body>
+      <h1>Vive les cupcakes</h1>
+      
+      <p>J'ai découvert les cupcakes lors d'un voyage à <a href="https://fr.wikipedia.org/wiki/New_York">New York</a>... et depuis c'est une véritable passion. Sur mon site, vous saurez <strong>tout</strong> sur les cupcakes !</p>
+      
+      <p>Un cupcake ? C'est ça :</p>
+      
+      <figure>
+        <img src="https://images.unsplash.com/photo-1498458555718-c60a99aa4ddc?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=400&fit=max&ixid=eyJhcHBfaWQiOjE0NTg5fQ" alt="Cupcake" />
+        <figcaption>Un cupcake</figcaption>
+      </figure>
+      
+      <p>Délicieux non ? Sur mon site, je vous présenterai :</p>
+      
+      <ul>
+        <li>Les différentes variétés de cupcakes</li>
+        <li>Leur histoire</li>
+        <li>Leurs recettes</li>
+      </ul>
+      
+    </body>
+</html>
+```
+
+:::note !
+Dans cet éditeur, la feuille de style CSS est automatiquement liée au HTML par CodePen. Sur du code HTML "normal", il faudrait
+ajouter une balise de style dans le  `<head>`, comme ceci : `<link rel="stylesheet" type="text/css" href="style.css">`.
+:::
+
+```html
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <link rel="stylesheet" type="text/css" href="style.css">
+        <title>Les cupcakes</title>
+    </head>
+
+    <body>
+      <h1 class="red">Vive les cupcakes</h1>
+      
+      <p>J'ai découvert les cupcakes lors d'un voyage à <a href="https://fr.wikipedia.org/wiki/New_York">New York</a>... et depuis c'est une véritable passion. Sur mon site, vous saurez <strong>tout</strong> sur les cupcakes !</p>
+      
+      <p>Un cupcake ? C'est ça :</p>
+      
+      <figure>
+        <img src="https://images.unsplash.com/photo-1498458555718-c60a99aa4ddc?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=400&fit=max&ixid=eyJhcHBfaWQiOjE0NTg5fQ" alt="Cupcake" />
+        <figcaption>Un cupcake</figcaption>
+      </figure>
+      
+      <p>Délicieux non ? Sur mon site, je vous présenterai :</p>
+      
+      <ul>
+        <li>Les différentes variétés de cupcakes</li>
+        <li>Leur histoire</li>
+        <li>Leurs recettes</li>
+      </ul>
+      
+    </body>
+</html>
+```
+
+```css
+/* Feuille de styles CSS */
+
+h1 {
+  color: rgb(255,0,0);
+  font-size: 3em;
+}
+
+figure {
+  text-align:center;
+}
+
+
+ul {
+  border: 1px solid red;
+  box-shadow: 6px 6px 0px black;
+}
+
+
+a:hover {
+  font-weight:bold;
+}
+```
+
+Voici ce à quoi devrait ressembler votre page une fois modifiée :
+
+![Votre page une fois les étapes implémentées](https://user.oc-static.com/upload/2020/03/04/15833232654434_Capture%20d%E2%80%99e%CC%81cran%202020-03-04%20a%CC%80%2013.00.48.png)
+
+Votre page une fois les étapes implémentées
+
+Une fois que vous aurez implémenté tout ça, vous trouverez un exemple de réalisation des étapes [en suivant ce lien.](https://codepen.io/nicolaspatschkowski/pen/XWbgxwK?editors=1100)
+
+:::info
+Bien sûr, ce qui est demandé dans cet exercice est le minimum, mais n'hésitez pas à **aller plus loin** ! Modifiez les couleurs,
+le style, ajoutez du contenu... Testez, CodePen vous le permet : vous êtes sûr de ne rien casser. 😉
+:::
+
+-----
+
+## Entraînez-vous en mettant en forme votre CV
+
+[Entraînez-vous en mettant en forme votre CV - Apprenez à créer votre site web avec HTML5 et CSS3 - OpenClassrooms](https://openclassrooms.com/fr/courses/1603881-apprenez-a-creer-votre-site-web-avec-html5-et-css3/6725256-entrainez-vous-en-mettant-en-forme-votre-cv)
+
+:::info
+**À vous de jouer !** Pour vous entraîner, réalisez cet exercice étape par étape. Une fois que vous avez terminé, vous pouvez
+comparer votre travail avec les pistes que je vous propose.
+:::
+
+### Contexte
+
+Vous cherchez du travail et vous avez créé votre CV en ligne en y ajoutant les informations de votre parcours professionnel.
+Cependant, pour que votre CV attire l’œil des recruteurs, une mise en forme impeccable est nécessaire. Pour cela, vous allez
+devoir enrichir votre page HTML avec du .CSS.
+
+### Votre mission
+
+- Étape 1 : Récupérez le fichier HTML que vous aviez créé dans la première activité.
+- Étape 2 : Ajoutez-y les effets de style suivants :
+    - changer la couleur d'un des textes ;
+    - changer l'alignement d'un des textes ;
+    - appliquer une image de fond à la page ;
+    - utiliser une police personnalisée via @font-face ;
+    - définir la bordure d'un élément ;
+    - définir l'ombre d'un élément.
+
+Vérifiez bien que vous avez les éléments suivants :<br />
+✅ Vous avez une page .html et un fichier .css.<br />
+✅ La couleur d’un des textes est changée.<br />
+✅ L’alignement d’un des textes est changé.<br />
+✅ Une image de fond est appliquée à la page.<br />
+✅ Une police personnalisée est utilisée via @font-face.<br />
+✅ La bordure d’un élément est définie.<br />
+✅ L’ombre d’un élément est définie.
+
+Alors, vous êtes allé au bout ? Voici [un exemple](https://static.oc-static.com/activities/199/evaluation_resources/mettez-en-forme-votre-cv_exemple-2019-01-03T082017.zip)
+pour vous permettre de vérifier votre travail.
+
+-----
+
+## Quiz : Utilisez du code CSS
+
+[Utilisez du code CSS - OpenClassrooms](https://openclassrooms.com/fr/courses/1603881-apprenez-a-creer-votre-site-web-avec-html5-et-css3/exercises/92)
+
+#### Compétences évaluées
+
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-checkbox" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#00b341" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <polyline points="9 11 12 14 20 6" />
+  <path d="M20 12v6a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h9" />
+</svg> Utiliser du code CSS
+
+#### Description
+
+Maintenant, il est temps d'évaluer vos connaissances sur cette deuxième partie !<br />
+Bon courage ! 😀
+
+-----
+
+#### Question 1 : Que doit-on écrire en CSS pour appliquer un style aux balises de titre de niveau 2 et 3 ?
+
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> h2 + h3<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> h2 h3<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> .h2 .h3<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle-check" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#7bc62d" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M9 12l2 2l4 -4" />
+</svg> h2, h3<br />
+<br />
+
+-----
+
+#### Question 2 : Quelle est la particularité de l'attribut class par rapport à l'attribut id ?
+
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle-check" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#7bc62d" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M9 12l2 2l4 -4" />
+</svg> Il ne peut y avoir qu'un seul et même nom d'id par page, et plusieurs fois une même classe<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> class est utilisable dans les vieilles versions de HTML mais pas id<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> class peut être utilisé dans un fichier .css mais pas id<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> Il n'y a strictement aucune différence entre les deux<br />
+<br />
+
+-----
+
+#### Question 3 : Peut-on utiliser n'importe quelle police sur son site web ?
+
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle-check" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#7bc62d" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M9 12l2 2l4 -4" />
+</svg> Oui, à condition d'utiliser @font-face<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> Oui, à condition d'utiliser une police hébergée par Google Web Fonts uniquement<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> Oui, mais le visiteur doit obligatoirement télécharger et installer manuellement la police<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> Non, ce n'est pas possible du tout<br />
+<br />
+
+-----
+
+#### Question 4 : Lequel de ces alignements fait prendre au texte toute la largeur disponible ?
+
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> left<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> center<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> right<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle-check" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#7bc62d" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M9 12l2 2l4 -4" />
+</svg> justify<br />
+<br />
+
+-----
+
+#### Question 5 : Laquelle de ces couleurs correspond à du blanc ?
+
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> #000<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> rgb(100, 100, 100)<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle-check" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#7bc62d" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M9 12l2 2l4 -4" />
+</svg> #FFFFFF<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> purple<br />
+<br />
+
+-----
+
+#### Question 6 : Si je donne la valeur 1 à la propriété opacity sur un élément, que se passera-t-il ?
+
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> L'élément disparaîtra complètement<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> L'élément sera à moitié transparent<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> L'élément sera très très légèrement transparent<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle-check" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#7bc62d" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M9 12l2 2l4 -4" />
+</svg> L'élément sera opaque<br />
+<br />
+
+-----
+
+#### Question 7 : Vrai ou faux ? On peut donner une image de fond à un paragraphe de texte.
+
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle-check" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#7bc62d" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M9 12l2 2l4 -4" />
+</svg> Vrai<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> Faux<br />
+<br />
+
+-----
+
+#### Question 8 : Laquelle de ces propriétés CSS permet d'ajouter une ombre à des lettres ?
+
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> box-shadow<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle-check" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#7bc62d" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M9 12l2 2l4 -4" />
+</svg> text-shadow<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> letter-shadow<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> shadow<br />
+<br />
+
+-----
+
+#### Question 9 : Laquelle de ces règles CSS permet de modifier l'apparence d'un lien déjà visité ?
+
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle-check" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#7bc62d" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M9 12l2 2l4 -4" />
+</svg> a:visited<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> a.consulted<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> a:focus<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> a:consulted<br />
+<br />
+
+-----
+
+#### Question 10 : Que se passe-t-il quand un élément est rendu flottant ?
+
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> Il bouge sur la page<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> Il est positionné en haut à gauche de l'écran<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle-check" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#7bc62d" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M9 12l2 2l4 -4" />
+</svg> Le texte entoure l'élément flottant<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> La notion de flottant n'existe pas<br />
+

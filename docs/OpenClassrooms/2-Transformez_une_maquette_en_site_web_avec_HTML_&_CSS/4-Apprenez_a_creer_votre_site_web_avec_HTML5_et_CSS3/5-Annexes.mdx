@@ -1,0 +1,590 @@
+---
+sidebar_position: 6
+---
+import { MDXProvider } from '@mdx-js/react';
+import { CodePen, Gist } from 'mdx-embed';
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+import { Vimeo } from 'mdx-embed';
+
+# Annexes
+
+## Envoyez votre site sur le Web
+
+[Envoyez votre site sur le Web - Apprenez à créer votre site web avec HTML5 et CSS3 - OpenClassrooms](https://openclassrooms.com/fr/courses/1603881-apprenez-a-creer-votre-site-web-avec-html5-et-css3/1607901-envoyez-votre-site-sur-le-web)
+
+Votre site est tout beau, tout propre, tout prêt… mais comme il est sur votre disque dur, personne d'autre ne va pouvoir en
+profiter !
+
+Vous aimeriez donc l'envoyer sur le Web, mais… vous ne savez pas comment faire.<br />
+Nous allons découvrir dans cette annexe tout ce qu'il faut savoir pour envoyer son site sur le Web :
+1. Comment réserver un **nom de domaine** ?
+2. Qu'est-ce qu'un **hébergeur** et comment cela fonctionne-t-il ?
+3. Enfin, comment utiliser un **client FTP** pour pouvoir transférer les fichiers sur le Net ?
+
+### Le nom de domaine
+
+Savez-vous ce qu'est un **nom de domaine** ?<br />
+Il s'agit en fait d'une adresse sur le Web : `openclassrooms.com`  est par exemple un nom de domaine.
+
+Un nom de domaine est constitué de deux parties, ici "openclassrooms" et ".com".
+- Dans le cas présent, "openclassrooms" est le nom de domaine proprement dit. Il s'agit d'un nom que l'on peut en général choisir
+librement, tant que personne ne l'a réservé avant nous. Il peut contenir des lettres et des chiffres, et depuis 2012, certains
+caractères accentués (comme le « ç » français, le « é » ou le « è »).
+- Le ".com" est l'extension (aussi appelée « TLD », de l'anglais _top-level domain_). Il existe grosso modo une extension par
+pays (`.fr` pour la France, `.be` pour la Belgique, `.ca` pour le Canada, etc.). Toutefois, il y a aussi des extensions utilisées
+au niveau international comme `.com`, `.net`, `.org`. Elles étaient au départ réservées aux sites commerciaux, aux organisations…
+mais cela fait longtemps que tout le monde peut les réserver. D'ailleurs, `.com` est très probablement l'extension la plus
+utilisée sur le Web.
+
+:::info
+En général, un site web voit son adresse précédée par `www`, comme par exemple `www.lemonde.fr`. Cela ne fait pas partie du nom
+de domaine : en fait, `www` est ce qu'on appelle un _sous-domaine_, et on peut en théorie en créer autant qu'on veut une fois
+qu'on est propriétaire du nom de domaine.<br />
+Le `www` est présent sur la plupart des sites web, c'est une sorte de convention, mais elle n'est absolument pas obligatoire.
+:::
+
+#### Réserver un nom de domaine
+
+:::note ?
+Moi aussi, je veux un nom de domaine pour mon site ! Comment dois-je faire ?
+:::
+
+Alors j'ai une bonne et une mauvaise nouvelle. Comme d'habitude, on va commencer par la mauvaise :
+- **la mauvaise** : ce n'est pas gratuit…
+- **la bonne** : … ce n'est vraiment pas cher du tout.
+
+En effet, un nom de domaine coûte entre 7 et 12 euros par an.<br />
+Le prix peut varier en fonction de l'extension. Ainsi, l'extension `.info` est généralement proposée à plus bas prix et peut
+s'avérer être une alternative intéressante. Mais si vous voulez une adresse plus « courante », il faudra plutôt viser une
+extension de type `.com` ou encore `.fr`.
+
+Pour réserver un nom de domaine, deux solutions :
+- passer par un **registrar** spécialisé. C'est un organisme qui sert d'intermédiaire entre l'ICANN (l'organisation qui gère
+l'ensemble des noms de domaine au niveau international) et vous. 1&1 IONOS, OVH et Gandi sont de célèbres registrars français ;
+- encore mieux : vous pouvez commander le nom de domaine en même temps que l'hébergement (c'est ce que je vous conseille). De
+cette manière, vous faites d'une pierre deux coups, vu que vous aurez de toute façon besoin de l'hébergement _et_ du nom de
+domaine.
+
+Dans ce chapitre, nous allons voir comment commander un nom de domaine en même temps que l'hébergement ; c'est de loin la solution
+la plus simple et la moins coûteuse pour vous.
+
+### L'hébergeur
+
+Intéressons-nous maintenant à l'hébergeur.
+
+:::note ?
+Qu'est-ce qu'un hébergeur et pourquoi aurai-je besoin de lui ?
+:::
+
+Sur Internet, tous les sites web sont stockés sur des ordinateurs particuliers appelés **_serveurs_** (figure suivante). Ce sont
+des ordinateurs généralement très puissants, qui restent tout le temps allumés. Ils contiennent les pages des sites web et les
+délivrent aux internautes qui les demandent, à toute heure du jour et de la nuit.
+
+![Un serveur](https://s3-eu-west-1.amazonaws.com/sdz-upload/prod/upload/serveur3.jpg)
+
+Un serveur
+
+Un serveur ne possède pas d'écran car, la plupart du temps, il tourne tout seul sans qu'il y ait besoin de faire quoi que ce soit
+dessus. Comme vous le voyez, les serveurs sont très plats : c'est un format spécial de serveur (appelé « 1U »). Cela permet de
+les empiler dans des **baies**, c'est-à-dire une sorte d'armoire climatisée pour serveurs (figure suivante).
+
+![Une baie de serveurs](https://user.oc-static.com/files/40001_41000/40007.jpg)
+
+Une baie de serveurs
+
+Comme vous le voyez, il y a un écran pour toute la baie. C'est suffisant car on ne branche l'écran sur un serveur que si celui-ci
+rencontre un problème. La plupart du temps, heureusement, le serveur travaille sans broncher.
+
+#### Le rôle de l'hébergeur
+
+L'hébergeur est une entreprise qui se charge de gérer des baies de serveurs. Elle s'assure du bon fonctionnement des serveurs
+24h/24, 7j/7. En effet, si l'un d'eux tombe en panne, tous les sites présents sur la machine deviennent inaccessibles (et cela
+fait des clients mécontents).
+
+Ces baies se situent dans des lieux particuliers appelés _**datacenters**_ (figure suivante). Les datacenters sont donc en
+quelque sorte des « entrepôts à serveurs », et leur accès est très protégé.
+
+![Un datacenter, dans lequel on voit plusieurs baies de serveurs](https://user.oc-static.com/files/81001_82000/81378.gif)
+
+Un datacenter, dans lequel on voit plusieurs baies de serveurs
+
+:::info
+Il est aussi possible, en théorie, d'héberger un site sur son propre ordinateur. Toutefois, c'est complexe : il vaut mieux avoir
+des connaissances en Linux, l'ordinateur doit être assez puissant, tourner jour et nuit et… surtout… la connexion doit être à
+très très haut débit (surtout en **upload**, la vitesse d'envoi des fichiers compte énormément). Les particuliers n'ont en règle
+générale pas une connexion suffisamment puissante pour héberger des sites, contrairement aux datacenters : ceux-ci sont câblés
+en fibre optique (ce qui permet d'atteindre des vitesses de plusieurs Gbps !)
+:::
+
+Bref, gérer un serveur soi-même est complexe et, la plupart du temps, les particuliers et les entreprises font appel à un
+hébergeur dont c'est le métier.
+
+#### Trouver un hébergeur
+
+Les hébergeurs, contrairement aux registrars, sont très très nombreux. Il y en a de tous types, à tous les prix. Il y a un
+vocabulaire à connaître pour vous repérer dans leurs offres :
+- **hébergement mutualisé** : si vous optez pour une offre d'hébergement mutualisé, votre site sera placé sur un serveur gérant
+plusieurs sites à la fois (peut-être une centaine, peut-être plus). _C'est l'offre la moins chère et c'est celle que je vous
+recommande de viser_ si vous démarrez votre site web ;
+- **hébergement dédié virtuel** : cette fois, le serveur ne gère que très peu de sites (généralement moins d'une dizaine). Cette
+offre est généralement adaptée aux sites qui d'un côté ne peuvent plus tenir sur un hébergement mutualisé car ils ont trop de
+trafic (trop de visiteurs), mais qui par ailleurs ne peuvent pas se payer un hébergement dédié (voir ci-dessous) ;
+- **hébergement dédié** (on parle aussi de « serveur dédié ») : c'est le nec plus ultra. Le serveur gère uniquement votre site et
+aucun autre. Attention, cela coûte assez cher et il vaut mieux avoir des connaissances en Linux pour administrer le serveur à
+distance ;
+- **hébergement cloud** : de plus en plus en vogue, cela consiste à envoyer notre site sur des serveurs virtuels. En fait, c'est
+l'équivalent d'un hébergement dédié virtuel, mais avec tout un tas de services autour pour nous permettre de gérer plus facilement
+le réseau, les bases de données, etc. C'est la tendance pour de plus en plus de moyens et gros sites. Parmi les hébergeurs cloud,
+on peut citer Amazon Web Services, Google Cloud, Microsoft Azure, etc.<br />
+Ce type d'hébergement est en revanche un peu _trop complexe_ pour nous qui débutons dans la création de sites web. Je recommande
+plutôt un hébergement mutualisé, dans notre cas.
+
+:::note ?
+Mais où puis-je trouver un hébergeur ?
+:::
+
+Oh ça, c'est très simple.<br />
+Une recherche dans Google de « hébergeur web » vous donnera plusieurs millions de résultats. Vous n'aurez que l'embarras du choix.
+
+### Utiliser un client FTP
+
+#### Installer un client FTP
+
+FTP signifie _File Transfer Protocol_ et, pour faire court et simple, c'est le moyen que l'on utilise pour envoyer nos fichiers.<br />
+Il existe des logiciels permettant d'utiliser le FTP pour transférer vos fichiers sur Internet.
+
+Bien entendu, des logiciels FTP, il en existe des centaines, gratuits, payants, français, anglais, etc.<br />
+Pour que nous soyons sur la même longueur d'onde, je vais vous proposer celui que j'utilise, qui est gratuit et en français :
+**FileZilla** (figure suivante).
+
+![L'icône du célèbre client FTP FileZilla](https://user.oc-static.com/files/380001_381000/380712.jpg)
+
+L'icône du célèbre client FTP FileZilla
+
+:::info
+Ce logiciel n'a rien à voir avec Mozilla, si ce n'est qu'il se termine lui aussi par « zilla ». N'allez donc pas croire que je
+vous force à utiliser des logiciels d'un même éditeur, c'est tout à fait faux. D'ailleurs, vous pouvez utiliser n'importe quel
+autre logiciel FTP si cela vous chante, cela ne me dérange absolument pas.
+:::
+
+Quoi qu'il en soit, je vais vous montrer quelle est la marche à suivre avec FileZilla. Et la première étape, c'est bien entendu
+de le télécharger !
+
+[Télécharger FileZilla](https://filezilla-project.org/download.php?type=client)
+
+Prenez la version correspondant à votre système d'exploitation (Windows, Mac OS X ou Linux).
+
+Je vous fais confiance pour l'installation, elle est toute simple et vous ne devriez pas avoir de problème.<br />
+Lancez le logiciel, vous devriez voir quelque chose ressemblant à la figure suivante.
+
+![FileZilla est ouvert](https://user.oc-static.com/files/5001_6000/5918.png)
+
+FileZilla est ouvert
+
+À première vue, cela semble un peu compliqué (à première vue seulement). En fait, le principe est très simple.<br />
+Il y a quatre grandes zones à connaître dans la fenêtre :
+1. En haut, vous verrez apparaître les messages qu'envoie et reçoit le logiciel. Si vous avez un peu de chance, vous verrez même
+la machine vous dire bonjour (si si, je vous jure). En général, cette zone ne nous intéresse pas vraiment, sauf s'il y a des
+messages d'erreur en rouge…
+2. À gauche, c'est votre disque dur. Dans la partie du haut, vous avez les dossiers et, dans la partie du bas, la liste des
+fichiers du dossier actuel.
+3. À droite, c'est la liste des fichiers envoyés sur le serveur sur Internet. Pour le moment il n'y a rien car on ne s'est pas
+connecté, mais cela va venir, ne vous en faites pas.
+4. Enfin, en bas, vous verrez apparaître les fichiers en cours d'envoi (et le pourcentage d'envoi).
+
+La première étape va être de se connecter au serveur de votre hébergeur.
+
+#### Configurer le client FTP
+
+Quel que soit l'hébergeur que vous avez choisi, cela fonctionne toujours de la même manière. On va vous fournir _trois
+informations_ qui sont indispensables pour que FileZilla puisse se connecter au serveur :
+- **l'IP** : c'est « l'adresse » du serveur. Le plus souvent, on vous donnera une information du type `ftp.mon-site.com`, mais
+il peut aussi s'agir d'une suite de nombres comme `122.65.203.27`  ;
+- **le login** : c'est votre identifiant, on vous a probablement demandé de le choisir. Vous avez peut-être mis votre pseudo, ou
+le nom de votre site. Mon login pourrait par exemple être `mateo21`.
+- **le mot de passe** : soit on vous a demandé de choisir un mot de passe, soit (c'est plus probable) on vous en a attribué un
+d'office (un truc imprononçable du genre `crf45u7h`).
+
+Si vous avez ces trois informations, vous allez pouvoir continuer.<br />
+Si vous ne les avez pas, il faut que vous les cherchiez, c'est indispensable. On vous les a probablement envoyées par e-mail.
+Sinon, n'hésitez pas à les demander à votre hébergeur (IP, login et mot de passe).
+
+Maintenant que nous sommes en possession de ces informations, nous allons les donner à FileZilla, qui en a besoin pour se
+connecter au serveur.
+
+Cliquez sur la petite icône en haut à gauche (pas sur la petite flèche à droite, mais bien sur l'image), représentée à la figure
+suivante.
+
+![L'icône de connexion de FileZilla](https://user.oc-static.com/files/5001_6000/5919.png)
+
+L'icône de connexion de FileZilla
+
+Une fenêtre s'ouvre. Cliquez sur `Nouveau site` et donnez-lui le nom que vous voulez (par exemple « Mon site »). À droite, vous
+allez devoir indiquer les trois informations dont je viens de vous parler, comme sur la figure suivante.
+
+![Les trois informations à donner à FileZilla](https://user.oc-static.com/files/5001_6000/5920.png)
+
+Les trois informations à donner à FileZilla
+
+Vous pouvez distinguer en haut l'hôte (c'est là qu'il faut indiquer `ftp.monsite.com`, par exemple). Cochez
+`Type d'authentification : Normale`  pour pouvoir saisir le login et le mot de passe.
+
+Cliquez sur `Connexion` et le tour est (presque) joué.
+
+#### Transférer les fichiers
+
+À ce stade, deux possibilités :
+- soit la connexion a réussi : vous voyez alors apparaître en haut des messages en vert, comme « Connecté ». Dans ce cas, la zone
+de droite de la fenêtre de FileZilla devrait s'activer et vous verrez les fichiers qui se trouvent déjà sur le serveur (il se
+peut qu'il y en ait déjà quelques-uns) ;
+- soit cela a planté, vous avez plein de messages écrits en rouge et là, eh bien… il n'y a pas trente-six solutions : vous vous
+êtes trompé en tapant l'IP, ou le login, ou le mot de passe. Un de ces éléments est incorrect, veillez à les redemander à votre
+hébergeur car s'ils sont bons, cela _doit_ marcher.
+
+Si la connexion a réussi, alors ce que vous avez à faire est très simple : dans la partie de gauche, cherchez où se trouvent, sur
+votre disque dur, vos fichiers `.html` et `.css` (mais aussi vos images `.jpg`, `.png`, `.gif`, etc.).<br />
+À gauche, faites un double-clic sur le fichier que vous voulez transférer. Au bout de quelques secondes, il apparaîtra à droite,
+ce qui voudra dire qu'il a été correctement envoyé sur le serveur, et donc qu'il est accessible sur Internet !
+
+:::info
+Vous pouvez envoyer n'importe quel type de fichier. Bien entendu, généralement on envoie des fichiers `.php`, `.html`, `.css` et
+des images, mais vous pouvez aussi très bien envoyer des `.pdf`, des programmes, des `.zip`, etc.
+:::
+
+La figure suivante, par exemple, représente le résultat que l'on obtient après avoir transféré un fichier `index.html` et
+quelques autres fichiers.
+
+![Des fichiers sont hébergés sur le FTP](https://user.oc-static.com/files/5001_6000/5926.png)
+
+Des fichiers sont hébergés sur le FTP
+
+Il apparaît à droite, ce qui veut dire qu'il est maintenant disponible sur le serveur.
+
+:::info
+Veuillez noter qu'il _faut_ que votre page d'accueil s'appelle `index.html`. C'est la page qui sera chargée lorsqu'un nouveau
+visiteur arrivera sur votre site.
+:::
+
+Vous pouvez aussi transférer des dossiers entiers d'un seul coup : il suffit de faire un glisser-déposer du dossier depuis la
+partie de gauche (ou directement de la fenêtre de votre système d'exploitation) jusqu'à la partie de droite de la fenêtre de
+FileZilla.
+
+Une fois configuré, vous pouvez voir que l'envoi de fichiers est très simple.
+
+### En résumé
+
+- Pour le moment, votre site web n'est visible que par vous, sur votre ordinateur. Il faut l'envoyer sur le Web pour qu'il soit
+visible par tout le monde.
+- Vous avez besoin de deux éléments :
+    - un nom de domaine : c'est l'adresse de votre site web. Vous pouvez réserver une adresse en `.com`, `.fr`, `.net`… Par
+    exemple : `openclassrooms.com`.
+    - un hébergeur : c'est lui qui va stocker votre site web sur une machine appelée « serveur ». Son rôle sera d'envoyer votre
+    site à vos visiteurs à toute heure du jour et de la nuit.
+- Pour transmettre les fichiers de votre site au serveur de votre hébergeur, il faut utiliser un client FTP comme FileZilla.
+- Pour vous connecter au serveur, vous avez besoin de trois informations : l'adresse IP du serveur (ou son nom d'hôte), votre
+login et votre mot de passe. Ceux-ci vous sont fournis par votre hébergeur.
+
+-----
+
+## Mémento des balises HTML
+
+[Mémento des balises HTML - Apprenez à créer votre site web avec HTML5 et CSS3 - OpenClassrooms](https://openclassrooms.com/fr/courses/1603881-apprenez-a-creer-votre-site-web-avec-html5-et-css3/1608357-memento-des-balises-html)
+
+Cette page est une liste _non exhaustive_ des balises HTML qui existent. Vous trouverez ici un grand nombre de balises HTML. Nous
+en avons déjà vu certaines dans le cours, mais il y en a d'autres que nous n'avons pas eu l'occasion d'étudier. Généralement, les
+balises que nous n'avons pas étudiées sont des balises un peu plus rarement utilisées. Peut-être trouverez-vous votre bonheur dans
+ce lot de nouvelles balises.
+
+Vous pouvez vous servir de cette annexe comme d'un aide-mémoire lorsque vous développez votre site web.
+
+:::caution !
+Attention, j'insiste : _cette annexe n'est pas complète et c'est volontaire_. Je préfère mettre _moins_ de balises et garder
+seulement celles qui me semblent les plus utiles dans la pratique.
+:::
+
+:::info
+Une référence exhaustive des éléments HTML est fournie sur le site du Mozilla Developer Network : [https://developer.mozilla.org/fr/docs/Web/HTML/Element](https://developer.mozilla.org/fr/docs/Web/HTML/Element) ;
+et si vous voulez les voir en anglais, c'est [ici](https://eastmanreference.com/complete-list-of-html-tags) !
+:::
+
+### Mémento
+
+#### Balises de premier niveau
+
+Les balises de premier niveau sont les principales balises qui structurent une page HTML. Elles sont indispensables pour réaliser
+le « code minimal » d'une page web.
+
+| Balise | Description |
+|--------|-------------|
+| `<html>` | Balise principale |
+| `<head>` | En-tête de la page |
+| `<body>` | Corps de la page |
+
+Code minimal d'une page HTML :
+
+```html
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <title>Titre</title>
+    </head>
+
+    <body>
+    
+    </body>
+</html>
+```
+
+#### Balises d'en-tête
+
+Ces balises sont toutes situées dans l'en-tête de la page web, c'est-à-dire entre `<head>` et `</head>` :
+
+| Balise | Description |
+|--------|-------------|
+| `<link />` | Liaison avec une feuille de style |
+| `<meta />` | Métadonnées de la page web (charset, mots-clés, etc.) |
+| `<script>` | Code JavaScript |
+| `<style>` | Code CSS |
+| `<title>` | Titre de la page |
+
+#### Balises de structuration du texte
+
+| Balise | Description |
+|--------|-------------|
+| `<abbr>` | Abréviation |
+| `<blockquote>` | Citation (longue) |
+| `<cite>` | Citation du titre d'une œuvre ou d'un évènement |
+| `<q>` | Citation (courte) |
+| `<sup>` | Exposant |
+| `<sub>` | Indice |
+| `<strong>` | Mise en valeur forte |
+| `<em>` | Mise en valeur normale |
+| `<mark>` | Mise en valeur visuelle |
+| `<h1>` | Titre de niveau 1 |
+| `<h2>` | Titre de niveau 2 |
+| `<h3>` | Titre de niveau 3 |
+| `<h4>` | Titre de niveau 4 |
+| `<h5>` | Titre de niveau 5 |
+| `<h6>` | Titre de niveau 6 |
+| `<img />` | Image |
+| `<figure>` | Figure (image, code, etc.) |
+| `<figcaption>` | Description de la figure |
+| `<audio>` | Son |
+| `<video>` | Vidéo |
+| `<source>` | Format source pour les balises `<audio>` et `<video>` |
+| `<a>` | Lien hypertexte |
+| `<br />` | Retour à la ligne |
+| `<p>` | Paragraphe |
+| `<hr />` | Ligne de séparation horizontale |
+| `<address>` | Adresse de contact |
+| `<del>` | Texte supprimé |
+| `<ins>` | Texte inséré |
+| `<dfn>` | Définition |
+| `<kbd>` | Saisie clavier |
+| `<pre>` | Affichage formaté (pour les codes sources) |
+| `<progress>` | Barre de progression |
+| `<time>` | Date ou heure |
+
+#### Balises de listes
+
+Cette section énumère toutes les balises HTML permettant de créer des listes (listes à puces, listes numérotées, listes de définitions…)
+
+| Balise | Description |
+|--------|-------------|
+| `<ul>` | Liste à puces, non numérotée |
+| `<ol>` | Liste numérotée |
+| `<li>` | Élément de la liste à puces |
+| `<dl>` | Liste de définitions |
+| `<dt>` | Terme à définir |
+| `<dd>` | Définition du terme |
+
+#### Balises de tableau
+
+| Balise | Description |
+|--------|-------------|
+| `<table>` | Tableau |
+| `<caption>` | Titre du tableau |
+| `<tr>` | Ligne de tableau |
+| `<th>` | Cellule d'en-tête |
+| `<td>` | Cellule |
+| `<thead>` | Section de l'en-tête du tableau |
+| `<tbody>` | Section du corps du tableau |
+| `<tfoot>` | Section du pied du tableau |
+
+#### Balises de formulaire
+
+| Balise | Description |
+|--------|-------------|
+| `<form>` | Formulaire |
+| `<fieldset>` | Groupe de champs |
+| `<legend>` | Titre d'un groupe de champs |
+| `<label>` | Libellé d'un champ |
+| `<input />` | Champ de formulaire (texte, mot de passe, case à cocher, bouton, etc.) |
+| `<textarea>` | Zone de saisie multiligne |
+| `<select>` | Liste déroulante |
+| `<option>` | Élément d'une liste déroulante |
+| `<optgroup>` | Groupe d'éléments d'une liste déroulante |
+
+#### Balises sectionnantes
+
+Ces balises permettent de construire le squelette de notre site web.
+
+| Balise | Description |
+|--------|-------------|
+| `<header>` | En-tête |
+| `<nav>` | Liens principaux de navigation |
+| `<footer>` | Pied de page |
+| `<section>` | Section de page |
+| `<article>` | Article (contenu autonome) |
+| `<aside>` | Informations complémentaires |
+
+#### Balises génériques
+
+Les balises génériques sont des balises qui n'ont pas de sens sémantique.
+
+En effet, toutes les autres balises HTML ont un _sens_ : `<p>` signifie « paragraphe », `<h2>` signifie « sous-titre », etc.<br />
+Parfois, on a besoin d'utiliser des balises génériques (aussi appelées **_balises universelles_**) car aucune des autres balises
+ne convient. On utilise le plus souvent des balises génériques pour construire son design.
+
+Il y a deux balises génériques : l'une est inline, l'autre est block.
+
+| Balise | Description |
+|--------|-------------|
+| `<span>` | Balise générique de type inline |
+| `<div>` | Balise générique de type block |
+
+Ces balises ont un intérêt uniquement si vous leur associez un attribut `class`, `id` ou `style` :
+- **`class`** : indique le nom de la classe CSS à utiliser.
+- **`id`** : donne un nom à la balise. Ce nom doit être unique sur toute la page car il permet d'identifier la balise. Vous
+pouvez vous servir de l'ID pour de nombreuses choses, par exemple pour créer un lien vers une ancre, pour un style CSS de type ID,
+pour des manipulations en JavaScript, etc.
+- **`style`** : cet attribut vous permet d'indiquer directement le code CSS à appliquer. Vous n'êtes donc pas obligé d'avoir une
+feuille de style à part, vous pouvez mettre directement les attributs CSS. Notez qu'il est préférable de ne pas utiliser cet
+attribut et de passer à la place par une feuille de style externe, car cela rend votre site plus facile à mettre à jour par la
+suite.
+
+Ces trois attributs ne sont pas réservés aux balises génériques : vous pouvez aussi les utiliser sans aucun problème dans la
+plupart des autres balises.
+
+-----
+
+## Mémento des propriétés CSS
+
+[Mémento des propriétés CSS - Apprenez à créer votre site web avec HTML5 et CSS3 - OpenClassrooms](https://openclassrooms.com/fr/courses/1603881-apprenez-a-creer-votre-site-web-avec-html5-et-css3/1608902-memento-des-proprietes-css)
+
+Cette page est une liste _non exhaustive_ des propriétés CSS qui existent en CSS3. Pour la plupart, ce sont des propriétés que
+nous avons vues dans le cours, mais vous trouverez aussi quelques nouvelles propriétés que nous n'avons pas abordées.
+
+La liste est non exhaustive car mon but n'est pas de faire la liste de toutes les propriétés CSS qui peuvent exister : il y en a
+vraiment trop (plus de deux cents !) et certaines sont très rarement utilisées.
+
+### Mémento
+
+#### Propriétés de mise en forme du texte
+
+Je résume ici la plupart des propriétés de **mise en forme du texte**.
+
+Qu'est-ce que la mise en forme de texte ? C'est tout ce qui touche à la présentation du texte proprement dit : le gras, l'italique,
+le souligné, la police, l'alignement, etc.
+
+| Propriété | Valeurs (exemples) | Description |
+|-----------|--------------------|-------------|
+| `font-family` | _police1, police2, police3_, serif,<br />sans-serif, monospace | Nom de police |
+| `@font-face` | _Nom et source de la police_ | Police personnalisée |
+| `font-size` | 1.3em, 16px, 120%... | Taille du texte |
+| `font-weight` | bold, normal | Gras |
+| `font-style` | italic, oblique, normal | Italique |
+| `text-decoration` | underline, overline, line-through, blink, none | Soulignement, ligne au-dessus, barré ou clignotant |
+| `font-variant` | small-caps, normal | Petites capitales |
+| `text-transform` | capitalize, lowercase, uppercase | Capitales |
+| `font` | - | Super propriété de police. Combine : `font-weight`,<br />`font-style`, `font-size`, `font-variant`, `font-family`. |
+| `text-align` | left, center, right, justify | Alignement horizontal |
+| `vertical-align` | baseline, middle, sub, super, top, bottom | Alignement vertical (cellules de tableau<br />ou éléments `inline-block` uniquement) |
+| `line-height` | 18px, 120%, normal... | Hauteur de ligne |
+| `text-indent` | 25px | Alinéa |
+| `white-space` | pre, nowrap, normal | Césure |
+| `word-wrap` | break-word, normal | Césure forcée |
+| `text-shadow` | 5px 5px 2px blue<br />_(horizontale, verticale, fondu, couleur)_ | Ombre de texte |
+
+#### Propriétés de couleur et de fond
+
+| Propriété | Valeurs (exemples) | Description |
+|-----------|--------------------|-------------|
+| `color` | _nom_, rgb(rouge,vert,bleu),<br />rgba(rouge,vert,bleu,transparence),<br />#CF1A20... | Couleur du texte |
+| `background-color` | _Identique à color_ | Couleur de fond |
+| `background-image` | url('image.png') | Image de fond |
+| `background-attachment` | fixed, scroll | Fond fixe |
+| `background-repeat` | repeat-x, repeat-y, no-repeat, repeat | Répétition du fond |
+| `background-position` | _(x y)_, top, center, bottom, left, right | Position du fond |
+| `background` | - | Super propriété du fond. Combine :<br />`background-image`,<br />`background-repeat`,<br />`background-attachment`,<br />`background-position` |
+| `opacity` | 0.5 | Transparence |
+
+#### Propriétés des boîtes
+
+| Propriété | Valeurs (exemples) | Description |
+|-----------|--------------------|-------------|
+| `width` | 150px, 80%... | Largeur |
+| `height` | 150px, 80%... | Hauteur |
+| `min-width` | 150px, 80%... | Largeur minimale |
+| `max-width` | 150px, 80%... | Largeur maximale |
+| `min-height` | 150px, 80%... | Hauteur minimale |
+| `max-height` | 150px, 80%... | Hauteur maximale |
+| `margin-top` | 23px | Marge en haut |
+| `margin-left` | 23px | Marge à gauche |
+| `margin-right` | 23px | Marge à droite |
+| `margin-bottom` | 23px | Marge en bas |
+| `margin` | 23px 5px 23px 5px<br />_(haut, droite, bas, gauche)_ | Super-propriété de marge.<br />Combine : `margin-top`,<br />`margin-right`,<br />`margin-bottom`,<br />`margin-left`. |
+| `padding-left` | 23px | Marge intérieure à gauche |
+| `padding-right` | 23px | Marge intérieure à droite |
+| `padding-bottom` | 23px | Marge intérieure en bas |
+| `padding-top` | 23px | Marge intérieure en haut |
+| `padding` | 23px 5px 23px 5px<br />_(haut, droite, bas, gauche)_ | Super-propriété de marge intérieure.<br />Combine : `padding-top`,<br />`padding-right`,<br />`padding-bottom`,<br />`padding-left`. |
+| `border-width` | 3px | Épaisseur de bordure |
+| `border-color` | _nom_, rgb(rouge,vert,bleu),<br />rgba(rouge,vert,bleu,transparence),<br />#CF1A20... | Couleur de bordure |
+| `border-style` | solid, dotted, dashed, double,<br />groove, ridge, inset, outset | Type de bordure |
+| `border` | 3px solid black | Super-propriété de bordure.<br />Combine ,`border-width`,<br />`border-color`,<br />`border-style`.<br />Existe aussi en version<br />`border-top`,<br />`border-right`,<br />`border-bottom`,<br />`border-left`. |
+| `border-radius` | 5px | Bordure arrondie |
+| `box-shadow` | 6px 6px 0px black<br />_(horizontale, verticale, fondu, couleur)_ | Ombre de boîte |
+
+#### Propriétés de positionnement et d'affichage
+
+| Propriété | Valeurs (exemples) | Description |
+|-----------|--------------------|-------------|
+| `display` | block, inline, inline-block,<br />table, table-cell, none... | Type d'élément (`block`, `inline`,<br />`inline-block`, `none`…) |
+| `visibility` | visible, hidden | Visibilité |
+| `clip` | rect (0px, 60px, 30px, 0px)<br />_rect (haut, droite, bas, gauche)_ | Affichage d'une partie de l'élément |
+| `overflow` | auto, scroll, visible, hidden | Comportement en cas de dépassement |
+| `float` | left, right, none | Flottant |
+| `clear` | left, right, both, none | Arrêt d'un flottant |
+| `position` | relative, absolute, static | Positionnement |
+| `top` | 20px | Position par rapport au haut |
+| `bottom` | 20px | Position par rapport au bas |
+| `left` | 20px | Position par rapport à la gauche |
+| `right` | 20px | Position par rapport à la droite |
+| `z-index` | 10 | Ordre d'affichage en cas de superposition.<br />La plus grande valeur est affichée par-dessus les autres. |
+
+#### Propriétés des listes
+
+| Propriété | Valeurs (exemples) | Description |
+|-----------|--------------------|-------------|
+| `list-style-type` | disc, circle, square, decimal,<br />lower-roman, upper-roman,<br />lower-alpha, upper-alpha, none | Type de liste |
+| `list-style-position` | inside, outside | Position en retrait |
+| `list-style-image` | url('puce.png') | Puce personnalisée |
+| `list-style` | - | Super-propriété de liste. Combine<br />`list-style-type`,<br />`list-style-position`,<br />`list-style-image`. |
+
+#### Propriétés des tableaux
+
+| Propriété | Valeurs (exemples) | Description |
+|-----------|--------------------|-------------|
+| `border-collapse` | collapse, separate | Fusion des bordures |
+| `empty-cells` | hide, show | Affichage des cellules vides |
+| `caption-side` | bottom, top | Position du titre du tableau |
+
+#### Autres propriétés
+
+| Propriété | Valeurs (exemple) | Description |
+|-----------|-------------------|-------------|
+| `cursor` | crosshair, default, help, move, pointer,<br />progress, text, wait, e-resize, ne-resize, auto... | Curseur de souris |
+

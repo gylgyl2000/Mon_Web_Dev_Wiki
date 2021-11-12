@@ -1,0 +1,751 @@
+---
+sidebar_position: 4
+---
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+import { Vimeo } from 'mdx-embed';
+
+# Mettez en place un système d'authentification sur votre application
+
+## Optimisez la structure du back-end
+
+[Optimisez la structure du back-end - Passez au Full stack avec Node.js, Express et MongoDB - OpenClassrooms](https://openclassrooms.com/fr/courses/6390246-passez-au-full-stack-avec-node-js-express-et-mongodb/6466459-optimisez-la-structure-du-back-end)
+
+<Vimeo vimeoId="373129314" />
+
+<br />
+
+Avant de nous lancer dans le sujet complexe qu'est l'authentification, nous allons réorganiser la structure de notre back-end pour
+en faciliter la compréhension et la gestion. Il est techniquement possible de conserver toute notre logique dans le fichier
+`app.js`, mais ce fichier peut vite devenir bien trop volumineux, ce qui compliquerait la gestion. Par conséquent, rendons les
+choses un peu plus modulaires.
+
+### Configurez le routage
+
+<Vimeo vimeoId="374619536" />
+
+<br />
+
+La première chose que nous allons faire est de dissocier notre logique de _routing_ et la logique globale de l'application. Créez,
+dans votre dossier `backend`, un dossier `routes` puis, dans ce nouveau dossier, un fichier `stuff.js`. Celui-ci contiendra la
+logique de nos routes `stuff` :
+
+```javascript
+const express = require('express');
+
+const router = express.Router();
+
+module.exports = router;
+```
+
+Ci-dessus, nous créons un routeur Express. Jusqu'à présent, nous avions enregistré nos routes directement dans notre application.
+Maintenant, nous allons les enregistrer dans notre routeur Express, puis enregistrer celui-ci dans l'application.
+
+Il est temps de couper toutes nos routes de `app.js` et de les coller dans notre routeur. Veillez à remplacer toutes les
+occurrences de `app` par `router`, car nous enregistrons les routes dans notre routeur :
+
+```javascript
+const express = require('express');
+const router = express.Router();
+
+const Thing = require('../models/thing');
+
+router.post('/', (req, res, next) => {
+    const thing = new Thing({
+        title: req.body.title,
+        description: req.body.description,
+        imageUrl: req.body.imageUrl,
+        price: req.body.price,
+        userId: req.body.userId
+    });
+    thing.save()
+    .then(() => { res.status(201).json({ message: 'Post saved successfully!' }); })
+    .catch((error) => { res.status(400).json({ error: error });});
+});
+
+router.get('/:id', (req, res, next) => {
+    Thing.findOne({ _id: req.params.id })
+    .then((thing) => { res.status(200).json(thing)})
+    .catch((error) => { res.status(404).json({ error: error }) });
+});
+
+router.put('/:id', (req, res, next) => {
+    const thing = new Thing({
+        _id: req.params.id,
+        title: req.body.title,
+        description: req.body.description,
+        imageUrl: req.body.imageUrl,
+        price: req.body.price,
+        userId: req.body.userId
+    });
+    Thing.updateOne({ _id: req.params.id }, thing)
+    .then(() => { res.status(201).json({ message: 'Thing updated successfully!' })})
+    .catch((error) => { res.status(400).json({ error: error })});
+});
+
+router.delete('/:id', (req, res, next) => {
+    Thing.deleteOne({ _id: req.params.id })
+    .then(() => { res.status(200).json({ message: 'Deleted!' })})
+    .catch((error) => { res.status(400).json({ error: error })});
+});
+
+router.get('/' + '', (req, res, next) => {
+    Thing.find()
+    .then((things) => { res.status(200).json(things)})
+    .catch((error) => { res.status(400).json({ error: error })});
+});
+
+module.exports = router;
+```
+
+:::info
+`/api/stuff` doit être supprimé de chaque segment de route. Si cela supprime une chaîne de route, veillez à laisser une barre
+oblique `/` (reportez-vous au code ci-dessus).
+
+Veillez également à remplacer l'élément `app.use()` final par `app.get()` si ce n'est pas déjà fait, car cette route ne concerne
+que les demandes GET.
+:::
+
+Nous devons désormais enregistrer notre nouveau routeur dans notre fichier `app.js`. D'abord, nous devons l'importer :
+
+```javascript
+const stuffRoutes = require('./routes/stuff');
+```
+
+Nous l'enregistrerons ensuite comme nous le ferions pour une route unique. Nous voulons enregistrer notre routeur pour toutes les
+demandes effectuées vers `/api/stuff`. Par conséquent, tapez :
+
+```javascript
+app.use('/api/stuff', stuffRoutes);
+```
+
+Restez dans la section « Parties 1 + 2 » pour le moment. Si vous actualisez l'application front-end, tout devrait encore
+fonctionner comme avant.
+
+### Configurez les contrôleurs
+
+<Vimeo vimeoId="374619572" />
+
+<br />
+
+Pour rendre notre structure encore plus modulaire, simplifier la lecture et la gestion de notre code, nous allons séparer la
+logique métier de nos routes en contrôleurs.
+
+Créez un dossier `controllers` dans votre dossier `backend` et créez un autre fichier `stuff.js`. Celui-ci sera notre contrôleur
+`stuff`. Copions le premier élément de logique métier de la route POST vers notre contrôleur :
+
+```javascript
+// in controllers/stuff.js
+
+const Thing = require('../models/thing');
+
+exports.createThing = (req, res, next) => {
+    const thing = new Thing({
+        title: req.body.title,
+        description: req.body.description,
+        imageUrl: req.body.imageUrl,
+        price: req.body.price,
+        userId: req.body.userId
+    });
+    thing.save()
+    .then(() => { res.status(201).json({ message: 'Post saved successfully!' })})
+    .catch((error) => { res.status(400).json({ error: error })});
+};
+```
+
+Ici, nous exposons la logique de notre route POST en tant que fonction appelée `createThing()`. Pour réimplémenter cela dans notre
+route, nous devons importer notre contrôleur puis enregistrer `createThing` :
+
+```javascript
+// in routes/stuff.js
+
+const stuffCtrl = require('../controllers/stuff');
+
+router.get('/', stuffCtrl.getAllStuff);
+```
+
+Nous pouvons maintenant faire de même pour toutes nos autres routes. Voici le contrôleur final :
+
+```javascript
+const Thing = require('../models/thing');
+
+exports.createThing = (req, res, next) => {
+    const thing = new Thing({
+        title: req.body.title,
+        description: req.body.description,
+        imageUrl: req.body.imageUrl,
+        price: req.body.price,
+        userId: req.body.userId
+    });
+    thing.save()
+    .then(() => { res.status(201).json({ message: 'Post saved successfully!' })})
+    .catch((error) => { res.status(400).json({ error: error })});
+};
+
+exports.getOneThing = (req, res, next) => {
+    Thing.findOne({ _id: req.params.id })
+    .then((thing) => { res.status(200).json(thing) })
+    .catch((error) => { res.status(404).json({ error: error })});
+};
+
+exports.modifyThing = (req, res, next) => {
+    const thing = new Thing({
+        _id: req.params.id,
+        title: req.body.title,
+        description: req.body.description,
+        imageUrl: req.body.imageUrl,
+        price: req.body.price,
+        userId: req.body.userId
+    });
+    Thing.updateOne({_id: req.params.id}, thing)
+    .then(() => { res.status(201).json({ message: 'Thing updated successfully!' })})
+    .catch((error) => { res.status(400).json({ error: error })});
+};
+
+exports.deleteThing = (req, res, next) => {
+    Thing.deleteOne({ _id: req.params.id })
+    .then(() => { res.status(200).json({ message: 'Deleted!' })})
+    .catch((error) => { res.status(400).json({ error: error })});
+};
+
+exports.getAllStuff = (req, res, next) => {
+    Thing.find()
+    .then((things) => { res.status(200).json(things); })
+    .catch((error) => { res.status(400).json({ error: error })});
+};
+```
+
+Voici notre routeur final :
+
+```javascript
+const express = require('express');
+const router = express.Router();
+
+const stuffCtrl = require('../controllers/stuff');
+
+router.get('/', stuffCtrl.getAllStuff);
+router.post('/', stuffCtrl.createThing);
+router.get('/:id', stuffCtrl.getOneThing);
+router.put('/:id', stuffCtrl.modifyThing);
+router.delete('/:id', stuffCtrl.deleteThing);
+
+module.exports = router;
+```
+
+Comme vous le voyez, cela facilite la compréhension de notre fichier de routeur. Il est évident quelles routes sont disponibles à
+quels points de terminaison, et les noms descriptifs donnés aux fonctions de notre contrôleur permettent de mieux comprendre la
+fonction de chaque route.
+
+Structurer le code de manière modulaire comme cela n'est pas absolument nécessaire pour chaque projet, mais c'est une bonne
+habitude à prendre car cela simplifie la maintenance.
+
+Maintenant que tout est prêt, commençons à implémenter l'authentification utilisateur.
+
+-----
+
+## Préparez la base de données pour les informations d'authentification
+
+[Préparez la base de données pour les informations d'authentification - Passez au Full stack avec Node.js, Express et MongoDB - OpenClassrooms](https://openclassrooms.com/fr/courses/6390246-passez-au-full-stack-avec-node-js-express-et-mongodb/6466473-preparez-la-base-de-donnees-pour-les-informations-dauthentification)
+
+<Vimeo vimeoId="373134554" />
+
+<br />
+
+### Comprenez le stockage de mot de passe sécurisé
+
+Dans les chapitres suivants, nous implémenterons l'authentification par e-mail et mot de passe pour notre API. Cela implique de
+stocker des mots de passe utilisateur dans notre base de données d'une manière ou d'une autre. Ce que nous ne voulons certainement
+**pas** faire est de les stocker sous la forme de texte brut : quiconque accéderait à notre base de données verrait la liste
+complète des informations de connexion de tous les utilisateurs. À la place, nous stockerons le mot de passe de chaque utilisateur
+sous la forme d'un **hash** ou d'une chaîne chiffrée.
+
+Le package de chiffrement que nous utiliserons, `bcrypt`, utilise un algorithme unidirectionnel pour chiffrer et créer un hash des
+mots de passe utilisateur, que nous stockerons ensuite dans le document de la base de données relatif à chaque utilisateur.
+Lorsqu'un utilisateur tentera de se connecter, nous utiliserons `bcrypt` pour créer un hash avec le mot de passe entré, puis le
+comparerons au hash stocké dans la base de données. Ces deux hash ne seront pas les mêmes : cela poserait un problème de
+sécurisation, car les pirates informatiques n'auraient qu'à deviner les mots de passe jusqu'à ce que les hash correspondent. Le
+package `bcrypt` permet d'indiquer si les deux hash ont été générés à l'aide d'un même mot de passe initial. Il nous aidera donc à
+implémenter correctement le stockage et la vérification sécurisés des mots de passe.
+
+La première étape de l'implémentation de l'authentification est de créer un modèle de base de données pour les informations de nos
+utilisateurs.
+
+### Créez un modèle de données
+
+<Vimeo vimeoId="374619621" />
+
+<br />
+
+Pour s'assurer que deux utilisateurs ne peuvent pas utiliser la même adresse e-mail, nous utiliserons le mot clé `unique` pour
+l'attribut `email` du schéma d'utilisateur `userSchema`. Les erreurs générées par défaut par MongoDB pouvant être difficiles à
+résoudre, nous installerons un package de validation pour pré-valider les informations avant de les enregistrer :
+
+```sh
+npm install --save mongoose-unique-validator
+```
+
+Ce package une fois installé, nous pouvons créer notre propre modèle utilisateur :
+
+```javascript
+const mongoose = require('mongoose');
+const uniqueValidator = require('mongoose-unique-validator');
+
+const userSchema = mongoose.Schema({
+    email: { type: String, required: true, unique: true },
+    password: { type: String, required: true }
+});
+
+userSchema.plugin(uniqueValidator);
+
+module.exports = mongoose.model('User', userSchema);
+```
+
+Dans notre schéma, la valeur `unique`, avec l'élément `mongoose-unique-validator` passé comme plug-in, s'assurera qu'aucun des
+deux utilisateurs ne peut partager la même adresse e-mail.
+
+Maintenant que notre modèle est prêt, nous allons commencer à l'utiliser dans le chapitre suivant pour enregistrer les nouveaux
+utilisateurs dans notre base de données et appliquer le chiffrement de mot de passe.
+
+-----
+
+## Créez des utilisateurs
+
+[Créez des utilisateurs - Passez au Full stack avec Node.js, Express et MongoDB - OpenClassrooms](https://openclassrooms.com/fr/courses/6390246-passez-au-full-stack-avec-node-js-express-et-mongodb/6466506-creez-des-utilisateurs)
+
+<Vimeo vimeoId="373129822" />
+
+<br />
+
+### Configurez les routes d'authentification
+
+<Vimeo vimeoId="374619645" />
+
+<br />
+
+Commençons par créer l'infrastructure nécessaire à nos routes d'authentification. Il nous faudra un contrôleur et un routeur, puis
+nous devrons enregistrer ce routeur dans notre application Express.
+
+D'abord, créez un fichier `user.js` dans votre dossier `controllers` :
+
+```javascript
+exports.signup = (req, res, next) => {
+
+};
+
+exports.login = (req, res, next) => {
+
+};
+```
+
+Nous implémenterons ces fonctions bientôt. Pour l'instant, terminons la création des routes.
+
+Pour ce faire, créez un autre fichier `user.js`, cette fois dans votre dossier `routes` :
+
+```javascript
+const express = require('express');
+const router = express.Router();
+
+const userCtrl = require('../controllers/user');
+
+router.post('/signup', userCtrl.signup);
+router.post('/login', userCtrl.login);
+
+module.exports = router;
+```
+
+Les routes fournies sont celles prévues par l'application front-end.
+
+:::caution
+N'oubliez pas que le segment de route indiqué ici est uniquement le segment final, car le reste de l'adresse de la route sera
+déclaré dans notre application Express.
+:::
+
+Maintenant, enregistrons notre routeur dans notre application. Pour ce faire, importez le routeur :
+
+```javascript
+const userRoutes = require('./routes/user');
+```
+
+Puis enregistrez-le :
+
+```javascript
+app.use('/api/stuff', stuffRoutes);
+app.use('/api/auth', userRoutes);
+```
+
+Nos routes sont maintenant prêtes. Il est temps de commencer l'implémentation de la logique métier.
+
+### Créez des utilisateurs
+
+<Vimeo vimeoId="374619331" />
+
+<br />
+
+Il nous faudra le package de chiffrement `bcrypt` pour notre fonction `signup`. Installons-le donc dans notre projet :
+
+```sh
+npm install --save bcrypt
+```
+
+Nous pouvons l'importer dans notre contrôleur et implémenter notre fonction `signup` (n'oubliez pas d'importer votre modèle `User` !) :
+
+```javascript
+exports.signup = (req, res, next) => {
+    bcrypt.hash(req.body.password, 10)
+    .then(hash => {
+        const user = new User({
+            email: req.body.email,
+            password: hash
+        });
+        user.save()
+        .then(() => res.status(201).json({ message: 'Utilisateur créé !' }))
+        .catch(error => res.status(400).json({ error }));
+    })
+    .catch(error => res.status(500).json({ error }));
+};
+```
+
+Dans cette fonction :
+- nous appelons la fonction de hachage de `bcrypt` dans notre mot de passe et lui demandons de « saler » le mot de passe 10 fois.
+Plus la valeur est élevée, plus l'exécution de la fonction sera longue, et plus le hachage sera sécurisé. Pour plus d'informations,
+consultez la [documentation](https://www.npmjs.com/package/bcrypt) de `bcrypt` ;
+- il s'agit d'une fonction asynchrone qui renvoie une Promise dans laquelle nous recevons le hash généré ;
+- dans notre bloc `then`, nous créons un utilisateur et l'enregistrons dans la base de données, en renvoyant une réponse de
+réussite en cas de succès, et des erreurs avec le code d'erreur en cas d'échec ;
+
+Dans le chapitre suivant, nous implémenterons notre fonction `login` pour vérifier les informations d'identification des
+utilisateurs pour leur permettre de se connecter.
+
+-----
+
+## Vérifiez les informations d'identification d'un utilisateur
+
+[Vérifiez les informations d'identification d'un utilisateur - Passez au Full stack avec Node.js, Express et MongoDB - OpenClassrooms](https://openclassrooms.com/fr/courses/6390246-passez-au-full-stack-avec-node-js-express-et-mongodb/6466533-verifiez-les-informations-didentification-dun-utilisateur)
+
+<Vimeo vimeoId="373129915" />
+
+<br />
+
+### Implémentez la fonction login
+
+<Vimeo vimeoId="374619383" />
+
+<br />
+
+Maintenant que nous pouvons créer des utilisateurs dans la base de données, il nous faut une méthode permettant de vérifier si un
+utilisateur qui tente de se connecter dispose d'identifiants valides. Implémentons donc notre fonction `login` :
+
+```javascript
+exports.login = (req, res, next) => {
+    User.findOne({ email: req.body.email })
+    .then(user => {
+        if (!user) {
+            return res.status(401).json({ error: 'Utilisateur non trouvé !' });
+        }
+        bcrypt.compare(req.body.password, user.password)
+        .then(valid => {
+            if (!valid) {
+                return res.status(401).json({ error: 'Mot de passe incorrect !' });
+            }
+            res.status(200).json({
+                userId: user._id,
+                token: 'TOKEN'
+            });
+        })
+        .catch(error => res.status(500).json({ error }));
+    })
+    .catch(error => res.status(500).json({ error }));
+};
+```
+
+Dans cette fonction :
+- nous utilisons notre modèle Mongoose pour vérifier que l'e-mail entré par l'utilisateur correspond à un utilisateur existant de
+la base de données :
+   - dans le cas contraire, nous renvoyons une erreur `401 Unauthorized`,
+   - si l'e-mail correspond à un utilisateur existant, nous continuons ;
+- nous utilisons la fonction `compare` de `bcrypt` pour comparer le mot de passe entré par l'utilisateur avec le hash enregistré
+dans la base de données :
+   - s'ils ne correspondent pas, nous renvoyons une erreur `401 Unauthorized` et un message « Mot de passe incorrect ! » ;
+   - s'ils correspondent, les informations d'identification de notre utilisateur sont valides. Dans ce cas, nous renvoyons une
+   réponse `200` contenant l'ID utilisateur et un _token_. Ce _token_ est une chaîne générique pour l'instant, mais nous allons le
+   modifier et le crypter dans le prochain chapitre.
+
+Avant d'utiliser la section « Partie 3 » de l'application front-end, supprimez tous les articles en vente de la section
+« Parties 1+2 ». Sinon, vous ne pourrez plus les modifier. En effet, comme ils ont été créés à l'aide d'un ID utilisateur
+générique, ils ne sont pas modifiables par des utilisateurs créés à partir de maintenant.
+
+Dans le chapitre suivant, vous découvrirez l'authentification par _token_, son rôle, son mode de fonctionnement et comment nous
+l'appliquerons dans notre nouvelle application pour sécuriser correctement notre API.
+
+-----
+
+## Créez des tokens d'authentification
+
+[Créez des tokens d'authentification - Passez au Full stack avec Node.js, Express et MongoDB - OpenClassrooms](https://openclassrooms.com/fr/courses/6390246-passez-au-full-stack-avec-node-js-express-et-mongodb/6466557-creez-des-tokens-dauthentification)
+
+<Vimeo vimeoId="373130013" />
+
+<br />
+
+### Créez des tokens d'authentification
+
+<Vimeo vimeoId="374619436" />
+
+<br />
+
+Les _tokens_ d'authentification permettent aux utilisateurs de ne se connecter qu'une seule fois à leur compte. Au moment de se
+connecter, ils recevront leur _token_ et le renverront automatiquement à chaque requête par la suite. Ceci permettra au back-end
+de vérifier que la requête est authentifiée.
+
+Pour pouvoir créer et vérifier les _tokens_ d'authentification, il nous faudra un nouveau package :
+
+```sh
+npm install --save jsonwebtoken
+```
+
+Nous l'importerons ensuite dans notre contrôleur utilisateur :
+
+```javascript
+const jwt = require('jsonwebtoken');
+```
+
+Enfin, nous l'utiliserons dans notre fonction `login` :
+
+```javascript
+exports.login = (req, res, next) => {
+    User.findOne({ email: req.body.email })
+    .then(user => {
+        if (!user) {
+            return res.status(401).json({ error: 'Utilisateur non trouvé !' });
+        }
+        bcrypt.compare(req.body.password, user.password)
+        .then(valid => {
+            if (!valid) {
+                return res.status(401).json({ error: 'Mot de passe incorrect !' });
+            }
+            res.status(200).json({
+                userId: user._id,
+                token: jwt.sign(
+                    { userId: user._id },
+                    'RANDOM_TOKEN_SECRET',
+                    { expiresIn: '24h' }
+                )
+            });
+        })
+        .catch(error => res.status(500).json({ error }));
+    })
+    .catch(error => res.status(500).json({ error }));
+};
+```
+
+Dans le code ci-dessus :
+- nous utilisons la fonction `sign` de `jsonwebtoken` pour encoder un nouveau _token_ ;
+- ce _token_ contient l'ID de l'utilisateur en tant que _payload_ (les données encodées dans le _token_) ;
+- nous utilisons une chaîne secrète de développement temporaire `RANDOM_SECRET_KEY` pour encoder notre _token_ (à remplacer par
+une chaîne aléatoire beaucoup plus longue pour la production) ;
+- nous définissons la durée de validité du _token_ à 24 heures. L'utilisateur devra donc se reconnecter au bout de 24 heures ;
+- nous renvoyons le _token_ au front-end avec notre réponse.
+
+Vous pouvez désormais utiliser l'onglet « Réseau » de Chrome DevTools pour vérifier que, une fois connecté, chaque requête
+provenant du front-end contient bien un en-tête « Authorization » avec le mot-clé « Bearer » et une longue chaîne encodée. Il
+s'agit de notre _token_ !
+
+Dans le chapitre suivant, nous créerons un élément de _middleware_ pour vérifier ce _token_ et son contenu afin de nous assurer
+que seules les requêtes autorisées ont accès aux routes à protéger.
+
+-----
+
+## Configurez le middleware d'authentification
+
+[Configurez le middleware d'authentification - Passez au Full stack avec Node.js, Express et MongoDB - OpenClassrooms](https://openclassrooms.com/fr/courses/6390246-passez-au-full-stack-avec-node-js-express-et-mongodb/6466605-configurez-le-middleware-dauthentification)
+
+<Vimeo vimeoId="373130160" />
+
+<br />
+
+### Implémentez le _middleware_ d'authentification
+
+<Vimeo vimeoId="374619488" />
+
+<br />
+
+Nous allons à présent créer le _middleware_ qui protégera les routes sélectionnées et vérifier que l'utilisateur est authentifié
+avant d'autoriser l'envoi de ses requêtes.
+
+Créez un dossier `middleware` et un fichier `auth.js` à l'intérieur :
+
+```javascript
+const jwt = require('jsonwebtoken');
+
+module.exports = (req, res, next) => {
+    try {
+        const token = req.headers.authorization.split(' ')[1];
+        const decodedToken = jwt.verify(token, 'RANDOM_TOKEN_SECRET');
+        const userId = decodedToken.userId;
+        if (req.body.userId && req.body.userId !== userId) {
+            throw 'Invalid user ID';
+        } else {
+            next();
+        }
+    } catch {
+        res.status(401).json({
+            error: new Error('Invalid request!')
+        });
+    }
+};
+```
+
+Dans ce middleware :
+- étant donné que de nombreux problèmes peuvent se produire, nous insérons tout à l'intérieur d'un bloc `try...catch` ;
+- nous extrayons le _token_ du header `Authorization` de la requête entrante. N'oubliez pas qu'il contiendra également le mot-clé
+`Bearer`. Nous utilisons donc la fonction `split` pour récupérer tout après l'espace dans le header. Les erreurs générées ici
+s'afficheront dans le bloc `catch` ;
+- nous utilisons ensuite la fonction `verify` pour décoder notre _token_. Si celui-ci n'est pas valide, une erreur sera générée ;
+- nous extrayons l'ID utilisateur de notre _token_ ;
+- si la demande contient un ID utilisateur, nous le comparons à celui extrait du _token_. S'ils sont différents, nous générons une
+erreur ;
+- dans le cas contraire, tout fonctionne et notre utilisateur est authentifié. Nous passons l'exécution à l'aide de la fonction
+`next()`.
+
+Maintenant, nous devons appliquer ce _middleware_ à nos routes `stuff`, qui sont celles à protéger. Dans notre routeur `stuff`,
+nous importons notre _middleware_ et le passons comme argument aux routes à protéger :
+
+```javascript
+const express = require('express');
+const router = express.Router();
+
+const auth = require('../middleware/auth');
+
+const stuffCtrl = require('../controllers/stuff');
+
+router.get('/', auth, stuffCtrl.getAllStuff);
+router.post('/', auth, stuffCtrl.createThing);
+router.get('/:id', auth, stuffCtrl.getOneThing);
+router.put('/:id', auth, stuffCtrl.modifyThing);
+router.delete('/:id', auth, stuffCtrl.deleteThing);
+
+module.exports = router;
+```
+
+Désormais, à partir du front-end, vous devriez être capable de vous connecter et d'utiliser normalement l'application. Pour
+vérifier que les requêtes non autorisées ne fonctionnent pas, vous pouvez utiliser une application (telle que Postman) pour passer
+une demande sans en-tête `Authorization`. L'API refusera l'accès et renverra une réponse 401.
+
+Félicitations ! Votre API implémente à présent l'authentification par _token_ et est correctement sécurisée.
+
+### En résumé
+
+Dans cette partie du cours :
+- vous avez ajouté un modèle de données `User` afin de stocker les informations utilisateur dans votre base de données ;
+- vous avez implémenté le cryptage de mot de passe sécurisé afin de stocker en toute sécurité les mots de passe utilisateur ;
+- vous avez créé et envoyé des _tokens_ au front-end pour authentifier les requêtes ;
+- vous avez ajouté le _middleware_ d'authentification pour sécuriser les routes dans votre API. De cette façon, seules les
+requêtes authentifiées seront gérées.
+
+Dans la dernière partie de ce cours, vous en apprendrez plus sur la gestion des fichiers :
+- comment capturer les fichiers provenant du front-end ;
+- comment les enregistrer sur votre serveur, et
+- comment les supprimer lorsqu'ils ne sont plus nécessaires.
+
+-----
+
+## Quiz : Savez-vous sécuriser votre API ?
+
+[Savez-vous sécuriser votre API ? - OpenClassrooms](https://openclassrooms.com/fr/courses/6390246-passez-au-full-stack-avec-node-js-express-et-mongodb/exercises/3702)
+
+#### Compétences évaluées
+
+<i class="bi bi-check2-circle"></i> Mettre en place un système d'authentification sur une application Express
+
+-----
+
+#### Question 1 : Dans une application Express, un contrôleur…
+
+<i class="bi bi-circle"></i> … enregistre des routes à l'application.<br />
+<i class="bi bi-record-circle"></i> … contient la logique métier pour une ou plusieurs routes.<br />
+<i class="bi bi-circle"></i> … enregistre des routes dans un routeur, qu'il exporte ensuite.<br />
+<br />
+
+_Les contrôleurs contiennent la logique métier, et sont généralement importés par les routeurs, qui attribuent cette logique aux
+routes spécifiques._
+
+-----
+
+#### Question 2 : Il est généralement acceptable de stocker des mots de passe non cryptés dans une base de données si cette base requiert un mot de passe d'accès.
+
+<i class="bi bi-circle"></i> Vrai<br />
+<i class="bi bi-record-circle"></i> Faux<br />
+<br />
+
+_Il n'est jamais acceptable de stocker des mots de passe non cryptés, peu importe la protection de la base de données elle-même.
+On ne sait jamais comment les données pourraient fuir et donner un accès ouvert aux mots de passe utilisateur._
+
+-----
+
+#### Question 3 : Que fait la fonction `hash` de bcrypt ?
+
+<i class="bi bi-circle"></i> Elle crée un string encodé qui peut être décodé avec une même clé secrète.<br />
+<i class="bi bi-circle"></i> Elle crypte un string avec un algorithme simple bidirectionnel.<br />
+<i class="bi bi-record-circle"></i> Elle crypte un string avec un algorithme unidirectionnel, d'une manière quasi indécryptable.<br />
+<br />
+
+_Le package bcrpyt permet un cryptage sécurisé avec un algorithme unidirectionnel._
+
+-----
+
+#### Question 4 : Avec des hashs bcrypt, comment sait-on quand un utilisateur entre le bon mot de passe ?
+
+<i class="bi bi-circle"></i> Pour un string donné, bcrypt émettra toujours le même hash, on peut donc les comparer directement.<br />
+<i class="bi bi-circle"></i> bcrypt décrypte les deux hashs pour comparer les strings d'origine.<br />
+<i class="bi bi-record-circle"></i> bcrypt sait quand deux hashs différents ont été produits à partir du même string d'origine.<br />
+<br />
+
+_Il est virtuellement impossible de calculer le string d'origine à partir d'un hash bcrypt, mais le package bcrypt sait comparer
+deux hashs pour savoir si les deux viennent d'un même string d'origine (cf. [P vs NP problem](https://en.wikipedia.org/wiki/P_versus_NP_problem)
+pour plus d'informations sur la base mathématique de ce phénomène)._
+
+-----
+
+#### Question 5 : Un _token_ JWT est crypté avec un algorithme unidirectionnel.
+
+<i class="bi bi-circle"></i> Vrai<br />
+<i class="bi bi-record-circle"></i> Faux<br />
+<br />
+
+*Les _tokens_ JWT sont encodés et non cryptés, et peuvent donc être décodés avec la clé secrète.*
+
+-----
+
+#### Question 6 : Un _token_ JWT, une fois signé, est valable indéfiniment.
+
+<i class="bi bi-circle"></i> Vrai<br />
+<i class="bi bi-record-circle"></i> Faux<br />
+<br />
+
+*On peut fixer un délai d'expiration pour un _token_ JWT au moment de sa signature.*
+
+-----
+
+#### Question 7 : Les _tokens_ JWT sont sécurisés parce que :
+
+<i class="bi bi-circle"></i> il n'y a pas de session stockée sur le serveur qui pourrait être détournée.<br />
+<i class="bi bi-circle"></i> leur <em>payload</em> encodé peut contenir des données qui permettent de vérifier que l'utilisateur
+connecté n'utilise pas le <em>token</em> de quelqu'un d'autre.<br />
+<i class="bi bi-circle"></i> ils sont très difficiles à fausser sans connaître la clé secrète.<br />
+<i class="bi bi-record-circle"></i> toutes les réponses ci-dessus.<br />
+<br />
+
+*Les _tokens_ JWT ont plusieurs avantages qui les rendent sécurisés.*
+
+-----
+
+#### Question 8 : Dans quel header de requête envoie-t-on généralement un _token_ ?
+
+<i class="bi bi-circle"></i> Authentication.<br />
+<i class="bi bi-circle"></i> Access-Control-Allow-Origin.<br />
+<i class="bi bi-record-circle"></i> Authorization.<br />
+<i class="bi bi-circle"></i> X-Requested-With.<br />
+<br />
+
+*Même s'il n'y a pas de règle absolue, la majorité des API requièrent que les _tokens_ d'authentification soient envoyés dans un
+header Authorization.*

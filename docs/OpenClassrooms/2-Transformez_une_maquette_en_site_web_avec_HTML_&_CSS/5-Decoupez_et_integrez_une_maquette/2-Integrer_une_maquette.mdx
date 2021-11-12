@@ -1,0 +1,913 @@
+---
+sidebar_position: 3
+---
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+import { Vimeo } from 'mdx-embed';
+
+# Intégrer une maquette
+
+## Recréer la structure en HTML
+
+[Recréer la structure en HTML - Découpez et intégrez une maquette - OpenClassrooms](https://openclassrooms.com/fr/courses/3504431-decoupez-et-integrez-une-maquette/3605781-recreer-la-structure-en-html)
+
+Comme quand vous construisez un site web, la meilleure chose à faire est de commencer par les blocs de construction de base : le
+contenu de votre site ! Prenons ce que nous voyons dans la maquette et traduisons-le en HTML basique. Je vais utiliser
+l'application appelée [Sublime Text](https://www.sublimetext.com/3), mais vous êtes libre d'utiliser l’éditeur de texte de votre
+choix.
+
+Tout d'abord, vous devez créer un nouveau fichier appelé `index.html`. Dans ce document, nous allons faire l'équivalent de ce que
+vous venez de faire dans Photoshop avec des groupes de calques : vous déterminerez l'ordre de votre contenu et réfléchirez à la
+répartition des éléments dans les différents groupes.
+
+:::info
+Si vous n’avez jamais travaillé avec HTML, vous pouvez utiliser le contenu du [document suivant](https://github.com/emilyreese/course-documents/blob/master/basic_boilerplate.html)
+et lire l'excellent cours de Mathieu Nebra [Apprenez à créer votre site web avec HTML5 et CSS3](https://openclassrooms.com/courses/apprenez-a-creer-votre-site-web-avec-html5-et-css3).
+:::
+
+La création d'une page HTML passe toujours par les étapes suivantes :
+- déclarer le document en HTML ;
+- créer une section `head` ;
+- et créer une section`body`.
+
+Le début et la fin de chacune de ces sections sont marqués par ce qu'on appelle une **balise d'ouverture** et une **balise de
+fermeture**. C’est une notion de base en HTML. Chaque fois que vous allez ajouter un élément, vous spécifiez son type dans une
+balise d'ouverture, et vous devez vous assurer de bien fermer l'élément avec la balise de fermeture correspondante une fois que
+vous avez ajouté son contenu (et avant de passer à l'élément suivant).
+
+Nous allons commencer directement par le `body` – ce que l’utilisateur verra de votre page. Vous allez y lister et y organiser les
+dossiers que vous aviez dans le document Photoshop. Pensez à un architecte faisant un plan. Il ne commencerait pas par dessiner
+une porte spécifique : il commencerait par définir l’architecture générale de la maison, puis définirait ensuite les éléments
+spécifiques.
+
+Pour vous aider à définir cette organisation, vous pouvez créer des "notes" pour vous-même qui ne seront pas visibles par les
+utilisateurs. C’est ce qu'on appelle les **commentaires**. Ceux-ci peuvent être des annotations, des explications aléatoires, des
+rappels de choses à faire, ou toute autre note. Pas d’inquiétude, vous serez le seul à les voir ! Ils ne s'afficheront pas sur
+la page web.
+
+Sentez-vous libre d'écrire autant de commentaires que vous le sentez. Cela vous sera très utile pour ajouter les balises HTML
+au bon endroit.
+
+Un commentaire HTML s'ouvre en utilisant le code `<!--`  et se ferme en ajoutant `-->`.
+
+```html
+<!DOCTYPE html>
+
+<html>
+   <head>
+   </head>
+<body>
+
+   <!-- Header -->
+   
+   <!-- Section 1 -->
+
+   <!-- Section 2 Description -->
+
+   <!-- Section 3 Contenu mis en avant -->
+
+   <!-- Section 4 Details -->
+
+   <!-- Section 5 Big picture -->
+   
+   <!-- Section 6 A propos -->
+
+   <!-- Section 7 Gammes de prix  -->
+
+   <!-- Footer -->
+
+</body>
+
+</html>
+```
+
+Ici, vous pouvez voir que j’ai organisé la page selon l'organisation en groupes de calques du fichier Photoshop. Leurs noms sont
+écrits sous forme de commentaires HTML et  m’aideront à les ajouter de manière organisée, des balises HTML qui afficheront du
+contenu.
+
+Chacun de ces groupes d'éléments constituant une sorte de grande partie, vous pouvez utiliser la balise HTML5 `<section>`. Y ajouter
+un id reprenant le nom qui est dans votre commentaire vous assure une organisation adéquate de votre CSS ultérieurement.
+
+Nous en reparlerons !
+
+```html
+<!DOCTYPE html>
+
+<html>
+   <head>
+   </head>
+<body>
+
+   <!-- Header -->
+   <header>
+   </header>
+   
+   <!-- Section 1 -->
+   <section id="section_one">
+   </section> 
+
+   <!-- Section 2 Description -->
+   <section id="description">
+   </section>
+
+   <!-- Section 3 Contenu mis en avant -->
+   <section id="featured_content">
+   </section>
+
+   <!-- Section 4 Details -->
+   <section id="details">
+   </section>
+
+
+   <!-- Section 5 Big picture -->
+   <section id="big_picture">
+   </section>
+
+   <!-- Section 6 A propos -->
+   <section id="about">
+   </section>
+
+
+   <!-- Section 7 Gammes de prix  -->
+   <section id="price_ranges">
+   </section> 
+   
+   <footer>
+   </footer>
+
+</body>
+
+</html>
+```
+
+Bravo ! Vous avez désormais la structure de base de votre page, organisée en différentes parties dans votre document HTML. Vous
+pouvez déjà commencer à voir le parallèle entre l'organisation du contenu en groupes de calques dans Photoshop et l’organisation
+de votre contenu en différents groupes au sein de votre HTML !
+
+Commencez toujours par les éléments les plus généraux en premier. Pensez à votre contenu ou imaginez votre maquette à une échelle
+plus globale lorsque vous commencez à la construire, et intégrez-y ensuite des éléments plus petits, comme les images ou le texte.
+
+N'ajoutez pas encore les autres éléments, nous le ferons dans les chapitres suivants. Pour l'instant, le plus important est que
+vous ayez compris la logique : "Du global au particulier" ![:)](https://openclassrooms.com/bundles/common/images/smiley/smile.png).
+
+-----
+
+## Ajouter les metatags
+
+[Ajouter les metatags - Découpez et intégrez une maquette - OpenClassrooms](https://openclassrooms.com/fr/courses/3504431-decoupez-et-integrez-une-maquette/3605786-ajouter-les-metatags)
+
+Il y a fort à parier que vos utilisateurs partageront votre page sur les réseaux sociaux au moins une fois dans la vie de votre
+site. Vous avez déjà certainement vous-même partagé des articles ou des sites particulièrement enthousiasmants. La plupart du
+temps, des informations automatiques s’affichent sur le réseau social : nom de la page, lien, image aux bonnes proportions et
+parfois même le nom d’une page à suivre. C’est un peu la magie des réseaux sociaux qui s’opère : le simple fait de copier un lien
+met en forme un contenu prêt à être partagé !
+
+Néanmoins, et pour paraphraser notre cher ami Antoine de Saint-Exupéry, l’essentiel est invisible aux yeux des internautes. Quand
+vous collez un lien dans le fil d’actualité d’un réseau social, ce dernier commence par parcourir son code source à la recherche
+d’informations : titre de la page, image, lien, et tout autre élément que le développeur aura voulu ajouter.
+
+S’il ne trouve rien, il reconstituera par lui-même les informations. C’est pourquoi Facebook vous propose parfois plusieurs images
+voire aucune : le développeur n’a pas pensé à inclure les bonnes données dans son code source.
+
+![Le code source n’inclut certainement pas les bonnes données...](https://s3-eu-west-1.amazonaws.com/sdz-upload/prod/upload/Screenshot%202016-04-12%2015.42.32.png)
+
+Le code source n’inclut certainement pas les bonnes données...
+
+De quels éléments parle-t-on exactement ? Des méta-tags. Ils permettent aux réseaux sociaux de mieux comprendre le contenu de
+votre page et d’afficher le contenu que vous souhaitez. Vous êtes ainsi maître du contenu diffusé sur les réseaux sociaux.
+
+La plupart des réseaux sociaux se basent sur les “meta tags” pour compléter ces informations. Ce sont des balises meta contenues
+dans le `<head>` de votre site. Un petit exemple :
+
+```html
+<title>Catyler, our new hero</title>
+<meta name="description" content="I need a caaaaat, I’m holding out for a hero ‘til the end of the night. He’s gotta be strong...">
+```
+
+Si aucune autre information n’est donnée, les réseaux sociaux indiqueront que le titre de la publication à partager est “Catyler,
+our new hero” et que la description associée est “I need a cat, I’m holding out for a hero ‘til the end of the night. He’s gotta
+be strong...”.
+
+Mais certains réseaux sociaux ont besoin d’éléments de plus en plus spécifiques, comme des images d’une certaine taille ou des
+informations additionnelles. C’est pourquoi ils ont développé leurs propres attributs. Nous allons nous concentrer sur les deux
+principaux réseaux : Facebook et Twitter.
+
+### Facebook : l’Open Graph
+
+L’Open Graph est un protocole développé par Facebook qui lui permet, de façon très simplifiée, de récupérer des informations sur
+votre page web et de créer une entrée structurée dans Facebook.
+
+Reprenons la page de Catyler. Facebook a besoin de plus d’informations qu’un simple titre et sa description. En effet,
+l’utilisateur aimerait ajouter une photo de la chanteuse ainsi que le lien vers son site. Facebook aimerait savoir si
+l'utilisateur partage un article, une page d’accueil, une chanson, une vidéo, etc.
+
+Le protocole de Facebook intègre de nombreuses propriétés que nous ne pouvons toutes voir en détail. Néanmoins, vous pouvez vous
+baser de manière générale sur ce snippet générique que vous pourrez reprendre sur la plupart de vos pages d’accueil.
+
+```html
+<!-- Open Graph data -->
+
+<meta property="og:title" content="Title Here"/>
+<meta property="og:type" content="website"/>
+<meta property="og:url" content="http://www.example.com/"/>
+<meta property="og:image" content="http://example.com/image.jpg"/>
+<meta property="og:description" content="Description Here"/>
+```
+
+_Source : [https://github.com/celine-m-s/metatags-101/blob/master/minimal\_template](https://github.com/celine-m-s/metatags-101/blob/master/minimal_template)_
+
+- `og:title` : Le titre de votre page, optimisé pour Facebook.
+- `og:type` : website. Indiquez “article” s’il s’agit d’un article.
+- `og:url` : l’url à afficher
+- `og:image` : image optimisée pour Facebook
+- `og:description` : description pour Facebook
+
+Un outil très utile pour comprendre la manière dont fonctionne Open Graph est le Débogueur de Facebook : [https://developers.facebook.com/tools/debug/](https://developers.facebook.com/tools/debug/).
+
+Il vous expliquera pourquoi certains éléments ne s’affichent pas (très utile quand, par exemple, votre photo est mal prise en
+compte).
+
+:::info
+Vous aurez besoin d’un compte Facebook Developers pour utiliser le Débogueur. Rien de plus facile ! Allez sur [https://developers.facebook.com/](https://developers.facebook.com/)
+et connectez-vous avec votre compte Facebook.
+:::
+
+### Twitter : les Twitter Cards
+
+Twitter a également ses propres attributs pour les balises meta. Vous pourrez ainsi dire à Twitter quelle image afficher en grand
+dans les bonnes dimensions.
+
+```html
+<!-- Twitter Card data -->
+<meta name="twitter:card" content="summary">
+<meta name="twitter:site" content="@publisher_handle">
+<meta name="twitter:title" content="Page Title">
+<meta name="twitter:description" content="Page description less than 200 characters">
+<meta name="twitter:creator" content="@author_handle">
+<-- Twitter Summary card images must be at least 200x200px -->
+<meta name="twitter:image" content="http://www.example.com/image.jpg">
+```
+
+À notre maquette !
+
+Utilisons ce [boilerplate](https://github.com/celine-m-s/metatags-101) pour intégrer les balises meta de notre choix.
+
+Je vais intégrer le “minimal_template” mais je vous invite à regarder les autres boilerplates.
+
+```html
+<!-- Place this data between the <head> tags of your website -->
+<title>Page Title. Maximum length 60-70 characters</title>
+<meta name="description" content="Page description. No longer than 155 characters." />
+
+<!-- Twitter Card data -->
+<meta name="twitter:card" content="summary">
+
+<!-- Open Graph data -->
+<meta property="og:title" content="Title Here"/>
+<meta property="og:type" content="website"/>
+<meta property="og:url" content="http://www.example.com/"/>
+<meta property="og:image" content="http://example.com/image.jpg"/>
+<meta property="og:description" content="Description Here"/>
+```
+
+### Vers un Web sémantique
+
+Un des grands enjeux pour les moteurs de recherche depuis des années se résume en deux mots : Web sémantique. Ce concept fait
+référence à la création de standards sur le Web qui permettraient aux grands acteurs de la recherche de mieux comprendre l’univers
+sémantique des requêtes qui sont faites sur leur moteur.
+
+Ce que j’explique semble vaseux ? C’est normal !
+
+Prenons un exemple !
+
+quandmonchat.tumblr.com parle de chats. Vous et moi le savons car notre cerveau a, depuis bien longtemps normalement, fait la
+liaison entre l’animal de type “chat” et le mot “chat”. Quand nous étions enfant, un humain nous a dit : “Ceci est un chat. Il
+s’agit d’un animal.”
+
+Plus tard, nous avons découvert les “chats” (souvenez-vous de Caramail ! Et de MSN Messenger ! Toute mon adolescence ![;)](https://openclassrooms.com/bundles/common/images/smiley/clin.png)).
+Mais un “chat” n’est pas un “chat” n’est-ce pas. ![;)](https://openclassrooms.com/bundles/common/images/smiley/clin.png).
+
+L’outil de messagerie appartient au champ sémantique de l’informatique, à la différence du miaou qui appartient à celui des
+animaux.
+
+Or les robots sont comme des enfants qui découvrent le vocabulaire humain. Si vous cherchez “chat” sur votre moteur de recherche
+préféré, il ne saura pas si vous faites référence à l’animal ou à la messagerie. Il vous proposera alors un mélange des deux dans
+l’espoir de tomber juste (c’est un peu simplifié mais vous comprenez l’idée !).
+
+Son enjeu est de mieux vous comprendre pour vous proposer des résultats qui se rapprochent au plus de ce que vous cherchez. Il a
+pour cela besoin d’apprendre l’univers sémantique de chaque mot que nous utilisons pour s’imprégner du contexte et du vocabulaire.
+
+Pour faire face à cette problématique, les moteurs de recherche ont développé leurs propres conventions. Puis, [en 2011](https://en.wikipedia.org/wiki/Schema.org),
+certains d’entre eux se sont réunis pour mettre à plat leurs pratiques et créer un standard commun qui pourrait être adopté par
+tous les développeurs. Schema.org est né. Il s’agit d’un collectif collaboratif et communautaire qui a pour mission de créer,
+maintenir et promouvoir de nouveaux schémas pour structurer les données sur Internet, tant au niveau des pages que des mails. Il
+s’inscrit dans la grande réflexion globale sur le web sémantique.
+
+Concrètement, Schema.org introduit de nouveaux attributs HTML qui permettent aux robots (tels que Google) de mieux comprendre le
+contenu de vos pages. Ils contextualisent les concepts que nous utilisons pour permettre aux robots de les comprendre et de mieux
+les afficher.
+
+Imaginons que nous vendons une figurine de chat. Notre souhait le plus cher est que l’utilisateur achète cette figurine, n’est-ce
+pas ? Les attributs schema.org sont interprétés par la plupart des moteurs de recherche et génèrent des affichages différents qui
+peuvent mettre votre produit plus en évidence pour l’utilisateur.
+
+![Une des possibles interprétations par Google des standards schema.org](https://s3-eu-west-1.amazonaws.com/sdz-upload/prod/upload/Screenshot%202016-04-12%2015.59.43.png)
+
+Une des possibles interprétations par Google du standard schema.org
+
+Cet aspect mériterait un cours en lui-même, c’est pourquoi je ne le développerai pas plus dans ce cours. Mais je vous conseille
+la lecture de [cet excellent article sur le lien entre schema.org et Google](http://www.abondance.com/actualites/20140627-14046-faut-il-integrer-les-balises-semantiques-schema-org-ses-pages.html).
+
+:::note ?
+Ça a l’air assez compliqué… Est-ce indispensable de comprendre le fonctionnement de schema.org ? As-tu des ressources à me
+conseiller ?
+:::
+
+Comprendre le principe des balises sémantiques est essentiel et je vous conseille de vous entraîner en jouant avec les outils
+ci-dessous :
+- [Structured Data Testing Tool](https://developers.google.com/structured-data/testing-tool/) : cherchez une page contenant des
+balises sémantiques et laissez Google vous afficher ce qu’il en a compris ;
+- [Schema creator](http://schema-creator.org/) : créez vos premières balises sémantiques grâce à un formulaire qui vous affichera
+le code HTML correspondant.
+
+-----
+
+## Intégrer une grille Bootstrap
+
+[Intégrer une grille Bootstrap - Découpez et intégrez une maquette - OpenClassrooms](https://openclassrooms.com/fr/courses/3504431-decoupez-et-integrez-une-maquette/3605791-integrer-une-grille-bootstrap)
+
+Commençons à jeter un oeil à la disposition des éléments selon les principes d'une grille, comme décrit dans la première partie
+de ce cours. Vous avez appris que l'utilisation d'une grille, qu'elle soit destinée à l'imprimerie ou au Web, permet d'organiser
+le contenu de façon à ce qu'il soit le plus cohérent possible.
+
+Vous avez entrevu comment se crée une grille sur Photoshop. Le jeu maintenant va être de la recréer en CSS.
+
+:::note ?
+Entièrement en CSS ? Olala, mais cela va me prendre des heures ! Et je ne suis pas sûr-e d'avoir le niveau requis en CSS...
+:::
+
+Ne vous inquiétez pas, vous n'allez pas avoir à créer votre propre grille par vous-même ! Nous allons utiliser une excellente
+grille responsive mise en place par les développeurs de Twitter : Bootstrap.
+
+### Qu'est-ce que Bootstrap ?
+
+Bootstrap est un framework HTML, CSS et JavaScript incroyablement populaire. Il est souvent utilisé sur le Web : il l'est
+probablement sur les sites web que vous visitez régulièrement.
+
+Bootstrap peut vous aider à tout niveau de développement, que vous travailliez avec des configurations de base ou que vous vouliez
+faire un travail de conception très personnalisé.
+
+Dans ce cours, nous sommes particulièrement intéressés par Bootstrap pour deux raisons : sa réactivité et sa grille. L'utilisation
+de la grille Bootstrap vous permettra de construire un site qui s'adapte bien à différents appareils et à différentes tailles
+d'écran, sans trop de travail de développement intensif. Vous pouvez visiter [http://getbootstrap.com](https://getbootstrap.com)
+pour plus d'informations sur l'outil lui-même.
+
+La grille Bootstrap est un système de grille fluide de 12 colonnes qui se réarrangent selon la taille de l'écran de l'utilisateur
+en fonction des critères que vous définissez. Chaque _row_ (ce qui signifie un groupe de contenu) de votre code sera divisée en
+groupes horizontaux de colonnes, et Bootstrap vous fournit des classes prédéfinies pour définir la largeur de chaque colonne. Vous
+avez certainement l'habitude de mesurer les choses avec des pixels, des pieds, des centimètres, des pouces, etc., mais si vous
+utilisez une grille Bootstrap, vous devez vous habituer à mesurer en colonnes ! 
+
+![Exemple de grille utilisant Bootstrap](https://s3-eu-west-1.amazonaws.com/sdz-upload/prod/upload/Captura%20de%20pantalla%202016-04-13%20a%20las%2015.56.251.png)
+
+Exemple de grille utilisant Bootstrap
+
+:::note ?
+Comment faire pour définir les critères pour une mise en page différente selon la taille de l'écran de l'utilisateur ?
+:::
+
+La grille de Bootstrap étant responsive, elle s'adaptera à toutes les dimensions d'écran. En fait, elle reprend le concept de
+breaking-points que nous avons déjà vu pendant la première partie.
+
+Souvenez-vous...
+
+> _En général, nous retrouvons 4 breaking-points :_
+> 
+> _- Les très petits écrans (< 768 px : pour les écrans dont la largeur est comprise entre 0 px et 768 px)_  
+> _- Tablettes (768 px - 991 px)  
+> _- Ordinateurs (992 px - 1199 px)  
+> _- Grands écrans d'ordinateurs et télévisions_
+
+Il nous faut donc "simplement" apprendre la syntaxe de Bootstrap et les classes adaptées aux différentes esquisses que nous avons
+déjà.
+
+### Comment "traduire" la maquette Photoshop en Bootstrap ?
+
+Commencez par les deux premiers éléments qui sont côte à côte sur la maquette : le paragraphe "Picture perfect" et la photo du
+smartphone. En regardant vos esquisses, vous remarquerez que le paragraphe occupe un espace de 8 colonnes avant qu'il ne touche
+la photo du smartphone. Néanmoins, la photo se trouve sous le paragraphe et occupe 100% de l'espace quand on visite le site en
+utilisant un smartphone.
+
+Comment peut-on faire ?
+
+Nous pouvons indiquer le breaking-point et le nombre de colonnes directement dans la classe utilisée par Bootstrap :
+
+```html
+class="col-XX-##"
+```
+
+Le XX sera soit xs, sm, md, ou lg. "Xs" sera applicable pour les appareils comme les téléphones (<768px), "sm" sera pour les
+petits écrans comme les tablettes (≥768px), "md" pour les écrans d'ordinateur moyens (≥992px), et "lg" s'appliquera pour les
+grands écrans (≥1200px).
+
+Le ## sera le nombre de colonnes que l'élément devrait occuper. Vous pouvez combiner plusieurs règles de taille de l'écran en
+une seule déclaration. Par exemple :
+
+```html
+<div class="col-md-8 col-sm-12 col-lg-6">
+```
+
+L'apprentissage de la grille de bootstrap pourrait être un cours complet en lui-même, donc si vous sentez que vous avez besoin
+de plus amples informations afin de comprendre la manière dont fonctionnent les colonnes, consultez [ce chapitre de notre cours Bootstrap](https://openclassrooms.com/fr/courses/6391096-creez-des-sites-web-responsive-avec-bootstrap-4/6503463-implementez-votre-structure-de-pages)
+et la [documentation de Bootstrap](https://getbootstrap.com/css/#grid).
+
+Ajoutez les différentes colonnes à vos différentes sections. Votre code va peu à peu ressembler à ceci :
+
+```html
+<!DOCTYPE html>
+
+<html>
+   <head>
+       <!-- Metatags, links to Bootstrap and stylesheets -->
+   </head>
+<body>
+
+   <!-- Header -->
+   <header>
+   </header>
+   
+   <!-- Section 1 -->
+   <section id="section_one">
+       <div class="container">
+           <div class="col-md-8">
+               <h1>Picture perfect</h1>
+               <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit,
+               sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </p>
+           </div>
+           <div class="col-md-4">
+               <img src="images/phone.png">
+           </div>
+       </div>
+   </section> 
+
+   <!-- Section 2 Description -->
+   <section id="description">
+   </section>
+
+   <!-- Section 3 Contenu mis en avant -->
+   <section id="featured_content">
+   </section>
+
+   <!-- Section 4 Details -->
+   <section id="details">
+   </section>
+
+   <!-- Section 5 Big picture -->
+   <section id="big_picture">
+   </section>
+
+   <!-- Section 6 A propos -->
+   <section id="about">
+   </section>
+
+   <!-- Section 7 Gammes de prix  -->
+   <section id="price_ranges">
+   </section> 
+   
+   <footer>
+   </footer>
+
+</body>
+
+</html>
+```
+
+Prenez un peu de temps pour mesurer la largeur de chaque élément majeur dans les colonnes, et incorporer une balise div dans
+votre code HTML avec la classe de taille de la colonne appropriée. Il suffit simplement de continuer à construire le code en
+suivant l'exemple ci-dessus ! Une fois que vous avez la largeur des colonnes mis en place, vous pouvez placer des éléments à
+l'intérieur, et Bootstrap réglera le reste pour vous (et s'occupera d'adapter votre site selon les écrans).
+
+![](https://s3-eu-west-1.amazonaws.com/sdz-upload/prod/upload/sIHLfez3EA.gif)
+
+:::info
+Laissez autant de commentaires que nécessaire pour que vous puissiez identifier les éléments plus tard et ne pas perdre la trace
+de l'endroit où vous êtes. Vous aurez également besoin d'indenter correctement votre code pour le rendre plus organisé. Pour
+chaque élément que vous ajoutez **dans** un autre élément, indentez d'un seul niveau. Retirez une tabulation une fois l'élément
+terminé !
+:::
+
+-----
+
+## Organisation du CSS
+
+[Organisation du CSS - Découpez et intégrez une maquette - OpenClassrooms](https://openclassrooms.com/fr/courses/3504431-decoupez-et-integrez-une-maquette/3605796-organisation-du-css)
+
+Notre HTML est bien mis en place, et les éléments sont correctement placés horizontalement, mais nous avons encore beaucoup de
+travail à faire avec notre mise en page. Commençons par un aperçu des fichiers CSS si vous n'avez pas déjà travaillé avec des
+feuilles de styles avant.
+
+Si vous avez déjà travaillé avec le langage CSS, vous pouvez sauter la section ci-dessous !
+
+### Qu'est-ce que CSS ?
+
+CSS signifie **Cascading Style Sheets**. Le langage CSS vous permet de contrôler votre mise en page, les couleurs, les polices,
+le positionnement, et plus encore.
+
+La grille Bootstrap vous donne une base qui vous permet d'organiser tous vos éléments dans les colonnes, mais elle ne suffit pas
+à gérer toutes vos règles de style et ne vous permet pas d'obtenir une réplique parfaite de votre maquette.
+
+![CSS example](https://s3-eu-west-1.amazonaws.com/sdz-upload/prod/upload/CSS-shade.svg.png)
+
+Exemple de CSS
+
+La syntaxe CSS est relativement simple. Vous allez :
+- Identifier un élément HTML
+- Ouvrir des accolades
+- Associer une valeur à une propriété pour la modifier et ajouter un point-virgule.
+- Fermer les accolades
+
+Par exemple, pour changer la couleur de fond d'un élément, vous devez définir une valeur comme code hexadécimal avec la propriété
+background-color. Voici un exemple de propriétés que vous pouvez changer au sein de votre CSS :
+
+```css
+element {
+    color: blue; /* change la couleur */
+    opacity: 0.1; /* change l'opacité. Ici 10% */
+    background-color: yellow; /* change la couleur de fond */
+    font-family: Arial;/* change la police utilisée */
+    text-align: center; /* change l'allignement */
+    font-size: 14px; /* change la taille de la police */
+    border: 1px solid black; /* ajoute une bordure */
+    margin: 5px; /* ajoute une marge autour de l'élément */
+    padding: 10px; /* ajoute de l'espace à l'intérieur de l'élément */
+    height: 50px; /* hauteur de l'élément */
+    width: 50px; /* largeur de l'élément */
+}
+```
+
+Dans cette liste, vous avez des propriétés qui changent la couleur des éléments, la disposition des éléments, l'espace entre les
+éléments, l'espace autour des éléments, et plus encore. La liste est en réalité beaucoup plus longue !
+
+Vous n'avez pas besoin de connaitre toutes ces propriétés par coeur ; vous pouvez toujours les regarder en ligne si vous réalisez
+que vous avez besoin de changer une propriété particulière d'un élément. Je recommande d'utiliser [Mozilla Developer Network](https://developer.mozilla.org/en-US/docs/Web/CSS)
+pour faire votre recherche. Ils ont une documentation complète sur presque tout en CSS !
+
+### Priorité CSS
+
+Lorsque vous configurez des règles de style en CSS, vous devez garder en tête que les règles plus spécifiques pour des éléments
+particuliers ont la priorité sur les règles générales. Par exemple, si vous définissez que la couleur du texte sur la page entière
+(à l'aide d'une balise `body` en HTML) doit être le noir, mais que pour un paragraphe particulier, vous fixez une règle de style
+qui dit que le texte doit être jaune, il aura la priorité parce que la règle est plus spécifique.
+
+Les règles sont également définies dans l'ordre chronologique : si vous définissez une règle plus haut dans votre feuille de
+styles puis que vous définissez la même règle plus bas dans votre feuille de styles, la deuxième valeur remplacera la première.
+
+:::note ?
+Pourquoi nous parler de ça pour les maquettes ?
+:::
+
+Vous aurez beaucoup d'éléments à considérer et vous allez rapidement accumuler les règles CSS sans organisation, arrivant très
+vite à plusieurs centaines de lignes de code. Un fichier CSS désorganisé finit avec une page désorganisée, car des règles peuvent
+accidentellement en remplacer d'autres, ou certaines règles peuvent s'appliquer à d'autres éléments qui n'auraient pas dû être
+impactés.
+
+Notre premier petit pas sera de créer un fichier CSS. Dans le même dossier que votre fichier index.html, ajoutez un dossier
+appelé `css`. Dans ce dossier, créez un fichier `styles.css` (vous pouvez le faire à partir de votre éditeur de code : créez un
+nouveau document et enregistrez-le au format CSS).
+
+Regardez maintenant les éléments similaires dans la maquette et réfléchissez à ce qu'ils ont en commun. Peut-être remarquerez-vous
+que les deux plus grands titres dans la maquette sont blancs :
+
+![](https://s3-eu-west-1.amazonaws.com/sdz-upload/prod/upload/Screenshot%202016-04-08%2013.04.59.png)
+
+![White header text](https://s3-eu-west-1.amazonaws.com/sdz-upload/prod/upload/Screenshot%202016-04-08%2013.05.20.png)
+
+White header text
+
+Étant les plus grands titres de la page, vous pouvez supposer qu'ils sont des éléments HTML `<h1>`. Voici comment le premier
+apparaîtrait dans votre fichier `index.html` (regardez ligne 16) :
+
+```html
+...
+<body>
+
+   <!--Masthead-->
+   <div>
+       <div class="container">
+           <div class="row">
+             <div class="col-md-2">
+                 <img src="assets/logo.svg" class="logo"/>
+             </div>
+             <div class="col-md-8"></div>
+           </div>
+           
+           <div class="row">
+               <div class="col-md-8 col-sm-12 col-lg-6">
+                   <h1>Picture perfect</h1>
+                   <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit,
+                   sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </p>
+                   <a href="#">Read More →</a>
+               </div>
+               <div class="col-md-4 hidden-sm-down">
+                   <img src="assets/iPhone.png/">
+               </div>
+           </div>
+       </div>
+   </div>
+   ...
+```
+
+Dans votre fichier `styles.css`, nous allons définir la couleur du texte en blanc pour tous les éléments `<h1>`.
+
+```css
+h1 {
+    color: #ffffff;
+}
+```
+
+### Les polices
+
+C'est une bonne idée de commencer avec des styles généraux. Maintenant, nous devons penser aux polices que nous voulons définir
+pour le corps du texte. Cliquez sur le texte de la page ; vous remarquerez que le nom de la police est Open Sans.
+
+:::info
+Utiliser une Google Font quand vous avez besoin d'une police de caractère est rapide et efficace. Ces polices se chargent
+rapidement et existent généralement dans plusieurs graisses différentes.
+:::
+
+![Google Fonts](https://s3-eu-west-1.amazonaws.com/sdz-upload/prod/upload/Screenshot%202016-04-08%2018.22.59.png)
+
+Google Fonts
+
+Visitez [Google Fonts](https://www.google.com/fonts) et trouvez Open Sans. Si vous cliquez sur la petite flèche dans le carré,
+vous serez redirigé vers un guide de démarrage rapide. Choisissez les styles de police que vous voulez en les cochant et copiez
+les lignes de code à inclure dans votre projet !
+
+Vous allez inclure `<link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>` dans la
+section `<head>` de votre document HTML, et `font-family: 'Open Sans', sans-serif;` dans votre fichier CSS. Incluez la règle dans
+le CSS pour le sélecteur `body` : vous voulez que tous les textes soient en Open Sans.
+
+```css
+body {
+    font-family: 'Open Sans', sans-serif;
+}
+```
+
+Vous commencez à comprendre comment définir des règles CSS générales en utilisant votre maquette comme base, et dans le chapitre
+suivant nous verrons comment être encore plus spécifiques !
+
+-----
+
+## Intégrer les règles CSS
+
+[Intégrer les règles CSS - Découpez et intégrez une maquette - OpenClassrooms](https://openclassrooms.com/fr/courses/3504431-decoupez-et-integrez-une-maquette/3605801-integrer-les-regles-css)
+
+La grille de Bootstrap est, comme nous l’avons vu précédemment, composée de 12 colonnes. Les colonnes sont contenues dans des
+rangées (row) qui elles-mêmes sont encadrées par une grande `<div class="container">`. Chaque colonne ayant une largeur relative,
+exprimée en pourcentage, il est primordial de les englober dans une div qui ait une largeur fixe exprimée en pixels.
+
+:::note ?
+Comment calculer ces pourcentages ?
+:::
+
+En reprenant notre maquette, nous pouvons voir que la largeur de la grille est de 1230 px. Or le container de Bootstrap a
+[une largeur de 1170 px](https://getbootstrap.com/css/#grid-options) en version Ordinateur (desktop).
+
+Notre première mission va être de changer la largeur du container pour qu’il soit en adéquation avec notre maquette. Les colonnes
+s’adapteront automatiquement.
+
+La première étape est de cibler le sélecteur dont nous voulons changer la valeur. Nous allons utiliser l’inspecteur de notre
+navigateur pour trouver le sélecteur à changer. Pas besoin de connaître toutes les classes de Bootstrap par coeur ! Il vous
+suffit de bien savoir utiliser votre inspecteur.
+
+Cliquez-droit sur une des colonnes de votre page puis cliquez sur Inspecter l’élément. A gauche, sélectionnez la div qui a la
+classe “container”. Puis regardez, dans la colonne de droite dédiée au CSS, quelle valeur fait référence à la largeur de l’élément.
+
+La règle qui nous intéresse est "[max-width](https://developer.mozilla.org/en/docs/Web/CSS/max-width)". Cette règle donne une
+largeur maximale à l’élément mais lui permet également d’avoir une largeur inférieure si l’écran le demande, elle est donc assez
+flexible. 
+
+![](https://s3-eu-west-1.amazonaws.com/sdz-upload/prod/upload/Screenshot%202016-04-12%2011.56.371.png)
+
+Nous allons donc copier le sélecteur et la règle pour en changer uniquement la valeur.
+
+```css
+/*##################################*/
+/*############# GRILLE #############*/
+/*#################################*/
+
+.container {
+    width: 1230px;
+}
+```
+
+En lisant bien, vous remarquerez que des tailles d’écran apparaissent dans votre inspecteur. Elles sont identiques aux
+breaking-points utilisés par Bootstrap pour changer l’affichage de la grille.
+
+:::info
+Si tout ceci vous semble ésotérique, lisez de nouveau [le chapitre 4 de la partie 1](https://openclassrooms.com/courses/decouper-et-integrer-une-maquette/dimensions-et-proportions) !
+:::
+
+![](https://s3-eu-west-1.amazonaws.com/sdz-upload/prod/upload/Screenshot%202016-04-12%2011.57.18.png)
+
+Vous remarquerez aussi que la règle “max-width” se répète en dessous et adopte une valeur différente en fonction des tailles
+d’écran. Ces valeurs sont d’ailleurs barrées, la seule en vigueur étant celle qui se trouve tout en haut.
+
+C’est normal. Votre navigateur a reconnu que sa largeur était supérieure à 1200px. Il a donc appliqué la règle qui s’applique à
+cette taille d’écran et écarté celles qui correspondent à d’autres largeurs.
+
+:::info
+Amusez-vous à changer la taille de votre écran et voyez comment les valeurs affichées dans l’inspecteur s’adaptent !
+:::
+
+Etant donné que nous voulons que le container ait une largeur de 1230px uniquement en version desktop, il va nous falloir cibler
+tous les écrans qui ont une largeur égale ou supérieure à 1200 px. Comment ferons-nous ?
+
+Nous allons utiliser une [media-query](https://developer.mozilla.org/fr/docs/Web/CSS/Media_queries). Si le terme ne vous évoque
+rien c’est le moment de le découvrir !
+
+La définition de Mozilla est assez parlante :
+
+> "Une media query (ou requête média) consiste en un type de média, et au moins une expression limitant la portée des
+déclarations CSS, en mettant à profit les particularités des supports multimédias comme leur largeur, leur hauteur ou leur
+affichage des couleurs. Ajouté dans CSS3, les media queries permettent d'adapter la présentation du contenu à une large gamme
+d'appareils sans changer le contenu lui-même."
+> 
+> [Mozilla lab](https://developer.mozilla.org/fr/docs/Web/CSS/Media_queries)
+
+Concrètement, une media query fonctionne de cette manière :
+- le navigateur détecte la largeur de la page,
+- il cherche les media-queries qui correspondent à cette largeur,
+- il exécute les règles contenues dans les media-queries correspondantes.
+
+:::info
+Les règles contenues dans les media-queries sont plus spécifiques que celles qui s’appliquent à toutes les largeurs d’écran. Elles
+vont donc les "écraser", même si vos media-queries se trouvent au début du document.
+:::
+
+Exemple de media-query :
+
+```css
+/*##################################*/
+/*############# GRILLE #############*/
+/*#################################*/
+
+@media (min-width: 1200px) {
+    .container {
+        width: 1230px;
+    }
+}
+```
+
+Sauvez le document et rechargez votre page. Vous devriez constater que la largeur du container est plus grande. Bravo !
+
+### Couleurs de fond
+
+Parfois, vous voudrez changer des composantes de la grille de Bootstrap comme les colonnes. La manière la plus simple, et la plus
+souple, de faire est de créer une classe que vous pourrez ajouter directement à l’élément que vous souhaitez modifier.
+
+Prenons l’exemple de la grille composée des différents articles. Les colonnes ont des couleurs de fond différentes, or pour le
+moment le fond est transparent.
+
+Nous allons donc créer plusieurs classes pour changer uniquement le fond des colonnes.
+
+```css
+.pink {
+    background-color: #f5989d;
+}
+
+.blue {
+    background-color: #615f7d;
+}
+
+.green {
+    background-color: #09a298;
+}
+```
+
+Puis nous ajoutons la classe dans la colonne à changer.
+
+```html
+       <div class="container">
+
+         <div class="row">
+
+           <div class="col-md-4 pink">
+
+             <h1>Design quality</h1>
+
+             <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit,
+             sed do eiusmod tempor incididunt ut labore</p>
+
+             <a href="">Find Out More   <i class="fa fa-long-arrow-right"></i></a>
+
+           </div>
+
+           <div class="col-md-7">
+
+             <img src="img/phone.svg">
+
+           </div>
+
+         </div>
+
+       </div>
+```
+
+Cette manière de procéder est très flexible car vous pourrez réutiliser la classe dans d’autres éléments. Elle correspond
+également à une très bonne pratique : le DRY.
+
+:::info
+DRY veut dire Don’t Repeat Yourself. CSS est un langage très verbeux qui peut nous inciter à ajouter des règles à l’infini sans
+vraiment les organiser. Coder en respectant le principe DRY nous invite à utiliser des sélecteurs réutilisables, semblables à des
+étiquettes, et à organiser notre feuille de style pour qu’elle soit le plus concise possible.
+:::
+
+Moins vous avez de code et plus il est facile de le maintenir dans la durée ! Imaginez que vous reprenez le projet dans 6 mois.
+Vous cherchez à remplacer le code couleur du bleu par une autre nuance. Comment pouvez-vous vous faciliter la vie dès maintenant ?
+
+### Dernières retouches
+
+Il vous reste de nombreux ajustements à faire ! Voici mon dernier conseil : adoptez une approche du global au particulier et du
+haut vers le bas.
+
+Concrètement, commencez par la première section et par vous intéresser à la photo de fond. Puis positionnez le logo à votre
+convenance et modifiez la taille du titre principal. Enfin, intéressez-vous au positionnement de l’image située à droite.
+
+![](https://s3-eu-west-1.amazonaws.com/sdz-upload/prod/upload/Screenshot%202016-04-12%2011.57.41.png)
+
+Puis continuez pour toutes les sections suivantes jusqu’au footer.
+
+-----
+
+## Entraînez-vous à intégrer une maquette en HTML et CSS
+
+[Entraînez-vous à intégrer une maquette en HTML et CSS - Découpez et intégrez une maquette - OpenClassrooms](https://openclassrooms.com/fr/courses/3504431-decoupez-et-integrez-une-maquette/6770866-entrainez-vous-a-integrer-une-maquette-en-html-et-css)
+
+### À vous de jouer
+
+:::info
+Pour vous entraîner, réalisez cet exercice étape par étape. Une fois terminé, vous pouvez comparer votre travail avec les pistes
+que je vous propose.
+:::
+
+Dans cet exercice, vous vous entraînerez à gérer un projet avec un client dans sa totalité, c'est-à-dire de la rédaction du cahier
+des charges à la livraison finale.
+
+Commencez par identifier votre client. Qui est-il ? Où est-il ? Que cherche-il ? Ecrivez dans un document quel est son projet et
+quelles sont ses attentes.
+
+Ensuite, trouvez une maquette qui correspond à ces besoins. Voici quelques sites utiles qui vous aideront à trouver des maquettes
+(mais vous pouvez utiliser le site de votre choix) :
+
+- [Creative Market](https://creativemarket.com/themes/wordpress),
+- [ThemeForest](https://themeforest.net/category/wordpress),
+- [Blazrobar](http://blazrobar.com/),
+- [Breebiesbug](http://freebiesbug.com/psd-freebies/website-template/),
+- [UI8.net](https://ui8.net/)
+
+Idéalement, vous trouverez un document PSD et vous utiliserez Photoshop ou un logiciel équivalent pour travailler les visuels et
+en extraire les images. Mais vous êtes libre d'utiliser le logiciel de votre choix pour mesurer la largeur, la hauteur et
+l'espacement des éléments de votre visuel. À partir de cette maquette, créez une structure de base en HTML et utilisez la grille
+Bootstrap pour organiser les éléments en colonnes. Notez bien que vous devez utiliser Bootstrap !
+
+Ajoutez du CSS si besoin pour personnaliser l'apparence et aller au-delà de ce que vous permet Bootstrap. Vous pouvez changer
+les couleurs, les polices (utilisez une police web !), le dimensionnement, et plus encore. Essayez de vous rapprocher le plus
+possible de la maquette, même si nous comprendrons si la ressemblance n'est pas parfaite.
+
+Vous devez donc partir d'un (ou plusieurs) documents au format PSD pour arriver à une page web finale.
+
+Vous devrez avoir :
+- des fichiers HTML et CSS,
+- une copie d'écran de votre page,
+- un fichier .txt de votre cahier des charges avec un lien vers la maquette originale que vous avez utilisée,
+
+### Vérifiez votre travail
+
+:::info
+Alors, vous êtes allé au bout ? Suivez le guide pour vérifier votre travail !
+:::
+
+- Le fichier HTML répond à la norme suivante :
+
+```html
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>title</title>
+  </head>
+  <body>
+  </body>
+</html>
+```
+
+- La structure du code HTML correspond à celle du thème choisi
+- Le fichier HTML est bien indenté et ne contient pas d’erreurs de syntaxe
+- Les règles CSS sont rangées dans une feuille de style à part du fichier HTML.
+- La feuille de style est liée au fichier HTML par l'intermédiaire d'une balise `<script src="lien la feuille de style"></script>`
+situé dans le `<head></head>`.
+- Une fois intégrée la page Web ressemble raisonnablement à la maquette.
+- Les colonnes sont placées dans un `<div class="row"></div>` lui-même placé dans un `<div class="container"></div>`
+- Un `<div class="row"> </div>` ne contient pas plus de 12 colonnes.
+

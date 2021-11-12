@@ -1,0 +1,609 @@
+---
+sidebar_position: 3
+---
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+import { Vimeo } from 'mdx-embed';
+
+# Créez une API RESTful
+
+## Configurez votre base de données
+
+[Configurez votre base de données - Passez au Full stack avec Node.js, Express et MongoDB - OpenClassrooms](https://openclassrooms.com/fr/courses/6390246-passez-au-full-stack-avec-node-js-express-et-mongodb/6466348-configurez-votre-base-de-donnees)
+
+<Vimeo vimeoId="373128974" />
+
+<br />
+
+Jusqu'à présent, nous n'avons pas pu faire persister de données ou rendre notre application entièrement dynamique. Mais tout cela
+est sur le point de changer, car nous intégrons la couche de base de données de notre serveur : MongoDB.
+
+Bien qu'il soit possible de télécharger et d'exécuter MongoDB sur votre propre machine (reportez-vous au [site Web de MongoDB](https://www.mongodb.com/download-center?initial=true#community)
+pour en savoir plus), pour ce cours nous utiliserons la couche gratuite de MongoDB Atlas, la « database as a service » (base de
+données en tant que service).
+
+### Configurez MongoDB Atlas
+
+<Vimeo vimeoId="374618951" />
+
+<br />
+
+Accédez au [site Web de MongoDB](https://www.mongodb.com/cloud/atlas) et inscrivez-vous pour obtenir un compte gratuit. Une fois que
+vous avez accès à votre tableau de bord, créez un _cluster_ puis configurez-le avec l'**option AWS** et **uniquement les options
+gratuites** afin de pouvoir développer gratuitement.
+
+Pendant le démarrage de votre _cluster_, vous pouvez accéder à l'onglet **Database Access**. D'abord, vous devrez ajouter un
+utilisateur disposant de la capacité de lecture et d'écriture dans n'importe quelle base de données. Choisissez le nom d'utilisateur
+ainsi que le mot de passe de votre choix et **notez-les**, car vous en aurez besoin pour connecter votre API à votre _cluster_.
+
+<figure>
+    <img src="https://user.oc-static.com/upload/2019/10/29/1572369906457_Capture%20d%E2%80%99e%CC%81cran%202019-10-29%20a%CC%80%2018.23.04.png"
+         alt="Création d'un nouvel utilisateur en « read and write »" />
+    <figcaption>Création d'un nouvel utilisateur en « read and write »</figcaption>
+</figure>
+
+Vous devrez également accéder à l'onglet **Network Access**, cliquer sur _Add IP Adress_ et autoriser l'accès depuis n'importe où
+(_Add access from Anywhere_).
+
+Une fois la création de votre _cluster_ terminée, vous pouvez passer à la section suivante.
+
+### Connectez votre API à votre _cluster_ MongoDB
+
+<Vimeo vimeoId="374618981" />
+
+<br />
+
+Depuis MongoDB Atlas, cliquez sur le bouton **Connect** et choisissez **Connect your application**. Sélectionnez bien la version la
+plus récente du driver Node.js, puis **Connection String Only**, et faites une copie de la chaîne de caractères retournée.
+
+De retour sur votre projet, installez le package Mongoose en exécutant, à partir du dossier `backend`, la commande suivante :
+
+```sh
+npm install --save mongoose
+```
+
+:::info
+Mongoose est un package qui facilite les interactions avec notre base de données MongoDB grâce à des fonctions extrêmement utiles.
+:::
+
+Une fois l'installation terminée, importez `mongoose` dans votre fichier `app.js` en ajoutant la constante suivante :
+
+```javascript
+const mongoose = require('mongoose');
+```
+
+Juste en dessous de votre déclaration de constante `app`, ajoutez la ligne suivante. Veillez à remplacer l'adresse SRV par la vôtre
+et la chaîne `<PASSWORD>` par votre mot de passe utilisateur MongoDB :
+
+```javascript
+mongoose.connect('mongodb+srv://jimbob:<PASSWORD>@cluster0-pme76.mongodb.net/test?retryWrites=true&w=majority',
+    { useNewUrlParser: true,
+      useUnifiedTopology: true })
+    .then(() => console.log('Connexion à MongoDB réussie !'))
+    .catch(() => console.log('Connexion à MongoDB échouée !'));
+```
+
+Après enregistrement voire redémarrage de votre serveur Node si nécessaire, vous devriez voir le message « Connexion à MongoDB Atlas
+réussie ! » dans la console. Votre API est à présent connectée à votre base de données et nous pouvons commencer à créer des routes
+serveur afin d'en bénéficier.
+
+-----
+
+## Créez un schéma de données
+
+[Créez un schéma de données - Passez au Full stack avec Node.js, Express et MongoDB - OpenClassrooms](https://openclassrooms.com/fr/courses/6390246-passez-au-full-stack-avec-node-js-express-et-mongodb/6466362-creez-un-schema-de-donnees)
+
+<Vimeo vimeoId="373129062" />
+
+<br />
+
+L'un des avantages que nous avons à utiliser Mongoose pour gérer notre base de données MongoDB est que nous pouvons implémenter des
+schémas de données stricts, qui permettent de rendre notre application plus robuste. Commençons par créer un schéma **Thing**
+(« chose ») pour tout objet mis en vente dans notre application.
+
+### Créez un schéma Thing
+
+<Vimeo vimeoId="374619026" />
+
+<br />
+
+Dans votre dossier `backend`, créez un dossier appelé `models` et, dans ce nouveau dossier, un fichier appelé `thing.js` :
+
+```javascript
+const mongoose = require('mongoose');
+
+const thingSchema = mongoose.Schema({
+    title: { type: String, required: true },
+    description: { type: String, required: true },
+    imageUrl: { type: String, required: true },
+    userId: { type: String, required: true },
+    price: { type: Number, required: true },
+});
+
+module.exports = mongoose.model('Thing', thingSchema);
+```
+
+Ici, voici ce que nous faisons :
+- nous créons un schéma de données qui contient les champs souhaités pour chaque Thing, indique leur type ainsi que leur caractère
+(obligatoire ou non). Pour cela, on utilise la méthode Schema mise à disposition par Mongoose. Pas besoin de mettre un champ pour
+l'Id puisqu'il est automatiquement généré par Mongoose,
+- ensuite, nous exportons ce schéma en tant que modèle Mongoose appelé « Thing », le rendant par là même disponible pour notre
+application Express.
+
+Ce modèle vous permettra non seulement d'appliquer notre structure de données, mais aussi de simplifier les opérations de lecture et
+d'écriture dans la base de données comme vous le verrez dans les chapitres suivants.
+
+-----
+
+## Enregistrez et récupérez des données
+
+[Enregistrez et récupérez des données - Passez au Full stack avec Node.js, Express et MongoDB - OpenClassrooms](https://openclassrooms.com/fr/courses/6390246-passez-au-full-stack-avec-node-js-express-et-mongodb/6466398-enregistrez-et-recuperez-des-donnees)
+
+<Vimeo vimeoId="373129161" />
+
+<br />
+
+En utilisant le modèle Thing que nous avons créé dans le chapitre précédent, nous allons exploiter Mongoose. Vous verrez que
+l'enregistrement et la récupération de données dans la base de données est un jeu d'enfant ! Commençons par implémenter correctement
+notre route POST.
+
+### Enregistrement des Things dans la base de données
+
+<Vimeo vimeoId="374619056" />
+
+<br />
+
+Pour pouvoir utiliser notre nouveau modèle Mongoose dans l'application, nous devons l'importer dans le fichier `app.js` :
+
+```javascript
+const Thing = require('./models/thing');
+```
+
+Maintenant, remplacez la logique de votre route POST par :
+
+```javascript
+app.post('/api/stuff', (req, res, next) => {
+    delete req.body._id;
+    const thing = new Thing({
+        ...req.body
+    });
+    thing.save()
+    .then(() => res.status(201).json({ message: 'Objet enregistré !'}))
+    .catch(error => res.status(400).json({ error }));
+});
+```
+
+Ici, vous créez une instance de votre modèle `Thing` en lui passant un objet JavaScript contenant toutes les informations requises
+du corps de requête analysé (en ayant supprimé en amont le faux `_id` envoyé par le front-end).
+
+:::info
+L'opérateur spread `...` est utilisé pour faire une copie de tous les éléments de `req.body`. Pour plus d'informations sur
+l'opérateur spread, rendez-vous sur [la documentation de MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Spread_syntax).
+:::
+
+Ce modèle comporte une méthode `save()` qui enregistre simplement votre `Thing` dans la base de données.
+
+:::info
+La base de données MongoDB est fractionnée en **collections** : le nom de la collection est défini par défaut sur le pluriel du nom
+du modèle. Ici, ce sera `Things`.
+:::
+
+La méthode `save()` renvoie une Promise. Ainsi, dans notre bloc `then()`, nous renverrons une réponse de réussite avec un code 201 de
+réussite. Dans notre bloc `catch()`, nous renverrons une réponse avec l'erreur générée par Mongoose ainsi qu'un code d'erreur 400.
+
+### Récupération de la liste de Things en vente
+
+<Vimeo vimeoId="374619096" />
+
+<br />
+
+Désormais, nous pouvons implémenter notre route GET afin qu'elle renvoie tous les `Things` dans la base de données :
+
+```javascript
+app.use('/api/stuff', (req, res, next) => {
+    Thing.find()
+        .then(things => res.status(200).json(things))
+        .catch(error => res.status(400).json({ error }));
+});
+```
+
+Dans l'exemple ci-dessus, nous utilisons la méthode `find()` dans notre modèle Mongoose afin de renvoyer un tableau contenant tous
+les `Things` dans notre base de données. À présent, si vous ajoutez un `Thing`, il doit s'afficher immédiatement sur votre page
+d'articles en vente.
+
+En revanche, si vous cliquez sur l'un des `Things`, l'affichage d'un seul élément ne fonctionne pas. En effet, il tente d'effectuer
+un appel GET différent pour trouver un `Thing` individuel. Implémentons cette route maintenant.
+
+### Récupération d'un Thing spécifique
+
+<Vimeo vimeoId="374618836" />
+
+<br />
+
+Ajoutons une autre route à notre application, juste après notre route POST :
+
+```javascript
+app.get('/api/stuff/:id', (req, res, next) => {
+    Thing.findOne({ _id: req.params.id })
+        .then(thing => res.status(200).json(thing))
+        .catch(error => res.status(404).json({ error }));
+});
+```
+
+Dans cette route :
+- nous utilisons la méthode `get()` pour répondre uniquement aux demandes GET à cet endpoint ;
+- nous utilisons deux-points `:` en face du segment dynamique de la route pour la rendre accessible en tant que paramètre ;
+- nous utilisons ensuite la méthode `findOne()` dans notre modèle `Thing` pour trouver le `Thing` unique ayant le même `_id` que le
+paramètre de la requête ;
+- ce `Thing` est ensuite retourné dans une Promise et envoyé au front-end ;
+- si aucun `Thing` n'est trouvé ou si une erreur se produit, nous envoyons une erreur 404 au front-end, avec l'erreur générée.
+
+Maintenant, notre application commence vraiment à prendre forme ! Nous pouvons créer des objets et les voir apparaître immédiatement
+dans notre boutique en ligne grâce à la base de données. Et nous pouvons même ouvrir un objet en particulier pour obtenir les
+informations de cet objet précis, via la base de données.
+
+Dans le chapitre suivant, nous implémenterons nos boutons Modifier et Supprimer pour terminer la partie `Thing` de notre API.
+
+-----
+
+## Modifiez et supprimez des données
+
+[Modifiez et supprimez des données - Passez au Full stack avec Node.js, Express et MongoDB - OpenClassrooms](https://openclassrooms.com/fr/courses/6390246-passez-au-full-stack-avec-node-js-express-et-mongodb/6466426-modifiez-et-supprimez-des-donnees)
+
+<Vimeo vimeoId="373129265" />
+
+<br />
+
+### Mettez à jour un Thing existant
+
+<Vimeo vimeoId="374618877" />
+
+<br />
+
+Ajoutons une autre route à notre application, juste en dessous de notre route GET individuelle. Cette fois, elle répondra aux requêtes PUT :
+
+```javascript
+app.put('/api/stuff/:id', (req, res, next) => {
+    Thing.updateOne({ _id: req.params.id }, { ...req.body, _id: req.params.id })
+        .then(() => res.status(200).json({ message: 'Objet modifié !'}))
+        .catch(error => res.status(400).json({ error }));
+});
+```
+
+Ci-dessus, nous exploitons la méthode `updateOne()` dans notre modèle `Thing`. Cela nous permet de mettre à jour le `Thing` qui correspond à l'objet que nous passons
+comme premier argument. Nous utilisons aussi le paramètre `id` passé dans la demande et le remplaçons par le `Thing` passé comme second argument.
+
+:::caution !
+L'utilisation du mot-clé `new` avec un modèle Mongoose crée par défaut un champ `_id`. Utiliser ce mot-clé générerait une erreur, car nous tenterions de modifier un
+champ immuable dans un document de la base de données. Par conséquent, nous devons utiliser le paramètre `id` de la requête pour configurer notre Thing avec le même
+`_id` qu'avant.
+:::
+
+Vous pouvez maintenant tester votre nouvelle route : cliquez sur un `Thing` de l'application, puis sur son bouton Modifier, changez ses paramètres puis sauvegardez.
+Vous envoyez alors un `Thing` modifié au back-end. En revenant sur la page des articles, vous devriez retrouver votre article modifié.
+
+### Suppression d'un Thing
+
+<Vimeo vimeoId="374618919" />
+
+<br />
+
+Il est temps d'ajouter une dernière route, la route DELETE :
+
+```javascript
+app.delete('/api/stuff/:id', (req, res, next) => {
+    Thing.deleteOne({ _id: req.params.id })
+        .then(() => res.status(200).json({ message: 'Objet supprimé !'}))
+        .catch(error => res.status(400).json({ error }));
+});
+```
+
+La méthode `deleteOne()` de notre modèle fonctionne comme `findOne()` et `updateOne()` dans le sens où nous lui passons un objet correspondant au document à supprimer.
+Nous envoyons ensuite une réponse de réussite ou d'échec au front-end.
+
+Félicitations ! Désormais, votre application implémente le **CRUD** complet :
+- **create** (création de ressources) ;
+- **read** (lecture de ressources) ;
+- **update** (modification de ressources) ;
+- **delete** (suppression de ressources).
+
+L'application permet donc désormais un parcours client complet !
+
+### En résumé
+
+Dans cette partie du cours :
+- vous avez configuré votre base de données MongoDB et l'avez connectée à votre application Express ;
+- vous avez utilisé Mongoose pour créer un modèle de données afin de faciliter les opérations de la base de données ;
+- vous avez implémenté, dans votre application Express, les routes CRUD qui exploitent votre modèle de données Mongoose, rendant ainsi votre application entièrement
+dynamique.
+
+Dans la partie suivante de ce cours, nous nous pencherons sur une thématique extrêmement importante : **la sécurité**.
+
+-----
+
+## Quiz : Savez-vous implémenter le CRUD ?
+
+[Savez-vous implémenter le CRUD ? - OpenClassrooms](https://openclassrooms.com/fr/courses/6390246-passez-au-full-stack-avec-node-js-express-et-mongodb/exercises/3732)
+
+#### Compétences évaluées
+
+<i class="bi bi-check2-circle"></i> Créer une API REST avec Node, Express et MongoDB
+
+-----
+
+#### Description
+
+:::info
+Ce quiz est en fait un réel **cas pratique**, dans lequel vous aurez l'opportunité de tester vos compétences en codant !
+:::
+
+Pour pouvoir répondre correctement, il vous faudra créer une API fonctionnelle comme nous venons de le faire pendant le cours. Votre API devra être
+connectée à une base de données, car les différentes opérations CRUD seront testées et vérifiées !
+
+Vous allez créer une API basique pour une boutique en ligne qui permet de créer, lire, modifier et supprimer des produits (`Product`). Les `Product`
+auront quatre champs obligatoires :
+- `name` : le nom du produit, de type String
+- `description` : la description du produit, de type String
+- `price` : le prix du produit, de type Number
+- `inStock` : si le produit est en stock, de type Boolean.
+
+Vous allez implémenter cinq routes :
+- GET: `/api/products`<br />
+Retournera tous les produits sous la forme`{ products: Product[] }`
+- GET:`/api/products/:id`<br />
+Retournera le produit avec le`_id` fourni sous la forme `{ product: Product }`
+- POST:`/api/products`<br />
+Créera un nouveau Product dans la base de données.<br />
+Le corps de la requête a pour forme :
+
+```json
+{
+    "name": string,
+    "description": string,
+    "price": number,
+    "inStock": boolean
+}
+```
+
+Il retournera le Product ainsi créé (y compris son champ `_id`), sous la forme `{ product: Product }`.
+
+:::info
+La Promise retournée par la méthode `save()` de votre modèle `Mongoose` reçoit le produit créé :
+
+```javascript
+product.save()
+    .then(product => ... ... .json({ product }))
+    .catch(error => ... ...)
+```
+
+:::
+
+- PUT: `/api/products/:id`<br />
+Modifiera le produit avec le `_id` fourni selon les données envoyées dans le corps de la requête.<br />
+Le corps de la requête a pour forme :
+
+```json
+{
+    "name": string,
+    "description": string,
+    "price": number,
+    "inStock": boolean
+}
+```
+
+Retournera un objet de la forme `{ message: 'Modified!' }`
+
+- DELETE : `/api/products/:id`<br />
+Supprimera le produit avec le `_id` fourni.<br />
+Retournera un objet de la forme `{ message: 'Deleted!' }`
+
+Votre API devra tourner sur votre machine locale en `localhost` (de préférence en port 3000, mais l'application front-end vous permet de modifier ce
+port si besoin) et accepter les requêtes HTTP venant de n'importe quelle origine (n'oubliez pas la configuration CORS !).
+
+Pour tester votre API, vous allez installer une mini-application front-end. Clonez [le repo avec le code frontend sur ce lien](https://github.com/OpenClassrooms-Student-Center/fullstack-activity).
+
+Depuis le dossier cloné, exécutez `npm install` puis `npm start`. Vous devriez voir s'ouvrir une fenêtre de navigateur comme celle-ci :
+
+
+<figure>
+    <img src="https://user.oc-static.com/upload/2019/10/22/15717373055881_Screenshot%202019-10-22%20at%2011.41.36.png"
+         alt="Front end app" />
+    <figcaption>Application front-end</figcaption>
+</figure>
+
+Si votre serveur tourne, cliquez sur <kbd>TEST ROUTES</kbd> pour lancer les tests. Ces tests vous permettront de vérifier que vous avez
+bien réussi à implémenter les routes demandées et donc de valider ce quiz ! Vous verrez apparaître des messages de succès (ou d'erreur) selon que
+l'application a réussi à faire fonctionner votre API ou non.
+
+:::info
+Si votre navigateur s'ouvre avec une erreur 404, attendez quelques secondes et faites un _refresh_.
+
+Parfois, lors de la première tentative après le lancement de l'application, celle-ci émet une erreur même si l'API fonctionne. Re-cliquez sur <kbd>TEST
+ROUTES</kbd>. S'il y a toujours une erreur, il est probable qu'elle vienne de votre API.
+:::
+
+-----
+
+#### Question 1 : Quand tout fonctionnera bien, l'application de test affichera un mot secret. Quel est ce mot secret ? Sélectionnez-le dans la liste ci-dessous :
+
+<i class="bi bi-circle"></i> GIRAFFE<br />
+<i class="bi bi-circle"></i> ELEPHANT<br />
+<i class="bi bi-record-circle"></i> GORILLA<br />
+<i class="bi bi-circle"></i> ZEBRA<br />
+
+-----
+
+```json title="package.json"
+{
+    "name": "backend-activity",
+    "version": "1.0.0",
+    "main": "server.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "author": "",
+    "license": "ISC",
+    "dependencies": {
+        "body-parser": "^1.19.0",
+        "express": "^4.17.1",
+        "mongoose": "^6.0.12",
+        "nodemon": "^2.0.14"
+    },
+    "description": ""
+}
+```
+
+```javascript title="models/Product.js"
+const mongoose = require('mongoose');
+
+const productSchema = mongoose.Schema({
+    name: { type: String, required: true },
+    description: { type: String, required: true },
+    price: { type: Number, required: true },
+    inStock: { type: Boolean, required: true }
+});
+
+module.exports = mongoose.model('Product', productSchema);
+```
+
+```javascript title="server.js"
+const http = require('http');
+const app = require('./app');
+
+const normalizePort = val => {
+    const port = parseInt(val, 10);
+
+    if (isNaN(port)) {
+        return val;
+    }
+    if (port >= 0) {
+        return port;
+    }
+    return false;
+};
+const port = normalizePort(process.env.PORT || '3006');
+app.set('port', port);
+
+const errorHandler = error => {
+    if (error.syscall !== 'listen') {
+        throw error;
+    }
+    const address = server.address();
+    const bind = typeof address === 'string' ? 'pipe ' + address : 'port: ' + port;
+    switch (error.code) {
+        case 'EACCES':
+            console.error(bind + ' requires elevated privileges.');
+            process.exit(1);
+            break;
+        case 'EADDRINUSE':
+            console.error(bind + ' is already in use.');
+            process.exit(1);
+            break;
+        default:
+            throw error;
+    }
+};
+
+const server = http.createServer(app);
+
+server.on('error', errorHandler);
+server.on('listening', () => {
+    const address = server.address();
+    const bind = typeof address === 'string' ? 'pipe ' + address : 'port ' + port;
+    console.log('Listening on ' + bind);
+});
+
+server.listen(port);
+```
+
+```javascript title="app.js"
+const express = require('express');
+const bodyParser = require('body-parser');
+const mongoose = require('mongoose');
+
+const Product = require('./models/Product');
+
+mongoose.connect('mongodb+srv://gylgyl2000:Merlin2004@cluster0.2gtcx.mongodb.net/myFirstDatabase?retryWrites=true&w=majority',
+    { useNewUrlParser: true,
+      useUnifiedTopology: true })
+    .then(() => console.log('Connexion à MongoDB réussie !'))
+    .catch(() => console.log('Connexion à MongoDB échouée !'));
+
+const app = express();
+
+app.use((req, res, next) => {
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content, Accept, Content-Type, Authorization');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS');
+    next();
+});
+
+app.use(bodyParser.json());
+
+app.post('/api/products', (req, res, next) => {
+    const product = new Product({
+        ...req.body
+    });
+    product.save()
+    .then(product => res.status(201).json({ product}))
+    .catch(error => res.status(400).json({ error }));
+});
+
+app.get('/api/products/:id', (req, res, next) => {
+    Product.findOne({ _id: req.params.id })
+    .then(product => res.status(200).json({ product }))
+    .catch(error => res.status(404).json({ error }));
+});
+
+app.get('/api/products', (req, res, next) => {
+    Product.find()
+        .then(products => res.status(200).json({ products }))
+        .catch(error => res.status(400).json({ error }));
+});
+
+app.put('/api/products/:id', (req, res, next) => {
+    Product.updateOne({ _id: req.params.id }, { ...req.body, _id: req.params.id })
+    .then(product => res.status(200).json({ message: 'Modified!' }))
+    .catch(error => res.status(404).json({ error }));
+});
+
+app.delete('/api/products/:id', (req, res, next) => {
+    Product.deleteOne({ _id: req.params.id })
+      .then(() => res.status(200).json({ message: 'Deleted!' }))
+      .catch(error => res.status(404).json({ error }))
+});
+
+module.exports = app;
+```
+
+:::info Installation et démarrage
+
+```sh
+npm install -g @angular/cli
+```
+
+```sh
+git clone https://github.com/OpenClassrooms-Student-Center/fullstack-activity frontend
+```
+
+```sh
+cd frontend
+npm install
+npm install --save-dev run-script-os
+npm run start
+```
+
+http://localhost:8081
+
+```sh
+cd backend
+npm init
+=> entry point: (index.js) server.js
+npm install -g nodemon
+npm install --save express
+npm install --save body-parser
+npm install --save mongoose
+nodemon server
+```
+
+:::

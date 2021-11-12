@@ -1,0 +1,63 @@
+---
+id: 7-kyu-Additionner_les_chiffres_d_un_nombre
+---
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# Additionner les chiffres d'un nombre
+
+[Summing a number's digits | Codewars](https://www.codewars.com/kata/52f3149496de55aded000410/javascript)
+
+:::info instructions
+Écrivez une fonction nommée `sumDigits` qui prend un nombre en entrée et renvoie la somme de la valeur absolue de chacun des chiffres
+décimaux du nombre.
+
+Par exemple : (Entrée --> Sortie)
+
+```sh
+10 --> 1
+99 --> 18
+-32 --> 5
+```
+
+Supposons que tous les nombres de l'entrée seront des valeurs entières.
+
+```javascript
+function sumDigits(number) {
+}
+```
+
+:::
+
+```javascript
+function sumDigits(number) {
+  let posNum = (number < 0) ? number * -1 : number;
+  let digit = posNum.toString().split('');
+  let sum = 0;
+  for (i = 0; i < digit.length; i++) {
+    sum += parseInt(digit[i]);
+  }
+  return sum;
+}
+```
+
+<nav className="docs-nav">
+<div className="docs-nav-code">
+
+```javascript title="Exemples de tests"
+console.log(sumDigits(10));
+console.log(sumDigits(99));
+console.log(sumDigits(-32));
+```
+
+</div>
+<div className="docs-nav-html">
+
+```shell title="console"
+1
+18
+5
+```
+
+</div>
+</nav>

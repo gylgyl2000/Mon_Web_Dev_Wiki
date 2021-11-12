@@ -1,0 +1,2812 @@
+---
+sidebar_position: 4
+---
+import { MDXProvider } from '@mdx-js/react';
+import { CodePen, Gist } from 'mdx-embed';
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+import { Vimeo } from 'mdx-embed';
+
+# Mettez en page votre site
+
+## Structurez votre page
+
+[Structurez votre page - Apprenez à créer votre site web avec HTML5 et CSS3 - OpenClassrooms](https://openclassrooms.com/fr/courses/1603881-apprenez-a-creer-votre-site-web-avec-html5-et-css3/1605881-structurez-votre-page)
+
+<Vimeo vimeoId="243807352" />
+
+<br />
+
+Nous approchons de plus en plus du but. Si nos pages web ne ressemblent pas encore tout à fait aux sites web que nous connaissons,
+c'est qu'il nous manque les connaissances nécessaires pour faire la mise en page.
+
+En général, une page web est constituée d'un en-tête (tout en haut), de menus de navigation (en haut ou sur les côtés), de
+différentes sections au centre… et d'un pied de page (tout en bas).
+
+Dans ce chapitre, nous allons nous intéresser aux nouvelles balises HTML dédiées à la structuration du site. Ces balises ont été
+introduites par HTML5 (elles n'existaient pas avant) et vont nous permettre de dire : « Ceci est mon en-tête », « Ceci est mon menu
+de navigation », etc.
+
+Pour le moment, nous n'allons pas encore faire de mise en page. Nous allons en fait préparer notre document HTML pour pouvoir
+découvrir la mise en page dans les prochains chapitres.
+
+### Les balises structurantes de HTML5
+
+Je vais vous présenter ici les nouvelles balises introduites par HTML5 pour structurer nos pages. Vous allez voir, cela ne va pas
+beaucoup changer l'apparence de notre site pour le moment, mais il sera bien construit et prêt à être mis en forme ensuite !
+
+#### `<header>` : l'en-tête
+
+La plupart des sites web possèdent en général un en-tête, appelé _header_ en anglais. On y trouve le plus souvent un logo, une
+bannière, le slogan de votre site…
+
+Vous devrez placer ces informations à l'intérieur de la balise `<header>` :
+
+```html
+<header>
+    <!-- Placez ici le contenu de l'en-tête de votre page -->
+</header>
+```
+
+La figure suivante, par exemple, représente le site du W3C (qui se charge des nouvelles versions de HTML et CSS, notamment). La
+partie encadrée en rouge correspondrait à l'en-tête :
+
+![L'en-tête du site du W3C](https://s3-eu-west-1.amazonaws.com/sdz-upload/prod/upload/header25.png)
+
+L'en-tête du site du W3C
+
+L'en-tête peut contenir tout ce que vous voulez : images, liens, textes…
+
+:::info
+Il peut y avoir plusieurs en-têtes dans votre page. Si celle-ci est découpée en plusieurs sections, chaque section peut en effet
+avoir son propre `<header>`.
+:::
+
+#### `<footer>` : le pied de page
+
+À l'inverse de l'en-tête, le pied de page se trouve en général tout en bas du document. On y trouve des informations comme des liens
+de contact, le nom de l'auteur, les mentions légales, etc.
+
+```html
+<footer>
+    <!-- Placez ici le contenu du pied de page -->
+</footer>
+```
+
+La figure suivante vous montre à quoi ressemble le pied de page du W3C.
+
+![Pied de page du W3C](https://s3-eu-west-1.amazonaws.com/sdz-upload/prod/upload/footer19.png)
+
+Pied de page du W3C
+
+#### `<nav>` : principaux liens de navigation
+
+La balise `<nav>` doit regrouper tous les principaux liens de navigation du site. Vous y placerez par exemple le menu principal de
+votre site.
+
+Généralement, le menu est réalisé sous forme de liste à puces à l'intérieur de la balise `<nav>` :
+
+```html
+<nav>
+    <ul>
+        <li><a href="index.html">Accueil</a></li>
+        <li><a href="forum.html">Forum</a></li>
+        <li><a href="contact.html">Contact</a></li>
+    </ul>
+</nav>
+```
+
+Voici le menu sur le site du W3C : `<nav>`.
+
+![Le menu de navigation du W3C](https://s3-eu-west-1.amazonaws.com/sdz-upload/prod/upload/nav6.png)
+
+Le menu de navigation du W3C
+
+#### `<section>`  : une section de page
+
+La balise `<section>` sert à regrouper des contenus en fonction de leur thématique. Elle englobe généralement une portion du contenu
+au centre de la page.
+
+```html
+<section>
+    <h1>Ma section de page</h1>
+    <p>Bla bla bla bla</p>
+</section>
+```
+
+Sur la page d'accueil du portail Free.fr, on trouve plusieurs blocs qui pourraient être considérés comme des sections de page
+(figure suivante).
+
+![Des sections de page sur le portail de Free](https://user.oc-static.com/files/343001_344000/343659.png)
+
+Des sections de page sur le portail de Free
+
+:::info
+Chaque section peut avoir son titre de niveau 1 (`<h1>`), de même que l'en-tête peut contenir un titre `<h1>` lui aussi. Chacun de
+ces blocs étant indépendant des autres, il n'est pas illogique de retrouver plusieurs titres `<h1>` dans le code de la page web.
+On a ainsi « le titre `<h1>` du `<header>` », « le titre `<h1>` de cette `<section>` », etc.
+:::
+
+#### `<aside>` : informations complémentaires
+
+La balise `<aside>` est conçue pour contenir des informations complémentaires au document que l'on visualise. Ces informations sont
+généralement placées sur le côté (bien que ce ne soit pas une obligation).
+
+```html
+<aside>
+    <!-- Placez ici des informations complémentaires -->
+</aside>
+```
+
+Il peut y avoir plusieurs blocs `<aside>` dans la page.
+
+Sur Wikipédia, par exemple, il est courant de voir à droite un bloc d'informations complémentaires à l'article que l'on visualise.
+Ainsi, sur la page présentant la planète Saturne (figure suivante), on trouve dans ce bloc les caractéristiques de la planète
+(dimensions, masse, etc.).
+
+![Bloc d'informations complémentaires sur Wikipédia](https://user.oc-static.com/files/343001_344000/343657.png)
+
+Bloc d'informations complémentaires sur Wikipédia
+
+#### `<article>` : un article indépendant
+
+La balise `<article>` sert à englober une portion généralement autonome de la page. C'est une partie de la page qui pourrait ainsi
+être reprise sur un autre site. C'est le cas par exemple des actualités (articles de journaux ou de blogs).
+
+```html
+<article>
+    <h1>Mon article</h1>
+    <p>Bla bla bla bla</p>
+</article>
+```
+
+Par exemple, voici un article sur _Le Monde_ :
+
+![Un article publié sur le Monde](https://s3-eu-west-1.amazonaws.com/sdz-upload/prod/upload/article5.png)
+
+Un article publié sur Le Monde
+
+#### Résumé
+
+Ouf, cela fait beaucoup de nouvelles balises à retenir.<br />
+Heureusement, je vous ai fait un petit schéma (figure suivante) pour vous aider à retenir leur rôle !
+
+![Sections de la page identifiées par les balises](https://user.oc-static.com/files/343001_344000/343677.png)
+
+Sections de la page identifiées par les balises
+
+:::note !
+Ne vous y trompez pas : ce schéma propose un _exemple_ d'organisation de la page. Rien ne vous empêche de décider que votre menu de
+navigation soit à droite, ou tout en haut, que vos balises `<aside>` soient au-dessus, etc.<br />
+On peut même imaginer une seconde balise `<header>`, placée cette fois à l'intérieur d'une `<section>`. Dans ce cas-là, elle sera
+considérée comme étant l'en-tête de la section.<br />
+Enfin, une section ne doit pas forcément contenir un `<article>` et des `<aside>`. Utilisez ces balises uniquement si vous en avez
+besoin. Rien ne vous interdit de créer des sections contenant seulement des paragraphes, par exemple.
+:::
+
+### Exemple concret d'utilisation des balises
+
+Essayons d'utiliser les balises que nous venons de découvrir pour structurer notre page web. Le code ci-dessous reprend toutes les
+balises que nous venons de voir au sein d'une page web complète :
+
+```html
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <title>Zozor - Le Site Web</title>
+    </head>
+
+    <body>
+        <header>
+            <h1>Zozor</h1>
+            <h2>Carnets de voyage</h2>
+        </header>
+        
+        <nav>
+            <ul>
+                <li><a href="#">Accueil</a></li>
+                <li><a href="#">Blog</a></li>
+                <li><a href="#">CV</a></li>
+            </ul>
+        </nav>
+        
+        <section>
+            <aside>
+                <h1>À propos de l'auteur</h1>
+                <p>C'est moi, Zozor ! Je suis né un 23 novembre 2005.</p>
+            </aside>
+            <article>                
+                <h1>Je suis un grand voyageur</h1>
+                <p>Bla bla bla bla (texte de l'article)</p>
+            </article>
+        </section>
+        
+        <footer>
+            <p>Copyright Zozor - Tous droits réservés<br />
+            <a href="#">Me contacter !</a></p>
+        </footer>
+        
+    </body>
+</html>
+```
+
+Ce code peut vous aider à comprendre comment les balises doivent être agencées. Vous y reconnaissez un en-tête, un menu de
+navigation, un pied de page… et, au centre, une section avec un article et un bloc`<aside>` donnant des informations sur l'auteur
+de l'article.
+
+:::note ?
+À quoi ressemble la page que nous venons de créer ?
+:::
+
+À rien !<br />
+Si vous testez le résultat, vous verrez juste du texte noir sur fond blanc (figure suivante). C'est normal, il n'y a pas de CSS !
+Par contre, la page est bien structurée, ce qui va nous être utile pour la suite.
+
+![Une page bien structurée mais sans CSS](https://user.oc-static.com/files/343001_344000/343672.png)
+
+Une page bien structurée mais sans CSS
+
+:::info
+Les liens sont volontairement factices (d'où la présence d'un simple `#`), ils n'amènent donc nulle part (eh, c'est juste une page
+de démo) !
+:::
+
+:::note ?
+Je ne comprends pas l'intérêt de ces balises. On peut très bien obtenir le même résultat sans les utiliser !
+:::
+
+C'est vrai. En fait, ces balises sont seulement là pour expliquer à l'ordinateur « Ceci est l'en-tête », « Ceci est mon pied de
+page », etc. Elles n'indiquent pas, contrairement à ce qu'on pourrait penser, où doit être placé le contenu. C'est le rôle du CSS,
+comme nous le verrons dans peu de temps maintenant.
+
+À l'heure actuelle, pour tout vous dire, ces balises ont encore assez peu d'utilité. On pourrait très bien utiliser des balises
+génériques `<div>` à la place pour englober les différentes portions de notre contenu. D'ailleurs, c'est comme cela qu'on faisait
+avant l'arrivée de ces nouvelles balises HTML5.
+
+Néanmoins, il est assez probable que, dans un futur proche, les ordinateurs commenceront à tirer parti intelligemment de ces
+nouvelles balises. On peut imaginer par exemple un navigateur qui choisisse d'afficher les liens de navigation `<nav>` de manière
+toujours visible ! Quand l'ordinateur « comprend » la structure de la page, tout devient possible.
+
+### En résumé
+
+- Plusieurs balises ont été introduites avec HTML5 pour délimiter les différentes zones qui constituent la page web :
+    - `<header>` : en-tête ;
+    - `<footer>` : pied de page ;
+    - `<nav>` : liens principaux de navigation ;
+    - `<section>` : section de page ;
+    - `<aside>` : informations complémentaires ;
+    - `<article>` : article indépendant.
+- Ces balises peuvent être imbriquées les unes dans les autres. Ainsi, une section peut avoir son propre en-tête.
+- Ces balises ne s'occupent pas de la mise en page. Elles servent seulement à indiquer à l'ordinateur le sens du texte qu'elles
+contiennent. On pourrait très bien placer l'en-tête en bas de la page, si on le souhaitait.
+
+-----
+
+## Découvrez le modèle des boîtes
+
+[Découvrez le modèle des boîtes - Apprenez à créer votre site web avec HTML5 et CSS3 - OpenClassrooms](https://openclassrooms.com/fr/courses/1603881-apprenez-a-creer-votre-site-web-avec-html5-et-css3/1606168-decouvrez-le-modele-des-boites)
+
+<Vimeo vimeoId="243807666" />
+
+<br />
+
+Une page web peut être vue comme une succession et un empilement de boîtes, qu'on appelle « blocs ». La plupart des éléments vus
+au chapitre précédent sont des blocs : `<header>`, `<article>`, `<nav>`… Mais nous connaissions déjà d'autres blocs : les
+paragraphes `<p>`, les titres `<h1>`…
+
+Dans ce chapitre, nous allons apprendre à manipuler ces blocs comme de véritables boîtes. Nous allons leur donner des dimensions,
+les agencer en jouant sur leurs marges, mais aussi apprendre à gérer leur contenu… pour éviter que le texte ne dépasse de ces blocs !
+
+Ce sont des notions fondamentales dont nous allons avoir besoin pour mettre en page notre site web… Soyez attentif !
+
+### Les balises de type block et inline
+
+En HTML, la plupart des balises peuvent se ranger dans l'une ou l'autre de deux catégories :
+- les balises **inline** : c'est le cas par exemple des liens `<a></a>`.
+- les balises **block** : c'est le cas par exemple des paragraphes `<p></p>`.
+
+:::info
+Il existe en fait plusieurs autres catégories très spécifiques, par exemple pour les cellules de tableau (type `table-cell`) ou les
+puces (type `list-item`). Nous n'allons pas nous y intéresser pour le moment, car ces balises sont minoritaires.
+:::
+
+:::note ?
+Mais comment je reconnais une balise inline d'une balise block ?
+:::
+
+C'est en fait assez facile :
+- **block** : une balise de type block sur votre page web crée automatiquement un retour à la ligne avant et après. Il suffit
+d'imaginer tout simplement un bloc. Votre page web sera en fait constituée d'une série de blocs les uns à la suite des autres. Mais
+vous verrez qu'en plus, il est possible de mettre un bloc à l'intérieur d'un autre, ce qui va augmenter considérablement nos
+possibilités pour créer le design de notre site !
+- **inline** : une balise de type inline se trouve obligatoirement à l'intérieur d'une balise block. Une balise inline ne crée pas
+de retour à la ligne, le texte qui se trouve à l'intérieur s'écrit donc à la suite du texte précédent, sur la même ligne (c'est pour
+cela que l'on parle de balise « en ligne »).
+
+:::caution !
+Depuis HTML5, la catégorisation des différents éléments est un peu plus complexe que cela. Cependant, cette petite simplification
+va vous permettre de bien comprendre la différence entre le concept de "bloc" et le concept de "en ligne".  ![:)](https://openclassrooms.com/bundles/common/images/smiley/smile.png)
+:::
+
+Pour bien visualiser le concept, voici en figure suivante un petit schéma que je vous ai concocté.
+
+![Différence entre une balise inline et une balise block](https://user.oc-static.com/files/3001_4000/3302.jpg)
+
+Différence entre une balise inline et une balise block
+
+- Sur fond bleu, vous avez tout ce qui est de type block.
+- Sur fond jaune, vous avez tout ce qui est de type inline.
+
+Comme vous pouvez le voir, les blocs sont les uns en dessous des autres. On peut aussi les imbriquer les uns à l'intérieur des
+autres (souvenez-vous, nos blocs `<section>` contiennent par exemple des blocs `<aside>` !).<br />
+La balise inline `<a></a>`, elle, se trouve à l'intérieur d'une balise block et le texte vient s'insérer sur la même ligne.
+
+#### Quelques exemples
+
+Afin de mieux vous aider à assimiler quelles balises sont inline et quelles balises sont block, voici un petit tableau dressant la
+liste de quelques balises courantes.
+
+| Balises block | Balises inline |
+|---------------|----------------|
+| `<p>` | `<em>` |
+| `<footer>` | `<strong>` |
+| `<h1>` | `<mark>` |
+| `<h2>` | `<a>` |
+| `<article>` | `<img />` |
+| … | … |
+
+Ce tableau n'est pas complet, loin de là. Si vous voulez avoir la liste complète des balises qui existent et savoir si elles sont
+de type inline ou block, reportez-vous à l'[annexe donnant la liste des balises HTML](https://openclassrooms.com/courses/apprenez-a-creer-votre-site-web-avec-html5-et-css3/memento-des-balises-html).
+
+#### Les balises universelles
+
+Vous les connaissez déjà car je vous les ai présentées il y a quelques chapitres. Ce sont des balises qui n'ont aucun sens
+particulier (contrairement à `<p>` qui veut dire « paragraphe »,`<strong>`, « import‌ant », etc.).<br />
+Le principal intérêt de ces balises est que l'on peut leur appliquer une `class` (ou un `id`) pour le CSS quand aucune autre balise
+ne convient.
+
+Il existe deux balises génériques et, comme par hasard, la seule différence entre les deux est que l'une d'elle est inline et
+l'autre est block :
+- `<span></span>` (**inline**) ;
+- `<div></div>` (**block**).
+
+#### Respectez la sémantique
+
+Les balises universelles sont « pratiques » dans certains cas, certes, mais attention à ne pas en abuser. Je tiens à vous avertir
+de suite : beaucoup de webmasters mettent des `<div>` et des `<span>` trop souvent et oublient que d'autres balises plus adaptées
+existent.
+
+Voici deux exemples :
+- **Exemple d'un span inutile** : `<span class="important">`. Je ne devrais jamais voir ceci dans un de vos codes, alors qu'il
+existe la balise `<strong>` qui sert à indiquer l'importance !
+- **Exemple d'un div inutile** : `<div class="titre">`. Ceci est complètement absurde puisqu'il existe des balises faites
+spécialement pour les titres (`<h1>`, `<h2>`…).
+
+Oui, vous allez me dire qu'au final le résultat (visuel) est le même. Je suis tout à fait d'accord. Mais les balises génériques
+n'apportent aucun sens à la page et ne peuvent pas être comprises par l'ordinateur. Utilisez toujours d'autres balises plus adaptées
+quand c'est possible. Google lui-même le conseille pour vous aider à améliorer la position de vos pages au sein de ses résultats de
+recherche !
+
+### Les dimensions
+
+Nous allons ici travailler uniquement sur des balises de type block.
+
+Pour commencer, intéressons-nous à la taille des blocs. Contrairement à un inline, un bloc a des dimensions précises. Il possède
+une largeur et une hauteur. Ce qui fait, ô surprise, qu'on dispose de deux propriétés CSS :
+- `width` : c'est la largeur du bloc. À exprimer en pixels (px) ou en pourcentage (%) ;
+- `height` : c'est la hauteur du bloc. Là encore, on l'exprime soit en pixels (px), soit en pourcentage (%).
+
+:::note !
+Pour être exact, `width` et `height` représentent la largeur et la hauteur du contenu des blocs. Si le bloc a des marges (on va
+découvrir ce principe un peu plus loin), celles-ci s'ajouteront à la largeur et à la hauteur.
+:::
+
+Par défaut, un bloc prend 100 % de la largeur disponible. On peut le vérifier en appliquant à nos blocs des bordures ou une couleur
+de fond (figure suivante).
+
+![Les blocs prennent toute la largeur disponible](https://user.oc-static.com/files/343001_344000/343694.png)
+
+Les blocs prennent toute la largeur disponible
+
+Maintenant, rajoutons un peu de CSS afin de modifier la largeur des paragraphes. Le CSS suivant dit : « Je veux que tous mes
+paragraphes aient une largeur de 50 % ».
+
+```css
+p
+{
+    width: 50%;
+}
+```
+
+Le résultat est visible à la figure suivante.
+
+![Un paragraphe de 50% de largeur](https://user.oc-static.com/files/343001_344000/343695.png)
+
+Un paragraphe de 50 % de largeur
+
+Les pourcentages seront utiles pour créer un design qui s'adapte automatiquement à la résolution d'écran du visiteur.<br />
+Toutefois, il se peut que vous ayez besoin de créer des blocs ayant une dimension précise en pixels :
+
+```css
+p
+{
+    width: 250px;
+}
+```
+
+#### Minimum et maximum
+
+On peut demander à ce qu'un bloc ait des dimensions minimales et maximales. C'est très pratique, car cela nous permet de définir
+des dimensions « limites » pour que notre site s'adapte aux différentes résolutions d'écran de nos visiteurs :
+- `min-width` : largeur minimale ;
+- `min-height` : hauteur minimale ;
+- `max-width` : largeur maximale ;
+- `max-height` : hauteur maximale.
+
+Par exemple, on peut demander à ce que les paragraphes occupent 50 % de la largeur _et_ exiger qu'il fassent au moins 400 pixels
+de large dans tous les cas :
+
+```css
+p
+{
+    width: 50%;
+    min-width: 400px;
+}
+```
+
+Observez le résultat en modifiant la largeur de la fenêtre de votre navigateur. Vous allez voir que, si celle-ci est trop petite,
+le paragraphe se force à occuper au moins 400 pixels de largeur.
+
+### Les marges
+
+Il faut savoir que tous les blocs possèdent des marges. Il existe _deux types de marges_ :
+- les marges intérieures ;
+- les marges extérieures.
+
+Regardez bien le schéma qui se trouve à la figure suivante.
+
+![Marges extérieure et intérieure](https://user.oc-static.com/files/5001_6000/5633.jpg)
+
+Marges extérieure et intérieure
+
+Sur ce bloc, j'ai mis une bordure pour qu'on repère mieux ses frontières.
+- L'espace entre le texte et la bordure est la marge intérieure (en vert).
+- L'espace entre la bordure et le bloc suivant est la marge extérieure (en rouge).
+
+En CSS, on peut modifier la taille des marges avec les deux propriétés suivantes :
+- `padding` : indique la taille de la marge intérieure. À exprimer en général en pixels (px) ;
+- `margin` : indique la taille de la marge extérieure. Là encore, on utilise le plus souvent des pixels.
+
+:::info
+Les balises de type inline possèdent également des marges. Vous pouvez donc aussi essayer ces manipulations sur ce type de balises.
+:::
+
+Pour bien voir les marges, prenons deux paragraphes auxquels j'applique simplement une petite bordure (figure suivante) :
+
+```css
+p
+{
+    width: 350px;
+    border: 1px solid black;
+    text-align: justify;
+}
+```
+
+![Marges par défaut sur les paragraphes](https://user.oc-static.com/files/343001_344000/343698.png)
+
+Marges par défaut sur les paragraphes
+
+Comme vous pouvez le constater, il n'y a par défaut pas de marge intérieure (`padding`). En revanche, il y a une marge extérieure
+(`margin`). C'est cette marge qui fait que deux paragraphes ne sont pas collés et qu'on a l'impression de « sauter une ligne ».
+
+:::info
+Les marges par défaut ne sont pas les mêmes pour toutes les balises de type block. Essayez d'appliquer ce CSS à des balises `<div>`
+qui contiennent du texte, par exemple : vous verrez que, dans ce cas, il n'y a par défaut ni marge intérieure, ni marge extérieure !
+:::
+
+Supposons que je veuille rajouter une marge intérieure de 12 px aux paragraphes (figure suivante) :
+
+```css
+p
+{
+    width: 350px;
+    border: 1px solid black;
+    text-align: justify;
+    padding: 12px; /* Marge intérieure de 12px */
+}
+```
+
+![Une marge intérieure ajoutée aux paragraphes](https://user.oc-static.com/files/343001_344000/343703.png)
+
+Une marge intérieure ajoutée aux paragraphes
+
+Maintenant, je veux que mes paragraphes soient plus espacés entre eux. Je rajoute la propriété `margin` pour demander à ce qu'il y
+ait 50 px de marge entre deux paragraphes (figure suivante) :
+
+```css
+p
+{
+    width: 350px;
+    border: 1px solid black;
+    text-align: justify;
+    padding: 12px;
+    margin: 50px; /\* Marge extérieure de 50px \*/
+}
+```
+
+[![Une marge extérieure ajoutée aux paragraphes](https://user.oc-static.com/files/343001_344000/343704.png)](https://course.oc-static.com/ftp-tutos/cours/html-css/p3/ch2/marges/index.html)
+
+[Une marge extérieure ajoutée aux paragraphes](https://course.oc-static.com/ftp-tutos/cours/html-css/p3/ch2/marges/index.html)
+
+:::note ?
+Mais ??? Une marge s'est rajoutée à gauche aussi !
+:::
+
+Eh oui, `margin` (comme `padding`, d'ailleurs) s'applique aux quatre côtés du bloc.
+
+Si vous voulez spécifier des marges différentes en haut, en bas, à gauche et à droite, il va falloir utiliser des propriétés plus
+précises… Le principe est le même que pour la propriété `border`, vous allez voir !
+
+#### En haut, à droite, en bas, à gauche… et on recommence !
+
+L'idéal serait que vous reteniez les termes suivants en anglais :
+- _top_ : haut ;
+- _bottom_ : bas ;
+- _left_ : gauche ;
+- _right_ : droite.
+
+Ainsi, vous pouvez retrouver toutes les propriétés de tête.<br />
+Je vais quand même vous faire la liste des propriétés pour `margin` et `padding`, histoire que vous soyez sûr d'avoir compris le
+principe.
+
+Voici la liste pour `margin` :
+- `margin-top` : marge extérieure en haut ;
+- `margin-bottom` : marge extérieure en bas ;
+- `margin-left` : marge extérieure à gauche ;
+- `margin-right` : marge extérieure à droite.
+
+Et la liste pour `padding` :
+- `padding-top` : marge intérieure en haut ;
+- `padding-bottom` : marge intérieure en bas ;
+- `padding-left` : marge intérieure à gauche ;
+- `padding-right` : marge intérieure à droite.
+
+:::info
+Il y a d'autres façons de spécifier les marges avec les propriétés `margin` et `padding`. Par exemple :<br />
+`margin: 2px 0 3px 1px;` signifie « 2 px de marge en haut, 0 px à droite (le px est facultatif dans ce cas), 3 px en bas, 1 px à
+gauche ».<br />
+Autre notation raccourcie : `margin: 2px 1px;`  signifie « 2 px de marge en haut et en bas, 1 px de marge à gauche et à droite ».
+:::
+
+#### Centrer des blocs
+
+Il est tout à fait possible de centrer des blocs. C'est même très pratique pour réaliser un design centré quand on ne connaît pas
+la résolution du visiteur.
+
+Pour centrer, il faut respecter les règles suivantes :
+- donnez une largeur au bloc (avec la propriété `width`) ;
+- indiquez que vous voulez des marges extérieures automatiques, comme ceci : `margin: auto;`.
+
+Essayons cette technique sur nos petits paragraphes (lignes 3 et 4) :
+
+```css
+p
+{
+    width: 350px; /* On a indiqué une largeur (obligatoire) */
+    margin: auto; /* On peut donc demander à ce que le bloc soit centré avec auto */
+    border: 1px solid black;
+    text-align: justify;
+    padding: 12px;
+    margin-bottom: 20px;
+}
+```
+
+Et voici le résultat à la figure suivante.
+
+[![Centrage des paragraphes](https://user.oc-static.com/files/343001_344000/343709.png)Centrage des paragraphes](https://course.oc-static.com/ftp-tutos/cours/html-css/p3/ch2/centre/index.html)
+
+Ainsi, le navigateur centre automatiquement nos paragraphes !
+
+:::info
+Il n'est cependant pas possible de centrer verticalement un bloc avec cette technique. Seul le centrage horizontal est permis.
+:::
+
+### Quand ça dépasse…
+
+Lorsqu'on commence à définir des dimensions précises pour nos blocs, comme on vient de le faire, il arrive qu'ils deviennent trop
+petits pour le texte qu'ils contiennent.
+
+Les propriétés CSS que nous allons voir ici ont justement été créées pour contrôler les dépassements… et décider quoi faire si
+jamais cela devait arriver.
+
+#### `overflow` : couper un bloc
+
+Supposons que vous ayez un long paragraphe et que vous vouliez (pour une raison qui ne regarde que vous) qu'il fasse 250 px de
+large et 110 px de haut. Ajoutons-lui une bordure et remplissons-le de texte… à ras-bord (figure suivante) :
+
+```css
+p
+{
+    width: 250px;
+    height: 110px;
+    text-align: justify;
+    border: 1px solid black;
+}
+```
+
+![Le texte dépasse du bloc de paragraphe](https://user.oc-static.com/files/343001_344000/343711.png)
+
+Le texte dépasse du bloc de paragraphe
+
+:::note ?
+Horreur ! Le texte dépasse des limites du paragraphe !
+:::
+
+Eh oui ! Vous avez demandé des dimensions précises, vous les avez eues ! Mais… le texte ne tient pas à l'intérieur d'un si petit
+bloc.
+
+Si vous voulez que le texte ne dépasse pas des limites du paragraphe, il va falloir utiliser la propriété `overflow`. Voici les
+valeurs qu'elle peut accepter :
+- `visible` (par défaut) : si le texte dépasse les limites de taille, il reste visible et sort volontairement du bloc ;
+- `hidden` : si le texte dépasse les limites, il sera tout simplement coupé. On ne pourra pas voir tout le texte ;
+- `scroll` : là encore, le texte sera coupé s'il dépasse les limites. Sauf que cette fois, le navigateur mettra en place des barres
+de défilement pour qu'on puisse lire l'ensemble du texte. C'est un peu comme un cadre à l'intérieur de la page.
+- `auto` : c'est le mode « pilote automatique ». En gros, c'est le navigateur qui décide de mettre ou non des barres de défilement
+(il n'en mettra que si c'est nécessaire). C'est la valeur que je conseille d'utiliser le plus souvent.
+
+Avec `overflow: hidden;`, le texte est donc coupé (on ne peut pas voir la suite), comme sur la figure suivante.
+
+![Le texte est coupé aux limites du paragraphe](https://user.oc-static.com/files/343001_344000/343715.png)
+
+Le texte est coupé aux limites du paragraphe
+
+Essayons maintenant `overflow: auto;` avec le code CSS suivant (résultat à la figure suivante) :
+
+```css
+p
+{
+    width: 250px;
+    height: 110px;
+    text-align: justify;
+    border: 1px solid black;
+    overflow: auto;
+}
+```
+
+[![Des barres de défilement sont ajoutées au paragraphe](https://user.oc-static.com/files/343001_344000/343716.png)](https://course.oc-static.com/ftp-tutos/cours/html-css/p3/ch2/overflow/index.html)
+
+[Des barres de défilement sont ajoutées au paragraphe](https://course.oc-static.com/ftp-tutos/cours/html-css/p3/ch2/overflow/index.html)
+
+Eurêka ! Des barres de défilement nous permettent maintenant de consulter le contenu qui n'était pas visible.
+
+:::warning !
+Il existe une ancienne balise HTML, `<iframe>`, qui donne à peu près le même résultat. Cependant, l'usage de cette balise est
+déconseillé aujourd'hui. Elle permet de charger tout le contenu d'une autre page HTML au sein de votre page.
+:::
+
+#### `word-wrap` : couper les textes trop larges
+
+Si vous devez placer un mot très long dans un bloc, qui ne tient pas dans la largeur, vous allez adorer `word-wrap`. Cette
+propriété permet de forcer la césure des très longs mots (généralement des adresses un peu longues).
+
+La figure suivante représente ce que l'on peut avoir quand on écrit une URL un peu longue dans un bloc.
+
+![Le texte déborde en largeur](https://user.oc-static.com/files/343001_344000/343779.png)
+
+Le texte déborde en largeur
+
+L'ordinateur ne sait pas « couper » l'adresse car il n'y a ni espace, ni tiret. Il ne sait pas faire la césure.
+
+Avec le code suivant, la césure sera forcée dès que le texte risque de dépasser (figure suivante).
+
+```css
+p
+{
+    word-wrap: break-word;
+}
+```
+
+![Le texte est coupé pour ne pas déborder](https://user.oc-static.com/files/343001_344000/343780.png)
+
+Le texte est coupé pour ne pas déborder
+
+:::info
+Je conseille d'utiliser cette fonctionnalité dès qu'un bloc est susceptible de contenir du texte saisi par des utilisateurs (par
+exemple sur les forums de votre futur site). Sans cette astuce, on peut « casser » facilement le design d'un site (en écrivant par
+exemple une longue suite de « aaaaaaaaaaa »).
+:::
+
+### En résumé
+
+- On distingue deux principaux types de balises en HTML :
+    - le type block (`<p>`, `<h1>`…) : ces balises créent un retour à la ligne et occupent par défaut toute la largeur disponible.
+    Elles se suivent de haut en bas ;
+    - le type inline (`<a>`, `<strong>`…) : ces balises délimitent du texte au milieu d'une ligne. Elles se suivent de gauche à
+    droite.
+- On peut modifier la taille d'une balise de type block avec les propriétés CSS `width` (largeur) et `height` (hauteur).
+- On peut définir des minima et maxima autorisés pour la largeur et la hauteur : `min-width`, `max-width`, `min-height`,
+`max-height`.
+- Les éléments de la page disposent chacun de marges intérieures (`padding`) et extérieures (`margin`).
+- S'il y a trop de texte à l'intérieur d'un bloc de dimensions fixes, il y a un risque de débordement. Dans ce cas, il peut être
+judicieux de rajouter des barres de défilement avec la propriété `overflow`, ou de forcer la césure avec `word-wrap`.
+
+-----
+
+## Faites votre mise en page avec Flexbox
+
+[Faites votre mise en page avec Flexbox - Apprenez à créer votre site web avec HTML5 et CSS3 - OpenClassrooms](https://openclassrooms.com/fr/courses/1603881-apprenez-a-creer-votre-site-web-avec-html5-et-css3/3298561-faites-votre-mise-en-page-avec-flexbox)
+
+<Vimeo vimeoId="243807888" />
+
+<br />
+
+Allez, il est temps d'apprendre à mettre en page notre site. Vous savez ? Placer un en-tête, des menus sur le côté, choisir où
+apparaît une information, etc. C'est la pièce manquante du puzzle pour que nous puissions enfin créer notre site ! ![:)](https://openclassrooms.com/bundles/common/images/smiley/smile.png)
+
+Il y a plusieurs façons de mettre en page un site. Au fil du temps, plusieurs techniques ont existé :
+1. Au début, les webmasters utilisaient des tableaux HTML pour faire la mise en page (berk).
+2. Puis, CSS est apparu et on a commencé à faire une mise en page à l'aide de la propriété `float` (bof).
+3. Cette technique avait des inconvénients. Une autre, plus pratique, a consisté à créer des éléments de type `inline-block` sur
+la page (mouais).
+4. Aujourd'hui, une bien meilleure technique encore existe : **Flexbox** ! Elle permet toutes les folies (ou presque ![;)](https://openclassrooms.com/bundles/common/images/smiley/clin.png) ),
+et c'est celle que je vous recommande d'utiliser si vous en avez la possibilité, lorsque vous créez un nouveau site.
+[Flexbox est désormais reconnu par tous les navigateurs récents](https://caniuse.com/#feat=flexbox) !
+
+:::info
+Nous découvrirons donc le fonctionnement de Flexbox dans ce chapitre. Pour ceux qui ont besoin d'informations sur les autres
+techniques de mise en page plus anciennes, je vous invite à consulter le chapitre "Quelques autres techniques de mise en page".
+Cela peut toujours vous être utile.
+:::
+
+### Un conteneur, des éléments
+
+Le principe de la mise en page avec Flexbox est simple : vous définissez un conteneur, et à l'intérieur vous placez plusieurs
+éléments. Imaginez un carton dans lequel vous rangez plusieurs objets : c'est le principe !
+
+Sur une même page web, vous pouvez sans problème avoir plusieurs conteneurs (plusieurs cartons, si vous préférez ![;)](https://openclassrooms.com/bundles/common/images/smiley/clin.png) ).
+Ce sera à vous d'en créer autant que nécessaire pour obtenir la mise en page que vous voulez.
+
+Commençons par étudier le fonctionnement d'un carton (euh pardon, d'un conteneur).
+
+![Un conteneur et ses éléments](https://s3-eu-west-1.amazonaws.com/sdz-upload/prod/upload/flexbox_conteneur.png)
+
+Un conteneur et ses éléments
+
+Le conteneur est une balise HTML, et les éléments sont d'autres balises HTML à l'intérieur :
+
+```html
+<div id="conteneur">
+    <div class="element 1">Element </div>
+    <div class="element 2">Element </div>
+    <div class="element 3">Element </div>
+</div>
+```
+
+OK, jusque-là, vous devriez suivre. ![:p](https://openclassrooms.com/bundles/common/images/smiley/langue.png)
+
+:::note ?
+Mais si je fais ça, par défaut, mes éléments vont se mettre les uns en dessous des autres, non ? Ce sont des blocs, après tout !
+:::
+
+Oui, tout à fait. Si je mets une bordure au conteneur, une taille et une couleur de fond aux éléments, on va vite voir comment ils
+s'organisent :
+
+![Par défaut, les blocs se placent les uns en-dessous des autres](https://s3-eu-west-1.amazonaws.com/sdz-upload/prod/upload/position_defaut.png)
+
+Par défaut, les blocs se placent les uns en dessous des autres
+
+Rien de bien nouveau, c'est le comportement normal dont nous avons l'habitude.
+
+:::warning !
+Je vous montrerai un peu plus tard comment attribuer une couleur et une bordure différente aux éléments avec la [pseudo-classe](https://developer.mozilla.org/fr/docs/Web/CSS/Pseudo-classes) [:nth-child](https://developer.mozilla.org/fr/docs/Web/CSS/:nth-child).
+Pour l'instant, j'ai mis de la couleur sur chacun des éléments, pour que vous puissiez les distinguer facilement dans mon exemple !
+:::
+
+### Soyez flex !
+
+Découvrons maintenant Flexbox. Si je mets une (une seule !) propriété CSS, tout change. Cette propriété, c'est `flex`, et je
+l'applique au conteneur :
+
+```css
+#conteneur
+{
+    display: flex;
+}
+```
+
+... alors les blocs se placent par défaut côte à côte. Magique !
+
+![Un coup de flex, tout change !](https://s3-eu-west-1.amazonaws.com/sdz-upload/prod/upload/flex_defaut.png)
+
+Un coup de flex, et les blocs se positionnent côte à côte !
+
+#### La direction
+
+Flexbox nous permet d'agencer ces éléments dans le sens que l'on veut. Avec `flex-direction`, on peut les positionner verticalement
+ou encore les inverser. Il peut prendre les valeurs suivantes :
+- row : organisés sur une ligne (par défaut) ;
+- column : organisés sur une colonne ;
+- row-reverse : organisés sur une ligne, mais en ordre inversé ;
+- column-reverse : organisés sur une colonne, mais en ordre inversé.
+
+Exemple :
+
+```css
+#conteneur
+{
+    display: flex;
+    flex-direction: column;
+}
+```
+
+![Les éléments sont disposés en colonne](https://s3-eu-west-1.amazonaws.com/sdz-upload/prod/upload/flex_direction_column.png)
+
+Les éléments sont disposés en colonne
+
+Mais mais... c'est pareil qu'au début, non ? On avait ce résultat sans Flexbox, après tout !
+
+C'est vrai. Mais maintenant que nos éléments sont _flex_, ils ont tout un tas d'autres propriétés utiles que nous allons voir
+juste après, on va y revenir.
+
+Essayez aussi de tester l'ordre inversé, pour voir :
+
+```css
+#conteneur
+{
+    display: flex;
+    flex-direction: column-reverse;
+}
+```
+
+![Les éléments sont en colonne... dans l'ordre inverse !](https://s3-eu-west-1.amazonaws.com/sdz-upload/prod/upload/flex_direction_column_reverse.png)
+
+Les éléments sont en colonne... dans l'ordre inverse !
+
+Regardez bien la différence : les blocs sont maintenant dans l'ordre inverse ! Je n'ai pas du tout changé le code HTML, qui reste
+le même depuis le début.
+
+#### Le retour à la ligne
+
+Par défaut, les blocs essaient de rester sur la même ligne s'ils n'ont pas la place (ce qui peut provoquer des bugs de design,
+parfois). Si vous voulez, vous pouvez demander à ce que les blocs aillent à la ligne lorsqu'ils n'ont plus la place, avec
+`flex-wrap` qui peut prendre ces valeurs :
+- nowrap : pas de retour à la ligne (par défaut) ;
+- wrap : les éléments vont à la ligne lorsqu'il n'y a plus la place ;
+- wrap-reverse : les éléments vont à la ligne, lorsqu'il n'y a plus la place, en sens inverse.
+
+Exemple :
+
+```css
+#conteneur
+{
+    display: flex;
+    flex-wrap: wrap;
+}
+```
+
+Voici l'effet que prennent les différentes valeurs sur une même illustration :
+
+![Gestion du retour à la ligne avec flex-wrap](https://s3-eu-west-1.amazonaws.com/sdz-upload/prod/upload/flex_wrap.png)
+
+Gestion du retour à la ligne avec flex-wrap
+
+### Alignez-les !
+
+Reprenons. Les éléments sont organisés soit horizontalement (par défaut), soit verticalement. Cela définit ce qu'on appelle
+**l'_axe principal_**. Il y a aussi un axe secondaire (_cross axis_) :
+- si vos éléments sont organisés horizontalement, l'axe secondaire est l'axe vertical ;
+- si vos éléments sont organisés verticalement, l'axe secondaire est l'axe horizontal.
+
+Pourquoi je vous raconte ça ? Parce que nous allons découvrir comment aligner nos éléments sur l'axe principal _et_ sur l'axe
+secondaire.
+
+#### Aligner sur l'axe principal
+
+Pour faire simple, partons sur des éléments organisés horizontalement (c'est le cas par défaut).
+
+Pour changer leur alignement, on va utiliser `justify-content`, qui peut prendre ces valeurs :
+- flex-start : alignés au début (par défaut) ;
+- flex-end : alignés à la fin ;
+- center : alignés au centre ;
+- space-between : les éléments sont étirés sur tout l'axe (il y a de l'espace entre eux) ;
+- space-around : idem, les éléments sont étirés sur tout l'axe, mais ils laissent aussi de l'espace sur les extrémités.
+
+Par exemple :
+
+```css
+#conteneur
+{
+    display: flex;
+    justify-content: space-around;
+}
+```
+
+Le mieux est encore de tester toutes les valeurs possibles pour voir ce que ça donne, vous pensez pas ? ![^^](https://openclassrooms.com/bundles/common/images/smiley/hihi.png)
+
+![Les différentes valeurs possibles pour l'alignement avec justify-content](https://s3-eu-west-1.amazonaws.com/sdz-upload/prod/upload/justify_content.png)
+
+Les différentes valeurs possibles pour l'alignement avec justify-content
+
+Vous voyez comment les éléments s'alignent différemment selon les cas ? Avec une simple propriété, on peut intelligemment agencer
+nos éléments comme on veut ! ![:)](https://openclassrooms.com/bundles/common/images/smiley/smile.png)
+
+Maintenant, voici ce qu'il faut bien comprendre : **ça marche aussi si vos éléments sont dans une direction verticale**. Dans ce
+cas, l'axe vertical devient l'axe principal, et `justify-content` s'applique aussi :
+
+```css
+#conteneur
+{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 350px; /* Un peu de hauteur pour que les éléments aient la place de bouger */
+}
+```
+
+![Avec une direction verticale (column), le centrage fonctionne de la même façon](https://s3-eu-west-1.amazonaws.com/sdz-upload/prod/upload/vertical_center.png)
+
+Avec une direction verticale (column), le centrage fonctionne de la même façon, cette fois en hauteur !
+
+Essayez, à vous de jouer ! ![;)](https://openclassrooms.com/bundles/common/images/smiley/clin.png)
+
+#### Aligner sur l'axe secondaire
+
+Comme je vous le disais, si nos éléments sont placés dans une direction horizontale (ligne), l'axe secondaire est... vertical. Et
+inversement : si nos éléments sont dans une direction verticale (colonne), l'axe secondaire est horizontal.
+
+Avec `align-items`, nous pouvons changer leur alignement sur l'axe secondaire. Il peut prendre ces valeurs :
+- stretch : les éléments sont étirés sur tout l'axe (valeur par défaut) ;
+- flex-start : alignés au début ;
+- flex-end : alignés à la fin ;
+- center : alignés au centre ;
+- baseline : alignés sur la ligne de base (semblable à flex-start).
+
+Pour ces exemples, nous allons partir du principe que nos éléments sont dans une direction horizontale (mais n'hésitez pas à
+tester aussi dans la direction verticale !).
+
+```css
+#conteneur
+{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+```
+
+![Un alignement sur l'axe secondaire nous permet de centrer complètement l'élément dans le conteneur !](https://s3-eu-west-1.amazonaws.com/sdz-upload/prod/upload/center_center.png)
+
+Un alignement sur l'axe secondaire avec align-items nous permet de centrer complètement l'élément dans le conteneur !
+
+:::info
+Saint Graal du développeur web, le centrage vertical et horizontal peut d'ailleurs être obtenu encore plus facilement. Dites que
+votre conteneur est une flexbox et établissez des marges automatiques sur les éléments à l'intérieur. C'est tout ! Essayez !
+
+```css
+#conteneur
+{
+    display: flex;
+}
+.element
+{
+    margin: auto;
+}
+```
+
+:::
+
+#### Aligner un seul élément
+
+Il est possible de faire une exception pour un seul des éléments sur l'axe secondaire avec `align-self` :
+
+```css
+#conteneur
+{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+.element:nth-child(2) /* On prend le deuxième bloc élément */
+{
+    background-color: blue;
+    align-self: flex-end; /* Seul ce bloc sera aligné à la fin */
+}
+
+/* ... */
+```
+
+Résultat :
+
+![Un élément aligné différemment avec align-self](https://s3-eu-west-1.amazonaws.com/sdz-upload/prod/upload/align_self.png)
+
+Un élément aligné différemment des autres avec align-self. Tiens, je crois que j'ai dessiné une tête en pixel art !
+
+### Répartir plusieurs lignes
+
+Si vous avez plusieurs lignes dans votre Flexbox, vous pouvez choisir comment celles-ci seront réparties avec `align-content`.
+
+:::info
+Cette propriété n'a aucun effet s'il n'y a qu'une seule ligne dans la Flexbox.
+:::
+
+Prenons donc un cas de figure où nous avons plusieurs lignes. Je vais rajouter des éléments :
+
+```html
+<div id="conteneur">
+    <div class="element"></div>
+    <div class="element"></div>
+    <div class="element"></div>
+    <div class="element"></div>
+    <div class="element"></div>
+    <div class="element"></div>
+    <div class="element"></div>
+    <div class="element"></div>
+    <div class="element"></div>
+    <div class="element"></div>
+    <div class="element"></div>
+    <div class="element"></div>
+</div>
+```
+
+J'autorise mes éléments à aller à la ligne avec `flex-wrap` :
+
+```css
+#conteneur
+{
+    display: flex;
+    flex-wrap: wrap;
+}
+```
+
+![Plusieurs lignes dans une Flexbox](https://s3-eu-west-1.amazonaws.com/sdz-upload/prod/upload/multilignes.png)
+
+Plusieurs lignes dans une Flexbox
+
+Jusque là, rien de vraiment nouveau. Voyons voir comment les lignes se répartissent différemment avec la nouvelle propriété
+`align-content` que je voulais vous présenter. Elle peut prendre ces valeurs :
+- flex-start : les éléments sont placés au début ;
+- flex-end : les éléments sont placés à la fin ;
+- center : les éléments sont placés au centre ;
+- space-between : les éléments sont séparés avec de l'espace entre eux ;
+- space-around : idem, mais il y a aussi de l'espace au début et à la fin ;
+- stretch (par défaut) : les éléments s'étirent pour occuper tout l'espace.
+
+Voici ce que donnent les différentes valeurs :
+
+![Les lignes sont placées différemment avec align-content](https://s3-eu-west-1.amazonaws.com/sdz-upload/prod/upload/align_content.png)
+
+Les lignes sont placées différemment avec align-content
+
+### Rappel à l'ordre
+
+Sans changer le code HTML, nous pouvons modifier l'ordre des éléments en CSS grâce à la propriété `order`. Indiquez simplement un
+nombre, et les éléments seront triés du plus petit au plus grand nombre.
+
+Reprenons une simple ligne de 3 éléments :
+
+```css
+#conteneur
+{
+    display: flex;
+}
+```
+
+![Une ligne de 3 éléments](https://s3-eu-west-1.amazonaws.com/sdz-upload/prod/upload/flex_defaut.png)
+
+Une ligne de 3 éléments
+
+Si je dis que le premier élément sera placé en 3e position, le second en 1re position et le troisième en 2de position, l'ordre à
+l'écran change !
+
+```css
+.element:nth-child(1)
+{
+    order: 3;
+}
+.element:nth-child(2)
+{
+    order: 1;
+}
+.element:nth-child(3)
+{
+    order: 2;
+}
+```
+
+![Avec order, nous pouvons réordonner les éléments en CSS](https://s3-eu-west-1.amazonaws.com/sdz-upload/prod/upload/order.png)
+
+Avec order, nous pouvons réordonner les éléments en CSS
+
+### Encore plus flex : faire grossir ou maigrir les éléments
+
+Allez, encore une dernière technique, après on passe à la pratique. ![;)](https://openclassrooms.com/bundles/common/images/smiley/clin.png)
+
+Avec la propriété `flex`, nous pouvons permettre à un élément de grossir pour occuper tout l'espace restant.
+
+```css
+.element:nth-child(2)
+{
+    flex: 1;
+}
+```
+
+![Le second élément s'étire pour prendre tout l'espace](https://s3-eu-west-1.amazonaws.com/sdz-upload/prod/upload/flex1.png)
+
+Le deuxième élément s'étire pour prendre tout l'espace
+
+Le nombre que vous indiquez à la propriété flex indique dans quelle mesure il peut grossir par rapport aux autres.
+
+```css
+.element:nth-child(1)
+{
+    flex: 2;
+}
+.element:nth-child(2)
+{
+    flex: 1;
+}
+```
+
+Ici, le premier élément peut grossir 2 fois plus que le deuxième élément :
+
+![Le second élément peut grossir deux fois plus que le second élément](https://s3-eu-west-1.amazonaws.com/sdz-upload/prod/upload/flex2.png)
+
+Le premier élément peut grossir deux fois plus que le deuxième élément
+
+:::ingo
+La propriété `flex` est en fait une super-propriété qui combine `flex-grow` (capacité à grossir), `flex-shrink` (capacité à maigrir)
+et `flex-basis` (taille par défaut). J'utilise simplement flex comme je vous l'ai montré ici, mais si vous voulez en savoir plus,
+je vous invite à vous renseigner sur ces autres propriétés.
+
+### En résumé
+
+- Il existe plusieurs techniques pour positionner les blocs sur la page. Flexbox est la technique la plus récente et de loin la
+plus puissante, que je vous recommande d'utiliser.
+- Le principe de Flexbox est d'avoir un conteneur, avec plusieurs éléments à l'intérieur. Avec `display: flex;` sur le conteneur,
+les éléments à l'intérieur sont agencés en mode Flexbox (horizontalement, par défaut).
+- Flexbox peut gérer toutes les directions. Avec `flex-direction`, on peut indiquer si les éléments sont agencés horizontalement
+(par défaut) ou verticalement. Cela définit ce qu'on appelle l'_axe principal_.
+- L'alignement des éléments se fait sur l'axe principal avec `justify-content`, et sur l'axe secondaire avec `align-items`.
+- Avec `flex-wrap`, on peut autoriser les éléments à revenir à la ligne s'ils n'ont plus d'espace.
+- S'il y a plusieurs lignes, on peut indiquer comment les lignes doivent se répartir entre elles avec `align-content`.
+- Chaque élément peut être réagencé en CSS avec `order` (pas besoin de toucher au code HTML !).
+- Avec la super-propriété `flex`, on peut autoriser nos éléments à occuper plus ou moins d'espace restant.
+- Flexbox, c'est cool.
+
+-----
+
+## Pratiquez !
+
+[Pratiquez ! - Apprenez à créer votre site web avec HTML5 et CSS3 - OpenClassrooms](https://openclassrooms.com/fr/courses/1603881-apprenez-a-creer-votre-site-web-avec-html5-et-css3/4214576-pratiquez)
+
+<Vimeo vimeoId="243808027" />
+
+<br />
+
+Voici un nouvel exercice pour mettre en pratique vos compétences en CSS3 et HTML5. Ouvrez [cet éditeur CodePen en ligne](https://codepen.io/nicolaspatschkowski/pen/yLNXQaO?editors=1100).
+Vous allez effectuer la mise en page d'un site qui s'appelle 'Le blog trotter' ! Pour cela, effectuez les tâches suivantes :
+1. Une balise sémantique `<nav>` manque, ajoutez-la au bon endroit.
+2. Retirez les puces de la liste à puces (à vous de trouver comment faire !).
+3. Placez le header et le menu côte à côte.
+4. Affichez les paragraphes en justifié, sur 80 % de largeur, et centrez leurs blocs sur la page.
+
+[![CodePen, votre éditeur en ligne](https://user.oc-static.com/upload/2020/03/04/15833240860047_Capture%20d%E2%80%99e%CC%81cran%202020-03-04%20a%CC%80%2013.14.25.png)](https://codepen.io/nicolaspatschkowski/pen/yLNXQaO?editors=1100)
+
+CodePen, votre éditeur en ligne
+
+:::caution !
+Dans cet éditeur, la feuille de style CSS est automatiquement liée au HTML par CodePen. Sur du code HTML "normal", il faudrait ajouter
+une balise de style dans le head, comme ceci : `<link rel="stylesheet" type="text/css" href="style.css">`.
+:::
+
+Voici ce à quoi devrait ressembler votre page une fois modifiée :
+
+![Votre page une fois les étapes implémentées](https://user.oc-static.com/upload/2020/04/27/15879891381925_Screen%20Shot%202020-04-27%20at%2014.04.58.png)
+
+Votre page une fois les étapes implémentées
+
+Une fois que vous aurez implémenté tout ça, vous trouverez un exemple de réalisation des étapes [en suivant ce lien](https://codepen.io/nicolaspatschkowski/pen/WNvOYGN?editors=1100).
+
+<CodePen codePenId="WNvOYGN?editors=1100" />
+
+
+Source : [Correction HTML / CSS - P3 "Pratiquez!"](https://codepen.io/nicolaspatschkowski/pen/WNvOYGN?editors=1100)
+
+
+:::info
+Bien sûr, ce qui est demandé dans cet exercice est le minimum, mais n'hésitez pas à **aller plus loin** ! Modifiez les couleurs, le
+style, ajoutez du contenu... Testez, CodePen vous le permet : vous êtes sûr de ne rien casser. 😉
+:::
+
+-----
+
+## Découvrez d'autres techniques de mise en page
+
+[Découvrez d'autres techniques de mise en page - Apprenez à créer votre site web avec HTML5 et CSS3 - OpenClassrooms](https://openclassrooms.com/fr/courses/1603881-apprenez-a-creer-votre-site-web-avec-html5-et-css3/1606402-decouvrez-dautres-techniques-de-mise-en-page)
+
+<Vimeo vimeoId="243808101" />
+
+<br />
+
+Aujourd'hui, Flexbox est l'outil de mise en page que je recommande... mais vous devriez toujours connaître les autres techniques de mise
+en page que je vais vous présenter dans ce chapitre. Plus anciennes, elles ont l'avantage d'être reconnues par les vieilles versions des
+navigateurs. Enfin, si vous êtes amené à gérer un "vieux" code, vous aurez besoin de connaître ces techniques de positionnement !
+
+:::caution !
+Ce chapitre vous sera donc plus probablement utile si vous avez besoin de gérer de vieux sites. Si vous êtes sur un nouveau projet, je
+recommande d'utiliser à la place une mise en page à base de Flexbox !
+:::
+
+### Le positionnement flottant
+
+Vous vous souvenez de la propriété `float` ? Nous l'avons utilisée pour faire flotter une image autour du texte (figure suivante).
+
+![L'image flotte autour du texte grâce à la propriété float](https://user.oc-static.com/files/5001_6000/5646.png)
+
+L'image flotte autour du texte grâce à la propriété float
+
+Il se trouve que cette propriété est aujourd'hui utilisée par la majorité des sites web pour… faire la mise en page ! En effet, si on
+veut placer son menu à gauche et le contenu de sa page à droite, c'est _a priori_ un bon moyen. Je dis bien _a priori_ car, à la base,
+cette propriété n'a pas été conçue pour faire la mise en page, et nous allons voir qu'elle a quelques petits défauts.
+
+Reprenons le code HTML structuré que nous avons réalisé il y a quelques chapitres :
+
+```html
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <link rel="stylesheet" href="style.css" />
+        <title>Zozor - Le Site Web</title>
+    </head>
+
+    <body>
+        <header>
+            <h1>Zozor</h1>
+            <h2>Carnets de voyage</h2>
+        </header>
+        
+        <nav>
+            <ul>
+                <li><a href="#">Accueil</a></li>
+                <li><a href="#">Blog</a></li>
+                <li><a href="#">CV</a></li>
+            </ul>
+        </nav>
+        
+        <section>
+            <aside>
+                <h1>À propos de l'auteur</h1>
+                <p>C'est moi, Zozor ! Je suis né un 23 novembre 2005.</p>
+            </aside>
+            <article>                
+                <h1>Je suis un grand voyageur</h1>
+                <p>Bla bla bla bla (texte de l'article)</p>
+            </article>
+        </section>
+        
+        <footer>
+            <p>Copyright Zozor - Tous droits réservés<br />
+
+            <a href="#">Me contacter !</a></p>
+        </footer>
+        
+    </body>
+</html>
+```
+
+Je rappelle que, sans CSS, la mise en page ressemble à la figure suivante.
+
+![Une page HTML sans CSS](https://user.oc-static.com/files/343001_344000/343672.png)
+
+Une page HTML sans CSS
+
+Nous allons essayer de placer le menu à gauche et le reste du texte à droite. Pour cela, nous allons faire flotter le menu à gauche et
+laisser le reste du texte se placer à sa droite.
+
+Nous voulons que le menu occupe 150 pixels de large. Nous allons aussi rajouter une bordure noire autour du menu et une bordure bleue
+autour du corps (à la balise `<section>`) pour bien les distinguer :
+
+```css
+nav
+{
+    float: left;
+    width: 150px;
+    border: 1px solid black;
+}
+section
+{
+    border: 1px solid blue;
+}
+```
+
+Voici le résultat à la figure suivante. Ce n'est pas encore tout à fait cela.
+
+![Le menu est bien positionné mais collé au texte](https://user.oc-static.com/files/343001_344000/343925.png)
+
+Le menu est bien positionné, mais collé au texte
+
+Il y a deux défauts (mis à part le fait que c'est encore bien moche) :
+- le texte du corps de la page touche la bordure du menu. Il manque une petite marge… ;
+- plus embêtant encore : la suite du texte passe… sous le menu !
+
+On veut bien que le pied de page (« Copyright Zozor ») soit placé en bas sous le menu mais, par contre, on aimerait que tout le corps
+de page soit constitué d'un seul bloc placé à droite.
+
+Pour résoudre ces deux problèmes d'un seul coup, il faut ajouter une marge extérieure à gauche de notre `<section>`, marge qui doit être
+par ailleurs _supérieure_ à la largeur du menu. Si notre menu fait 150 px, nous allons par exemple donner une marge extérieure gauche de
+170 px à notre section de page (figure suivante), ici à la ligne 10.
+
+```css
+nav
+{
+    float: left;
+    width: 150px;
+    border: 1px solid black;
+}
+section
+{
+    margin-left: 170px;
+    border: 1px solid blue;
+}
+```
+
+![Le corps de page est bien aligné à droite du menu](https://user.oc-static.com/files/343001_344000/343932.png)
+
+Le corps de page est bien aligné à droite du menu
+
+Voilà, le contenu de la page est maintenant correctement aligné.
+
+:::info
+À l'inverse, vous pouvez aussi préférer qu'un élément se place obligatoirement sous le menu. Dans ce cas, il faudra utiliser… 
+`clear: both;`, que nous avions déjà découvert, qui oblige la suite du texte à se positionner sous l'élément flottant.
+:::
+
+### Transformez vos éléments avec display
+
+Je vais vous apprendre ici à modifier les lois du CSS (brrr…). Accrochez-vous !
+
+Il existe en CSS une propriété très puissante : `display`. Elle est capable de _transformer_ n'importe quel élément de votre page d'un
+type vers un autre. Avec cette propriété magique, je peux par exemple imposer à mes liens (originellement de type inline) d'apparaître
+sous forme de blocs :
+
+```css
+a
+{
+    display: block;
+}
+```
+
+À ce moment-là, les liens vont se positionner les uns en-dessous des autres (comme des blocs normaux) et il devient possible de modifier
+leurs dimensions !
+
+Voici quelques-unes des principales valeurs que peut prendre la propriété `display` en CSS (il y en a encore d'autres) :
+
+| Valeur | Exemples | Description |
+|--------|----------|-------------|
+| `inline` | `<a>`, `<em>`, `<span>`… | Eléments d'une ligne. Se placent les uns à côté des autres. |
+| `block` | `<p>`, `<div>`, `<section>`… | Eléments en forme de blocs. Se placent les uns en dessous des autres et peuvent être redimensionnés. |
+| `inline-block` | `<select>`, `<input>` | Eléments positionnés les uns à côté des autres (comme les inlines) mais qui peuvent être redimensionnés (comme les blocs). |
+| `none` | `<head>` | Eléments non affichés. |
+
+On peut donc décider de masquer complètement un élément de la page avec cette propriété. Par exemple, si je veux masquer les éléments
+qui ont la classe « secret », je vais écrire :
+
+```css
+.secret
+{
+    display: none;
+}
+```
+
+:::info
+Pour faire apparaître ces éléments par la suite, vous devrez faire appel à JavaScript. Certains sites web utilisent cette technique pour,
+par défaut, masquer les sous-menus qui ne s'affichent que lorsqu'on parcourt les menus.
+:::
+
+:::note ?
+Et quel est ce nouveau type bizarre, ,`inline-block`, ? C'est un mélange ?
+:::
+
+Oui, ce type d'élément est en fait une combinaison des inlines et des blocs. C'est un peu le meilleur des deux mondes : les éléments
+s'affichent côte à côte et peuvent être redimensionnés.
+
+Peu de balises sont affichées comme cela par défaut, c'est surtout le cas des éléments de formulaire (comme `<input>`) que nous
+découvrirons un peu plus tard. Par contre, avec la propriété `display`, nous allons pouvoir transformer d'autres balises en `inline-block`,
+ce qui va nous aider à réaliser notre design.
+
+### Le positionnement inline-block
+
+Les manipulations que demande le positionnement flottant se révèlent parfois un peu délicates sur des sites complexes. Dès qu'il y a un
+peu plus qu'un simple menu à mettre en page, on risque d'avoir à recourir à des `clear: both;` qui complexifient rapidement le code de
+la page.
+
+Une meilleure technique consiste à transformer vos éléments en `inline-block` avec la propriété `display`.
+
+Quelques petits rappels sur les éléments de type inline-block :
+- ils se positionnent les uns à côté des autres (exactement ce qu'on veut pour placer notre menu et le corps de notre page !) ;
+- on peut leur donner des dimensions précises (là encore, exactement ce qu'on veut !).
+
+Nous allons transformer en inline-block les deux éléments que nous voulons placer côte à côte : le menu de navigation et la section du
+centre de la page.
+
+```css
+nav
+{
+    display: inline-block;
+    width: 150px;
+    border: 1px solid black;
+}
+section
+{
+    display: inline-block;
+    border: 1px solid blue;
+}
+```
+
+Ce qui nous donne comme résultat la figure suivante.
+
+![Le menu et le corps sont côte à côte… mais positionnés en bas !](https://user.oc-static.com/files/343001_344000/343935.png)
+
+Le menu et le corps sont côte à côte… mais positionnés en bas !
+
+Argh !  
+Ce n'est pas tout à fait ce qu'on voulait. Et en fait, c'est normal : les éléments inline-block se positionnent sur une même ligne de
+base (appelée **_baseline_**), en bas.
+
+Heureusement, le fait d'avoir transformé les éléments en inline-block nous permet d'utiliser une nouvelle propriété, normalement réservée
+aux tableaux : `vertical-align`. Cette propriété permet de modifier l'alignement vertical des éléments. Voici quelques-unes des valeurs
+possibles pour cette propriété :
+- `baseline` : aligne la base de l'élément avec celle de l'élément parent (par défaut) ;
+- `top` : aligne en haut ;
+- `middle` : centre verticalement ;
+- `bottom` : aligne en bas ;
+- (valeur en px ou %) : aligne à une certaine distance de la ligne de base (baseline).
+
+Il ne nous reste plus qu'à aligner nos éléments en haut (lignes 6 et 13), et le tour est joué (figure suivante) !
+
+```css
+nav
+{
+    display: inline-block;
+    width: 150px;
+    border: 1px solid black;
+    vertical-align: top;
+}
+section
+{
+    display: inline-block;
+    border: 1px solid blue;
+    vertical-align: top;
+}
+```
+
+![Le menu et le corps sont alignés en haut et côte à côte](https://user.oc-static.com/files/343001_344000/343939.png)
+
+Le menu et le corps sont alignés en haut et côte à côte
+
+:::info
+Vous noterez que le corps (la `<section>`) ne prend pas toute la largeur. En effet, ce n'est plus un bloc ! La section occupe seulement
+la place dont elle a besoin.  <br />
+Si cela ne vous convient pas pour votre design, modifiez la taille de la section avec `width`.
+:::
+
+Et voilà ! Pas besoin de s'embêter avec les marges, aucun risque que le texte passe sous le menu… Bref, c'est parfait !
+
+### Les positionnements absolu, fixe et relatif
+
+Il existe d'autres techniques un peu particulières permettant de positionner avec précision des éléments sur la page :
+- **le positionnement absolu** : il nous permet de placer un élément n'importe où sur la page (en haut à gauche, en bas à droite, tout
+au centre, etc.) ;
+- **le positionnement fixe** : identique au positionnement absolu mais, cette fois, l'élément reste toujours visible, même si on descend
+plus bas dans la page. C'est un peu le même principe que `background-attachment: fixed;` (si vous vous en souvenez encore) ;
+- **le positionnement relatif** : permet de décaler l'élément par rapport à sa position normale.
+
+:::info
+Comme pour les flottants, les positionnements absolu, fixé et relatif fonctionnent aussi sur des balises de type inline.<br />
+Toutefois, vous verrez qu'on l'utilise bien plus souvent sur des balises block que sur des balises inline.
+:::
+
+Il faut d'abord faire son choix entre les trois modes de positionnement disponibles. Pour cela, on utilise la propriété CSS `position`,
+à laquelle on donne une de ces valeurs :
+- `absolute` : positionnement absolu ;
+- `fixed` : positionnement fixe ;
+- `relative` : positionnement relatif.
+
+Nous allons étudier un à un chacun de ces positionnements.
+
+#### Le positionnement absolu
+
+Le positionnement absolu permet de placer un élément (réellement) n'importe où sur la page. Pour effectuer un positionnement absolu, on
+doit écrire :
+
+```css
+element
+{
+    position: absolute;
+}
+```
+
+Mais cela ne suffit pas ! On a dit qu'on voulait un positionnement absolu, mais encore faut-il dire _où l'on veut que le bloc soit
+positionné sur la page_.<br />
+Pour ce faire, on va utiliser quatre propriétés CSS :
+- `left` : position par rapport à la gauche de la page ;
+- `right` : position par rapport à la droite de la page ;
+- `top` : position par rapport au haut de la page ;
+- `bottom` : position par rapport au bas de la page.
+
+On peut leur donner une valeur en pixels, comme 14 px, ou bien une valeur en pourcentage, comme 50 %.
+
+Si ce n'est pas très clair pour certains d'entre vous, la figure suivante devrait vous aider à comprendre.
+
+![Positionnement absolu de l'élément sur la page](https://user.oc-static.com/files/343001_344000/343950.png)
+
+Positionnement absolu de l'élément sur la page
+
+Avec cela, vous devriez être capable de positionner correctement votre bloc.
+
+Il faut donc utiliser la propriété `position` et au moins une des quatre propriétés ci-dessus (`top`, `left`, `right`ou `bottom`). Si
+on écrit par exemple :
+
+```css
+element
+{
+    position: absolute;
+    right: 0px;
+    bottom: 0px;
+}
+```
+
+… cela signifie que le bloc doit être positionné tout en bas à droite (0 pixel par rapport à la droite de la page, 0 par rapport au bas
+de la page).
+
+Si on essaie de placer notre bloc `<nav>` en bas à droite de la page, on obtient le même résultat qu'à la figure suivante.
+
+![Le menu est positionné en bas à droite de l'écran](https://user.oc-static.com/files/343001_344000/343969.png)
+
+Le menu est positionné en bas à droite de l'écran
+
+On peut bien entendu ajouter une marge intérieure (padding) au menu pour qu'il soit moins collé à sa bordure.
+
+Les éléments positionnés en absolu sont placés par-dessus le reste des éléments de la page ! Par ailleurs, si vous placez deux éléments
+en absolu vers le même endroit, ils risquent de se chevaucher. Dans ce cas, utilisez la propriété `z-index` pour indiquer quel élément
+doit apparaître au-dessus des autres.
+
+```css
+element
+{
+    position: absolute;
+    right: 0px;
+    bottom: 0px;
+    z-index: 1;
+}
+element2
+{
+    position: absolute;
+    right: 30px;
+    bottom: 30px;
+    z-index: 2;
+}
+```
+
+L'élément ayant la valeur de `z-index`  la plus élevée sera placé par-dessus les autres, comme le montre la figure suivante.
+
+![Positionnement des éléments absolus](https://user.oc-static.com/files/343001_344000/343973.png)
+
+Positionnement des éléments absolus
+
+:::info
+Une petite précision technique qui a son importance : le positionnement absolu ne se fait pas forcément toujours par rapport au coin en
+haut à gauche de la fenêtre ! Si vous positionnez en absolu un bloc A qui se trouve dans un autre bloc B, lui-même positionné en absolu
+(ou fixe ou relatif), alors votre bloc A se positionnera par rapport au coin supérieur gauche du bloc B. Faites le test, vous verrez !
+:::
+
+#### Le positionnement fixe
+
+Le principe est _exactement le même_ que pour le positionnement absolu sauf que, cette fois, le bloc reste fixe à sa position, même si
+on descend plus bas dans la page.
+
+```css
+element
+{
+    position: fixed;
+    right: 0px;
+    bottom: 0px;
+}
+```
+
+Essayez d'observer le résultat, vous verrez que le menu reste dans le cas présent affiché en bas à droite même si on descend plus bas
+dans la page (figure suivante).
+
+[![Le menu reste affiché en bas à droite en toutes circonstances](https://user.oc-static.com/files/343001_344000/343974.png)](https://course.oc-static.com/ftp-tutos/cours/html-css/p3/ch3/menu_fixe/index.html)
+
+[Le menu reste affiché en bas à droite en toutes circonstances](https://course.oc-static.com/ftp-tutos/cours/html-css/p3/ch3/menu_fixe/index.html)
+
+#### Le positionnement relatif
+
+Plus délicat, le positionnement relatif peut vite devenir difficile à utiliser. Ce positionnement permet d'effectuer des « ajustements » :
+l'élément est décalé par rapport à sa position initiale.
+
+Prenons par exemple un texte important, situé entre deux balises `<strong>`. Pour commencer, je le mets sur fond rouge pour qu'on puisse
+mieux le repérer :
+
+```css
+strong
+{
+    background-color: red; /* Fond rouge */
+    color: yellow; /* Texte de couleur jaune */
+}
+```
+
+Cette fois, le schéma que je vous ai montré tout à l'heure pour les positions absolue et fixe ne marche plus. Pourquoi ? Parce que
+l'origine a changé : le point de coordonnées (0, 0) ne se trouve plus en haut à gauche de votre fenêtre comme c'était le cas tout à
+l'heure. Non, cette fois l'origine se trouve en haut à gauche… de la position actuelle de votre élément.
+
+Tordu, n'est-ce pas ? C'est le principe de la position relative. Le schéma en figure suivante devrait vous aider à comprendre où se
+trouve l'origine des points.
+
+![Origine de la position relative](https://user.oc-static.com/files/3001_4000/3587.jpg)
+
+Origine de la position relative
+
+Donc, si vous faites un `position: relative;` et que vous appliquez une des propriétés `top`, `left`, `right` ou `bottom`, le texte sur
+fond rouge va se déplacer par rapport à la position où il se trouve.
+
+Prenons un exemple : je veux que mon texte se décale de 55 pixels vers la droite et de 10 pixels vers le bas. Je vais donc demander à
+ce qu'il soit décalé de 55 pixels par rapport au « bord gauche » et de 10 pixels par rapport au « bord haut » (lignes 6 à 8) :
+
+```css
+strong
+{
+    background-color: red;
+    color: yellow;
+    position: relative;
+    left: 55px;
+    top: 10px;
+}
+```
+
+Le texte est alors décalé par rapport à sa position initiale, comme illustré à la figure suivante.
+
+![Le texte est décalé](https://user.oc-static.com/files/5001_6000/5655.jpg)
+
+Le texte est décalé
+
+### En résumé
+
+- La technique de mise en page la plus récente et la plus puissante est Flexbox. C'est celle que vous devriez utiliser si vous en avez
+la possibilité.
+- D'autres techniques de mise en page restent utilisées, notamment sur des sites plus anciens : le positionnement flottant et le
+positionnement `inline-block`. Il est conseillé de les connaître.
+- Le positionnement flottant (avec la propriété `float`) est l'un des plus utilisés à l'heure actuelle. Il permet par exemple de placer
+un menu à gauche ou à droite de la page. Néanmoins, cette propriété n'a pas été initialement conçue pour cela et il est préférable, si
+possible, d'éviter cette technique.
+- Le positionnement `inline-block` consiste à affecter un type `inline-block` à nos éléments grâce à la propriété `display`. Ils se
+comporteront comme des inlines (placement de gauche à droite) mais pourront être redimensionnés comme des blocs (avec `width` et `height`).
+Cette technique est à préférer au positionnement flottant.
+- Le positionnement absolu permet de placer un élément où l'on souhaite sur la page, au pixel près.
+- Le positionnement fixe est identique au positionnement absolu, mais l'élément restera toujours visible même si on descend plus bas
+dans la page.
+- Le positionnement relatif permet de décaler un bloc par rapport à sa position normale.
+- Un élément A positionné en absolu à l'intérieur d'un autre élément B (lui-même positionné en absolu, fixe ou relatif) se positionnera
+par rapport à l'élément B, et non par rapport au coin en haut à gauche de la page.
+
+-----
+
+## TP : Créez un site pas à pas
+
+[TP : Créez un site pas à pas - Apprenez à créer votre site web avec HTML5 et CSS3 - OpenClassrooms](https://openclassrooms.com/fr/courses/1603881-apprenez-a-creer-votre-site-web-avec-html5-et-css3/1606688-tp-creez-un-site-pas-a-pas)
+
+<Vimeo vimeoId="243808215" />
+
+<br />
+
+Enfin, nous y voilà. C'est un chapitre un peu particulier, assez différent de ce que vous avez lu jusqu'à maintenant. En fait, c'est ce
+que j'appelle un « TP » (_travaux pratiques_). Maintenant, vous ne pouvez plus vous contenter de lire mes chapitres à moitié endormi,
+vous allez devoir mettre la main à la pâte en même temps que moi.
+
+Vous avez lu beaucoup de théorie jusqu'ici, mais vous vous demandez sûrement comment font les webmasters pour créer d'aussi beaux sites.
+Vous vous dites que vous êtes encore loin d'avoir les connaissances nécessaires pour construire tout un site… Eh bien vous vous trompez !
+
+### Maquettage du design
+
+Je vois d'ici le tableau. Vous vous dites « Chouette, on va créer un site complet », vous ouvrez votre éditeur de texte et vous me
+regardez en me demandant « Bon, par quelle ligne de code on commence ? ».
+
+Et là, je dois justement vous arrêter. Prenez un crayon et un papier : il faut d'abord réfléchir à ce que vous voulez créer comme site.
+De quoi va-t-il parler ? Avez-vous un thème, un objectif ?
+
+Je sais, par expérience, que la plupart d'entre vous « cherchent juste à apprendre » pour le moment. Vous n'avez donc peut-être pas
+encore d'idée précise en tête. Dans ce cas, je vous suggère de créer un site pour vous présenter, pour assurer votre présence sur le
+Web : ce site parlera de vous, il y aura votre CV, vos futures réalisations et pourquoi pas votre blog.
+
+En ce qui me concerne, dans ce TP, je vais réaliser le site web de notre ami Zozor. Zozor a décidé de partir en voyage à travers le
+monde et sa première étape sera… San Francisco ! Il veut donc créer un site web pour qu'on le connaisse et pour qu'on suive son périple
+à travers le monde.
+
+![Zozor part en voyage et a besoin d'un site web](https://user.oc-static.com/files/344001_345000/344078.png)
+
+Zozor part en voyage et a besoin d'un site web
+
+La première étape consiste à _maquetter le design_, pour avoir un objectif du site web à réaliser. À partir de là, deux possibilités :
+- soit vous êtes un graphiste (ou vous en connaissez un) ayant l'habitude d'imaginer des designs, avec des logiciels comme Photoshop ;
+- soit vous n'êtes pas très créatif, vous manquez d'inspiration et, dans ce cas, vous allez chercher votre inspiration sur des sites
+web comme [https://html5up.net/](https://html5up.net/), qui vous proposent des idées de design et qui peuvent même vous donner le code
+HTML/CSS tout prêt !
+
+Pour ma part, j'ai fait appel à un graphiste, Fan Jiyong, qui m'a proposé le design (qui me plaît beaucoup !) que vous pouvez voir à
+la figure suivante.
+
+![La maquette du site web que nous allons réaliser](https://user.oc-static.com/thb/344001_345000/344081.png)
+
+La maquette du site web que nous allons réaliser
+
+_Conception de la maquette : Fan Jiyong_
+
+Cette maquette est en fait une simple image du résultat qu'on veut obtenir. Je demande au graphiste de me fournir les éléments qui vont
+m'aider à construire le design, c'est-à-dire les codes couleurs utilisés, les images découpées (figure suivante), ainsi que les polices
+dont j'aurai besoin.
+
+[**Télécharger les images et les polices**](https://course.oc-static.com/ftp-tutos/cours/html-css/p3/ch4/tp_images_polices.zip)
+
+Il ne nous reste plus qu'à réaliser ce site web ! Nous allons procéder en deux temps :
+1. Nous allons construire le squelette **HTML** de la page.
+2. Puis nous allons le mettre en forme et le mettre en page avec **CSS**.
+
+Allez, au boulot !
+
+### Organiser le contenu en HTML
+
+La première chose à faire est de distinguer les principaux blocs sur la maquette. Ces blocs vont constituer le squelette de notre page.
+
+Pour créer ce squelette, nous allons utiliser différentes balises HTML :
+- les balises structurantes de HTML5, que nous connaissons : `<header>`, `<section>`, `<nav>`, etc. ;
+- la balise universelle `<div>` quand aucune balise structurante ne convient.
+
+:::note ?
+Comment je sais quelle balise utiliser, moi ?
+:::
+
+C'est à vous de décider. De préférence, utilisez une balise qui a du sens (comme les balises structurantes `<header>`, `<section>`,
+`<nav>`) ; mais si aucune balise ne vous semble mieux convenir, optez pour la balise générique `<div>`.
+
+Regardez la figure suivante pour voir ce que je vous propose comme structure.
+
+![Maquette découpée en différentes sections](https://user.oc-static.com/thb/344001_345000/344140.png)
+
+Maquette découpée en différentes sections
+
+:::info
+On peut imaginer d'autres façons de faire le découpage, retenez bien que ma proposition n'est pas forcément la seule et unique solution !
+:::
+
+Toutes les balises que l'on va utiliser n'apparaissent pas sur cette maquette, mais cela vous permet d'avoir une idée de l'imbrication
+que je propose pour les éléments.
+
+Le HTML n'est pas vraiment la partie complexe de la réalisation du site web. En fait, si vous avez bien compris comment imbriquer des
+balises, vous ne devriez pas avoir de mal à réaliser un code approchant du mien :
+
+```html
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <link rel="stylesheet" href="style.css" />
+        <title>Zozor - Carnets de voyage</title>
+    </head>
+    
+    <body>
+        <div id="bloc_page">
+            <header>
+                <div id="titre_principal">
+                    <div id="logo">
+                        <img src="images/zozor_logo.png" alt="Logo de Zozor" />
+                        <h1>Zozor</h1>    
+                    </div>
+                    <h2>Carnets de voyage</h2>
+                </div>
+                
+                <nav>
+                    <ul>
+                        <li><a href="#">Accueil</a></li>
+                        <li><a href="#">Blog</a></li>
+                        <li><a href="#">CV</a></li>
+                        <li><a href="#">Contact</a></li>
+                    </ul>
+                </nav>
+            </header>
+            
+            <div id="banniere_image">
+                <div id="banniere_description">
+                    Retour sur mes vacances aux États-Unis...
+                    <a href="#" class="bouton_rouge">Voir l'article <img src="images/flecheblanchedroite.png" alt="" /></a>
+                </div>
+            </div>
+            
+            <section>
+                <article>
+                    <h1><img src="images/ico_epingle.png" alt="Catégorie voyage" class="ico_categorie" />Je suis un grand voyageur</h1>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam nec sagittis massa. Nulla facilisi. Cras id arcu
+                    lorem, et semper purus. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Duis
+                    vel enim mi, in lobortis sem. Vestibulum luctus elit eu libero ultrices id fermentum sem sagittis. Nulla imperdiet
+                    mauris sed sapien dignissim id aliquam est aliquam. Maecenas non odio ipsum, a elementum nisi. Mauris non erat eu
+                    erat placerat convallis. Mauris in pretium urna. Cras laoreet molestie odio, consequat consequat velit commodo eu.
+                    Integer vitae lectus ac nunc posuere pellentesque non at eros. Suspendisse non lectus lorem.</p>
+                    <p>Vivamus sed libero nec mauris pulvinar facilisis ut non sem. Quisque mollis ullamcorper diam vel faucibus.
+                    Vestibulum sollicitudin facilisis feugiat. Nulla euismod sodales hendrerit. Donec quis orci arcu. Vivamus fermentum
+                    magna a erat ullamcorper dignissim pretium nunc aliquam. Aenean pulvinar condimentum enim a dignissim. Vivamus sit
+                    amet lectus at ante adipiscing adipiscing eget vitae felis. In at fringilla est. Cras id velit ut magna rutrum
+                    commodo. Etiam ut scelerisque purus. Duis risus elit, venenatis vel rutrum in, imperdiet in quam. Sed vestibulum,
+                    libero ut bibendum consectetur, eros ipsum ultrices nisl, in rutrum diam augue non tortor. Fusce nec massa et risus
+                    dapibus aliquam vitae nec diam.</p>
+                    <p>Phasellus ligula massa, congue ac vulputate non, dignissim at augue. Sed auctor fringilla quam quis porttitor.
+                    Praesent vitae dignissim magna. Pellentesque quis sem purus, vel elementum mi. Pellentesque habitant morbi tristique
+                    senectus et netus et malesuada fames ac turpis egestas. Maecenas consectetur euismod urna. In hac habitasse platea
+                    dictumst. Quisque tincidunt porttitor vestibulum. Ut iaculis, lacus at molestie lacinia, ipsum mi adipiscing ligula,
+                    vel mollis sem risus eu lectus. Nunc elit quam, rutrum ut dignissim sit amet, egestas at sem.</p>
+                </article>
+                <aside>
+                    <h1>À propos de l'auteur</h1>
+                    <img src="images/bulle.png" alt="" id="fleche_bulle" />
+                    <p id="photo_zozor"><img src="images/zozor_classe.png" alt="Photo de Zozor" /></p>
+                    <p>Laisse-moi le temps de me présenter&nbsp;: je m'appelle Zozor, je suis né un 23 novembre 2005.</p>
+                    <p>Bien maigre, n'est-ce pas ? C'est pourquoi, aujourd'hui, j'ai décidé d'écrire ma biographie afin que vous sachiez
+                    qui je suis réellement.</p>
+                    <p>
+                        <img src="images/facebook.png" alt="Facebook" />
+                        <img src="images/twitter.png" alt="Twitter" />
+                        <img src="images/vimeo.png" alt="Vimeo" />
+                        <img src="images/flickr.png" alt="Flickr" />
+                        <img src="images/rss.png" alt="RSS" />
+                    </p>
+                </aside>
+            </section>
+            
+            <footer>
+                <div id="tweet">
+                    <h1>Mon dernier tweet</h1>
+                    <p>Hii haaaaaan !</p>
+                    <p>le 12 mai à 23h12</p>
+                </div>
+                <div id="mes_photos">
+                    <h1>Mes photos</h1>
+                    <p>
+                        <img src="images/photo1.jpg" alt="Photographie" />
+                        <img src="images/photo2.jpg" alt="Photographie" />
+                        <img src="images/photo3.jpg" alt="Photographie" />
+                        <img src="images/photo4.jpg" alt="Photographie" />
+                    </p>
+                </div>
+                <div id="mes_amis">
+                    <h1>Mes amis</h1>
+                    <div id="listes_amis">
+                        <ul>
+                            <li><a href="#">Pupi le lapin</a></li>
+                            <li><a href="#">Mr Baobab</a></li>
+                            <li><a href="#">Kaiwaii</a></li>
+                            <li><a href="#">Perceval.eu</a></li>
+                        </ul>
+                        <ul>
+                            <li><a href="#">Belette</a></li>
+                            <li><a href="#">Le concombre masqué</a></li>
+                            <li><a href="#">Ptit prince</a></li>
+                            <li><a href="#">Mr Fan</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </footer>
+        </div>
+    </body>
+</html>
+```
+
+Petite particularité : comme vous le voyez, tout le contenu de la page est placé dans une grande balise `<div>` ayant pour `id`
+`bloc_page` (on l'appelle aussi parfois `main_wrapper` en anglais). Cette balise englobe tout le contenu, ce qui va nous permettre de
+fixer facilement les dimensions de la page et de centrer notre site à l'écran.
+
+Pour le reste, aucune grosse difficulté à signaler. Notez que je n'ai pas forcément pensé à toutes les balises du premier coup : en
+réalisant le design en CSS, il m'est parfois apparu qu'il était nécessaire d'englober une partie des balises d'un bloc `<div>` pour
+m'aider dans la réalisation du design.
+
+Pour le moment, comme vous vous en doutez, le site web n'est pas bien beau (et encore, je suis gentil). Vous pouvez voir le résultat
+actuel à la figure suivante.
+
+![Apparence du site web constitué uniquement du HTML](https://user.oc-static.com/files/344001_345000/344188.png)
+
+Apparence du site web constitué uniquement du HTML
+
+C'est en CSS que la magie va maintenant opérer.
+
+### Mettre en forme en CSS
+
+Les choses se compliquent un peu plus lorsqu'on arrive au CSS. En effet, il faut du travail (et parfois un peu d'astuce) pour obtenir
+un résultat se rapprochant de la maquette. Je dis bien « se rapprochant », car vous ne pourrez jamais obtenir un résultat identique au
+pixel près.
+
+Mettez-vous bien cela en tête : le but est d'obtenir le rendu _le plus proche possible_, sans chercher la perfection. Même si vous
+obtenez selon vous « la perfection » sur un navigateur, vous pouvez être sûr qu'il y aura des différences sur un autre navigateur
+(plus ancien) ou sur une autre machine que la vôtre. Nous allons donc faire au mieux et ce sera déjà du travail, vous verrez.
+
+Pour mettre en forme le design, je vais procéder en plusieurs étapes. Je vais m'occuper des éléments suivants, dans cet ordre :
+1. Polices personnalisées.
+2. Définition des styles principaux de la page (largeur du site, fond, couleur par défaut du texte).
+3. En-tête et liens de navigation.
+4. Bannière (représentant le pont de San Francisco).
+5. Section principale du corps de page, au centre.
+6. Pied de page (_footer_).
+
+#### Les polices personnalisées
+
+Pour les besoins du design, mon graphiste a utilisé trois polices sur sa maquette :
+- `Trebuchet MS` (police courante) ;
+- `BallparkWeiner` (police exotique) ;
+- `Day Roman` (police exotique).
+
+:::info
+Vous trouverez ces polices dans le fichier que je vous ai fait télécharger un peu plus haut. Si ce n'est pas encore fait, je vous
+encourage fortement à le télécharger.
+:::
+
+La plupart des ordinateurs sont équipés de `Trebuchet MS` (quoique pas nécessairement tous ; on pourrait la faire télécharger). Par
+contre, les deux autres polices sont un peu originales et ne sont sûrement pas présentes sur les ordinateurs de vos visiteurs. Nous
+allons les leur faire télécharger.
+
+Comme vous le savez, il faut proposer plusieurs versions de ces polices pour les différents navigateurs. `Dafont` ne propose que le
+`.ttf` en téléchargement. Par contre, `FontSquirrel` propose un [générateur de polices](http://www.fontsquirrel.com/fontface/generator)
+à utiliser en CSS3 avec `@font-face` : vous lui envoyez un `.ttf`, l'outil transforme le fichier dans tous les autres formats nécessaires,
+et vous fournit même le code CSS prêt à l'emploi !
+
+Je m'en suis servi pour générer les différentes versions des deux polices exotiques que je vais utiliser. Ensuite, dans mon fichier CSS,
+je rajoute ce code qui m'a été fourni par `FontSquirrel` pour déclarer les nouvelles polices :
+
+```css
+/* Définition des polices personnalisées */
+
+@font-face
+{
+    font-family: 'BallparkWeiner';
+    src: url('polices/ballpark.eot');
+    src: url('polices/ballpark.eot?#iefix') format('embedded-opentype'),
+         url('polices/ballpark.woff') format('woff'),
+         url('polices/ballpark.ttf') format('truetype'),
+         url('polices/ballpark.svg#BallparkWeiner') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face
+{
+    font-family: 'Dayrom';
+    src: url('polices/dayrom.eot');
+    src: url('polices/dayrom.eot?#iefix') format('embedded-opentype'),
+         url('polices/dayrom.woff') format('woff'),
+         url('polices/dayrom.ttf') format('truetype'),
+         url('polices/dayrom.svg#Dayrom') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+```
+
+En plus de cela, il faut bien entendu mettre à disposition les fichiers des polices. Comme vous le voyez, j'ai créé un sous-dossier
+`polices` dans lequel j'ai mis les différentes versions de mes polices.
+
+#### Définition des styles principaux
+
+On peut maintenant s'attaquer à définir quelques styles globaux pour tout le design de notre page. On va définir une image de fond, une
+police et une couleur de texte par défaut, et surtout on va dimensionner notre page et la centrer à l'écran.
+
+```css
+/* Eléments principaux de la page */
+
+body
+{
+    background: url('images/fond_jaune.png');
+    font-family: 'Trebuchet MS', Arial, sans-serif;
+    color: #181818;
+}
+
+#bloc_page
+{
+    width: 900px;
+    margin: auto;
+}
+
+section h1, footer h1, nav a
+{
+    font-family: Dayrom, serif;
+    font-weight: normal;
+    text-transform: uppercase;
+}
+```
+
+Avec `#bloc_page`, le bloc qui englobe toute la page, j'ai fixé les limites à 900 pixels de large. Avec les marges automatiques, le
+design sera centré.
+
+:::info
+Si vous souhaitez créer un design qui s'adapte aux dimensions de l'écran du visiteur, définissez une largeur en pourcentage plutôt qu'en
+pixels.
+:::
+
+J'ai utilisé la propriété CSS `text-transform: uppercase;` (que nous n'avons pas vue auparavant) pour faire en sorte que mes titres
+soient toujours écrits en majuscules. Cette propriété transforme en effet le texte en majuscules (elle peut aussi faire l'inverse avec
+`lowercase`). Notez qu'on aurait aussi pu écrire les titres directement en majuscules dans le code HTML.
+
+La figure suivante vous montre ce qu'on obtient pour le moment avec le code CSS. On est encore loin du résultat final, mais on se sent
+déjà un petit peu plus « chez soi ».
+
+![Le fond et les limites de la page commencent à apparaître](https://user.oc-static.com/thb/344001_345000/344197.png)
+
+Le fond et les limites de la page commencent à apparaître
+
+#### En-tête et liens de navigation
+
+D'après la structure que j'ai proposée, l'en-tête contient aussi les liens de navigation. Commençons par définir l'en-tête et, en
+particulier, le logo en haut à gauche. Nous verrons ensuite comment mettre en forme les liens de navigation.
+
+##### L'en-tête
+
+
+```css
+/* Header */
+
+header
+{
+    background: url('images/separateur.png') repeat-x bottom;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+}
+
+#titre_principal
+{
+    display: flex;
+    flex-direction: column;
+}
+
+#logo
+{
+    display: flex;
+    flex-direction: row;
+    align-items: baseline;
+}
+
+#logo img
+{
+    width: 59px;
+    height: 60px;
+}
+
+header h1
+{
+    font-family: 'BallparkWeiner', serif;
+    font-size: 2.5em;
+    font-weight: normal;
+    margin: 0 0 0 10px;
+}
+
+header h2
+{
+    font-family: Dayrom, serif;
+    font-size: 1.1em;
+    margin-top: 0px;
+    font-weight: normal;
+}
+```
+
+Nous créons une distinction entre l'en-tête et le corps de page grâce à une image de fond. Les éléments sont positionnés avec Flexbox :
+il y a plusieurs niveaux d'imbrication, certains sont positionnés verticalement, d'autres horizontalement. Nous personnalisons aussi
+les polices et les dimensions.
+
+##### Les liens de navigation
+
+La mise en forme des liens de navigation est intéressante. Vous l'avez vu, j'ai créé une liste à puces pour les liens… mais une telle
+liste s'affiche habituellement en hauteur, et non en largeur. Heureusement, cela se change facilement, vous allez voir :
+
+```css
+/* Navigation */
+
+nav ul
+{
+    list-style-type: none;
+    display: flex;
+}
+
+nav li
+{
+    margin-right: 15px;
+}
+
+nav a
+{
+    font-size: 1.3em;
+    color: #181818;
+    padding-bottom: 3px;
+    text-decoration: none;
+}
+
+nav a:hover
+{
+    color: #760001;
+    border-bottom: 3px solid #760001;
+}
+```
+
+La principale nouveauté est la définition CSS `list-style-type: none;`, qui permet de retirer l'image ronde servant de puce. Chaque
+élément de la liste (`<li>`) est positionné dans une Flexbox, ce qui nous permet de placer les liens côte à côte comme nous le
+souhaitions.
+
+Le reste des définitions ne contient rien d'extraordinaire : des dimensions, des couleurs, des bordures… Autant de choses que vous
+connaissez déjà. Notez que je ne trouve pas forcément les bonnes valeurs du premier coup, il me faut parfois tâtonner un peu pour
+trouver une apparence proche de la maquette d'origine.
+
+La figure suivante représente le résultat que nous obtenons avec les derniers ajouts de CSS.
+
+![L'en-tête est mis en page](https://user.oc-static.com/thb/344001_345000/344478.png)
+
+L'en-tête est mis en page
+
+#### La bannière
+
+Bien, passons maintenant à un exercice un peu plus difficile mais très intéressant : la bannière ! Notre maquette comporte une jolie
+bannière représentant le pont de San Francisco. Cette bannière, sur votre site, peut être amenée à évoluer. Ici, elle peut servir à
+illustrer, par exemple, le dernier billet de blog de notre ami Zozor, qui vient de visiter San Francisco.
+
+La bannière est intéressante à plus d'un titre :
+- elle comporte des angles arrondis ;
+- la description est écrite sur un fond légèrement transparent ;
+- le bouton « Voir l'article » est réalisé en CSS, avec des angles arrondis ;
+- une ombre vient donner du volume à la bannière.
+
+Voici le code que j'ai utilisé pour réaliser toute la bannière :
+
+```css
+/* Bannière */
+
+#banniere_image
+{
+    margin-top: 15px;
+    height: 200px;
+    border-radius: 5px;
+    background: url('images/sanfrancisco.jpg') no-repeat;
+    position: relative;
+    box-shadow: 0px 4px 4px #1c1a19;
+    margin-bottom: 25px;
+}
+
+#banniere_description
+{
+    position: absolute;
+    bottom: 0;
+    border-radius: 0px 0px 5px 5px;
+    width: 99.5%;
+    height: 33px;
+    padding-top: 15px;
+    padding-left: 4px;
+    background-color: rgba(24,24,24,0.8);
+    color: white;
+    font-size: 0.8em;
+    
+}
+
+.bouton_rouge
+{
+    height: 25px;
+    position: absolute;
+    right: 5px;
+    bottom: 5px;
+    background: url('images/fond_degraderouge.png') repeat-x;
+    border: 1px solid #760001;
+    border-radius: 5px;
+    font-size: 1.2em;
+    text-align: center;
+    padding: 3px 8px 0px 8px;
+    color: white;
+    text-decoration: none;
+}
+
+.bouton_rouge img
+{
+    border: 0;
+}
+```
+
+Ce code est assez technique et riche en fonctionnalités CSS. C'est peut-être la partie la plus délicate à réaliser dans cette page.
+
+Vous pouvez constater que j'ai choisi d'afficher l'image du pont sous forme d'image de fond dans le bloc `<div>` de la bannière.
+
+J'ai aussi donné une position relative à la bannière, sans utiliser de propriétés pour en modifier le décalage… Pourquoi ? _A priori_,
+une position relative sans décalage ne sert à rien… Et pourtant, cela m'a été particulièrement utile pour placer le bouton « Voir
+l'article » en bas à droite de la bannière. En effet, j'ai placé le bouton en absolu à l'intérieur.
+
+:::note ?
+Le bouton ne devrait-il pas se placer en bas à droite de la page ?
+:::
+
+Non, souvenez-vous ce que je vous avais dit : si un bloc est positionné en absolu dans un autre bloc lui-même positionné en absolu,
+fixe ou relatif, alors il se positionne _à l'intérieur_ de ce bloc.<br />
+Notre bannière est positionnée en relatif (sans décalage). Comme le bouton est positionné en absolu à l'intérieur, il se place donc
+en bas à droite de la bannière !
+
+C'est une technique particulièrement utile et puissante dans la réalisation d'un design, souvenez-vous-en !
+
+Dernier détail : pour la légende de la bannière, j'ai choisi d'utiliser la transparence avec la notation `RGBa` plutôt que la propriété
+`opacity`. En effet, `opacity` aurait rendu tout le contenu du bloc transparent, y compris le bouton « Voir l'article » à l'intérieur.
+J'ai trouvé préférable de rendre transparente seulement la couleur de fond plutôt que tout le bloc.
+
+Le résultat est plutôt sympathique (figure suivante).
+
+![La bannière est mise en forme](https://user.oc-static.com/thb/344001_345000/344480.png)
+
+La bannière est mise en forme
+
+Cela en jette, vous ne trouvez pas ?
+
+:::info
+Pour réaliser le dégradé du bouton « Voir l'article », j'ai utilisé une image de fond représentant le dégradé, et j'ai répété cette
+image horizontalement. Sachez qu'il existe une propriété CSS3 , `linear-gradient`, qui permet de réaliser des dégradés sans avoir à
+recourir à une image de fond. Son usage étant un peu complexe, j'ai choisi de ne pas l'utiliser dans cet exemple, mais vous pouvez vous
+documenter à son sujet si vous le souhaitez !
+:::
+
+#### Le corps
+
+Le corps, au centre de la page, est dans notre cas constitué d'une unique balise `<section>` (mais il pourrait y en avoir plusieurs,
+bien sûr).
+
+Le positionnement du bloc « À propos de l'auteur » se fait grâce à Flexbox. J'ai choisi de répartir la taille des éléments avec la
+propriété `flex`, ce qui permet à l'article et au bloc sur le côté d'équilibrer leurs largeurs.
+
+On joue avec les angles arrondis et les ombres, on ajuste un peu les marges et les dimensions du texte, et nous y voilà !
+
+```css
+/* Corps */
+
+section
+{
+    display: flex;
+    margin-bottom: 20px;
+}
+
+article, aside
+{
+    text-align: justify;
+}
+
+article
+{
+    margin-right: 20px;
+    flex: 3;
+}
+
+.ico_categorie
+{
+    vertical-align: middle;
+    margin-right: 8px;
+}
+
+article p
+{
+    font-size: 0.8em;
+}
+
+aside
+{
+    flex: 1.2;
+    position: relative;
+    background-color: #706b64;
+    box-shadow: 0px 2px 5px #1c1a19;
+    border-radius: 5px;
+    padding: 10px;
+    color: white;
+    font-size: 0.9em;
+}
+
+#fleche_bulle
+{
+    position: absolute;
+    top: 100px;
+    left: -12px;
+}
+
+#photo_zozor
+{
+    text-align: center;
+}
+
+#photo_zozor img
+{
+    border: 1px solid #181818;
+}
+
+aside img
+{
+    margin-right: 5px;
+}
+```
+
+La petite difficulté ici était de réussir à placer la flèche à gauche du bloc `<aside>` « À propos de l'auteur »,  pour donner l'effet
+d'une bulle. Là encore, notre meilleur ami est le positionnement absolu. La technique est la même : je positionne le bloc `<aside>` en
+relatif (sans effectuer de décalage), ce qui me permet ensuite de positionner l'image de la flèche en absolu par rapport au bloc
+`<aside>` (et non par rapport à la page entière). En jouant sur le décalage de l'image, je peux la placer avec précision où je veux,
+au pixel près (figure suivante) !
+
+![Le corps de la page est mis en forme](https://user.oc-static.com/thb/344001_345000/344482.png)
+
+Le corps de la page est mis en forme
+
+#### Le pied de page
+
+Il ne nous reste plus que le pied de page à mettre en forme. Celui-ci est constitué de trois sous-blocs que j'ai matérialisés par des
+`<div>` auxquels j'ai donné des `id` pour mieux les repérer. Ces blocs sont positionnés, grâce à une Flexbox, les uns à côté des autres.
+
+```css
+/* Footer */
+
+footer
+{
+    display: flex;
+    background:  url('images/ico_top.png') no-repeat top center, url('images/separateur.png') repeat-x top, url('images/ombre.png') repeat-x top;
+    padding-top: 25px;
+}
+
+footer p, footer ul
+{
+    font-size: 0.8em;
+}
+
+footer h1
+{
+    font-size: 1.1em;
+}
+
+
+#tweet
+{
+    width: 28%;
+}
+
+#mes_photos
+{
+    width: 35%;
+}
+
+#mes_amis
+{
+    width: 31%;
+}
+
+#mes_photos img
+{
+    border: 1px solid #181818;
+    margin-right: 2px;
+}
+
+#listes_amis
+{
+    display: flex;
+    justify-content: space-between;
+    margin-top: 0;
+}
+
+#mes_amis ul
+{
+    list-style-image: url('images/ico_liensexterne.png');
+    padding-left: 2px;
+}
+
+#mes_amis a
+{
+    text-decoration: none;
+    color: #760001;
+}
+```
+
+Deux petites particularités à signaler sur le pied de page :
+- j'ai utilisé la fonctionnalité des images de fond multiples de CSS3, ce qui m'a permis de réaliser le séparateur entre le corps et
+le pied de page. Il est constitué de trois images : le séparateur, la petite flèche vers le haut et un léger dégradé ;
+- j'ai modifié la puce de la liste « Mes amis », en bas à droite, avec la propriété `list-style-image` qui m'a permis d'utiliser une
+image personnalisée plutôt que les puces standard. Il existe de nombreuses propriétés CSS spécifiques comme celle-ci et nous ne pouvons
+pas toutes les voir une par une dans ce cours mais, maintenant que vous êtes un habitué du CSS, vous n'aurez aucun mal à apprendre à
+les utiliser simplement en lisant l'[annexe listant les principales propriétés CSS](https://openclassrooms.com/courses/apprenez-a-creer-votre-site-web-avec-html5-et-css3/memento-des-proprietes-css).
+
+Et voilà, notre design est terminé (figure suivante) !
+
+![Le pied de page est mis en forme](https://user.oc-static.com/thb/344001_345000/344484.png)
+
+Le pied de page est mis en forme
+
+Ah, vous pensez en avoir fini ? Il reste hélas encore un peu de travail : il faut tester notre site sur différents navigateurs.
+Idéalement, il vaut mieux le faire au fur et à mesure de la mise en place du design. Ouvrez-le donc sur d'autres navigateurs pour
+vérifier que tout est en ordre !
+
+![Ouf ! Le site s'affiche bien aussi sur Firefox !](https://s3-eu-west-1.amazonaws.com/sdz-upload/prod/upload/tp_final_firefox.png)
+
+Ouf ! Le site s'affiche bien aussi sur Firefox !
+
+### Vérifier la validité
+
+Le W3C propose sur son site web un outil appelé le « validateur » (« Validator » en anglais).<br />
+Le validateur est une sorte de programme qui va analyser votre code source et vous dire s'il est correctement écrit, ou s'il comporte
+des erreurs que vous devez corriger.
+
+Souvenez-vous : le W3C a établi des normes. Il est nécessaire de les respecter, pour qu'on soit sûr que tous les sites web parlent la
+même « langue ».
+
+Il existe un validateur pour HTML et un validateur pour CSS (à mettre dans vos favoris !). Celui pour CSS comportant quelques bugs (il
+signale comme invalides des feuilles CSS qui sont tout à fait valides), nous ne nous y attarderons pas. Par contre, le validateur HTML
+va être très intéressant pour nous ; voici son adresse : [http://validator.w3.org](https://validator.w3.org).
+
+Vous pouvez valider votre page web de trois façons différentes, c'est pour cela qu'il y a trois onglets :
+- adresse (URL) ;
+- envoi du fichier `.html` ;
+- copier-coller du code HTML.
+
+Pour le moment, notre site web n'est pas encore disponible sur le Web, ce qui fait qu'il n'a pas d'adresse URL. Le mieux est donc
+d'envoyer le fichier `.html` que l'on a fait, ou encore de copier-coller directement le code HTML.
+
+Si vous envoyez votre code HTML et que tout se passe bien, le validateur va vous répondre avec le message représenté à la figure
+suivante.
+
+![Le validateur du W3C nous informe que notre page ne comporte pas d'erreur](https://user.oc-static.com/files/345001_346000/345202.png)
+
+Le validateur du W3C nous informe que notre page ne comporte pas d'erreur
+
+Dans ce cas, cela signifie que tout va bien et que vous avez bien construit votre page !
+
+Malheureusement, il arrivera souvent que vous ayez des erreurs. Dans ce cas, évitez de paniquer comme cela :
+
+:::note ?
+AU SEEECOUUUUUUUURS !!! Ma page web n'est pas valide, je ne vais pas m'en sortir, je suis cerné par les erreurs, faites quelque chose
+aidez-mmmoiiiiii !
+:::
+
+Vous aviez une belle page web, elle s'affichait bien, elle était jolie, et pourtant le validateur vous répond avec un message rouge
+inquiétant, en vous disant que votre page web n'est pas bien construite.
+
+Tout d'abord, mettez-vous bien ceci en tête : ce n'est pas parce que votre page web s'affiche correctement qu'elle ne comporte pas
+d'erreur. Votre page web peut être toute belle et comporter beaucoup d'erreurs.
+
+:::note ?
+Quel intérêt de les corriger, alors ?
+:::
+
+Il faut savoir que les navigateurs « essaient » de ne pas afficher les erreurs, lorsqu'ils en rencontrent, pour ne pas perturber
+l'internaute. Mais rien ne vous dit que d'autres navigateurs ne vont pas se comporter bizarrement !
+
+Avoir une page web valide, c'est donc avoir la possibilité de dormir tranquille en sachant que l'on a bien fait les choses comme il faut.
+Cela simplifie le travail des programmes qui lisent les pages web.<br />
+De plus, et c'est vérifié, une page web correctement construite aura plus de chances d'être mieux positionnée dans les résultats de
+recherche de Google, ce qui vous amènera… plus de visiteurs !
+
+Voici une liste de conseils qui peuvent vous aider à résoudre les erreurs qui risquent de vous être signalées tôt ou tard :
+- tous vos textes doivent en général être dans des balises de paragraphes. Il est interdit de mettre du texte directement entre les
+balises `<body></body>` sans l'avoir entouré des fameux `<p></p>`. Ceci est aussi valable pour les retours à la ligne `<br />`, qui
+doivent être à l'intérieur de paragraphes. C'est une erreur ultra-courante chez les débutants ;
+
+```html
+<p>Ceci est un texte correctement placé dans un paragraphe.
+<br />
+Les balises <br /> doivent se trouver à l'intérieur d'un paragraphe, ne l'oubliez pas</p>
+
+Ceci est un texte en-dehors d'un paragraphe. C'est interdit.
+<br />
+```
+
+- _toutes vos images doivent comporter un attribut_ `alt` qui indique ce que contient l'image. Si, par hasard, votre image est purement
+décorative (vous ne pouvez pas lui trouver une description), vous êtes autorisé à ne rien mettre comme valeur pour l'attribut `alt`.
+
+```html
+<!-- Les balises ne sont pas fermées dans leur ordre d'ouverture -->
+<p>Texte <em>important</p></em>
+
+<!-- Les balises sont fermées dans leur ordre d'ouverture -->
+<p>Texte <em>important</em></p>
+```
+
+- vos balises doivent être _fermées dans l'ordre_.
+
+```html
+<!-- Exemple d'un mauvais lien en HTML -->
+<a href="http://www.site.com/?jour=15&mois=10&an=2000">
+
+<!-- Exemple d'un bon lien en HTML -->
+<a href="http://www.site.com/?jour=15&amp;mois=10&amp;an=2000">
+```
+
+Gardez bien ce schéma en tête, beaucoup de débutants font cette erreur ;
+
+- si vos liens comportent des `&`, vous devez les remplacer par le code `&amp;` pour éviter toute confusion au navigateur ;
+
+```html
+<!-- Exemple d'un mauvais lien en HTML -->
+<a href="http://www.site.com/?jour=15&mois=10&an=2000">
+
+<!-- Exemple d'un bon lien en HTML -->
+<a href="http://www.site.com/?jour=15&amp;mois=10&amp;an=2000">
+```
+
+- vérifiez enfin que vous n'avez pas utilisé des balises anciennes et désormais obsolètes en HTML5 (comme le vieux `<frame>`, la balise
+`<marquee>`…).
+
+Le validateur vous dira « Element _XXX_ undefined » (balise inconnue) ou encore « There is no attribute _XXX_ » (attribut inconnu).
+
+Tout le monde fait des erreurs, alors ne paniquez pas. Corrigez pas à pas votre page web jusqu'à ce que le validateur vous affiche un
+beau résultat en vert.
+
+### Le code final
+
+Je mets à disposition le code final de la page web que nous avons réalisée. Voici à quoi ça ressemble :
+
+![Apparence finale du site web](https://user.oc-static.com/thb/344001_345000/344512.png)
+
+Apparence finale du site web
+
+Vous pouvez télécharger un fichier ZIP contenant tous les fichiers du site pour pouvoir le tester chez vous :
+
+[Télécharger les fichiers du site (500 Ko)](https://course.oc-static.com/ftp-tutos/cours/html-css/p3/ch4/tp_final.zip)
+
+Essayez de refaire le site sans la solution sous les yeux, maintenant ! Ça va vous prendre du temps, vous n'y arriverez sûrement pas
+du premier coup, mais pas de panique : persévérez, ça finira par marcher !
+
+-----
+
+## Entraînez-vous en organisant votre CV
+
+[Entraînez-vous en organisant votre CV - Apprenez à créer votre site web avec HTML5 et CSS3 - OpenClassrooms](https://openclassrooms.com/fr/courses/1603881-apprenez-a-creer-votre-site-web-avec-html5-et-css3/6725301-entrainez-vous-en-organisant-votre-cv)
+
+:::info
+**À vous de jouer !** Pour vous entraîner, réalisez cet exercice étape par étape. Une fois que vous avez terminé, vous pouvez comparer
+votre travail avec les pistes que je vous propose.
+:::
+
+### **Contexte**
+
+Votre CV commence à prendre forme, mais il faut encore travailler sa mise en page.
+
+### Votre mission
+
+Pour le moment, vos pages sont assez verticales… Mais il est possible de travailler le sens de lecture et de profiter de la puissance
+de la mise en page en CSS.
+
+Vous allez devoir structurer votre CV comme ceci :
+- à gauche, un liseré, qui sera défini en valeur absolue (en pixels) ;
+- à droite, le contenu de votre CV, qui contiendra à l'intérieur, de gauche à droite, les sections suivantes :
+    - Mon expérience,
+    - Mes compétences,
+    - Ma formation.
+
+La mise en page, à l'exception du liseré, doit être en valeur relative (pourcentage). Le contenu doit occuper tout l'espace en largeur,
+quelle que soit la largeur de la fenêtre.
+
+Vous devrez utiliser des balises sémantiques pour réaliser votre mise en page.
+
+Vérifiez bien que vous avez les éléments suivants :<br />
+✅ Un liseré est présent à gauche, en valeur absolue.<br />
+✅ 3 blocs sont alignés de gauche à droite, avec une mise en page en valeur relative (pourcentage).<br />
+✅ Des balises sémantiques sont utilisées.
+
+Alors, vous êtes allé au bout ? Voici [un exemple](https://static.oc-static.com/activities/200/evaluation_resources/organiser-son-cv_exemple-2019-01-03T082109.zip)
+pour vous permettre de vérifier votre travail.
+
+-----
+
+## Quiz : Organisez les éléments d'une page web grâce aux règles CSS
+
+[Organisez les éléments d'une page web grâce aux règles CSS - OpenClassrooms](https://openclassrooms.com/fr/courses/1603881-apprenez-a-creer-votre-site-web-avec-html5-et-css3/exercises/1236)
+
+#### Compétences évaluées
+
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-checkbox" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#00b341" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <polyline points="9 11 12 14 20 6" />
+  <path d="M20 12v6a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h9" />
+</svg> Organiser les éléments d'une page web grâce aux règles CSS
+
+#### Description
+
+Maintenant, il est temps d'évaluer vos connaissances sur cette troisième partie !<br />
+Bon courage ! 😀
+
+-----
+
+#### Question 1 : Laquelle de ces balises indique un pied de page ?
+
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle-check" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#7bc62d" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M9 12l2 2l4 -4" />
+</svg> <code>&#60;footer></code><br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> <code>&#60;bottom></code><br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> <code>&#60;nav></code><br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> <code>&#60;div></code><br />
+<br />
+
+-----
+
+#### Question 2 : Peut-on insérer une balise  `<header>` à l'intérieur d'une balise  `<section>` ?
+
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> Oui, c'est autorisé mais ça n'a aucun sens<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle-check" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#7bc62d" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M9 12l2 2l4 -4" />
+</svg> Oui, c'est autorisé et ça peut avoir du sens<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> Non, c'est interdit (et stupide !)<br />
+<br />
+
+-----
+
+#### Question 3 : Par défaut, il est impossible de donner des dimensions à l'une de ces balises. Laquelle ?
+
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle-check" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#7bc62d" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M9 12l2 2l4 -4" />
+</svg> <code>&#60;a></code><br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> <code>&#60;div></code><br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> <code>&#60;p></code><br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> <code>&#60;h6></code><br />
+<br />
+
+-----
+
+#### Question 4 : Quelle propriété CSS permet de modifier la marge intérieure droite d'un élément ?
+
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> <code>margin-left</code><br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle-check" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#7bc62d" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M9 12l2 2l4 -4" />
+</svg> <code>padding-right</code><br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> <code>margin-right</code><br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> <code>inner-top</code><br />
+<br />
+
+-----
+
+#### Question 5 : Quelle valeur de la propriété CSS  `overflow` masque le texte qui dépasse d'un bloc sans ajouter de barres de défilement ?
+
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle-check" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#7bc62d" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M9 12l2 2l4 -4" />
+</svg> <code>hidden</code><br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> <code>visible</code><br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> <code>auto</code><br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> <code>scroll</code><br />
+<br />
+
+-----
+
+#### Question 6 : Un élément qui possède une min-width de 200px et une width de 50% pourra avoir une taille...
+
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle-check" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#7bc62d" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M9 12l2 2l4 -4" />
+</svg> De 200px à l'infini<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> De 100px à 200px<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> De 0px à 200px<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> De 200px à 400px<br />
+<br />
+
+-----
+
+#### Question 7 : Par quel moyen peut-on faire en sorte qu'un lien `<a>` se comporte comme une balise de type `<div>` ?
+
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> <code>transform: div;</code><br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> <code>display: inline-block;</code><br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle-check" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#7bc62d" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M9 12l2 2l4 -4" />
+</svg> <code>display: block;</code><br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> <code>visibility: full;</code><br />
+<br />
+
+-----
+
+#### Question 8 : Avec quelle valeur de la propriété `position` puis-je décaler un élément de 10px de sa position initiale ?
+
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle-check" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#7bc62d" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M9 12l2 2l4 -4" />
+</svg> <code>relative</code><br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> <code>absolute</code><br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> <code>initial</code><br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> <code>fixed</code><br />
+<br />
+
+-----
+
+#### Question 9 : Quel est le site qui héberge un outil qui teste la validité HTML de votre site ?
+
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> iso.org<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> html5.net<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> w3schools.com<br />
+
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle-check" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#7bc62d" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M9 12l2 2l4 -4" />
+</svg> w3.org<br />

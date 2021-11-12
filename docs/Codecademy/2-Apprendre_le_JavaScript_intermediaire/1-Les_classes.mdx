@@ -1,0 +1,1262 @@
+---
+sidebar_position: 1
+---
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+import { Vimeo } from 'mdx-embed';
+
+# Les classes
+
+## Introduction aux classes
+
+[Learn Intermediate JavaScript | Codecademy](https://www.codecademy.com/courses/learn-intermediate-javascript/lessons/classes/exercises/introduction)
+
+JavaScript est un langage de *programmation orienté objet* - *object-oriented programming* (OOP) que nous pouvons utiliser pour
+modéliser des éléments du monde réel. Dans cette leçon, vous apprendrez à faire des classes. Les classes sont un outil que les
+développeurs utilisent pour produire rapidement des objets similaires.
+
+Prenons, par exemple, un objet représentant un chien nommé `Halley`. Le `name` de ce chien (une clé) est `"Halley"` (une valeur) et
+a un `behavior` ("*comportement*") (une autre clé) de `0` (une autre valeur). Nous créons l'objet `halley` ci-dessous :
+
+```javascript
+let halley = {
+    _name: 'Halley',
+    _behavior: 0,
+
+    get name() {
+        return this._name;
+    },
+
+    get behavior() {
+        return this._behavior;
+    },
+
+    incrementBehavior() {
+        this._behavior++;
+    }
+}
+```
+
+Maintenant, imaginez que vous possédez une garderie pour chiens et que vous souhaitez créer un catalogue de tous les chiens qui
+appartiennent à la garderie. Au lieu d'utiliser la syntaxe ci-dessus pour chaque chien qui rejoint la garderie, nous pouvons créer
+une classe `Dog` qui sert de modèle pour créer de nouveaux objets `Dog`. Pour chaque nouveau chien, vous pouvez fournir une valeur
+pour son nom.
+
+Comme vous pouvez le voir, les classes sont un excellent moyen de réduire le code en double et le temps de débogage.
+
+Après avoir posé les bases des cours dans les premiers exercices, nous présenterons l'héritage et les méthodes statiques, deux
+fonctionnalités qui rendront votre code plus efficace et plus significatif.
+
+:::info instructions
+1 - Dans le prochain exercice, vous en apprendrez plus sur les classes. Avant de le faire, prenez un moment pour étudier le cours dans
+**main.js**.
+
+Passez un peu de temps à identifier les similitudes et les différences entre la classe `Dog` dans **main.js** et le code que nous
+avons utilisé pour créer notre objet `halley` dans les instructions ci-dessus.
+:::
+
+```javascript title="main.js"
+class Dog {
+    constructor(name) {
+        this._name = name;
+        this._behavior = 0;
+    }
+    get name() {
+        return this._name;
+    }
+    get behavior() {
+        return this._behavior;
+    }   
+    incrementBehavior() {
+        this._behavior ++;
+    }
+}
+```
+
+:::info instructions
+2 - Copiez l'instanciation de classe, l'appel de méthode et les instructions `console.log()` ci-dessous dans **main.js**.
+
+```javascript
+const halley = new Dog('Halley');
+console.log(halley.name); // Affiche la valeur du nom dans la console
+console.log(halley.behavior); // Affiche la valeur du comportement dans la console
+halley.incrementBehavior(); // Ajoute un au comportement
+console.log(halley.name); // Affiche la valeur du nom dans la console
+console.log(halley.behavior); // Affiche la valeur du comportement dans la console
+```
+
+Qu'attendez-vous de voir lorsque vous exécutez ce code ?
+:::
+
+<nav className="docs-nav">
+<div className="docs-nav-code">
+
+```javascript title="main.js"
+const halley = new Dog('Halley');
+console.log(halley.name);
+console.log(halley.behavior);
+halley.incrementBehavior();
+console.log(halley.name);
+console.log(halley.behavior);
+```
+
+</div>
+<div className="docs-nav-html">
+
+```shell title="console"
+
+Halley
+0
+
+Halley
+1
+```
+
+</div>
+</nav>
+
+-----
+
+## Constructeur
+
+Dans le dernier exercice, vous avez créé une classe appelée `Dog` et l'avez utilisée pour produire un objet `Dog`.
+
+Bien que vous puissiez voir des similitudes entre la syntaxe des classes et des objets, il existe une méthode importante qui les
+distingue. C'est ce qu'on appelle la méthode *constructor*. JavaScript appelle la méthode `constructor()` à chaque fois qu'il crée
+une nouvelle *instance* d'une classe.
+
+```javascript
+class Dog {
+    constructor(name) {
+        this.name = name;
+        this.behavior = 0;
+    }
+}
+```
+
+- `Dog` est le nom de notre classe. Par convention, nous mettons en majuscule et en CamelCase les noms de classe.
+- JavaScript invoquera la méthode `constructor()` chaque fois que nous créons une nouvelle instance de notre classe `Dog`.
+- Cette méthode `constructor()` accepte un argument, `name`.
+- À l'intérieur de la méthode `constructor()`, nous utilisons le mot-clé `this`. Dans le contexte d'une classe, `this` fait référence
+à une instance de cette classe. Dans la classe `Dog`, nous utilisons `this` pour définir la valeur de la propriété `name` de
+l'instance Dog sur l'argument `name`.
+- Sous `this.name`, nous créons une propriété appelée `behavior`, qui gardera une trace du nombre de fois qu'un chien se comporte mal.
+La propriété `behavior` est toujours initialisée à zéro.
+
+Dans l'exercice suivant, vous apprendrez à créer des instances `Dog`.
+
+:::info instructions
+1 - Créez une classe vide nommée `Surgeon`.
+:::
+
+```javascript title="main.js"
+class Surgeon {
+
+}
+```
+
+:::info instructions
+2 - Dans la classe `Surgeon`, créez une méthode `constructor()` qui accepte deux paramètres : `name` et `department`.
+:::
+
+```javascript title="main.js"
+class Surgeon {
+    constructor(name, department) {
+
+    }
+}
+```
+
+:::info instructions
+3 - Dans le `constructor` `Surgeon()`, créez des propriétés de `name` et de `department` et définissez-les sur la même valeur que
+vos paramètres d'entrée.
+:::
+
+```javascript title="main.js"
+class Surgeon {
+    constructor(name, department) {
+        this.name = name;
+        this.department = department;
+    }
+}
+```
+
+-----
+
+## Instance
+
+Maintenant, nous sommes prêts à créer des instances de classe. Une instance est un objet qui contient les noms de propriété et les
+méthodes d'une classe, mais avec des valeurs de propriété uniques. Regardons notre exemple de classe `Dog`.
+
+```javascript
+class Dog {
+    constructor(name) {
+        this.name = name;
+        this.comportment = 0;
+    }
+}
+
+const halley = new Dog('Halley'); // Crée une nouvelle instance de Chien
+console.log(halley.nom); // Enregistre la valeur du nom enregistrée dans Halley
+// Sortie : 'Halley'
+```
+
+Sous notre classe `Dog`, nous utilisons le mot-clé `new` pour créer une instance de notre classe `Dog`. Considérons la ligne de code
+étape par étape.
+
+- Nous créons une nouvelle variable nommée `Halley` qui stockera une instance de notre classe `Dog`.
+- Nous utilisons le mot-clé `new` pour générer une nouvelle instance de la classe `Dog`. Le mot clé `new` appelle le `constructor()`,
+exécute le code qu'il contient, puis renvoie la nouvelle instance.
+- Nous passons la chaîne `'Halley'` au constructeur `Dog`, qui définit la propriété `name` sur `'Halley'`.
+- Enfin, nous enregistrons la valeur enregistrée dans la clé `name` dans notre objet `Halley`, qui enregistre `'Halley'` dans la
+console.
+
+Vous savez maintenant créer des instances. Dans l'exercice suivant, vous apprendrez à ajouter des getters, des setters et des méthodes.
+
+:::info instructions
+1 - Créez une instance de la classe `Surgeon` — définissez le `name` sur `'Francisco Romero'` et `department` sur `'Cardiovascular'`.
+
+Enregistrez l'instance dans une variable constante appelée `surgeonRomero`.
+:::
+
+```javascript title="main.js"
+const surgeonRomero = new Surgeon('Francisco Romero', 'Cardiovascular');
+```
+
+:::info instructions
+2 - Créez une instance de la classe `Surgeon` — définissez `name` sur `'Ruth Jackson'` et `department` sur `'Orthopedics'`.
+
+Enregistrez l'instance dans une variable constante appelée `surgeonJackson`.
+:::
+
+```javascript title="main.js"
+const surgeonJackson = new Surgeon('Ruth Jackson', 'Orthopedics');
+```
+
+-----
+
+## Méthodes
+
+À ce stade, nous avons une classe `Dog` qui fait tourner des objets avec des propriétés `name` et `behavior`. Ci-dessous, nous
+ajouterons des getters et une méthode pour donner vie à notre classe.
+
+La méthode classe et la syntaxe getter sont les mêmes que pour les objets, **sauf que vous ne pouvez pas inclure de virgules entre les
+méthodes**.
+
+```javascript
+class Dog {
+    constructor(name) {
+        this._name = name;
+        this._behavior = 0;
+    }
+
+    get name() {
+        return this._name;
+    }
+
+    get behavior() {
+        return this._behavior;
+    }
+
+    incrementBehavior() {
+        this._behavior++;
+    }
+}
+```
+
+Dans l'exemple ci-dessus, nous ajoutons des méthodes getter pour `name` et `behavior`. Notez que nous avons également ajouté au début
+de nos noms de propriété des traits de soulignement (`_name` et `_behavior`), qui indiquent que ces propriétés ne doivent pas être
+accédées directement. Sous les getters, nous ajoutons une méthode nommée `.incrementBehavior()`. Lorsque vous appelez
+`.incrementBehavior()` sur une instance Dog, il ajoute `1` à la propriété `_behavior`. Entre chacune de nos méthodes, nous n'avons
+*pas* inclus de virgules.
+
+:::info instructions
+1 - Dans le constructeur `Surgeon`, ajoutez un trait de soulignement (`_`) au début des propriétés `name` et `department`.
+
+2 - À l'intérieur du `constructor()`, ajoutez une propriété nommée `_remainingVacationDays` et définissez-la sur `20`.
+
+3 - Sous le `constructor()`, créez un getter appelé `name` qui renvoie la valeur enregistrée dans `_name`.
+:::
+
+```javascript title="main.js"
+class Surgeon {
+    constructor(name, department) {
+        this._name = name;
+        this._department = department;
+        this._remainingVacationDays = 20;
+    }
+    get name() {
+        return this._name;
+    }
+}
+```
+
+:::info instructions
+4 - Sous le getter `name`, créez un getter appelé `department` qui renvoie la valeur enregistrée dans `_department`.
+:::
+
+```javascript title="main.js"
+    get department() {
+        return this._department;
+    }
+```
+
+:::info instructions
+5 - Sous le getter `department`, créez un getter appelé `restantVacationDays` qui renvoie la valeur enregistrée dans `_remainingVacationDays`.
+:::
+
+```javascript title="main.js"
+    get remainingVacationDays() {
+        return this._remainingVacationDays;
+    }
+```
+
+:::info instructions
+6 - Sous le getter `remainingVacationDays`, créez une méthode appelée `takeVacationDays` qui accepte un argument nommé `daysOff`.
+
+À l'intérieur de la méthode, soustrayez `daysOff` du nombre enregistré dans `_remainingVacationDays`. Définissez `_remainingVacationDays`
+sur le résultat.
+:::
+
+```javascript title="main.js"
+    takeVacationDays(daysOff) {
+        this._remainingVacationDays -= daysOff;    
+    }
+```
+
+:::note
+[L'opérateur get - JavaScript | MDN](https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Functions/get)
+:::
+
+-----
+
+## Appels de méthode
+
+Enfin, utilisons nos nouvelles méthodes pour accéder et manipuler les données des instances `Dog`.
+
+```javascript
+class Dog {
+    constructor(name) {
+        this._name = name;
+        this._behavior = 0;
+    }
+
+    get name() {
+        return this._name;
+    }
+
+    get behavior() {
+        return this._behavior;
+    }
+
+    incrementBehavior() {
+        this._behavior++;
+    }
+}
+
+const halley = new Dog('Halley');
+```
+
+Dans l'exemple ci-dessus, nous créons la classe `Dog`, puis créons une instance et l'enregistrons dans une variable nommée `Halley`.
+
+La syntaxe pour appeler des méthodes et des getters sur une instance est la même que pour les appeler sur un objet — ajoutez à
+l'instance un point, puis le nom de la propriété ou de la méthode. Pour les méthodes, vous devez également inclure des parenthèses
+ouvrantes et fermantes.
+
+Prenons un moment pour créer deux instances `Dog` et appelons notre méthode `.incrementBehavior()` sur l'une d'entre elles.
+
+```javascript
+let nikko = new Dog('Nikko'); // Créer un chien nommé Nikko
+nikko.incrementBehavior(); // Ajoute 1 au comportement de l'instance nikko
+let bradford = new Dog('Bradford'); // Créer le nom de chien Bradford
+console.log(nikko.behavior); // Enregistre 1 dans la console
+console.log(bradford.behavior); // Enregistre 0 dans la console
+```
+
+Dans l'exemple ci-dessus, nous créons deux nouvelles instances `Dog`, `nikko` et `bradford`. Comme nous incrémentons le comportement
+de notre instance `nikko`, mais pas `bradford`, l'accès à `nikko.behavior` renvoie `1` et l'accès à `bradford.behavior` renvoie `0`.
+
+:::info instructions
+1 - Au bas de **main.js**, utilisez `console.log()` pour afficher la valeur enregistrée dans la propriété `name` de l'objet
+`surgeopnRomero`.
+:::
+
+```javascript title="main.js"
+console.log(surgeonRomero.name)  // Francisco Romero
+```
+
+:::info instructions
+2 - Appelez `.takeVacationDays()` sur le `surgeonRomero`, avec une entrée de `3`.
+:::
+
+```javascript title="main.js"
+surgeonRomero.takeVacationDays(3);
+```
+
+:::info instructions
+3 - Après l'appel à `.takeVacationDays()`, utilisez `console.log()` pour imprimer la valeur enregistrée dans la propriété
+`remainingVacationDays` de l'instance de `surgeonRomero`.
+:::
+```javascript title="main.js"
+console.log(surgeonRomero.remainingVacationDays) // 17
+```
+
+:::note
+[Accesseurs de propriétés - JavaScript | MDN](https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Operators/Property_accessors)
+:::
+
+-----
+
+## Héritage I
+
+Imaginez que notre garderie pour chiens connaisse un tel succès que nous décidons d'agrandir l'entreprise et d'ouvrir une garderie
+pour chatons. Avant l'ouverture de la garderie, nous devons créer une classe `Cat` afin de pouvoir générer rapidement des instances
+`Cat`. Nous savons que les propriétés de notre classe `Cat` (`name`, `behavior`) sont similaires aux propriétés de notre classe `Dog`,
+cependant, il y aura quelques différences, car bien sûr, les chats ne sont pas des chiens.
+
+Disons que notre classe `Cat` ressemble à ceci :
+
+```javascript
+class Cat {
+    constructor(name, usesLitter) {
+        this._name = name;
+        this._usesLitter = usesLitter;
+        this._behavior = 0;
+    }
+
+    get name() {
+        return this._name;
+    }
+
+    get usesLitter() {
+        return this._usesLitter;
+    }
+
+    get behavior() {
+        return this._behavior;
+    }  
+ 
+    incrementBehavior() {
+        this._behavior++;
+    }
+}
+```
+
+Dans l'exemple ci-dessus, nous créons une classe `Cat`. Il partage quelques propriétés (`_name` et `_behavior`) et une méthode
+(`.incrementBehavior()`) avec la classe `Dog` des exercices précédents. La classe `Cat` contient également une propriété
+supplémentaire (`_usesLitter`), qui contient une valeur booléenne pour indiquer si un chat peut utiliser sa litière.
+
+Lorsque plusieurs classes partagent des propriétés ou des méthodes, elles deviennent candidates *à l'héritage* - un outil que les
+développeurs utilisent pour réduire la quantité de code qu'ils doivent écrire.
+
+Avec l'héritage, vous pouvez créer une classe *parent* (également appelée superclasse) avec des propriétés et des méthodes que
+plusieurs classes *enfants* (également appelées sous-classes) partagent. Les classes enfants héritent des propriétés et des méthodes
+de leur classe parente.
+
+Faisons abstraction des propriétés et méthodes partagées de nos classes `Cat` et `Dog` dans une classe parent appelée `Animal`.
+
+```javascript
+class Animal {
+    constructor(name) {
+        this._name = name;
+        this._behavior = 0;
+    }
+
+    get name() {
+        return this._name;
+    }
+
+    get behavior() {
+        return this._behavior;
+    }
+
+    incrementBehavior() {
+        this._behavior++;
+    }
+}
+```
+Dans l'exemple ci-dessus, la classe `Animal` contient les propriétés et les méthodes que partagent les classes `Cat` et `Dog` (`name`,
+`behavior`, `.incrementBehavior()`).
+
+Le diagramme de droite montre les relations que nous voulons créer entre les classes Animal, Cat et Dog.
+
+![diagram: child classes Dog and Cat inherit from parent class Animal](../assets/inheritance_diagram.svg)
+
+-----
+
+## Héritage II
+
+Dans le dernier exercice, nous avons créé une classe parent nommée `Animal` pour deux classes enfants nommées `Cat` et `Dog`.
+
+La classe `Animal` ci-dessous contient les propriétés et les méthodes partagées de `Cat` et `Dog`.
+
+```javascript
+class Animal {
+    constructor(name) {
+        this._name = name;
+        this._behavior = 0;
+    }
+
+    get name() {
+        return this._name;
+    }
+
+    get behavior() {
+        return this._behavior;
+    }
+
+    incrementBehavior() {
+        this._behavior++;
+    }
+}
+```
+
+Le code ci-dessous montre la classe `Cat` qui héritera des informations de la classe `Animal`.
+
+```javascript
+class Cat {
+    constructor(name, usesLitter) {
+        this._name = name;
+        this._usesLitter = usesLitter;
+        this._behavior = 0;
+    }
+
+    get name() {
+        return this._name;
+    }
+
+    get behavior() {
+        return this._behavior;
+    }
+
+    get usesLitter() {
+        return this._usesLitter;
+    }
+
+    incrementBehavior() {
+        this._behavior++;
+    }
+}
+```
+
+À droite, dans **main.js**, vous mettrez en pratique ce que vous avez appris en créant une classe parent nommée `HospitalEmployee`.
+
+:::info instructions
+1 - Dans les prochains exercices, vous allez créer deux sous-classes (`Doctor` et `Nurse`) à partir d'une classe parent nommée
+`HospitalEmployee`. Ci-dessous, nous avons listé les propriétés et les méthodes que vous trouverez dans les classes `Doctor` et
+`Nurse`.
+
+**Médecin** :
+- Propriétés : `_name`, `_remainingVacationDays` (défini sur `20` dans le `constructor()`), `_insurance`,
+- Méthodes : `.takeVacationDays()`.
+
+**Infirmière** :
+- Propriétés : `_name`, `_remainingVacationDays` (défini sur `20` dans le `constructor()`), `_certifications`,
+- Méthodes : `.takeVacationDays()`, `.addCertification()`.
+
+Dans **main.js**, créez une classe parent nommée `HospitalEmployee`. Ajoutez un constructeur avec `name` comme argument.
+:::
+
+```javascript title="main.js"
+class HospitalEmployee {
+    constructor(name) {
+
+    }
+}
+```
+
+:::info instructions
+2 - À l'intérieur du `constructor()`, définissez le `_name` de l'instance sur `name` et `_remainingVacationDays` sur `20`.
+:::
+
+```javascript title="main.js"
+class HospitalEmployee {
+    constructor(name) {
+        this._name = name;
+        this._remainingVacationDays = 20;
+    }
+}
+```
+
+:::info instructions
+3 - Sous le constructeur, créez des getters pour vos propriétés `_name` et `_remainingVacationDays`.
+
+Dans le getter, retournez la valeur de la propriété.
+:::
+
+```javascript title="main.js"
+    get name() {
+        return this._name;
+    }
+
+    get remainingVacationDays() {
+        return this._remainingVacationDays;
+    }
+```
+
+:::info instructions
+4 - Sous les getters, ajoutez une méthode appelée `takeVacationDays`.
+
+Cette méthode doit accepter un argument, appelé `daysOff`.
+
+Dans la méthode, soustrayez `daysOff` de `_remainingVacationDays`. Enregistrez le résultat dans `_remainingVacationDays`.
+:::
+
+```javascript title="main.js"
+    takeVacationDays(daysOff) {
+        this._remainingVacationDays -= daysOff;
+    }
+```
+
+-----
+
+## Héritage III
+
+Nous avons résumé les propriétés et méthodes partagées de nos classes `Cat` et `Dog` dans une classe parent appelée `Animal` (voir
+ci-dessous).
+
+```javascript
+class Animal {
+    constructor(name) {
+        this._name = name;
+        this._behavior = 0;
+    }
+
+    get name() {
+        return this._name;
+    }
+
+    get behavior() {
+        return this._behavior;
+    }
+
+    incrementBehavior() {
+        this._behavior++;
+    }
+}
+```
+
+Maintenant que nous avons ces propriétés et méthodes partagées dans la classe `Animal` parent, nous pouvons les étendre à la
+sous-classe `Cat`.
+
+```javascript
+class Cat extends Animal {
+    constructor(name, usesLitter) {
+        super(name);
+        this._usesLitter = usesLitter;
+    }
+}
+```
+
+Dans l'exemple ci-dessus, nous créons une nouvelle classe nommée `Cat` qui étend la classe `Animal`. Portons une attention
+particulière à nos nouveaux mots-clés : `extends` et `super`.
+- Le mot-clé `extends` rend les méthodes de la classe animal disponibles dans la classe cat.
+- Le constructeur, appelé lorsque vous créez un nouvel objet `Cat`, accepte deux arguments, `name` et `usesLitter`.
+- Le mot-clé `super` appelle le constructeur de la classe parent. Dans ce cas, `super(name)` passe l'argument `name` de la classe
+`Cat` au constructeur de la classe `Animal`. Lorsque le constructeur `Animal` s'exécute, il définit `this._name = name;` pour les
+nouvelles instances `Cat`.
+- `_usesLitter` est une nouvelle propriété unique à la classe `Cat`, nous la définissons donc dans le constructeur `Cat`.
+
+Notez que nous appelons `super` sur la première ligne de notre `constructor()`, puis définissons la propriété `usesLitter` sur la
+deuxième ligne. Dans un `constructor()`, vous devez toujours appeler la méthode `super` avant de pouvoir utiliser le mot-clé `this` —
+si vous ne le faites pas, JavaScript renverra une erreur de référence. Pour éviter les erreurs de référence, il est recommandé
+d'appeler `super` sur la première ligne des constructeurs de sous-classe.
+
+Ci-dessous, nous créons une nouvelle instance `Cat` et appelons son nom avec la même syntaxe qu'avec la classe `Dog` :
+
+```javascript
+const bryceCat = new Cat('Bryce', false); 
+console.log(bryceCat._name); // sortie : Bryce
+```
+
+Dans l'exemple ci-dessus, nous créons une nouvelle instance de la classe `Cat`, nommée `bryceCat`. Nous passons `'Bryce'` et `false`
+pour nos arguments `name` et `useLitter`. Lorsque nous appelons `console.log(bryceCat._name)`, notre programme affiche `Bryce`.
+
+Dans l'exemple ci-dessus, nous avons abandonné les bonnes pratiques en appelant directement notre propriété `_name`. Dans le
+prochain exercice, nous allons résoudre ce problème en appelant une méthode getter héritée pour notre propriété `name`.
+
+:::info instructions
+1 - Dans cet exercice, vous allez commencer à créer la classe `Nurse` en tant qu'enfant de la classe `HospitalEmployee`. N'oubliez
+pas que la classe `Nurse` a les propriétés et méthodes suivantes :
+
+**Infirmière** :
+- Propriétés : `_name`, `_remainingVacationDays` (défini sur `20` dans le `constructor()`), `_certifications`,
+- Méthodes : `.takeVacationDays()`, `.addCertification()`.
+
+Sous `HospitalEmployee`, créez une classe vide nommée `Nurse` qui étend `HospitalEmployee`.
+:::
+
+```javascript title="main.js"
+class HospitalEmployee {
+    constructor(name) {
+        this._name = name;
+        this._remainingVacationDays = 20;
+    }
+
+    get name() {
+        return this._name;
+    }
+
+    get remainingVacationDays() {
+        return this._remainingVacationDays;
+    }
+
+    takeVacationDays(daysOff) {
+        this._remainingVacationDays -= daysOff;
+    }
+}
+class Nurse extends HospitalEmployee {
+
+}
+```
+
+:::info instructions
+2 - Dans la classe `Nurse`, créez un `constructor()` qui accepte deux arguments. Utilisez la liste de propriétés ci-dessus pour
+nommer ces arguments.
+
+Vérifiez l'indice si vous avez besoin d'aide.
+:::
+
+```javascript title="main.js"
+class Nurse extends HospitalEmployee {
+    constructor(name, certifications) {
+
+    }
+}
+```
+
+:::info instructions
+3 - Dans le constructeur `Nurse`, appelez la méthode du constructeur du parent et transmettez la ou les valeurs appropriées.
+:::
+
+```javascript title="main.js"
+class Nurse extends HospitalEmployee {
+    constructor(name, certifications) {
+        super(name);
+    }
+}
+```
+
+:::info instructions
+4 - À l'intérieur du constructeur `Nurse`, et sous `super`, définissez `_certifications`.
+:::
+
+```javascript title="main.js"
+class Nurse extends HospitalEmployee {
+    constructor(name, certifications) {
+        super(name);
+        this._certifications = certifications;
+    }
+}
+```
+
+:::info instructions
+5 - Sous la classe `Nurse`, créez une nouvelle instance de `Nurse` et enregistrez-la dans une variable constante nommée `nurseOlynyk`.
+Transmettez les valeurs suivantes pour chaque propriété :
+- `name` : `'Olynyk'`
+- `certifications` : `['Trauma', 'Pediatrics']`
+:::
+
+```javascript title="main.js"
+const nurseOlynyk = new Nurse('Olynyk', ['Trauma', 'Pediatrics']);
+```
+
+-----
+
+## Héritage IV
+
+Maintenant que nous savons comment créer un objet qui hérite des propriétés d'une classe parent, tournons notre attention vers les
+méthodes.
+
+Lorsque nous appelons `extends` dans une déclaration de classe, toutes les méthodes parentes sont disponibles pour la classe enfant.
+
+Ci-dessous, nous étendons notre classe `Animal` à une sous-classe `Cat`.
+
+```javascript
+class Animal {
+    constructor(name) {
+        this._name = name;
+        this._behavior = 0;
+    }
+
+    get name() {
+        return this._name;
+    }
+
+    get behavior() {
+        return this._behavior;
+    }
+
+    incrementBehavior() {
+        this._behavior++;
+    }
+}
+
+class Cat extends Animal {
+    constructor(name, usesLitter) {
+        super(name);
+        this._usesLitter = usesLitter;
+    }
+}
+
+const bryceCat = new Cat('Bryce', false);
+```
+
+Dans l'exemple ci-dessus, notre classe `Cat` étend `Animal`. Par conséquent, la classe `Cat` a accès aux getters `Animal` et à la
+méthode `.incrementBehavior()`.
+
+Également dans le code ci-dessus, nous créons une instance `Cat` nommée `bryceCat`. Étant donné que `bryceCat` a accès au getter de
+`name`, le code ci-dessous enregistre `'Bryce'` dans la console.
+
+```javascript
+console.log(bryceCat.name);
+```
+
+Étant donné que le mot clé `extends` apporte tous les getters et méthodes du parent dans la classe enfant, `bryceCat.name` accède au
+getter de `name` et renvoie la valeur enregistrée dans la propriété `name`.
+
+Considérez maintenant un exemple plus complexe et essayez de répondre à la question suivante : Qu'est-ce que le code ci-dessous
+enregistrera dans la console ?
+
+```javascript
+bryceCat.incrementBehavior(); // Appel .incrementBehavior() sur l'instance Cat
+console.log(bryceCat.behavior); // Valeur de journal enregistrée dans le comportement
+```
+
+La bonne réponse est 1. Mais pourquoi ?
+- La classe `Cat` hérite de la propriété `_behavior`, du getter de comportement et de la méthode `.incrementBehavior()` de la classe
+`Animal`.
+- Lorsque nous avons créé l'instance de `bryceCat`, le constructeur `Animal` a défini la propriété `_behavior` sur zéro.
+- La première ligne de code appelle la méthode héritée `.incrementBehavior()`, qui augmente la valeur `bryceCat` `_behavior` de zéro
+à un.
+- La deuxième ligne de code appelle le getter `behavior` et enregistre la valeur enregistrée dans `_behavior` (`1`).
+
+:::info instructions
+1 - Appelez `.takeVacationDays()` avec une entrée de `5` sur votre instance `nurseOlynyk`.
+:::
+
+```javascript title="main.js"
+const nurseOlynyk = new Nurse('Olynyk', ['Trauma','Pediatrics']);
+nurseOlynyk.takeVacationDays(5);
+```
+
+:::info instructions
+2 - Sous l'appel de méthode, enregistrez la valeur enregistrée dans la propriété `restantVacationDays` dans `nurseOlynyk`.
+:::
+
+```javascript title="main.js"
+const nurseOlynyk = new Nurse('Olynyk', ['Trauma','Pediatrics']);
+nurseOlynyk.takeVacationDays(5);
+console.log(nurseOlynyk.remainingVacationDays);
+```
+
+-----
+
+## Héritage V
+
+En plus des fonctionnalités héritées, les classes enfants peuvent contenir leurs propres propriétés, getters, setters et méthodes.
+
+Ci-dessous, nous allons ajouter un getter `usesLitter`. La syntaxe pour créer des getters, des setters et des méthodes est la même
+que dans n'importe quelle autre classe.
+
+```javascript
+class Cat extends Animal {
+    constructor(name, usesLitter) {
+        super(name);
+        this._usesLitter = usesLitter;
+    }
+
+    get usesLitter() {
+        return this._usesLitter;
+    }
+}
+```
+
+Dans l'exemple ci-dessus, nous créons un getter `usesLitter` dans la classe `Cat` qui renvoie la valeur enregistrée dans `_usesLitter`.
+
+Comparez la classe `Cat` ci-dessus à celle que nous avons créée sans héritage :
+
+```javascript
+class Cat {
+    constructor(name, usesLitter) {
+        this._name = name;
+        this._usesLitter = usesLitter;
+        this._behavior = 0;
+    }
+    
+    get name() {
+        return this._name;
+    }
+    
+    get usesLitter() {
+        return this._usesLitter;
+    }
+    
+    get behavior() {
+        return this._behavior;
+    }   
+    
+    incrementBehavior() {
+        this._behavior++;
+    }
+}
+```
+
+Nous avons réduit de moitié environ le nombre de lignes requises pour créer la classe `Cat`. Oui, cela nécessitait une classe
+supplémentaire (`Animal`), ce qui rend la réduction de la taille de notre classe `Cat` semble discutable. Cependant, les bénéfices
+(gain de temps, lisibilité, efficacité) de l'héritage augmentent au fur et à mesure que le nombre et la taille de vos sous-classes
+augmentent.
+
+L'un des avantages est que lorsque vous devez modifier une méthode ou une propriété partagée par plusieurs classes, vous pouvez
+modifier la classe parente au lieu de chaque sous-classe.
+
+Avant de dépasser l'héritage, prenez un moment pour voir comment créer une sous-classe supplémentaire, appelée `Dog`.
+
+```javascript
+class Dog extends Animal {
+    constructor(name) {
+        super(name);
+    }
+}
+```
+
+Cette classe `Dog` a accès aux mêmes propriétés, getters, setters et méthodes que la classe `Dog` que nous avons créée sans héritage,
+et sa taille est un quart.
+
+Maintenant que nous avons résumé les fonctionnalités de la garderie pour animaux, il est facile de voir comment vous pouvez étendre
+`Animal` pour prendre en charge d'autres classes, comme `Rabbit`, `Bird` ou même `Snake`.
+
+:::info instructions
+1 - Utilisez les propriétés et les méthodes ci-dessous pour vous aider à effectuer les tâches qui suivent.
+
+**Infirmière** :
+- Propriétés : `_name`, `_remainingVacationDays` (défini sur `20` dans le `constructor()`), `_certifications`,
+- Méthodes : `.takeVacationDays()`, `.addCertification()`.
+
+Sous le `constructor()` Nurse, ajoutez un getter qui renvoie la valeur enregistrée dans les `_certifications` de l'instance Nurse.
+:::
+
+```javascript title="main.js"
+class Nurse extends HospitalEmployee {
+    constructor(name, certifications) {
+        super(name);
+        this._certifications = certifications;
+    }
+    get certifications() {
+        return this._certifications;
+    }
+}
+```
+
+:::info instructions
+2 - Ajoutez une méthode appelée `addCertification` sous le getter `certifications`.
+
+La méthode doit accepter une entrée (`newCertification`). Dans la méthode, utilisez la méthode push pour ajouter la valeur
+`newCertification` au tableau des `certifications` de l'infirmière.
+:::
+
+```javascript title="main.js"
+    addCertification(newCertification) {
+        this._certifications.push(newCertification);
+    }
+```
+
+:::info instructions
+3 - Au bas de **main.js**, appelez la méthode `.addCertification()` sur `nurseOlynyk` avec un paramètre de `Genetics`.
+:::
+
+```javascript title="main.js"
+nurseOlynyk.addCertification('Genetics');
+```
+
+:::info instructions
+4 - Loggez la valeur enregistrée dans la propriété `certifications` de `nurseOlynyk`.
+:::
+
+```javascript title="main.js"
+console.log(nurseOlynyk.certifications); // [ 'Trauma', 'Pediatrics', 'Genetics' ]
+```
+
+:::note
+[Array.prototype.push() - JavaScript | MDN](https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Global_Objects/Array/push)
+:::
+
+-----
+
+## Méthodes statiques
+
+Parfois, vous voudrez qu'une classe ait des méthodes qui ne sont pas disponibles dans des instances individuelles, mais que vous
+pouvez appeler directement depuis la classe.
+
+Prenez la classe `Date`, par exemple - vous pouvez à la fois créer des instances de `Date` pour représenter la date de votre choix et
+appeler des méthodes statiques, comme `Date.now()` qui renvoie la date actuelle, directement à partir de la classe. La méthode `.now()`
+est statique, vous pouvez donc l'appeler directement depuis la classe, mais pas depuis une instance de la classe.
+
+Voyons comment utiliser le mot-clé `static` pour créer une méthode statique appelée méthode `generateName` dans notre classe `Animal` :
+
+```javascript
+class Animal {
+    constructor(name) {
+        this._name = name;
+        this._behavior = 0;
+    }
+    
+    static generateName() {
+        const names = ['Angel', 'Spike', 'Buffy', 'Willow', 'Tara'];
+        const randomNumber = Math.floor(Math.random()*5);
+        return names[randomNumber];
+    }
+}
+```
+
+Dans l'exemple ci-dessus, nous créons une méthode `static` appelée `.generateName()` qui renvoie un nom aléatoire lorsqu'elle est
+appelée. En raison du mot-clé `static`, nous ne pouvons accéder à `.generateName()` qu'en l'ajoutant à la classe `Animal`.
+
+Nous appelons la méthode `.generateName()` avec la syntaxe suivante :
+
+```javascript
+console.log(Animal.generateName()); // renvoie un nom
+```
+
+Vous ne pouvez pas accéder à la méthode `.generateName()` à partir d'instances de la classe `Animal` ou d'instances de ses
+sous-classes (voir ci-dessous).
+
+```javascript
+const tyson = new Animal('Tyson'); 
+tyson.generateName(); // TypeError
+```
+
+L'exemple ci-dessus entraînera une erreur, car vous ne pouvez pas appeler de méthodes statiques (`.generateName()`) sur une instance
+(`tyson`).
+
+:::info instructions
+1 - Dans votre classe `HospitalEmployee`, créez une méthode statique appelée `generatePassword`. Lorsqu'elle est appelée, cette
+méthode doit renvoyer un entier aléatoire compris entre zéro et 10 000.
+:::
+
+```javascript title="main.js"
+    static generatePassword() {
+        return Math.floor(Math.random() * 10000);
+    }
+```
+
+```javascript
+console.log(HospitalEmployee.generatePassword()) // 4522
+```
+
+-----
+
+## Révision : les classes
+
+Marche à suivre ! Passons en revue ce que vous avez appris.
+
+- *Les classes* sont des modèles pour les objets.
+- Javascript appelle une méthode *constructor* lorsque nous créons une nouvelle instance d'une classe.
+- *L'héritage* se produit lorsque nous créons une classe parente avec des propriétés et des méthodes que nous pouvons étendre aux
+classes enfants.
+- Nous utilisons le mot clé `extends` pour créer une sous-classe.
+- Le mot-clé `super` appelle le `constructor()` d'une classe parent.
+- Les méthodes statiques sont appelées sur la classe, mais pas sur les instances de la classe.
+
+En terminant cette leçon, vous avez fait un pas de plus vers l'écriture de JavaScript efficace au niveau de la production. Bonne
+chance alors que vous continuez à développer vos compétences et à passer aux concepts de niveau intermédiaire.
+
+:::info instructions
+Si vous souhaitez vous entraîner davantage avec l'héritage, prenez le temps de créer une classe `Doctor` qui hérite de `HospitalEmployee`.
+Les propriétés et méthodes de la classe `Doctor` sont répertoriées ci-dessous :
+
+**Médecin** :
+- propriétés : `_name`, `_remainingVacationDays` (défini sur `20` dans le `constructor()`), `_insurance`,
+- méthodes : `.takeVacationDays()`.
+:::
+
+```javascript
+class Doctor extends HospitalEmployee {
+    constructor(name, insurance) {
+        super(name);
+        this._insurance = insurance;
+    }
+    get insurance() {
+        return this._insurance;
+    }
+}
+
+const doctorLouis = new Doctor('Louis', 'good');
+doctorLouis.takeVacationDays(12);
+console.log(doctorLouis.remainingVacationDays); // 8
+console.log(doctorLouis.insurance); // good
+```
+
+-----
+
+## Aide-mémoire
+
+<nav className="docs-nav">
+<div className="docs-nav-code">
+
+<h2>Méthodes statiques</h2>
+Dans une classe JavaScript, le mot-clé <code>static</code> définit une méthode statique pour une classe. Les méthodes statiques
+ne sont pas appelées sur des instances individuelles de la classe, mais sur la classe elle-même. Par conséquent, il s'agit
+généralement de méthodes générales (utilitaires).
+
+</div>
+<div className="docs-nav-html">
+
+```javascript
+class Dog {
+    constructor(name) {
+        this._name = name;  
+    }
+    
+    introduce() { 
+        console.log('This is ' + this._name + ' !');  
+    }
+    
+    // Une méthode statique
+    static bark() {
+        console.log('Woof!');  
+    }
+}
+ 
+const myDog = new Dog('Buster');
+myDog.introduce();
+ 
+// Appel de la méthode statique
+Dog.bark();
+```
+
+</div>
+</nav>
+<br />
+<br />
+<nav className="docs-nav">
+<div className="docs-nav-code">
+
+<h2>Classe</h2>
+JavaScript prend en charge le concept de <em>classes</em> en tant que syntaxe pour créer des objets. Les classes spécifient les
+propriétés et les méthodes partagées que les objets produits à partir de la classe auront.
+
+Lorsqu'un objet est créé sur la base de la classe, le nouvel objet est appelé <em>instance</em> de la classe. De nouvelles instances
+sont créées à l'aide du mot-clé <code>new</code>.
+
+L'exemple de code montre une classe qui représente un <code>Song</code>. Un nouvel objet appelé <code>mySong</code> est créé en
+dessous et la méthode <code>.play()</code> de la classe est appelée. Le résultat serait le texte <code>Song playing!</code> affiché
+dans la console.
+
+</div>
+<div className="docs-nav-html">
+
+```javascript
+class Song {
+    constructor() {
+        this.title;
+        this.author;
+    }
+    
+    play() {
+        console.log('Song playing!');
+    }
+}
+ 
+const mySong = new Song();
+mySong.play();
+```
+
+</div>
+</nav>
+<br />
+<br />
+<nav className="docs-nav">
+<div className="docs-nav-code">
+
+<h2>Constructeur de classe</h2>
+Les classes peuvent avoir une méthode <code>constructor</code>. Il s'agit d'une méthode spéciale qui est appelée lorsque l'objet
+est créé (instancié). Les méthodes constructeur sont généralement utilisées pour définir les valeurs initiales de l'objet.
+
+</div>
+<div className="docs-nav-html">
+
+```javascript
+class Song {
+    constructor(title, artist) {
+        this.title = title;
+        this.artist = artist;
+    }
+}
+ 
+const mySong = new Song('Bohemian Rhapsody', 'Queen');
+console.log(mySong.title);
+```
+
+</div>
+</nav>
+<br />
+<br />
+<nav className="docs-nav">
+<div className="docs-nav-code">
+
+<h2>Méthodes de classe</h2>
+Les propriétés des objets sont séparées par des virgules. Ce n'est pas le cas lors de l'utilisation de la syntaxe <code>class</code>.
+Les méthodes des classes n'ont pas de séparateurs entre elles.
+
+</div>
+<div className="docs-nav-html">
+
+```javascript
+class Song {
+    play() {
+        console.log('Playing!');
+    }
+    
+    stop() {
+        console.log('Stopping!');
+    }
+}
+```
+
+</div>
+</nav>
+<br />
+<br />
+<nav className="docs-nav">
+<div className="docs-nav-code">
+
+<h2>extends</h2>
+Les classes JavaScript prennent en charge le concept d'héritage — une classe enfant peut <em>étendre</em> une classe parent. Ceci
+est accompli en utilisant le mot clé <code>extends</code> dans le cadre de la définition de classe.
+
+Les classes enfants ont accès à toutes les propriétés et méthodes d'instance de la classe parent. Ils peuvent ajouter leurs propres
+propriétés et méthodes en plus de celles-ci. Un constructeur de classe enfant appelle le constructeur de classe parent à l'aide de
+la méthode <code>super()</code>.
+
+</div>
+<div className="docs-nav-html">
+
+```javascript
+// Classe parent
+class Media {
+    constructor(info) {
+        this.publishDate = info.publishDate;
+        this.name = info.name;
+    }
+}
+ 
+// Classe enfant
+class Song extends Media {
+    constructor(songData) {
+        super(songData);
+        this.artist = songData.artist;
+    }
+}
+ 
+const mySong = new Song({ 
+    artist: 'Queen', 
+    name: 'Bohemian Rhapsody', 
+    publishDate: 1975
+});
+```
+
+</div>
+</nav>
+<br />
+<br />

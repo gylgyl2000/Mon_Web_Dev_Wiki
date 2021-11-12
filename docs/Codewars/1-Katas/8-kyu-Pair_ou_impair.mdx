@@ -1,0 +1,61 @@
+---
+id: 8-kyu-Pair_ou_impair
+---
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# Pair ou impair
+
+[Training on Even or Odd | Codewars](https://www.codewars.com/kata/53da3dbb4a5168369a0000fe/train/javascript)
+
+:::info Instructions
+Créez une fonction qui prend un entier comme argument et renvoie « Pair » ("Even") pour les nombres pairs ou « Impair » ("Odd") pour
+les nombres impairs.
+
+```javascript
+function even_or_odd(number) {
+
+}
+```
+:::
+
+```js title="javascript"
+function even_or_odd(number) {
+  number = parseInt(number);
+  return ((number & 1) == '0')?"Even":"Odd";
+}
+```
+
+<nav className="docs-nav">
+<div className="docs-nav-code">
+
+```javascript title="Exemples de tests"
+console.log(even_or_odd(2))
+console.log(even_or_odd(7))
+console.log(even_or_odd(-42))
+console.log(even_or_odd(-7))
+console.log(even_or_odd(0))
+```
+
+</div>
+<div className="docs-nav-html">
+
+```shell title="console"
+Even
+Odd
+Even
+Odd
+Even
+```
+
+</div>
+</nav>
+
+:::note autre solution
+
+```javascript
+function even_or_odd(number) {
+  return number % 2 ? "Odd" : "Even"
+}
+```
+:::

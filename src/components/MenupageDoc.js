@@ -31,7 +31,7 @@ const DocList = [
   {
     title: 'Codewars',
     Svg: require('../../static/img/sites/codewars.svg').default,
-    Url: '*',
+    Url: '../docs/Codewars/menu',
   },
   {
     title: 'CSS-Tricks',

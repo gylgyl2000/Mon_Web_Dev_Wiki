@@ -1,0 +1,858 @@
+---
+sidebar_position: 3
+---
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+import { Vimeo } from 'mdx-embed';
+
+# Manipulez des fichiers avec un terminal
+
+## Créez vos fichiers et vos dossiers
+
+[Créez vos fichiers et vos dossiers - Apprenez à utiliser la ligne de commande dans un terminal - OpenClassrooms](https://openclassrooms.com/fr/courses/6173491-apprenez-a-utiliser-la-ligne-de-commande-dans-un-terminal/6349706-creez-vos-fichiers-et-vos-dossiers)
+
+<Vimeo vimeoId="345882327" />
+
+<br />
+
+Pour le moment, vous avez navigué dans des répertoires et avez affiché leur contenu. Essayons désormais de créer de nouveaux
+éléments.
+
+### Utilisez `mkdir`
+
+<Vimeo vimeoId="345882349" />
+
+<br />
+
+`mkdir` est la contraction de “make directory”, c’est-à-dire “Créer un répertoire”, en français.
+
+La syntaxe de mkdir est simple : il suffit de taper "mkdir" suivi du nom du répertoire que l'on désire créer. Par exemple, si je
+tape “mkdir test”, cela créera un répertoire appelé “test” à l’endroit où je me trouve :
+
+![Le résultat de la commande mkdir test sur mon terminal](/img/OpenClassrooms/15621638411887_mkdir_test.PNG)
+
+mkdir test
+
+Dans l’exemple ci-dessus, j’ai commencé par un **ls** pour voir l’ensemble des dossiers et fichiers présents, puis j’ai créé un
+**nouveau répertoire** appelé “test” et j’ai enfin exécuté un second “ls” pour **vérifier** que mon nouveau répertoire a bien
+été créé.
+
+En tapant **cd test**, vous pouvez même vous rendre à l’intérieur de ce nouveau répertoire.
+
+_Alors, avez-vous réussi à créer un dossier ? 😀_
+
+### Que faire si le nom possède un espace ?
+
+Si vous voulez créer un dossier dont le nom possède un espace, par exemple “mon dossier”, la première idée est simplement d’écrire
+“mkdir mon dossier”.
+
+Essayons :
+
+![Le résultat de la commande mkdir mon dossier sur ma machine](/img/OpenClassrooms/1562164081749_mkdir_mon_dossier_(encadre).PNG)
+
+mkdir mon dossier
+
+Vous pouvez constater que **deux** dossiers ont été créés. Le premier s'appelle “**dossier**” et le second “**mon**”.
+
+En effet, le terminal considère l’espace comme un **séparateur** entre deux dossiers, alors que “**mon dossier**”, est en réalité
+le nom complet.
+
+Il faut donc indiquer au terminal que cet espace est bien un caractère et pas un séparateur.
+
+La façon la plus simple de faire est d’entourer le nom du dossier avec des guillemets.
+
+![Le résultat de la commande mkdir](/img/OpenClassrooms/15621641485753_mkdir_second_test.PNG)
+
+mkdir "second test"
+
+Ici, vous pouvez constater que “second test” a bien été créé.
+
+L’autre manière de faire est “d’**échapper**” le caractère espace, c’est-à-dire d’indiquer au terminal que l’espace en question
+n’est **pas un séparateur** mais doit se comporter comme une “lettre” normale. Le **caractère d'échappement** s’appelle un
+“**antislash**” (ou **backslash**) : **\\**.
+
+Il suffit de le mettre devant le caractère à “échapper”.
+
+![Le résultat de la commande mkdir troisième\ test sur mon terminal](/img/OpenClassrooms/15621642420671_mkdir_troisieme_test.PNG)
+
+mkdir troisieme\\ test
+
+Et vous pouvez constater la présence du nouveau répertoire.
+
+_Essayez de refaire l'opération. Alors, vous trouvez cela plus facile maintenant ?_
+
+### Apprenez à utiliser `touch`
+
+Vous savez désormais créer des dossiers, mais comment créer des fichiers ? Eh bien, exactement de la même manière que pour créer
+un dossier, mais avec une autre commande.
+
+Cette fois-ci, vous allez utiliser _touch_, avec la même syntaxe, c'est-à-dire : touch nomDuNouveauFichier.
+
+Par exemple, pour créer un fichier appelé fichier.txt, il suffira de taper : touch fichier.txt
+
+![Le résultat de la commande touch fichier.txt et touch](/img/OpenClassrooms/1562164320851_touch_fichier.png)
+
+touch fichier.txt et touch "un fichier avec espace.txt"
+
+Et vous voici avec deux fichiers :
+- fichier.txt ;
+- un fichier avec espace.txt.
+
+:::info
+Pour créer un **nom** de fichier avec **espace**, il faudra prendre les mêmes précaution que pour la création d’un dossier,
+c’est-à-dire soit :
+- **entourer** le nom du fichier avec des guillemets : **“nom fichier"** ;
+- **échapper** l’espace avec un antislash : **nom\\ fichier**.
+:::
+
+### En résumé
+
+Dans ce chapitre, vous avez appris :
+- à **créer** des **dossiers** avec la commande mkdir ;
+- à **créer** des **fichiers** avec la commande touch ;
+- à **manipuler** des **noms** de dossiers et de fichiers **comportant des espaces**.
+
+_L’étape suivante va être de manipuler des fichiers existants, en les **déplaçant**, en les **copiant** et même en les
+**supprimant** !_
+
+-----
+
+## Manipulez des éléments sur votre ordinateur
+
+[Manipulez des éléments sur votre ordinateur - Apprenez à utiliser la ligne de commande dans un terminal - OpenClassrooms](https://openclassrooms.com/fr/courses/6173491-apprenez-a-utiliser-la-ligne-de-commande-dans-un-terminal/6349956-manipulez-des-elements-sur-votre-ordinateur)
+
+<Vimeo vimeoId="345882366" />
+
+<br />
+
+Maintenant que vous savez vous repérer avec le terminal et même créer des dossiers et fichiers, il est temps d’apprendre à les
+**déplacer**, à les **copier** et à les **supprimer**.
+
+:::note !
+Soyez particulièrement vigilant lorsque vous ferez vos tests : manipuler des éléments implique qu’il va être possible de les
+supprimer, et donc potentiellement d’effacer des fichiers que vous voudriez garder.
+:::
+
+:::info
+N’hésitez pas à vous créer un répertoire spécial pour faire vos tests.
+:::
+
+### Déplacez du contenu avec `mv`
+
+<Vimeo vimeoId="345882480" />
+
+<br />
+
+Pour déplacer un fichier, la commande à utiliser est **mv** pour “move”, _déplacer_, en français. La syntaxe sera donc : _mv
+elementADeplacer destination._
+
+Par exemple, pour déplacer le fichier “fichier.txt” à l’intérieur du répertoire “dossier”, nous écrirons :
+
+![Le résultat de la commande mv fichier.txt dossier sur mon terminal](/img/OpenClassrooms/15621649247469_mv_fichier.txt_dossier_(encadre).png)
+
+mv fichier.txt dossier
+
+:::info
+Pensez à **vérifier** que vos commandes se sont bien passées à l’aide de **ls** !
+:::
+
+Dans l’image ci-dessus, nous pouvons voir que le fichier “fichier.txt” qui était initialement présent dans le répertoire "test"
+a bien disparu, mais se retrouve à l’intérieur du dossier “dossier”.
+
+_Alors, vous avez réussi à déplacer des fichiers ?_
+
+:::note ?
+Et si je veux faire l’opération inverse et remettre le fichier “fichier.txt” là où il était ?
+:::
+
+Souvenez-vous du **dossier caché** “**.**”, celui qui indiquait quel est le **dossier courant**. C’est ici qu’il va prendre
+toute son utilité.
+
+En effet, la commande à utiliser est  _mv dossier/fichier.txt ._
+
+![Le résultat de la commande mv dossier/fichier.txt . sur mon terminal](/img/OpenClassrooms/15621650357915_mv_sousfichier_point.PNG)
+
+mv dossier/fichier.txt .
+
+“dossier/fichier.txt” sert ici à désigner le fichier “**fichier.txt**” qui se trouve **à l’intérieur** du répertoire “**dossier**”,
+et “**.**” signifie “**ici**”.
+
+En d’autres termes, avec cette commande je demande au terminal de me **déplacer le fichier “fichier.txt”**.
+
+Et comme à chaque fois, un petit **ls** pour **vérifier** que tout a fonctionné comme nous nous y attendions.
+
+### Découvrez les wildcards
+
+:::note ?
+Vous savez désormais déplacer du contenu, mais comment s’y prendre si on veut déplacer **beaucoup de fichiers d’un coup** ?
+:::
+
+Il est possible de retaper “mv” pour chaque fichier, mais si vous avez une centaine de fichiers à déplacer, vous risquez de vous
+ennuyer assez vite :-).
+
+C’est pour cette raison que l’on a créé des “**wildcards**” ou “**jokers**”. Ce sont des caractères qui “**remplacent**” une partie
+du nom d’un fichier.
+
+Il en existe plusieurs, mais le plus connu d’entre eux est probablement le caractère **\***. Ce caractère peut être utilisé comme
+substitut pour n’importe quelle autre chaîne de caractères dans une recherche.
+
+Plutôt qu’un long discours, voici un exemple :
+
+![Le résultat de la commande ls c* sur mon terminal](/img/OpenClassrooms/1562167093647_ls_c_etoile.PNG)
+
+ls c\*
+
+Avec ls, vous pouvez constater que j’ai deux dossiers qui commencent par “C” dans mon répertoire courant : **Cours1** et **Cours2**.
+
+Si je tape **ls C\***, alors **C\*** va être remplacé, au moment de l'exécution de la commande, par tous les noms qui
+“correspondent” à C\*, ici Cours1 et Cours2.
+
+Taper **ls C\*** revient donc en réalité à taper _**ls Cours1 Cours2**_, mais en plus rapide (et si vous avez 100 cours, en
+_beaucoup_ plus rapide ! )![:D](https://openclassrooms.com/bundles/common/images/smiley/heureux.png)
+
+Et cela fonctionne avec toutes les commandes :
+
+![Le résultat de la commande mv * dossier/ sur mon terminal](/img/OpenClassrooms/15621671282089_mv_etoile_dossier.PNG)
+
+mv \* dossier/
+
+Dans ce nouvel exemple, je suis dans mon **répertoire test**, qui contient plusieurs sous-répertoires et fichiers (dossier,
+fichier.txt, mon, ‘second  test’, ‘troisième test’, ‘un fichier avec espace.txt').
+
+Parmi eux, le répertoire appelé “**dossier**” ne contient rien du tout.
+
+Lorsque je fais **mv \* dossier**, je demande au terminal de déplacer (mv) tout ce qui correspond à \* (c’est-à-dire, absolument
+tout !) dans le répertoire “dossier”.
+
+:::note !
+Notez le message d’erreur qui apparaît, car il est impossible de déplacer un répertoire à l’intérieur de lui-même. 😃
+:::
+
+Cependant, tous les autres éléments ont bien été copiés à l’intérieur du répertoire “dossier”. Si vous tapez la commande ls, vous
+pouvez vérifier qu’il n’y a plus que le répertoire “dossier” dans le répertoire courant, et que les autres éléments ont bien été
+déplacés.
+
+### Copiez du contenu avec `cp`
+
+<Vimeo vimeoId="345882509" />
+
+<br />
+
+Pour copier du contenu, nous allons procéder exactement de la **même manière** que ce que nous avons fait pour la commande mv,
+mais avec la commande “**cp**”.
+
+La syntaxe pour copier un élément est _cp elementACopier destination._
+
+Par exemple pour **copier le fichier** “fichier.txt” **dans le répertoire** “dossier” :
+
+![Le résultat de la commande cp fichier.txt dossier/ sur mon terminal](/img/OpenClassrooms/15621674155009_cp_fichier_dossier.PNG)
+
+cp fichier.txt dossier/
+
+Après la copie, nous pouvons voir que le fichier est **présent à deux endroits**, là où je suis et dans le répertoire “dossier”.
+
+Second exemple : pour **copier le fichier** “fichier.txt” **dans le même répertoire**, mais avec un **nouveau nom**, ici
+“fichier2.txt”.
+
+![Le résultat de la commande cp fichier.txt fichier2.txt sur mon terminal](/img/OpenClassrooms/15621674977105_cp_fichier_fichier.PNG)
+
+cp fichier.txt fichier2.txt
+
+Dernier exemple, **la copie d’un répertoire** : 
+
+![Le résultat de la commande cp -r dossier/ dossierCopie sur mon terminal](/img/OpenClassrooms/15621675329554_cp_dossier_dossierCopie.PNG)
+
+cp -r dossier/ dossierCopie
+
+:::note !
+Notez le message d'erreur :
+
+`cp -r not specified`
+
+Celui-ci est apparu parce que j'ai tenté de faire la copie directement, comme je l'aurais fait pour un fichier. Cependant, le
+terminal a ici indiqué qu’il manquait l’option “-r”.
+
+En effet, copier un répertoire signifie copier également les éventuels sous-répertoires et fichiers qu’il contient, ce qui peut
+concerner **potentiellement beaucoup de fichiers** (imaginez que vous copiez le répertoire "Windows", par exemple...).
+
+Le terminal demande donc une **confirmation** avec l’**option -r** (r pour “récursif” qui signifie au terminal qu’il va devoir
+aller à l’intérieur du dossier, et des sous-dossiers, et ainsi de suite).
+
+Une fois la commande lancée avec cette option, la copie s’effectue alors sans problème.
+:::
+
+### Supprimez des fichiers et des répertoires avec `rm`
+
+Dernier point et pas des moindres, la **suppression**.
+
+<Vimeo vimeoId="345882528" />
+
+<br />
+
+La suppression se fait avec **rm**, _remove_, qui signifie tout simplement “supprimer”, en français.
+
+:::note !
+Soyez vigilant avec cette commande car elle supprime du contenu ! N'hésitez pas à faire vos tests dans un répertoire à part pour
+plus de sécurité.
+:::
+
+La syntaxe de rm est très simple : _**rm elementASupprimer**._ Par exemple, pour supprimer le fichier “fichier2.txt” je n’ai qu’à
+écrire _rm fichier2.txt._
+
+![Le résultat de la commande rm fichier2.txt sur mon terminal](/img/OpenClassrooms/15621679362335_rm_fichier.PNG)
+
+rm fichier2.txt
+
+Et avec ls nous avons vérifié que ce fichier a bien été supprimé.
+
+Essayons maintenant de **supprimer un répertoire**. Ici, je tente de supprimer le répertoire “dossierCopie”.
+
+![Le résultat de la commande rm -r dossierCopie/ sur mon terminal](/img/OpenClassrooms/15621680115377_rm_dossier.PNG)
+
+rm -r dossierCopie/
+
+:::note !
+Comme pour ce que nous avons vu avec cp, supprimer un répertoire signifie également **supprimer ses éventuels sous-répertoires**
+et fichiers. Par **mesure de sécurité**, la commande rm exige que l’on précise que l’on veut réellement supprimer le dossier
+_et **tout ce qu’il contient**_.
+
+Pour cela, c’est la même option à utiliser, **\-r**.
+
+Ce qui donne au final : _rm -r dossierCopie_.
+:::
+
+Dans ce chapitre, vous avez appris à :
+- **créer** des **dossiers** et des **fichiers** ;
+- les **déplacer** ;
+- les **supprimer**.
+
+Nous sommes presque à la fin de ce cours d’introduction à la ligne de commande.
+
+Le prochain chapitre explorera d’autres commandes pour aller **plus loin** encore et vous donner un aperçu de toute la puissance
+du terminal, au-delà de la manipulation de fichiers !
+
+-----
+
+## Allez plus loin avec de nouvelles commandes
+
+[Allez plus loin avec de nouvelles commandes - Apprenez à utiliser la ligne de commande dans un terminal - OpenClassrooms](https://openclassrooms.com/fr/courses/6173491-apprenez-a-utiliser-la-ligne-de-commande-dans-un-terminal/6349957-allez-plus-loin-avec-de-nouvelles-commandes)
+
+<Vimeo vimeoId="345882545" />
+
+<br />
+
+Vous devriez maintenant être plus à l’aise avec l’utilisation du terminal.
+
+Dans ce dernier chapitre, nous allons nous éloigner de la simple manipulation de dossiers et fichiers via le terminal pour
+**explorer d’autres possibilités**.
+
+### Affichez le manuel d’une commande avec `man`
+
+<Vimeo vimeoId="345882574" />
+
+<br />
+
+La première de ces commandes à explorer est le “**man**”.
+
+La commande “man” **affiche l’aide** associée à une commande. Pour cela, il suffit de taper _**man commande**__._
+
+Par exemple pour afficher l’aide de la commande pwd, on tapera _man pwd_ :
+
+![Le résultat de la commande man pwd sur mon terminal](/img/OpenClassrooms/15621683596802_man_pwd.PNG)
+
+man pwd
+
+Comme vous pouvez le constater, **l’écran entier** a été **remplacé par l’aide** de la commande pwd.
+
+Pour naviguer dans cette aide, vous pouvez utiliser `flèche haut` et `flèche bas`. Et pour sortir de cette aide, vous pouvez taper
+sur la touche `q` (_q_ pour pour "quitter").
+
+:::info
+En cas de **doute** sur le **fonctionnement** d’une commande, ou pour connaître l’**ensemble des options** disponibles, **man**
+sera votre meilleur allié.
+:::
+
+Si vous tapez “_**man ls**_” vous verrez qu’il existe de **nombreuses autres options** que nous n’avons **pas explorées**. Et
+vous pouvez même taper “man man” pour avoir l’aide de man :-). 
+
+### Utilisez `cat`, `less` et `more` pour connaître le contenu d’un fichier
+
+<Vimeo vimeoId="345882595" />
+
+<br />
+
+Nous savons comment connaître le contenu d’un répertoire avec ls, mais comment connaître le contenu d’un fichier ?
+
+Pour cela il existe cat, less et more.
+
+Ces trois commandes ont le même but, à savoir **afficher le contenu d’un fichier**.
+
+Par exemple, si je veux afficher le contenu du fichier “fichier.txt”, je vais taper _cat fichier.txt._
+
+![Le résultat de la commande cat fichier.txt sur mon terminal](/img/OpenClassrooms/15621685856716_cat_fichier.PNG)
+
+cat fichier.txt
+
+Le contenu du fichier s’affiche tel quel dans le terminal.
+
+Pour “less”, la différence, c’est que cet affichage va être “paginé”. C’est-à-dire qu’au lieu d’afficher le contenu directement
+sous la commande, le terminal va utiliser le même mode de visualisation qu’avec la commande “man”.
+
+Ainsi, si le fichier est très long, vous pourrez naviguer dedans à l’aide de `flèche haut` et `flèche bas`, et pour quitter, là
+encore, il suffira de taper `q`.
+
+:::info
+More est une ancienne version de “less”, avec des options navigation en moins. Je précise cependant son existence ici, car il est
+encore très répandu.
+:::
+
+### Découvrez les redirections
+
+<Vimeo vimeoId="345882610" />
+
+<br />
+
+Ce qui suit n’est pas réellement une commande mais une “**redirection**”.
+
+Il en existe plusieurs types, mais nous ne verrons ici que la plus commune : “**\>**”.
+
+Une redirection consiste à **prendre la “sortie” d’une commande** (par exemple pour “ls”, la sortie est tout simplement : afficher
+la liste des répertoires à l’écran) **et** à **la rediriger** vers autre chose, ici vers un fichier.
+
+L’intérêt est notamment de pouvoir garder une trace des commandes que l’on a pu faire, en enregistrant leur résultat dans un
+fichier pour s’en resservir plus tard.
+
+Voici un exemple simple pour mieux comprendre :
+
+![Le résultat de la commande ls -l > liste.txt sur mon terminal](/img/OpenClassrooms/15621687446672_ls_supperieur_liste.PNG)
+
+ls -l > liste.txt
+
+ls -l est censé afficher la contenu de mon répertoire courant. Cependant, vous pouvez constater que ls -l > liste.txt **n’affiche
+rien**.
+
+En revanche, si j’affiche le contenu du fichier “liste.txt” (grâce à la commande “cat” que nous venons juste de voir), alors nous
+retrouvons bien la liste des fichiers. La sortie de ls (c'est-à-dire l'affichage sur l'écran) a été **redirigée** **à l’intérieur
+du fichier**.
+
+### Appréhendez `grep`
+
+<Vimeo vimeoId="345882625" />
+
+<br />
+
+La dernière commande que nous allons voir dans ce chapitre est **grep**.
+
+Grep sert à **chercher des éléments** **à l’intérieur** **d’un fichier** sans même avoir besoin de les ouvrir.
+
+La syntaxe est : _grep ceQueVousVoulezChercher làOùVousVoulezChercher_
+
+Par exemple, si vous voulez afficher toutes les lignes qui contiennent le mot “Cours” dans le fichier liste.txt, il faudra taper
+_grep Cours liste.txt_
+
+![Le résultat de la commande grep cours liste.txt sur mon terminal](/img/OpenClassrooms/15621688744968_grep_cours_liste.PNG)
+
+grep cours liste.txt
+
+Et vous pouvez constater que les deux lignes contenant le mot “**Cours**” se sont affichées à l’écran.
+
+Si nous voulons chercher par exemple “txt” dans l’intégralité des fichiers du répertoire courant, alors la commande sera _grep txt \*._
+
+![Le résultat de la commande grep txt * sur mon terminal](/img/OpenClassrooms/15621689536376_grep_txt_etoile.PNG)
+
+grep txt \*
+
+Ce qui s’est passé, c’est que grep a cherché la chaîne “txt” dans tous les éléments du répertoire courant un par un (grâce
+à **\*** que nous avons vu précédemment et qui permet de cibler l’ensemble des fichiers).
+
+:::note !
+Comme grep fait ses **recherches dans des fichiers**, lorsqu’il rencontre un élément qui est un répertoire, il affiche un message
+pour préciser que cet élément est un répertoire et qu'il ne peut donc pas vérifier si la chaîne se trouve bien à l'intérieur.
+
+Par exemple, ici, “2019”, "Cours1", "Cours2" et "test" sont un répertoire.
+:::
+
+Lorsque grep rencontre des fichiers, il les **vérifie et soit il reste silencieux** quand il n'y a **rien à l'intérieur qui
+corresponde à la recherche** (par exemple, le fichier "lorem.txt" ne contient pas, à l'intérieur, la chaîne "txt") **soit il
+affiche le contenu qui correspond** (par exemple “liste.txt” contient trois lignes avec “txt” dedans, et ces lignes sont bien
+affichées).
+
+### En résumé
+
+Dans ce chapitre, nous avons appris :
+- **man** pour **afficher le manuel** ;
+- **cat/less/more** pour **afficher un contenu** ;
+- la **redirection** “**\>**” pour envoyer le **résultat** d’une commande **à l’intérieur d’un fichier** ;
+- **grep** pour **faire des recherches**.
+
+N’hésitez pas à faire quelques tests afin de bien prendre en main ces différentes commandes. En particulier, “man” peut vous
+donner de précieuses informations sur les options disponibles pour chacune d’entre elles.
+
+-----
+
+## Faites le bilan
+
+[Faites le bilan - Apprenez à utiliser la ligne de commande dans un terminal - OpenClassrooms](https://openclassrooms.com/fr/courses/6173491-apprenez-a-utiliser-la-ligne-de-commande-dans-un-terminal/6349958-faites-le-bilan)
+
+<Vimeo vimeoId="345882637" />
+
+<br />
+
+Vous devriez désormais être un peu **plus à l’aise** avec l’utilisation de la ligne de commande.
+
+Comme il était dit en introduction, ce cours n’avait pas pour vocation à vous apprendre tout ce qu’il est possible de réaliser
+avec le terminal, mais simplement de vous faire **prendre conscience** que cet **outil**, même s’il peut sembler un peu aride
+au premier abord, est **très simple** d’utilisation.
+
+
+:::info
+Si vous voulez aller plus loin, je vous conseille le **[cours de Mathieu Nebra](https://openclassrooms.com/fr/courses/43538-reprenez-le-controle-a-laide-de-linux/37813-la-console-ca-se-mange)**.
+Ce cours concerne initialement Linux, mais **reprend en détail l’utilisation du terminal** en étant bien **plus exhaustif**.
+
+Je pense que vous êtes prêt ! 😀
+:::
+
+Pour rappel, voici toutes les commandes que nous avons vues ensemble, tout au long de ce cours :
+- _pwd_ : permet d’afficher le répertoire courant ;
+- _ls_ : permet d’afficher le contenu d’un répertoire ;
+    - _ls -a_ : l’option -a affiche également les fichiers et dossiers cachés,
+    - _ls -l_ : l’option -l modifie l’affichage pour rajouter de nombreuses informations ;
+- _cd dossier_ : permet de se déplacer à l’intérieur d’un répertoire ;
+- _mkdir dossier_ : permet de créer un dossier ;
+- _touch nomFichier_ : permet de créer un fichier ;
+- _mv source destination_ : permet de déplacer des éléments ;
+- \* : est un caractère qui peut être utilisé comme substitut pour n’importe quel caractère dans une recherche ;
+- _cp source destination_ : permet de copier des éléments ;
+    - _cp -r_ : l’option -r permet de copier un répertoire ;
+- _rm fichiers_ : permet de supprimer des fichiers ;
+    - _rm -r dossiers_ : l’option -r permet de supprimer des répertoires ;
+- _man commande_ : permet d’afficher le manuel d’une commande ;
+- _cat/less/more nomFichier_ : permet d’afficher le contenu d’un fichier ;
+- \> : permet de rediriger le résultat d’une commande vers un fichier ;
+- _grep motif chemin_ : permet de faire des recherches dans des fichiers.
+
+À bientôt !
+
+-----
+
+## Quiz : Testez-vous en situation réelle !
+
+[Testez-vous en situation réelle ! - OpenClassrooms](https://openclassrooms.com/fr/courses/6173491-apprenez-a-utiliser-la-ligne-de-commande-dans-un-terminal/exercises/3548)
+
+#### Compétences évaluées
+
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-checkbox" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#00b341" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <polyline points="9 11 12 14 20 6" />
+  <path d="M20 12v6a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h9" />
+</svg> Manipuler des fichiers avec un terminal
+
+-----
+
+#### Description
+
+:::info
+Pour réaliser ce quiz, vous aurez besoin de télécharger le fichier [zip](https://s3-eu-west-1.amazonaws.com/course.oc-static.com/courses/6349650/quiz.zip).
+
+Ouvrez votre terminal sur votre ordinateur. C'est depuis ce terminal que vous allez chercher votre dossier "quiz" que vous venez
+de télécharger.
+:::
+
+Le but de ce quiz est de vous tester sur l'ensemble des commandes que vous avez pu aborder durant ce cours d'introduction.
+
+-----
+
+#### Question 1 : Placez-vous dans le dossier "quiz" à l'aide de la commande "cd".
+
+**Depuis ce dossier, si vous tapez la commande "ls", qu'obtenez-vous ?**
+
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> . .. 2019 fichier.txt image.png lorem.txt test test2<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> Photos Vidéos<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle-check" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#7bc62d" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M9 12l2 2l4 -4" />
+</svg> 2019 fichier.txt image.png lorem.txt test test2<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> Le contenu du fichier "lorem.txt"<br />
+<br />
+
+*Le dossier "quiz" contient deux répertoires : "2019" et "test", ainsi que 4 fichiers ("fichier.txt", "image.png", "lorem.txt" et
+"test2").*
+
+*Comme la commande ls n'a pas été lancée avec l'option "-a", les dossiers cachés . et .. ne devraient pas apparaître.*
+
+*"Photos" et "Vidéos" sont des dossiers contenus dans le dossier 2019.*
+
+-----
+
+#### Question 2 : Si vous tapez la commande "cat fichier.txt", que voyez-vous ?
+
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> "Lorem impsum dolor sit amet...".<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> Le terminal affiche une erreur.<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> Le contenu du répertoire "quiz".<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle-check" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#7bc62d" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M9 12l2 2l4 -4" />
+</svg> "Ceci est un fichier. Le terminal, c'est facile."<br />
+<br />
+
+*"cat fichier.txt" permet d'afficher le contenu du fichier appelé "fichier.txt". Ce fichier contient "Ceci est un fichier. Le
+terminal, c'est facile. "*
+
+-----
+
+#### Question 3 : Tapez la commande "ls -la > liste.txt". Que se passe-t-il ?
+
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle-check" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#7bc62d" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M9 12l2 2l4 -4" />
+</svg> Le terminal n'affiche pas le résultat de ls, mais un fichier liste.txt avec ce résultat a été créé.<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> Le terminal affiche le résultat de ls et un fichier liste.txt a été créé.<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> Le terminal affiche le contenu du fichier "liste.txt".<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> Le terminal a créé un dossier appelé "liste.txt".<br />
+<br />
+
+*Le caractère ">" est ici une redirection. Donc ce qu'aurait dû afficher la commande "ls -la" est redirigé à l'intérieur du
+fichier "liste.txt". Donc rien n'est affiché, mais un fichier avec le résultat de la commande est bien créé.*
+
+-----
+
+#### Question 4 : Si je me positionne dans le dossier quiz et que je tape "ls 2" puis `tab` et enfin `entrée`, que vais-je voir ?
+
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> Un message d'erreur, le répertoire "2" n'existe pas.<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> Le contenu du répertoire "2".<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle-check" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#7bc62d" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M9 12l2 2l4 -4" />
+</svg> Photos Vidéos.<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> Le contenu du fichier 2019.<br />
+<br />
+
+*Le répertoire quiz contient un dossier appelé 2019. Si je tape ls 2 puis `tab`, alors le terminal va compléter automatiquement
+la ligne, et la commande va devenir "ls 2019". En l'exécutant avec `entrée`, nous verrons donc le contenu du dossier 2019,
+c'est-à-dire "Photos" et "Vidéos".*
+
+-----
+
+#### Question 5 : Dans le dossier quiz, il y a deux éléments appelés "test" et "test2". Quelle est la nature de ces deux éléments ?
+
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> "test" est un répertoire et "test2" un répertoire.<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> "test" est un fichier et "test2" un fichier.<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> "test" est un fichier et "test2" un fichier.<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle-check" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#7bc62d" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M9 12l2 2l4 -4" />
+</svg> "test" est un répertoire et "test2" un fichier.<br />
+<br />
+
+*Avec la commande ls -l nous pouvons constater que test est un répertoire (la ligne commence par "d" pour "directory") et test2
+est un fichier (la ligne commence par un -).*
+
+*Il est tout à fait possible pour un fichier de ne pas avoir d'extention (comme .txt ou .png). De la même manière, il est tout à
+fait possible d'avoir un répertoire qui s'appellerait "dossier.txt". Le fait d'avoir seulement les noms de fichier qui finissent
+par une extension n'est qu'une convention et n'est en rien obligatoire.*
+
+-----
+
+#### Question 6 : Si depuis le dossier "quiz", je tape dans l'ordre :
+
+- cp fichier.txt fichier2.txt
+- cp lorem.txt fichier2.txt
+- less fichier2.txt
+
+**que va afficher cette dernière commande ?**
+    
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> Rien, fichier2.txt est vide.<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> Le même contenu que fichier.txt.<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle-check" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#7bc62d" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M9 12l2 2l4 -4" />
+</svg> Le même contenu que lorem.txt.<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> Cet enchaînement n'est pas valide et le terminal va retourner un message d'erreur.<br />
+<br />
+
+*La première commande fait une copie de fichier.txt vers "fichier2.txt". À ce stade, fichier2.txt possède le même contenu que
+"fichier.txt".*
+
+*La seconde commande fait une copie de "lorem.txt" vers "fichier2.txt". Même si "fichier2.txt" existe déjà, il va être remplacé
+par la copie de "lorem.txt". Donc à la fin de la seconde commande, "fichier2.txt" est une copie de "lorem.txt".*
+
+*La dernière commande affiche le contenu de fichier2.txt. Comme il a été copié à partir de "lorem.txt", l'affichage sera le même
+que celui que l'on aurait eu en tapant "less lorem.txt".*
+
+-----
+
+#### Question 7 : Depuis le répertoire quiz, si je tape la commande "rm test", que va-t-il se passer ?
+
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> Le dossier "test" sera supprimé.<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> Tous les éléments commençant par "test" seront supprimés.<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle-check" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#7bc62d" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M9 12l2 2l4 -4" />
+</svg> Un message d'erreur va apparaître.<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> Un fichier "remarque" (rm) va être ajouté à l'intérieur du dossier test.<br />
+<br />
+
+*Test est un dossier, donc lorsqu'on tape rm test, le terminal refuse de faire la suppression, car il exige que l'on spécifie
+l'option "-r", pour bien préciser que l'on est d'accord pour supprimer le dossier test ainsi que tout ce que, potentiellement,
+il pourrait contenir.*
+
+*Pour supprimer tous les éléments commençant par test, il aurait fallu utiliser un joker et taper "rm test\*" (là encore, pour la
+suppression des dossiers, le -r est requis).*
+
+-----
+
+#### Question 8 : Pour créer un dossier appelé "photo", quelle commande devez-vous taper ?
+
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle-check" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#7bc62d" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M9 12l2 2l4 -4" />
+</svg> mkdir photo<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> makedir photo<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> createdir photo<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> cd photos<br />
+<br />
+
+*Pour créer un nouveau dossier, la commande à utiliser est "mkdir" (qui signifie "make dir", "créer un répertoire", en français).*
+
+*Makedir et createdir ne sont pas des commandes qui existent et cd (change directory) permet de changer de répertoire de travail.*
+
+-----
+
+#### Question 9 : Combien de fichiers seront créés si vous tapez la commande : "touch mon fichier second\\ fichier" ?
+
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> Aucun<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> 1<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> 2<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle-check" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#7bc62d" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M9 12l2 2l4 -4" />
+</svg> 3<br />
+<br />
+
+*Par défaut, le terminal considère l'espace comme un séparateur. Cependant, l'antislash est un inhibiteur qui permet de dire au
+terminal que l'espace qui suit doit être considéré comme une "lettre normale". Donc ici, nous avons créé trois fichiers :*<br />
+*- mon ;*<br />
+*- fichier ;*<br />
+*- second fichier.*
+
+-----
+
+#### Question 10 : À propos de  la commande "man man", quelles affirmations sont vraies ?
+
+*Attention, plusieurs réponses sont possibles.*
+
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-checkbox" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#00b341" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <polyline points="9 11 12 14 20 6" />
+  <path d="M20 12v6a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h9" />
+</svg> Elle affiche l'aide de la commande "man".<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-square" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <rect x="4" y="4" width="16" height="16" rx="2" />
+</svg> Elle écrit "man" à l'écran.<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-square" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <rect x="4" y="4" width="16" height="16" rx="2" />
+</svg> Elle affiche le contenu du fichier "man".<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-checkbox" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#00b341" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <polyline points="9 11 12 14 20 6" />
+  <path d="M20 12v6a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h9" />
+</svg> Pour sortir du mode manuel, il faut appuyer sur <code>q</code>.<br />
+<br />
+
+*La commande "man" affiche l'aide d'une autre commande. "man man" affiche donc l'aide de la commande passée en paramètre, ici
+"man".*
+
+*Une fois lancée, le terminal est entièrement remplacé par l'aide, et une fois que l'on a fini de la consulter, il suffit
+d'appuyer sur q(pour quit) pour sortir du mode "manuel".*

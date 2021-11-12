@@ -1,0 +1,766 @@
+---
+sidebar_position: 2
+---
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+import { Vimeo } from 'mdx-embed';
+
+# Découper une maquette
+
+## Découvrir le concept de maquette
+
+[Découvrir le concept de maquette - Découpez et intégrez une maquette - OpenClassrooms](https://openclassrooms.com/fr/courses/3504431-decoupez-et-integrez-une-maquette/3605756-decouvrir-le-concept-de-maquette)
+
+Une maquette est l’équivalent de **votre site web en version imprimée**. La création d’une maquette intervient souvent après
+l’étude des besoins du client et l’élaboration d’un cahier des charges.
+
+:::info
+Un **cahier des charges** est un document qui liste les besoins du client ainsi que les différentes étapes de réalisation jusqu’à
+la mise en ligne finale. Il est extrêmement important d’en avoir un pour être certain que vous et votre client partagez les mêmes
+objectifs.
+:::
+
+### Qu'est-ce qu'une maquette ?
+
+La maquette permet de vérifier avec le client tous les aspects visuels d’un site, de la mise en page générale aux détails tels
+que les couleurs, les polices de caractères utilisées, certaines images, les icônes, les logos…
+
+Elle rend la création de site plus tangible pour le client car il peut avoir un aperçu du rendu, sans attendre que les
+développeurs créent le site. Pour les développeurs, c’est la garantie d’être plus efficaces puisque tous les choix graphiques
+ont déjà été faits !
+
+En général, elle est réalisée par un graphiste qui maîtrise les outils de PAO et qui a de bonnes connaissances en design pour le
+Web. Elle peut aussi être réalisée par les designers d’interface (UI designer). Les outils les plus connus sont **Photoshop,
+InDesign ou Sketch**
+(Mac OS X uniquement).
+
+![Photoshop](https://s3-eu-west-1.amazonaws.com/sdz-upload/prod/upload/photoshoplogo.png)
+
+Photoshop
+
+La maquette est le point de départ de tout intégrateur. En effet, le premier travail du développeur va être de traduire la
+maquette en langage web, c’est-à-dire en HTML et CSS. Il devra également parler avec le graphiste pour connaître les éléments
+interactifs qui nécessiteront du Javascript.
+
+### La structure générale : le HTML
+
+La première étape va être de découper la maquette en ensembles et sous-ensembles qui recréeront une structure de page HTML. Vous
+commencerez par repérer les éléments qui iront dans le `<header>`, ceux qui constitueront le corps de page et ceux qui formeront
+le `<footer>`.
+
+:::info
+Vous aurez une première vue globale que vous allez ensuite diviser en élément toujours plus petits, comme des images ou des
+boutons.
+:::
+
+### Éléments décoratifs : le CSS
+
+Une fois la structure HTML dessinée, vous vous intéresserez au contenu que vous pouvez réaliser en CSS.
+
+Une erreur commune, même si on la rencontre de moins en moins, est d’exporter des images “décoratives” alors que le développeur
+peut aisément utiliser CSS pour les recréer.
+
+Par exemple, imaginons que vous travaillez sur une maquette qui comporte un titre avec une double barre horizontale centrée à
+gauche et une autre à droite, comme ceci :
+
+![](https://s3-eu-west-1.amazonaws.com/sdz-upload/prod/upload/image2510.png)
+
+_Source : [http://codepen.io/chriscoyier/pen/zDGkw](https://codepen.io/chriscoyier/pen/zDGkw)_
+
+Le premier réflexe serait d’exporter les deux barres en images. Mais ce sera plus rapide et plus flexible en CSS !
+
+:::note ?
+"Ça, c’est vous qui le dites ! Je ne comprends pas pourquoi je devrais faire le plus d’éléments possibles en CSS si c’est plus
+facile pour moi de tout exporter en images."
+:::
+
+Tout d’abord, rappelez-vous de l’importance du “[Responsive Design](https://www.seo.fr/definition/responsive-design)”,
+c’est-à-dire le fait qu’une page web puisse être consultée à la fois sur un portable, une tablette ou un ordinateur sans perdre
+en lisibilité ni en vitesse de chargement. Compte tenu de l’augmentation très importante du trafic venant de smartphones, vous
+n’aimeriez pas que vos visiteurs abandonnent votre site au profit d’un autre car ils ne peuvent pas le consulter sur leur mobile !
+
+Un élément créé en CSS s’adaptera mieux à différentes tailles d’écran qu’une image. Dans notre exemple, je suis certaine que vous
+aurez envie d’effacer les barres, ou de réduire leur taille, quand votre utilisateur consulte la page depuis un mobile. Si ce sont
+des images, vous devrez exporter plusieurs versions d’une même image simplement pour “adapter” sa taille à celle des différents
+écrans. Et quand vous voudrez en changer la couleur ? Vous allez devoir tout recommencer ! Tandis que si vous les réalisez en CSS,
+vous aurez simplement besoin de 10 secondes pour en changer la couleur.
+
+Enfin, **une image sera toujours plus longue à charger** qu’une feuille de styles (CSS). Pensez à deux aspects : votre utilisateur
+et Google. Si votre page met plus de 3 secondes à charger, vous avez déjà perdu votre utilisateur. Et étant donné que Google
+préfère que ses utilisateurs soient heureux, il privilégie les pages qui se chargent vite.
+
+### Optimiser les images
+
+Il reste néanmoins des contenus que vous ne pourrez entièrement recréer en CSS : les logos, les icônes et les photos. Encore une
+fois, pensons adaptabilité et rapidité. Le format à privilégier pour vos logos et vos icônes est le **SVG**. Il s’agit d’un
+format vectoriel qui, par conséquent, ne sera jamais pixellisé. Il a aussi l’avantage d’être plus léger qu’une image.
+
+Finalement, vous ne devriez avoir des images (au format **PNG**) que pour les photos.
+
+En résumé, les seuls éléments image que vous aurez devraient être des photos et, si c’est vraiment nécessaire, des icônes.
+
+Prêt-e à commencer ? C’est parti !
+
+-----
+
+## Trouver une maquette et comprendre son fonctionnement
+
+[Trouver une maquette et comprendre son fonctionnement - Découpez et intégrez une maquette - OpenClassrooms](https://openclassrooms.com/fr/courses/3504431-decoupez-et-integrez-une-maquette/3605761-trouver-une-maquette-et-comprendre-son-fonctionnement)
+
+Imaginons qu’un client vienne vous voir et vous commande un site. Si vous n’avez pas de compétences en graphisme, il vous sera
+assez difficile de créer une maquette de zéro. Or il existe pléthores de maquettes sur Intenet, payantes ou gratuites, prêtes à
+être utilisées et adaptées par vous !
+
+Nous allons donc commencer par trouver une maquette qui s’approche de ce qui nous est demandé par notre client. Vous pouvez
+aisément en trouver en tapant “PSD web layouts” sur votre moteur de recherche préféré.
+
+Je vais me baser sur [la maquette de Blaz](http://blazrobar.com/free-psd-website-templates/take-a-free-mobile-app-landing-page-psd-template/)
+qu’il met à disposition gracieusement (vous pouvez lui envoyer un message pour le remercier !).
+
+_**Bienvenue dans l’environnement de Photoshop !**_
+
+Nous allons utiliser [Photoshop](https://openclassrooms.com/courses/debuter-sur-adobe-photoshop) pour ouvrir ses fichiers. La
+plupart des maquettes que vous trouverez utilisent ce logiciel. Vous pouvez également chercher des maquettes utilisant Illustrator
+ou Sketch mais elles sont plus rares.
+
+Si vous ne l’avez pas déjà installé, cliquez sur [ce lien](https://www.adobe.com/products/photoshop.html). Photoshop est un
+logiciel payant mais vous pouvez l’utiliser gratuitement pendant une petite semaine. Un bon moyen de le tester !
+
+### Introduction à Photoshop : espace de travail
+
+Photoshop est un logiciel de traitement d’image très utilisé par les graphistes pour créer des images ou des maquettes.
+
+Et j’ai une bonne nouvelle : il reprend la même organisation que les autres logiciels Adobe. Donc une fois que vous savez en
+utiliser un, il est plus facile d’utiliser les autres !
+
+Pour comprendre Photoshop, imaginez-vous dans un atelier d’artiste-peintre qui cohabiterait avec une imprimerie. Votre espace de
+travail est votre écran. À gauche, vous retrouvez les outils que vous pourriez utiliser, dans la vie réelle, avec vos mains. Nous
+rentrerons dans le détail plus tard, mais vous pouvez distinguer un pinceau, une pipette ou une plume.
+
+À droite se trouvent des réglages plus généraux, qui ressembleraient dans la vie réelle à des tableaux en liège ou à des boîtes.
+Vous avez par exemple un nuancier de couleurs en haut à droite.
+
+La barre du haut change en fonction de l’outil utilisé. Elle vous permet de sélectionner les options de cet outil. Par exemple,
+en utilisant l’outil Texte, vous pouvez changer la police de caractères.
+
+Enfin, le centre de votre écran affiche votre création. Comme une feuille de papier, elle peut être de n'importe quelles
+dimensions mais elle sera toujours rectangulaire (ou carrée).
+
+### Zoom sur les grilles
+
+En ouvrant la maquette, je peux observer un ensemble de lignes qui recouvrent toute la maquette. C’est ce que l’on appelle une
+grille.
+
+:::info
+Le terme de Grille est hérité des premiers écrivains qui utilisaient du fil tendu horizontalement et verticalement pour aligner
+leurs écrits. Quand l’imprimerie est apparue, les imprimeurs ont repris le concept lors de la création des matrices (plaques
+contenant les lettres). La grille typographique est partie intégrante de la mise en page de tout écrit. Selon le choix du
+graphiste elle peut apporter stabilité ou mouvement, transmettre de la confiance ou au contraire une grande impression de fouillis.
+:::
+
+Une grille est organisée en lignes horizontales (qui forment une rangée) et en lignes verticales (qui créent des colonnes).
+
+Dans notre projet, les colonnes sont symbolisées par des languettes un peu transparentes qui courent à travers tout le document.
+
+Pourquoi utiliser une grille ? Avant tout, elle rend vos contenus plus lisibles et plus structurés si vous en choisissez une
+organisée en colonnes parallèles. Elle vous permet également, en tant qu’intégrateur ou intégratrice, d’adapter vos contenus aux
+différentes tailles d’écran, donc de penser responsive.
+
+![Une grille pour ordinateur](https://s3-eu-west-1.amazonaws.com/sdz-upload/prod/upload/image031.png)
+
+Une grille pour ordinateur
+
+![La même grille pensée pour un smartphone](https://s3-eu-west-1.amazonaws.com/sdz-upload/prod/upload/image05.png)
+
+La même grille pensée pour un smartphone
+
+Blaz, le graphiste de notre projet, a utilisé une grille composée de 12 colonnes. C’est parfait si vous désirez utiliser
+Bootstrap, la librairie CSS créée par Twitter (c’est d’ailleurs ce que nous ferons un peu plus tard !).
+
+Les lignes horizontales (les rangées) sont créées grâce aux règles de Photoshop. On les utilise comme aide pour aligner les
+éléments horizontalement, comme une règle dans la vraie vie ! Pour en ajouter une, déplacez simplement votre curseur sur la
+règle en haut, cliquez et déplacez cette nouvelle règle à l’endroit souhaité.
+
+![Une règle Photoshop](https://s3-eu-west-1.amazonaws.com/sdz-upload/prod/upload/P1C2moverulers.gif)
+
+Une règle Photoshop
+
+### Les calques
+
+Vous observez également, sur la droite, un élément dont nous n’avons pas encore parlé : les calques.
+
+![](https://s3-eu-west-1.amazonaws.com/sdz-upload/prod/upload/image008.png)
+
+Un calque Photoshop fonctionne de la même manière qu’un calque dans la vraie vie, à la différence que vous pouvez en superposer
+autant que vous le souhaitez en voyant toujours à travers !
+
+Chaque calque suit un principe de priorité : celui qui est tout en haut a priorité sur celui qui est tout en bas. Si, dans la
+vraie vie, vous empilez deux calques, vous verrez en priorité le contenu situé au-dessus. Il couvrirait le contenu de celui qui
+est en dessous. Il en est de même pour Photoshop !
+
+Dans notre cas, les calques sont organisés par fichiers afin que ce soit plus lisible. Vous pouvez désactiver un calque, ou un
+fichier, en cliquant sur l’oeil (pour ne plus le voir !) et le réactiver en cliquant de nouveau sur l’oeil.
+
+Pour zoomer sur un élément, cliquez sur la loupe ou sur Cmd + + (Cmd + – pour dézoomer).
+
+![Cacher et montrer des calques](https://s3-eu-west-1.amazonaws.com/sdz-upload/prod/upload/P1C2hidelayers.gif)
+
+Cacher et montrer des calques
+
+-----
+
+## Traduire les éléments visuels en HTML
+
+[Traduire les éléments visuels en HTML - Découpez et intégrez une maquette - OpenClassrooms](https://openclassrooms.com/fr/courses/3504431-decoupez-et-integrez-une-maquette/3605766-traduire-les-elements-visuels-en-html)
+
+La première action que nous allons réaliser aura pour objectif de nous aider à bien structurer notre page HTML.
+
+### Réorganiser les calques
+
+Certains graphistes organisent le contenu de leur maquette en la pensant déjà pour l’intégration. Les calques sont alors déjà
+organisés en dossiers de contenu qui contiennent tous les calques d'une section donnée. Par exemple, vous retrouverez certainement
+un dossier "header" englobant les calques dédiés au haut de page de votre site. Le dossier d’en dessous contiendra le contenu qui
+suivra dans la page (la première section) et ainsi de suite. Dans notre cas, Blaz a créé un dossier `<header>` et un dossier
+`<footer>`.<br />
+Top !
+
+Pour autant, nous pouvons remarquer qu’ils ne sont pas du tout dans le bon ordre. Je vous conseille de prendre 5 minutes pour
+réorganiser les calques pour qu’ils suivent l’ordre de votre page HTML. Ce sera ainsi plus facile de vous y retrouver quand vous
+coderez.
+
+:::info
+N’hésitez pas à renommer les différents dossiers (Description, A propos…).
+:::
+
+Si votre maquette n’inclut pas de dossiers, je vous conseille de regrouper les calques en dossiers pour une meilleure organisation.
+
+Pour ajouter un dossier, cliquez sur la petite icône en forme de dossier située en bas à droite du panneau "Calques".
+
+![La section 7 est sous le footer car sinon cela changeait la maquette. Respectez bien le dessin de base !](https://s3-eu-west-1.amazonaws.com/sdz-upload/prod/upload/image1510.png)
+
+La section 7 est sous le footer car sinon cela changeait la maquette. Respectez bien le dessin de base !
+
+![Changez l'ordre des dossiers](https://s3-eu-west-1.amazonaws.com/sdz-upload/prod/upload/P1C3movelayers1.gif)
+
+Changez l'ordre des dossiers
+
+### Faire connaissance avec la maquette
+
+Prenez le temps de parcourir les éléments en désactivant et en réactivant les calques. Vous verrez ainsi l’ordre de priorité ainsi
+que la structure de votre maquette. Cela vous aidera à organiser votre HTML.
+
+Amusez-vous également à distinguer les différents formats de contenu : texte, image, dégradé, forme géométrique… En général je
+réalise une première esquisse, sur une feuille de papier, des éléments de la maquette que je "traduis" en HTML. Je vais du global
+au particulier, c’est-à-dire de l’élément le plus grand à l'élément le plus petit. J’en profite pour ajouter quelques éléments
+qui ne font pas vraiment partie de la maquette, comme la future balise `<ul>` pour les listes ou la `<form>` pour les formulaires.
+
+![Ajoutez des tags HTML aux calques](https://s3-eu-west-1.amazonaws.com/sdz-upload/prod/upload/P1C3renamelayers1.gif)
+
+Ajoutez des tags HTML aux calques
+
+:::info
+Vous ne connaissez absolument pas HTML et vous avez l’impression que je vous parle chinois ? Tout va bien ! Faites quand même
+l’exercice en écrivant le type de contenu (texte, image, icône, titre…) et nous verrons ensemble, dans la seconde partie de ce
+cours, les équivalences en HTML.
+:::
+
+![k](https://s3-eu-west-1.amazonaws.com/sdz-upload/prod/upload/image021.png)
+
+Vous remarquerez, si vous regardez mes esquisses, que les proportions ne sont pas respectées à la lettre. Ce n’est pas grave,
+car le principal pour l'instant est de bien reconnaître les éléments qui seront intégrés en HTML. Nous allons nous intéresser
+aux proportions et aux tailles dans le prochain chapitre !
+
+-----
+
+## Dimensions et proportions
+
+[Dimensions et proportions - Découpez et intégrez une maquette - OpenClassrooms](https://openclassrooms.com/fr/courses/3504431-decoupez-et-integrez-une-maquette/3605771-dimensions-et-proportions)
+
+Intégrer une maquette signifie la traduire à l’identique en langages pour le Web. Chaque pixel est important ! Comme une
+photocopie. C’est pour cela que la taille des éléments, ainsi que leurs proportions les uns envers les autres, sont fondamentaux.
+
+### Grille et proportions
+
+Nous l’avons mentionné plus tôt : la maquette de votre site a beau être conçue pour un affichage sur un ordinateur, vous devez
+penser à son adaptation sur mobile et sur tablette.
+
+:::note ?
+"Tu veux dire qu’il faut que je fasse d’autres maquettes ? Et comment gérer la position de chaque élément pour les appareils dont
+les écrans sont entre deux valeurs ? Par exemple 500 px de largeur quand ma maquette est pensée pour un écran de 480 px ?"
+:::
+
+Ne vous inquiétez pas, il n’est pas nécessaire de créer de nouvelles maquettes. Quant aux dimensions intermédiaires… Vous aurez
+la réponse dans quelques minutes. ![;)](https://openclassrooms.com/bundles/common/images/smiley/clin.png)
+
+Commençons par un petit dessin ! Ou plutôt deux : un pour le smartphone et l’autre pour la tablette. Le jeu va être d’agencer les
+éléments de la maquette pour un écran plus petit (celui d’un smartphone) puis un peu plus grand (une tablette). Reprenez vos
+esquisses et, comme s’il s’agissait d’un puzzle, réorganisez les éléments.
+
+![](https://s3-eu-west-1.amazonaws.com/sdz-upload/prod/upload/Screenshot%202016-04-05%2011.17.16.png)
+
+Et voilà !
+
+Intéressons-nous maintenant au positionnement des éléments pour les tailles d’écran comprises entre ces trois esquisses. Nous
+n’allons évidemment pas faire une esquisse par taille d’écran qui existe, d’autant plus que de nouveaux modèles sortent chaque
+jour. Nous allons plutôt définir un "breaking-point", un point de rupture en français. Nous allons décider que l’organisation de
+certains éléments changera à partir d’une taille d’écran définie.
+
+En général, nous retrouvons 4 breaking-points :
+- Les très petits écrans (&#60; 768 px : pour les écrans dont la largeur est comprise entre 0 px et 768 px)
+- Tablettes (768 px - 991 px)
+- Ordinateurs (992 px - 1199 px)
+- Grands écrans d'ordinateurs et télévisions
+
+Prenons un exemple et utilisons le breaking-point des très petits écrans (&#60; 768 px). De 0 à 768 px, le `<h1>` et le `<p>`
+seront au-dessus de l’image. Puis, à partir de 768 px, le titre et le paragraphe seront à côté de l’image.
+
+La clé est alors de penser en proportions plutôt qu’en pixels et d’utiliser la grille. Chaque élément compris dans la grille est
+mesuré en nombre de colonnes ou en pourcentages : 6 colonnes sur 12 ou 50% de la largeur de la page. Ainsi, peu importe si la
+taille de votre écran change : vous savez que votre élément prendra toujours 50% de l’espace total de votre page.
+
+Vous n’avez donc pas à noter la taille exacte en pixels de tous les éléments qui suivent la grille.
+
+Prenons un autre exemple. Ce texte :
+
+![](https://s3-eu-west-1.amazonaws.com/sdz-upload/prod/upload/image1410.png)
+
+Visuellement, nous distinguons deux colonnes ‘invisibles’ (une à gauche et une à droite).
+
+Si nous suivons la grille de 12 colonnes, le texte de gauche occupe un espace de 6 colonnes sur 12 et celui de droite également.
+
+Nous noterons donc qu’il nous faudra créer deux `<div>` (une pour le texte de gauche et une pour le texte de droite). Chacune de
+ces `<div>` devra occuper un espace de 6 colonnes sur 12.
+
+Par contre, lorsqu’un utilisateur visitera ma page depuis un mobile, chaque élément occupera 100% de la largeur de l’écran. Le
+titre viendra en premier, puis les paragraphes de la colonne invisible de gauche et les paragraphes de celle de droite. Leur
+contenu sera ainsi plus facilement lisible car il sera plus grand.
+
+Il existe néanmoins un élément à noter en pixels : la largeur de la grille ! Elle ne dépend de personne et ne peut donc pas être
+exprimée en pourcentages.
+
+Revenez à Photoshop et sélectionnez l’outil Règle dans la colonne de gauche. Glissez votre curseur pour mesurer l’espacement entre
+la ligne le plus à gauche de votre grille et celle le plus à droite.
+
+![Mésurez la largeur de la grille](https://s3-eu-west-1.amazonaws.com/sdz-upload/prod/upload/P1C4measureruler1.gif)
+
+Mesurez la largeur de la grille
+
+:::info
+Conseil de pro : afin de tracer une ligne droite, maintenez la touche Maj enfoncée pendant que vous mesurez la colonne.
+:::
+
+Puis regardez la valeur qui s’affiche sur la barre supérieure, à côté de la lettre L : 1230. La largeur de ma grille est donc de
+1230 pixels sur ordinateur. Notez-le sur vos esquisses afin de vous en souvenir !
+
+![](https://s3-eu-west-1.amazonaws.com/sdz-upload/prod/upload/image091.png)
+
+### Dimensions verticales
+
+Nous avons beaucoup parlé des éléments compris dans les colonnes, mais comment mesurer les éléments en hauteur ? Peut-on également
+réfléchir en pourcentage ?
+
+Oui, mais ce n’est pas très pratique. ![;)](https://openclassrooms.com/bundles/common/images/smiley/clin.png)
+
+Si nous voulons le faire en pourcentage, c'est possible. Il faut alors mesurer la hauteur totale de la page, puis l’élément à
+placer verticalement, et trouver la proportion. Le problème, vous l’imaginez bien, est que la hauteur de votre page est amenée
+à varier en fonction de son contenu !
+
+Ce n’est donc VRAIMENT pas pratique !
+
+Nous allons donc nous contenter de mesurer les pixels pour la version desktop et de les inventer pour la version mobile et
+tablette. ![:)](https://openclassrooms.com/bundles/common/images/smiley/smile.png)
+
+![](https://s3-eu-west-1.amazonaws.com/sdz-upload/prod/upload/image1310.jpg)
+
+-----
+
+## Les éléments traduisibles en CSS
+
+[Les éléments traduisibles en CSS - Découpez et intégrez une maquette - OpenClassrooms](https://openclassrooms.com/fr/courses/3504431-decoupez-et-integrez-une-maquette/3605776-les-elements-traduisibles-en-css)
+
+Maintenant que nous avons décomposé la maquette au niveau des éléments et des dimensions, il est temps de nous intéresser aux
+couleurs et aux polices de caractères ! Nous verrons également comment retrouver des filtres ou des effets spéciaux qui peuvent
+être recréés en CSS puis nous finirons par l’export d’un logo en SVG.
+
+### Palette de couleurs
+
+La palette de couleurs est l’élément fondateur de tout design, qu’il soit destiné à l’impression ou au Web. Afin de mieux
+comprendre l’importance des couleurs, prenez le temps (prévoyez une bonne heure) de lire et d’assimiler cette série de trois
+articles publiés dans Smashing Magazine :
+- [Color Theory for Designers, Part 1: The Meaning of Color](https://www.smashingmagazine.com/2010/01/color-theory-for-designers-part-1-the-meaning-of-color/)
+- [Color Theory For Designers, Part 2: Understanding Concepts And Terminology](https://www.smashingmagazine.com/2010/02/02/color-theory-for-designers-part-2-understanding-concepts-and-terminology/)
+- [Color Theory for Designer, Part 3: Creating Your Own Color Palettes](https://www.smashingmagazine.com/2010/02/08/color-theory-for-designer-part-3-creating-your-own-color-palettes/)
+
+:::info
+Appliquez chacun de ces articles à la maquette choisie. Quelles sensations vous évoquent les couleurs utilisées ? Comment
+traduiriez-vous "hue", "shades" ou "tints" ? Quel est le type de Palette utilisée selon vous ?
+:::
+
+Afin de retrouver les couleurs utilisées dans votre document, tirez parti de l’outil Pipette. Sélectionnez la pipette et cliquez
+sur la couleur dont vous désirez connaître le code. Puis cliquez sur le carré de couleur principale situé tout en base de la barre
+latérale de gauche.
+
+Une nouvelle fenêtre s’ouvre contenant tous les codes de couleurs.
+
+![Sélectionnez une couleur](https://s3-eu-west-1.amazonaws.com/sdz-upload/prod/upload/P1C5pipettecolor2.gif)
+
+Sélectionnez une couleur
+
+:::note ?
+Quelles sont ces lettres ? Je ne comprends pas à quoi elles font référence.
+:::
+
+**TSL** est l’acronyme de Teinte (exprimée en degrés par rapport à une position donnée sur la roue Chromatique), Saturation (en
+pourcentage) et Luminosité (en pourcentage). Ces valeurs sont plutôt utilisées en imprimerie et vous n’en aurez pas besoin.
+
+**Lab** fait référence au modèle CIE L\*a\*b, utilisé par Photoshop pour se rapprocher au plus près de la perception humaine des
+couleurs : Luminosité, position a sur l’axe de couleurs vert-rouge et position b sur l’axe de couleurs bleu-jaune. Il est surtout
+utilisé en imprimerie.
+
+**RVB** signifie Rouge Vert Bleu. Vous verrez plus souvent l’acronyme RGB lors de vos recherches. Il s’agit de la même notion
+exprimée en anglais : Red Green Blue. Cette notation fait directement référence aux pixels de votre écran et à la synthèse
+additive de couleurs. En étant extrêmement synthétique, les valeurs RVB définissent l’intensité des couleurs Rouge, Vert et Bleu
+contenues dans un pixel entre 0 (noir absolu) et 255 (blanc absolu). Notez cette valeur car vous en aurez besoin.
+
+**CMJN** est pour Cyan Magenta Jaune Noir. Il fait référence à la synthèse soustractive des couleurs, utilisée en imprimerie pour
+rendre les couleurs.
+
+**Triplet Hexadécimal** (aussi appelé hex) : une suite de chiffres et de lettres qui suit un croisillon (hashtag). Nombre
+hexadécimal à 6 chiffres qui représente une couleur en RVB. Notez cette valeur, elle est très importante.
+
+Notez les valeurs RVB et le triplet hexadécimal des couleurs qui sont importantes.
+
+:::note ?
+Comment faire pour réaliser un dégradé ?
+:::
+
+Double-cliquez sur le calque, à l’endroit où se trouvent les couleurs du dégradé et dans le petit carré. Puis cliquez dans le
+dégradé. En cliquant sur les carrés de couleur vous obtiendrez les valeurs des couleurs.
+
+![](https://s3-eu-west-1.amazonaws.com/sdz-upload/prod/upload/image1910.png)
+
+:::note ?
+Comment retrouver la couleur d’un texte ?
+:::
+
+Double-cliquez sur le texte puis cliquez sur le rectangle de couleur dans la barre supérieure.
+
+![](https://s3-eu-west-1.amazonaws.com/sdz-upload/prod/upload/image051.png)
+
+### Polices de caractère
+
+Les polices jouent également un rôle primordial dans le design d’un site web. Qu’elles apportent de la force, du caractère ou de
+la froideur, elles sont toujours à chouchouter !
+
+Il en existe de multiples sortes mais ce qui nous intéresse le plus, pour le moment, est leur format. Le plus souvent, votre
+designer vous enverra une version print de la police, c’est-à-dire un format qui sera lisible sur votre ordinateur uniquement.
+
+Or il existe un second format, adapté au Web, qui vous permettra de changer la police utilisée dans le navigateur de votre
+utilisateur.
+
+:::note ?
+Je ne peux pas tout simplement dire au navigateur : "Utilise telle police de l’ordinateur de mon internaute" ? On a tous les
+mêmes polices sur nos ordis, non ?
+:::
+
+Quand vous utilisez une police sur votre ordinateur, vous l’installez au préalable. Vous ne vous en rendez pas forcément compte
+car de nombreuses polices sont installées par défaut (Arial, Comic Sans _– beurk –_, Times… ). Mais, si vous voulez utiliser
+d’autres polices (souvenez-vous de la période bénie des Word Art !), vous devez les installer.
+
+Il en va de même sur votre navigateur. Ce dernier ne connait que les polices de caractère installées sur votre ordinateur. Par
+conséquent, si un site utilise une police qui n’est pas installée sur votre ordinateur, il cherchera la police de substitution
+la plus proche (ou pas…).
+
+La ruse du développeur est d’installer les polices sur le serveur qu’il souhaite utiliser dans un format adapté pour le Web. De
+cette manière, le site web commence par charger les polices dont il a besoin à partir du serveur puis il peut les interpréter
+comme il le souhaite. Plus besoin de passer par les polices installées sur l’ordinateur ! Et, surtout, plus besoin de trouver
+une police de remplacement.
+
+Souvenez-vous de ceci : une police est unique et non substituable. Votre graphiste l’a choisie pour une raison qui lui est propre
+et votre grande tâche est de lui redonner vie sur le Web.
+
+Commencez par trouver le nom de la police utilisée. Pour faire cela, double cliquez sur le texte dont vous souhaitez connaître la
+police et regardez dans la barre supérieure (ou dans la boite de dialogue qui s’ouvre si cette police n’est pas installée sur
+votre ordinateur).
+
+![](https://s3-eu-west-1.amazonaws.com/sdz-upload/prod/upload/image032.png)
+
+Notez cette police directement sur vos esquisses puis cherchez la version pour le Web directement sur votre moteur de recherche
+préféré. Je vous conseille d’indiquer le nom de la police et d’y ajouter ‘web’, tout simplement. Par exemple : "OpenSans web"
+nous renvoie à une police Google, utilisable gratuitement.
+
+Notez le lien vers cette police.
+
+S’il ne s’agit pas d’une Google Font, téléchargez les fichiers.
+
+Parfois, vous ne trouverez pas d’équivalent web. Faut-il laisser tomber ? Que nenni ! Vous pouvez convertir la version print en
+version web grâce au générateur de FontSquirrel. Pensez à sauvegarder les fichiers dans le dossier de votre site web (vous pouvez
+créer un sous-dossier "fonts" pour que votre rangement reste clair).
+
+### Effets spéciaux
+
+CSS3 vous donne accès à de nombreux filtres hérités de la photographie dont nous parlerons dans la seconde partie. Pour le moment,
+il est essentiel de les noter pour les retrouver ultérieurement.
+
+Photoshop offre de multiples façons de modifier les visuels en ajoutant des effets. Néanmoins, les deux manières les plus communes
+sont en modifiant les propriétés d'un calque ou en ajoutant un calque d’effets.
+
+#### Modification des propriétés d’un calque
+
+Quand les propriétés d’un calque ont été modifiées, un petit sigle fx apparaît à droite de son titre dans la liste des calques.
+
+![](https://s3-eu-west-1.amazonaws.com/sdz-upload/prod/upload/image2111.png)
+
+Double-cliquer dessus vous montrera les propriétés qui ont été modifiées. Dans notre exemple, une ombre portée a été ajoutée.
+Nous pourrons recréer cet effet en CSS ultérieurement.
+
+:::info
+Amusez-vous à retrouver les différentes propriétés qui ont été modifiées. Vous n’en trouvez pas assez ? Modifiez-les et regardez
+ce que ces changements génèrent !
+:::
+
+#### Calques de réglages
+
+Un calque de réglage est un calque dont l’unique fonction est de modifier les réglages des éléments qu’il recouvre. Par exemple,
+si j’ajoute un calque de réglage "Luminosité / Contraste" dans ma section 2, tous les éléments se trouvant de la section 3 à la
+section 7 verront leur luminosité modifiée.
+
+Vous pouvez aisément recréer cet effet en CSS. Pour retrouver les réglages qui ont été modifiés, double-cliquez sur l’icône du
+calque et notez les valeurs qui vous semblent anormales.
+
+Dans notre cas, la luminosité a été augmentée de 88% et le contraste de 100%.
+
+#### Éléments graphiques : SVG, PNG, rapidité de chargement
+
+Nous avons mentionné tout à l’heure l’importance de travailler avec les éléments les plus légers et les plus adaptables possibles.
+
+Le meilleur format pour gérer des formes avec des transparences, comme des logos, est le format SVG. Vous pouvez très facilement
+exporter des éléments au format SVG grâce à Photoshop.
+
+Tout d'abord, isolez l'élément que vous souhaitez exporter en masquant toutes les couches qui ne sont pas nécessaires à l'export.
+Ensuite, cliquez que l'image --> Sélectionnez "Pixels transparents". En cliquant sur "OK", le canvas est découpé pour inclure
+uniquement les éléments visibles. Cliquez ensuite sur Fichier --> Exporter --> Exporter en et sélectionnez SVG.
+
+Cliquez sur Exporter et le tour est joué.
+
+Répétez l'opération pour chaque élément que vous souhaitez exporter.
+
+-----
+
+## Quiz : Comprendre Photoshop et les maquettes
+
+[Comprendre Photoshop et les maquettes - OpenClassrooms](https://openclassrooms.com/fr/courses/3504431-decoupez-et-integrez-une-maquette/exercises/822)
+
+#### Compétences évaluées
+
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-checkbox" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#00b341" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <polyline points="9 11 12 14 20 6" />
+  <path d="M20 12v6a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h9" />
+</svg> Découper une maquette avec Photoshop
+
+-----
+
+#### Question 1 : De quel domaine les maquettes pour le web proviennent-elles ?
+
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> La peinture<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle-check" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#7bc62d" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M9 12l2 2l4 -4" />
+</svg> L'imprimerie<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> Le patinage<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> La construction<br />
+<br />
+
+-----
+
+#### Question 2 : Comment s'appelle l'autre document qui accompagne souvent la maquette et qui détaille les besoins du client ?
+
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle-check" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#7bc62d" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M9 12l2 2l4 -4" />
+</svg> Cahier des charges<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> Plan<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> Rédaction<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> Brouillon HTML<br />
+<br />
+
+-----
+
+#### Question 3 : En traduisant une maquette pour le Web, vous devez faire un maximum de choses en :
+
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> Images<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle-check" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#7bc62d" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M9 12l2 2l4 -4" />
+</svg> CSS<br />
+<br />
+
+-----
+
+#### Question 4 : Grâce à quel(s) logiciel(s) pouvez-vous réaliser des maquettes ?
+
+*Attention, plusieurs réponses sont possibles.*
+
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-checkbox" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#00b341" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <polyline points="9 11 12 14 20 6" />
+  <path d="M20 12v6a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h9" />
+</svg> Photoshop<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-checkbox" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#00b341" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <polyline points="9 11 12 14 20 6" />
+  <path d="M20 12v6a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h9" />
+</svg> InDesign<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-checkbox" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#00b341" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <polyline points="9 11 12 14 20 6" />
+  <path d="M20 12v6a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h9" />
+</svg> Sketch<br />
+<br />
+
+-----
+
+#### Question 5 : De combien de colonnes dispose la grille Bootstrap ?
+
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> 6<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> 8<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle-check" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#7bc62d" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M9 12l2 2l4 -4" />
+</svg> 12<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> 16<br />
+<br />
+
+-----
+
+#### Question 6 : Comment s'appelle la fonctionnalité Photoshop qui vous permet de séparer et d'organiser des éléments dans votre maquette ?
+
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> Une règle<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> Une chaîne<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> Un composant<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle-check" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#7bc62d" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M9 12l2 2l4 -4" />
+</svg> Un calque<br />
+<br />
+
+-----
+
+#### Question 7 : Comment appelle-t-on le moment où un site réorganise son contenu en fonction de la taille de l'écran de l'utilisateur ?
+
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle-check" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#7bc62d" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M9 12l2 2l4 -4" />
+</svg> Breakpoint<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> Cutpoint<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> Column point<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> Layer point<br />
+<br />
+
+-----
+
+#### Question 8 : Quelle version de votre site un utilisateur qui dispose d'une largeur d'écran entre 768 et 991 pixels verra-t-il probablement ?
+
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> Smartphone/mobile<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle-check" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#7bc62d" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M9 12l2 2l4 -4" />
+</svg> Tablette<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> Desktop<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> Télévision<br />
+<br />
+
+-----
+
+#### Question 9 : Vous devriez mesurer des éléments **horizontalement** en :
+
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> Pixels<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle-check" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#7bc62d" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M9 12l2 2l4 -4" />
+</svg> Pourcentage<br />
+<br />
+
+-----
+
+#### Question 10 : Vous devriez mesurer des éléments **verticalement** en :
+
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle-check" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#7bc62d" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M9 12l2 2l4 -4" />
+</svg> Pixels<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> Pourcentage<br />
+

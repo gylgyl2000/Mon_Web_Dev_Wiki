@@ -1,0 +1,812 @@
+---
+sidebar_position: 3
+---
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+import { Vimeo } from 'mdx-embed';
+
+# Faites vos premiers pas avec Git
+
+## Tirez le maximum de ce cours !
+
+[Tirez le maximum de ce cours ! - Gérez du code avec Git et GitHub - OpenClassrooms](https://openclassrooms.com/fr/courses/7162856-gerez-du-code-avec-git-et-github/7166041-tirez-le-maximum-de-ce-cours)
+
+<Vimeo vimeoId="513007408" />
+
+<br />
+
+Bonjour et bienvenue dans ce cours !
+
+Je m'appelle **Tiffany Lestroubac,** je suis développeuse sur les technologies Microsoft depuis maintenant 9 ans et mentor chez
+OpenClassrooms et j'utilise Git au quotidien !
+
+**Mila Paul** est l'auteure du cours anglais sur Git et GitHub. Elle a contribué à ce cours, notamment pour le contenu des vidéos.
+**Luc Bourrat**, développeur web et mentor chez OpenClassrooms, a également contribué aux contenus écrits de ce cours.
+
+Avant de démarrer, voici quelques conseils pour tirer le maximum de ce cours :
+- Certains chapitres contiennent des **vidéos**. Vous pouvez les visionner pour mieux appréhender les concepts clés
+- Lisez le **texte** sous les vidéos et visionnez les **screencasts** afin de suivre pas à pas les différentes étapes du cours
+- Vérifiez votre compréhension des concepts grâce aux **évaluations** à la fin de chaque partie
+- Et enfin, **entrainez-vous** !
+
+Dans ce cours, les interfaces de Git et GitHub sont en anglais, comme pour la plupart des outils et technologies liés au
+développement informatique. Mais pas d'inquiétude ! Tous les termes importants seront traduits en français et vous serez guidés
+pas à pas. Et puis, prenez-le comme une opportunité : celle de vous familiariser avec un environnement anglophone. Ce sera votre
+quotidien au fur et à mesure que vous avancerez dans ce domaine.
+
+_Alors, prêt ? C'est parti !_
+
+-----
+
+## Découvrez la magie du contrôle de versions
+
+[Découvrez la magie du contrôle de versions - Gérez du code avec Git et GitHub - OpenClassrooms](https://openclassrooms.com/fr/courses/7162856-gerez-du-code-avec-git-et-github/7165703-decouvrez-la-magie-du-controle-de-versions)
+
+<Vimeo vimeoId="513007463" />
+
+<br />
+
+Dans ce cours, je vais vous présenter l’outil indispensable à tout bon développeur : **le gestionnaire de versions**. 
+
+Imaginez, vous avez passé une semaine à écrire votre code, et donc produit votre première version, la V1. Votre collègue vous a
+fait des suggestions pour l’améliorer. Vous allez donc créer une deuxième version de votre code, la V2. Pour garder un historique
+de votre travail et éviter les mauvaises surprises (bugs, perte de votre travail), vous aurez besoin d’un **gestionnaire de
+versions**.
+
+![Schéma représentant le principe du contrôle de versions](/img/OpenClassrooms/1613932861483_image60.jpg)
+
+Le contrôle de versions
+
+### Qu'est-ce qu’un gestionnaire de versions ?
+
+:::note ?
+Alors, qu’est-ce qu’un gestionnaire de versions ?
+:::
+
+:::info
+Un gestionnaire de versions est un programme qui permet aux développeurs de conserver un historique des modifications et des
+versions de tous leurs fichiers.
+:::
+
+:::info
+L’action de contrôler les versions est aussi appelée "versioning" en anglais, vous pourrez entendre les deux termes.
+:::
+
+Le gestionnaire de versions permet de garder en mémoire :
+- chaque modification de chaque fichier ;
+- pourquoi elle a eu lieu ;
+- et par qui !
+
+**Si vous travaillez seul**, vous pourrez garder l’historique de vos modifications ou revenir à une version précédente facilement. 
+
+**Si vous travaillez en équipe**, plus besoin de mener votre enquête ! Le gestionnaire de versions fusionne les modifications des
+personnes qui travaillent simultanément sur un même fichier. Grâce à ça, vous ne risquez plus de voir votre travail supprimé par
+erreur !
+
+:::info
+Cet outil a donc trois grandes fonctionnalités :
+1. Revenir à une version précédente de votre code en cas de problème.
+2. Suivre l’évolution de votre code étape par étape.
+3. Travailler à plusieurs sans risquer de supprimer les modifications des autres collaborateurs.
+:::
+
+Dans ce cours, vous allez apprendre à utiliser le gestionnaire de versions Git.
+
+:::info
+Git est de loin le système de contrôle de versions le plus largement utilisé aujourd'hui.
+:::
+
+C’est un programme qui a une structure **décentralisée**. 
+
+:::note ?
+Qu’est-ce que cela veut dire ?
+:::
+
+Avec Git, l’historique complet du code n’est pas conservé dans un unique emplacement. Chaque copie du code effectué correspond
+à un nouveau dépôt dans lequel est conservé l’historique des modifications.
+
+:::caution !
+La maîtrise de Git est très souvent demandée lors d’un recrutement, c’est pourquoi il est essentiel de le maîtriser. ![](https://user.oc-static.com/upload/2021/02/21/16139330232686_image6.png)
+:::
+
+### Pourquoi est-ce utile dans le travail d’équipe ?
+
+Prenons un exemple concret ! Alice et Bob travaillent sur le même projet depuis un mois. Tout se déroulait à merveille jusqu’à
+hier : le client leur a demandé de livrer leur projet en urgence. Alice a réalisé en vitesse les dernières modifications,
+enregistré les fichiers et envoyé le tout au client.
+
+Le lendemain, le client appelle, très énervé : rien ne fonctionne. Alice et Bob ne comprennent pas. Ils s’étaient pourtant bien
+réparti les tâches et tous les deux avaient fait correctement leur travail.
+
+Le problème ? Sans s’en rendre compte, Alice a écrasé le code de Bob en effectuant ses modifications. Bob n’a pas copié son
+travail en local, il a donc codé pendant un mois pour rien car il lui est impossible de récupérer son travail.
+
+:::info
+"En local" signifie sur votre machine, par opposition à "en ligne".
+:::
+
+Tout cela aurait pu être évité avec le gestionnaire de versions !
+
+Si Alice et Bob avaient initialisé Git pour leur projet, ils auraient pu modifier leurs fichiers, envoyer et recevoir les mises
+à jour à tout moment, sans risque d’écraser les modifications de l’autre. Les modifications de dernière minute n’auraient donc
+pas eu d’impact sur la production finale !
+
+![Représentation du travail mutualisé d'Alice et Bob](/img/OpenClassrooms/16139331064833_image65.jpg)
+
+Alice et Bob ont initialisé Git. Ils travaillent chacun sur leur partie du code. Quand ils les regroupent, leurs versions
+précédentes sont archivées.
+
+### Git ou GitHub ? Quelle est la différence ?
+
+:::info
+Git et GitHub sont deux choses différentes.
+
+**Git est un gestionnaire de versions**. Vous l’utiliserez pour créer un dépôt local et gérer les versions de vos fichiers.
+
+**GitHub est un service en ligne** qui va héberger votre dépôt. Dans ce cas, on parle de **dépôt distant** puisqu’il n’est pas
+stocké sur votre machine.
+:::
+
+C’est un peu confus ? Pas de panique, prenons un exemple pour illustrer cela. ![:)](https://openclassrooms.com/bundles/common/images/smiley/smile.png)
+
+Imaginez, vous participez à la préparation d’un parfum. Chez vous, vous créez la base du parfum en mélangeant différents
+ingrédients. Puis vous envoyez cette base dans un entrepôt où il sera stocké. Cette base de parfum pourra être distribuée telle
+quelle ou être modifiée en y ajoutant d’autres ingrédients.
+
+Eh bien, c'est la même chose pour Git et GitHub. Git est la préparation que vous avez réalisée chez vous, et GitHub est l'entrepôt
+où elle peut être modifiée par les autres ou distribuée. ![](https://user.oc-static.com/upload/2021/02/21/16139332710362_image6.png)
+
+![Représentation de Git et GitHub en suivant l'exemple de la confection de parfums](/img/OpenClassrooms/16139333110781_image47.jpg)
+
+Avec Git, vous préparez votre code. Avec GitHub, vous stockez votre code. 
+
+### En résumé
+
+- Un gestionnaire de versions permet aux développeurs de conserver un historique des modifications et des versions de tous leurs
+fichiers.
+- Git est un gestionnaire de versions tandis que GitHub est un service en ligne qui héberge les dépôts Git. On parle alors de
+_dépôt distant_.
+
+_Passons au chapitre suivant pour en savoir plus sur la différence entre dépôts locaux et dépôts distants !_
+
+-----
+
+## Saisissez l'utilité des dépôts distants sur GitHub
+
+[Saisissez l'utilité des dépôts distants sur GitHub - Gérez du code avec Git et GitHub - OpenClassrooms](https://openclassrooms.com/fr/courses/7162856-gerez-du-code-avec-git-et-github/7165707-saisissez-lutilite-des-depots-distants-sur-github)
+
+<Vimeo vimeoId="513007584" />
+
+<br />
+
+### Faites la différence entre dépôt local et dépôt distant
+
+Avant tout, avez-vous bien compris ce qu’était un dépôt ?
+
+:::info
+Un dépôt est comme un dossier qui conserve un historique des versions et des modifications d’un projet. Il peut être local ou
+distant.
+:::
+
+#### Le dépôt local
+
+Un **dépôt local** est un entrepôt virtuel de votre projet. Il vous permet d'enregistrer les versions de votre code et d'y accéder
+au besoin.
+
+Pour illustrer cette idée, prenons l'image de la réalisation d'un gâteau. Pour faire un gâteau, vous allez réaliser les étapes
+suivantes :
+- préparer la pâte du gâteau ;
+- stocker cette pâte au réfrigérateur ;
+- réaliser la crème et en garnir la pâte ;
+- stocker le gâteau assemblé au réfrigérateur ;
+- décorer votre gâteau ;
+- remettre le gâteau au réfrigérateur.
+
+Dans cet exemple, le réfrigérateur est comme un dépôt local : c'est l'endroit où vous stockez vos préparations au fur et à mesure.
+
+![Illustration du fonctionnement d'un dépôt local](/img/OpenClassrooms/16146982618722_P1C2.png)
+
+Utilisez un dépôt local comme un réfrigérateur et préparez votre gâteau !
+
+Un **dépôt local** est utilisé de la même manière ! On réalise une version, que l'on va petit à petit améliorer. Ces versions sont
+stockées au fur et à mesure dans le dépôt local.
+
+#### Le dépôt distant
+
+Le **dépôt distant** est un peu différent. Il permet de stocker les différentes versions de votre code afin de garder un
+**historique délocalisé**, c'est-à-dire un historique hébergé sur Internet ou sur un réseau. Vous pouvez avoir plusieurs dépôts
+distants avec des droits différents (lecture seule, écriture, etc.).
+
+Ben oui, imaginez que votre PC rende l’âme demain, vous aurez toujours vos super programmes sur un dépôt distant ! C’est pourquoi,
+je vous conseille de toujours commencer par copier vos sources sur un dépôt distant lorsque vous commencez un nouveau projet, avec
+GitHub par exemple ! Vous pourrez aussi les rendre publics, et chacun pourra y ajouter ses évolutions.
+
+:::note !
+Sur un dépôt public, les personnes pourront collaborer à votre projet alors que sur un dépôt privé, vous seul aurez accès à votre
+travail !
+:::
+
+Le dépôt distant est donc un type de dépôt indispensable si vous travaillez à plusieurs sur le même projet, puisqu’il permet de
+centraliser le travail de chaque développeur. C’est aussi sur le dépôt distant que toutes les modifications de tous les
+collaborateurs seront fusionnées.
+
+:::note ?
+Alors, pourquoi créer une copie locale ?
+:::
+
+Tout simplement car votre dépôt local est un clone de votre dépôt distant. C’est sur votre dépôt local que vous ferez toutes vos
+modifications de code.
+
+Ainsi, les dépôts sont utiles si :
+- vous souhaitez conserver un historique de votre projet ;
+- vous travaillez à plusieurs ;
+- vous souhaitez collaborer à des projets open source ;
+- vous devez retrouver par qui a été faite chaque modification ;
+- vous voulez savoir pourquoi chaque modification a eu lieu.
+
+### Quelle plateforme utiliser pour héberger votre code ?
+
+Il existe plusieurs outils intéressants (GitHub, GitLab, Bitbucket), et nous allons donc voir les principaux avantages et
+inconvénients de chacun.
+
+#### GitHub
+
+C'est mon préféré, mais chuttt !! [GitHub](https://github.com/) est un outil de communication et de collaboration entre plusieurs
+développeurs (ou toute autre personne qui écrit du texte). C’est une interface web créée pour faciliter l’interaction avec Git.
+
+L’avantage de GitHub, c’est que depuis quelques années, il est devenu le **book/portfolio des développeurs** ! Dans beaucoup de
+processus de recrutement, on vous demandera maintenant votre lien GitHub ! Si ça, c’est pas un argument de taille ! Il permet de
+mettre en avant la qualité de son code, et ainsi montrer ses capacités et sa plus-value lorsque l’on recherche un emploi. GitHub
+est considéré comme un véritable réseau social, et permet de contribuer à des projets open source. Il fonctionne par abonnement,
+mais pas de panique, il y a un abonnement gratuit qui est déjà très bien. ![](https://user.oc-static.com/upload/2021/02/22/16139723386444_image6.png)
+
+#### GitLab
+
+[GitLab](https://about.gitlab.com/) est la principale alternative à GitHub depuis le rachat de GitHub par Microsoft ! Les
+anti-Microsoft ont même lancé le hashtag _#MovingToGitLab_ ! Il fonctionne avec une version gratuite à installer sur son propre
+serveur ou une version cloud payante.
+
+#### Bitbucket
+
+[Bitbucket](https://bitbucket.org/) est la version de Atlassian. Payante, elle plaira néanmoins aux habitués de la gestion de
+projet sous Atlassian. Bitbucket conviendra aussi bien aux étudiants ou petites équipes qu’aux grands groupes.
+
+Vous avez fait votre choix ? Nous étudierons dans ce cours la solution GitHub, qui est la plus plébiscitée par les développeurs.
+
+### En résumé
+
+- Un dépôt est comme un dossier qui conserve un historique des versions et des modifications d’un projet. Il est essentiel pour
+travailler en équipe ou collaborer à un projet open source.
+- Un dépôt local est l’endroit où l’on stocke, sur sa machine, une copie d’un projet, ses différentes versions et l’historique des
+modifications.
+- Un dépôt distant est une version dématérialisée du dépôt local, que ce soit sur Internet ou sur un réseau. Il permet de
+centraliser le travail des développeurs dans un projet collectif.
+- Il existe plusieurs services en ligne pour héberger un dépôt distant, GitHub étant l’un des plus populaires.
+
+_Maintenant, mettons les pieds dans le plat et démarrons notre projet GitHub_ _! ![](https://user.oc-static.com/upload/2021/02/22/1613972436417_image17.png)_
+
+-----
+
+## Démarrez votre projet avec GitHub
+
+[Démarrez votre projet avec GitHub - Gérez du code avec Git et GitHub - OpenClassrooms](https://openclassrooms.com/fr/courses/7162856-gerez-du-code-avec-git-et-github/7165712-demarrez-votre-projet-avec-github)
+
+<Vimeo vimeoId="513790658" />
+
+<br />
+
+### Créez un compte GitHub
+
+Comme nous l’avons vu dans le chapitre précédent, GitHub est un service en ligne qui va vous permettre d’héberger vos dépôts
+distants.
+
+Pour créer votre compte GitHub, rendez-vous sur la page d’accueil, cliquez sur Sign up. On vous demandera alors de renseigner un
+nom d’utilisateur, un e-mail et un mot de passe.
+
+![Screenshot de la page d'accueil de GitHub](/img/OpenClassrooms/16139724930046_image24.png)
+
+Inscrivez-vous à GitHub
+
+Une fois ces informations données, vous devrez choisir votre **abonnement** (gratuit ou pro). La principale différence entre les
+deux offres est que la première est destinée aux particuliers, ou aux équipes de moins de 3 collaborateurs, alors que la seconde
+offre est destinée aux plus grandes équipes. Sachez néanmoins que si vous faites des projets open source, il n’y a aucune
+limitation du nombre de collaborateurs. ![](https://user.oc-static.com/upload/2021/02/22/16139917308716_image4.png)
+
+![Screenshot des deux offres d'abonnement sur GitHub](/img/OpenClassrooms/16139730809454_image25.png)
+
+Les abonnements GitHub
+
+[À vous de créer votre compte GitHub](https://github.com/) [!](https://github.com/)
+
+### Faites un petit tour de GitHub
+
+GitHub est assez facile à prendre en main et simple d’utilisation.  ![](https://user.oc-static.com/upload/2021/02/22/16139731259358_image26.png)
+
+#### Votre tableau de bord
+
+Vous pouvez consulter votre **tableau de bord** personnel pour :
+- suivre les problèmes et extraire les demandes sur lesquelles vous travaillez ou que vous suivez ;
+- accéder à vos principaux repositories et pages d'équipe ;
+- rester à jour sur les activités récentes des organisations et des repositories auxquels vous êtes abonné.
+
+:::info
+_Repository_ est la traduction en anglais du terme “dépôt”.
+:::
+
+#### L'interface repository
+
+L’interface Repositories est l’emplacement où vous pourrez créer et retrouver vos dépôts existants.
+
+Pour créer un projet, il suffit de cliquer sur “Start a project”.
+
+![Screenshot](/img/OpenClassrooms/16139918354508_image34.png)
+
+Cliquez sur "start a project"
+
+#### Votre profil
+
+Sur votre profil, vous pourrez éditer vos informations, mais aussi voir le total de vos contributions sur les différents projets.
+
+![Screenshot du profil](/img/OpenClassrooms/16139919096343_image33.png)
+
+Consultez votre profil
+
+#### L'onglet Pull requests
+
+**L’onglet Pull requests**, quant à lui, permet de réaliser des demandes de pull. Les demandes de _pull_, ou extractions, vous
+permettent d'informer les autres des modifications que vous avez appliquées à une branche d'un repository sur GitHub.
+
+:::info
+Une branche est une copie du code principal à un instant T. Nous reviendrons sur cette notion plus tard. ![:)](https://openclassrooms.com/bundles/common/images/smiley/smile.png)
+:::
+
+![Onglet Pull request entouré en rouge](/img/OpenClassrooms/16152244692096_pull_request.png)
+
+L'onglet Pull requests
+
+#### La fonctionnalité Explore
+
+Un des derniers points importants sur GitHub est la fonctionnalité **Explore**.
+
+:::info
+Via Explore, vous pourrez trouver de nouveaux projets open source sur lesquels travailler, en parcourant les projets recommandés,
+en vous connectant à la communauté GitHub et en recherchant des repositories par sujet ou par libellé.
+:::
+
+![Screenshot de la fonctionnalité Explore](/img/OpenClassrooms/16152245327303_explore.png)
+
+La fonctionnalité Explore
+
+### Créez votre propre dépôt
+
+Pour mettre votre projet sur GitHub, vous devez créer un **repository** dans lequel il pourra être installé.
+
+Cliquez sur le "+" dans le coin supérieur droit, pour faire apparaître l’option New repository.
+
+![Screenshot](/img/OpenClassrooms/16139926111728_image58.png)
+
+Ajoutez un repository
+
+Choisissez un nom simple pour votre dépôt. Dans ce cours, nous utiliserons “OpenclassroomsProject”.
+
+Puis, choisissez si vous souhaitez créer un dépôt public ou privé.
+
+![Screenshot](/img/OpenClassrooms/16172035216982_P1.png)
+
+Créez un dépôt
+
+:::info
+**readme** est un fichier qui indique les informations clés de votre projet : description, environnement à utiliser, dépendances
+possibles et droits d’auteurs.
+
+**gitignore** est un fichier qui permet d’ignorer certains fichiers de votre projet Git. Nous reviendrons là-dessus plus tard.
+:::
+
+Cliquez ensuite sur “Create repository” pour créer un dépôt.
+
+![Screenshot du premier dépôt Git](/img/OpenClassrooms/16172080728347_P2.PNG)
+
+Votre premier dépôt Git
+
+### En résumé
+
+- Pour démarrer un projet, vous devez créer votre compte GitHub.
+- Vous pouvez suivre vos différents projets facilement grâce au tableau de bord.
+- Pour mettre votre projet sur GitHub, vous devez créer un repository.
+
+_Félicitations ! Vous avez créé votre premier dépôt GitHub_ _! La prochaine étape est d'installer Git sur votre ordinateur._[Démarrez votre projet avec GitHub - Gérez du code avec Git et GitHub - OpenClassrooms](https://openclassrooms.com/fr/courses/7162856-gerez-du-code-avec-git-et-github/7165712-demarrez-votre-projet-avec-github)
+
+-----
+
+## Installez Git sur votre ordinateur
+
+[Installez Git sur votre ordinateur - Gérez du code avec Git et GitHub - OpenClassrooms](https://openclassrooms.com/fr/courses/7162856-gerez-du-code-avec-git-et-github/7165721-installez-git-sur-votre-ordinateur)
+
+<Vimeo vimeoId="513007731" />
+
+<br />
+
+### Téléchargez et installez Git
+
+Tadammm ! L’heure est venue d’installer **votre futur meilleur ami**.  ![](https://user.oc-static.com/upload/2021/02/22/16140031921188_image6.png)
+
+Je vous invite à suivre ce screencast pour installer Git sur votre ordinateur. Les étapes sont également détaillées sous la vidéo.
+
+<Vimeo vimeoId="518537618" />
+
+<br />
+
+Exécutez le fichier que vous venez de [le lien de téléchargement ici](https://git-scm.com/downloads). Choisissez la **version**
+qui correspond à votre installation et téléchargez-la.
+
+![Exécutez le fichier](/img/OpenClassrooms/16140032488947_image48.png)
+
+Exécutez le fichier
+
+Appuyez sur Suivant à chaque fenêtre puis sur **Installer**. Lors de l’installation, laissez toutes les options par défaut, elles
+conviennent bien.
+
+![Lancez l'installation](/img/OpenClassrooms/16140033165753_image63.png)
+
+Lancez l'installation
+
+Cochez ensuite Launch Git Bash.
+
+:::info
+Git Bash est l’interface permettant d’utiliser Git en ligne de commande.
+:::
+
+![Lancez Git Bash](/img/OpenClassrooms/16140033619683_image61.png)
+
+Lancez Git Bash
+
+Git Bash se lance.
+
+![Fenêtre Git Bash](/img/OpenClassrooms/16140034455232_image31.png)
+
+Fenêtre Git Bash
+
+### Initialisez Git
+
+Vous allez passer par différentes étapes, suivez le guide grâce à la vidéo ci-dessous !
+
+<Vimeo vimeoId="513790691" />
+
+<br />
+
+Pour travailler sur Git, vous devez créer un dépôt local, c'est-à-dire un dossier dans lequel toutes vos modifications seront
+enregistrées. C’est ce qu’on appelle **initialiser un dépôt Git**. 
+
+#### Configurez votre identité
+
+La première chose à faire est de configurer votre identité. Pour cela, vous allez entrer dans le monde des lignes de commande !
+
+Commencez par renseigner votre nom et votre adresse e-mail. **C'est une information importante** car vous en aurez besoin pour
+toutes vos validations dans Git :
+
+```shell
+$ git config --global user.name "John Doe"
+$ git config --global user.email johndoe@example.com
+```
+
+:::info
+Grâce à l’option --global, vous n’aurez besoin de le faire qu'une fois.
+:::
+
+Si vous souhaitez, pour **un projet spécifique**, changer votre nom d’utilisateur, vous devrez repasser cette ligne mais sans
+le --global.
+
+Pour vérifier que vos paramètres ont bien été pris en compte, et vérifier les autres paramètres, il suffit de passer la commande
+`git config --list`.
+
+![](/img/OpenClassrooms/1614003533987_image42.png)
+
+#### Configurez les couleurs
+
+Je vous recommande d’activer les couleurs afin d’améliorer la lisibilité des différentes branches. Pour cela, passez ces trois
+lignes dans Git Bash :
+
+```shell
+$ git config --global color.diff auto
+$ git config --global color.status auto
+$ git config --global color.branch auto
+```
+
+#### Configurez l’éditeur
+
+Par défaut, Git utilise Vim comme éditeur et Vimdiff comme outil de merge. Vous pouvez les modifier en utilisant :
+
+```shell
+$ git config --global core.editor notepad++
+$ git config --global merge.tool vimdiff
+```
+
+:::info
+L’outil de merge permet de fusionner deux parties distinctes d’un projet. Nous verrons cela en détail dans les commandes de base.
+:::
+
+#### Créez votre dépôt local
+
+##### Les deux méthodes pour créez un dépôt local
+
+Maintenant que vous avez configuré les paramètres de base, vous pouvez **créer votre fameux dépôt local**. Pour ce faire, deux
+solutions sont possibles :
+- **créer un dépôt local** vide pour accueillir un nouveau projet : la procédure est expliquée ci-dessous ;
+- **cloner un dépôt** **distant**, c’est-à-dire rapatrier l’historique d’un dépôt distant en local. Nous aborderons cette méthode
+dans la deuxième partie du cours.
+
+##### Initialisez votre dépôt en créant un dépôt local vide
+
+Dans un premier temps, créez un dossier sur votre ordinateur (avec le nom de notre projet, c’est mieux ![](https://user.oc-static.com/upload/2021/02/22/16140036417406_image4.png) ).
+
+Je vous conseille de suivre scrupuleusement les étapes suivantes :
+- Allez dans “Document”.
+- Créez le dossier “PremierProjet”.
+- Accédez à votre dossier.
+
+![Screenshot](/img/OpenClassrooms/16152252898486_Premierprojet.png)
+
+Créez un dossier
+
+Ensuite, lancez deux lignes de commande dans Git Bash :
+
+```shell
+johndoe ~
+$ cd Documents/PremierProjet
+johndoe ~/Documents/PremierProjet
+$ git init
+Initialized empty Git repository in c:/users/JohnDoe/Documents/PremierProjet/
+```
+
+:::info
+La première ligne permet de vous positionner dans le dossier que vous venez de créer sur l’ordinateur. La seconde ligne va
+initialiser ce “simple dossier” comme un dépôt.
+:::
+
+Votre dossier n’a rien de nouveau, mais c’est normal ![](https://user.oc-static.com/upload/2021/02/22/16140229023738_image6.png).
+Vous avez pourtant bien initialisé votre dépôt Git. **Un dossier caché .git a été créé** ! Vous pouvez l'afficher en allant dans
+Affichage => Éléments masqués.
+
+Pour les plus curieux d’entre vous, sachez que ce dossier caché contient tous les éléments non visibles de Git : la configuration,
+les “logs”, les branches...
+
+![Capture d'écran de l'ordinateur afin de montrer le dossier caché entouré en rouge.](/img/OpenClassrooms/16152953100588_p1c5-1_1.png)
+
+Affichez le dossier Git caché
+
+### En résumé
+
+- Pour installer Git, vous devez télécharger et configurer Git sur votre ordinateur.
+- Pour initialiser un dépôt Git, vous pouvez soit créer un dépôt local vide, soit cloner un dépôt distant.
+- git init permet d’initialiser un projet Git.
+
+_Et maintenant, passons aux commandes de base !_
+
+-----
+
+## Quiz : Testez ce que vous avez appris
+
+[Testez ce que vous avez appris - OpenClassrooms](https://openclassrooms.com/fr/courses/7162856-gerez-du-code-avec-git-et-github/exercises/4057)
+
+#### Compétences évaluées
+
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-checkbox" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#00b341" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <polyline points="9 11 12 14 20 6" />
+  <path d="M20 12v6a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h9" />
+</svg> Utiliser les commandes de base de Git<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-checkbox" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#00b341" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <polyline points="9 11 12 14 20 6" />
+  <path d="M20 12v6a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h9" />
+</svg> Installer et configurer Git et GitHub
+
+-----
+
+#### Question 1 : A quoi sert un gestionnaire de versions ?
+
+*Attention, plusieurs réponses sont possibles.*
+
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-checkbox" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#00b341" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <polyline points="9 11 12 14 20 6" />
+  <path d="M20 12v6a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h9" />
+</svg> Conserver un historique<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-checkbox" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#00b341" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <polyline points="9 11 12 14 20 6" />
+  <path d="M20 12v6a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h9" />
+</svg> Revenir en arrière en cas de problème<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-checkbox" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#00b341" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <polyline points="9 11 12 14 20 6" />
+  <path d="M20 12v6a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h9" />
+</svg> Travailler à plusieurs<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-checkbox" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#00b341" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <polyline points="9 11 12 14 20 6" />
+  <path d="M20 12v6a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h9" />
+</svg> Suivre les modifications de chaque fichier<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-square" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <rect x="4" y="4" width="16" height="16" rx="2" />
+</svg> Mettre en ligne un site web<br />
+<br />
+
+*Un gestionnaire de versions permet de conserver un historique, revenir en arrière en cas de problème, collaborer, et suivre les
+modifications de chaque fichier. En revanche, il ne permet pas de mettre en ligne un site web.*
+
+-----
+
+#### Question 2 : Quelle est la différence entre Git et GitHub ?
+    
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> GitHub est un logiciel qui s’installe sur votre ordinateur tandis que Git est un site en ligne pour stocker votre code<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle-check" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#7bc62d" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M9 12l2 2l4 -4" />
+</svg> Git est un gestionnaire de versions tandis que GitHub est un service en ligne qui héberge les dépôts Git<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> Il n’y a pas de différence entre Git et GitHub. Ils permettent tous les deux de gérer votre code<br />
+<br />
+
+*Git et GitHub sont deux outils qui vous permettent de gérer votre code. Cependant, ce sont deux outils distincts. Git est un
+gestionnaire de versions tandis que GitHub est un service en ligne qui héberge les dépôts Git.*
+
+-----
+
+#### Question 3 : Git est un gestionnaire de version décentralisé.
+
+*Attention, plusieurs réponses sont possibles.*
+    
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-square" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <rect x="4" y="4" width="16" height="16" rx="2" />
+</svg> Faux<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-checkbox" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#00b341" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <polyline points="9 11 12 14 20 6" />
+  <path d="M20 12v6a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h9" />
+</svg> Vrai<br />
+<br />
+
+*Git est un gestionnaire de version décentralisé. Cela signifie qu'en tant qu'utilisateur, vous disposez de votre propre dépôt et
+d'une copie locale du projet sur lequel vous travaillez. Vous pouvez donc avancer à votre rythme sur votre dépôt local et hors
+connexion.*
+
+-----
+
+#### Question 4 : Qu’est-ce qu’un dépôt local ?
+    
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle-check" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#7bc62d" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M9 12l2 2l4 -4" />
+</svg> L’endroit où l’on stocke, sur sa machine, une copie d’un projet<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> Un fichier de configuration sur Git<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> Un code source déposé sur GitHub<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> Le nom donné aux data centers de l’entreprise Git<br />
+<br />
+
+*Un dépôt local est l’endroit où l’on stocke, sur sa machine, une copie d’un projet. Il ne s'agit ni d'un fichier de configuration,
+ni d'un projet stocké sur internet ou d'un nom donné aux data centers.*
+
+-----
+
+#### Question 5 : Un dépôt distant GitHub permet de :
+
+*Attention, plusieurs réponses sont possibles.*
+    
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-square" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <rect x="4" y="4" width="16" height="16" rx="2" />
+</svg> stocker du code sur votre ordinateur<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-checkbox" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#00b341" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <polyline points="9 11 12 14 20 6" />
+  <path d="M20 12v6a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h9" />
+</svg> travailler en équipe<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-checkbox" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#00b341" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <polyline points="9 11 12 14 20 6" />
+  <path d="M20 12v6a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h9" />
+</svg> contribuer à des projets open source<br />
+<br />
+
+*Un dépôt distant GitHub permet de travailler en équipe et de contribuer à des projets open source. Cependant, votre code est
+stocké dans le cloud et non sur votre ordinateur.*
+
+-----
+
+#### Question 6 : Pour démarrer un projet GitHub, vous devez :
+
+*Attention, plusieurs réponses sont possibles.*
+    
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-checkbox" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#00b341" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <polyline points="9 11 12 14 20 6" />
+  <path d="M20 12v6a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h9" />
+</svg> créer votre compte GitHub<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-square" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <rect x="4" y="4" width="16" height="16" rx="2" />
+</svg> installer GitHub sur votre ordinateur<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-checkbox" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#00b341" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <polyline points="9 11 12 14 20 6" />
+  <path d="M20 12v6a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h9" />
+</svg> créer un repository<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-square" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <rect x="4" y="4" width="16" height="16" rx="2" />
+</svg> payer un abonnement mensuel<br />
+<br />
+
+*Pour démarrer un projet, vous devez créer votre compte GitHub et créer un repository. Il n'est pas nécessaire d'installer GitHub
+ou de payer un abonnement.*
+
+-----
+
+#### Question 7 : Pour installer Git, vous devez :
+    
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> acheter une licence<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> créer un compte Git<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle-check" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#7bc62d" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M9 12l2 2l4 -4" />
+</svg> télécharger et configurer Git<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> avoir un compte GitHub<br />
+<br />
+
+*Pour installer Git, vous devez télécharger et configurer Git sur votre ordinateur. Vous n'avez pas besoin de créer un compte Git
+ou GitHub, ni d'acheter une licence.*
+
+-----
+
+#### Question 8 : Quelle commande permet d'initialiser son projet dans Git Bash ?
+    
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle-check" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#7bc62d" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M9 12l2 2l4 -4" />
+</svg> <code>git init</code><br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> <code>git start</code><br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> <code>git in</code><br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> <code>git initial</code><br />
+<br />
+
+*`git init` est la seule commande qui permet d'initialiser son projet Git une fois le dossier créé. Les autres commandes n'existent
+pas.*

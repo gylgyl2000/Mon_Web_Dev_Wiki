@@ -1,0 +1,174 @@
+---
+sidebar_position: 1
+---
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+import { Vimeo } from 'mdx-embed';
+
+# Mission
+
+## Scénario
+
+[Construisez une API sécurisée pour une application d'avis gastronomiques - OpenClassrooms](https://openclassrooms.com/fr/paths/185/projects/676/assignment)
+
+Vous avez passé la dernière année en tant que développeur back-end indépendant et vous avez travaillé sur plusieurs projets de
+tailles et de difficultés variées.
+
+La semaine dernière, vous avez reçu un message sur votre plateforme de freelance vous demandant de l'aide pour un nouveau projet.
+Les sauces piquantes sont de plus en plus populaires, en grande partie grâce à la série YouTube « Hot Ones ». C’est pourquoi ce
+nouveau client, la marque de condiments à base de piment _Piiquante_, veut développer une application web de critique des sauces
+piquantes appelée « Hot Takes ».
+
+<figure>
+    <img src="https://user.oc-static.com/upload/2021/07/29/16275605596354_PiiquanteLogo.png"
+         alt="Deux piments rouges dans dans un bol, avec le nom en rouge" />
+    <figcaption>Piiquante : Marque de sauces piquantes</figcaption>
+</figure>
+
+Si la responsable produit de _Piiquante_ souhaite à terme transformer l'application d'évaluation en une boutique en ligne, elle
+souhaite que la première version soit une « galerie de sauces » permettant aux utilisateurs de télécharger leurs sauces piquantes
+préférées et de liker ou disliker les sauces que d'autres partagent. Le front-end de l'application a été développé à l'aide d'Angular
+et a été précompilé après des tests internes, mais _Piiquante_ a besoin d'un développeur back-end pour construire l'API.
+
+Le délai est raisonnable, vous décidez donc d'accepter le projet. Après avoir rencontré Paula, la cheffe de produit de _Piiquante_,
+elle vous envoie l’email suivant :
+
+<div class="courriel-container">
+    <div class="courriel-header">
+
+<strong>De</strong> : Paula Z<br />
+<strong>À</strong> : Me<br />
+<strong>Sujet</strong> : Besoins pour l'API<br />
+<br />
+
+</div>
+<div class="courriel-main">
+
+Bonjour,
+
+Nous sommes ravis que vous contribuiez à cette nouvelle application web ! Nous sommes une petite marque, donc ce projet aura un
+impact important sur notre croissance.
+
+Vous trouverez ci-joint les spécifications pour l'API. Vous pouvez également trouver un [lien vers le repo du projet ici](https://github.com/OpenClassrooms-Student-Center/Web-Developer-P6)
+où vous aurez accès à l'interface.
+
+Merci de faire particulièrement attention aux exigences en matière de sécurité. Nous avons récemment été victimes d'attaques sur
+notre site web et nous voulons être sûrs que l'API de cette application est construite selon des pratiques de code sécurisées. Tous
+les mots de passe des utilisateurs recueillis par l'application doivent être protégés !
+
+Cordialement,
+
+<strong>Paula Z<br />
+Cheffe de produit<br />
+Piiquante</strong> 
+<br />
+<br />
+Pièce jointe : <a href="https://s3.eu-west-1.amazonaws.com/course.oc-static.com/projects/DWJ_FR_P6/Requirements_DW_P6.pdf">Requirements</a>
+<br />
+<br />
+</div>
+</div>
+<br />
+<br />
+Vous êtes prêt à vous lancer dans l'API ! C’est parti !
+<br />
+<br />
+
+<embed style={{width: "100%", height: "667px" }} src="/pdf/Requirements_DW_P6.pdf"></embed>
+
+
+### Livrables
+
+:::info
+Pour faciliter votre passage au jury, mettez le livrable sur la plateforme dans un dossier nommé « P6_prenom_nom ».
+:::
+
+- Un fichier zip contenant le **code de l'API**, nommé « P6_prenom_nom_code.zip » (en remplaçant « prenom » et « nom » par votre
+prénom et nom).
+
+:::caution !
+Pour vous aider à compléter ce projet, vous pouvez suivre [cet exemples des étape clés](https://s3.eu-west-1.amazonaws.com/course.oc-static.com/projects/DWJ_FR_P6/Guide+E%CC%81tapes+Cle%CC%81s_DW_P6.pdf)
+pour le projet. Vous trouverez des recommandations, des outils ou des ressources utiles pour chaque étape.
+:::
+
+<embed style={{width: "100%", height: "667px" }} src="/pdf/Guide+Etapes+Cles_DW_P6.pdf"></embed>
+
+### Soutenance
+
+Pendant la présentation orale, votre évaluateur jouera le rôle de Paula, la cheffe de produit de _Piiquante_. L'évaluateur
+challengera vos décisions, préparez-vous donc à défendre votre travail.
+
+Lorsque votre évaluateur aura téléchargé votre code, il exécutera "npm install" à partir de la racine du projet. Il doit ensuite
+être en mesure d'exécuter le serveur node (ou le serveur nodemon) pour faire tourner votre API.
+
+La présentation sera structurée comme suit :
+
+- **Présentation du livrable (15 minutes)**
+    - Expliquez le fonctionnement de votre code, en particulier les éléments qui ne peuvent pas être vérifiés à l'aide de
+    l'application front-end, comme votre middleware d'authentification. Vous devrez partager votre écran pour faire votre
+    démonstration.
+    - Expliquez la structure de votre code (contrôleurs, routeurs, etc.) et les raisons pour lesquelles vous avez choisi cette
+    structure spécifique.
+    - Expliquez vos méthodes pour sécuriser la base de données selon le RGPD et l’OWASP.
+- **Discussion (10 minutes)**
+    - Jouant le rôle du cheffe de produit, l'évaluateur vous posera des questions sur votre méthodologie et votre livrable. Par
+    exemple, il peut vous challenger sur :
+       - Votre choix de versions de logiciels, de plugins et de services.
+       - Votre approche pour protéger les données des utilisateurs et sécuriser l'API. 
+- **Débriefing (5 minutes)**
+    - À la fin de la session, l'évaluateur cessera de jouer le rôle du cheffe de produit afin que vous puissiez débriefer ensemble.
+
+:::caution !
+Votre présentation devrait durer 15 minutes (+/- 5 minutes). Puisque le respect des durées des présentations est important en milieu
+professionnel, les présentations en dessous de 10 minutes ou au-dessus de 20 minutes peuvent être refusées.
+:::
+
+### Compétences évaluées
+
+<i class="bi bi-pencil-square"></i> Implémenter un modèle logique de données conformément à la réglementation<br />
+<i class="bi bi-pencil-square"></i> Mettre en œuvre des opérations CRUD de manière sécurisée<br />
+<i class="bi bi-pencil-square"></i> Stocker des données de manière sécurisée<br />
+<br />
+
+-----
+
+## Cours
+
+[Construisez une API sécurisée pour une application d'avis gastronomiques - OpenClassrooms](https://openclassrooms.com/fr/paths/185/projects/676/courses)
+
+Ces cours peuvent vous aider dans la réussite de votre projet. Ils ne sont pas obligatoires.
+
+- [Passez au Full stack avec Node.js, Express et MongoDB](https://openclassrooms.com/fr/courses/6390246-passez-au-full-stack-avec-node-js-express-et-mongodb)
+- [Sécurisez vos applications web avec l'OWASP](https://openclassrooms.com/fr/courses/6179306-securisez-vos-applications-web-avec-lowasp)
+- [Adoptez les API REST pour vos projets web](https://openclassrooms.com/fr/courses/6573181-adoptez-les-api-rest-pour-vos-projets-web)
+
+-----
+
+## Ressources
+
+[Construisez une API sécurisée pour une application d'avis gastronomiques - OpenClassrooms](https://openclassrooms.com/fr/paths/185/projects/676/resources)
+
+### Site web
+
+- [Express - Infrastructure d'application Web Node.js](https://expressjs.com/fr/)
+
+* * *
+
+### Articles
+
+- [Utiliser MongoDB avec Node.js grâce à Mongoose](https://atinux.developpez.com/tutoriels/javascript/mongodb-nodejs-mongoose/)
+- [Gérez les variables d'environnement dans votre application NodeJs avec dotenv](https://ichi.pro/fr/gerez-les-variables-d-environnement-dans-votre-application-nodejs-avec-dotenv-90198954812747)
+- [Les bonnes pratiques à suivre pour développer des APIs REST – Gekko](https://www.gekko.fr/les-bonnes-pratiques-a-suivre-pour-developper-des-apis-rest/)
+- [Upload Single File In Node.js Using Express and Multer in 6 Steps - DEV Community](https://dev.to/aimalm/upload-single-file-in-node-js-using-express-and-multer-in-6-steps-4o9p)
+- [Télécharger un fichier avec Multer dans les applications Node.js](https://ichi.pro/fr/telecharger-un-fichier-avec-multer-dans-les-applications-node-js-208100977885636)
+- [Les tableaux - Apprendre le développement web | MDN](https://developer.mozilla.org/fr/docs/Learn/JavaScript/First_steps/Arrays)
+
+* * *
+
+### Livre
+
+- [Ignorer des fichiers](https://alexgirard.com/git-book/intermediaire/git-ignore/)<br />
+**Ajout ou suppression d'un fichier de gitignore**<br />
+§2.2 du livre Pro Git, par Scott Chacon et Ben Straub, traduit par Alex Girard
+
+* * *

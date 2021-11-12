@@ -1,0 +1,1003 @@
+---
+sidebar_position: 2
+---
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+import { Vimeo } from 'mdx-embed';
+
+# Mettez en place votre environnement
+
+## Installez vos outils de développement front-end
+
+[Installez vos outils de développement front-end - Mettez en place votre environnement front-end - OpenClassrooms](https://openclassrooms.com/fr/courses/6943241-mettez-en-place-votre-environnement-front-end/6943248-installez-vos-outils-de-developpement-front-end)
+
+<Vimeo vimeoId="491647985" />
+
+<br />
+
+Dans ce chapitre, on va installer :
+- l'un des environnements de développement gratuits les plus utilisés : Visual Studio Code ;
+- les deux navigateurs les plus répandus : Chrome et Firefox.
+
+:::info
+Si vous ne savez pas encore ce qu'est un environnement de développement, ou pourquoi on a besoin de plusieurs navigateurs, ne
+vous inquiétez pas ! On en parlera en détail dans les prochains chapitres. Ici, on va simplement s'assurer de les télécharger
+et de les installer correctement, et on les découvrira ensuite.
+:::
+
+### Installez Visual Studio Code
+
+![](/img/OpenClassrooms/16073346800551_P1C1-1_Intallez_VSCode.png)
+
+Le premier outil qu'on va installer est Visual Studio Code, ou _VS Code_, qui sera votre outil de travail principal.
+
+Téléchargez d'abord l'installateur depuis le site officiel : [https://code.visualstudio.com](https://code.visualstudio.com).
+
+:::note !
+Normalement, votre système d'exploitation (Windows ou macOS) sera sélectionné par défaut. Si ce n'est pas le cas, sélectionnez-le
+dans le menu déroulant, et sélectionnez l'installation **Stable**.
+:::
+
+#### Sous **Windows**
+
+Une fois le téléchargement terminé, lancez l'installateur depuis son dossier de téléchargement, et acceptez le _User Agreement_.
+Vous pouvez avancer dans les différents écrans de l'installation sans modifier la configuration par défaut.
+
+![Accept the license agreement](/img/OpenClassrooms/16085651860482_image29.png)
+
+Acceptez le contrat de licence
+
+![Les options par défaut](/img/OpenClassrooms/1608565203072_image64.png)
+
+Les options par défaut
+
+![Prêt à installer](/img/OpenClassrooms/16085652164701_image50.png)
+
+Prêt à installer
+
+:::note
+Après l'installation, vous avez le choix ou non de lancer VS Code, mais faites-le uniquement si vous avez terminé les installations
+et que vous êtes prêt à avancer au prochain chapitre !
+:::
+
+#### Sous **macOS**
+
+Le fichier que vous téléchargez est l'application déjà prête à l'emploi. Glissez-la dans votre dossier _Applications_ pour la
+rendre accessible depuis le _launchpad_.
+
+![Glissez VS Code dans Applications](/img/OpenClassrooms/16085653980659_image15.png)
+
+Glissez VS Code dans Applications
+
+Et voilà ! VS Code est installé correctement : il est temps d'installer les navigateurs.
+
+:::note
+Si vous avez déjà installé Chrome et/ou Firefox, n'hésitez pas à passer les instructions correspondantes.
+:::
+
+### Installez vos navigateurs
+
+Les différents navigateurs n'affichent pas forcément les sites et applications exactement de la même manière, et il faut souvent
+modifier son code pour qu'il soit compatible. Il vous sera donc indispensable d'avoir accès à plusieurs navigateurs, en tant que
+développeur front-end, pour tester vos projets. Il faudra au moins les deux navigateurs les plus répandus : Chrome et Firefox.
+
+#### Installez Chrome
+
+![](/img/OpenClassrooms/16073347151941_P1C1-2_Installez_Chrome.png)
+
+Allez sur [https://www.google.com/chrome/](https://www.google.com/chrome/) et téléchargez Google Chrome pour votre système d'exploitation.
+
+##### Sous **Windows**
+
+Lancez l'installateur téléchargé, l'installation se fait automatiquement.
+
+##### Sous **macOS**
+
+Ouvrez le fichier que vous avez téléchargé. Glissez l'icône Chrome dans le dossier _Applications_ dans la fenêtre qui s'ouvre.
+
+![Glissez Chrome dans Applications](/img/OpenClassrooms/16085652323839_image3.png)
+
+Glissez Chrome dans Applications
+
+#### Installez Firefox
+
+![](/img/OpenClassrooms/16073347303794_P1C1-3_Installez_Firefox.png)
+
+Naviguez vers [https://www.mozilla.org/fr/firefox/new/](https://www.mozilla.org/fr/firefox/new/) et téléchargez la dernière version de Firefox pour votre système d'exploitation.
+
+##### Sous **Windows**
+
+Lancez l'installateur téléchargé, l'installation se fait automatiquement.
+
+##### Sous **macOS**
+
+Ouvrez le fichier téléchargé. Glissez l'icône Firefox dans le dossier Applications dans la fenêtre qui s'ouvre.
+
+![Glissez Firefox dans Applications](/img/OpenClassrooms/16085652466189_image55.png)
+
+Glissez Firefox dans Applications
+
+### En résumé
+
+Tous les outils dont vous aurez besoin pour ce cours sont maintenant installés :
+- Visual Studio Code ;
+- vos navigateurs : Chrome et Firefox.
+
+_Il est temps de commencer à les découvrir dans le prochain chapitre !_
+
+-----
+
+## Éditez vos premières lignes de code avec Visual Studio Code
+
+[Éditez vos premières lignes de code avec Visual Studio Code - Mettez en place votre environnement front-end - OpenClassrooms](https://openclassrooms.com/fr/courses/6943241-mettez-en-place-votre-environnement-front-end/7056001-editez-vos-premieres-lignes-de-code-avec-visual-studio-code)
+
+<Vimeo vimeoId="491648565" />
+
+<br />
+
+Apprenez dans les deux chapitres qui suivent à utiliser l'outil Visual Studio Code. Vous apprendrez à :
+- Configurer Visual Studio Code ;
+- Utiliser l'éditeur ;
+- Gérez vos dossiers de travail ;
+- Prendre en main la palette de commandes ;
+- Manipuler le terminal ;
+- Utiliser Git ;
+- Exploiter les extensions.
+
+:::note ?
+Vous êtes prêt ?
+:::
+
+### Configurez VS Code
+
+![](/img/OpenClassrooms/16073347576707_P1C2-1_Configurez_VSCode.png)
+
+Avant de plonger dans les fonctionnalités de VS Code, commençons par une configuration de base.
+
+:::info
+La plupart des vidéos et des captures d'écran de ce cours sont effectuées sur un Mac, mais les interfaces Mac et PC de VS Code
+sont sensiblement les mêmes. La plus grande différence est que la **barre des menus** sur Mac se trouve en haut de l'écran, alors
+que sur PC elle est collée à la fenêtre VS Code.
+
+L'autre différence se situe au niveau des **raccourcis clavier**, et je donnerai toujours les raccourcis des deux plateformes.
+:::
+
+Découvrez dans ce premier screencast l'outil Visual Studio Code et comment réaliser les premières configuration de base. Et
+ci-dessous, retrouvez en images, pas à pas, les configurations.
+
+<Vimeo vimeoId="491648135" />
+
+<br />
+
+Commençons par choisir un thème :
+
+![Choisissez un thème](/img/OpenClassrooms/16042476866879_Screenshot_2020-11-01_at_17.18.33.png)
+
+Cliquez sur "Color theme"
+
+Vous pouvez choisir, avec les flèches de votre clavier, entre des **thèmes Dark** (fond foncé, texte clair) et **Light** (fond
+clair, texte foncé). Appuyez sur Entrée pour sélectionner le thème que vous préférez.
+
+![Liste de thèmes](/img/OpenClassrooms/16042479066554_Screenshot_2020-11-01_at_17.22.38.png)
+
+Liste de thèmes
+
+Pour toutes les autres **options de configuration** de VS Code, vous avez le bouton **Manage** en bas à gauche, à partir duquel
+vous pouvez ouvrir les **Settings**.
+
+![Le bouton Manage](/img/OpenClassrooms/16042480868571_Screenshot_2020-11-01_at_17.26.36.png)
+
+Le bouton Manage
+
+![Settings](/img/OpenClassrooms/16042481843707_Screenshot_2020-11-01_at_17.28.44.png)
+
+L'interface Settings
+
+Vous pouvez, par exemple, y modifier le réglage **Editor: Font Size**, ce qui change la taille de police de l'éditeur.
+Personnellement, je préfère l'augmenter légèrement, car je la trouve un peu petite.
+
+:::info
+N'hésitez pas à explorer les différents paramètres !
+:::
+
+Vous pouvez maintenant fermer l'onglet Settings. Comme vous pouvez le constater, on ne revient pas par défaut sur l'onglet
+d'accueil de VS Code. Pour revenir à l'accueil, allez dans le menu **Help**, puis cliquez sur **Welcome**.
+
+![Retour à la page d'accueil](/img/OpenClassrooms/16042485616252_Screenshot_2020-11-01_at_17.33.38.png)
+
+Retour à la page d'accueil
+
+### Découvrez l'éditeur
+
+![](/img/OpenClassrooms/16075191126501_P1C2-2_Decouvrez_l_editeur.png)
+
+Dans ce screencast, observez les fonctionnalités de VS Code à partir d'un fichier de code.
+
+<Vimeo vimeoId="491648160" />
+
+<br />
+
+Pour travailler avec l'éditeur de code, il nous faut d'abord du code ! Je vous propose de cloner un projet simple à partir d'un
+dépôt Git OpenClassrooms :
+
+[https://github.com/OpenClassrooms-Student-Center/5543061-ecrivez-du-javascript-pour-le-web-activity.git](https://github.com/OpenClassrooms-Student-Center/5543061-ecrivez-du-javascript-pour-le-web-activity.git)
+
+:::info
+Il s'agit du code d'une activité du cours [Écrivez du JavaScript pour le Web](https://openclassrooms.com/en/courses/5543061-ecrivez-du-javascript-pour-le-web?status=published)
+que j'ai créé en collaboration avec Fabien Henon !
+:::
+
+Une fois le repo cloné, on va ouvrir le dossier qui contient le code, depuis l'onglet d'accueil :
+
+![Open folder](/img/OpenClassrooms/16042508881016_Screenshot_2020-11-01_at_18.13.14.png)
+
+Ouvrir un dossier
+
+![Folder open!](/img/OpenClassrooms/16042509858898_Screenshot_2020-11-01_at_18.15.32.png)
+
+Dossier ouvert !
+
+:::info
+Pour faciliter la lecture des images et des screencasts, j'ai zoomé mon interface. La gestion du zoom se fait dans le
+**menu _View -> Appearance_**, où vous trouverez également les raccourcis clavier !
+:::
+
+À gauche de la fenêtre VS Code, le contenu du dossier de code apparaît. On peut maintenant fermer l'onglet d'accueil, et ouvrir
+le fichier `blog.js` en cliquant dessus :
+
+![A JavaScript file](/img/OpenClassrooms/16042519487563_Screenshot_2020-11-01_at_18.31.19.png)
+
+Un fichier JavaScript
+
+Là vous voyez un fichier écrit en **JavaScript**, l'un des nombreux langages gérés par défaut par VS Code. Ne vous inquiétez pas
+si vous ne comprenez pas le code, ceci n'est pas un cours de JavaScript ! Je voudrais simplement attirer votre attention sur
+l'onglet **Editor** qui s'est ouvert.
+
+La première chose que l'on peut constater, c'est que le texte est **coloré**. Les différentes couleurs correspondent à différents
+éléments du langage utilisé, rendant votre code plus facile à lire et à comprendre.
+
+Vous constaterez ensuite que les lignes du fichier sont **numérotées**. C'est une aide qui, vous le verrez, est indispensable,
+car elle nous permet de retrouver rapidement les erreurs, ainsi que de collaborer bien plus facilement avec d'autres développeurs.
+
+:::info
+Souvent, quand un programme que nous créons rencontre une erreur, il nous fournit le nom du fichier et le numéro de la ligne où
+l'erreur se trouve !
+:::
+
+Passez maintenant votre souris entre les numéros de ligne et le code : vous y verrez apparaître des flèches qui permettent de
+**réduire** le code. Cliquez sur les flèches des lignes **4**, **20**, **31,** et **35** :
+
+![Réduire du code](/img/OpenClassrooms/1604252580551_Screenshot_2020-11-01_at_18.42.13.png)
+
+Réduire du code
+
+Le code est toujours là (les numéros de ligne reflètent la vérité cachée !), mais le fait de cacher certaines sections du code
+rend l'écran **moins encombré** et peut nous aider à nous concentrer sur l'essentiel.
+
+Vous découvrirez beaucoup d'autres fonctionnalités de l'éditeur de code au cours de vos études et de votre carrière de développeur.
+
+### Gérez vos dossiers de travail
+
+![](/img/OpenClassrooms/16073347873366_P1C2-2_Gerez_vos_dossiers_de_travail.png)
+
+Gérez ici les extensions de fichiers et organisez vos dossiers. Cela vous sera bien utile pour gérer vos projets !
+
+<Vimeo vimeoId="491648267" />
+
+<br />
+
+En travaillant avec l'éditeur de code, on a vu qu'on pouvait ouvrir un fichier en cliquant dessus dans l'explorateur de fichiers
+à gauche de l'écran. Cet explorateur vous permet également de **gérer vos fichiers et dossiers de travail**. Si vous y passez
+votre souris, vous verrez apparaître quelques icônes dans l'en-tête :
+
+![Opérations de dossier](/img/OpenClassrooms/16085656856691_image17.png)
+
+Opérations de dossier
+
+Le premier vous permet de **créer un nouveau fichier**. Quand on crée un fichier, on doit spécifier son **extension**.
+
+:::info
+L'extension d'un fichier nous spécifie son **type**, et ce qu'on pourra y trouver. C'est ce qui se trouve après le dernier point
+dans un nom de fichier ; par exemple, index._html_, blog._js_, styles._css_…
+:::
+
+VS Code interprète l'extension du fichier pour colorer correctement le code et pour mettre en place la bonne autocorrection, par
+exemple. Cliquez sur l'icône `New File`, et essayez ces trois exemples : `new.html`, `new.js`, `new.css`. Vous voyez que VS Code
+reconnaît l'extension, grâce à l'icône qu'il y attribue.
+
+![Nouveaux fichiers](/img/OpenClassrooms/16085656968735_image16.png)
+
+Reconnaissance des extensions des nouveaux fichiers
+
+:::info
+Cette différenciation par icône va faciliter la navigation !
+:::
+
+La deuxième icône de l'en-tête vous permet de **créer des dossiers** et sous-dossiers. On différencie les dossiers dans
+l'explorateur par l'icône _chevron_. Quand vous cliquez sur un dossier, il s'ouvre pour montrer son contenu. Créez un
+sous-dossier `icons` au dossier `images` en le sélectionnant, puis en cliquant sur `New Folder` :
+
+![Nouveau dossier](/img/OpenClassrooms/16085657060202_image20.png)
+
+Nouveau dossier
+
+La prochaine icône, la flèche en cercle, permet de **rafraîchir** l'explorateur. Cette fonctionnalité vous sera utile notamment
+quand des fichiers auront été créés par un autre outil, et que VS Code devra en prendre compte.
+
+La dernière icône est un raccourci pour **replier** tous les dossiers qui sont ouverts dans l'explorateur. Ça vous sera utile
+quand vous aurez des projets plus complexes avec beaucoup de dossiers, comme ce projet front-end avancé :
+
+![Une multitude de dossiers...](/img/OpenClassrooms/16085657188725_image7.png)
+
+Une multitude de dossiers...
+
+:::info
+En tout cas, l'explorateur de fichiers intégré à VS Code vous permettra de vous organiser et de naviguer facilement à l'intérieur
+de votre projet.
+:::
+
+### Prenez en main la palette de commandes
+
+![](/img/OpenClassrooms/16073348090971_P1C2-3_Prenez_en_main_la_palette_de_commandes.png)
+
+La palette de commande est une fonctionnalité dont vous ne pourrez plus vous passer ! Elle vous sera d'une grande aide pour
+travailler plus efficacement sur VS Code. Découvrez là dans ce sceencast :
+
+<Vimeo vimeoId="491648321" />
+
+<br />
+
+Dans VS Code, il existe un raccourci qui vous permet de trouver toutes les commandes possibles et imaginables en tapant leur nom.
+Ça veut dire que vous n'avez pas besoin d'apprendre par cœur dans quel menu se trouve une commande, ni son raccourci clavier
+(même si vous finirez par en apprendre certains !). Tout ça grâce à la **palette de commandes**, que vous ouvrez avec `Ctrl+Maj+P`
+sur PC, ou `Cmd+Maj+P` sur Mac :
+
+![La palette de commandes](/img/OpenClassrooms/16047517833775_Screenshot_2020-11-07_at_13.22.10.png)
+
+La palette de commandes
+
+Par exemple, imaginons que vous ayez plusieurs éditeurs ouverts, et que vous vouliez tous les fermer pour travailler sur une autre
+fonctionnalité de votre projet. Ouvrez la palette de commandes et tapez simplement le mot "Close" :
+
+![Fermer tous les éditeurs](/img/OpenClassrooms/16047519832114_Screenshot_2020-11-07_at_13.25.27.png)
+
+Fermer tous les éditeurs
+
+Vous y voyez la commande "Close All Editors", ou "Fermer tous les éditeurs". Vous pouvez y accéder avec les flèches de votre
+clavier, et appuyer sur "Entrée" pour exécuter la commande.
+
+:::info
+Notez aussi que la palette de commandes vous montre également le raccourci clavier pour la commande que vous souhaitez exécuter !
+:::
+
+Un autre exemple de commande rapide : la création d'un nouveau fichier. Ouvrez la palette de commandes et tapez "New File" :
+
+![New File](/img/OpenClassrooms/16047522778353_Screenshot_2020-11-07_at_13.30.38.png)
+
+Nouveau fichier
+
+Cela accomplit la même chose que lorsque vous cliquez sur le bouton dans l'explorateur de fichiers, mais **sans utiliser votre
+souris**. Tout geste qui requiert la souris nous ralentit : essayez de garder le plus possible les mains sur le clavier !
+
+:::info
+La palette de commandes est un peu l'arme secrète de VS Code : elle vous facilitera l'apprentissage de l'outil, et vous permettra
+d'être plus efficace !
+:::
+
+### En résumé
+
+Dans ce chapitre, vous avez exploré les bases de Visual Studio Code :
+- vous avez configuré votre installation en choisissant un thème ;
+- vous avez découvert l'éditeur de code ;
+- vous avez manipulé l'explorateur de fichiers ;
+- vous avez utilisé la palette de commandes pour accéder aux différentes commandes de VS Code ;
+
+Découvrez dans le chapitre suivant d'autres fonctionnalités qui vous seront utiles sur VS Code.
+
+-----
+
+## Explorez les fonctionnalités de Visual Studio Code
+
+[Explorez les fonctionnalités de Visual Studio Code - Mettez en place votre environnement front-end - OpenClassrooms](https://openclassrooms.com/fr/courses/6943241-mettez-en-place-votre-environnement-front-end/7117191-explorez-les-fonctionnalites-de-visual-studio-code)
+
+### Manipulez le terminal
+
+![](/img/OpenClassrooms/16073349530167_P1C2-4_Manipulez_le_terminal.png)
+
+Découvrez dans ce screencast le terminal intégré à l'outil VS Code. De quoi vous simplifier la vie en gérant qu'un seul outil !
+
+<Vimeo vimeoId="491648377" />
+
+<br />
+
+Au cours de vos études et de votre carrière de développeur, vous aurez souvent besoin d'exécuter des commandes de terminal
+(aussi connu sous les noms de _shell_, _PowerShell_, _invite de commandes_…). C'est pour cela que VS Code permet d'utiliser
+un **terminal intégré**. Ouvrez la palette de commandes, tapez "create terminal" et choisissez
+`Terminal: Create New Integrated Terminal` :
+
+![Create Terminal](/img/OpenClassrooms/16047632908408_Screenshot_2020-11-07_at_16.34.33.png)
+
+Commande : Create Terminal
+
+![Integrated terminal](/img/OpenClassrooms/16047633662906_Screenshot_2020-11-07_at_16.35.24.png)
+
+Terminal intégré
+
+:::info
+Votre terminal ne ressemblera pas forcément exactement au mien, selon votre système d'exploitation.
+:::
+
+On peut être amené à avoir besoin de **plusieurs fenêtres de terminal** en même temps – par exemple, un serveur de développement
+occupera un terminal, du coup on aura besoin d'un autre pour exécuter d'autres commandes.
+
+VS Code nous offre donc plusieurs possibilités : le bouton "New Terminal" qui ajoute un terminal à la liste déroulante, ou le
+bouton "Split Terminal" qui permet d'ouvrir plusieurs onglets côte à côte :
+
+![New Terminal + menu](/img/OpenClassrooms/16085659287512_image66.png)
+
+Liste déroulante des terminaux créés après avoir cliqué sur "New terminal"
+
+![Split Terminal](/img/OpenClassrooms/16047637767157_Screenshot_2020-11-07_at_16.41.53.png)
+
+Split Terminal
+
+:::info
+Plus vous avancerez dans vos études et votre carrière de développeur, plus vous apprécierez le terminal intégré !
+:::
+
+### Utilisez Git
+
+![](/img/OpenClassrooms/16073349683126_P1C2-5_Utiliser_Git.png)
+
+:::info
+Si vous ne connaissez pas comment utilisez Git, je vous invite à suivre le cours "[utilisez Git et GitHub pour vos projets de développement](https://openclassrooms.com/fr/courses/5641721-utilisez-git-et-github-pour-vos-projets-de-developpement)".
+:::
+
+Dans ce screencast, vous allez découvrir comment VS Code intègre les fonctionnalités de Git.
+
+<Vimeo vimeoId="491648453" />
+
+<br />
+
+Comme vous le savez, le système de contrôle de version Git est extrêmement important dans le monde du développement, que ce soit
+au niveau individuel, au niveau d'une équipe, ou même au niveau d'une entreprise. VS Code intègre donc tous les outils nécessaires
+à son utilisation.
+
+#### Clonez un dépôt
+
+Tout d'abord, vous pouvez cloner un dépôt Git directement depuis VS Code. Pour faire cela, fermez tout projet actuellement ouvert,
+et ouvrez l'explorateur de fichiers (en haut à gauche) :
+
+![Clone a repo](/img/OpenClassrooms/16047669171213_Screenshot_2020-11-07_at_17.33.51.png)
+
+Cloner un dépôt
+
+Vous pouvez ensuite cliquer sur "Clone Repository", puis coller l'URL du dépôt à cloner ; par exemple celui que nous avons
+utilisé jusqu'ici :
+
+[https://github.com/OpenClassrooms-Student-Center/5543061-ecrivez-du-javascript-pour-le-web-activity.git](https://github.com/OpenClassrooms-Student-Center/5543061-ecrivez-du-javascript-pour-le-web-activity.git)
+
+Quand vous validez l'URL, VS Code vous propose de choisir l'emplacement où vous souhaitez cloner le code, et vous propose d'ouvrir
+le dépôt cloné. En cliquant sur "Open", vous vous retrouvez dans le bon projet.
+
+#### Créez une branche
+
+Il est temps de travailler sur votre code, et vous souhaitez créer une branche de travail. Les outils Git se trouvent à gauche :
+
+![Les outils Git](/img/OpenClassrooms/16047675764325_Screenshot_2020-11-07_at_17.45.06.png)
+
+Les outils Git
+
+Vous pouvez ouvrir le menu `…` ; allez sur Branch -> Create Branch.
+
+:::info
+Bien sûr, vous pouvez aussi chercher "Create Branch" dans la palette de commandes !
+:::
+
+Choisissez un nom pour votre branche et appuyez sur Entrée. Vous verrez alors la branche sur laquelle vous vous trouvez, en bas
+à gauche de la fenêtre principale :
+
+![La branche active](/img/OpenClassrooms/16085659413319_image18.png)
+
+La branche active
+
+En cliquant sur cette branche, vous pouvez choisir de changer de branche ou d'en créer une nouvelle.
+
+#### Commit
+
+Effectuons quelques modifications. Ouvrez l'explorateur de fichiers, puis ouvrez `blog.html`, et changez la langue `en` en ligne 2
+à `fr`. Dans `functions.js`, à la ligne 17, changez "Veuillez saisir quelque chose !" en "Il faut saisir quelque chose !".
+
+:::info
+N'oubliez pas d'enregistrer vos modifications à chaque fois avec `Ctrl+S` sur PC ou `Cmd+S` sur Mac !
+:::
+
+Rouvrez les outils Git, et vous verrez le résumé de vos modifications. Cliquez sur un fichier pour voir le détail :
+
+![Git Diff](/img/OpenClassrooms/16047681121861_Screenshot_2020-11-07_at_17.54.29.png)
+
+Git Diff
+
+Plusieurs options s'ouvrent donc à nous, mais disons que nous souhaitons _commit_ nos modifications. Il faut d'abord **stage**
+nos modifications en cliquant sur les boutons + sur chaque fichier. Puis, entrez simplement votre **message de commit** ("Changed
+language", par exemple), et faites Ctrl+Entrée sur PC, ou Cmd+Entrée sur Mac pour effectuer votre commit.
+
+Toutes les commandes liées au contrôle de version se trouvent dans cette partie de VS Code (et sont trouvables par la palette de
+commandes), donc n'hésitez pas à les essayer avec vos propres dépôts.
+
+:::info
+Vous pouvez même y lier votre compte GitHub !
+:::
+
+### Exploitez les extensions
+
+![](/img/OpenClassrooms/16073349891466_P1C2-6_Exploitez_les_plugins.png)
+
+Pour personnaliser encore plus votre configuration de VS Code, vous pouvez installer des **plugins**, ou **_extensions_**. Ces
+plugins viennent rajouter des fonctionnalités ou des outils supplémentaires à votre VS Code.
+
+Vous pouvez parcourir toutes les extensions disponibles sur [https://marketplace.visualstudio.com](https://marketplace.visualstudio.com),
+mais voici deux extensions que je peux vous conseiller :
+- _Color Picker_ – cette extension vous permet de générer des codes couleurs à partir d'une color wheel, facilitant l'utilisation
+des couleurs dans vos projets ;
+- _open in browser_ – permet d'ouvrir le fichier sélectionné directement dans votre navigateur par défaut, ce qui facilite les
+tests de sites ou d'applications.
+
+Pour installer une extension, ouvrez Extensions à gauche de la fenêtre, et tapez le nom de l'extension souhaitée :
+
+![Choisissez une extension](/img/OpenClassrooms/16047723592818_Screenshot_2020-11-07_at_18.55.45.png)
+
+Choisissez une extension
+
+En cliquant sur les différentes extensions, vous pouvez lire leur descriptif, et pour en installer une, il suffit de cliquer sur
+le bouton Install correspondant !
+
+### Découvrez des extensions VS Code supplémentaires
+
+![](/img/OpenClassrooms/1607503355669_P1C3-5_-_Allez_plus_loin.png)
+
+Voici quelques suggestions d'extensions VS Code que vous trouverez peut-être intéressantes :
+- [Live Share](https://marketplace.visualstudio.com/items?itemName=MS-vsliveshare.vsliveshare-pack) – collaborez avec d'autres
+développeurs **en temps réel**, travaillez sur les mêmes fichiers en simultané pour du pair programming facile.
+- [GitLens](https://marketplace.visualstudio.com/items?itemName=eamodio.gitlens) – **étendez** les fonctionnalités Git intégrées.
+- [Stories](https://marketplace.visualstudio.com/items?itemName=bar9.stories) – comme les stories Instagram, mais en code !
+- [Search Hero](https://marketplace.visualstudio.com/items?itemName=Wscats.search) – tous les développeurs font des recherches
+sur Internet pour trouver des réponses, donc Search Hero intègre directement la recherche et la traduction multimoteur.
+
+Vous pouvez bien sûr trouver toutes les extensions disponibles au [Visual Studio Marketplace](https://marketplace.visualstudio.com/vscode).
+
+### En résumé
+
+Dans ce chapitre vous avez exploré les fonctionnalités supplémentaires de VS Code  :
+- vous avez vu les différentes possibilités du terminal intégré ;
+- vous avez interagi avec des dépôts Git ;
+- vous avez installé vos premières extensions.
+
+Bien évidemment, vous apprendrez de mieux en mieux cet outil au cours de vos études et de votre carrière, et vous en découvrirez
+des fonctionnalités plus avancées, mais c'est déjà un excellent début !
+
+_Dans le chapitre suivant, vous apprendrez à tester votre code avec les outils de développeur (devtools) Chrome et Firefox !_
+
+-----
+
+## Testez votre code avec les devtools Chrome et Firefox
+
+[Testez votre code avec les devtools Chrome et Firefox - Mettez en place votre environnement front-end - OpenClassrooms](https://openclassrooms.com/fr/courses/6943241-mettez-en-place-votre-environnement-front-end/7056021-testez-votre-code-avec-les-devtools-chrome-et-firefox)
+
+<Vimeo vimeoId="491649474" />
+
+<br />
+
+Dans ce chapitre, vous allez utiliser les outils développeur, ou **devtools**, de Chrome et Firefox, pour analyser une page du
+site d'OpenClassrooms !
+
+### Découvrez l’inspecteur – HTML
+
+![](/img/OpenClassrooms/1607335033082_P1C3-1_Decouvrez_l_inspecteur_HTML.png)
+
+À partir d'une page web d'OpenClassrooms, découvrez à quoi ressemble l'inspecteur HTML sur votre navigateur web.
+
+<Vimeo vimeoId="491648719" />
+
+<br />
+
+Pour commencer, ouvrez [https://openclassrooms.com/fr/paths](https://openclassrooms.com/fr/paths) dans Chrome :
+
+![Open Classrooms - Parcours](/img/OpenClassrooms/16050319867305_Screenshot_2020-11-10_at_19.12.24.png)
+
+OpenClassrooms – Parcours
+
+Pour inspecter la structure de cette page, vous allez ouvrir **l'inspecteur d'éléments**. Sur Windows, faites `Ctrl+Maj+C`. Sur
+macOS, faites `Option+Cmd+C`. L'inspecteur s'ouvrira en bas de votre écran.
+
+:::info
+Les raccourcis sont les mêmes entre **Chrome** et **Firefox**, et toutes les manipulations dans cette section sont identiques,
+avec quelques nuances sur le design des icônes (mais tout se trouve aux mêmes endroits dans les deux navigateurs).
+:::
+
+Pour la lisibilité, je préfère ancrer les devtools à droite de mon écran. Pour changer l'ancrage des devtools, l'option se trouve
+dans le menu de customisation :
+
+![Customisation des Devtools](/img/OpenClassrooms/16085674203905_image33.png)
+
+Personnalisation des devtools
+
+![Devtools à droite](/img/OpenClassrooms/16050327136836_Screenshot_2020-11-10_at_19.23.42.png)
+
+Devtools à droite
+
+:::info
+Le code que vous voyez dans l'inspecteur est du code **HTML** – le langage qui définit la **structure** d'une page web.
+
+Une page web est composée d'**éléments** – du texte, les images, les boutons… ce sont tous des exemples d'éléments. Un élément
+peut être **parent** de plusieurs éléments **enfants** : par exemple, l'élément d'en-tête de cette page contient des éléments
+enfants : le logo OpenClassrooms, des liens, un bouton Rechercher, et les boutons liés à la connexion.
+:::
+
+Lorsque vous passez votre souris sur différentes lignes de code, les différents éléments sont surlignés sur la page affichée. Par
+exemple, survolez la ligne suivante :
+
+```html
+<div id="oc-header" data-widget="header">...</div>
+```
+
+L'en-tête de la page sera surligné :
+
+![En-tête surlignée](/img/OpenClassrooms/16050332616965_Screenshot_2020-11-10_at_19.33.23.png)
+
+En-tête surligné
+
+Ce surlignage nous signale que l'élément de code survolé correspond à l'en-tête de la page. Plongeons dedans en cliquant sur la
+flèche qui se trouve au début de la ligne de code :
+
+![Ouvrez l'en-tête](/img/OpenClassrooms/16085674351081_image5.png)
+
+Ouvrez l'en-tête
+
+On voit que l'élément de type  `div`  contient un seul enfant : un élément de type  `header`  . La structure de cette page fait que nous avons plusieurs éléments à un seul enfant. Ouvrons-les tous jusqu'à trouver les enfants multiples qui correspondent aux différents éléments de l'en-tête : 
+
+![Plongeons dans la structure](/img/OpenClassrooms/16085674655034_image44.png)
+
+Plongeons dans la structure
+
+Si vous survolez les différents enfants à ce niveau, vous voyez les différents éléments surlignés sur la page, et ainsi vous savez
+à quel élément visuel correspond telle ligne de code :
+
+![Le logo](/img/OpenClassrooms/16085674877389_image14.png)
+
+Le logo surligné
+
+![Le menu surligné](/img/OpenClassrooms/1608567511102_image62.png)
+
+Le menu surligné
+
+Vous pouvez aussi retrouver la ligne qui correspond à un élément en faisant un **clic droit** sur l'élément de la page, puis sur
+Inspecter. Essayez sur le texte "Découvrez nos parcours diplômants" :
+
+![Clic-droit + Inspecter](/img/OpenClassrooms/16085675396129_image71.png)
+
+Clic droit + Inspecter
+
+![Le code correspondant](/img/OpenClassrooms/16085675664466_image4.png)
+
+Le code correspondant
+
+Vous pouvez aussi activer l'inspection à la sélection, qui vous permet de survoler et de cliquer sur les éléments de la page pour
+les inspecter, depuis l'inspecteur :
+
+![L'inspection à la sélection](/img/OpenClassrooms/16085675813778_image68.png)
+
+L'inspection à la sélection
+
+;;;info
+Vous savez maintenant inspecter les éléments structurels d'une page web. Gardons la sélection que l'on vient d'effectuer, et
+profitons-en pour découvrir un autre aspect de l'inspecteur : les **styles**.
+
+### Découvrez l’inspecteur – styles
+
+![](/img/OpenClassrooms/16073350539802_P1C3-2_D_couvrez_l_inspecteur_de_styles.png)
+
+Découvrez à présent, à quoi ressemble l'inspecteur style sur votre navigateur web.
+
+<Vimeo vimeoId="491649042" />
+
+<br />
+
+L'inspecteur des navigateurs nous permet de visualiser et de modifier le code qui régit les **styles** d'une page web, c'est-à-dire
+l'**apparence** des différents éléments. Si vous avez modifié votre sélection depuis la section précédente, revenez sur l'élément
+"Découvrez nos parcours diplômants". Dans la partie inférieure de l'inspecteur, vous verrez la partie Styles :
+
+#### Sur Chrome
+
+![Styles inspector - Chrome](/img/OpenClassrooms/16085676008565_image2.png)
+
+L'inspecteur de style sur Chrome
+
+#### Sur Firefox
+
+![Styles inspector - Firefox](/img/OpenClassrooms/16051038229467_Screenshot_2020-11-11_at_15.09.06.png)
+
+L'inspecteur de style sur Firefox
+
+:::info
+N'hésitez pas à augmenter la hauteur de cette partie de l'inspecteur, et sur Firefox, je vous conseille également de désactiver
+la vue à trois panneaux à l'aide de ce bouton dans l'en-tête de l'inspecteur des styles :
+
+![Désactivez la vue à trois panneaux](/img/OpenClassrooms/16051039822563_Screenshot_2020-11-11_at_15.12.22.png)
+
+Désactivez la vue à trois panneaux
+:::
+
+Dans l'inspecteur des styles ("Styles" dans Chrome, "Règles" ou "Rules" dans Firefox), vous pouvez filtrer les styles pour
+trouver ce qui vous intéresse, et même en modifier la valeur.
+
+Imaginons que vous souhaitiez modifier la couleur blanche du texte. Dans le champ de filtrage, tapez "color", et cherchez la règle
+`color` qui est accompagnée d'un petit carré blanc et de la valeur `rgb(255, 255, 255)` :
+
+#### Sur Chrome
+
+![color - Chrome](/img/OpenClassrooms/16085676198339_image11.png)
+
+color – Chrome
+
+#### Sur Firefox
+
+![color - Firefox](/img/OpenClassrooms/16085676324716_image34.png)
+
+color – Firefox
+
+Si vous cliquez sur la valeur associée à `color`, vous pouvez la modifier. Tapez `red`, et vous remarquerez la modification de
+l'apparence de l'élément :
+
+![Texte rouge](/img/OpenClassrooms/16085676430126_image70.png)
+
+Texte rouge
+
+:::info
+Le fait de pouvoir modifier ainsi à la volée les styles d'une page web nous permet de tester des modifications sans toucher au
+code source de notre projet, et peut être extrêmement utile.
+:::
+
+### Étudiez la console
+
+![](/img/OpenClassrooms/1607335071702_P1C3-3_Etudiez_la_console.png)
+
+Un autre outil principal des devtools est la **console**. La console nous apporte des informations essentielles sur le
+fonctionnement de nos projets, surtout en cas de problème. Vous trouverez l'accès à la console dans l'en-tête des devtools.
+
+<Vimeo vimeoId="491649218" />
+
+<br />
+
+#### Sur Chrome
+
+![Accès à la console - Chrome](/img/OpenClassrooms/16085676592728_image67.png)
+
+Accès à la console – Chrome
+
+#### Sur Firefox
+
+![Accès à la console - Firefox](/img/OpenClassrooms/16085676708182_image24.png)
+
+Accès à la console – Firefox
+
+En tant que développeur front-end, vous pourrez faire afficher des messages dans la console. Par exemple, les développeurs chez
+OpenClassrooms font apparaître un message d'avertissement pour prévenir les potentielles victimes d'attaque self-XSS, où
+l'attaquant convainc la victime à coller du code néfaste dans cette console.
+
+Au moment de la création de ce cours, on constate également des avertissements liés au code source, et même une erreur !
+
+![Erreur dans la console !](/img/OpenClassrooms/1605107708982_Screenshot_2020-11-11_at_16.12.56.png)
+
+Erreur dans la console !
+
+:::info
+La console sera certainement l'un des outils que vous utiliserez le plus souvent de toute la gamme des devtools.
+:::
+
+### Activez le mode mobile
+
+![](/img/OpenClassrooms/16073350829128_P1C3-4_Activez_le_mode_mobile.png)
+
+Environ 50 % du trafic web aujourd'hui se déroule sur mobile, donc il vous est indispensable, en tant que développeur front-end,
+de vérifier l'apparence de vos projets sur différents types d'appareils. Découvrez comment gérer l'apparence mobile :
+
+<Vimeo vimeoId="491649402" />
+
+<br />
+
+:::info
+On parle souvent de design **responsive** : il s'agit d'une technique de design où l'apparence d'une page ou d'une application
+dépend de l'appareil sur lequel on les consulte. On dépendra souvent de la largeur en pixels de la fenêtre de navigateur.
+:::
+
+Les devtools vous permettent de simuler de manière assez fiable plusieurs appareils mobiles. Vous pouvez activer le mode mobile
+depuis l'en-tête des devtools :
+
+#### Sur Chrome
+
+![Mode mobile - Chrome](/img/OpenClassrooms/16051093392511_Screenshot_2020-11-11_at_16.41.22.png)
+
+Mode mobile – Chrome
+
+#### Sur Firefox
+
+![Mode mobile - Firefox](/img/OpenClassrooms/16051093534836_Screenshot_2020-11-11_at_16.41.43.png)
+
+Mode mobile – Firefox
+
+Vous constaterez le redimensionnement de la partie active de la fenêtre de navigation, et vous remarquerez que les développeurs
+chez OpenClassrooms ont bien fait leur travail ! Le design fonctionne bien en vue mobile :
+
+![Responsive design](/img/OpenClassrooms/16085676890631_image72.png)
+
+Responsive design
+
+En mode mobile, l'en-tête du navigateur permet de choisir le type de mobile simulé, son orientation, et vous pouvez même choisir
+de limiter la bande passante pour simuler une mauvaise connexion !
+
+![Options mode mobile](/img/OpenClassrooms/16051096243321_Screenshot_2020-11-11_at_16.46.46.png)
+
+Options mode mobile
+
+Tous ces outils vous seront très importants dans la réalisation de vos projets front-end.
+
+### En résumé
+
+Dans ce chapitre :
+- vous avez analysé la structure d'une page web avec l'inspecteur ;
+- vous avez trouvé et modifié les styles d'un élément ;
+- vous avez découvert la console ;
+- vous avez utilisé le mode mobile pour simuler l'utilisation d'un appareil mobile.
+
+_Félicitations ! Vous arrivez à la fin de cours. Vous avez mis en place votre environnement de développement. Vous avez installé
+**Visual Studio Code**, **Chrome** et **Firefox**, et vous avez une bonne compréhension de base de leurs différentes
+fonctionnalités.<br />
+Vous êtes maintenant prêt à évaluer ce que vous avez appris avec le quiz que je vous ai préparé !_
+
+_Bonne continuation dans le monde du développement front-end ! 😀_
+
+-----
+
+## Quiz : Manipulez vos outils !
+
+[Manipulez vos outils ! - OpenClassrooms](https://openclassrooms.com/fr/courses/6943241-mettez-en-place-votre-environnement-front-end/exercises/3963)
+
+#### Compétences évaluées
+
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-checkbox" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#00b341" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <polyline points="9 11 12 14 20 6" />
+  <path d="M20 12v6a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h9" />
+</svg> Mettre en place son environnement Front-End
+
+-----
+
+#### Description
+
+Ceci est un quiz **pratique**, c'est-à-dire qu'il vous faudra effectuer plusieurs manipulations pour répondre aux questions !
+
+Voici les instructions à suivre :
+
+1. Clonez le dépôt Git suivant avec VS Code : [https://github.com/willehpeh/setup-development-environment](https://github.com/willehpeh/setup-development-environment)
+
+2.  Ouvrez un terminal intégré :
+    - Sur Windows, tapez  `chrome index.html`
+    - Sur macOS, tapez  `open -a "Google Chrome" index.html`
+    Vous verrez la page de travail du quiz qui s'ouvre :
+    
+    ![La page du quiz](/img/OpenClassrooms/16054637939726_Screenshot_2020-11-15_at_19.09.19.png)
+    
+    La page du quiz
+    
+    Vous constaterez que le menu "Dropdown" en haut est désactivé. Vous allez l'activer maintenant !
+
+3. Dans VS Code :
+    - Dans le sous-dossier `extras`, ouvrez `extra.js`, copiez-en tout le contenu.
+    - Ouvrez `index.html`, et collez le contenu de `extra.js` à la ligne 73 (entre les balises `<script>` et `</script>` des
+    lignes 72 et 74).
+    - à la ligne 52 de `index.html`, supprimez le mot `disabled`
+    - enregistrez `index.html`
+
+4. De retour dans Chrome :
+    - Actualisez la page – le menu "Dropdown" doit maintenant être actif !
+    - Notez le dernier code du menu (le caractère # et les 6 chiffres).
+    - Inspectez le carré du milieu.
+    - Modifiez son style `background-color`, en y mettant le code du menu Dropdown que vous avez noté.
+    - Répondez à la question 1.
+
+5. Toujours dans Chrome :
+    - Deux de ces carrés ne sont en fait pas des carrés ! Trouvez le plus large, et inspectez-le.
+    - Modifiez son style `background-color` et mettez `transparent` (ou désactivez-le avec sa case à cocher) : un chiffre
+    se révèle !
+    - Répondez à la question 2.
+
+6. Ouvrez la console, et répondez à la question 3.
+
+:::info
+À chaque modification apportée à `index.html`, n'oubliez pas de sauvegarder, et puis d'actualiser la page dans Chrome !
+:::
+
+#### Question 1 : Comment décririez-vous la couleur du carré après sa modification ?
+
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> Rouge<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> Vert<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> Rose<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle-check" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#7bc62d" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M9 12l2 2l4 -4" />
+</svg> Violet<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> Jaune<br />
+<br />
+
+*Le carré est violet ; c'est d'ailleurs le violet d'OpenClassrooms !*
+
+-----
+
+#### Question 2 : Quel nombre est révélé ?
+
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> 3<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> 5<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle-check" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#7bc62d" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M9 12l2 2l4 -4" />
+</svg> 12<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> 15<br />
+<br />
+
+*Si vous avez révélé un autre nombre, vous n'avez pas sélectionné le carré le plus large.*
+
+*Si vous vous êtes trompé parce que vous avez cherché le nombre dans le code, c'est que j'ai été assez futé pour mieux cacher
+la bonne réponse !*
+
+-----
+
+#### Question 3 : La date du jour apparaît dans la console. De quelle couleur est le texte ?
+
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle-check" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#7bc62d" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M9 12l2 2l4 -4" />
+</svg> Bleu<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> Rouge<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> Noir<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> Vert<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> Blanc<br />
+<br />
+
+*La date du jour apparaît en bleu.*

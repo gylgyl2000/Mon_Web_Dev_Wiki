@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<!-- <script src="https://code.jquery.com/jquery-1.10.2.js"></script> -->
+    <!-- <script src="https://cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script> -->
+    <!-- <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.js"></script> -->
+    <!-- <script src="https://cdn.jsdelivr.net/npm/jquery-ui@1.13.0/ui/widget.min.js"></script> -->
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.0/jquery-ui.js"></script>
+
+	<script>
+		// This function runs everytime the page load
+		$(document).ready(function() {
+
+			var Countries = [
+				"Afghanistan", "Albania", "Algeria",
+				"Armenia", "Australia", "Bahrain",
+				"Bangladesh", "Belgium", "Bhutan",
+				"Brazil", "Canada", "Chile", "China",
+				"Denmark", "Djibouti", "Egypt",
+				"Estonia", "Ethiopia", "Finland",
+				"France", "Germany", "Ghana", "Greece",
+				"Greenland", "Hong Kong", "Hungary",
+				"Iceland", "India", "Indonesia", "Iran",
+				"Iraq", "Ireland", "Israel", "Italy",
+				"Japan", "Jersey", "Jordan", "Kazakhstan",
+				"Kuwait", "Kyrgyzstan", "Lebanon",
+				"Malaysia", "Maldives", "Mexico", "Nepal",
+				"Netherlands", "New Zealand", "North Korea",
+				"Pakistan", "Palestine", "Philippines",
+				"Poland", "Qatar", "Russia", "Saudi Arabia",
+				"Singapore", "South Africa", "Swaziland",
+				"Taiwan", "Thailand", "Turkey",
+				"United Kingdom", "United States of America",
+				"Uruguay", "Vietnam", "Yemen", "Zimbabwe"
+			];
+
+			// Fetch locally stored Countries
+			var Countries = window.localStorage.getItem("Countries");
+
+			// If countries is not available assign empty array []
+			// else assign JavaScript object
+			Countries = Countries === null ? [] : JSON.parse(Countries);
+
+			// Fetch Country input tag and use jQuery
+			// autocomplete function
+			$("#country_input").autocomplete({
+
+				// Pass JavaScript object to
+				// autocomplete function
+				source: Countries,
+				autofocus: true,
+			});
+
+			// Form submission event function
+			$("form").submit(function(event) {
+
+				// Prevent form submission until
+				// code execution
+				event.preventDefault;
+
+				// Fetch input field value
+				var currentCountry = $("#country_input").val();
+
+				// Store it on the top of the Countries
+				// array at index 0
+				Countries.unshift(currentCountry);
+
+				// Remove the duplicate entries
+				for (var i = 1; i < Countries.length; i++) {
+
+					// Countries[0] stores current input field
+					if (Countries[0] === Countries[i]) {
+						Countries.splice(i, 1);
+					}
+				}
+
+				// Stores only the last 10 searches
+				// Developer can choose the number of
+				// entries to be stored		
+				if (i === Countries.length && Countries.length > 10) {
+					Countries.pop();
+				}
+
+				// Stores the new list into the local
+				// storage overwriting the previous one
+				window.localStorage.setItem("Countries",
+					JSON.stringify(Countries));
+
+				// Submit the form
+				event.submit;
+			});
+
+			// To clear local storage when clear
+			// button is clicked
+			$("#clear").click(function(event) {
+				localStorage.clear();
+			});
+		});
+	</script>
+</head>
+
+<body>
+	<h2 style="color:green">GeeksforGeeks</h2>
+	<b>Autocomplete filling</b>
+
+	<p></p>
+
+	<form name="form" id="form">
+		<label for="">Enter Country</label>
+		<input type="text" id="country_input"
+				name="country_input" />
+		<button type="submit">Submit</button>
+		<button id="clear">Clear Local</button>
+	</form>
+</body>
+
+</html>

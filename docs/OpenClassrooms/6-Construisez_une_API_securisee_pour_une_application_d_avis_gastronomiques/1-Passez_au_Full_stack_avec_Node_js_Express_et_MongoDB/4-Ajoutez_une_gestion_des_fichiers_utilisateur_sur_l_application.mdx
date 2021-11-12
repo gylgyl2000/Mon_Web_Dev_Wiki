@@ -1,0 +1,442 @@
+---
+sidebar_position: 5
+---
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+import { Vimeo } from 'mdx-embed';
+
+# Ajoutez une gestion des fichiers utilisateur sur l'application
+
+## Acceptez les fichiers entrants avec multer
+
+[Acceptez les fichiers entrants avec multer - Passez au Full stack avec Node.js, Express et MongoDB - OpenClassrooms](https://openclassrooms.com/fr/courses/6390246-passez-au-full-stack-avec-node-js-express-et-mongodb/6466627-acceptez-les-fichiers-entrants-avec-multer)
+
+<Vimeo vimeoId="373130245" />
+
+<br />
+
+Dans cette dernière partie du cours, nous allons implémenter des **téléchargements de fichiers** pour que les utilisateurs
+puissent télécharger des images d'articles à vendre. Pour ce faire, nous utiliserons `multer`, un package qui nous permet de gérer
+les fichiers entrants dans les requêtes HTTP. Commençons par installer `multer` et par créer un élément de _middleware_ pour gérer
+ces fichiers entrants.
+
+### Configurez le _middleware_ de gestion des fichiers
+
+<Vimeo vimeoId="374676613" />
+
+<br />
+
+Nous devrons d'abord installer `multer` dans notre projet :
+
+```sh
+npm install --save multer
+```
+
+Les images seront enregistrées dans un sous-dossier appelé `images`. Créez donc ce sous-dossier dans votre dossier `backend`.
+
+Vous pouvez maintenant créer un _middleware_ dans notre dossier `middleware` appelé `multer-config.js` :
+
+```javascript
+const multer = require('multer');
+
+const MIME_TYPES = {
+    'image/jpg': 'jpg',
+    'image/jpeg': 'jpg',
+    'image/png': 'png'
+};
+
+const storage = multer.diskStorage({
+    destination: (req, file, callback) => {
+        callback(null, 'images');
+    },
+    filename: (req, file, callback) => {
+        const name = file.originalname.split(' ').join('_');
+        const extension = MIME_TYPES[file.mimetype];
+        callback(null, name + Date.now() + '.' + extension);
+    }
+});
+
+module.exports = multer({storage: storage}).single('image');
+```
+
+Dans ce _middleware_ :
+
+1. nous créons une constante `storage`, à passer à `multer` comme configuration, qui contient la logique nécessaire pour indiquer
+à `multer` où enregistrer les fichiers entrants :
+   - la fonction `destination` indique à `multer` d'enregistrer les fichiers dans le dossier `images` ;
+   - la fonction `filename` indique à `multer` d'utiliser le nom d'origine, de remplacer les espaces par des _underscores_ et
+   d'ajouter un timestamp `Date.now()` comme nom de fichier. Elle utilise ensuite la constante dictionnaire de type MIME pour
+   résoudre l'extension de fichier appropriée ;
+2. nous exportons ensuite l'élément `multer` entièrement configuré, lui passons notre constante `storage` et lui indiquons que
+nous gérerons uniquement les téléchargements de fichiers image.
+
+Avant de pouvoir appliquer notre _middleware_ à nos routes `stuff`, nous devrons les modifier quelque peu, car la structure des
+données entrantes n'est pas tout à fait la même avec des fichiers _et_ des données JSON.
+
+-----
+
+## Modifiez les routes pour prendre en compte les fichiers
+
+[Modifiez les routes pour prendre en compte les fichiers - Passez au Full stack avec Node.js, Express et MongoDB - OpenClassrooms](https://openclassrooms.com/fr/courses/6390246-passez-au-full-stack-avec-node-js-express-et-mongodb/6466669-modifiez-les-routes-pour-prendre-en-compte-les-fichiers)
+
+<Vimeo vimeoId="373130352" />
+
+<br />
+
+Pour que notre _middleware_ de téléchargement de fichiers fonctionne sur nos routes, nous devrons les modifier, car le format
+d'une requête contenant un fichier du front-end est différent.
+
+### Modifiez la route POST
+
+<Vimeo vimeoId="374676513" />
+
+<br />
+
+Tout d'abord, ajoutons notre _middleware_ `multer` à notre route POST dans notre routeur `stuff` :
+
+```javascript
+const express = require('express');
+const router = express.Router();
+
+const auth = require('../middleware/auth');
+const multer = require('../middleware/multer-config');
+
+const stuffCtrl = require('../controllers/stuff');
+
+router.get('/', auth, stuffCtrl.getAllStuff);
+router.post('/', auth, multer, stuffCtrl.createThing);
+router.get('/:id', auth, stuffCtrl.getOneThing);
+router.put('/:id', auth, stuffCtrl.modifyThing);
+router.delete('/:id', auth, stuffCtrl.deleteThing);
+
+module.exports = router;
+```
+
+:::caution !
+L'ordre des _middlewares_ est important ! Si nous devons placer `multer` avant le _middleware_ d'authentification, même les images
+des requêtes non authentifiées seront enregistrées dans le serveur. Veillez à placer `multer` **après** `auth` !
+:::
+
+Pour gérer correctement la nouvelle requête entrante, nous devons mettre à jour notre contrôleur :
+
+```javascript
+exports.createThing = (req, res, next) => {
+    const thingObject = JSON.parse(req.body.thing);
+    delete thingObject._id;
+    const thing = new Thing({
+        ...thingObject,
+        imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
+    });
+    thing.save()
+    .then(() => res.status(201).json({ message: 'Objet enregistré !'}))
+    .catch(error => res.status(400).json({ error }));
+};
+```
+
+Que fait le code ci-dessus ?
+- Pour ajouter un fichier à la requête, le front-end doit envoyer les données de la requête sous la forme form-data, et non sous
+forme de JSON. Le corps de la requête contient une chaîne `thing`, qui est simplement un objet `Thing` converti en chaîne. Nous
+devons donc l'analyser à l'aide de `JSON.parse()` pour obtenir un objet utilisable.
+- Nous devons également résoudre l'URL complète de notre image, car `req.file.filename` ne contient que le segment `filename`.
+Nous utilisons `req.protocol` pour obtenir le premier segment (dans notre cas `'http'`). Nous ajoutons `'://'`, puis utilisons
+`req.get('host')` pour résoudre l'hôte du serveur (ici, `'localhost:3000'`). Nous ajoutons finalement `'/images/'` et le nom de
+fichier pour compléter notre URL.
+
+:::info
+Pensez à utiliser la section Partie 4 ! Si vous enregistrez le contrôleur en l'état et testez l'application, vous constaterez que
+**presque** tout fonctionne. Le seul problème que nous avons est l'erreur 404 que nous obtenons lors de la tentative d'extraction
+de l'image, alors que notre URL semble correcte. Que se passe-t-il donc ici ?
+:::
+
+En fait, nous effectuons une demande GET vers `http://localhost:3000/images/<image-name>.jpg`. Cela semble simple, mais n'oubliez
+pas que notre application s'exécute sur `localhost:3000` et nous ne lui avons pas indiqué comment répondre aux requêtes transmises
+à cette route : elle renvoie donc une erreur 404. Pour remédier à cela, nous devons indiquer à notre `app.js` comment traiter les
+requêtes vers la route `/image`, en rendant notre dossier `images` statique.
+
+Il nous faudra une nouvelle importation dans `app.js` pour accéder au _path_ de notre serveur :
+
+```javascript
+const path = require('path');
+```
+
+De plus, nous ajoutons le gestionnaire de routage suivant juste au-dessus de nos routes actuelles :
+
+```javascript
+app.use('/images', express.static(path.join(__dirname, 'images')));
+```
+
+Cela indique à Express qu'il faut gérer la ressource `images` de manière statique (un sous-répertoire de notre répertoire de base,
+`__dirname`) à chaque fois qu'elle reçoit une requête vers la route `/images`. Enregistrez et actualisez l'application dans le
+navigateur ; désormais, tout devrait fonctionner correctement. Et maintenant, occupons-nous de la route PUT !
+
+### Modifiez la route PUT
+
+<Vimeo vimeoId="374676541" />
+
+<br />
+
+La modification de notre route PUT est sensiblement plus compliquée, car nous devons prendre en compte deux possibilités :
+l'utilisateur a mis à jour l'image, ou pas. Dans le premier cas, nous recevrons l'élément form-data et le fichier. Dans le second
+cas, nous recevrons uniquement les données JSON.
+
+Tout d'abord, ajoutons `multer` comme _middleware_ à notre route PUT :
+
+```javascript
+const express = require('express');
+const router = express.Router();
+
+const auth = require('../middleware/auth');
+const multer = require('../middleware/multer-config');
+
+const stuffCtrl = require('../controllers/stuff');
+
+router.get('/', auth, stuffCtrl.getAllStuff);
+router.post('/', auth, multer, stuffCtrl.createThing);
+router.get('/:id', auth, stuffCtrl.getOneThing);
+router.put('/:id', auth, multer, stuffCtrl.modifyThing);
+router.delete('/:id', auth, stuffCtrl.deleteThing);
+
+module.exports = router;
+```
+
+À présent, nous devons modifier notre fonction `modifyThing()` pour voir si nous avons reçu ou non un nouveau fichier, et répondre
+en conséquence :
+
+```javascript
+exports.modifyThing = (req, res, next) => {
+    const thingObject = req.file ?
+        {
+            ...JSON.parse(req.body.thing),
+            imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
+        } : { ...req.body };
+    Thing.updateOne({ _id: req.params.id }, { ...thingObject, _id: req.params.id })
+    .then(() => res.status(200).json({ message: 'Objet modifié !'}))
+    .catch(error => res.status(400).json({ error }));
+};
+```
+
+Dans cette version modifiée de la fonction, on crée un objet `thingObject` qui regarde si `req.file` existe ou non. S'il existe,
+on traite la nouvelle image ; s'il n'existe pas, on traite simplement l'objet entrant. On crée ensuite une instance `Thing` à
+partir de `thingObject`, puis on effectue la modification.
+
+Félicitations ! Notre application gère correctement les téléchargements de fichiers lorsque nous mettons de nouveaux articles en
+vente et lorsque nous modifions les articles existants.
+
+-----
+
+## Développez la fonction delete du back-end
+
+[Développez la fonction delete du back-end - Passez au Full stack avec Node.js, Express et MongoDB - OpenClassrooms](https://openclassrooms.com/fr/courses/6390246-passez-au-full-stack-avec-node-js-express-et-mongodb/6466697-developpez-la-fonction-delete-du-back-end)
+
+<Vimeo vimeoId="373130533" />
+
+<br />
+
+### Modifiez la route DELETE
+
+<Vimeo vimeoId="374676574" />
+
+<br />
+
+En ce qui concerne la gestion des fichiers dans notre back-end, il faut absolument nous assurer que, à chaque suppression d'un
+`Thing` de la base de données, le fichier image correspondant est également supprimé.
+
+Dans notre contrôleur `stuff`, il nous faut une nouvelle importation. Il s'agit du package `fs` de Node :
+
+```javascript
+const fs = require('fs');
+```
+
+:::info
+`fs` signifie « file system » (soit « système de fichiers » en français). Il nous donne accès aux fonctions qui nous permettent de
+modifier le système de fichiers, y compris aux fonctions permettant de supprimer les fichiers.
+:::
+
+À présent, nous pouvons modifier notre fonction `deleteThing()` :
+
+```javascript
+exports.deleteThing = (req, res, next) => {
+    Thing.findOne({ _id: req.params.id })
+    .then(thing => {
+        const filename = thing.imageUrl.split('/images/')[1];
+        fs.unlink(`images/${filename}`, () => {
+            Thing.deleteOne({ _id: req.params.id })
+            .then(() => res.status(200).json({ message: 'Objet supprimé !'}))
+            .catch(error => res.status(400).json({ error }));
+        });
+    })
+    .catch(error => res.status(500).json({ error }));
+};
+```
+
+Dans cette fonction :
+- nous utilisons l'ID que nous recevons comme paramètre pour accéder au `Thing` correspondant dans la base de données ;
+- nous utilisons le fait de savoir que notre URL d'image contient un segment `/images/` pour séparer le nom de fichier ;
+- nous utilisons ensuite la fonction `unlink` du package `fs` pour supprimer ce fichier, en lui passant le fichier à supprimer et
+le _callback_ à exécuter une fois ce fichier supprimé ;
+- dans le _callback_, nous implémentons la logique d'origine, en supprimant le `Thing` de la base de données.
+
+Notre API peut désormais gérer correctement toutes les opérations CRUD contenant des fichiers : lorsqu'un utilisateur crée un
+`Thing` , met à jour un `Thing` existant ou supprime un `Thing` !
+
+### Récapitulons...
+
+Vous avez presque terminé. Bravo !
+
+Regardons ce que vous avez appris :
+- vous avez créé un serveur Node et l'avez utilisé pour servir une application Express ;
+- vous avez connecté votre application à une base de données MongoDB et, à l'aide de Mongoose, vous avez créé une API RESTful
+permettant les opérations CRUD (Create, Read, Update and Delete — Créer, Lire, Modifier et Supprimer) ;
+- vous avez implémenté une authentification sécurisée à base du _token_ JWT ;
+- enfin, vous avez implémenté la gestion du téléchargement de fichiers, permettant ainsi aux utilisateurs d'ajouter et de supprimer
+des images.
+
+Félicitations ! Vous avez bientôt terminé ce cours sur Node, Express et MongoDB. Je vous laisse répondre au dernier quiz pour
+tester vos compétences.
+
+La suite ? À vous de choisir ! Vous pouvez, par exemple, choisir d'approfondir vos connaissances back-end. Vous pouvez aussi
+commencer l'apprentissage d'un _framework_ ou d'une librairie front-end avancée telle que Angular, React ou Vue.
+
+Où que vous alliez par la suite, je vous souhaite bonne chance, et **happy coding** !
+
+-----
+
+## Quiz : Saurez-vous gérer des fichiers utilisateur ?
+
+[Saurez-vous gérer des fichiers utilisateur ? - OpenClassrooms](https://openclassrooms.com/fr/courses/6390246-passez-au-full-stack-avec-node-js-express-et-mongodb/exercises/3725)
+
+#### Compétences évaluées
+
+<i class="bi bi-check2-circle"></i> Gérer des fichiers utilisateurs sur une application Express
+
+-----
+
+#### Question 1 : En configurant `multer` comme _middleware_ de gestion de fichiers, quels sont les deux arguments nécessaires ?
+
+<i class="bi bi-circle"></i> <code>source</code> et <code>destination</code>.<br />
+<i class="bi bi-circle"></i> <code>destination</code> et <code>filetype</code>.<br />
+<i class="bi bi-circle"></i> <code>filename</code> et <code>filetype</code>.<br />
+<i class="bi bi-record-circle"></i> <code>destination</code> et <code>filename</code>.<br />
+<br />
+
+*Le package `multer` a besoin de connaître la destination du fichier ainsi que le nom de fichier souhaité.*
+
+-----
+
+#### Question 2 : Quelle propriété est ajoutée à la requête par le _middleware_ `multer` ?
+
+<i class="bi bi-record-circle"></i> L'objet <code>file</code>.<br />
+<i class="bi bi-circle"></i> L'objet <code>body</code>.<br />
+<i class="bi bi-circle"></i> L'objet <code>formData</code>.<br />
+<i class="bi bi-circle"></i> L'objet <code>host</code>.<br />
+<br />
+
+*Le package `multer` ajoute une propriété `req.file`.*
+
+-----
+
+#### Question 3 : Comment récupère-t-on le segment de base de l'URL de notre serveur ?
+
+<i class="bi bi-circle"></i>
+
+```javascript
+`${req.body}://${req.host}`
+```
+
+<i class="bi bi-record-circle"></i>
+
+```javascript
+`${req.protocol}://${req.get('host')}`
+```
+
+<i class="bi bi-circle"></i>
+
+```javascript
+`${req.protocol}://${req.host}`
+```
+
+<i class="bi bi-circle"></i>
+
+```javascript
+`${req.get('protocol')}://${req.get('host')}`
+```
+
+*Pour construire l'URL pour notre serveur, il nous faut le protocole (`http` ou `https` généralement), le segment `://`, puis
+l'hôte de la requête (dans le cas de notre serveur de développement, il s'agit de `localhost:3000`).*
+
+-----
+
+#### Question 4 : Pour permettre l'accès à des ressources statiques comme des images, quelle configuration de _middleware_ est correcte ?
+
+<i class="bi bi-circle"></i>
+
+```javascript
+app.use('/images', res.send(path.join(__dirname, 'images')));
+```
+
+<i class="bi bi-circle"></i>
+
+```javascript
+app.use('/images', express.static(__dirname, '/images'));
+```
+
+<i class="bi bi-record-circle"></i>
+
+```javascript
+app.use('/images', express.static(path.join(__dirname, 'images')))
+```
+
+<i class="bi bi-circle"></i>
+
+```javascript
+app.use('/images', (req, res, next) \=> {
+    next(path.join(\_\_dirname, 'images'));
+})
+```
+
+*À l'aide du package `path` et de la méthode Express `static`, on peut servir des ressources statiques.*
+
+-----
+
+#### Question 5 : Si une requête entrante contient un fichier ainsi que d'autres données, notre fonction `bodyParser.json()` transformera automatiquement les autres données en JSON exploitable.
+
+<i class="bi bi-circle"></i> Vrai.<br />
+<i class="bi bi-record-circle"></i> Faux.<br />
+<br />
+
+*Faux. Les données entrantes sont sous la forme de `form-data`. Il faut donc utiliser `JSON.parse()` pour transformer des chaînes
+de caractères en JSON exploitable.*
+
+-----
+
+#### Question 6 : Laquelle de ces fonctions permet de supprimer un fichier à l'aide du package `fs` ?
+
+<i class="bi bi-circle"></i> <code>fs.remove()</code>.<br />
+<i class="bi bi-circle"></i> <code>fs.delete()</code>.<br />
+<i class="bi bi-record-circle"></i> <code>fs.unlink()</code>.<br />
+<i class="bi bi-circle"></i> <code>fs.deleteOne()</code>.<br />
+<br />
+
+*La fonction `unlink` permet de supprimer des fichiers du système de fichiers.*
+
+-----
+
+#### Question 7 : `multer` nous donne automatiquement l'extension d'un fichier entrant.
+
+<i class="bi bi-circle"></i> Vrai.<br />
+<i class="bi bi-record-circle"></i> Faux.<br />
+<br />
+
+*Faux. Il nous faut utiliser le type MIME d'un fichier pour déterminer son format, et donc trouver son extension.*
+
+-----
+
+#### Question 8 : En implémentant `multer` sur une route qui utilise également un _middleware_ d'authentification, l'ordre d'enregistrement des _middlewares_ n'a aucune importance.
+
+<i class="bi bi-circle"></i> Vrai.<br />
+<i class="bi bi-record-circle"></i> Faux.<br />
+<br />
+
+*Faux. Si `multer` est enregistré avant un _middleware_ d'authentification, tout fichier contenu dans une requête, même non
+authentifiée, sera enregistré sur le système de fichiers. Il est donc essentiel, dans cette situation, d'enregistrer `multer`
+**après** le _middleware_ d'authentification.*

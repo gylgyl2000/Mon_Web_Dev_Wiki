@@ -1,0 +1,876 @@
+---
+sidebar_position: 3
+---
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+import { Vimeo } from 'mdx-embed';
+
+# Utilisez les commandes de base de Git
+
+## Travaillez à partir d’un nouveau projet
+
+[Travaillez à partir d’un nouveau projet - Gérez du code avec Git et GitHub - OpenClassrooms](https://openclassrooms.com/fr/courses/7162856-gerez-du-code-avec-git-et-github/7165726-travaillez-a-partir-d-un-nouveau-projet)
+
+<Vimeo vimeoId="513007808" />
+
+<br />
+
+### Appréhendez le fonctionnement de Git
+
+Jusqu’à maintenant, vous avez découvert [l’utilité du contrôle de versions](https://openclassrooms.com/fr/courses/7162856-gerez-du-code-avec-git-et-github/7165703-decouvrez-la-magie-du-controle-de-versions?status=draft),
+et [initialisé un dépôt Git](https://openclassrooms.com/fr/courses/7162856-gerez-du-code-avec-git-et-github/7165721-installez-git-sur-votre-ordinateur?status=draft).
+Bravo !
+
+Avant de découvrir les commandes de base, je vous conseille de lire le schéma ci-dessous pour mieux appréhender le fonctionnement
+de Git. Ne vous inquiétez pas, je vais tout vous expliquer !
+
+![Schéma de fonctionnement de Git récapitulant les différentes zones de travail sans les commandes.](/img/OpenClassrooms/16147959433075_GIT_3.png)
+
+Ce schéma représente le fonctionnement de Git. Il est composé de 3 zones qui forment le dépôt local, et du dépôt distant GitHub.
+
+Regardons plus en détails les différentes zones du dépôt local.
+
+#### Le Working directory
+
+Cette zone correspond au dossier du projet sur votre ordinateur.
+
+Souvenez-vous, dans la partie précédente nous avons initialisé le dépôt “PremierProjet”. Eh bien ce dépôt, c’est la zone bleue
+du schéma.
+
+#### Le Stage ou index
+
+Cette zone est un intermédiaire entre le working directory et le repository. Elle représente tous les fichiers modifiés que vous
+souhaitez voir apparaître dans votre prochaine version de code.
+
+#### Le Repository
+
+Lorsque l’on crée de nouvelles versions d’un projet (vous vous souvenez, les 3 versions différentes du gâteau ?), c’est dans cette
+zone qu’elles sont stockées.
+
+Ces 3 zones sont donc présentes dans votre ordinateur, en local.
+
+En-dessous, vous trouvez le repository GitHub, c’est-à-dire votre dépôt distant.
+
+:::note ?
+Alors comment ça marche ?
+:::
+
+Prenons un exemple pour y voir plus clair !
+
+Imaginez un projet composé de 3 fichiers : fichier1, fichier2 et fichier3.
+
+Nous faisons une modification sur fichier1, puis une modification sur fichier2, depuis le working directory. Super ! Nous avons
+maintenant une version évoluée de notre projet.
+
+Nous aimerions sauvegarder cette version grâce à Git, c'est-à-dire la stocker dans le repository.
+
+:::note ?
+Comment faire ?
+:::
+
+Pour commencer, nous allons envoyer les fichiers modifiés (fichier1 et fichier2) du working directory vers l’index.
+**On dit qu’on va** **indexer** fichier1 et fichier2. Une fois les fichiers indexés, nous pouvons créer une nouvelle version de
+notre projet.
+
+:::info
+Le terme “stage” est aussi beaucoup utilisé par les développeurs à la place du terme “index”. On peut dire “indexer un fichier”
+ou “stage un fichier”.
+:::
+
+### Et maintenant, à vous de jouer !
+
+Je vous propose de mettre en place une base de projet web, avec un fichier HTML et un fichier CSS pour mettre tout cela en pratique.
+
+### Initialisez un dépôt
+
+Commencez par initialiser un dépôt en vous basant sur l’exemple “PremierProjet”. du chapitre précédent. Je vous conseille de
+suivre pas à pas la vidéo ci-dessous !
+
+<Vimeo vimeoId="513790721" />
+
+<br />
+
+#### Créez les premiers fichiers
+
+:::info
+Pour créer vos premiers fichiers, vous aurez besoin de manipuler des fichiers HTML et CSS. N'hésitez pas à consulter [ce cours](https://openclassrooms.com/fr/courses/1603881-apprenez-a-creer-votre-site-web-avec-html5-et-css3)
+pour accéder à des ressources supplémentaires à ce sujet.
+:::
+
+Dans notre dossier “PremierProjet”, créez un fichier “index.html” avec ce contenu :
+
+```html
+<!DOCTYPE html\>
+<html>
+<head>
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="styles.css"\>
+</head>
+<body>
+    <h1>Un super titre</h1>
+</body>
+</html>
+```
+
+Puis, créez un fichier “styles.css” avec ce contenu :
+
+```css
+h1 {
+    color: red;
+}
+```
+
+Vous pouvez ouvrir le fichier “index.html” dans un navigateur pour vérifier que tout fonctionne bien. Si c’est le cas, vous devriez
+avoir une page blanche avec le titre “Un super titre” en rouge.
+
+Maintenant que vous avez une première base intéressante pour travailler sur votre projet web, créez une version du projet dans son
+état actuel.
+
+#### Indexez vos fichiers avec la commande `git add`
+
+Vous avez créé 2 fichiers, index.html et styles.css. Ces fichiers sont situés dans le dépôt Git. Pour créer une nouvelle version
+de votre projet, vous allez maintenant indexer les fichiers. Pour cela, retournez dans l’outil “Git Bash”.
+
+Vous devez vous situer dans le dépôt Git du projet.<br />
+Pour le savoir, tapez la commande “pwd” dans Git Bash. Si vous avez créé les mêmes dossiers que moi et que le résultat de la
+commande “pwd” est :
+
+```shell
+c:/users/JohnDoe/Documents/PremierProjet/
+```
+
+… c’est que vous êtes bien situé ! Sinon, pas de panique, il suffit d’utiliser la commande “cd” pour vous replacer dans le
+dossier/dépôt Git du projet.
+
+Vous pouvez maintenant faire passer les fichiers index.html et styles.css vers l’index en utilisant la commande “git add” suivie
+du nom du fichier :
+
+```shell
+$ git add index.html
+$ git add styles.css
+```
+
+Voilà, vous avez indexé vos deux fichiers !
+
+#### Créez une nouvelle version avec la commande `git commit`
+
+Maintenant que vos fichiers modifiés sont indexés, vous pouvez créer une version, c'est-à-dire archiver le projet en l’état. Pour
+ce faire, utilisez la commande "git commit" :
+
+```shell
+git commit -m “Ajout des fichiers html et css de base”
+```
+
+:::info
+-m (comme message) est ce qu'on appelle un **argument**, qui est ajouté à la commande principale. Ici "-m" permet de définir un
+message particulier rattaché au commit effectué. Si vous n’utilisez pas cet argument, la commande “git commit” ouvrira un éditeur
+de texte dans lequel vous pourrez saisir le message de commit.
+:::
+
+“Ajout des fichiers html et css de base” est le message rattaché au commit grâce à l'argument "-m".
+
+Vos modifications sont maintenant enregistrées avec la description “Ajout des fichiers html et css de base”.
+
+La description est très importante pour retrouver le fil de vos commits, et revenir sur un commit en particulier. Ne la négligez
+pas ! Il ne serait pas pratique de nommer des commits du type "version 1", "version 2", "version 2.1", car vous seriez alors
+obligé de lire le fichier pour connaître les modifications réalisées. Avec un message clair, vous pouvez tout de suite identifier
+les modifications effectuées.
+
+Félicitations ! Vous venez de créer une version de votre projet !
+
+#### Envoyez votre commit sur le dépôt distant avec la commande `git push`
+
+Créer une version de votre projet, c’est super, mais il faut désormais passer votre commit du repository à votre dépôt distant.
+On dit qu’il faut “pusher” votre commit.
+
+Votre premier push va vous demander un peu de configuration.
+
+Pour commencer, vous allez devoir “reliez” votre dépôt local au dépôt distant que vous avez créé sur GitHub précédemment. Pour
+cela :
+- Allez sur GitHub.
+- Cliquez sur la petite image en haut à droite.
+- Cliquez sur “your repositories”.
+- Cliquez sur le repository créé dans la première partie du cours, “OpenclassroomsProject”.
+
+Vous devriez avoir un écran comme celui-ci :
+
+![Screenshot of quick set up](/img/OpenClassrooms/1615227327918_quick_setup_etudiant_oc.png)
+
+Reliez votre dépôt local au dépôt distant
+
+Il va falloir copier le lien qui figure sur la capture d’écran.
+
+Maintenant, retournez sur Git Bash et tapez la commande suivante :
+
+```shell
+git remote add origin https://github.com/EtudiantOC/OpenclassroomsProject.git
+```
+
+Vous l’aurez compris, le lien à saisir est le lien que vous venez de copier.
+
+Ensuite, tapez la commande :
+
+```shell
+git branch -M main
+```
+
+:::info
+Depuis le 1er octobre 2020, tous les nouveaux dépôts créés sur GitHub sont appelés “main”, au lieu de “master” comme c’était le
+cas historiquement. Ce changement de terme a été opéré par la société GitHub afin d’adopter des références plus inclusives. Les
+dépôts existants, eux, ne changent pas de nom. Vous verrez donc les deux termes dans vos projets.
+:::
+
+Ça y est ! Vous avez relié le dépôt local au dépôt distant. Vous pouvez donc envoyer des commits du repository vers le dépôt
+distant GitHub en utilisant la commande suivante :
+
+```shell
+git push -u origin main
+```
+
+Bravo, la version du projet est maintenant stockée dans le cloud !
+
+Reprenez le fichier HTML créé. Disons que vous allez modifier le titre “Un super titre” en “Un super titre !”.
+
+Pour créer une version du projet avec le fichier HTML à jour et l’envoyer sur le dépôt distant GitHub, vous allez :
+- Indexer le fichier HTML modifié grâce à la commande :
+
+```shell
+git add index.html
+```
+
+- Créer une nouvelle version grâce à la commande :
+
+```shell
+git commit -m “Modification du titre H1”
+```
+
+- Envoyer la nouvelle version sur le dépôt distant grâce à la commande :
+
+```shell
+git push origin main
+```
+
+Et voilà ! Vous savez maintenant utiliser les commandes `git add`, `git commit` et `git push`. Vous serez amené à les utiliser
+régulièrement. Je vous conseille donc de vous entraîner, et pourquoi pas, de regarder régulièrement le schéma ci-dessous pour
+mémoriser les commandes de bases.
+
+![Schéma de représentation de Git avec les commandes de base](/img/OpenClassrooms/16152280847683_GIT_2.png)
+
+Fonctionnement et commandes de base de Git
+
+### En résumé
+
+- git add permet d’ajouter des fichiers dans l’index, qui est une zone intermédiaire dans laquelle stocker les fichiers modifiés.
+- git commit permet de créer une nouvelle version avec les fichiers situés dans l’index.
+- git push permet d’envoyer les modifications faites en local vers un dépôt distant.
+
+*Maintenant que vous savez utiliser les commandes Git de base, allons voir comment travailler à partir d'un projet existant !*
+
+-----
+
+## Travaillez à partir d’un projet existant
+
+[Travaillez à partir d’un projet existant - Gérez du code avec Git et GitHub - OpenClassrooms](https://openclassrooms.com/fr/courses/7162856-gerez-du-code-avec-git-et-github/7165692-travaillez-a-partir-d-un-projet-existant)
+
+### Accédez à un dépôt distant OC
+
+Maintenant que vous savez travailler à partir d’un nouveau projet, voyons comment **accéder à un dépôt distant** et le copier en
+local.
+
+Tout d’abord, initialisez votre répertoire courant en local, en utilisant la commande :
+
+```shell
+git init 
+```
+
+Ensuite, récupérez l’URL du dépôt distant : cela se passe sur GitHub !
+
+Accédez au dépôt distant sur lequel vous souhaitez travailler.
+
+![Accédez à un dépôt open source](/img/OpenClassrooms/16153807366793_image_2.png)
+
+Accédez à un dépôt open source
+
+Cliquez sur le bouton "Code" pour copier le dépôt.
+
+![Screenshot de la phase de copiage du dépôt](/img/OpenClassrooms/16153808134888_image_1.png)
+
+Cliquez sur "Code" pour copier le dépôt
+
+Et tadam, vous avez la fameuse URL dont nous allons avoir besoin. Copiez-la dans le presse-papier.
+
+Retournez sur Git Bash, et tapez la commande suivante :
+
+```shell
+git remote add OC https://github.com/OpenClassrooms-Student-Center/ProjetOpenSource.git
+```
+
+:::info
+OC représente le nom court que vous utiliserez ensuite pour appeler votre dépôt. Appelez-le comme bon vous semble, mais un nom
+court et simple est toujours plus facile.
+:::
+
+Cette ligne ne permet pas de copier le dépôt, mais permet de dire au dépôt que l’on pointe vers le dépôt distant.
+
+Avant de copier votre dépôt, placez-vous sur la branche locale “main” pour éviter tout conflit avec la branche “master”, grâce
+à la commande :
+
+```shell
+git branch -M main
+```
+
+### Copiez le dépôt en local
+
+Maintenant que **notre dépôt local pointe sur le dépôt distant**, vous allez le dupliquer en local.
+
+Pour réaliser cette duplication, utilisez la commande :
+
+```shell
+git pull OC main
+```
+
+Cela devrait afficher ces petites lignes de commande !
+
+![Résultat de la commande git pull](/img/OpenClassrooms/16172069121998_image5.png)
+
+Résultat de la commande git pull
+
+C’est bon signe, la magie a opéré !  ![](https://user.oc-static.com/upload/2021/02/22/1614004978104_image55.png)
+
+Vous devriez maintenant avoir l’ensemble des fichiers et dossiers du repository dans votre répertoire courant. La duplication
+s’effectue très rapidement, puisque les fichiers vont être compressés avant le transfert. Vous allez donc les recevoir à la
+vitesse de l’éclair ! Enfin... rapidement, quoi.
+
+Vous pouvez maintenant vous mettre à vos développements, et cela sans faire de bêtises !
+
+### En résumé
+
+- Sur GitHub, nous pouvons récupérer l'URL d'un dépôt distant.
+- git remote add permet de lier un dépôt à un "nom court", pour une plus grande facilité d’utilisation.
+- git pull permet de dupliquer un dépôt GitHub en local.
+
+-----
+
+## Appréhendez le système de branches
+
+[Appréhendez le système de branches - Gérez du code avec Git et GitHub - OpenClassrooms](https://openclassrooms.com/fr/courses/7162856-gerez-du-code-avec-git-et-github/7165678-apprehendez-le-systeme-de-branches)
+
+<Vimeo vimeoId="513007904" />
+
+<br />
+
+Le principal atout de Git est **son système de branches**. C’est sur ces branches que repose toute la magie de GIT !
+
+:::info
+Les différentes branches correspondent à des copies de votre code principal à un instant T, où vous pourrez tester toutes vos
+idées les plus folles sans que cela impacte votre code principal.
+:::
+
+Sous Git, la branche principale est appelée la **_branche main_****, ou** **_master_** pour les dépôts créés avant octobre 2020. 
+
+:::note !
+Pour rappel, la société GitHub a opéré un changement de terme de “master” à “main” en octobre 2020. Vous serez amené à travailler
+avec ces deux termes.
+:::
+
+La branche main ou master portera l’intégralité des modifications effectuées. Le but n’est donc pas de réaliser les modifications
+directement sur cette branche, mais de les réaliser sur d’autres branches, et après divers tests, de les intégrer sur la branche
+main ou master.
+
+Vous avez l’impression que c’est du charabia ? Je vous comprends tout à fait ! ![:lol:](https://openclassrooms.com/bundles/common/images/smiley/rire.gif)
+
+Il faut voir les branches comme autant de dossiers différents. Prenons un exemple concret. ![:)](https://openclassrooms.com/bundles/common/images/smiley/smile.png)
+
+Imaginez que vous ayez réalisé une superbe application bancaire pour M. Robert, et que ce dernier ait une superbe idée de cagnotte
+à ajouter à son application.
+
+Panique à bord dans votre tête ! Votre application fonctionne parfaitement, elle est en production, et y toucher serait prendre le
+risque de tout faire planter.
+
+Avec Git et ses fameuses branches, pas de soucis. Vous pouvez créer une branche correspondant à l’évolution “cagnotte”, et cela
+**sans toucher à votre application en cours de production**. 
+
+Une fois que toutes vos modifications auront été testées, vous pourrez les envoyer en production sans crainte en les intégrant à
+la branche main (et dans le pire des cas, revenir en arrière simplement) !
+
+![Illustration des branches de code : branche principale et évolution Cagnotte](/img/OpenClassrooms/16146940305651_p2c3-1.png)
+
+Grâce aux branches, créez l'évolution Cagnotte de votre projet sans toucher à l'application en cours de production
+
+On dit qu’un bon développeur est toujours fainéant !  ![](https://user.oc-static.com/upload/2021/02/22/16140051298192_image26.png)
+En fait, un bon développeur trouvera toujours une technique simple pour faire le travail à sa place. Eh bien, Git est l’outil idéal
+dans ce cas. Il va créer une branche virtuelle, mémoriser tous vos changements, et seulement quand vous le souhaitez, les ajouter
+à votre application principale. Il va vérifier s'il n’y a pas de conflits avec d’autres fusions, et hop, le tour est joué ! 
+
+Je vous propose un petit aperçu dans la vidéo ci-dessous.
+
+<Vimeo vimeoId="521788482" />
+
+<br />
+
+Pour connaître les branches présentes dans notre projet, il faut taper la ligne de commande :
+
+```shell
+git branch
+```
+
+Dans un premier temps, vous n’aurez que :
+
+```shell
+git branch
+* main
+```
+
+Et c’est normal. L’étoile signifie que c’est la branche sur laquelle vous vous situez, et que c’est sur celle-ci qu'actuellement
+vous réalisez vos modifications.
+
+:::note !
+Je vous conseille fortement de créer une branche si votre modification est lourde, compliquée, ou si elle risque d’avoir des
+impacts importants sur votre projet.
+:::
+
+Entre nous, il est souvent préférable de créer une branche pour une modification. La création prend 30 secondes et vous économise
+beaucoup de temps de galère si vous faites des bêtises sur votre branche main ou master.
+
+Mais revenons au projet de M. Robert !
+
+Nous avons donc notre branche master, et nous souhaitons maintenant réaliser la fonctionnalité Cagnotte. Pour cela, on tape :
+
+```shell
+git branch cagnotte
+```
+
+Cette commande va créer la branche Cagnotte en local. Cette dernière ne sera pas dupliquée sur le dépôt distant.
+
+Vous pouvez de nouveau taper la ligne de commande :
+
+```shell
+git branch
+* main
+cagnotte
+```
+
+Vous pouvez maintenant voir votre branche master et votre branche Cagnotte. Comme vous pouvez le voir, la petite étoile est
+toujours sur la branche master. Nous avons créé la branche Cagnotte, mais nous n’avons pas encore basculé sur celle-ci.
+
+Pour basculer de branche, nous allons utiliser :
+
+```shell
+git checkout cagnotte
+```
+
+Vous aurez donc :
+
+```shell
+git branch
+main
+* cagnotte
+```
+
+La branche va fonctionner comme un dossier virtuel. Avec **git checkout**, on va être téléporté dans le dossier virtuel Cagnotte.
+On reste dans le dossier OC physiquement, mais virtuellement nous sommes passés dans un monde parallèle !
+
+Vous pouvez désormais réaliser votre évolution sans toucher à la branche master qui abrite votre code principal fonctionnel. Vous
+pouvez rebasculer si besoin à tout moment sur la branche master, sans impacter les modifications de la branche Cagnotte.
+
+### Réalisez un `commit`
+
+Vous avez réalisé des évolutions sur la branche Cagnotte, il faut maintenant demander à Git de les enregistrer, de créer une
+nouvelle version du projet comprenant les évolutions réalisées sur la branche Cagnotte.
+
+Vous devez créer un "commit" grâce à la commande :
+
+```shell
+git commit -m “Réalisation de la partie cagnotte côté front end”
+```
+
+Vos modifications sont maintenant enregistrées avec la description “Réalisation de la partie cagnotte côté front end”.
+
+Félicitations ! Vous venez d’être couronné roi du commit ! ![:pirate:](https://openclassrooms.com/bundles/common/images/smiley/pirate.png)"
+
+### Réalisez un `push`
+
+Avec la commande commit, nous avons enregistré des modifications en local, uniquement. Il ne vous reste plus qu’à envoyer les
+modifications réalisées sur le dépôt distant grâce à la commande push que nous avons pu voir dans le [chapitre précédent](https://openclassrooms.com/fr/courses/7162856-gerez-du-code-avec-git-et-github/7165726-travaillez-a-partir-d-un-nouveau-projet?status=draft).
+
+### Fusionnez votre travail avec la commande `git merge`
+
+Voilà plusieurs jours que vous travaillez sur l'évolution "cagnotte" de l'application. Après de nombreux commits et pushs, le
+travail semble terminé. Vous effectuez donc une série de tests pour vérifier le bon fonctionnement de l'évolution “cagnotte”, et
+bravo à vous, tout est fonctionnel !
+
+À présent, il faut intégrer l'évolution réalisée dans la branche "cagnotte" à la branche principale "master". Pour cela, vous
+devez utiliser la commande "git merge".
+
+Cette commande doit s'utiliser à partir de la branche dans laquelle nous voulons apporter les évolutions. Dans notre cas, la
+commande s’effectuera donc dans la branche master. Pour y retourner, utilisez la commande :
+
+```shell
+git checkout main
+Switched to branch 'main'
+```
+
+Maintenant que vous êtes dans votre branche principale, vous pouvez fusionner votre branche "cagnotte" à celle-ci grâce à la
+commande suivante :
+
+```shell
+git merge cagnotte
+Merge made by the 'recursive' strategy
+```
+
+### En résumé
+
+- Une branche est une “copie” d’un projet sur laquelle on opère des modifications de code.
+- La branche main ou master est la branche principale d’un projet.
+- git checkout permet de basculer d’une branche à une autre.
+- git merge permet de fusionner deux branches.
+
+*Cette partie vous a permis de découvrir la gestion de versions pour le développement, et de prendre en main Git. Bien sûr, il
+vous arrivera de faire des erreurs et nous allons voir dans la partie suivante comment les réparer !*
+
+_Mais avant cela, passons au quiz !  ![](https://user.oc-static.com/upload/2021/02/22/1614005313013_image6.png)_
+
+-----
+
+## Quiz : Testez ce que vous avez appris
+
+[Testez ce que vous avez appris - OpenClassrooms](https://openclassrooms.com/fr/courses/7162856-gerez-du-code-avec-git-et-github/exercises/4058)
+
+#### Compétences évaluées
+
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-checkbox" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#00b341" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <polyline points="9 11 12 14 20 6" />
+  <path d="M20 12v6a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h9" />
+</svg> Utiliser les commandes de base de Git
+
+-----
+
+#### Question 1 : Quelles sont les trois zones locales majeures dans Git ?
+
+*Attention, plusieurs réponses sont possibles.*
+
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-checkbox" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#00b341" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <polyline points="9 11 12 14 20 6" />
+  <path d="M20 12v6a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h9" />
+</svg> Working directory<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-square" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <rect x="4" y="4" width="16" height="16" rx="2" />
+</svg> Cloud<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-checkbox" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#00b341" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <polyline points="9 11 12 14 20 6" />
+  <path d="M20 12v6a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h9" />
+</svg> Repository<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-checkbox" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#00b341" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <polyline points="9 11 12 14 20 6" />
+  <path d="M20 12v6a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h9" />
+</svg> Index<br />
+<br />
+
+![3 zones locales majeures](/img/OpenClassrooms/16140132996983_image18.jpg)
+
+3 zones locales majeures
+
+*Git gère les versions de vos travaux locaux à travers 3 zones locales majeures :*<br />
+*- **le répertoire de travail** (working directory/WD) ;*<br />
+*- **l’index ou stage** ;*<br />
+*- **le dépôt local** (Git directory/repository).*
+
+*Le répertoire de travail désigne **l'arborescence** de vos fichiers, c'est-à-dire tous vos fichiers et répertoires qui sont
+indépendants de Git. Ils sont même là avant que vous réalisiez votre git init !*<br />
+*L'index ou stage désigne tous les fichiers modifiés que vous souhaitez voir apparaître dans votre **prochain commit**. C'est
+avec la commande `git add` que l'on ajoute un fichier à l’index.*<br />
+*Le dépôt local est **l'historique de l'ensemble de vos actions** (commits, configurations...).* 
+
+-----
+
+#### Question 2 : Vous avez créé votre dépôt distant sur GitHub, que l'on appellera monDepotDistant, et vous souhaitez maintenant le lier avec votre dépôt local sur Git. DEP représente le nom court qui sera utilisé pour appeler le dépôt. Quelle ligne de commande devez-vous taper ?
+
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> <code>git remote DEP https://github.com/xxxxxx/monDepotDistant</code><br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> <code>git remote DEP add https://github.com/xxxxxx/monDepotDistant</code><br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle-check" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#7bc62d" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M9 12l2 2l4 -4" />
+</svg> <code>git remote add DEP https://github.com/xxxxxx/monDepotDistant</code><br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> <code>git add DEP https://github.com/xxxxxx/monDepotDistant</code><br />
+<br />
+
+*Pour lier votre dépôt local au dépôt distant, vous devez effectuer la commande :*<br />
+`git remote add DEP https://github.com/xxxxxx/monDepotDistant`<br />
+*La commande git remote doit être effectuée sous la forme : git remote add leNomCourt "URL de votre dépôt".*<br />
+*Les autres commandes ne sont pas valides.*
+
+-----
+
+#### Question 3 : Maintenant que votre dépôt distant est lié à votre dépôt local, vous allez devoir dupliquer son contenu en local. Pour ce faire, nous devons utiliser :
+
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> <code>git clone DEP https://github.com/xxxxxx/monDepotDistant</code><br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> <code>git duplicate https://github.com/xxxxxx/monDepotDistant</code><br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle-check" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#7bc62d" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M9 12l2 2l4 -4" />
+</svg> <code>git clone https://github.com/xxxxxx/monDepotDistant</code><br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> <code>git duplicate DEP</code><br />
+<br />
+
+*La commande git clone permet de dupliquer le contenu distant en local. Pour être valide, cette commande doit être écrite sous la
+forme : `git clone [https://github.com/nom](https://github.com/nom-dutilisateur/monDossier`. La commande git duplicate n’existe pas.*
+
+-----
+
+#### Question 4 : Nous allons désormais ajouter des branches à notre dépôt. Je souhaite créer trois nouvelles branches : "Branch1", "Branch2" et "Branch3", et basculer sur ma branche "Branch2". Que dois-je faire ?
+
+<svg style={{float: 'left'}} xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg>
+
+```shell
+git branch
+git branch
+git branch
+git checkout branch
+```
+
+<svg style={{float: 'left'}} xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle-check" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#7bc62d" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M9 12l2 2l4 -4" />
+</svg>
+
+```shell
+git branch Branch1  
+git branch Branch2  
+git branch Branch3  
+git checkout Branch2
+```
+
+<svg style={{float: 'left'}} xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg>
+
+```shell
+git checkout Branch1
+git checkout Branch2
+git checkout Branch3
+git branch
+```
+
+*Pour créer chacune des branches, vous devez utiliser la commande git branch, puis réaliser un git checkout sur la branche où vous
+souhaitez basculer. Utilisée seule, la commande git branch permet de visualiser les différentes branches d’un projet.*
+
+-----
+
+#### Question 5 : Quelle commande permet de consulter nos branches, et quel est le résultat de cette commande ?
+
+<svg style={{float: 'left'}} xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle-check" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#7bc62d" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M9 12l2 2l4 -4" />
+</svg>
+
+```shell
+git branch
+main
+Branch1
+*Branch2
+Branch3
+```
+
+<svg style={{float: 'left'}} xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg>
+
+```shell
+git checkout
+main
+Branch1
+*Branch2
+Branch3
+```
+
+<svg style={{float: 'left'}} xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg>
+
+```shell
+git branch
+Branch1
+*Branch2
+Branch3
+```
+
+<svg style={{float: 'left'}} xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg>
+
+```shell
+git checkout
+Branch1
+*Branch2
+Branch3
+```
+
+*La commande git branch permet de consulter l'état de notre arbre, et ici de visualiser 4 branches : Branch1, Branch2, Branch3 et
+notre branche principale, la branche “main”. La commande git checkout permet de basculer d'une branche à une autre.*
+
+-----
+
+#### Question 6 : Vous devez maintenant réaliser des modifications sur votre branche Branch2, puis créer une version en indiquant le message "Je suis le roi du commit". Comment faites-vous cela ?
+
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> <code>git commit "Je suis le roi du commit"</code><br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle-check" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#7bc62d" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M9 12l2 2l4 -4" />
+</svg> <code>git commit -m “Je suis le roi du commit”</code><br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> <code>git commit -m -n “Je suis le roi du commit”</code><br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> <code>commit</code><br />
+<br />
+
+*git commit -m permet de réaliser un commit en indiquant un message de description. Les autres commandes ne sont pas valides.*
+
+-----
+
+#### Question 7 : Dans quel ordre dois-je réaliser les 3 commandes ?
+
+<svg style={{float: 'left'}} xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle-check" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#7bc62d" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M9 12l2 2l4 -4" />
+</svg>
+
+```shell
+git add fichier.html
+git commit -m “message”
+git push origin main
+```
+
+<svg style={{float: 'left'}} xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg>
+
+```shell
+git add fichier.html
+git push origin main
+git commit -m “message”
+```
+
+<svg style={{float: 'left'}} xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg>
+
+```shell
+git push origin main
+git add fichier.html
+git commit -m “message”
+```
+
+<svg style={{float: 'left'}} xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg>
+
+```shell
+git commit -m “message”
+git add fichier.html
+git push origin main
+```
+
+*Pour commencer, on indexe le fichier .html avec la commande `git add`, puis on crée une version avec la commande `git commit`, et
+enfin on envoie cette version sur le dépôt distant avec la commande `git push origin main`. Les autres commandes ne sont pas
+valides.*
+
+-----
+
+#### Question 8 : Je veux fusionner la branche “modifications” à la branche principale du projet. Quelles commandes dois-je réaliser ?
+
+<svg style={{float: 'left'}} style={{float: 'left'}} xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle-check" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#7bc62d" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M9 12l2 2l4 -4" />
+</svg>
+
+```shell
+git checkout main
+git merge modifications
+```
+
+<svg style={{float: 'left'}} style={{float: 'left'}} xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg>
+
+```shell
+git checkout modifications
+git merge main
+```
+
+<svg style={{float: 'left'}} style={{float: 'left'}} xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg>
+
+```shell
+git merge modifications
+git checkout main
+```
+
+<svg style={{float: 'left'}} style={{float: 'left'}} xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg>
+
+```shell
+git merge main
+git checkout modifications
+```
+
+*La commande merge doit s'utiliser à partir de la branche dans laquelle nous voulons apporter les évolutions. Nous voulons apporter
+les évolutions de la branche “modifications” dans la branche principale (main). Nous devrons donc utiliser les commandes :*
+
+```shell
+git checkout main
+git merge modifications
+```
+
+

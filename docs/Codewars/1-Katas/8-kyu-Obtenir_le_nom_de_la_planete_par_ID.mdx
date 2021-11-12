@@ -1,0 +1,101 @@
+---
+id: 8-kyu-Obtenir_le_nom_de_la_planete_par_ID
+---
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# Obtenir le nom de la planète par ID
+
+[Get Planet Name By ID | Codewars](https://www.codewars.com/kata/515e188a311df01cba000003/javascript)
+
+:::info Instructions
+La fonction ne renvoie pas les valeurs correctes. Peux-tu comprendre pourquoi ?
+
+Exemple (Entrée --> Sortie ) :
+
+```sh
+3 --> 'Earth'
+```
+
+```javascript
+function getPlanetName(id){
+  var name;
+  switch(id){
+    case 1:
+      name = 'Mercury'
+    case 2:
+      name = 'Venus'
+    case 3:
+      name = 'Earth'
+    case 4:
+      name = 'Mars'
+    case 5:
+      name = 'Jupiter'
+    case 6:
+      name = 'Saturn'
+    case 7:
+      name = 'Uranus'
+    case 8:
+      name = 'Neptune'
+  }
+  
+  return name;
+}
+```
+
+:::
+
+```js title="javascript"
+function getPlanetName(id){
+  var name;
+  switch(id){
+    case 1:
+      name = 'Mercury'
+      break;
+    case 2:
+      name = 'Venus'
+      break;
+    case 3:
+      name = 'Earth'
+      break;
+    case 4:
+      name = 'Mars'
+      break;
+    case 5:
+      name = 'Jupiter'
+      break;
+    case 6:
+      name = 'Saturn'
+      break;
+    case 7:
+      name = 'Uranus'
+      break;
+    case 8:
+      name = 'Neptune'
+      break;
+  }
+  
+  return name;
+}
+```
+
+<nav className="docs-nav">
+<div className="docs-nav-code">
+
+```javascript title="Exemples de tests"
+console.log(getPlanetName(2));
+console.log(getPlanetName(5));
+console.log(getPlanetName(3));
+```
+
+</div>
+<div className="docs-nav-html">
+
+```shell title="console"
+'Venus'
+'Jupiter'
+'Earth'
+```
+
+</div>
+</nav>

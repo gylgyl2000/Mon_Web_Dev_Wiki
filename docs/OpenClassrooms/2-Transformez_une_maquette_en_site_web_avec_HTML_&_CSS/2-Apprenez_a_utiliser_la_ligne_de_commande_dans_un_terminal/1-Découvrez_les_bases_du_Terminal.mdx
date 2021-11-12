@@ -1,0 +1,743 @@
+---
+sidebar_position: 2
+---
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+import { Vimeo } from 'mdx-embed';
+
+# Découvrez les bases du Terminal
+
+## Découvrez le terminal
+
+[Découvrez le terminal - Apprenez à utiliser la ligne de commande dans un terminal - OpenClassrooms](https://openclassrooms.com/fr/courses/6173491-apprenez-a-utiliser-la-ligne-de-commande-dans-un-terminal/6349461-decouvrez-le-terminal)
+
+<Vimeo vimeoId="345882241" />
+
+<br />
+
+Vous vous êtes lancé dans ce cours sur le terminal. Bienvenue ! Je vais vous accompagner pas à pas à la découverte de cette
+application dont vous ne pourrez plus vous passer.
+
+### Qu’est-ce qu’un terminal ?
+
+Commençons par découvrir ce qu’est un **terminal**.
+
+:::info
+Un terminal est une **application** permettant de **dialoguer** avec son ordinateur via l’écriture de **lignes de commande**.
+:::
+
+Une ligne de commande est une instruction écrite, qui une fois envoyée à l’ordinateur via le terminal, va effectuer une action,
+comme par exemple créer un répertoire, lancer un programme ou afficher le contenu d’un fichier.
+
+Historiquement, lorsque les ordinateurs faisaient la taille d’un immeuble, un terminal était un **point d’accès physique** avec
+un écran et un clavier, pour envoyer des instructions à la machine et recevoir ses réponses.
+
+![Deux femmes en train de manipuler un très vieil ordinateur.](/img/OpenClassrooms/15621593492703_Colossus.jpg)
+
+Les débuts de l'informatique
+
+De nos jours, il s’agit généralement d’un programme, qui a gardé le côté un peu austère de ses premières heures, mais qui a
+surtout le même usage : dialoguer avec votre ordinateur.
+
+D'une certaine façon, le terminal est l'**ancêtre** de programmes comme l'**explorateur Windows** ou **Finder** (sous Mac).
+
+:::note ?
+Mais que permet un terminal ?
+:::
+
+Eh bien, entre autres choses, le terminal sert à :
+- naviguer dans une arborescence de fichiers ;
+- créer, supprimer et déplacer des dossiers et des fichiers ;
+- lancer des programmes.
+
+« Console », « terminal », « ligne de commande », « term », tous ces mots sont des synonymes pour désigner la même chose. Dans
+la suite du cours, l'un ou l'autre de ces termes seront utilisés indifféremment.
+
+### Comment tirer au mieux parti du cours ?
+
+Dans ce cours, vous découvrirez des commandes simples mais essentielles pour **naviguer** dans vos dossiers et fichiers,
+**rechercher** du contenu, et même **créer** de nouveaux fichiers.
+
+La **première partie** se concentrera sur l’**exploration** : qu’est-ce qu’une ligne de commande ? Comment lister le contenu
+d’un répertoire ? Comment se déplacer ?
+
+La **seconde partie**, elle, vous permettra véritablement d’**agir** sur votre ordinateur, en créant des dossiers et des fichiers.
+Vous apprendrez aussi à les déplacer, à les copier et même à les supprimer. Cette seconde partie s’achèvera sur la découverte de
+quelques autres possibilités du terminal, afin de vous montrer toute la puissance de cet outil.
+
+Une **vidéo d'introduction** sera présente **au début de chaque chapitre** pour expliquer les concepts généraux. Ces concepts
+seront détaillés davantage dans le texte sous la vidéo ainsi que dans une **seconde vidéo** dans laquelle vous verrez **mon écran**.
+À la fin de chaque partie, des quiz seront présents pour vous aider à tester vos connaissances.
+
+En terminant ce cours, vous serez capable d'utiliser les commandes de base du terminal, et prêt à aller plus loin si vous le
+désirez.
+
+### De quoi aurez-vous besoin pour commencer ?
+
+Si vous êtes sous **Linux**, vous pouvez directement ouvrir un terminal en suivant les instructions suivantes :
+
+Cliquez sur _Applications > Accessoires > Terminal_.
+
+Vous pouvez également utiliser le raccourci : _Ctrl + Alt + T_
+
+Si vous êtes sous **Mac**, vous pouvez accéder à un terminal via :
+
+_Applications > Utilitaires > Terminal.app_
+
+Si vous êtes sous **Windows**, accéder à un terminal sera un peu plus complexe, car celui-ci n’est pas disponible de base et
+doit être installé préalablement au cours.
+
+Pour ceci, je vous propose deux options :
+- "**Cygwin**", que vous pouvez télécharger et installer en suivant les instructions du [site officiel (en anglais)](https://www.cygwin.com/install.html) ;
+- **le shell Bash pour Windows,** que vous pouvez installer en suivant [les instructions officielles de Microsoft (en français)](https://docs.microsoft.com/fr-fr/windows/wsl/install-win10).
+
+:::info
+Windows possède deux utilitaires directement inspiré du terminal, mais qui **ne sont pas des terminaux** même si visuellement,
+ils sont très proches :
+- L'invite de commande (appelée aussi fenêtre de commande DOS).
+- Le powershell (présent sur les Windows les plus récents et qui accepte des commandes plus proches de ce que propose le terminal)
+
+Ces deux programmes ont le même but que le terminal et la même philosophie, mais les commandes acceptés par le terminal ne
+fonctionneront pas nécessairement avec ces deux programmes, ce pourquoi il est **vivement conseillé** pour ce cours d'installer
+un vrai terminal avec **Cygwin** ou le **shell Bash pour Windows**.
+:::
+
+Alors, avez-vous réussi à lancer votre terminal ? 🤓
+
+### En résumé
+
+- Un terminal est une **application** permettant de **dialoguer** avec son ordinateur via l’écriture de **lignes de commande**.
+- Il sert à naviguer dans une arborescence de fichiers, créer, supprimer et déplacer des dossiers et des fichiers et lancer des
+programmes.
+- Vous avez pu lancer votre terminal ! Bravo !
+
+_Vous avez envie de lancer votre première ligne de commande ? Rendez-vous dans le prochain chapitre !_
+
+-----
+
+## Utilisez votre première commande
+
+[Utilisez votre première commande - Apprenez à utiliser la ligne de commande dans un terminal - OpenClassrooms](https://openclassrooms.com/fr/courses/6173491-apprenez-a-utiliser-la-ligne-de-commande-dans-un-terminal/6349513-utilisez-votre-premiere-commande)
+
+<Vimeo vimeoId="345882261" />
+
+<br />
+
+Bravo ! Votre terminal doit maintenant être correctement installé ! Il est désormais temps de lancer votre première commande et
+de comprendre les principes derrière la ligne de commande.
+
+### Découvrez la ligne de commande
+
+Avant toute chose, commencez par lancer votre terminal. Si vous ne savez pas comment faire, il vous suffira de retourner à la
+fin du premier chapitre et de suivre les instructions.
+
+<Vimeo vimeoId="345882273" />
+
+<br />
+
+:::info
+Il est très probable que l'affichage de votre terminal ne soit pas tout à fait identique à celui des vidéos et des captures
+d'écran : c’est tout à fait normal. L’affichage dépend de plusieurs paramètres, comme votre système d'exploitation ou diverses
+options. Par exemple, par défaut, certains n’indiquent ni le nom de l’utilisateur, ni le nom de la machine, simplement un $
+et rien d’autre.  Cela ne change pas son fonctionnement.
+:::
+
+N'ayez pas peur et lancez-vous !
+
+![Ce que je vois sur mon terminal](/img/OpenClassrooms/15622457059748_image19.png)
+
+Mon terminal
+
+Voici une capture d’écran de mon terminal. J’utilise Cygwin.
+
+Dans cet exemple, “David” est mon nom d’utilisateur. “Scalde” est le nom de ma machine (mon ordinateur).
+
+Le “~” signifie que je n’ai pas encore changé de répertoire : je suis dans le répertoire de l’utilisateur “David”, à savoir
+/home/David. Je peux taper mes instructions derrière le $.
+
+### Découvrez où vous êtes sur votre ordinateur : la commande `pwd`
+
+Votre terminal attend maintenant vos instructions. Elles sont transmises par le biais de **commandes**. La plupart des commandes
+dans un terminal sont des **raccourcis** ou des **acronymes**.
+
+Commençons avec la commande « _**pwd**_», qui signifie en réalité « **Print Working Directory** » (ou, en français, « afficher
+le répertoire de travail »). Avouez que « _pwd_ » est tout de même plus rapide à écrire ! 🙂
+
+Dans votre terminal, tapez la commande « _pwd_ », puis appuyez sur « Entrée ».
+
+![Le résultat de la commande pwd sur ma machine](/img/OpenClassrooms/15621602311598_pwd.PNG)
+
+Résultat de la commande pwd
+
+La commande pwd demande au terminal d’indiquer **l’endroit où vous vous trouvez** dans l’**arborescence de fichiers**. Dans mon
+cas, « _/cygdrive/c/OpenClassrooms_ » indique que je me trouve dans le dossier « OpenClassrooms», situé dans à la racine de mon
+disque C.
+
+![L'arborescence de fichiers de ma machine](/img/OpenClassrooms/15621603226414_explorateur_c.PNG)
+
+L'explorateur Windows
+
+:::note ?
+Mais pourquoi le terminal indique “cygdrive" ? 🧐
+:::
+
+Je travaille actuellement sous Windows, donc pour avoir accès à un terminal, j’ai installé **Cygwin**. Avec Cygwin, si je veux
+accéder à mon disque C, je dois aller dans un dossier particulier. Ce dossier spécial s’appelle “**cygdrive**”. Donc lorsque
+mon terminal affiche “/cygdrive/c/OpenClassrooms”, cela signifie tout simplement que je suis dans le dossier “OpenClassrooms”
+du disque “C”.
+
+Sous Linux et Mac, ce dossier “cygdrive” n’est pas présent, car ces systèmes d’exploitations possèdent déjà un terminal.
+
+:::info
+Chez vous, la réponse à pwd sera probablement légèrement différente par rapport à mon terminal, ce qui est tout à fait normal.
+:::
+
+**Félicitations**, vous venez de lancer votre **première commande** dans un terminal !
+
+### Comprenez les arguments de la ligne de commande
+
+La plupart des instructions de la ligne de commande prennent en compte des “paramètres” (ou “arguments”) qui vont venir “compléter”
+l’instruction et modifier son comportement.
+
+Par exemple, avec pwd. Au lieu de taper simplement l’instruction “pwd", vous allez rajouter le paramètre “--help”. Cette commande
+avec l’argument --help n’affiche plus le répertoire dans lequel vous vous trouvez, mais l’aide associée à la commande.
+
+![Terminal avec l'instruction pwd --help](/img/OpenClassrooms/15621605020786_pwd_help.PNG)
+
+pwd --help
+
+ L’argument _\--help_ a bien modifié ce que faisait la commande.  😎😎
+
+_Avez-vous réussi à afficher l'aide de la commande pwd sur votre machine ?_
+
+### En résumé
+- Vous avez lancé votre terminal et découvert à quoi il ressemble.
+- Vous avez lancé votre première commande : pwd.
+- Vous avez ajouté un paramètre à la commande pwd : --help.
+
+_Ces notions vous seront particulièrement utiles dans les chapitres à venir, et notamment le suivant qui va vous apprendre à **naviguer dans votre système** via le terminal !_
+
+-----
+
+## Naviguez dans le système
+
+[Naviguez dans le système - Apprenez à utiliser la ligne de commande dans un terminal - OpenClassrooms](https://openclassrooms.com/fr/courses/6173491-apprenez-a-utiliser-la-ligne-de-commande-dans-un-terminal/6349650-naviguez-dans-le-systeme)
+
+<Vimeo vimeoId="345882287" />
+
+<br />
+
+Maintenant que vous avez lancé votre première ligne de commande, voyons comment **s’organisent les fichiers** sur votre ordinateur
+et comment vous pouvez **naviguer** dans cette **arborescence** grâce au terminal.
+
+### Déplacez-vous dans l’arborescence de fichiers
+
+Les fichiers sur votre ordinateur sont rangés dans des dossiers qui peuvent eux-mêmes contenir des sous-dossiers, des fichiers, etc.
+
+Cette organisation est appelée “l’arborescence de fichiers”. C’est ainsi que l’intégralité de vos documents sont “rangés” dans
+votre machine.
+
+Dans le chapitre précédent, lorsque j'ai tapé la commande pwd, j'ai obtenu ceci :
+
+![Le résultat de la commande pwd sur mon terminal](/img/OpenClassrooms/15621607242575_pwd.PNG)
+
+La commande pwd avec le terminal
+
+Concrètement, cela correspond à ceci sur mon ordinateur :
+
+![La correspondance avec mon dossier](/img/OpenClassrooms/15621623046977_Explorateur_windows_OC.PNG)
+
+Mon explorateur Windows, au même endroit
+
+Le dossier “OpenClassrooms” contient **plusieurs sous-dossiers**, comme “2019”, “Cours1”, “Cours2”, “test”, ainsi que **quelques
+fichiers**, “image.png”, “liste.txt” et “lorem.txt”.
+
+_Et vous ? Qu'avez vous obtenu ? 😃_
+
+:::note ?
+Mais comment faire avec un terminal pour savoir ce que contient un dossier ?
+:::
+
+### Explorez le contenu d’un dossier avec `ls`
+
+<Vimeo vimeoId="345882307" />
+
+<br />
+
+La commande **ls** (qui est le raccourci pour "_list_" en anglais) permet de **lister le contenu** d'un **répertoire**. Essayons-la.
+
+![Le résultat de la commande ls sur mon terminal](/img/OpenClassrooms/1562160885214_ls_simple.png)
+
+La commande ls dans le terminal
+
+Faites le test à partir d'un dossier sur votre ordinateur. En tapant ls, vous devriez **retrouver le contenu** de votre répertoire,
+avec la **liste des sous-dossiers** et des **fichiers** dans votre terminal.
+
+Cependant, dans le terminal, vous ne voyez que les noms des éléments présents dans le dossier. Il est difficile de savoir si ce
+sont des dossiers ou des fichiers (les extensions comme .txt ou .png sont des indices, certes, mais il est tout à fait possible
+de créer des fichiers sans extensions ou des répertoires qui en possèdent une, ce n’est donc pas fiable).
+
+De plus, il existe des fichiers et des dossiers “**cachés**” que vous ne voyez pas avec la commande “ls” de base.
+
+Pour remédier à ces problèmes, vous pouvez ajouter deux paramètres à la commande ls :
+- -l : ce paramètre précise à la commande ls d’afficher plus d’informations sur chacun des éléments présents ;
+- -a : ce paramètre indique que tous les dossiers et fichiers devront apparaître, y compris les dossiers et fichiers cachés.
+
+:::info
+Il est également possible de **combiner** ces deux commandes. Cela s’écrira ls -l -a ou plus simplement : **ls -la**
+:::
+
+Vous pouvez constater que l'affichage est nettement plus détaillé.
+
+![Le résultat de la commande ls - la sur mon terminal](/img/OpenClassrooms/15621610186591_ls_-la.PNG)
+
+ls -la
+
+Chaque ligne possède beaucoup d’informations. Vous pouvez par exemple repérer que chaque ligne **commence** par un “**d**” ou
+un “**\-**”. Lorsque la ligne commence par un “d”, pour “directory”, cela signifie que l’élément correspondant est un **dossier**.
+Sinon, c’est un **fichier**.
+
+Vous pouvez également voir la date de dernière modification (par exemple : 16 mai à 11 h 42 pour lorem.txt), ou encore la taille
+du fichier (par exemple 5 907 octets pour lorem.txt).
+
+_Alors, qu’est-ce qui apparaît chez vous ?_
+
+:::info
+Vous pouvez également constater l'apparition de deux éléments supplémentaires, “**.**” et “**..**”.
+
+![Les dossiers cachés sur ma machine](/img/OpenClassrooms/1562670623573_ls_-la_point_point.png)
+
+Les dossiers cachés "." et ".."
+:::
+
+Ces deux éléments sont en réalité des dossiers cachés, présents dans  les répertoires, et aux propriétés un peu particulières :
+- “.” : ce dossier désigne toujours le répertoire dans lequel on se trouve. Autrement dit, si “pwd” vous dit que vous êtes dans
+/cygdrive/c/OpenClassrooms, alors le terminal remplacera automatiquement “.” par “/cygdrive/c/OpenClassrooms” ;
+- “..” : ce dossier désigne toujours le répertoire parent (c’est-à-dire le dossier qui contient le dossier dans lequel vous êtes
+actuellement).
+
+Par exemple, si vous êtes dans “/cygdrive/c/OpenClassrooms”, le répertoire parent est : “/cygdrive/c”.
+
+:::note !
+Si les dossiers cachés **.** et **..** ne vous semblent pas clair, **pas de panique**, nous y reviendrons plus en détail dans la
+suite du cours !
+:::
+
+### Utilisez différentes options de la commande `ls`
+
+Vous allez découvrir différentes options de la commande ls.
+
+#### _ls nomDuRepertoire_
+
+Commençons par ls nom du répertoire. Vous savez désormais afficher le **contenu** du **répertoire courant**, mais comment faire
+pour afficher le contenu d’un **autre répertoire** ?  Eh bien, vous pouvez utiliser la commande **ls nomdurepertoire**.
+
+Par exemple ici, si je tape ls 2019, le contenu du répertoire 2019 va s’afficher.
+
+![Le résultat de la commande ls 2019 sur mon terminal](/img/OpenClassrooms/15621614443727_ls_2019.PNG)
+
+ls 2019
+
+:::info
+Comme vous le voyez, simplement en spécifiant le nom du répertoire, il est possible de consulter son contenu !
+:::
+
+#### `ls ..`
+
+Découvrons maintenant ls ..
+
+‘..’ quant à lui est un **dossier caché** qui correspond toujours au **répertoire parent**. Donc _ls .._ va afficher le contenu
+du répertoire parent. 
+
+Dans notre exemple, nous sommes dans le dossier OpenClassrooms du disque C. Le dossier dans lequel se trouve "OpenClassrooms” est
+directement le disque C. Donc ls .. va afficher le contenu de mon disque C.
+
+![Le résultat de la commande ls.. sur mon terminal](/img/OpenClassrooms/15621622306692_ls_point_point.PNG)
+
+ls ..
+
+Pour mieux comprendre, voici l’équivalent depuis mon explorateur Windows :
+
+![La correspondance de ls.. avec le dossier sur ma machine](/img/OpenClassrooms/15621623423686_explorateur_c.PNG)
+
+Le contenu du répertoire ciblé par "ls .." lancé depuis le dossier OpenClassrooms
+
+#### `ls -la` répertoire
+
+Et bien sûr, tous les paramètres peuvent être combinés. 😱
+
+**ls -la 2019** va afficher le contenu du **répertoire “2019”**, avec les **dossiers et fichiers cachés** (option “a”) et sous
+forme de **liste détaillée** (option “l”).
+
+![Le résultat de la commande ls -la 2019 sur ma machine](/img/OpenClassrooms/15621624690781_ls_-la_2019.PNG)
+
+ls -la 2019
+
+Alors, vous vous en sortez ? 😲
+
+:::note !
+Si vous souhaitez lister le contenu d'un dossier dont le nom contient un espace comme « _mon dossier_ » cela peut poser des
+problèmes, car la commande « _ls_ » croira que vous cherchez à lister le contenu deux dossiers distincts : "_mon_" et "_dossier_".
+
+Pour afficher le contenu d’un dossier dont le nom contient un espace, vous pouvez utiliser des guillemets :
+
+![Le résultat de la commande ls](/img/OpenClassrooms/1562162531619_ls_recit_de_vacances.PNG)
+
+ls "Récit de vacances"
+:::
+
+### Déplacez-vous dans votre répertoire avec la commande `cd`
+
+Maintenant que vous savez afficher ce qui se trouve dans un répertoire donné, voyons comment vous rendre dans ce même répertoire.
+
+Pour cela, la commande « _**cd**_ », pour « **Change Directory** » (« changer de répertoire », en français) vous permettra de
+**naviguer** d'un répertoire à l'autre.
+
+Le fonctionnement est très simple, il suffit de taper **“cd” suivi du répertoire de destination**.
+
+Par exemple en tapant “cd 2019”, je vais me rendre dans mon répertoire appelé “2019”.
+
+![Le résultat de la commande cd 2019 sur ma machine](/img/OpenClassrooms/15621626723556_cd_2019.PNG)
+
+cd 2019
+
+Pour vérifier que la commande cd s’est bien exécutée, vous pouvez utiliser pwd.
+
+Pour retourner dans le dossier parent, nous utilisons le .. que nous avons vu précédemment :
+
+![Le résultat de la commande cd .. sur ma machine](/img/OpenClassrooms/1562162731855_cd_point_point.PNG)
+
+cd ..
+
+_Entraînez-vous à naviguer d’un dossier à l’autre ! 💪💪_
+
+### Découvrez quelques raccourcis utiles
+
+Il peut parfois être un peu fastidieux de retaper à la main toutes ces commandes. Mais heureusement pour vous, il existe un
+certain nombre de « raccourcis » pour éviter de le faire :
+- la `flèche haut` et la `flèche bas` permettent de **naviguer dans l'historique** du terminal et de relancer des commandes déjà
+tapées précédemment ;
+- `tab` permet de faire de **l'autocomplétion**, c’est-à-dire compléter automatiquement une commande ou un chemin si on a commencé
+à en taper le début. Si plusieurs options sont disponibles, taper **une deuxième fois** sur cette touche **affichera la liste des
+options** possibles ;
+- `ctrl` + `r` : cette combinaison permet de faire une **recherche** dans **l'historique des commandes**. Faites d’abord ctrl+r
+pour passer en mode “recherche”, puis tapez une partie de la commande que vous voulez rejouer. Lorsque votre recherche a porté
+ses fruits, vous n’avez plus qu’à valider en appuyant sur Entrée;
+- `ctrl` + `a` et `ctrl` + `e` : ces deux combinaison permettent respectivement d'**aller** automatiquement au tout **début** ou
+à la toute **fin** de la ligne de commande que vous êtes **en train de taper**, ce qui peut être pratique lorsque vous êtes en
+train d'écrire une commande particulièrement longue.
+
+### En résumé
+
+- Vous avez découvert que les dossiers sont généralement organisés en sous-dossiers et en fichiers.
+- Vous avez appris à vous **déplacer** à l’intérieur d'un dossier grâce à la commande “**cd**”.
+- Vous avez utilisé différents variantes de la commande ls.
+
+_Dans le prochain chapitre, vous irez plus loin encore et vous apprendrez à **manipuler** des dossiers et des fichiers !_
+
+-----
+
+## Quiz : Testez vos connaissances sur le terminal
+
+[Testez vos connaissances sur le terminal - OpenClassrooms](https://openclassrooms.com/fr/courses/6173491-apprenez-a-utiliser-la-ligne-de-commande-dans-un-terminal/exercises/3547)
+
+#### Compétences évaluées
+
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-checkbox" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#00b341" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <polyline points="9 11 12 14 20 6" />
+  <path d="M20 12v6a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h9" />
+</svg> Découvrir les bases du terminal<br />
+
+-----
+
+#### Description
+
+Ce petit quiz vous permettra de vérifier que vous avez bien assimilé cette première partie, lancez-vous !
+
+-----
+
+#### Question 1 : Le terminal est ... entre vous et votre ordinateur ?
+
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> une machine<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> un serveur<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle-check" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#7bc62d" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M9 12l2 2l4 -4" />
+</svg> une interface<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> un bug<br />
+<br />
+
+*Le terminal est une _interface_ entre vous et votre ordinateur. Son but premier est de vous permettre de communiquer avec lui
+grâce à des commandes.*
+
+-----
+
+#### Question 2 : Pour afficher l'endroit où vous vous trouvez sur votre ordinateur, quelle est la commande à utiliser ?
+
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> ls<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle-check" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#7bc62d" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M9 12l2 2l4 -4" />
+</svg> pwd<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> mv<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> cd<br />
+<br />
+
+*La commande à utiliser pour afficher l'endroit où l'on se trouve dans sa machine (appelé aussi le "répertoire de travail") est
+_pwd_.*
+
+*Pwd est un sigle qui signifie "print working directory", mais la commande à taper est simplement _pwd_.*
+
+-----
+
+#### Question 3 : Qu'est-ce que le "répertoire de travail" ?
+    
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle-check" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#7bc62d" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M9 12l2 2l4 -4" />
+</svg> L'endroit où l'on se trouve dans l'arborescence des fichiers.<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> Le seul endroit d'où l'on peut exécuter des commandes du terminal.<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> L'endroit où se trouve l'application "terminal".<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> Le bureau Windows.<br />
+<br />
+
+*Le répertoire de travail correspond à l'endroit où l'on se trouve dans l'arborescence des fichiers. C'est ce répertoire qui est
+retourné lorsqu'on tape "pwd" dans un terminal par exemple.*
+
+-----
+
+#### Question 4 : À propos des paramètres ou arguments d'une commande, quelles affirmations sont vraies ?
+
+*Attention, plusieurs réponses sont possibles.*
+
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-checkbox" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#00b341" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <polyline points="9 11 12 14 20 6" />
+  <path d="M20 12v6a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h9" />
+</svg> Les paramètres modifient le comportement d'une commande, en lui apportant des précisions, comme des noms de dossiers ou
+des options.<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-square" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <rect x="4" y="4" width="16" height="16" rx="2" />
+</svg> Il est impossible de lancer une commande sans préciser au moins un argument.<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-square" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <rect x="4" y="4" width="16" height="16" rx="2" />
+</svg> Toutes les commandes peuvent interpréter exactement les mêmes arguments.<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-checkbox" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#00b341" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <polyline points="9 11 12 14 20 6" />
+  <path d="M20 12v6a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h9" />
+</svg> Chaque commande possède ses propres arguments.<br />
+<br />
+
+*Les commandes peuvent prendre un nombre variable d'arguments. Certaines commandes ont un comportement par défaut qui est appliqué
+lorsqu'aucun argument n'est spécifié (par exemple "ls" se comporte comme si on lui avait précisé d'afficher le contenu du
+répertoire de travail).*
+
+*Les arguments sont spécifiques à chaque commande et vont directement influer sur ce que va faire la commande.*
+
+-----
+
+#### Question 5 : Je veux afficher le contenu de mon dossier avec deux conditions :
+**- je veux pouvoir différencier leur nature : si ce sont des fichiers ou des dossiers ;**<br />
+**- je veux voir tous les fichiers et dossiers (cachés ou non).**<br />
+**Quelles commandes puis-je utiliser ?**
+
+*Attention, plusieurs réponses sont possibles.*
+    
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-square" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <rect x="4" y="4" width="16" height="16" rx="2" />
+</svg> ls -a<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-square" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <rect x="4" y="4" width="16" height="16" rx="2" />
+</svg> ls -l<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-checkbox" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#00b341" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <polyline points="9 11 12 14 20 6" />
+  <path d="M20 12v6a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h9" />
+</svg> ls -l -a<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-checkbox" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#00b341" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <polyline points="9 11 12 14 20 6" />
+  <path d="M20 12v6a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h9" />
+</svg> ls -la<br />
+<br />
+
+*Pour afficher le contenu d'un dossier, la commande à utiliser est "ls" (pour "list").*<br />
+*L'option -l permet d'afficher le contenu avec beaucoup plus d'options, et permet notamment de savoir, pour chaque élément, si c'est
+un dossier ou pas, ainsi que d'autres informations, comme sa taille ou sa date de modification.*<br />
+*L'option -a permet d'afficher les fichiers et dossiers cachés. En particulier, le dossier . (qui représente le répertoire de
+travail) et le dossier .. (qui représente le répertoire parent), qui sont systématiquement présents.*
+
+*La commande ls permet de combiner les arguments. De fait, écrire "ls -l -a" est strictement équivalent à écrire "ls -la".*
+
+-----
+
+#### Question 6 : Que signifie la commande cd ?
+
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> Command Documentation : cette commande sert à avoir l'aide d'une autre commande.<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle-check" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#7bc62d" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M9 12l2 2l4 -4" />
+</svg> Change Directory : cette commande sert à changer de répertoire de travail.<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> Change Dynamics : cette commande améliore les performances de votre ordinateur.<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> Command Destroy : cette commande détruit des fichiers aléatoirement sur votre ordinateur.<br />
+<br />
+
+*La commande "cd" signifie "Change Directory". Elle sert à changer de répertoire de travail.*
+
+*Pour avoir l'aide d'une autre commande, il faut utiliser "man" (mais nous verrons cela plus tard, dans la suite du cours !).*
+
+-----
+
+#### Question 7 : Si je suis dans le répertoire "/home/David/dossier/sousDossier" et que je tape "cd .." à quel endroit vais-je me retrouver ?
+    
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> Au même endroit : /home/David/dossier/sousDossier<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle-check" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#7bc62d" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M9 12l2 2l4 -4" />
+</svg> Dans le répertoire parent : /home/David/dossier<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> À la racine : /<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> Dans mon dossier "home" : /home/David<br />
+<br />
+
+*La commande cd sert à changer de répertoire de travail. Ici ".." est un argument qui signifie "le répertoire parent". Donc la
+commande "cd .." signifie : change le répertoire de travail pour aller dans le répertoire parent.*
+
+*Comme nous sommes partis d'ici : "/home/David/dossier/sousDossier", le répertoire parent est : "/home/David/dossier/".*
+
+-----
+
+#### Question 8 : Suite de la question précédente : si je tape à nouveau "cd ..", à quel endroit vais-je maintenant me retrouver ?
+    
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> /home/David/dossier/sousDossier<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> /home/David/dossier<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> /<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle-check" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#7bc62d" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M9 12l2 2l4 -4" />
+</svg> /home/David<br />
+<br />
+
+*À la fin de la question précédente, le répertoire de travail est devenu "/home/David/dossier". Si nous retapons la commande "cd ..",
+alors nous demandons à nouveau au terminal d'aller dans le répertoire parent, donc la réponse est "/home/David".*
+
+-----
+
+#### Question 9 : Dans le terminal, que permettent les flèches vers le haut et vers le bas ?
+    
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> D'aller au début ou à la fin de la ligne.<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> De faire de l'autocomplétion (compléter automatiquement une commande ou un paramètre, comme un nom de répertoire).<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> D'afficher la liste des dossiers et fichiers du répertoire courant.<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle-check" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#7bc62d" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M9 12l2 2l4 -4" />
+</svg> De naviguer dans l'historique des commandes déjà lancées.<br />
+<br />
+
+*Les flèches vers le haut et vers le bas permettent de naviguer dans l'historique des commandes, très pratique pour éviter d'avoir
+à retaper à la main une commande que vous avez entrée précédemment.*
+
+*Pour aller au début ou à la fin de la ligne, vous pouvez utiliser les flèches vers la gauche ou la droite, ainsi que les
+raccourcis ctrl+a et ctrl+e.*
+
+-----
+
+#### Question 10 : Quelle touche permet de faire de l'autocomplétion dans votre terminal ?
+    
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> <code>ctrl</code> + <code>a</code><br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> <code>ctrl</code><br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> <code>Enter</code><br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle-check" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#7bc62d" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M9 12l2 2l4 -4" />
+</svg> <code>tab</code><br />
+<br />
+
+*`tab` permet de faire de **l'autocomplétion**, c’est-à-dire compléter automatiquement une commande ou un chemin si on a commencé
+à en taper le début. Si plusieurs options sont disponibles, taper **une deuxième fois** sur cette touche **affichera la liste des
+options** possibles.*

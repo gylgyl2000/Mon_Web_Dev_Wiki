@@ -1,0 +1,279 @@
+---
+sidebar_position: 1
+---
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+import { Vimeo, YouTube } from 'mdx-embed';
+
+# Mission
+
+[Transformez une maquette en site web - OpenClassrooms](https://openclassrooms.com/fr/paths/185/projects/639/assignment)
+
+## Scénario
+
+Enfin, vous avez trouvé votre premier stage en tant que développeur web chez Reservia, une petite entreprise proposant un outil de
+planification de vacances. Leur site permet aux usagers de trouver des hébergements et des activités dans la ville de leur choix. Les
+hébergements peuvent également être filtrés par thématique, par exemple leur budget ou leur ambiance.
+
+Un nouveau design basé sur les principes du Material Design vient d’être proposé par Loïc, designer UI.
+
+![Maquette](/img/OpenClassrooms/1598262857804_Maquette_reservia-min.png)
+
+Avant de valider définitivement ce design, l’entreprise décide de réaliser un prototype. La première étape consiste à intégrer la maquette
+responsive en HTML et CSS. Voici donc la tâche qui vous est attribuée ! Loïc vous envoie un mail pour vous en dire plus, en mettant en copie
+votre manager, Sarah, qui est CTO de l’entreprise.
+
+<div class="courriel-container">
+    <div class="courriel-header">
+
+<strong>De</strong> : Loïc<br />
+<strong>À</strong> : Vous<br />
+<strong>CC</strong> : Sarah<br />
+<strong>Objet</strong> : Intégration maquette Reserviabr />
+<br />
+
+</div>
+<div class="courriel-main">
+
+Bonjour ! 😀  
+  
+Je t’envoie les nouvelles [maquettes desktop et mobiles du site Reservia](https://s3-eu-west-1.amazonaws.com/course.oc-static.com/projects/Front-End+V2/P2+HTML+%26+CSS/Projet+2+-+Reservia+FR.zip).
+Le dossier comprend aussi les images. Voici quelques précisions qui te seront utiles pour l’intégration.
+
+**Fonctionnalités**
+
+- Les usagers pourront rechercher des hébergements dans la ville de leur choix. Le champ de recherche est donc un champ de saisie, dont le
+texte peut être édité par l’usager. En revanche, à ce stade, le bouton de recherche ne sera pas fonctionnel.
+- Chaque carte d’hébergement ou d’activité devra être cliquable dans son intégralité. Pour l’instant les liens seront vides.
+- Les filtres ne seront pas fonctionnels pour cette version, en revanche, il faut qu’ils changent d’apparence au survol. Je te laisse décider
+de l’effet le plus approprié.
+- Dans le menu, les liens “Hébergements” et “Activités” sont des ancres qui doivent mener aux sections de la page.
+
+**Contraintes techniques**
+
+- Je te fournis deux maquettes : l’une desktop et l’autre mobile. Le site devra également être adapté aux tablettes. Sur ce support, tu es
+libre de faire les adaptations nécessaires avec la mise en page, tant qu’aucun élément n’est coupé et que le texte a une taille suffisante.
+Je te laisse choisir les breakpoints appropriés.
+- Comme je ne savais pas de quels tailles et formats d’image tu avais besoin, j’ai exporté les images en différents formats. Je te laisse
+choisir le format le plus adapté par rapport à la résolution et au temps de chargement.
+- Les icônes proviennent de la bibliothèque [Font Awesome](https://fontawesome.com/). Les couleurs de la charte sont le bleu #0065FC, et sa
+version plus claire #DEEBFF ainsi que le gris pour le fond #F2F2F2.
+- La police du site est [Raleway](https://fonts.google.com/specimen/Raleway).
+
+Si tu as des questions n’hésite pas à m’écrire.<br />
+Bonne journée!
+
+</div>
+</div>
+
+<br />
+Vous vous plongez dans ce projet… Et commencez à vous poser quelques questions techniques sur l’intégration. Heureusement, votre manager
+rebondit sur l’échange de mails pour vous apporter des précisions !
+<br />
+<br />
+
+<div class="courriel-container">
+    <div class="courriel-header">
+
+<strong>De</strong> : Sarah<br />
+<strong>À</strong> : Vous<br />
+<strong>CC</strong> : Loïc<br />
+<strong>Objet</strong> : RE - Intégration maquette Reservia
+
+</div>
+<div class="courriel-main">
+
+Hello,
+
+J’espère que les premiers éléments partagés par Loïc te semblent clairs ! Comme c’est ton premier projet avec nous et que tu es en stage, je
+voulais te guider un peu plus :
+- N’utilise pas de framework ou pré-compilateur CSS pour ce projet (comme SASS par exemple) : comme tu démarres, je préfère que tu montes en
+compétences sur HTML et CSS et que tu apprennes à coder from scratch. On aimerait tester tes compétences là-dessus !
+- Je te recommande d'utiliser Visual Studio Code, plusieurs plugins pourront te simplifier la vie, par exemple Live Server ou Prettier.
+- Tu peux intégrer les icônes Font Awesome en HTML ou CSS. Je te conseille fortement d’utiliser Flexbox mais tu peux aussi utiliser CSS Grid
+si tu veux.
+- Ton code devra utiliser les balises sémantiques et ne doit contenir aucune erreur ni alerte au validateur W3C HTML et CSS.
+- Le site devra être compatible avec les dernières versions de Chrome et Firefox.
+- Pense à séparer le HTML et le CSS et à organiser ton dossier de rendu.
+- N’oublie pas de versionner ton code avec Git, et ce dès les premières lignes de code. C’est hyper important quand on travaille en équipe.
+Nous on utilise GitKraken comme client Git, c'est plus sympa qu'une console, mais tu fais comme tu veux. Ensuite il faut que tu déploies la
+page sur GitHub Pages ou GitLab Pages comme tu préfères.
+
+À ta disposition pour en discuter ! 
+
+Sarah
+
+</div>
+</div>
+
+### Livrables
+
+- Un lien vers votre repository GitHub ou GitLab.
+    - Vous devez versionner votre code sur GitHub ou GitLab.
+    - Votre repository doit être accessible.
+- Un lien vers votre page web hébergée en ligne sur GitHub Pages ou GitLab Pages, pour présenter votre maquette.
+
+Pour faciliter votre passage au jury, déposez sur la plateforme, dans un dossier nommé “_P2\_nom\_prenom_”, tous les livrables du projet.
+Chaque livrable doit être nommé avec le numéro du projet et selon l'ordre dans lequel il apparaît, par exemple “_P2\_01\_lienGithub_”,
+“_P2\_02\_lienpageweb_”, et ainsi de suite.
+
+:::info
+Le repo GitHub doit être nommé avec la convention suivante : Nomcomplet\_#\_Datedémarrage. Le # correspond au numéro du projet sur le parcours
+et la date doit être au format jjmmaaaa. Par exemple, FrancoisLenotre\_3\_05032020.
+:::
+
+Vous vous demandez par où commencer ? Suivez nos conseils dans cette video pour vous organiser et faire le point avant votre première session
+de mentorat !
+
+<Vimeo vimeoId="486474864" />
+
+<br />
+
+:::note
+Une question sur ce projet et votre mentor n’est pas disponible ? Rendez-vous sur le post Workplace dédié aux questions sur ce projet.
+**Le lien est disponible dans l’onglet Ressources du projet**. Un mentor est disponible pour répondre à vos questions. Une fois par semaine,
+ce même mentor organisera une session live d'une heure sur Workplace pour répondre à vos questions en direct.
+:::
+
+### Soutenance
+
+Durant la présentation orale, votre évaluateur jouera le rôle de Sarah, votre manager :
+1. **Présentation des livrables** : Vous présenterez votre travail à votre évaluateur en expliquant vos choix techniques. (10 minutes)
+2. **Discussion** : votre évaluateur, jouant toujours le rôle de votre manager, va vous questionner sur la façon dont vous avez intégré les
+éléments ainsi que sur votre utilisation de Git et GitHub. Comme vous venez d’arriver dans l’équipe, il est important que vous vous
+familiarisiez avec les pratiques de l’équipe ! (15 minutes)
+
+Votre évaluateur questionnera vos choix, soyez donc prêt à défendre votre travail. À la fin de la session, votre évaluateur reprendra son rôle
+de mentor pour que vous puissiez débriefer ensemble.
+
+### Compétences évaluées
+
+- Utiliser un système de gestion de versions pour le suivi du projet et son hébergement
+- Mettre en place son environnement Front-End
+- Intégrer du contenu conformément à une maquette
+- Implémenter une interface responsive
+
+-----
+
+## Cours
+
+[Transformez une maquette en site web - OpenClassrooms](https://openclassrooms.com/fr/paths/185/projects/639/courses)
+
+Ces cours peuvent vous aider dans la réussite de votre projet. Ils ne sont pas obligatoires.
+
+- [Mettez en place votre environnement front-end](https://openclassrooms.com/fr/courses/6943241-mettez-en-place-votre-environnement-front-end)
+- [Apprenez à utiliser la ligne de commande dans un terminal](https://openclassrooms.com/fr/courses/6173491-apprenez-a-utiliser-la-ligne-de-commande-dans-un-terminal)
+- [Gérez du code avec Git et GitHub](https://openclassrooms.com/fr/courses/7162856-gerez-du-code-avec-git-et-github)
+- [Apprenez à créer votre site web avec HTML5 et CSS3](https://openclassrooms.com/fr/courses/1603881-apprenez-a-creer-votre-site-web-avec-html5-et-css3)
+- [Découpez et intégrez une maquette](https://openclassrooms.com/fr/courses/3504431-decoupez-et-integrez-une-maquette)
+
+-----
+
+## Ressources : Contenu exclusif
+
+### Webinaire : Découpez une maquette pour préparer l'intégration
+
+Dans ce webinaire, accompagnés d’un mentor, nous corrigerons l'exercice donné en amont dans lequel l'objectif est de mettre
+en place la structure d’une page HTML à partir d’une maquette afin de bien préparer votre intégration en HTML/CSS.
+
+<video
+  height="auto"
+  width="100%"
+  controls>
+    <source
+      src="https://monwikidevweb.la-loutre.fr/data/OpenClassrooms/video/Webinaire_DW_P2_decouper_maquette.mp4"
+      type="video/mp4"
+    />
+</video>
+
+### Énoncé du webinaire : Découpez une maquette pour préparer l'intégration
+
+<embed style={{width: "100%", height: "667px" }} src="/pdf/Webinaire_DW_P2_decouper_maquette+ennonce.pdf"></embed>
+
+### Corrigé du webimaire : Découpez une maquette pour préparer l'intégration
+
+<img src="/img/OpenClassrooms/Webinaire_DW_P2_decouper_maquette+corrige.jpg" />
+
+### Webinaire : Intégrez une maquette
+
+Dans ce webinaire, accompagnés d’un mentor OpenClassrooms, nous travaillerons sur un système de gestion de versions pour le
+suivi d'un projet et son hébergement.
+
+<video
+  height="auto"
+  width="100%"
+  controls>
+    <source
+      src="https://monwikidevweb.la-loutre.fr/data/OpenClassrooms/video/Webinaire_DW_P2_intégrer_maquette.mp4"
+      type="video/mp4"
+    />
+</video>
+
+### Énoncé du webinaire : Intégrez une maquette
+
+<embed style={{width: "100%", height: "667px" }} src="/pdf/Webinaire_DW_P2_intégrer_maquette+enonce.pdf"></embed>
+
+### Corrigé du webimaire : Intégrez une maquette
+
+<iframe
+    src="/algo/OpenClassrooms/Webinaire_DW_P2_Correction_code_html/html/index.html"
+    width="100%"
+    height="800">
+</iframe>
+
+-----
+## Ressources : Video
+
+### Comment héberger un site web facilement avec GitHub
+
+<YouTube youTubeId="dBAZ5Qc2bIk" />
+
+-----
+
+## Ressources : Site Web
+
+### FlexBox Froggy : un jeu pour s'entrainer sur Flexbox
+
+<iframe
+    src="https://flexboxfroggy.com/#fr"
+    width="100%"
+    height="800">
+</iframe>
+
+https://flexboxfroggy.com/#fr
+
+### Les sélecteurs en CSS (W3Schools)
+
+[CSS Selectors Reference](https://www.w3schools.com/cssref/css_selectors.asp)
+
+-----
+
+### Les mises en page CSS
+
+[CSS - à propos de ce site](https://fr.learnlayout.com/position.html)
+
+-----
+
+## Ressources : Document
+
+### Les balises sémantiques en HTML5
+
+[Les balises sémantiques en HTML5 - HTML | Ronan HELLO](https://ronan-hello.fr/series/html/balises-semantiques-html)
+
+-----
+
+## Ressources : Cours
+
+### Grafikart : Comprendre Git
+
+[Formation Comprendre Git | Grafikart](https://grafikart.fr/formations/git)
+
+-----
+
+## Ressources : Défi
+
+### Intégrez une maquette
+
+<embed style={{width: "100%", height: "667px" }} src="/pdf/Défi+_+Intégrez+une+maquette.pdf"></embed>
+
+

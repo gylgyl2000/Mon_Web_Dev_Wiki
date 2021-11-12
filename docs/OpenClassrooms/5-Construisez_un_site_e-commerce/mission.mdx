@@ -114,7 +114,7 @@ Bon développement !
 
 **Les spécifications techniques et fonctionnelles du projet**
 
-<embed style={{width: "100%", height: "667px" }} src="/Mon_Web_Dev_Wiki/pdf/DW+P5+-+Specifications+fonctionnelles.pdf"></embed>
+<embed style={{width: "100%", height: "667px" }} src="/pdf/DW+P5+-+Specifications+fonctionnelles.pdf"></embed>
 
 -----
 
@@ -128,7 +128,7 @@ Pour vous aider à réaliser ce projet, [voici un exemple de découpage](https:/
 des étapes à suivre. Vous y trouverez des conseils pour chaque étape, ainsi que sur l’utilisation des ressources pour ce projet.
 :::
 
-<embed style={{width: "100%", height: "667px" }} src="/Mon_Web_Dev_Wiki/pdf/DW+P5+-+Etapes+cles.pdf"></embed>
+<embed style={{width: "100%", height: "667px" }} src="/pdf/DW+P5+-+Etapes+cles.pdf"></embed>
 
 ## Livrables
 
@@ -191,7 +191,7 @@ Ces cours peuvent vous aider dans la réussite de votre projet. Ils ne sont pas 
 
 #### Enoncé du webinaire : Utilisez JavaScript pour réaliser un site dynamique
 
-<embed style={{width: "100%", height: "667px" }} src="/Mon_Web_Dev_Wiki/pdf/Webinaire+JavaScript+P5+DevWeb+Enonce+et+Correction.pdf"></embed>
+<embed style={{width: "100%", height: "667px" }} src="/pdf/Webinaire+JavaScript+P5+DevWeb+Enonce+et+Correction.pdf"></embed>
 
 #### Webinaire : Utilisez JavaScript pour réaliser un site dynamique
 
@@ -223,6 +223,645 @@ Ces cours peuvent vous aider dans la réussite de votre projet. Ils ne sont pas 
 
 Apprenez à créer un plan de test étape par étape
 
-<embed style={{width: "100%", height: "667px" }} src="/Mon_Web_Dev_Wiki/pdf/Défi+_+Créez+un+plan+de+test.pdf"></embed>
+<embed style={{width: "100%", height: "667px" }} src="/pdf/Défi+_+Créez+un+plan+de+test.pdf"></embed>
 
 * * *
+
+## Le projet
+
+### Mon projet
+
+**Dépôt GitHub :**
+
+- [gylgyl2000/GillesChassignet_5_01072021](https://github.com/gylgyl2000/GillesChassignet_5_01072021)
+
+**Plan de test**
+
+<embed style={{width: "100%", height: "667px" }} src="/pdf/P5_GillesChassignet_plan_test.pdf"></embed>
+
+
+### D'autres projets
+
+- [DamienLopvet/P5_05102021](https://github.com/DamienLopvet/P5_05102021)
+- [SelimBoughlam/P5-KANAP](https://github.com/SelimBoughlam/P5-KANAP)
+- [KatouProg/QuentinBuxo_5_01102021](https://github.com/KatouProg/QuentinBuxo_5_01102021)
+- [lifeae/OC_WD_P5: Openclassrooms- Parcours Développeur Web - Projet 5 : Construisez un site e-commerce](https://github.com/lifeae/OC_WD_P5)
+- [nathbrl/P5_barruel_code: new P5 project "KANAP"](https://github.com/nathbrl/P5_barruel_code)
+
+## Aide-mémoire
+
+## APIs Web
+
+-----
+
+### URL
+
+- [URL - Référence Web API | MDN](https://developer.mozilla.org/fr/docs/Web/API/URL)
+
+L'interface **URL** représente un objet qui fournit des méthodes statiques utilisées pour créer des URL d'objet.
+
+**URL** = "Uniform Resource Locator", repère uniforme de ressource.
+
+Le constructeur prend un paramètre url et un paramètre de base facultatif à utiliser comme base si le paramètre url est une URL
+relative :
+
+```javascript
+const url = new URL('../cats', 'http://www.example.com/dogs');
+console.log(url.hostname); // "www.example.com"
+console.log(url.pathname); // "/cats"
+```
+
+Les propriétés de l'URL peuvent être définies pour construire l'URL :
+
+```javascript
+url.hash = 'tabby';
+console.log(url.href); // "http://www.example.com/cats#tabby"
+```
+
+Les URL seront encodées selon la norme RFC 3986 :
+
+```javascript
+url.pathname = 'démonstration.html';
+console.log(url.href); // "http://www.example.com/d%C3%A9monstration.html"
+```
+
+-----
+
+### `URLSearchParams`
+
+- [URLSearchParams - Référence Web API | MDN](https://developer.mozilla.org/fr/docs/Web/API/URLSearchParams)
+- [How to Get URL Parameters | w3docs](https://www.w3docs.com/snippets/javascript/how-to-get-url-parameters.html)
+
+L’**interface** `URLSearchParams` définit des méthodes utilitaires pour travailler avec la chaîne de requête (les paramètres GET)
+d’une URL.
+
+L'interface URLSearchParams peut être utilisée pour construire et manipuler la chaîne de requête de l'URL.
+
+Pour obtenir les paramètres de recherche à partir de l'URL de la fenêtre en cours :
+
+```javascript
+// https://some.site/?id=123
+var parsedUrl = new URL(window.location.href);
+console.log(parsedUrl.searchParams.get("id")); // 123
+```
+
+```javascript
+let url = new URL(window.location.href);
+let index = url.searchParams.get("id");
+```
+
+-----
+
+### `window.location`
+
+- [JavaScript Window Location | w3schools](https://www.w3schools.com/js/js_window_location.asp)
+
+L'**objet** `window.location` peut être utilisé pour obtenir l'adresse de la page actuelle (URL) et pour rediriger le navigateur vers
+une nouvelle page.
+
+L'objet `window.location` peut être écrit sans le préfixe `window`.
+
+**Quelques exemples :**
+
+- `window.location.href` renvoie le href (URL) de la page en cours
+- `window.location.hostname` renvoie le nom de domaine de l'hébergeur Web
+- `window.location.pathname` renvoie le chemin et le nom de fichier de la page en cours
+- `window.location.protocol` renvoie le protocole web utilisé (http: ou https:)
+- `window.location.assign()` charge un nouveau document
+
+-----
+
+### `window.location.href`
+
+La propriété `window.location.href` renvoie l'URL de la page en cours.
+
+**Exemple : Afficher le href (URL) de la page en cours :**
+
+```javascript
+document.getElementById("demo").innerHTML =
+"Page location is " + window.location.href;
+```
+
+**Le résultat est :**
+
+L'emplacement de la page est https://www.w3schools.com/js/js_window_location.asp
+
+-----
+
+### `localStorage`
+
+- [Utiliser l'API Web Storage - Référence Web API | MDN](https://developer.mozilla.org/fr/docs/Web/API/Web_Storage_API/Using_the_Web_Storage_API)
+- [Window.localStorage - Référence Web API | MDN](https://developer.mozilla.org/fr/docs/Web/API/Window/localStorage)
+- [Storage Object | w3schools](https://www.w3schools.com/jsref/api_storage.asp)
+- [Window localStorage Property | w3schools](https://www.w3schools.com/jsref/prop_win_localstorage.asp)
+
+La **propriété** `localStorage` vous permet d'accéder à un objet local Storage. Le localStorage est similaire au sessionStorage. La
+seule différence : les données stockées dans le localStorage n'ont pas de délai d'expiration, alors que les données stockées dans le
+sessionStorage sont nettoyées quand la session navigateur prend fin — donc quand on ferme le navigateur.
+
+Il convient de noter que les données stockées dans localStorage ou sessionStorage sont spécifiques au protocole de la page.
+
+Les clés et les valeurs sont toujours des chaînes de caractères (à noter que, comme pour les objets, les clés entières seront
+automatiquement converties en chaînes de caractères).
+
+```javascript
+// Ajouter une entrée
+localStorage.setItem('myCat', 'Tom');
+
+// Lire l'entrée
+var cat = localStorage.getItem('myCat');
+
+// Effacer l'entrée
+localStorage.removeItem('myCat');
+
+// Effacer tous les éléments
+localStorage.clear();
+
+```
+
+-----
+
+### `fetch()`
+
+- [API Fetch - Référence Web API | MDN](https://developer.mozilla.org/fr/docs/Web/API/Fetch_API)
+- [JavaScript Fetch API | w3schools](https://www.w3schools.com/js/js_api_fetch.asp)
+
+L'**interface** de l'API Fetch permet au navigateur Web d'envoyer des requêtes HTTP aux serveurs Web.
+
+- [GlobalFetch.fetch() - Référence Web API | MDN](https://developer.mozilla.org/fr/docs/Web/API/fetch)
+
+La méthode fetch() du mixin WindowOrWorkerGlobalScope démarre le chargement d'une ressource sur le réseau et retourne une promesse
+qui est résolue dès que la réponse est disponible. La promesse résoud l'objet Response représentant la réponse de votre requête.
+Cette promesse n'échoue pas en cas d'erreur HTTP, elle n'échoue que sur les problèmes de réseau. Vous devez utiliser un gestionnaire
+then pour identifier les erreurs HTTP.
+
+-----
+
+fetch() => method: ‘POST’
+
+-----
+
+## Document
+
+- [document - Référence Web API | MDN](https://developer.mozilla.org/fr/docs/Web/API/Document)
+
+-----
+
+## Document - Méthodes
+
+### `document.querySelector()`
+
+- [document.querySelector - Référence Web API | MDN](https://developer.mozilla.org/fr/docs/Web/API/Document/querySelector)
+- [HTML DOM querySelector() Method | w3schools](https://www.w3schools.com/jsref/met_document_queryselector.asp)
+
+La **méthode** `querySelector()` de l'interface Document retourne le premier Element dans le document correspondant au sélecteur - ou
+groupe de sélecteurs - spécifié(s), ou null si aucune correspondance n'est trouvée.
+
+La méthode `querySelector()` renvoie le premier élément qui correspond à un ou plusieurs sélecteurs CSS spécifiés dans le document.
+
+**Remarque :** La méthode `querySelector()` ne renvoie que le premier élément qui correspond aux sélecteurs spécifiés. Pour renvoyer
+toutes les correspondances, utilisez plutôt la méthode `querySelectorAll()`.
+
+Si le sélecteur correspond à un identifiant ID dans un document qui est utilisé plusieurs fois (notez qu'un "id" doit être
+unique dans une page et ne doit pas être utilisé plus d'une fois), il renvoie le premier élément correspondant.
+
+
+```javascript
+// Obtenez le premier élément du document avec class="example" :
+document.querySelector(".example");
+
+// Obtenez le premier élément <p> dans le document :
+document.querySelector("p");
+
+// Obtenez le premier élément <p> dans le document avec class="example" :
+document.querySelector("p.example");
+
+// Modifiez le texte d'un élément avec id="demo" :
+document.querySelector("#demo").innerHTML = "Hello World!";
+
+// Obtenez le premier élément <p> dans le document où le parent est un élément <div>.
+document.querySelector("div > p");
+
+// Obtenez le premier élément <a> dans le document qui a un attribut "target" :
+document.querySelector("a[target]");
+
+document.querySelector("h2, h3").style.backgroundColor = "red";
+```
+
+-----
+
+### `document.querySelectorAll()`
+
+- [Document.querySelectorAll() - Référence Web API | MDN](https://developer.mozilla.org/fr/docs/Web/API/Document/querySelectorAll)
+- [HTML DOM querySelectorAll() Method | w3schools](https://www.w3schools.com/jsref/met_document_queryselectorall.asp)
+
+La **méthode** `querySelectorAll()` de Element renvoie une NodeList statique représentant une liste des éléments du document qui
+correspondent au groupe de sélecteurs spécifiés.
+
+La méthode `querySelectorAll()` renvoie tous les éléments du document qui correspondent à un ou plusieurs sélecteurs CSS spécifiés,
+en tant qu'objet NodeList statique.
+
+L'objet NodeList représente une collection de nœuds. Les nœuds sont accessibles par des numéros d'index. L'indice commence à 0.
+
+**Astuce :** vous pouvez utiliser la propriété `length` de l'objet NodeList pour déterminer le nombre d'éléments qui correspondent au
+sélecteur spécifié, puis vous pouvez parcourir tous les éléments et extraire les informations souhaitées.
+
+```javascript
+// Obtenez tous les éléments du document avec class="example" :
+var x = document.querySelectorAll(".example");
+
+// Obtenez tous les éléments <p> du document et définissez la couleur d'arrière-plan du premier
+// élément <p> (index 0) :
+var x = document.querySelectorAll("p");
+x[0].style.backgroundColor = "red";
+
+// Obtenez tous les éléments <p> du document avec class="example" et définissez l'arrière-plan du
+// premier élément <p> :
+var x = document.querySelectorAll("p.example");
+x[0].style.backgroundColor = "red";
+
+// Découvrez combien d'éléments avec class="example" il y a dans le document (en utilisant la
+// propriété length de l'objet NodeList) :
+var x = document.querySelectorAll(".example").length;
+
+// Définissez la couleur d'arrière-plan de tous les éléments du document avec class="example" :
+var x = document.querySelectorAll(".example");
+var i;
+for (i = 0; i < x.length; i++) {
+    x[i].style.backgroundColor = "red";
+}
+
+// Définissez la couleur d'arrière-plan de tous les éléments <p> du document :
+var x = document.querySelectorAll("p");
+var i;
+for (i = 0; i < x.length; i++) {
+    x[i].style.backgroundColor = "red";
+}
+
+// Définissez la bordure de tous les éléments du document qui ont un attribut "target" :
+var x = document.querySelectorAll("a[target]");
+var i;
+for (i = 0; i < x.length; i++) {
+    x[i].style.border = "10px solid red";
+}
+
+// Définissez la couleur d'arrière-plan de chaque élément <p> dont le parent est un élément <div> :
+var x = document.querySelectorAll("div > p");
+var i;
+for (i = 0; i < x.length; i++) {
+    x[i].style.backgroundColor = "red";
+}
+
+// Définissez la couleur d'arrière-plan de tous les éléments <h2>, <div> et <span> dans le document :
+var x = document.querySelectorAll("h2, div, span");
+var i;
+for (i = 0; i < x.length; i++) {
+    x[i].style.backgroundColor = "red";
+}
+```
+
+-----
+
+### `addEventListener()` de type `"change"`
+
+- [onchange Event | w3schools](https://www.w3schools.com/jsref/event_onchange.asp)
+- [HTML DOM addEventListener() Method | w3schools](https://www.w3schools.com/jsref/met_element_addeventlistener.asp)
+
+Cet exemple utilise la méthode `addEventListener()` pour attacher un événement `"change"` à un élément d'entrée.<br />
+Lorsque vous quittez le champ de saisie, une fonction est déclenchée qui transforme le texte saisi en majuscules.
+
+```javascript
+Entrez votre nom : <input type="text" id="fname">
+<script>
+document.getElementById("fname").addEventListener("change", myFunction);
+
+function myFunction() {
+    var x = document.getElementById("fname");
+    x.value = x.value.toUpperCase();
+}
+</script>
+```
+
+-----
+
+## Element
+
+-----
+
+## Element - Méthodes
+
+-----
+
+### `.closest()`
+
+- [Element.closest() - Référence Web API | MDN](https://developer.mozilla.org/fr/docs/Web/API/Element/closest)
+- [DOM Element closest() Method | w3schools](https://www.w3schools.com/jsref/met_element_closest.asp)
+
+La **méthode** `closest()` ("la plus proche") recherche dans l'arborescence DOM l'élément le plus proche qui correspond à un
+sélecteur CSS spécifié. Il commence à l'élément lui-même, puis teste le parent, le grand-parent, et ainsi de suite jusqu'à ce qu'une
+correspondance soit trouvée. Si aucune correspondance n'est trouvée, cette méthode renvoie *null*.
+
+-----
+
+### .`dataset`
+
+- [HTMLElement.dataset | MDN](https://developer.mozilla.org/fr/docs/orphaned/Web/API/HTMLOrForeignElement/dataset)
+
+La **propriété** `HTMLElement.dataset` fournit un accès en mode lecture et écriture, à tous les attributs de données sur mesure
+(data-*) définis sur l'élément. C'est un tableau associatif de DOMString, qui associe à chaque nom d'attribut de données sur mesure
+la valeur qu'il contient.
+
+-----
+
+## RegExp
+
+- [RegExp - JavaScript | MDN](https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Global_Objects/RegExp)
+- [Expressions rationnelles - JavaScript | MDN](https://developer.mozilla.org/fr/docs/Web/JavaScript/Guide/Regular_Expressions)
+- [JavaScript RegExp Reference | w3schools](https://www.w3schools.com/jsref/jsref_obj_regexp.asp)
+
+Le constructeur RegExp crée un objet expression rationnelle pour la reconnaissance d'un modèle dans un texte.
+
+-----
+
+## JSDoc
+
+- [Use JSDoc: Index](https://jsdoc.app/index.html)
+
+-----
+
+### `JSON`
+
+- [JSON - JavaScript | MDN](https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Global_Objects/JSON)
+- [JSON - Glossaire | MDN](https://developer.mozilla.org/fr/docs/Glossary/JSON)
+- [JavaScript JSON | w3schools](https://www.w3schools.com/js/js_json.asp)
+- [JavaScript JSON Reference | w3schools](https://www.w3schools.com/jsref/jsref_obj_json.asp)
+
+JSON est un format de stockage et de transport de données.
+
+JSON est souvent utilisé lorsque des données sont envoyées d'un serveur à une page Web.
+
+**Qu'est-ce que JSON ?** :
+
+- JSON signifie JavaScript Object Notation
+- JSON est un format d'échange de données léger
+- JSON est indépendant du langage*
+- JSON est « autodescriptif » et facile à comprendre
+
+*La syntaxe JSON est dérivée de la syntaxe de notation d'objet JavaScript, mais le format JSON est uniquement du texte. Le code pour
+lire et générer des données JSON peut être écrit dans n'importe quel langage de programmation.
+
+```json
+{
+"employees":[
+    {"firstName":"John", "lastName":"Doe"},
+    {"firstName":"Anna", "lastName":"Smith"},
+    {"firstName":"Peter", "lastName":"Jones"}
+]
+}
+```
+
+-----
+
+### `JSON.parse()`
+
+- [JSON.parse() - JavaScript | MDN](https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Global_Objects/JSON/parse)
+- [JSON.parse() | w3schools](https://www.w3schools.com/js/js_json_parse.asp)
+
+La **méthode** `JSON.parse()` analyse une chaîne de caractères JSON et construit la valeur JavaScript ou l'objet décrit par cette
+chaîne. On peut éventuellement utiliser cette fonction avec un paramètre de modification permettant de traiter l'objet avant qu'il
+soit renvoyé.
+
+```javascript
+const json = '{"result":true, "count":42}';
+const obj = JSON.parse(json);
+
+console.log(obj.count); // expected output: 42
+console.log(obj.result); // expected output: true
+```
+
+-----
+
+### `JSON.stringify()`
+
+- [JSON.stringify() - JavaScript | MDN](https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify)
+- [JSON.stringify() | w3schools](https://www.w3schools.com/js/js_json_stringify.asp)
+
+La **méthode** `JSON.stringify()` convertit une valeur JavaScript en chaîne JSON. Optionnellement, elle peut remplacer des valeurs ou
+spécifier les propriétés à inclure si un tableau de propriétés a été fourni.
+
+```javascript
+console.log(JSON.stringify({ x: 5, y: 6 }));
+// expected output: "{"x":5,"y":6}"
+
+console.log(JSON.stringify([new Number(3), new String('false'), new Boolean(false)]));
+// expected output: "[3,"false",false]"
+
+console.log(JSON.stringify({ x: [10, undefined, function(){}, Symbol('')] }));
+// expected output: "{"x":[10,null,null,null]}"
+
+console.log(JSON.stringify(new Date(2006, 0, 2, 15, 4, 5)));
+// expected output: ""2006-01-02T15:04:05.000Z""
+```
+
+-----
+
+## String
+
+- [String - JavaScript | MDN](https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Global_Objects/String)
+- [JavaScript Strings | w3schools](https://www.w3schools.com/js/js_strings.asp)
+
+Un objet **String** est utilisé afin de représenter et de manipuler une chaîne de caractères.
+
+-----
+
+## String - Propriétés
+
+### `.length`
+
+La **propriété** `length` représente la longueur d'une chaine de caractères, exprimée en nombre de points de code UTF-16. C'est une
+propriété accessible en lecture seule.
+
+```javascript
+const str = 'Life, the universe and everything. Answer:';
+
+console.log(`${str} ${str.length}`);
+// expected output: "Life, the universe and everything. Answer: 42"
+```
+
+## String - Méthodes
+
+### `.split()`
+
+- [String.prototype.split() - JavaScript | MDN](https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Global_Objects/String/split)
+- [JavaScript String split() Method | w3schools](https://www.w3schools.com/jsref/jsref_split.asp)
+
+La **méthode** `split()` divise une chaîne de caractères en une liste ordonnée de sous-chaînes, place ces sous-chaînes dans un
+tableau et retourne le tableau. La division est effectuée en recherchant un motif ; où le motif est fourni comme premier paramètre
+dans l'appel de la méthode.
+
+```javascript
+const str = 'The quick brown fox jumps over the lazy dog.';
+
+const words = str.split(' ');
+console.log(words[3]); // expected output: "fox"
+
+const chars = str.split('');
+console.log(chars[8]); // expected output: "k"
+
+const strCopy = str.split();
+console.log(strCopy); // expected output: Array ["The quick brown fox jumps over the lazy dog."]
+```
+
+-----
+
+## Array
+
+- [Array - JavaScript | MDN](https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Global_Objects/Array)
+- [JavaScript Array Reference | w3schools](https://www.w3schools.com/jsref/jsref_obj_array.asp)
+
+L'objet global **Array** est utilisé pour créer des tableaux. Les tableaux sont des objets de haut-niveau (en termes de complexité
+homme-machine) semblables à des listes.
+
+-----
+
+## Array - Méthodes
+
+### `.join()`
+
+- [Array.prototype.join() - JavaScript | MDN](https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Global_Objects/Array/join)
+- [JavaScript Array join() Method | w3schools](https://www.w3schools.com/jsref/jsref_join.asp)
+
+```javascript
+const elements = ['Fire', 'Air', 'Water'];
+
+console.log(elements.join());
+// expected output: "Fire,Air,Water"
+
+console.log(elements.join(''));
+// expected output: "FireAirWater"
+
+console.log(elements.join('-'));
+// expected output: "Fire-Air-Water"
+```
+
+-----
+
+### `.forEach()`
+
+- [for...of - JavaScript | MDN](https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Statements/for...of#utiliser_array.prototype.foreach)
+- [JavaScript Array forEach() Method | w3schools](https://www.w3schools.com/jsref/jsref_foreach.asp)
+
+La **méthode** `forEach()` permet d'exécuter une fonction donnée sur chaque élément du tableau.
+
+```javascript
+let arr = [3, 5, 7];
+arr.toto = "coucou";
+
+arr.forEach(function (element, index) {
+    console.log(element); // affiche "3", "5", "7"
+    console.log(index);  // affiche "0", "1", "2"
+});
+// ou avec Object.keys()
+Object.keys(arr).forEach(function (element, index) {
+    console.log(arr[element]); // affiche "3", "5", "7", "coucou"
+    console.log(arr[index]);  // affiche "3", "5", "7", undefined
+});
+```
+
+-----
+
+## Instructions
+
+### `for`
+
+- [for - JavaScript | MDN](https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Statements/for)
+- [JavaScript for Statement | w3schools](https://www.w3schools.com/jsref/jsref_for.asp)
+
+```javascript
+let str = '';
+
+for (let i = 0; i < 9; i++) {
+  str = str + i;
+}
+
+console.log(str); // expected output: "012345678"
+```
+
+-----
+
+### `for...of`
+
+- [for...of - JavaScript | MDN](https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Statements/for...of)
+- [JavaScript for/of Statement | w3schools](https://www.w3schools.com/jsref/jsref_forof.asp)
+
+L'**instruction** `for...of` permet de créer une boucle Array qui parcourt un objet itérable (ce qui inclut les objets Array, Map,
+Set, String, TypedArray, l'objet arguments, etc.) et qui permet d'exécuter une ou plusieurs instructions pour la valeur de chaque
+propriété.
+
+```javascript
+const array1 = ['a', 'b', 'c'];
+
+for (const element of array1) {
+    console.log(element);
+}
+// expected output: "a"
+// expected output: "b"
+// expected output: "c"
+```
+
+```javascript
+let iterable = 'pixel';
+
+for (let valeur of iterable) {
+    console.log(valeur);
+}
+// p
+// i
+// x
+// e
+// l
+```
+
+**Parcourir l'objet `arguments`**
+
+Il est possible de parcourir l'objet `arguments` afin d'examiner l'ensemble des paramètres passés à la fonction.
+L'objet `arguments` est un objet, **semblable** à un tableau, correspondant aux arguments passés à une fonction.
+
+```javascript
+(function() {
+    for (let argument of arguments){
+        console.log(argument);
+    }
+})(1, 2, 3);
+// 1
+// 2
+// 3
+```
+
+-----
+
+### `for...in`
+
+- [for...in - JavaScript | MDN](https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Statements/for...in)
+- [JavaScript for/in Statement | w3schools](https://www.w3schools.com/jsref/jsref_forin.asp)
+
+L'**instruction** `for...in` permet d'itérer sur les propriétés énumérables d'un objet qui ne sont pas des symboles. Pour chaque
+propriété obtenue, on exécute une instruction (ou plusieurs grâce à un bloc d'instructions).
+
+```javascript
+function myFunction() {
+  var person = {fname:"John", lname:"Doe", age:25}; 
+  
+  var text = "";
+  var x;
+  for (x in person) {
+    text += person[x] + " ";
+  }
+  document.getElementById("demo").innerHTML = text;
+}
+// John Doe 25
+```
+
+
+
+-----

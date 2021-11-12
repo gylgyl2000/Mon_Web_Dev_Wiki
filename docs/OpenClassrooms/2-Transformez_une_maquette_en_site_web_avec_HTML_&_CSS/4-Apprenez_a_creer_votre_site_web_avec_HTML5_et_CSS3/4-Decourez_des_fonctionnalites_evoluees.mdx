@@ -1,0 +1,2363 @@
+---
+sidebar_position: 5
+---
+import { MDXProvider } from '@mdx-js/react';
+import { CodePen, Gist } from 'mdx-embed';
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+import { Vimeo } from 'mdx-embed';
+
+# Découvrez des fonctionnalités évoluées
+
+## Ajoutez des tableaux
+
+[Ajoutez des tableaux - Apprenez à créer votre site web avec HTML5 et CSS3 - OpenClassrooms](https://openclassrooms.com/fr/courses/1603881-apprenez-a-creer-votre-site-web-avec-html5-et-css3/1606851-ajoutez-des-tableaux)
+
+<Vimeo vimeoId="243808522" />
+
+<br />
+
+Indispensables pour organiser les informations, les tableaux sont un petit peu délicats à construire en HTML : cela explique que
+je vous les présente seulement maintenant. Il va en effet falloir imbriquer de nouvelles balises HTML dans un ordre précis.
+
+Nous allons commencer par construire des tableaux basiques, puis nous les complexifierons au fur et à mesure : fusion de cellules,
+division en multiples sections… Nous découvrirons aussi les propriétés CSS liées aux tableaux, qui nous permettront de
+personnaliser leur apparence.
+
+### Un tableau simple
+
+La première balise à connaître est `<table> </table>`. C'est cette balise qui permet d'indiquer le début et la fin d'un tableau.
+
+Cette balise est de type bloc, il faut donc la placer en dehors d'un paragraphe. Exemple :
+
+```html
+<p>Ceci est un paragraphe avant le tableau.</p>
+
+<table>
+   <!-- Ici, on écrira le contenu du tableau -->
+</table>
+
+<p>Ceci est un paragraphe après le tableau.</p>
+```
+
+:::note ?
+Bon, et qu'est-ce qu'on écrit à l'intérieur du tableau ?
+:::
+
+Là, préparez-vous à subir une avalanche de nouvelles balises.<br />
+Pour commencer en douceur, voici deux nouvelles balises très importantes :
+- `<tr> </tr>` : indique le début et la fin d'une ligne du tableau ;
+- `<td> </td>` : indique le début et la fin du contenu d'une cellule.
+
+En HTML, un tableau se construit ligne par ligne. Dans chaque ligne (`<tr>`), on indique le contenu des différentes cellules
+(`<td>`).<br />
+Schématiquement, un tableau se construit comme à la figure suivante.
+
+![Un tableau, avec des cellules contenues dans des lignes](https://user.oc-static.com/files/5001_6000/5706.png)
+
+Un tableau, avec des cellules contenues dans des lignes
+
+On a une balise de ligne (`<tr>`) qui englobe un groupe de cellules (`<td>`).<br />
+Par exemple, si je veux faire un tableau à deux lignes, avec trois cellules par ligne (donc trois colonnes), je devrai taper ceci :
+
+```html
+<table>
+   <tr>
+       <td>Carmen</td>
+       <td>33 ans</td>
+       <td>Espagne</td>
+   </tr>
+   <tr>
+       <td>Michelle</td>
+       <td>26 ans</td>
+       <td>États-Unis</td>
+   </tr>
+</table>
+```
+
+Le résultat est un peu déprimant (figure suivante).
+
+![Un tableau sans bordures](https://user.oc-static.com/files/344001_345000/344364.png)
+
+Un tableau sans bordures
+
+:::note ?
+C'est un tableau, ça ?<br />
+Le texte s'est écrit à la suite et il n'y a même pas de bordures !
+:::
+
+Oui, un tableau sans CSS paraît bien vide. Et justement, rajouter des bordures est très simple, vous connaissez déjà le code CSS
+correspondant !
+
+```css
+td /* Toutes les cellules des tableaux... */
+{
+    border: 1px solid black; /* auront une bordure de 1px */
+}
+```
+
+Et voici le résultat à la figure suivante.
+
+![Chaque cellule a sa propre bordure](https://user.oc-static.com/files/344001_345000/344365.png)
+
+Chaque cellule a sa propre bordure
+
+Hum, ce n'est pas encore aussi parfait que ce qu'on voudrait. En effet, on aimerait qu'il n'y ait qu'une seule bordure entre deux
+cellules, or ce n'est pas le cas ici.
+
+Heureusement, il existe une propriété CSS spécifique aux tableaux, `border-collapse`, qui signifie « coller les bordures entre
+elles ».<br />
+Cette propriété peut prendre deux valeurs :
+- `collapse` : les bordures seront collées entre elles, c'est l'effet qu'on recherche ici ;
+- `separate` : les bordures seront dissociées (valeur par défaut).
+
+```css
+table
+{
+    border-collapse: collapse; /* Les bordures du tableau seront collées (plus joli) */
+}
+td
+{
+    border: 1px solid black;
+}
+```
+
+La figure suivante représente le résultat obtenu.
+
+![Les bordures sont collées les unes aux autres](https://user.oc-static.com/files/344001_345000/344366.png)
+
+Les bordures sont collées les unes aux autres
+
+Voilà qui est mieux !
+
+#### La ligne d'en-tête
+
+Maintenant que l'on a ce qu'on voulait, on va rajouter la ligne d'en-tête du tableau. Dans l'exemple ci-dessous, les en-têtes sont
+« Nom », « Âge » et « Pays ».<br />
+La ligne d'en-tête se crée avec un `<tr>` comme on l'a fait jusqu'ici, mais les cellules qu'elle contient sont, cette fois,
+encadrées par des balises `<th>` et non pas `<td>` !
+
+```html
+<table>
+   <tr>
+       <th>Nom</th>
+       <th>Âge</th>
+       <th>Pays</th>
+   </tr>
+
+   <tr>
+       <td>Carmen</td>
+       <td>33 ans</td>
+       <td>Espagne</td>
+   </tr>
+   <tr>
+       <td>Michelle</td>
+       <td>26 ans</td>
+       <td>États-Unis</td>
+   </tr>
+</table>
+```
+
+La ligne d'en-tête est très facile à reconnaître pour deux raisons :
+- les cellules sont des `<th>` au lieu des `<td>` habituels ;
+- c'est la première ligne du tableau (c'est idiot, mais encore faut-il le préciser).
+
+Comme le nom des cellules est un peu différent pour l'en-tête, il faut penser à mettre à jour le CSS pour lui dire d'appliquer une
+bordure sur les cellules normales _et_ sur l'en-tête (figure suivante).
+
+```css
+table
+{
+    border-collapse: collapse;
+}
+    td, th /* Mettre une bordure sur les td ET les th */
+{
+    border: 1px solid black;
+}
+```
+
+![Un tableau avec un en-tête](https://user.oc-static.com/files/344001_345000/344368.png)
+
+Un tableau avec un en-tête
+
+Comme vous pouvez le constater, votre navigateur a mis en gras le texte des cellules d'en-tête. C'est ce que font en général les
+navigateurs mais, si vous le désirez, vous pouvez changer cela à coups de CSS : modifier la couleur de fond des cellules d'en-tête,
+leur police, leur bordure, etc.
+
+#### Titre du tableau
+
+Normalement, tout tableau doit avoir un titre. Le titre permet de renseigner rapidement le visiteur sur le contenu du tableau.<br />
+Notre exemple est constitué d'une liste de personnes… oui, mais alors ? Qu'est-ce que cela représente ? Sans titre de tableau, vous
+le voyez, on est un peu perdu.
+
+Heureusement, il y a `<caption>` !<br />
+Cette balise se place tout au début du tableau, juste avant l'en-tête. C'est elle qui contient le titre du tableau (figure suivante) :
+
+```html
+<table>
+   <caption>Passagers du vol 377</caption>
+
+   <tr>
+       <th>Nom</th>
+       <th>Âge</th>
+       <th>Pays</th>
+   </tr>
+   <tr>
+       <td>Carmen</td>
+       <td>33 ans</td>
+       <td>Espagne</td>
+   </tr>
+   <tr>
+       <td>Michelle</td>
+       <td>26 ans</td>
+       <td>États-Unis</td>
+   </tr>
+</table>
+```
+
+![Un tableau avec un titre](https://user.oc-static.com/files/344001_345000/344369.png)
+
+Un tableau avec un titre
+
+C'est quand même plus clair !
+
+Sachez que vous pouvez changer la position du titre avec la propriété CSS `caption-side` qui peut prendre deux valeurs :
+- `top` : le titre sera placé au-dessus du tableau (par défaut) ;
+- `bottom` : le titre sera placé en dessous du tableau.
+
+### Un tableau structuré
+
+Nous avons appris à construire des petits tableaux simples. Ces petits tableaux suffisent dans la plupart des cas, mais il arrivera
+que vous ayez besoin de réaliser des tableaux plus… complexes.
+
+Nous allons découvrir deux techniques particulières :
+- pour les gros tableaux, il est possible de les **diviser** en trois parties :
+    - en-tête,
+    - corps du tableau,
+    - pied de tableau ;
+- pour certains tableaux, il se peut que vous ayez besoin de **fusionner** des cellules entre elles.
+
+#### Diviser un gros tableau
+
+Si votre tableau est assez gros, vous aurez tout intérêt à le découper en plusieurs parties. Pour cela, il existe des balises HTML
+qui permettent de définir les trois « zones » du tableau :
+- **l'en-tête (en haut)** : il se définit avec les balises `<thead></thead>` ;
+- **le corps (au centre)** : il se définit avec les balises `<tbody></tbody>` ;
+- **le pied du tableau (en bas)** : il se définit avec les balises `<tfoot></tfoot>`.
+
+Que mettre dans le pied de tableau ? Généralement, si c'est un long tableau, vous y recopiez les cellules d'en-tête. Cela permet
+de voir, même en bas du tableau, à quoi se rapporte chacune des colonnes. Schématiquement, un tableau en trois parties se découpe
+donc comme illustré à la figure suivante.
+
+![Un tableau découpé en plusieurs parties](https://user.oc-static.com/files/6001_7000/6786.png)
+
+Un tableau découpé en plusieurs parties
+
+C'est un peu déroutant, mais il est conseillé d'écrire les balises dans l'ordre suivant :
+1. `<thead>`
+2. `<tfoot>`
+3. `<tbody>`
+
+Dans le code, on renseigne donc d'abord la partie du haut, ensuite la partie du bas, et enfin la partie principale (`<tbody>`).
+Le navigateur se chargera d'afficher chaque élément au bon endroit, ne vous inquiétez pas.
+
+Voici donc le code à écrire pour construire le tableau en trois parties :
+
+```html
+<table>
+   <caption>Passagers du vol 377</caption>
+
+   <thead> <!-- En-tête du tableau -->
+       <tr>
+           <th>Nom</th>
+           <th>Âge</th>
+           <th>Pays</th>
+       </tr>
+   </thead>
+
+   <tfoot> <!-- Pied de tableau -->
+       <tr>
+           <th>Nom</th>
+           <th>Âge</th>
+           <th>Pays</th>
+       </tr>
+   </tfoot>
+
+   <tbody> <!-- Corps du tableau -->
+       <tr>
+           <td>Carmen</td>
+           <td>33 ans</td>
+           <td>Espagne</td>
+       </tr>
+       <tr>
+           <td>Michelle</td>
+           <td>26 ans</td>
+           <td>États-Unis</td>
+       </tr>
+       <tr>
+           <td>François</td>
+           <td>43 ans</td>
+           <td>France</td>
+       </tr>
+       <tr>
+           <td>Martine</td>
+           <td>34 ans</td>
+           <td>France</td>
+       </tr>
+       <tr>
+           <td>Jonathan</td>
+           <td>13 ans</td>
+           <td>Australie</td>
+       </tr>
+       <tr>
+           <td>Xu</td>
+           <td>19 ans</td>
+           <td>Chine</td>
+       </tr>
+   </tbody>
+</table>
+```
+
+:::info
+Il n'est pas obligatoire d'utiliser ces trois balises (`<thead>`, `<tbody>`, `<tfoot>`) dans tous les tableaux. En fait, vous vous
+en servirez surtout si votre tableau est assez gros et que vous avez besoin de l'organiser plus clairement.<br />
+Pour les « petits » tableaux, vous pouvez garder sans problème l'organisation plus simple que nous avons vue au début.
+:::
+
+#### 3, 2, 1… Fusioooon !
+
+Dans certains tableaux complexes, vous aurez besoin de « fusionner » des cellules entre elles.<br />
+Un exemple de fusion ? Regardez le tableau à la figure suivante, qui dresse une liste de films et indique à qui ils s'adressent.
+
+![Un tableau contenant des titres de films et leur public](https://s3-eu-west-1.amazonaws.com/sdz-upload/prod/upload/Capture%20d%E2%80%99e%CC%81cran%202016-05-26%20a%CC%80%2016.25.38.png)
+
+Un tableau contenant des titres de films et leur public
+
+Pour le dernier film, vous voyez que les cellules ont été fusionnées : elles ne font plus qu'une. C'est exactement l'effet qu'on
+cherche à obtenir.
+
+Pour effectuer une fusion, on rajoute un attribut à la balise `<td>`. Il faut savoir qu'il existe deux types de fusion :
+- **la fusion de colonnes** : c'est ce que je viens de faire dans cet exemple. La fusion s'effectue horizontalement. On utilisera
+l'attribut `colspan` ;
+- **la fusion de lignes** : là, deux lignes seront groupées entre elles. La fusion s'effectuera verticalement. On utilisera
+l'attribut `rowspan`.
+
+Comme vous le savez, vous devez donner une valeur à l'attribut (que ce soit`colspan` ou `rowspan`). Il faut indiquer le nombre de
+cellules à fusionner entre elles. Dans notre exemple, nous avons fusionné deux cellules : celle de la colonne « Pour enfants ? »
+et celle de « Pour adolescents ? ». On devra donc écrire :
+
+```html
+<td colspan="2">
+```
+
+… qui signifie : « Cette cellule est la fusion de deux cellules ». Il est possible de fusionner plus de cellules à la fois (trois,
+quatre, cinq… autant que vous voulez).
+
+Voilà le code HTML qui me permet de réaliser la fusion correspondant au tableau précédent :
+
+```html
+<table>
+   <tr>
+       <th>Titre du film</th>
+       <th>Pour enfants ?</th>
+       <th>Pour adolescents ?</th>
+   </tr>
+   <tr>
+       <td>Massacre à la tronçonneuse</td>
+       <td >Non, trop violent</td>
+       <td>Oui</td>
+   </tr>
+   <tr>
+       <td>Les bisounours font du ski</td>
+       <td>Oui, adapté</td>
+       <td>Pas assez violent...</td>
+   </tr>
+   <tr>
+       <td>Lucky Luke, seul contre tous</td>
+       <td colspan="2">Pour toute la famille !</td>
+   </tr>
+</table>
+```
+
+Une remarque importante : vous voyez que la ligne 19 ne contient que deux cellules au lieu de trois (il n'y a que deux balises
+`<td>`). C'est tout à fait normal car j'ai fusionné les deux dernières cellules entre elles. Le `<td colspan="2">` indique que
+cette cellule prend la place de deux cellules à la fois.
+
+:::note ?
+Et pour la fusion verticale avec `rowspan`, on fait comment ?
+:::
+
+Cela se complique un petit peu. Pour notre exemple, nous allons « inverser » l'ordre de notre tableau : au lieu de mettre les
+titres de films à gauche, on va les placer en haut.<br />
+C'est une autre façon de voir le tableau : au lieu de le construire en hauteur, on peut le construire en longueur.
+
+Dans ce cas, le `colspan` n'est plus adapté, c'est un `rowspan` qu'il faut utiliser :
+
+```html
+<table>
+   <tr>
+       <th>Titre du film</th>
+       <td>Massacre à la tronçonneuse</td>
+       <td>Les bisounours font du ski</td>
+       <td>Lucky Luke, seul contre tous</td>
+   </tr>
+   <tr>
+       <th>Pour enfants ?</th>
+       <td>Non, trop violent</td>
+       <td>Oui, adapté</td>
+       <td rowspan="2">Pour toute la famille !</td>
+   </tr>
+   <tr>
+       <th>Pour adolescents ?</th>
+       <td>Oui</td>
+       <td>Pas assez violent...</td>
+   </tr>
+</table>
+```
+
+Résultat : les cellules sont fusionnées verticalement (figure suivante) !
+
+![Les cellules ont été fusionnées verticalement](https://user.oc-static.com/files/344001_345000/344374.png)
+
+Les cellules ont été fusionnées verticalement
+
+:::info
+Notez qu'on peut modifier l'alignement vertical du texte des cellules de tableaux avec la propriété `vertical-align` que vous avez
+déjà vue dans le chapitre "Quelques autres techniques de mise en page".
+:::
+
+### En résumé
+
+- Un tableau s'insère avec la balise `<table>` et se définit ligne par ligne avec `<tr>`.
+- Chaque ligne comporte des cellules `<td>` (cellules normales) ou `<th>` (cellules d'en-tête).
+- Le titre du tableau se définit avec `<caption>`.
+- On peut ajouter une bordure aux cellules du tableau avec `border`. Pour fusionner les bordures, on utilise la propriété CSS
+`border-collapse`.
+- Un tableau peut être divisé en trois sections : `<thead>` (en-tête), `<tbody>` (corps) et `<tfoot>` (bas du tableau).
+L'utilisation de ces balises n'est pas obligatoire.
+- On peut fusionner des cellules horizontalement avec l'attribut `colspan` ou verticalement avec `rowspan`. Il faut indiquer
+combien de cellules doivent être fusionnées.
+
+-----
+
+## Créez des formulaires
+
+[Créez des formulaires - Apprenez à créer votre site web avec HTML5 et CSS3 - OpenClassrooms](https://openclassrooms.com/fr/courses/1603881-apprenez-a-creer-votre-site-web-avec-html5-et-css3/1607171-creez-des-formulaires)
+
+<Vimeo vimeoId="243808770" />
+
+<br />
+
+Toute page HTML peut être enrichie de formulaires interactifs, qui invitent vos visiteurs à renseigner des informations : saisir
+du texte, sélectionner des options, valider avec un bouton… tout est possible !
+
+Nous arrivons cependant aux limites du langage HTML car il faut ensuite pouvoir analyser les informations que le visiteur a
+saisies… et cela ne peut pas se faire en langage HTML. Comme nous allons le voir, le traitement des résultats doit s'effectuer
+dans un autre langage, par exemple le PHP.
+
+En attendant, nous avons un grand nombre de nouvelles balises HTML à découvrir. Bienvenue dans le monde merveilleux des
+formulaires, un monde où les boutons, les cases à cocher et les listes déroulantes vivent en harmonie (enfin presque).
+
+### Créer un formulaire
+
+Lorsqu'il vous prend subitement l'envie d'insérer un formulaire dans votre page HTML, vous devez pour commencer écrire une balise
+`<form> </form>`. C'est la balise principale du formulaire, elle permet d'en indiquer le début et la fin.
+
+```html
+<p>Texte avant le formulaire</p>
+
+<form>
+   <p>Texte à l'intérieur du formulaire</p>
+</form>
+
+<p>Texte après le formulaire</p>
+```
+
+:::info
+Notez qu'il faut obligatoirement mettre des balises de type block (comme `<p> </p>`) à l'intérieur de votre formulaire si vous
+souhaitez y faire figurer du texte.
+:::
+
+Voilà pour la structure de base. Maintenant, soyez attentif : ce que j'ai à vous dire n'est pas évident, parce qu'on est à la
+limite du HTML.
+
+On va prendre un exemple pour que les choses soient claires. Supposons que votre visiteur vienne de taper un commentaire dans
+votre formulaire, par exemple un message qu'il aimerait publier sur vos forums. Ce message doit être _envoyé_ pour que vous
+puissiez le recevoir (logique, non ?) et l'afficher pour vos autres visiteurs.
+
+Eh bien c'est là le problème, ou plutôt les problèmes, que l'on va se poser :
+- **Problème n° 1** : comment envoyer le texte saisi par le visiteur ? Par quel moyen ?
+- **Problème n° 2** : une fois que les données ont été envoyées, comment les traiter ? Souhaitez-vous recevoir le message
+automatiquement par mail ou préférez-vous qu'un programme se charge de l'enregistrer quelque part, puis de l'afficher sur une
+page visible par tout le monde ?
+
+Pour fournir les réponses à ces deux problèmes, vous devez ajouter deux attributs à la balise `<form>` :
+- `method` : cet attribut indique par quel moyen les données vont être envoyées (réponse au **problème n° 1**). Il existe deux
+solutions pour envoyer des données sur le Web :
+   - `method="get"` : c'est une méthode en général assez peu adaptée car elle est limitée à 255 caractères. La particularité
+    vient du fait que les informations seront envoyées dans l'adresse de la page (`http://…`), mais ce détail ne nous intéresse
+    pas vraiment pour le moment. La plupart du temps, je vous recommande d'utiliser l'autre méthode : `post`,
+   - `method="post"` : c'est la méthode la plus utilisée pour les formulaires car elle permet d'envoyer un grand nombre
+    d'informations. Les données saisies dans le formulaire ne transitent pas par la barre d'adresse ;
+- `action` : c'est l'adresse de la page ou du programme qui va _traiter_ les informations (réponse au **problème n° 2**). Cette
+page se chargera de vous envoyer un e-mail avec le message si c'est ce que vous voulez, ou bien d'enregistrer le message avec tous
+les autres dans une base de données.<br />
+Cela ne peut pas se faire en HTML et CSS ; on utilisera en général un autre langage dont vous avez peut-être entendu parler :
+PHP.
+
+On va donc maintenant compléter la balise `<form>` avec les deux attributs qu'on vient de voir.
+
+Pour `method`, vous l'aurez deviné, je vais mettre la valeur `post`.<br />
+Pour `action`, je vais taper le nom d'une page fictive en PHP (`traitement.php`). C'est cette page qui sera appelée lorsque le
+visiteur cliquera sur le bouton d'envoi du formulaire.
+
+```html
+<p>Texte avant le formulaire</p>
+
+<form method="post" action="traitement.php">
+   <p>Texte à l'intérieur du formulaire</p>
+</form>
+
+<p>Texte après le formulaire</p>
+```
+
+Pour le moment, on ne sait pas ce qu'il se passe à l'intérieur de la page `traitement.php` : je vous demande de me faire confiance
+et d'imaginer que cette page existe et fonctionne.
+
+Notre priorité, pour le moment, est de découvrir en HTML/CSS comment faire pour insérer des zones de texte, des boutons et des
+cases à cocher dans votre page web. C'est ce que nous allons voir maintenant.
+
+### Les zones de saisie basiques
+
+Bien, retour au concret.
+
+Nous allons passer en revue les différentes balises HTML permettant de saisir du texte dans un formulaire.<br />
+Il faut savoir qu'il y a deux zones de texte différentes :
+- **la zone de texte monoligne** : comme son nom l'indique, on ne peut y écrire qu'une seule ligne. Elle sert à saisir des textes
+courts, par exemple un pseudo ;
+- **la zone de texte multiligne** : cette zone de texte permet d'écrire une quantité importante de texte sur plusieurs lignes,
+par exemple une dissertation sur l'utilité du HTML dans le développement des pays d'Asie du Sud-Est (ce n'est qu'une suggestion,
+hein…).
+
+#### Zone de texte monoligne
+
+La figure suivante montre à quoi ressemble une zone de texte monoligne.
+
+![Une zone de texte monoligne](https://user.oc-static.com/files/6001_7000/6772.png)
+
+Une zone de texte monoligne
+
+Pour insérer une zone de texte dans une ligne, on va utiliser la balise `<input />`.
+
+:::info
+On retrouvera cette balise plusieurs fois dans la suite de ce chapitre. À chaque fois, c'est la valeur de son attribut `type` qui
+va changer.
+:::
+
+Pour créer une zone de texte à une ligne, on doit écrire :
+
+```html
+<input type="text" />
+```
+
+Ce n'est pas encore suffisant : il faut donner un nom à votre zone de texte. Ce nom n'apparaît pas sur la page, mais il vous sera
+indispensable par la suite. En effet, cela vous permettra (en PHP par exemple) de reconnaître d'où viennent les informations :
+vous saurez que tel texte est le pseudo du visiteur, tel texte est le mot de passe qu'il a choisi, etc.
+
+Pour donner un nom à un élément de formulaire, on utilise l'attribut `name`. Ici, on va supposer qu'on demande au visiteur de
+rentrer son pseudo :
+
+```html
+<input type="text" name="pseudo" />
+```
+
+Essayons donc de créer un formulaire très basique avec notre champ de texte :
+
+```html
+<form method="post" action="traitement.php">
+   <p><input type="text" name="pseudo" /></p>
+</form>
+```
+
+Comme d'habitude, je vous invite fortement à essayer ce code chez vous afin d'observer le résultat.
+
+#### Les libellés
+
+Cette zone de texte est bien jolie mais si votre visiteur tombe dessus, il ne sait pas ce qu'il doit écrire. C'est justement le
+rôle de la balise `<label>` :
+
+```html
+<form method="post" action="traitement.php">
+    <p>
+        <label>Votre pseudo</label> : <input type="text" name="pseudo" />
+    </p>
+</form>
+```
+
+Ce code donne exactement le résultat que vous avez pu observer à la figure précédente.
+
+Mais cela ne suffit pas. Il faut lier le label à la zone de texte.<br />
+Pour ce faire, on doit donner un nom à la zone de texte, non pas avec l'attribut `name` mais avec l'attribut `id` (que l'on peut
+utiliser sur toutes les balises).
+
+:::note ?
+Un `name` et un `id` sur le champ ? Cela ne va-t-il pas faire double emploi ?
+:::
+
+Pas du tout ! En fait, l'id est utilisé pour **identifier** l'élément HTML pour pouvoir y accéder et le manipuler. Il est donc
+unique pour cet élément.
+
+Le `name`, lui, réfère à la variable du formulaire que l’élément concerne. Ici, il n’y a qu’un seul élément qui pourra référer à
+la variable _pseudo_ ; `name` et `id` auront donc la même valeur. Mais lorsque nous utiliserons des `checkbox` ou des `radio`,
+plusieurs éléments correspondront à la même variable. Par exemple, la variable _couleur_ avec un élément pour _rouge_, un pour
+_bleu_ et un pour _vert_. Ils auront donc le même `name`, mais pas le même `id`.
+
+Pour lier le label au champ, il faut lui donner un attribut `for` qui a la même valeur que l' `id` du champ… Le mieux est de le
+voir sur un exemple :
+
+```html
+<form method="post" action="traitement.php">
+   <p>
+       <label for="pseudo">Votre pseudo</label> : <input type="text" name="pseudo" id="pseudo" />
+   </p>
+</form>
+```
+
+Essayez de cliquer sur le texte « Votre pseudo » : vous allez voir que le curseur se place automatiquement dans la zone de texte
+correspondante.
+
+#### Quelques attributs supplémentaires
+
+On peut ajouter un certain nombre d'autres attributs à la balise `<input />` pour personnaliser son fonctionnement :
+- on peut agrandir le champ avec `size` ;
+- on peut limiter le nombre de caractères que l'on peut saisir avec `maxlength` ;
+- on peut préremplir le champ avec une valeur par défaut à l'aide de `value` ;
+- on peut donner une indication sur le contenu du champ avec `placeholder`. Cette indication disparaîtra dès que le visiteur aura
+cliqué à l'intérieur du champ.
+
+Dans l'exemple suivant, la zone de texte contient une indication permettant de comprendre ce qu'il faut saisir ; le champ fait 30
+caractères de long mais on ne peut écrire que 10 caractères maximum à l'intérieur :
+
+```html
+<form method="post" action="traitement.php">
+    <p>
+        <label for="pseudo">Votre pseudo :</label>
+        <input type="text" name="pseudo" id="pseudo" placeholder="Ex : Zozor" size="30" maxlength="10" />
+    </p>
+</form>
+```
+
+Testez vous-mêmes le résultat pour observer le comportement du champ. En attendant, voici le rendu du champ dans son état initial
+en figure suivante.
+
+![Un champ de texte avec une indication (placeholder)](https://user.oc-static.com/files/344001_345000/344538.png)
+
+Un champ de texte avec une indication (placeholder)
+
+#### Zone de mot de passe
+
+Vous pouvez facilement faire en sorte que la zone de texte se comporte comme une « zone de mot de passe », c'est-à-dire une zone
+où on ne voit pas à l'écran les caractères saisis. Pour créer ce type de zone de saisie, utilisez l'attribut `type="password"`.
+
+Je complète mon formulaire. Il demande maintenant au visiteur son pseudo _et_ son mot de passe :
+
+```html
+<form method="post" action="traitement.php">
+   <p>
+       <label for="pseudo">Votre pseudo :</label>
+       <input type="text" name="pseudo" id="pseudo" />
+       
+       <br />
+       <label for="pass">Votre mot de passe :</label>
+       <input type="password" name="pass" id="pass" />
+       
+   </p>
+</form>
+```
+
+Testez la zone de mot de passe : vous verrez que les caractères ne s'affichent pas à l'écran, comme sur la figure suivante.
+
+![Une zone de saisie de mot de passe](https://user.oc-static.com/files/344001_345000/344540.png)
+
+Une zone de saisie de mot de passe
+
+#### Zone de texte multiligne
+
+Pour créer une zone de texte multiligne, on change de balise : nous allons utiliser `<textarea> </textarea>`.
+
+Comme pour tout autre élément du formulaire, il faut lui donner un nom avec `name` et utiliser un `label` qui explique de quoi il
+s'agit.
+
+```html
+<form method="post" action="traitement.php">
+   <p>
+       <label for="ameliorer">Comment pensez-vous que je pourrais améliorer mon site ?</label><br />
+       <textarea name="ameliorer" id="ameliorer"></textarea>
+   </p>
+</form>
+```
+
+Et voici le résultat en image (figure suivante) !
+
+![Une (petite) zone de saisie multiligne](https://user.oc-static.com/files/344001_345000/344542.png)
+
+Une (petite) zone de saisie multiligne
+
+Comme vous pouvez le constater, c'est un peu petit ! Heureusement, on peut modifier la taille du `<textarea>` de deux façons
+différentes.
+- **En CSS** : il suffit d'appliquer les propriétés CSS `width` et `height` au `<textarea>`.
+- **Avec des attributs** : on peut ajouter les attributs `rows` et `cols` à la balise `<textarea>`. Le premier indique le nombre
+de lignes de texte qui peuvent être affichées simultanément, et le second le nombre de colonnes.
+
+:::note ?
+Pourquoi ouvre-t-on la balise `<textarea>` pour la fermer juste après ?
+:::
+
+Vous pouvez préremplir le `<textarea>` avec une valeur par défaut. Dans ce cas, on n'utilise pas l'attribut `value` : on écrit
+tout simplement le texte par défaut entre la balise ouvrante et la balise fermante !
+
+```html
+<form method="post" action="traitement.php">
+   <p>
+       <label for="ameliorer">
+       Comment pensez-vous que je puisse améliorer mon site ?
+       </label>
+       <br />
+       
+       <textarea name="ameliorer" id="ameliorer" rows="10" cols="50">
+       Améliorer ton site ?!
+       Mais enfin ! Il est tellement génialissime qu'il n'est pas nécessaire de l'améliorer !
+       </textarea>       
+   </p>
+</form>
+```
+
+Et voici le résultat à la figure suivante.
+
+![Une zone de saisie multiligne pré-remplie](https://user.oc-static.com/files/344001_345000/344545.png)
+
+Une zone de saisie multiligne préremplie
+
+### Les zones de saisie enrichies
+
+HTML5 apporte de nombreuses fonctionnalités nouvelles relatives aux formulaires. De nouveaux types de champs sont en effet apparus
+avec cette version. Il suffit de donner à l'attribut `type` de la balise `<input />` l'une des nouvelles valeurs disponibles.
+Faisons un petit tour d'horizon !
+
+:::info
+Tous les navigateurs ne connaissent pas encore ces zones de saisie enrichies. À leur place, les anciennes versions des navigateurs
+afficheront une simple zone de saisie monoligne (comme si on avait écrit `type="text"`). Entre nous, c'est parfait : les nouveaux
+navigateurs peuvent profiter des dernières fonctionnalités, tandis que les anciens affichent une zone de texte de remplacement qui
+convient tout aussi bien.<br />
+Vous avez donc tout intérêt à utiliser ces nouvelles zones de saisie dès aujourd'hui ! Au mieux, vos visiteurs profiteront des
+nouvelles fonctionnalités, au pire, ils ne verront aucun problème.
+:::
+
+#### E-mail
+
+Vous pouvez demander à saisir une adresse e-mail :
+
+```html
+<input type="email" />
+```
+
+Le champ vous semblera _a priori_ identique, mais votre navigateur sait désormais que l'utilisateur doit saisir une adresse e-mail.
+Il peut afficher une indication si l'adresse n'est pas un e-mail ; c'est ce que fait Firefox, par exemple (figure suivante).
+
+![Un champ e-mail mal renseigné est entouré de rouge dans Firefox](https://user.oc-static.com/files/344001_345000/344587.png)
+
+Un champ e-mail mal renseigné est entouré de rouge dans Firefox
+
+Sachez que certains navigateurs, comme les navigateurs mobiles sur iPhone et Android, affichent un clavier adapté à la saisie
+d'e-mail (figure suivante).
+
+![Clavier de saisie d'e-mail sur un iPhone](https://s3-eu-west-1.amazonaws.com/sdz-upload/prod/upload/iphone_mail1.png)
+
+Clavier de saisie d'e-mail sur un iPhone
+
+#### Une URL
+
+Avec le type `url`  , on peut demander à saisir une adresse absolue (commençant généralement par `http://` ) :
+
+```html
+<input type="url" />
+```
+
+Même principe : si le champ ne vous semble pas différent sur votre ordinateur, sachez que celui-ci comprend bel et bien que le
+visiteur est censé saisir une adresse. Les navigateurs mobiles affichent par exemple un clavier adapté à la saisie d'URL (figure
+suivante).
+
+![Clavier de saisie d'URL sur iPhone](https://s3-eu-west-1.amazonaws.com/sdz-upload/prod/upload/iphone_url1.png)
+
+Clavier de saisie d'URL sur iPhone
+
+#### Numéro de téléphone
+
+Ce champ est dédié à la saisie de numéros de téléphone :
+
+```html
+<input type="tel" />
+```
+
+Sur iPhone, par exemple, un clavier adapté s'affiche lorsqu'on doit remplir le champ (figure suivante).
+
+![Clavier de saisie de numéro de téléphone sur un iPhone](https://s3-eu-west-1.amazonaws.com/sdz-upload/prod/upload/iphone_tel.png)
+
+Clavier de saisie de numéro de téléphone sur un iPhone
+
+#### Nombre
+
+Ce champ permet de saisir un nombre entier :
+
+```html
+<input type="number" />
+```
+
+Le champ s'affichera en général avec des petites flèches pour changer la valeur (figure suivante).
+
+![Champ de saisie de nombre](https://user.oc-static.com/files/344001_345000/344592.png)
+
+Champ de saisie de nombre
+
+Vous pouvez personnaliser le fonctionnement du champ avec les attributs suivants :
+- `min` : valeur minimale autorisée ;
+- `max` : valeur maximale autorisée ;
+- `step` : c'est le « pas » de déplacement. Si vous indiquez un pas de 2, le champ n'acceptera que des valeurs de 2 en 2 (par
+exemple 0, 2, 4, 6…).
+
+#### Un curseur
+
+Le type `range` permet de sélectionner un nombre avec un curseur (aussi appelé _slider_), comme à la figure suivante :
+
+```html
+<input type="range" />
+```
+
+![Un curseur grâce au type range](https://user.oc-static.com/files/344001_345000/344594.png)
+
+Un curseur grâce au type range
+
+Vous pouvez utiliser là aussi les attributs `min`, `max` et `step` pour restreindre les valeurs disponibles.
+
+#### Couleur
+
+Ce champ permet de saisir une couleur :
+
+```html
+<input type="color" />
+```
+
+![Un champ de type color](https://s3-eu-west-1.amazonaws.com/sdz-upload/prod/upload/input_color.png)
+
+Un champ de type color
+
+Attention, tous les navigateurs [ne connaissent pas encore ce type de champ](https://caniuse.com/#feat=input-color), mais la
+compatibilité progresse.
+
+#### Date
+
+Différents types de champs de sélection de date existent :
+- `date` : pour la date (05/08/1985 par exemple) ;
+- `time` : pour l'heure (13:37 par exemple) ;
+- `week` : pour la semaine ;
+- `month` : pour le mois ;
+- `datetime` : pour la date et l'heure (avec gestion du décalage horaire) ;
+- `datetime-local` : pour la date et l'heure (sans gestion du décalage horaire).
+
+Exemple :
+
+```html
+<input type="date" />
+```
+
+![Un champ de type date](https://s3-eu-west-1.amazonaws.com/sdz-upload/prod/upload/input_date.png)
+
+Un champ de type date
+
+Comme vous le voyez, il y a le choix !
+
+Surveillez bien [quels navigateurs gèrent ce type de champ](https://caniuse.com/#feat=input-datetime), il n'est pas encore
+complètement reconnu.
+
+#### Recherche
+
+On peut créer un champ de recherche comme ceci :
+
+```html
+<input type="search" />
+```
+
+Le navigateur décide ensuite comment afficher le champ de recherche. Ainsi, il peut ajouter une petite loupe au champ pour
+signifier que c'est un champ de recherche, et éventuellement mémoriser les dernières recherches effectuées par le visiteur.
+
+### Les éléments d'options
+
+HTML vous offre une ribambelle d'éléments d'options à utiliser dans votre formulaire. Ce sont des éléments qui demandent au
+visiteur de faire un choix parmi une liste de possibilités. Nous allons passer en revue :
+- les cases à cocher ;
+- les zones d'options ;
+- les listes déroulantes.
+
+#### Les cases à cocher
+
+Créer une case à cocher ? Rien de plus simple ! Nous allons réutiliser la balise `<input />`, en spécifiant cette fois le type
+`checkbox` :
+
+```html
+<input type="checkbox" name="choix" />
+```
+
+Rajoutez un `<label>` bien placé, et le tour est joué !
+
+```html
+<form method="post" action="traitement.php">
+   <p>
+       Cochez les aliments que vous aimez manger :<br />
+       <input type="checkbox" name="frites" id="frites" /> <label for="frites">Frites</label><br />
+       <input type="checkbox" name="steak" id="steak" /> <label for="steak">Steak haché</label><br />
+       <input type="checkbox" name="epinards" id="epinards" /> <label for="epinards">Epinards</label><br />
+       <input type="checkbox" name="huitres" id="huitres" /> <label for="huitres">Huitres</label>
+   </p>
+</form>
+```
+
+Et voici le résultat en figure suivante.
+
+![Des cases à cocher](https://user.oc-static.com/files/344001_345000/344549.png)
+
+Des cases à cocher
+
+N'oubliez pas de donner un nom différent à chaque case à cocher, cela vous permettra d'identifier plus tard lesquelles ont été
+cochées par le visiteur.
+
+Enfin, sachez que vous pouvez faire en sorte qu'une case soit cochée par défaut, avec l'attribut `checked` :
+
+```html
+<input type="checkbox" name="choix" checked />
+```
+
+:::info
+Normalement, tout attribut possède une valeur. Dans le cas présent, en revanche, ajouter une valeur n'est pas obligatoire : la
+présence de l'attribut suffit à faire comprendre à l'ordinateur que la case doit être cochée.<br />
+Si cela vous perturbe, sachez que vous pouvez donner n'importe quelle valeur à l'attribut (certains webmasters écrivent parfois
+`checked="checked"`, mais c'est un peu redondant !). Dans tous les cas, la case sera cochée.
+:::
+
+#### Les zones d'options
+
+Les zones d'options vous permettent de faire un choix (et un seul) parmi une liste de possibilités. Elles ressemblent un peu aux
+cases à cocher, mais il y a une petite difficulté supplémentaire : elles doivent être organisées en groupes. Les options d'un
+même groupe possèdent le même nom (`name`), mais chaque option doit avoir une valeur (`value`) différente.
+
+La balise à utiliser est toujours un `<input />`, avec cette fois la valeur `radio` pour l'attribut `type`.
+
+Les choses seront plus claires sur l'exemple ci-dessous :
+
+```html
+<form method="post" action="traitement.php">
+   <p>
+       Veuillez indiquer la tranche d'âge dans laquelle vous vous situez :<br />
+       <input type="radio" name="age" value="moins15" id="moins15" /> <label for="moins15">Moins de 15 ans</label><br />
+       <input type="radio" name="age" value="medium15-25" id="medium15-25" /> <label for="medium15-25">15-25 ans</label><br />
+       <input type="radio" name="age" value="medium25-40" id="medium25-40" /> <label for="medium25-40">25-40 ans</label><br />
+       <input type="radio" name="age" value="plus40" id="plus40" /> <label for="plus40">Encore plus vieux que ça ?!</label>
+   </p>
+</form>
+```
+
+Ce qui nous donne la figure suivante.
+
+![Des boutons radio](https://user.oc-static.com/files/344001_345000/344552.png)
+
+Des boutons radio
+
+Pourquoi avoir mis le même nom pour chaque option ? Tout simplement pour que le navigateur sache de quel « groupe » le bouton
+fait partie.<br />
+Essayez d'enlever les attributs `name`, vous verrez qu'il devient possible de sélectionner tous les éléments d'options. Or, ce
+n'est pas ce que l'on veut ; c'est pour cela qu'on les « lie » entre eux en leur donnant un nom identique.
+
+:::info
+Vous noterez que cette fois on a choisi un `id` différent de `name`. En effet, les valeurs de `name` étant identiques, on n'aurait
+pas pu différencier les _id_ (et vous savez bien qu'un `id` doit être unique !). Voilà donc pourquoi on a choisi de donner à
+l'`id` la même valeur que `value`.
+:::
+
+Si vous avez deux zones d'options différentes, il faut donner un `name` unique à chaque groupe, comme ceci :
+
+```html
+<form method="post" action="traitement.php">
+   <p>
+       Veuillez indiquer la tranche d'âge dans laquelle vous vous situez :<br />
+       <input type="radio" name="age" value="moins15" id="moins15" /> <label for="moins15">Moins de 15 ans</label><br />
+       <input type="radio" name="age" value="medium15-25" id="medium15-25" /> <label for="medium15-25">15-25 ans</label><br />
+       <input type="radio" name="age" value="medium25-40" id="medium25-40" /> <label for="medium25-40">25-40 ans</label><br />
+       <input type="radio" name="age" value="plus40" id="plus40" /> <label for="plus40">Encore plus vieux que ça ?!</label>
+   </p>
+   <p>
+       Sur quel continent habitez-vous ?<br />
+       <input type="radio" name="continent" value="europe" id="europe" /> <label for="europe">Europe</label><br />
+       <input type="radio" name="continent" value="afrique" id="afrique" /> <label for="afrique">Afrique</label><br />
+       <input type="radio" name="continent" value="asie" id="asie" /> <label for="asie">Asie</label><br />
+       <input type="radio" name="continent" value="amerique" id="amerique" /> <label for="amerique">Amérique</label><br />
+       <input type="radio" name="continent" value="australie" id="australie" /> <label for="australie">Australie</label>
+   </p>
+</form>
+```
+
+:::info
+L'attribut `checked` est, là aussi, disponible pour sélectionner une valeur par défaut.
+:::
+
+#### Les listes déroulantes
+
+Les listes déroulantes sont un autre moyen élégant de faire un choix parmi plusieurs possibilités. Le fonctionnement est un peu
+différent. On va utiliser la balise `<select> </select>` qui indique le début et la fin de la liste déroulante. On ajoute
+l'attribut `name` à la balise pour donner un nom à la liste.
+
+Puis, à l'intérieur du `<select> </select>`, nous allons placer plusieurs balises `<option> </option>` (une par choix possible).
+On ajoute à chacune d'elles un attribut `value` pour pouvoir identifier ce que le visiteur a choisi.
+
+Voici un exemple d'utilisation :
+
+```html
+<form method="post" action="traitement.php">
+   <p>
+       <label for="pays">Dans quel pays habitez-vous ?</label><br />
+       <select name="pays" id="pays">
+           <option value="france">France</option>
+           <option value="espagne">Espagne</option>
+           <option value="italie">Italie</option>
+           <option value="royaume-uni">Royaume-Uni</option>
+           <option value="canada">Canada</option>
+           <option value="etats-unis">États-Unis</option>
+           <option value="chine">Chine</option>
+           <option value="japon">Japon</option>
+       </select>
+   </p>
+</form>
+```
+
+Le résultat obtenu est représenté à la figure suivante.
+
+![Une liste déroulante](https://user.oc-static.com/files/344001_345000/344554.png)
+
+Une liste déroulante
+
+Si vous voulez qu'une option soit sélectionnée par défaut, utilisez cette fois l'attribut `selected` :
+
+```html
+<option value="canada" selected>Canada</option>
+```
+
+Vous pouvez aussi grouper vos options avec la balise `<optgroup> </optgroup>`. Dans notre exemple, pourquoi ne pas séparer les
+pays en fonction de leur continent ?
+
+```html
+<form method="post" action="traitement.php">
+   <p>
+       <label for="pays">Dans quel pays habitez-vous ?</label><br />
+       <select name="pays" id="pays">
+           <optgroup label="Europe">
+               <option value="france">France</option>
+               <option value="espagne">Espagne</option>
+               <option value="italie">Italie</option>
+               <option value="royaume-uni">Royaume-Uni</option>
+           </optgroup>
+           <optgroup label="Amérique">
+               <option value="canada">Canada</option>
+               <option value="etats-unis">Etats-Unis</option>
+           </optgroup>
+           <optgroup label="Asie">
+               <option value="chine">Chine</option>
+               <option value="japon">Japon</option>
+           </optgroup>
+       </select>
+   </p>
+</form>
+```
+
+Le résultat obtenu est représenté à la figure suivante.
+
+[![Les options sont regroupées par continent](https://user.oc-static.com/files/344001_345000/344556.png)](https://course.oc-static.com/ftp-tutos/cours/html-css/p4/ch2/optgroup)
+
+[Les options sont regroupées par continent](https://s3-eu-west-1.amazonaws.com/course.oc-static.com/ftp-tutos/cours/html-css/p4/ch2/liste_deroulante/index.html)
+
+:::info
+Les groupes ne peuvent pas être sélectionnés. Ainsi, dans notre exemple, on ne peut pas choisir « Europe » : seuls les noms de
+pays sont disponibles pour la sélection.
+:::
+
+### Finaliser et envoyer le formulaire
+
+Nous y sommes presque. Il ne nous reste plus qu'à agrémenter notre formulaire de quelques dernières fonctionnalités (comme la
+validation), puis nous pourrons ajouter le bouton d'envoi du formulaire.
+
+#### Regrouper les champs
+
+Si votre formulaire grossit et comporte beaucoup de champs, il peut être utile de les regrouper au sein de plusieurs balises
+`<fieldset>`. Chaque `<fieldset>` peut contenir une légende avec la balise `<legend>`. Regardez cet exemple :
+
+```html
+<form method="post" action="traitement.php">
+ 
+   <fieldset>
+       <legend>Vos coordonnées</legend> <!-- Titre du fieldset --> 
+
+       <label for="nom">Quel est votre nom ?</label>
+       <input type="text" name="nom" id="nom" />
+
+       <label for="prenom">Quel est votre prénom ?</label>
+       <input type="text" name="prenom" id="prenom" />
+ 
+       <label for="email">Quel est votre e-mail ?</label>
+       <input type="email" name="email" id="email" />
+
+   </fieldset>
+ 
+   <fieldset>
+       <legend>Votre souhait</legend> <!-- Titre du fieldset -->
+ 
+       <p>
+           Faites un souhait que vous voudriez voir exaucé :
+
+           <input type="radio" name="souhait" value="riche" id="riche" /> <label for="riche">Etre riche</label>
+           <input type="radio" name="souhait" value="celebre" id="celebre" /> <label for="celebre">Etre célèbre</label>
+           <input type="radio" name="souhait" value="intelligent" id="intelligent" /> <label for="intelligent">Etre <strong>encore</strong> plus intelligent</label>
+           <input type="radio" name="souhait" value="autre" id="autre" /> <label for="autre">Autre...</label>
+       </p>
+ 
+       <p>
+           <label for="precisions">Si "Autre", veuillez préciser :</label>
+           <textarea name="precisions" id="precisions" cols="40" rows="4"></textarea>
+       </p>
+   </fieldset>
+</form>
+```
+
+Le résultat obtenu est représenté à la figure suivante.
+
+![Les champs sont regroupés](https://user.oc-static.com/files/344001_345000/344616.png)
+
+Les champs sont regroupés
+
+#### Sélectionner automatiquement un champ
+
+Vous pouvez placer automatiquement le curseur dans l'un des champs de votre formulaire avec l'attribut `autofocus`. Dès que le
+visiteur chargera la page, le curseur se placera dans ce champ.
+
+Par exemple, pour que le curseur soit par défaut dans le champ `prenom` :
+
+```html
+<input type="text" name="prenom" id="prenom" autofocus />
+```
+
+#### Rendre un champ obligatoire
+
+Vous pouvez faire en sorte qu'un champ soit obligatoire en lui donnant l'attribut `required`.
+
+```html
+<input type="text" name="prenom" id="prenom" required />
+```
+
+Le navigateur indiquera alors au visiteur, si le champ est vide au moment de l'envoi, qu'il doit impérativement être rempli.
+
+:::caution !
+Les anciens navigateurs, qui ne reconnaissent pas cet attribut, enverront le contenu du formulaire sans vérification. Pour ces
+navigateurs, il sera nécessaire de compléter les tests avec, par exemple, des scripts JavaScript.
+:::
+
+:::info
+On dispose de pseudo-formats en CSS pour changer le style des éléments requis (`:required`) et invalides (`:invalid`). N'oubliez
+pas non plus que vous disposez du pseudo-format `:focus` pour changer l'apparence d'un champ lorsque le curseur se trouve à
+l'intérieur.
+:::
+
+```css
+:required
+{
+    background-color: red;
+}
+```
+
+#### Le bouton d'envoi
+
+Il ne nous reste plus qu'à créer le bouton d'envoi. Là encore, la balise `<input />` vient à notre secours. Elle existe en quatre
+versions :
+- `type="submit"` : le principal bouton d'envoi de formulaire. C'est celui que vous utiliserez le plus souvent. Le visiteur sera
+conduit à la page indiquée dans l'attribut `action` du formulaire ;
+- `type="reset"` : remise à zéro du formulaire ;
+- `type="image"` : équivalent du bouton `submit`, présenté cette fois sous forme d'image. Rajoutez l'attribut `src` pour indiquer
+l'URL de l'image ;
+- `type="button"` : bouton générique, qui n'aura (par défaut) aucun effet. En général, ce bouton est géré en JavaScript pour
+exécuter des actions sur la page. Nous ne l'utiliserons pas ici.
+
+:::info
+On peut changer le texte affiché à l'intérieur des boutons avec l'attribut `value`.
+:::
+
+Pour créer un bouton d'envoi, on écrira donc par exemple :
+
+```html
+<input type="submit" value="Envoyer" />
+```
+
+Ce qui nous donne la figure suivante.
+
+![Un bouton d'envoi](https://user.oc-static.com/files/344001_345000/344619.png)
+
+Un bouton d'envoi
+
+Lorsque vous cliquez sur le bouton « Envoyer », le formulaire vous amène alors à la page indiquée dans l'attribut `action`.
+Souvenez-vous, nous avions imaginé une page fictive : `traitement.php`.
+
+Le problème, c'est que vous ne pouvez pas créer cette page seulement en HTML. Il est nécessaire d'apprendre un nouveau langage,
+comme le PHP, pour pouvoir « récupérer » les informations saisies et décider quoi en faire. Cela tombe bien, j'ai aussi rédigé un
+[cours sur le langage PHP](https://openclassrooms.com/courses/concevez-votre-site-web-avec-php-et-mysql) pour ceux que cela
+intéresse !
+
+### En résumé
+
+- Un formulaire est une zone interactive de la page, dans laquelle vos visiteurs peuvent saisir des informations.
+- On délimite un formulaire avec la balise `<form>`, à laquelle il faut ajouter deux attributs : `method` (mode d'envoi des
+données) et `action` (page vers laquelle le visiteur sera redirigé après envoi du formulaire, et qui traitera les informations).
+- Une grande partie des éléments du formulaire peut s'insérer avec la balise `<input />`. La valeur de son attribut `type` permet
+d'indiquer quel type de champ doit être inséré :
+   - `text` : zone de texte ;
+   - `password` : zone de texte pour mot de passe ;
+   - `tel` : numéro de téléphone ;
+   - `checkbox` : case à cocher ;
+   - etc.
+- La balise `<label>` permet d'écrire un libellé. On l'associe à un champ de formulaire avec l'attribut `for`, qui doit avoir la
+même valeur que l'`id` du champ de formulaire.
+- On peut rendre un champ obligatoire avec l'attribut `required`, faire en sorte qu'il soit sélectionné par défaut avec `autofocus`,
+donner une indication dans le champ avec `placeholder`…
+- Pour récupérer ce que les visiteurs ont saisi, le langage HTML ne suffit pas. Il faut utiliser un langage « serveur » comme PHP…
+Si vous voulez aller plus loin, il va donc falloir apprendre un nouveau langage !
+
+-----
+
+## Enrichissez votre site avec de la vidéo et de l'audio
+
+[Enrichissez votre site avec de la vidéo et de l'audio - Apprenez à créer votre site web avec HTML5 et CSS3 - OpenClassrooms](https://openclassrooms.com/fr/courses/1603881-apprenez-a-creer-votre-site-web-avec-html5-et-css3/1607438-enrichissez-votre-site-avec-de-la-video-et-de-laudio)
+
+<Vimeo vimeoId="243808912" />
+
+<br />
+
+Depuis l'arrivée de YouTube et Dailymotion, il est devenu courant aujourd'hui de regarder des vidéos sur des sites web. Il faut
+dire que l'arrivée du haut débit a aidé à démocratiser les vidéos sur le Web.
+
+Cependant, aucune balise HTML ne permettait jusqu'ici de gérer la vidéo. Il fallait à la place utiliser un **plugin**, comme Flash.
+Celui-ci reste encore en partie utilisé pour regarder des vidéos sur YouTube, Dailymotion, Vimeo et ailleurs. Mais utiliser un
+plugin a de nombreux défauts : on dépend de ceux qui gèrent le plugin (en l'occurrence, l'entreprise Adobe, qui possède Flash), on
+ne peut pas toujours contrôler son fonctionnement, il y a parfois des failles de sécurité… Au final, c'est assez lourd.
+
+C'est pour cela que deux nouvelles balises standard ont été créées en HTML5 : `<video>` et `<audio>` !
+
+### Les formats audio et vidéo
+
+Lorsque je vous ai présenté les images et la balise `<img />`, j'ai commencé par un petit tour d'horizon des différents formats
+d'images (JPEG, PNG, GIF, etc.). Pour la vidéo et l'audio, je vais faire pareil… mais c'est plus compliqué.
+
+En fait, le fonctionnement des vidéos est même tellement complexe qu'on pourrait faire un cours entier à ce sujet ! Étant donné
+qu'on parle ici de HTML, nous n'allons pas passer toutes nos prochaines nuits à étudier les subtilités de l'encodage vidéo. Je
+vais donc simplifier les choses et vous expliquer juste ce que vous avez besoin de savoir.
+
+#### Les formats audio
+
+Pour diffuser de la musique ou n'importe quel son, il existe de nombreux formats. La plupart d'entre eux sont compressés (comme
+le sont les images JPEG, PNG et GIF), ce qui permet de réduire leur poids :
+- **MP3** : vous ne pouvez _pas_ ne pas en avoir entendu parler ! C'est l'un des plus vieux, mais aussi l'un des plus compatibles
+(tous les appareils savent lire des MP3), ce qui fait qu'il est toujours très utilisé aujourd'hui ;
+- **AAC** : utilisé majoritairement par Apple sur iTunes, c'est un format de bonne qualité. Les iPod, iPhone et autres iPad savent
+les lire sans problème ;
+- **Ogg** : le format Ogg Vorbis est très répandu dans le monde du logiciel libre, notamment sous Linux. Ce format a l'avantage
+d'être libre, c'est-à-dire qu'il n'est protégé par aucun brevet ;
+- **WAV** (**format non compressé**) : évitez autant que possible de l'utiliser car le fichier est très volumineux avec ce format.
+C'est un peu l'équivalent du Bitmap (BMP) pour l'audio.
+
+La compatibilité dépend des navigateurs, mais elle évolue dans le bon sens au fil du temps. Pensez à consulter caniuse.com pour
+connaître la compatibilité actuelle des [MP3](https://caniuse.com/#feat=mp3), [AAC](https://caniuse.com/#feat=aac), [Ogg](https://caniuse.com/#feat=ogg-vorbis),
+[WAV](https://caniuse.com/#feat=wav)...
+
+#### Les formats vidéo
+
+Le stockage de la vidéo est autrement plus complexe. On a besoin de trois éléments :
+- **un format conteneur** : c'est un peu comme une boîte qui va servir à contenir les deux éléments ci-dessous. On reconnaît en
+général le type de conteneur à l'extension du fichier : AVI, MP4, MKV… ;
+- **un codec audio** : c'est le format du son de la vidéo, généralement compressé. Nous venons de les voir, on utilise les mêmes :
+MP3, AAC, OGG… ;
+- **un codec vidéo** : c'est le format qui va compresser les images. C'est là que les choses se corsent, car ces formats sont
+complexes et on ne peut pas toujours les utiliser gratuitement. Les principaux à connaître pour le Web sont :
+   - **H.264** : l'un des plus puissants et des plus utilisés aujourd'hui… mais il n'est pas 100 % gratuit. En fait, on peut
+   l'utiliser gratuitement dans certains cas (comme la diffusion de vidéos sur un site web personnel), mais il y a un flou
+   juridique qui fait qu'il est risqué de l'utiliser à tout va,
+   - **Ogg Theora** : un codec gratuit et libre de droits, mais moins puissant que H.264. Il est bien reconnu sous Linux mais,
+   sous Windows, il faut installer des programmes pour pouvoir le lire,
+   - **WebM** : un autre codec gratuit et libre de droits, plus récent. Proposé par Google, c'est le concurrent le plus sérieux
+   de H.264 à l'heure actuelle.
+
+Là encore, surveillez bien la compatibilité sur caniuse.com : [H.264](https://caniuse.com/#feat=mpeg4), [Ogg Theora](https://caniuse.com/#feat=ogv),
+[WebM](https://caniuse.com/#feat=webm)... Le format H.264 semble sortir du lot. Il est quand même conseillé de proposer si
+possible chaque vidéo dans plusieurs formats, pour qu'elle soit lisible sur un maximum de navigateurs.
+
+Pour convertir une vidéo dans ces différents formats, je vous conseille l'excellent logiciel gratuit [Miro Video Converter](http://www.mirovideoconverter.com/).
+
+Il vous suffit de glisser-déposer votre vidéo dans la fenêtre du programme et de sélectionner le format de sortie souhaité. Cela
+vous permettra de créer plusieurs versions de votre vidéo !
+
+### Insertion d'un élément audio
+
+En théorie, il suffit d'une simple balise pour jouer un son sur notre page :
+
+```html
+<audio src="musique.mp3"></audio>
+```
+
+En pratique, c'est un peu plus compliqué que cela.<br />
+Si vous testez ce code… vous ne verrez rien ! En effet, le navigateur va seulement télécharger les informations générales sur le
+fichier (on parle de **_métadonnées_**), mais il ne se passera rien de particulier.
+
+Vous pouvez compléter la balise des attributs suivants :
+- `controls` : pour ajouter les boutons « Lecture », « Pause » et la barre de défilement. Cela peut sembler indispensable, et vous
+vous demandez peut-être pourquoi cela n'y figure pas par défaut, mais certains sites web préfèrent créer eux-mêmes leurs propres
+boutons et commander la lecture avec du JavaScript ;
+- `width` : pour modifier la largeur de l'outil de lecture audio ;
+- `loop` :   la musique sera jouée en boucle ;
+- `autoplay` : la musique sera jouée dès le chargement de la page (évitez d'en abuser, c'est en général irritant d'arriver sur un
+site qui joue de la musique tout seul !) ;
+- `preload` : indique si la musique peut être préchargée dès le chargement de la page ou non. Cet attribut peut prendre les
+valeurs :
+   - `auto` (par défaut) : le navigateur décide s'il doit précharger toute la musique, uniquement les métadonnées ou rien du tout,
+   - `metadata` : charge uniquement les métadonnées (durée, etc.),
+   - `none` : pas de préchargement. Utile si vous ne voulez pas gaspiller de bande passante sur votre site.
+
+:::info
+On ne peut pas forcer le préchargement de la musique, c'est toujours le navigateur qui décide.<br />
+Les navigateurs mobiles, par exemple, ne préchargent jamais la musique, pour économiser la bande passante (le temps de chargement
+étant long sur un portable).
+:::
+
+Ajoutons les contrôles et ce sera déjà mieux !
+
+```html
+<audio src="hype_home.mp3" controls></audio>
+```
+
+L'apparence du lecteur audio change en fonction du navigateur. La figure suivante représente par exemple le lecteur audio dans
+Google Chrome.
+
+![Le lecteur audio dans Google Chrome](https://s3-eu-west-1.amazonaws.com/sdz-upload/prod/upload/video_chrome.png)
+
+Le lecteur audio dans Google Chrome
+
+:::note ?
+Pourquoi ouvrir la balise pour la refermer immédiatement après ?
+:::
+
+Cela vous permet d'afficher un message ou de proposer une solution de secours pour les navigateurs qui ne gèrent pas cette
+nouvelle balise. Par exemple :
+
+```html
+<audio src="hype_home.mp3" controls>Veuillez mettre à jour votre navigateur !</audio>
+```
+
+Ceux qui ont un navigateur récent ne verront pas le message. Les anciens navigateurs, qui ne comprennent pas la balise,
+afficheront en revanche le texte qui se trouve à l'intérieur.
+
+:::note ?
+Et si le navigateur ne gère pas le MP3, comment faire ?
+:::
+
+Il faut proposer plusieurs versions du fichier audio. Dans ce cas, on va construire notre balise comme ceci :
+
+```html
+<audio controls>
+    <source src="hype_home.mp3">
+    <source src="hype_home.ogg">
+</audio>
+```
+
+Le navigateur prendra automatiquement le format qu'il reconnaît.
+
+### Insertion d'une vidéo
+
+Il suffit d'une simple balise `<video>` pour insérer une vidéo dans la page :
+
+```html
+<video src="sintel.webm"></video>
+```
+
+Mais, là encore, vous risquez d'être déçu si vous utilisez seulement ce code. Aucun contrôle ne permet de lancer la vidéo !
+
+Rajoutons quelques attributs (la plupart sont les mêmes que pour la balise `<audio>`) :
+- `poster` : image à afficher à la place de la vidéo tant que celle-ci n'est pas lancée. Par défaut, le navigateur prend la
+première image de la vidéo mais, comme il s'agit souvent d'une image noire ou d'une image peu représentative de la vidéo, je vous
+conseille d'en créer une ! Vous pouvez tout simplement faire une capture d'écran d'un moment de la vidéo.
+- `controls` : pour ajouter les boutons « Lecture », « Pause » et la barre de défilement. Cela peut sembler indispensable, mais
+certains sites web préfèrent créer eux-mêmes leurs propres boutons et commander la lecture avec du JavaScript. En ce qui nous
+concerne, ce sera largement suffisant !
+- `width` : pour modifier la largeur de la vidéo.
+- `height` : pour modifier la hauteur de la vidéo.
+- `loop` : la vidéo sera jouée en boucle.
+- `autoplay` : la vidéo sera jouée dès le chargement de la page. Là encore, évitez d'en abuser, c'est en général irritant
+d'arriver sur un site qui lance quelque chose tout seul !
+- `preload` : indique si la vidéo peut être préchargée dès le chargement de la page ou non. Cet attribut peut prendre les valeurs :
+    - `auto` (par défaut) : le navigateur décide s'il doit précharger toute la vidéo, uniquement les métadonnées ou rien du tout ;
+    - `metadata` : charge uniquement les métadonnées (durée, dimensions, etc.) ;
+    - `none` : pas de préchargement. Utile si vous souhaitez éviter le gaspillage de bande passante sur votre site.
+
+:::info
+On ne peut pas forcer le préchargement de la vidéo, c'est toujours le navigateur qui décide.
+:::
+
+:::info
+Les proportions de la vidéo sont toujours conservées. Si vous définissez une largeur et une hauteur, le navigateur fera en sorte
+de ne pas dépasser les dimensions indiquées, mais il conservera les proportions.
+:::
+
+Voici un code un peu plus complet :
+
+```html
+<video src="sintel.webm" controls poster="sintel.jpg" width="600"></video>
+```
+
+Et le résultat :
+
+![Une vidéo avec les options de lecture et une taille définie](https://user.oc-static.com/files/344001_345000/344795.jpg)
+
+Une vidéo avec les options de lecture et une taille définie
+
+:::note ?
+Pourquoi ouvrir et refermer immédiatement après la balise ?
+:::
+
+La réponse est la même que pour la balise `<audio>`. Cela vous permet d'afficher un message ou d'utiliser une technique de secours
+(en Flash) si le navigateur ne reconnaît pas la balise :
+
+```html
+<video src="sintel.webm" controls poster="sintel.jpg" width="600">
+    Il est temps de mettre à jour votre navigateur !
+</video>
+```
+
+:::note ?
+Comment contenter tous les navigateurs, puisque chacun reconnaît des formats vidéo différents ?
+:::
+
+Vous utiliserez la balise `<source>` à l'intérieur de la balise `<video>` pour proposer différents formats. Le navigateur prendra
+celui qu'il reconnaît :
+
+```html
+<video controls poster="sintel.jpg" width="600">
+    <source src="sintel.mp4">
+    <source src="sintel.webm">
+    <source src="sintel.ogv">
+</video>
+```
+
+:::caution !
+Les iPhone, iPad et iPod ne reconnaissent à l'heure actuelle que le format H.264 (fichier `.mp4`)… et uniquement si celui-ci
+apparaît en premier dans la liste ! Je vous recommande donc d'indiquer le format H.264 en premier pour assurer une compatibilité
+maximale.
+:::
+
+:::note ?
+Comment protéger ma vidéo ? Je ne veux pas qu'on puisse la copier facilement !
+:::
+
+Ce n'est pas possible. Les balises n'ont pas été conçues pour limiter ou empêcher le téléchargement. C'est assez logique quand on
+y pense : pour que le visiteur puisse voir la vidéo, il faut bien de toute façon qu'il la télécharge d'une manière ou d'une autre !
+
+N'espérez donc pas empêcher le téléchargement de votre vidéo avec cette technique.
+
+:::info
+Les lecteurs vidéo Flash permettent de « protéger » le contenu des vidéos mais, là encore, des solutions de contournement existent.
+De nombreux plugins permettent de télécharger les vidéos, de YouTube par exemple.
+:::
+
+### En résumé
+
+- Insérer de la musique ou de la vidéo n'était pas possible autrefois en HTML. Il fallait recourir à un plugin comme Flash.
+- Depuis HTML5, les balises `<audio>` et `<video>` ont été introduites et permettent de jouer de la musique et des vidéos sans
+plugin..
+- Il existe plusieurs formats audio et vidéo. Il faut notamment connaître :
+    - pour l'audio : MP3 et Ogg Vorbis ;
+    - pour la vidéo : H.264, Ogg Theora et WebM.
+- Aucun format n'est reconnu par l'ensemble des navigateurs : il faut proposer différentes versions de sa musique ou de sa vidéo
+pour satisfaire tous les navigateurs.
+- Il faut ajouter l'attribut `controls` aux balises `<audio>` et `<video>` pour permettre au visiteur de lancer ou d'arrêter le
+média.
+- Ces balises ne sont pas conçues pour empêcher le téléchargement de la musique et de la vidéo. Vous ne pouvez pas protéger votre
+média contre la copie.
+
+-----
+
+## Utilisez le responsive design avec les Media Queries
+
+[Utilisez le responsive design avec les Media Queries - Apprenez à créer votre site web avec HTML5 et CSS3 - OpenClassrooms](https://openclassrooms.com/fr/courses/1603881-apprenez-a-creer-votre-site-web-avec-html5-et-css3/1607616-utilisez-le-responsive-design-avec-les-media-queries)
+
+<Vimeo vimeoId="243809008" />
+
+<br />
+
+Savez-vous quelle est la première préoccupation des webmasters qui mettent en place le design de leur site ? La résolution d'écran
+de leurs visiteurs. Eh oui : selon les écrans, il y a plus ou moins de place, plus ou moins de pixels de largeur.
+
+Cette information est importante lorsque vous construisez un design : comment votre site doit-il s'afficher en fonction des
+différentes résolutions d'écran ? Si vous avez un écran large, vous risquez d'oublier que certaines personnes naviguent avec des
+écrans plus petits. Et je ne vous parle même pas des navigateurs des smartphones, qui sont encore moins larges.
+
+C'est là que les _media queries_ entrent en jeu. Ce sont des règles à appliquer pour changer le design d'un site en fonction des
+caractéristiques de l'écran ! Grâce à cette technique, nous pourrons créer un design qui s'adapte automatiquement à l'écran de
+chaque visiteur !
+
+### Mise en place des media queries
+
+Les media queries font partie des nouveautés de CSS3. Il ne s'agit pas de nouvelles propriétés, mais de _règles_ que l'on peut
+appliquer dans certaines conditions. Concrètement, vous allez pouvoir dire « Si la résolution de l'écran du visiteur est inférieure
+à tant, alors applique les propriétés CSS suivantes ». Cela vous permet de changer l'apparence du site dans certaines conditions :
+vous pourrez augmenter la taille du texte, changer la couleur de fond, positionner différemment votre menu dans certaines
+résolutions, etc.<br />
+Contrairement à ce qu'on pourrait penser, les media queries ne concernent pas que les résolutions d'écran. Vous pouvez changer
+l'apparence de votre site en fonction d'autres critères comme le type d'écran (smartphone, télévision, projecteur…), le nombre de
+couleurs, l'orientation de l'écran (portrait ou paysage), etc. Les possibilités sont très nombreuses !
+
+#### Appliquer une media query
+
+Les media queries sont donc des règles qui indiquent quand on doit appliquer des propriétés CSS. Il y a deux façons de les
+utiliser :
+- en chargeant une feuille de style `.css` différente en fonction de la règle (ex. : « Si la résolution est inférieure à 1280px
+de large, charge le fichier `petite_resolution.css` ») ;
+- en écrivant la règle directement dans le fichier `.css` habituel (ex. : « Si la résolution est inférieure à 1280px de large,
+charge les propriétés CSS ci-dessous »).
+
+##### Chargement d'une feuille de style différente
+
+Vous vous souvenez de la balise `<link />` qui permet, dans notre code HTML, de charger un fichier `.css` ?
+
+```html
+<link rel="stylesheet" href="style.css" />
+```
+
+On peut lui ajouter un attribut `media`, dans lequel on va écrire la règle qui doit s'appliquer pour que le fichier soit chargé.
+On dit qu'on fait une « requête de media » (_media query_ en anglais). Voici un exemple :
+
+```html
+<link rel="stylesheet" media="screen and (max-width: 1280px)" href="petite_resolution.css" />
+```
+
+Au final, votre code HTML pourrait proposer plusieurs fichiers CSS : un par défaut (qui est chargé dans tous les cas) et un ou
+deux autres qui seront chargés en supplément, uniquement si la règle correspondante s'applique.
+
+```html
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <link rel="stylesheet" href="style.css" /> <!-- Pour tout le monde -->
+        <link rel="stylesheet" media="screen and (max-width: 1280px)" href="petite_resolution.css" /> <!-- Pour ceux
+            qui ont une résolution inférieure à 1280px -->
+        <title>Media queries</title>
+    </head>
+```
+
+##### Chargement des règles directement dans la feuille de style
+
+Une autre technique, que je préfère personnellement pour des raisons pratiques, consiste à écrire ces règles dans le même fichier
+CSS que d'habitude.<br />
+Dans ce cas, on écrit la règle dans le fichier `.css` comme ceci :
+
+```css
+@media screen and (max-width: 1280px)
+{
+    /* Rédigez vos propriétés CSS ici */
+}
+```
+
+### Les règles disponibles
+
+Il existe de nombreuses règles permettant de construire des media queries. Je vous présente ici les principales :
+- `color` : gestion de la couleur (en bits/pixel) ;
+- `height` : hauteur de la zone d'affichage (fenêtre) ;
+- `width` : largeur de la zone d'affichage (fenêtre) ;
+- `device-height` : hauteur du périphérique ;
+- `device-width` : largeur du périphérique ;
+- `orientation`  : orientation du périphérique (portrait ou paysage) ;
+- `media` : type d'écran de sortie. Quelques-unes des valeurs possibles :
+    - `screen` : écran « classique »,
+    - `handheld` : périphérique mobile,
+    - `print` : impression,
+    - `tv` : télévision,
+    - `projection` : projecteur,
+    - `all` : tous les types d'écrans.
+
+:::info
+On peut rajouter le préfixe `min-` ou `max-` devant la plupart de ces règles. Ainsi, `min-width` signifie « largeur minimale »,
+`max-height` « hauteur maximale », etc.<br />
+La différence entre `width` et `device-width` se perçoit surtout sur les navigateurs mobiles des smartphones ; nous en reparlerons
+plus loin.
+:::
+
+Les règles peuvent être combinées à l'aide des mots suivants :
+- `only` : « uniquement » ;
+- `and` : « et » ;
+- `not` : « non ».
+
+Voici quelques exemples de media queries pour vous aider à bien comprendre le principe.
+
+```css
+/* Sur les écrans, quand la largeur de la fenêtre fait au maximum 1280px */
+@media screen and (max-width: 1280px)
+
+/* Sur tous types d'écran, quand la largeur de la fenêtre est comprise entre 1024px et 1280px */
+@media all and (min-width: 1024px) and (max-width: 1280px)
+
+/* Sur les téléviseurs */
+@media tv
+
+/* Sur tous types d'écrans orientés verticalement */
+@media all and (orientation: portrait)
+```
+
+#### Tester les media queries
+
+Les media queries sont surtout utilisées pour adapter le design du site aux différentes largeurs d'écran.
+
+Faisons un test tout simple : nous allons changer la couleur et la taille du texte si la fenêtre fait plus ou moins de 1024 pixels
+de large. Pour ce test, je vais utiliser la seconde méthode qui consiste à écrire la règle directement dans le même fichier `.css`
+que d'habitude :
+
+```css
+/* Paragraphes en bleu par défaut */
+p
+{
+    color: blue;
+}
+
+/* Nouvelles règles si la fenêtre fait au plus 1024px de large */
+@media screen and (max-width: 1024px)
+{
+    p
+    {
+        color: red; 
+        background-color: black;
+        font-size: 1.2em;
+    }
+}
+```
+
+Dans notre feuille CSS, nous avons d'abord demandé à ce que le texte des paragraphes soit écrit en bleu ; jusque là, rien de
+nouveau. En revanche, nous avons ajouté une media query qui s'applique à tous les écrans dont la largeur ne dépasse pas 1024 px.
+À l'intérieur, nous avons appliqué des règles CSS sur les paragraphes pour les écrire plus gros et en rouge.
+
+Résultat : la page n'a pas la même apparence selon la taille de la fenêtre (figure suivante) ! Essayez de la redimensionner, pour
+voir !
+
+[Tester ce code](https://course.oc-static.com/ftp-tutos/cours/html-css/p4/ch5/media_query_base/index.html)
+
+![L'apparence du texte change en fonction de la taille de la fenêtre](https://user.oc-static.com/files/381001_382000/381048.png)
+
+L'apparence du texte change en fonction de la taille de la fenêtre
+
+### Mise en pratique des media queries sur le design
+
+Bon, changer la couleur du texte, c'est bien joli, mais cela n'apporte pas grand-chose. Par contre, cela devient de suite plus
+intéressant quand on se sert des media queries pour modifier l'apparence de son site en fonction de la résolution. Vous allez voir
+qu'on peut faire tout ce qu'on veut !
+
+Pour cet exemple, je vous propose de reprendre le design que nous avons créé pour le site web de Zozor (figure suivante).
+
+![Le site web réalisé lors du TP](https://user.oc-static.com/files/381001_382000/381049.png)
+
+Le site web réalisé lors du TP
+
+Le site est bien adapté à la plupart des résolutions d'écran mais, quand l'écran est plus petit que 1024 px, il devient nécessaire
+de « scroller » vers la droite pour voir toute la page. Le site n'est donc pas très pratique à consulter sur un petit écran.
+
+Je vous propose d'utiliser les media queries pour changer l'apparence du site sur les résolutions inférieures à 1024 px de largeur.
+Nous allons opérer les modifications suivantes :
+- le menu de navigation en haut à droite sera disposé en hauteur plutôt qu'en largeur, et les liens seront écrits en plus petit ;
+- la bannière avec le pont de San Francisco (le _Golden Gate_) sera supprimée, car elle prend beaucoup de place et n'apporte pas
+beaucoup d'informations ;
+- le bloc `<aside>` « À propos de l'auteur » sera placé sous l'article (et non pas à côté), et son contenu sera réorganisé (la
+photo de Zozor sera positionnée en flottant).
+
+On pourrait bien entendu faire beaucoup d'autres modifications : changer la couleur, la disposition du pied de page, etc. Mais
+cela sera déjà bien suffisant pour nous entraîner avec les media queries.
+
+Nous allons travailler directement à l'intérieur du fichier `style.css` que nous avons réalisé lors du TP. Nous y ajouterons
+quelques instructions media queries pour adapter le design. Je vous invite à télécharger les fichiers du TP si vous ne les avez
+pas déjà.
+
+[Télécharger le TP](https://course.oc-static.com/ftp-tutos/cours/html-css/p3/ch4/tp_final.zip)
+
+#### La page
+
+Pour le moment, la largeur de la page est fixée à 900 px et le contenu est centré :
+
+```css
+#bloc_page
+{
+    width: 900px;
+    margin: auto;
+}
+```
+
+À la suite de ces lignes, je vous propose d'ajouter la règle media query suivante :
+
+```css
+@media all and (max-width: 1024px)
+{
+    #bloc_page
+    {
+        width: auto;
+    }
+}
+```
+
+La règle signifie : « Pour tous les types d'écrans, si la largeur de la fenêtre ne dépasse pas 1024 px, alors exécuter les règles
+CSS suivantes ».
+
+Les règles CSS en question sont très simples, il n'y en a en fait qu'une seule : on donne une largeur automatique à la page
+(plutôt qu'une largeur fixe de 900px). La page prendra alors tout l'espace disponible dans la fenêtre. Cela évite l'apparition
+de barres de défilement horizontales sur les petites résolutions.
+
+:::info
+`auto` est la valeur par défaut de la propriété `width`. Par défaut, les blocs ont une largeur automatique (ils prennent toute la
+place disponible). Cette valeur « écrase » celle que nous avions forcée à 900px quelques lignes plus haut : nous revenons donc au
+comportement par défaut du bloc.
+:::
+
+#### Le menu de navigation
+
+Nous voulons que le menu de navigation prenne moins de place sur les petites résolutions. Plutôt que de lui donner une dimension
+fixe, nous allons lui redonner sa dimension automatique flexible d'origine. Chaque élément du menu s'écrira en dessous du
+précédent : pour cela, nous demandons à ce que les éléments de la Flexbox soient organisés en colonne.
+
+Enfin, le texte sera écrit plus petit et nous retirons la bordure en bas des liens lors du survol, car elle est moins adaptée à
+cette disposition.
+
+```css
+@media all and (max-width: 1024px)
+{
+    nav
+    {
+        width: auto;
+        text-align: left;
+    }
+    nav ul
+    {
+        flex-direction: column;
+    }
+    nav li
+    {
+        padding-left: 4px;
+    }
+    nav a
+    {
+        font-size: 1.1em;
+    }
+    nav a:hover
+    {
+        border-bottom: 0;
+    }
+}
+```
+
+#### La bannière
+
+Pour retirer la bannière, rien de plus simple : nous utilisons la propriété `display`, à laquelle nous affectons la valeur `none`.
+Si la fenêtre est trop petite, nous préférons masquer complètement la bannière :
+
+```css
+@media all and (max-width: 1024px)
+{
+    #banniere_image
+    {
+        display: none;
+    }
+}
+```
+
+#### Le bloc « À propos de l'auteur »
+
+Plutôt que de placer ce bloc à droite de l'article, nous allons le faire passer en dessous grâce à des Flexbox en colonne. Ce
+type de disposition « de haut en bas » est plus adapté aux petits écrans.
+
+À l'intérieur du bloc, nous réajustons un peu la position des éléments : la photo de Zozor, notamment, sera placée en flottant à
+droite.
+
+```css
+@media all and (max-width: 1024px)
+{
+    section
+    {
+        flex-direction: column;
+    }
+    article, aside
+    {
+        width: auto;
+        margin-bottom: 15px;
+    }
+    #fleche_bulle
+    {
+        display: none;
+    }
+    #photo_zozor img
+    {
+        width: 110px;
+        float: right;
+        margin-left: 15px;
+    }
+    aside p:last-child
+    {
+        text-align: center;
+    }
+}
+```
+
+:::note ?
+Que signifie `aside p:last-child` ?
+:::
+
+C'est un sélecteur avancé que nous n'avons pas utilisé jusqu'ici. `aside p` signifie « Tous les paragraphes à l'intérieur de la
+balise `<aside>` ». Avec `:last-child`, on cible uniquement le dernier paragraphe dans le bloc `aside` (celui qui contient les
+liens vers Facebook et Twitter), pour pouvoir centrer les images. Bien entendu, on aurait aussi pu affecter une `class` ou un `id`
+à ce paragraphe pour le cibler directement, mais je n'ai pas voulu modifier le code HTML.
+
+#### Le résultat
+
+La page est désormais complètement réorganisée lorsque la fenêtre fait 1024 px ou moins de largeur. Regardez par vous-même le
+résultat, la figure suivante parle d'elle-même !
+
+![Le même site, présenté différemment en fonction de la largeur de l'écran](https://user.oc-static.com/files/381001_382000/381051.png)
+
+Le même site, présenté différemment en fonction de la largeur de l'écran
+
+[Essayez ce code !](https://course.oc-static.com/ftp-tutos/cours/html-css/p4/ch5/tp_media_queries/index.html)
+
+### Media queries et navigateurs mobiles
+
+Comme vous le savez sûrement, les écrans des smartphones sont beaucoup moins larges que nos écrans habituels (seulement quelques
+centaines de pixels de large). Pour s'adapter, les navigateurs mobiles affichent le site en « dézoomant », ce qui permet d'avoir
+un aperçu de l'ensemble de la page. La zone d'affichage simulée est appelée le **_viewport_**: c'est la largeur de la fenêtre du
+navigateur sur le mobile.
+
+En CSS, avec les media queries, si vous ciblez l'écran avec `max-width` sur un mobile, celui-ci va comparer la largeur que vous
+indiquez avec celle de son viewport. Le problème, c'est que le viewport change selon le navigateur mobile utilisé !
+
+| Navigateur | Largeur du _viewport_ par défaut |
+|------------|----------------------------------|
+| Opera Mobile | 850 pixels |
+| iPhone Safari | 980 pixels |
+| Android | 800 pixels |
+| Windows Phone | 1 024 pixels |
+
+Un iPhone se comporte comme si la fenêtre faisait 980px de large, tandis qu'un Android se comporte comme si la fenêtre faisait
+800px !
+
+Pour cibler les smartphones, plutôt que d'utiliser `max-width`, il peut être intéressant de recourir à `max-device-width` : c'est
+la largeur du périphérique. Les périphériques mobiles ne dépassant pas 480px de large, on pourra viser uniquement les navigateurs
+mobiles avec cette media query :
+
+```css
+@media all and (max-device-width: 480px)
+{
+    /* Vos règles CSS pour les mobiles ici */
+}
+```
+
+:::note ?
+Pourquoi ne pas cibler les mobiles avec la règle media `handheld` ?
+:::
+
+Je vois que vous suivez, très bien ! En effet, on peut (en théorie) cibler les écrans mobiles avec le media `handheld`…
+Malheureusement, aucun navigateur mobile à part Opera Mobile ne reconnaît `handheld`. Ils se comportent tous comme s'ils étaient
+des écrans normaux (`screen`). On ne peut donc pas vraiment utiliser `handheld` pour viser les mobiles.
+
+Vous pouvez modifier la largeur viewport du navigateur mobile avec une balise `meta` à insérer dans l'en-tête (`<head>`) du
+document :
+
+```html
+<meta name="viewport" content="width=320" />
+```
+
+Vous pouvez utiliser cette balise pour modifier la façon dont le contenu de votre page s'organise sur les mobiles. Pour obtenir
+un rendu facile à lire, sans zoom, vous pouvez demander à ce que le viewport soit le même que la largeur de l'écran :
+
+```html
+<meta name="viewport" content="width=device-width" />
+```
+
+### En résumé
+
+- Les media queries permettent de charger des styles CSS différents en fonction de certains paramètres.
+- Les paramètres autorisés par les media queries sont nombreux : nombre de couleurs, résolution de l'écran, orientation… En
+pratique, on s'en sert surtout pour modifier l'apparence du site en fonction des différentes résolutions d'écran.
+- On crée une media query avec la directive `@media` suivie du type d'écran et d'une ou plusieurs conditions (comme la largeur
+maximale d'écran). Le style CSS qui suit sera activé uniquement si les conditions sont remplies.
+- Les navigateurs mobiles simulent une largeur d'écran : on appelle cela le _viewport_.
+- On peut cibler les smartphones grâce à une règle basée sur le nombre réel de pixels affichés à l'écran : `max-device-width`.
+
+-----
+
+## Allez plus loin
+
+[Allez plus loin - Apprenez à créer votre site web avec HTML5 et CSS3 - OpenClassrooms](https://openclassrooms.com/fr/courses/1603881-apprenez-a-creer-votre-site-web-avec-html5-et-css3/1607717-allez-plus-loin)
+
+<Vimeo vimeoId="243809168" />
+
+<br />
+
+Alors que ce cours touche à sa fin, la tentation est grande de penser que l'on a tout vu. Tout vu ? Vous n'avez quand même pas
+cru cela ? Allons bon, il vous reste des centaines de choses à découvrir, que ce soit sur HTML, CSS, ou les technologies qui y
+sont liées (PHP, JavaScript…).
+
+Ce chapitre a pour but de vous donner quelques directions pour compléter votre apprentissage. Alors ne soyez pas triste, car vous
+n'avez pas fini de faire des découvertes !
+
+### Du site web à l'application web (JavaScript, AJAX…)
+
+JavaScript est un langage qui existe depuis de nombreuses années maintenant et que l'on utilise fréquemment sur le Web en plus
+de HTML et CSS. C'est probablement l'un des premiers langages que vous voudrez apprendre, maintenant que vous avez des
+connaissances en HTML et CSS.
+
+:::note ?
+À quoi JavaScript peut-il bien servir ? On ne peut pas tout faire avec HTML et CSS ?
+:::
+
+On peut faire déjà beaucoup de choses en HTML et CSS mais, lorsqu'on veut rendre sa page plus interactive, un langage comme
+JavaScript devient indispensable.
+
+Voici quelques exemples de ce à quoi peut servir JavaScript :
+- on l'utilisera le plus souvent pour modifier des propriétés CSS sans avoir à recharger la page. Par exemple, vous pointez sur
+une image et le fond de votre site change de couleur (ce n'est pas possible à faire avec un `:hover`, car cela concerne deux
+balises différentes ; c'est bien là une limite du CSS) ;
+- on peut l'utiliser aussi pour modifier le code source HTML sans avoir à recharger la page, _pendant_ que le visiteur consulte
+la page ;
+- il permet aussi d'afficher des boîtes de dialogue à l'écran du visiteur…
+- … ou encore de modifier la taille de la fenêtre.
+
+JavaScript est un langage qui se rapproche des langages de programmation tels que le C, C++, Python, Ruby… À l'inverse, HTML et
+CSS sont davantage des langages de description : ils décrivent comment la page doit apparaître mais ils ne donnent pas d'ordres
+directs à l'ordinateur (« fais ceci, fais cela… »), contrairement à JavaScript.
+
+:::warning !
+JavaScript n'a _aucun_ rapport avec le langage Java. Seuls les noms se ressemblent.
+:::
+
+JavaScript est régulièrement utilisé aujourd'hui pour faire de l'AJAX (_Asynchronous JavaScript And XML_). Cette technique permet
+de modifier une partie de la page web que le visiteur consulte en échangeant des données avec le serveur. Cela donne l'impression
+que les pages sont plus dynamiques et plus réactives. Le visiteur n'a plus besoin de recharger systématiquement toute la page.
+
+Les navigateurs sont de plus en plus efficaces dans leur traitement de JavaScript, ce qui fait que les pages qui utilisent
+JavaScript sont de plus en plus réactives. On peut ainsi arriver aujourd'hui à créer des sites qui deviennent littéralement des
+applications web, l'équivalent de logiciels mais disponibles sous forme de sites web !<br />
+Un exemple célèbre : Google Docs, la suite bureautique de Google, disponible sur le Web (figure suivante).
+
+![Le tableur Google Docs](https://user.oc-static.com/files/345001_346000/345121.png)
+
+Le tableur Google Docs
+
+Pour en savoir plus sur JavaScript, lisez [ce cours JavaScript](https://openclassrooms.com/fr/courses/6175841-apprenez-a-programmer-avec-javascript)
+(si vous débutez dans la programmation) ou bien [cet autre cours JavaScript](https://openclassrooms.com/courses/dynamisez-vos-sites-web-avec-javascript) !
+
+### Technologies liées à HTML5 (Canvas, SVG, Web Sockets…)
+
+Le W3C ne travaille pas que sur les langages HTML et CSS. Ce sont certes les plus connus, mais le W3C cherche aussi à définir
+d'autres technologies qui viennent compléter HTML et CSS. Elles sont nombreuses et on les confond d'ailleurs souvent avec HTML5.
+
+:::info
+En fait, HTML5 est devenu un mot très utilisé qui fait référence à d'autres technologies que HTML. Quand quelqu'un vous parle de
+« HTML5 » aujourd'hui, il fait peut-être aussi référence à d'autres éléments qui sortent du cadre strict du HTML.
+:::
+
+Voici une petite liste de ces nouvelles technologies introduites en parallèle de HTML5 (notez que certaines ne sont pas vraiment
+« nouvelles », mais elles reviennent sur le devant de la scène) :
+- **Canvas** : permet de dessiner au sein de la page web, à l'intérieur de la balise HTML `<canvas>`. On peut dessiner des formes
+(triangles, cercles…) mais aussi ajouter des images, les manipuler, appliquer des filtres graphiques… Au final, cela nous permet
+de réaliser aujourd'hui de véritables jeux et des applications graphiques directement dans des pages web !
+- **SVG** : permet de créer des dessins vectoriels au sein des pages web. À la différence de Canvas, ces dessins peuvent être
+agrandis à l'infini (c'est le principe du vectoriel). Le [logiciel](http://telecharger.tomsguide.fr/Inkscape,0301-6057-3462.html)
+[`Inkscape`](http://telecharger.tomsguide.fr/Inkscape,0301-6057-3462.html) est connu pour permettre de dessiner des SVG.
+- **Drag & Drop** : permet de faire « glisser-déposer » des objets dans la page web, de la même façon qu'on peut faire
+glisser-déposer des fichiers sur son bureau. Gmail l'utilise pour permettre d'ajouter facilement des pièces jointes à un e-mail.
+- **File API** : permet d'accéder aux fichiers stockés sur la machine du visiteur (avec son autorisation). On l'utilisera
+notamment en combinaison avec le Drag & Drop.
+- **Géolocalisation** : pour localiser le visiteur et lui proposer des services liés au lieu où il se trouve (ex. : les horaires
+des salles de cinéma proches). La localisation n'est pas toujours très précise, mais cela peut permettre de repérer un visiteur
+à quelques kilomètres près (avec son accord).
+- **Web Storage** : permet de stocker un grand nombre d'informations sur la machine du visiteur. C'est une alternative, plus
+puissante, aux traditionnels cookies. Les informations sont hiérarchisées, comme dans une base de données.
+- **AppCache** : permet de demander au navigateur de mettre en cache certains fichiers, qu'il ne cherchera alors plus à
+télécharger systématiquement. Très utile pour créer des applications web qui peuvent fonctionner même en mode « hors ligne »
+(déconnecté).
+- **Web Sockets** : permet des échanges plus rapides, en temps réel, entre le navigateur du visiteur et le serveur qui gère le
+site web (c'est une sorte d'AJAX amélioré). C'est un peu l'avenir des applications web, qui pourront devenir aussi réactives que
+les vrais programmes.
+- **WebGL** : permet d'introduire de la 3D dans les pages web, en utilisant le standard de la 3D OpenGL (figure suivante). Les
+scènes 3D sont directement gérées par la carte graphique.
+
+:::info
+La plupart de ces technologies s'utilisent avec JavaScript. Il s'agit donc de nouvelles fonctionnalités que l'on peut utiliser
+en JavaScript.
+:::
+
+![Une application web 3D utilisant WebGL](https://user.oc-static.com/files/345001_346000/345198.png)
+
+Une application web 3D utilisant WebGL
+
+Comme vous le voyez, vous avez de nouveaux mondes à découvrir ! Dès que vous connaîtrez suffisamment JavaScript, vous pourrez
+aller encore plus loin dans la gestion de votre site web… que vous pourrez même transformer en véritable application !
+
+### Les sites web dynamiques (PHP, JEE, ASP .NET…)
+
+Les langages dont nous allons parler ici sont eux aussi des langages de programmation. Comme JavaScript ? Oui, mais avec une
+différence importante : JavaScript s'exécute sur la machine de vos visiteurs, tandis que les langages que nous allons voir
+s'exécutent sur le « serveur » qui contient votre site web.
+
+:::note ?
+Quelle différence cela fait-il que le programme tourne sur la machine du visiteur ou sur le serveur ?
+:::
+
+Les différences sont importantes. Tout d'abord, en termes de puissance, un serveur sera bien souvent plus rapide que la machine
+de vos visiteurs, ce qui permet d'effectuer des calculs plus complexes. Vous avez aussi davantage de contrôle côté serveur qu'en
+JavaScript… Mais le JavaScript reste irremplaçable, car il y a certaines actions que vous ne pouvez faire que du côté « visiteur ».
+
+Les langages serveur permettent de générer la page web lorsque le visiteur arrive sur votre site (figure suivante). Chaque
+visiteur peut donc obtenir une page web personnalisée suivant ses besoins !
+
+![Échange de données avec un serveur](https://user.oc-static.com/files/345001_346000/345405.png)
+
+Échange de données avec un serveur
+
+Les langages ne servent donc pas aux mêmes choses, mais ils se complètent. Si vous combinez HTML + CSS + JavaScript + PHP, par
+exemple, vous pouvez faire de l'AJAX (échanges de données entre la page et le serveur), vous pouvez effectuer des calculs,
+stocker des informations dans des bases de données… bref, faire de vrais sites web dynamiques !
+
+Les langages « côté serveur » sont nombreux. Citons-en quelques-uns :
+- **PHP** : l'un des plus connus. Facile à utiliser et puissant, il est utilisé notamment par Facebook… et OpenClassrooms. J'ai
+d'ailleurs rédigé un [cours sur PHP](https://openclassrooms.com/courses/concevez-votre-site-web-avec-php-et-mysql) que vous êtes
+nombreux à suivre après avoir appris HTML et CSS !
+- **Java EE** (Java) : très utilisé dans le monde professionnel, il s'agit d'une extension du langage Java qui permet de réaliser
+des sites web dynamiques, puissants et robustes. Au début, il est un peu plus complexe à prendre en main que PHP. J'ai créé un
+[cours vidéo sur Java EE](https://openclassrooms.com/courses/developpez-des-sites-web-avec-java-ee) et il existe un [cours texte sur Java EE](https://openclassrooms.com/courses/creez-votre-application-web-avec-java-ee)
+aussi.
+- **ASP .NET** (C#) : assez semblable à JEE, c'est le langage de Microsoft. On l'utilise en combinaison avec d'autres technologies
+Microsoft (Windows Server…). Il utilise le puissant framework .NET, véritable couteau suisse des développeurs, qui offre de
+nombreuses fonctionnalités.
+- **Django** (Python) : une extension du langage Python qui permet de réaliser rapidement et facilement des sites web dynamiques.
+Il est connu pour générer des interfaces d'administration prêtes à l'emploi. [Apprenez d'abord Python](https://openclassrooms.com/courses/apprenez-a-programmer-en-python),
+puis rendez-vous sur le [cours Django sur OpenClassrooms](https://openclassrooms.com/courses/developpez-votre-site-web-avec-le-framework-django) !
+- **Ruby on Rails** (Ruby) : une extension du langage Ruby, assez similaire à Django, qui permet de réaliser des sites web
+dynamiques facilement et avec une grande souplesse. Apprenez d'abord [Ruby](https://openclassrooms.com/courses/lancez-vous-dans-la-programmation-avec-ruby),
+puis découvrez [Ruby on Rails](https://openclassrooms.com/fr/courses/3149156-initiez-vous-a-ruby-on-rails) (ce cours était en
+préparation lors de l'écriture de ces lignes).
+
+:::info
+Connaître l'un de ces langages est indispensable si vous voulez traiter le résultat des formulaires HTML ! Souvenez-vous de la
+balise `<form>` : je vous avais expliqué comment créer des formulaires, mais pas comment _récupérer_ les informations saisies
+par vos visiteurs. Il vous faut obligatoirement un langage serveur, comme PHP, pour récupérer et traiter ces données !
+:::
+
+Au final, ces langages vous permettent de réaliser vos rêves les plus fous sur votre site web :
+- forums ;
+- newsletter ;
+- compteur de visiteurs ;
+- système de news automatisé ;
+- gestion de membres ;
+- jeux web (jeux de stratégie, élevage d'animaux virtuels…) ;
+- etc.
+
+:::caution !
+Il est indispensable de connaître les langages HTML et CSS avant d'apprendre un langage serveur comme PHP !
+:::
+
+Bonne découverte !
+
+:::info
+Vous savez maintenant comment créer votre site web avec HTML5 et CSS3 ! Dans ce cours, vous avez appris à :
+- utiliser du code HTML ;
+- structurer une page web en HTML ;
+- utiliser du code CSS ;
+- mettre en forme une page web en CSS ;
+- organiser les éléments d’une page web grâce au CSS ;
+- modifier l'agencement d'une page HTML avec CSS ;
+- intégrer des formules dans une page web ;
+- adapter une page pour les petites résolutions en CSS.
+:::
+
+Réalisez maintenant les derniers exercices pour valider toutes ces compétences !
+
+-----
+
+## Entraînez-vous en adaptant votre CV en responsive
+
+[Entraînez-vous en adaptant votre CV en responsive - Apprenez à créer votre site web avec HTML5 et CSS3 - OpenClassrooms](https://openclassrooms.com/fr/courses/1603881-apprenez-a-creer-votre-site-web-avec-html5-et-css3/6725346-entrainez-vous-en-adaptant-votre-cv-en-responsive)
+
+:::info
+**À vous de jouer !** Pour vous entraîner, réalisez cet exercice étape par étape. Une fois que vous avez terminé, vous pouvez
+comparer votre travail avec les pistes que je vous propose.
+:::
+
+### Contexte
+
+Votre CV est mis en page et l’affichage fonctionne parfaitement sur un écran d’ordinateur... mais sur les petites résolutions,
+il n’est pas optimisé.
+
+### Votre mission
+
+- Faire disparaître le liseré dans la version mobile.
+- Afficher verticalement les sections Expérience, Compétences et Formation au lieu de les afficher côte à côte horizontalement.
+
+Vérifiez bien que vous avez les éléments suivants :<br />
+✅ Le liseré disparaît lorsque l’on passe en version mobile.<br />
+✅ Les sections s’affichent verticalement sur mobile.
+
+:::info
+Alors, vous êtes allé au bout ? Voici [un exemple](https://static.oc-static.com/activities/201/evaluation_resources/adapter-son-cv-en-responsive_exemple-2019-01-03T082134.zip)
+pour vous permettre de vérifier votre travail.
+:::
+
+-----
+
+## Quiz : Intégrez des formulaires dans une page web
+
+[Intégrez des formulaires dans une page web - OpenClassrooms](https://openclassrooms.com/fr/courses/1603881-apprenez-a-creer-votre-site-web-avec-html5-et-css3/exercises/96)
+
+#### Compétences évaluées
+
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-checkbox" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#00b341" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <polyline points="9 11 12 14 20 6" />
+  <path d="M20 12v6a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h9" />
+</svg> Intégrer des formulaires dans une page web
+
+#### Description
+
+Maintenant, il est temps d'évaluer vos connaissances sur cette quatrième partie !<br />
+Bon courage ! 😀
+
+-----
+
+#### Question 1 : Laquelle de ces balises représente une ligne dans un tableau ?
+
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle-check" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#7bc62d" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M9 12l2 2l4 -4" />
+</svg> <code>&#60;tr></code><br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> <code>&#60;table></code><br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> <code>&#60;line></code><br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> <code>&#60;td></code><br />
+<br />
+
+-----
+
+#### Question 2 : Quel attribut dois-je utiliser si je veux fusionner deux cellules d'une même ligne dans un tableau ?
+
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> fusion<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle-check" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#7bc62d" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M9 12l2 2l4 -4" />
+</svg> colspan<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> rowspan<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> groupline<br />
+<br />
+
+-----
+
+#### Question 3 : Vrai ou faux ? L'utilisation de la balise `<tbody>` est obligatoire dans un tableau en HTML5.
+
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle-check" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#7bc62d" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M9 12l2 2l4 -4" />
+</svg> Vrai<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> Faux<br />
+<br />
+
+-----
+
+#### Question 4 : Quelle est la méthode d'envoi de formulaire la plus recommandée qui permet d'envoyer le plus de données ?
+
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> get<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> action<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle-check" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#7bc62d" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M9 12l2 2l4 -4" />
+</svg> post<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> submit<br />
+<br />
+
+-----
+
+#### Question 5 : Comment donne-t-on une valeur par défaut à un champ `<textarea>` ?
+
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> Avec l'attribut value<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> Avec l'attribut default<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle-check" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#7bc62d" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M9 12l2 2l4 -4" />
+</svg> En écrivant le texte entre la balise ouvrante et la balise fermante<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> Ce n'est pas possible<br />
+<br />
+
+-----
+
+#### Question 6 : Quelle balise permet aussi bien d'insérer des cases à cocher, des champs de texte monolignes et des sélecteurs de date ?
+
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle-check" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#7bc62d" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M9 12l2 2l4 -4" />
+</svg> <code>&#60;input /></code><br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> <code>&#60;form></code><br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> <code>&#60;textarea></code><br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> <code>&#60;select /></code><br />
+<br />
+
+#### Question 7 : Comment fait-on pour créer deux groupes de boutons radio distincts, les deux groupes ne devant permettre la sélection que d'une seule valeur ?
+
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> Il n'y a rien à faire de particulier, c'est automatique<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> En les plaçant côte à côte dans le code source<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> En les plaçant à l'intérieur d'un même <code>&#60;fieldset></code><br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle-check" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#7bc62d" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M9 12l2 2l4 -4" />
+</svg> En donnant le même nom 'name' aux boutons de chaque groupe<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> En donnant le même 'id' aux boutons de chaque groupe<br />
+<br />
+
+-----
+
+#### Question 8 : Pourquoi est-il recommandé de proposer plusieurs formats de fichier vidéo au sein d'une balise `<video>` ?
+
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> Cela permet de charger plus rapidement la vidéo<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> Cela permet de gérer les navigateurs qui ne connaissent pas la balise <code>&#60;video></code><br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle-check" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#7bc62d" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M9 12l2 2l4 -4" />
+</svg> Cela permet au navigateur de sélectionner un format vidéo qu'il reconnaît<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> Cela permet de gérer les navigateurs qui ne reconnaissent pas JavaScript<br />
+<br />
+
+-----
+
+#### Question 9 : Quelle directive CSS permet de créer un site en responsive webdesign ?
+
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle-check" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#7bc62d" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M9 12l2 2l4 -4" />
+</svg> <code>@media</code><br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> <code>screensize</code><br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> <code>.handheld</code><br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> <code>[responsive]</code><br />
+<br />
+
+-----
+
+#### Question 10 : Que se passe-t-il lorsqu'on modifie en direct le code HTML et CSS au sein des outils de débogage de son navigateur ?
+
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> Le fichier source est immédiatement modifié<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle-check" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#7bc62d" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M9 12l2 2l4 -4" />
+</svg> La page affichée est modifiée mais le fichier source reste inchangé<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> Le navigateur plante<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> Le nouveau code est transmis au serveur web<br />

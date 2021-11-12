@@ -176,7 +176,7 @@ guests.unshift("Tao Perkington"); // "Tao Perkington" est ajouté au début du t
 guests.pop(); // supprimer le dernier élément du tableau
 ```
 
-## `if`/`else`
+### `if`/`else`
 
 ```javascript
 let UserLoggedIn = true;
@@ -187,7 +187,22 @@ if (UserLoggedIn) {
 }
 ```
 
-### Expressions de comparaison
+### `.forEach()`
+[Array.prototype.forEach() - JavaScript | MDN](https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Global_Objects/Array/forEach)
+
+La méthode **`forEach()`** permet d'exécuter une fonction donnée sur chaque élément du tableau.
+
+```javascript
+const array1 = ['a', 'b', 'c'];
+
+array1.forEach(element => console.log(element));
+
+// expected output: "a"
+// expected output: "b"
+// expected output: "c"
+```
+
+## Expressions de comparaison
 
 - `<` inférieur à ;
 - `<=` inférieur ou égal à ;

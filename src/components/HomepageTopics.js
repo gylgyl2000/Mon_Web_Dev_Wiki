@@ -117,6 +117,15 @@ const TopicsList = [
         title: 'MongoDB',
         Svg: require('../../static/img/logos/mongodb.svg').default,
         siteUrl: 'https://www.mongodb.com/fr',
+    },{
+        title: 'Mongoose',
+        Svg: require('../../static/img/logos/mongoose.svg').default,
+        siteUrl: 'https://mongoosejs.com/',
+    },
+    {
+        title: 'Postman',
+        Svg: require('../../static/img/logos/postman.svg').default,
+        siteUrl: 'https://www.postman.com/',
     },
 ];
 
