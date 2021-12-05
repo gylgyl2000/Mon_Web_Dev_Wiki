@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunkmon_web_dev_wiki=self.webpackChunkmon_web_dev_wiki||[]).push([[5658],{2845:function(e){e.exports=JSON.parse('{"allTagsPath":"/Mon_Web_Dev_Wiki/blog/tags","slug":"/Mon_Web_Dev_Wiki/blog/tags/docusaurus","name":"docusaurus","count":4,"permalink":"/Mon_Web_Dev_Wiki/blog/tags/docusaurus"}')}}]);

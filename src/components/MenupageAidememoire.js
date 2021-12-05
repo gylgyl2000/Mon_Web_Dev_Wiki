@@ -6,14 +6,14 @@ const AideMemoireList = [
   {
     title: 'JavaScript',
     Svg: require('../../static/img/JavaScript.svg').default,
-    Url: '/Mon_Web_Dev_Wiki/docs/Aide-memoire/JavaScript/menu',
+    Url: './JavaScript/accueil',
   },
 ];
 
 function AideMemoire({Svg, title, Url}) {
   return (
     <div className={clsx('col')}>
-      <div className="text--center">
+      <div>
         <a href={Url}>
           <Svg className={styles.aidememoireSvg} alt={title} />
         </a>

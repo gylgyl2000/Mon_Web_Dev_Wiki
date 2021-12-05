@@ -10,7 +10,7 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
   baseUrl: '/Mon_Web_Dev_Wiki/',
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'warn',
-  favicon: 'img/river-otter-silhouette.svg',
+  favicon: 'https://monwikidevweb.la-loutre.fr/img/river-otter-silhouette.svg',
   organizationName: 'gylgyl2000', // Usually your GitHub org/user name.
   projectName: 'Mon_Web_Dev_Wiki', // Usually your repo name.
 
@@ -46,7 +46,7 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
         title: 'Mon Wiki Dev Web par LaLoutre',
         logo: {
           alt: 'Otter',
-          src: 'img/river-otter-silhouette.svg',
+          src: 'https://monwikidevweb.la-loutre.fr/img/river-otter-silhouette.svg',
         },
         items: [
           {

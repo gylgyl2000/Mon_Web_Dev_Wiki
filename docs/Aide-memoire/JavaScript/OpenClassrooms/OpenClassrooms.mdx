@@ -1,0 +1,474 @@
+---
+sidebar_position: 1
+---
+
+# Javascript - OpenClassrooms
+
+![Fiche - Javascript](assets/16309151275577_Fiche-Javascript.png)
+
+## Variables `let`
+
+### Créer, déclarer, initialiser
+
+```javascript
+let numberOfSeasons = 6;
+let numberOfEpisodes = 12;
+```
+
+### Modifier la valeur
+
+```javascript
+let numberOfCats = 3;
+numberOfCats = 4;
+```
+
+### Addition et soustraction
+
+```javascript
+let totalCDs = 67;
+let totalVinyls = 34;
+let totalMusic = totalCDs + totalVinyls;
+
+let cookiesInJar = 10;
+let cookiesRemoved = 2;
+let cookiesLeftInJar = cookiesInJar - cookiesRemoved;
+
+let cookiesInJar = 10;
+/* manger deux cookies */
+cookiesInJar -= 2; //il reste 8 cookies
+/* cuisson d'un nouveau lot de cookies */
+cookiesInJar += 12; // il y a maintenant 20 cookies dans la boîte
+
+let numberOfLikes = 10;
+numberOfLikes++; // cela fait 11
+numberOfLikes--; // et on revient à 10...
+```
+
+### Multiplication et division
+
+```javascript
+let costPerProduct = 20;
+let numberOfProducts = 5;
+let totalCost = costPerProduct * numberOfProducts;
+let averageCostPerProduct = totalCost / numberOfProducts;
+
+let numberOfCats = 2;
+numberOfCats *= 6; // numberOfCats vaut maintenant 2*6 = 12;
+numberOfCats /= 3; // numberOfCats vaut maintenant 12/3 = 4;
+```
+
+### Mutabilité des variables
+
+```javascript
+let compteur = 0;
+compteur++;
+compteur = 10;
+```
+
+## Constantes `const`
+
+```javascript
+const nombrePostParPage = 20;
+nombrePostParPage = 30; // Retournera une erreur dans la console car on ne peut plus changer sa valeur
+```
+
+## Types primitifs d'une variable ou d'une constante
+
+### number
+
+```javascript
+let integerCalculation = 1 + 2; // donne 3
+let weirdCalculation = 0.1 + 0.2;  // on attend 0.3, réponse réelle 0.30000000000000004
+```
+
+### boolean
+
+```javascript
+let userIsSignedIn = true;
+let userIsAdmin = false;
+```
+
+### string
+
+```javascript
+let firstName = "Will";
+let lastName = 'Alexander';
+
+let wholeName = firstName + " " + lastName;  // valeur: "Will Alexander"
+
+const myName = `Alexander`;
+const salutation = `Bienvenue sur mon site ${myName}!`;
+console.log(salutation); //retournera “Bienvenue sur mon site Alexander!”
+```
+
+## Les objets
+
+```javascript
+let myBook = {
+    title: 'The Story of Tau',
+    author: 'Will Alexander',
+    numberOfPages: 250,
+    isAvailable: true
+};
+
+let bookTitle = myBook.title; // "L'Histoire de Tao"
+let bookPages = myBook.numberOfPages  // 250
+
+let bookTitle = myBook["title"]; // "L'Histoire de Tao"
+let bookPages = myBook["numberOfPages"];  // 250
+
+let propertyToAccess = "title"
+let bookTitle = myBook[propertyToAccess];  // "L'Histoire de Tao"
+```
+
+## Les classes
+
+```javascript
+class Book {
+    constructor(title, author, pages) {
+        this.title = title;
+        this.author = author;
+        this.pages = pages;
+    }
+}
+
+let myBook = new Book("L'Histoire de Tao", "Will Alexander", 250);
+/* Cette ligne crée l'objet suivant : */
+{
+    title: "L'Histoire de Tao",
+    author: "Will Alexander",
+    pages: 250
+}
+```
+
+## Les tableaux
+
+```javascript
+let guests = ["Sarah Kate", "Audrey Simon", "Will Alexander"];
+
+let firstGuest = guests[0]; // "Sarah Kate"
+let thirdGuest = guests[2]; // "Will Alexander"
+let undefinedGuest = guests[12] // undefined
+```
+
+### `.length`
+
+```javascript
+let guests = ["Will Alexander", "Sarah Kate", "Audrey Simon"];
+let howManyGuests = guests.length; // 3
+```
+
+### `.push`
+
+```javascript
+guests.push("Tao Perkington"); // ajoute "Tao Perkington" à la fin de notre tableau guests
+```
+
+### `.unshift`
+
+```javascript
+guests.unshift("Tao Perkington"); // "Tao Perkington" est ajouté au début du tableau guests
+```
+
+### `.pop`
+
+```javascript
+guests.pop(); // supprimer le dernier élément du tableau
+```
+
+### `if`/`else`
+
+```javascript
+let UserLoggedIn = true;
+if (UserLoggedIn) {
+    console.log("Utilisateur connecté!");
+} else {
+    console.log("Alerte, intrus!");
+}
+```
+
+### `.forEach()`
+[Array.prototype.forEach() - JavaScript | MDN](https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Global_Objects/Array/forEach)
+
+La méthode **`forEach()`** permet d'exécuter une fonction donnée sur chaque élément du tableau.
+
+```javascript
+const array1 = ['a', 'b', 'c'];
+
+array1.forEach(element => console.log(element));
+
+// expected output: "a"
+// expected output: "b"
+// expected output: "c"
+```
+
+## Expressions de comparaison
+
+- `<` inférieur à ;
+- `<=` inférieur ou égal à ;
+- `==` égal à ;
+- `>=` supérieur ou égal à ;
+- `>` supérieur à ;
+- `!=` différent de.
+
+```javascript
+const numberOfSeats = 30;
+const numberOfGuests = 25;
+if (numberOfGuests < numberOfSeats) {
+    // autoriser plus d'invités
+} else {
+    // ne pas autoriser de nouveaux invités
+}
+
+if (numberOfGuests == numberOfSeats) {
+    // tous les sièges sont occupés
+} else if (numberOfGuests < numberOfSeats) {
+    // autoriser plus d'invités
+} else {
+// ne pas autoriser de nouveaux invités
+}
+
+```
+
+### Égalités `==` `===`
+
+```javascript
+5 == "5" // true
+5 === "5" //false
+```
+
+### Conditions multiples
+
+- `&&` – ET logique – pour vérifier si deux conditions sont **toutes les deux** vraies ;
+- `||` – OU logique – pour vérifier si **au moins une** condition est vraie ;
+- `!` – NON logique – pour vérifier si une condition n'est **pas** vraie.
+
+```javascript
+let userLoggedIn = true;
+let hasUserPremiumAccount = true;
+let userHasMegaPremiumAccount = false;
+userLoggedIn && userHasPremiumAccount; // true
+userLoggedIn && userHasMegaPremiumAccount; // false
+userLoggedIn || userHasPremiumAccount; // true
+userLoggedIn || userHasMegaPremiumAccount; // true
+!userLoggedIn; // false
+!userHasMegaPremiumAccount; // true
+```
+
+## Scope (portée) des variables
+
+```javascript
+let userLoggedIn = true;
+if (userLoggedIn) {
+    let welcomeMessage = 'Welcome back!';
+} else {
+    let welcomeMessage = 'Welcome new user!';
+}
+console.log(welcomeMessage); // renvoie une erreur
+```
+
+```javascript
+let userLoggedIn = true;
+let welcomeMessage = ''; // déclarer la variable ici
+if (userLoggedIn) {
+    welcomeMessage = 'Welcome back!'; // modifier la variable extérieure
+} else {
+    welcomeMessage = 'Welcome new user!'; // modifier la variable extérieure
+}
+console.log(welcomeMessage); // imprime 'Welcome back!'
+```
+
+## `switch`
+
+```javascript
+let firstUser = {
+    name: "Will Alexander",
+    age: 33,
+    accountLevel: "normal"
+};
+let secondUser = {
+    name: "Sarah Kate",
+    age: 21,
+    accountLevel: "premium"
+};
+let thirdUser = {
+    name: "Audrey Simon",
+    age: 27,
+    accountLevel: "mega-premium"
+};
+
+switch (firstUser.accountLevel) {
+    case 'normal':
+        console.log('You have a normal account!');
+    break;
+    case 'premium':
+        console.log('You have a premium account!');
+    break;
+    case 'mega-premium':
+        console.log('You have a mega premium account!');
+    break;
+    default:
+    console.log('Unknown account type!');
+}
+```
+
+## Boucles
+
+### `for`
+
+```javascript
+const numberOfPassengers = 10;
+for (let i = 0; i < numberOfPassengers; i++) {
+    console.log("Passager embarqué !");
+}
+console.log("Tous les passagers sont embarqués !");
+```
+
+### `for` `in`
+
+```javascript
+const passengers = [
+    "Will Alexander",
+    "Sarah Kate'",
+    "Audrey Simon",
+    "Tao Perkington"
+]
+for (let i in passengers) {
+    console.log("Embarquement du passager " + passengers[i]);
+}
+```
+
+### `for` `of`
+
+```javascript
+const passengers = [
+    "Will Alexander",
+    "Sarah Kate",
+    "Audrey Simon",
+    "Tao Perkington"
+]
+for (let passenger of passengers) {
+    console.log("Embarquement du passager " + passenger);
+}
+```
+
+```javascript
+const passengers = [
+    {name: "Will Alexander", ticketNumber: 209542},
+    {name: "Sarah Kate", ticketNumber: 169336},
+    {name: "Audrey Simon", ticketNumber: 779042},
+    {name: "Tao Perkington", tiketNumber: 703911}
+]
+for (let passenger of passengers) {
+    console.log('Embarquement du passager ' + passenger.name + ' avec le ticket numéro ' + passenger.ticketNumber);
+}
+```
+
+### `while`
+
+```javascript
+let seatsLeft = 10;
+let passengersStillToBoard = 8;
+let passengersBoarded = 0;
+while (seatsLeft > 0 && passengersStillToBoard > 0) {
+    passengersBoarded++; // un passager embarque
+    passengersStillToBoard--; // donc il y a un passager de moins à embarquer
+    seatsLeft--; // et un siège de moins
+}
+console.log(passengersBoarded); // imprime 8, car il y a 8 passagers pour 10 sièges
+```
+
+## Gestion des erreurs
+
+### `if` `else`
+
+```javascript
+if (dataExists && dataIsValid) {
+    // utiliser les données ici
+} else {
+    // gérer l'erreur ici
+}
+```
+
+### `try` `catch`
+
+```javascript
+try {
+    // code susceptible à l'erreur ici
+} catch (error) {
+    // réaction aux erreurs ici
+}
+```
+
+## Fonction
+
+```javascript
+function nomDeLaFonction(parametres) {
+    code;
+}
+
+function somme(nombre1, nombre2) { // nombre1 et nombre2 sont les paramètres
+    return nombre1 + nombre2; // valeur de retour
+}
+
+somme(3,4); // 3 et 4 sont des arguments
+```
+
+## Classe
+
+### Méthode d'instance
+
+```javascript
+class BankAccount {
+    constructor(owner, balance) {
+        this.owner = owner;
+        this.balance = balance;
+    }
+    showBalance() {
+        console.log("Solde: " + this.balance + " EUR");
+    }
+    deposit(amount) {
+        console.log("Dépôt de " + amount + " EUR");
+        this.balance += amount;
+        this.showBalance();
+    }
+    withdraw(amount) {
+        if (amount > this.balance) {
+            console.log("Retrait refusé !");
+        } else {
+            console.log("Retrait de " + amount + " EUR");
+            this.balance -= amount;
+            this.showBalance();
+        }
+    }
+}
+```
+
+### Méthode statique
+
+```javascript
+const randomNumber = Math.random(); // crée un nombre aléatoire sur l'intervalle \[0, 1\]
+
+const roundMeDown = Math.floor(495.966); // arrondit vers le bas à l'entier le plus proche, renvoie 495
+```
+
+```javascript
+class BePolite {
+    static sayHello() {
+        console.log("Hello!");
+    }
+    static sayHelloTo(name) {
+        console.log("Hello " + name + "!");
+    }
+    static add(firstNumber, secondNumber) {
+        return firstNumber + secondNumber;
+    }
+}
+
+BePolite.sayHello(); // imprime "Hello!"
+
+BePolite.sayHelloTo("Will"); // imprime "Hello Will!"
+
+const sum = BePolite.add(2, 3); // sum = 5
+```
+
