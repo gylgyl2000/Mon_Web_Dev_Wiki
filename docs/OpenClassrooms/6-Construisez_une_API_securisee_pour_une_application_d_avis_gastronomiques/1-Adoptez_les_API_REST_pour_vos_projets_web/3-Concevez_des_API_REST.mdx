@@ -1,0 +1,828 @@
+---
+sidebar_position: 4
+---
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+import { Vimeo } from 'mdx-embed';
+
+# Concevez des API REST
+
+## Définissez la structure de votre API REST
+
+[Définissez la structure de votre API REST - Adoptez les API REST pour vos projets web - OpenClassrooms](https://openclassrooms.com/fr/courses/6573181-adoptez-les-api-rest-pour-vos-projets-web/6824631-definissez-la-structure-de-votre-api-rest)
+
+<Vimeo vimeoId="390934099" />
+
+<br />
+
+### Préparez-vous à concevoir votre propre API REST
+
+Maintenant que vous avez vu comment **utiliser** une API externe, parlons davantage de quand et comment **construire** concrètement une API
+REST vous-même.
+
+Pourquoi aurais-je besoin de construire ma propre API REST ? Je ne peux pas utiliser l’une de ces milliers d’API qui existent et dont tu nous
+as parlé dans la dernière partie ? 🤔
+
+Il existe deux raisons **principales** pour lesquelles vous pourriez vouloir développer votre propre API :
+1. Si vous construisez votre propre application web ou mobile, par exemple pour des recettes de cuisine, où vous savez que vous devrez
+**sauvegarder et manipuler beaucoup de données**. 🍳 Vous auriez absolument besoin d’une base de données, mais il n’est pas souhaitable que les
+développeurs front-end aient besoin de connaître SQL pour pouvoir afficher les informations sur votre UI. Vous voulez aussi respecter les
+normes pour les applications web pour qu’il y ait une couche API entre votre base de données et l’accès à vos données. Vous ne voulez pas que
+n’importe quel développeur soit en capacité d’accéder directement à votre base de données, pour des questions de sécurité et de confidentialité.
+Et vous voulez une manière rapide et efficace de rechercher et requêter les données existantes. Pour ce faire, vous aurez besoin d’une API
+interne.
+2. Si vous construisez une application web ou mobile où **vous voulez que d’autres développeurs soient en capacité d’interagir avec vos données**.
+Par exemple, une application où vous collectez des données sur les personnages de votre série télé favorite et où vous voulez que d’autres
+développeurs puissent ajouter et utiliser des données.
+
+:::info
+UI signifie User Interface ou interface utilisateur en français. Le terme UI fait référence à l’interface utilisateur par le biais de laquelle
+l’utilisateur interagit, que ce soit un site internet, un logiciel ou une application mobile.
+:::
+
+### Lancez-vous dans la conception de votre API
+
+Comme pour toute chose un peu compliquée, un **design** réfléchi et structuré est essentiel pour obtenir un succès sur le long terme. C’est
+peut-être facile de commencer par tout construire tout de suite en fonçant tête baissée, mais avant de vous ruer sur votre clavier, vous devez
+réfléchir aux concepts de design-clés qui rendront votre API plus **agréable d’utilisation** et plus **facile à scaler.**
+
+:::info
+Scaler vient de l’anglais to scale et signifie en quelques mots la capacité de votre application/logiciel/site internet à s’adapter et à
+fonctionner même en cas de forte augmentation soudaine du trafic, de demandes ou juste d’un grand nombre de fonctionnalités implémentées.
+:::
+
+:::note ?
+OK allons-y. Par quoi commence-t-on ? 🤔
+:::
+
+Allons-y étape par étape. Commencez d'abord par vous poser des questions sur les fonctionnalités importantes dont vous avez besoin pour votre
+API :
+- De quel type d’endpoints avez-vous besoin ?
+- Quelles ressources devez-vous créer ?
+- De quelles ressources avez-vous besoin pour y effectuer les opérations **CRUD** ?
+- Avez-vous besoin des quatre opérations **CRUD** pour chaque ressource ? Ou seulement d’une ou deux ?
+
+Une fois que vous aurez répondu à ces questions, vous serez prêt à commencer à préparer… votre documentation.
+
+### Documentez toute la journée : découvrez pourquoi une documentation adaptée est essentielle
+
+:::note ?
+Attends, on n'est pas censé créer une API ? Pourquoi est-ce que la documentation arrive tout de suite, on peut la faire à la fin non ? 🙄
+:::
+
+Non, non, non ! Lors des chapitres précédents nous avons dû consulter la documentation GitHub afin de pouvoir utiliser l’API comme il se doit.
+Sans toutes les informations de la documentation, nous aurions eu du mal à avoir le bon endpoint ou savoir quels paramètres préciser...
+La documentation est une des partie **les plus importantes** des API ! Quand vous créez une API, vous devez également tenir compte des
+**autres développeurs** qui utilisent votre API. Cela implique d’avoir une bonne **documentation** pour qu’ils puissent facilement comprendre
+ce que votre API peut accomplir et comment l’utiliser.
+
+Comme vous l’avez vu avec la documentation GitHub, de nombreuses informations doivent être expliquées à votre utilisateur API. Elles incluent :
+1. Les descriptions des ressources API.
+2. Les URI et verbes HTTP disponibles ainsi que leur fonction.
+3. Les paramètres (s’il y en a) qui doivent être donnés à l’endpoint.
+4. Un exemple de requête.
+5. Une réponse typique pour la requête donnée.
+
+Chaque API organise la documentation de manière légèrement différente, mais voici quelques bons exemples pour vous aider.
+
+#### Documentation de l’API Stripe
+
+Dans [l’API de Stripe](https://stripe.com/docs/api) vous pouvez clairement voir que la documentation décrit l’URL de la ressource et les
+informations pertinentes que les développeurs doivent pouvoir comprendre.
+
+<figure>
+    <img src="https://user.oc-static.com/upload/2021/10/15/16343004171489_image11.png"
+         alt="Un exemple dans la documentation de Stripe" />
+    <figcaption>Un exemple dans la documentation de Stripe</figcaption>
+</figure>
+
+<figure>
+    <img src="https://user.oc-static.com/upload/2021/10/15/16343004670458_image24.png"
+         alt="Un exemple dans la documentation de Stripe" />
+    <figcaption>Un exemple dans la documentation de Stripe</figcaption>
+</figure>
+
+La [documentation](https://stripe.com/docs/api/charges/create) montre également un exemple de réponse aux requêtes API :
+
+<figure>
+    <img src="https://user.oc-static.com/upload/2021/10/15/16343005147954_image46.png"
+         alt="Un exemple de réponse dans la documentation Stripe" />
+    <figcaption>Un exemple de réponse dans la documentation Stripe</figcaption>
+</figure>
+
+#### Documentation de l’API Pinterest
+
+L’[API Pinterest](https://developers.pinterest.com/docs/api/pins/) contient un bon exemple d’affichage d’un verbe HTTP, d’un URI, de
+paramètres, et d’une description de la fonction de l’endpoint. 
+
+<figure>
+    <img src="https://user.oc-static.com/upload/2021/10/15/16343005723491_image27.png"
+         alt="Documentation de l’API Pinterest : tableau en 3 colonnes Definition, Parameters et Description." />
+    <figcaption>Documentation de l’API Pinterest</figcaption>
+</figure>
+
+La documentation donne de nombreuses informations sur les endpoints et les requêtes, mais elle se doit aussi de documenter la gestion des
+erreurs.
+
+### Gérez les erreurs 🙅‍♀️
+
+Comme nous l’avons vu dans les chapitres précédents, une requête peut être un succès mais aussi un échec, et ce pour diverses raisons :
+ressource introuvable, serveur indisponible… Votre API doit avoir une bonne **gestion des erreurs**. Si un développeur essaye accidentellement
+d’utiliser votre API pour un usage non souhaité (authentification incorrecte, lettres inutiles ajoutées à une requête), votre API doit être
+capable de dire à l’utilisateur quelle a été son erreur pour qu’il puisse la corriger. Et oui, personne n’est à l’abri d’une faute de frappe !
+Le code HTTP donne une information sur le type d’erreur mais est généralement accompagné d’un message d’erreur dans le body de réponse.
+
+Vous avez vu à quoi ressemblaient certaines erreurs dans l’API GitHub lorsque nous avons voulu créer un repository dans la dernière partie.
+Souvenez-vous, quand nous avons essayé d’effectuer une requête sans notre token d’authentification, nous avons reçu la réponse suivante :
+
+```json
+{
+    "message": "Requires authentication",
+    "documentation_url": "https://developer.github.com/v3/repos/#edit"
+}
+```
+
+C’est ainsi que grâce au message d’erreur nous avons su que nous avions oublié notre code d’authentification ! Il existe de nombreux types
+d’erreurs différents pouvant se produire dans votre API qui, si elles sont gérées correctement, peuvent faciliter la vie des développeurs
+lorsqu’ils utilisent votre API. 💪
+
+L’[API de Meetup](https://www.meetup.com/fr-FR/meetup_api/docs/?uri=%2Fmeetup_api%2Fdocs%2F) contient un bon exemple de toutes les erreurs
+différentes qui peuvent se produire quand vous utilisez leur API et ce qu’elles signifient :
+
+Toutes les erreurs possibles de l’API Meetup
+
+|     |     |
+|-----|-----|
+| announce_error | Erreur dans l’annonce d’un événement |
+| description_error | Désolé, votre description Meetup est trop longue |
+| duration_error | La durée de cet événement n’est pas valide. |
+| event_error | L’ID fourni ne correspond pas à un évènement pouvant être modifié |
+| event_hosts_error | Un ou plusieurs des membres donnés ne sont pas des membres actifs de ce groupe |
+| featured_photo_id_error | Il y a un problème avec la photo fournie. |
+| fee.amount_error | Si le groupe se trouve aux États-Unis, le montant à acquitter ne peut pas excéder 4999. Sinon, il ne peut pas excéder 1 000 000. |
+| fee.refund_policy_error | La politique de remboursement de fonds ne peut pas excéder 250. |
+| guest_limit_error | Le nombre d’invités maximum n’est pas valide. |
+| how_to_find_us_error | Votre description « Comment nous retrouver » est trop longue. |
+
+Une partie nécessaire et importante lors de la conception de votre API est la réflexion sur les possibilités de mauvaise utilisation par les
+utilisateurs ! Ainsi en fonction de l’erreur, vous pouvez renvoyer le message approprié dans la réponse.
+
+#### En résumé
+
+- Vous pouvez construire une API soit pour l’utiliser dans votre propre application, soit pour que d’autres développeurs puissent interagir
+avec vos données.
+- Il est important en concevant une API de penser à toutes les fonctionnalités nécessaires avant de commencer à la développer.
+- La documentation et une bonne gestion des erreurs sont importantes pour que d’autres développeurs puissent comprendre votre API.
+
+_Maintenant que vous avez les bases, concevez les endpoints de votre API. OK, mais comment faire ? Voyons cela ensemble dans le chapitre
+suivant._
+
+-----
+
+## Concevez les endpoints de votre API
+
+[Concevez les endpoints de votre API - Adoptez les API REST pour vos projets web - OpenClassrooms](https://openclassrooms.com/fr/courses/6573181-adoptez-les-api-rest-pour-vos-projets-web/6824856-concevez-les-endpoints-de-votre-api)
+
+<Vimeo vimeoId="390934149" />
+
+<br />
+
+Lors de la création d’une API, il est important de ne pas se lancer tête baissée et de réfléchir à l’architecture de votre API, quitte à tout
+poser sur papier avant. Quel sera le rôle de votre API ? Quelles seront les ressources ? Quels seront les différents accès autorisés pour les
+utilisateurs ?
+
+Bien structurer votre API dès le début de sa conception vous permettra d’anticiper les erreurs mais aussi d’avoir une API plus solide et mieux
+conçue.
+
+Dans ce chapitre, vous ne coderez pas une API mais allez la concevoir. C’est un exercice de réflexion, afin de vous préparer au mieux à la
+création d’une API.
+
+### Concevez une API de partage de photos
+
+Dans cette partie, nous allons réfléchir à la manière de concevoir une API pour une application de partage de photos nommée InstaPhoto. 📸 Nous
+voulons que les utilisateurs puissent publier et partager des photos avec leurs amis, commenter les photos des autres, créer des hashtags,
+rechercher des photos par localisation, la totale, le grand jeu !
+
+Prenez une minute pour écrire ce à quoi vous avez besoin de réfléchir lors de la conception d’une API pour InstaPhoto. De quelles **ressources**
+avez-vous besoin ? Quels **URI** seraient compréhensibles par d’autres développeurs ? C’est aussi une belle occasion de revoir ce que vous avez
+appris dans les parties précédentes  !
+
+Voici quelques exemples de **ressources** dont vous aurez absolument besoin :
+- Photo ;
+- User ;
+- Location (_localisation_, en français) ;
+- Post.
+
+À partir de là, vous pouvez commencer à réfléchir à des questions importantes, comme celles-ci :
+- Quels endpoints auront besoin d’autorisations ?
+- Quelles ressources voulez-vous pouvoir mettre à jour ?
+- Aurez-vous besoin de pouvoir modifier des publications après leur création ?
+- Les commentaires doivent-ils pouvoir être supprimés ?
+- Avez-vous besoin de toutes les opérations CRUD pour chaque ressource ? Ou seulement d’une ou deux ? Lesquelles ?
+
+Il n’y a pas de bonne ou de mauvaise réponse ici – cela dépend simplement de l’application InstaPhoto que vous voulez développer ! À vous de
+choisir ! ✨
+
+### Créez vos endpoints
+
+Lors de la conception d’endpoints, le **naming** (ou _nommage_, en français) est un élément clé. Vous voulez que les développeurs qui
+l’utilisent comprennent naturellement ce que chaque endpoint est censé faire. Les conventions de naming actuelles demandent d’inclure
+uniquement la **ressource** que vous voulez mettre à jour, et non le **verbe** que vous voulez mettre en œuvre.
+
+Pour faire simple, utilisez _uniquement_ le **nom de la ressource** dans l’URI, car l’action se trouve déjà dans le verbe HTTP. Cela donnerait :
+- POST /photo
+- PUT /photo
+- GET /photo
+
+Puisque que le **verbe** de l’action est déjà inclus dans la requête HTTP, il n’est pas nécessaire de le préciser lors de la conception des
+endpoints.
+
+Pour que vous puissiez mieux comprendre, des endpoints mal nommés ressembleraient à ceci :
+- POST /createPhoto
+- PUT /updatePhoto
+- GET /getPhoto
+
+### Simulez des endpoints supplémentaires
+
+Considérons les endpoints possibles pour notre InstaPhoto.
+
+Ici aussi, il n’y a pas de bonne ou de mauvaise réponse, cela dépend simplement des besoins de votre application et de la façon dont vous
+voulez la concevoir.
+
+Imaginons que vous vouliez que les utilisateurs soient en capacité de créer, voir et supprimer des photos – mais pas de les modifier une fois
+publiées. Tous ces éléments nécessitent également une authentification, car vous ne voudriez pas que les utilisateurs puissent publier, modifier
+ou supprimer des photos qui ne leur appartiennent pas ! 🔐
+
+Maintenant, prenez une feuille de papier et écrivez quelques endpoints pour **créer, voir et supprimer des photos**. Rappelez-vous que vous
+voudrez peut-être spécifier une photo en particulier à visionner et à mettre à jour, non ? 😉 Une fois que vous aurez fini, regardez juste
+en-dessous si ce que vous avez écrit correspond à mes réponses.
+
+:::info
+Alors, curieux de connaître mes réponses ? Rendez-vous [**ici**](https://s3-eu-west-1.amazonaws.com/course.oc-static.com/courses/6824856/Solution+endpoints.pdf).
+
+<embed style={{width: "100%", height: "667px" }} src="https://s3-eu-west-1.amazonaws.com/course.oc-static.com/courses/6824856/Solution+endpoints.pdf"></embed>
+:::
+
+Vu que l’on veut généralement voir ou supprimer des photos en particulier, le fait d’ajouter un ID pour les deux derniers endpoints est logique.
+Il permet à l’API de savoir de quelle photo il s’agit.
+
+Et maintenant, vos utilisateurs ! De quels verbes HTTP aurez-vous besoin pour un compte utilisateur ? 🤔 Et puis, même si vous ne voulez pas
+que les utilisateurs puissent modifier leurs photos une fois qu’elles sont déjà créées, il doivent au moins pouvoir **modifier leur profil
+utilisateur** ! Par ailleurs, vous voulez qu’ils puissent **voir les informations disponibles publiquement sur un utilisateur** sans
+authentification (exactement comme l’API GitHub) ; donc pour cet endpoint, vous n’aurez pas besoin d’authentification. Quelles sortes
+d’endpoint pourriez-vous concevoir pour cela ?
+
+:::info
+Retrouvez mes résultats [**ici**](https://s3-eu-west-1.amazonaws.com/course.oc-static.com/courses/6824856/Solution+utilisateurs.pdf).
+
+<embed style={{width: "100%", height: "667px" }} src="https://s3-eu-west-1.amazonaws.com/course.oc-static.com/courses/6824856/Solution+utilisateurs.pdf"></embed>
+:::
+
+Et maintenant, les commentaires  ! Comment les ajouter ? Si vous voulez que les utilisateurs puissent commenter les photos d’un autre
+utilisateur, il vous faudra imbriquer une ressource dans une autre. Et ce, parce qu’un commentaire doit être associé à une photo spécifique.
+Par exemple, imaginons que vous vouliez créer un nouveau commentaire pour une photo avec ID. Vous pourriez créer l’endpoint POST
+/photos/{photoId}/comments. Utilisez POST parce que vous créez quelque chose. Ensuite, travaillez en arrière : créez un commentaire (/comments)
+pour une photo spécifique (/{photoId}) parmi toutes les autres photos (/photos).
+
+Et maintenant, voici une description de trois endpoints supplémentaires que vous devrez créer :
+- obtenir tous les commentaires pour une photo spécifique avec l’ID {photoId} ;
+- obtenir le commentaire avec l’ID {commentId} pour la photo avec l’ID {photoId} ;
+- supprimer le commentaire avec l’ID {commentId} pour la photo avec l’ID {photoId}.
+
+Vous ne voulez pas que les commentaires soient modifiables, n’incluez donc pas d’endpoint pour cela. Essayez d’écrire les endpoints pour ces
+trois éléments.
+
+:::info
+Vous trouverez mes réponses [**ici**](https://s3-eu-west-1.amazonaws.com/course.oc-static.com/courses/6824856/Solution+nouveaux+endpoints.pdf).
+
+<embed style={{width: "100%", height: "667px" }} src="https://s3-eu-west-1.amazonaws.com/course.oc-static.com/courses/6824856/Solution+nouveaux+endpoints.pdf"></embed>
+:::
+
+Tous ces endpoints nécessitent une authentification, car ils doivent seulement être modifiables par l’utilisateur qui les a créés, et non les
+autres. Et vous pourriez adopter le même mode de raisonnement pour toutes les autres ressources dont vous aurez besoin.
+
+:::info
+Rappel : ici, nous avons seulement conçu les endpoints. Les informations supplémentaires comme par exemple le contenu du commentaire, ou le nom
+de l’utilisateur que vous souhaitez modifier, seront contenus dans le body.
+:::
+
+### En résumé
+
+- Lors de la planification, pensez à quelles opérations CRUD seront nécessaires aux ressources.
+- Utilisez des noms de ressources et non des verbes en nommant les endpoints.
+- Pensez aux ressources que vous devrez imbriquer _dans_ d’autres ressources.
+- Pensez aux ressources qui nécessiteront une authentification.
+
+_Vous avez la liste des opérations CRUD nécessaires, vos ressources et leur nom, les ressources complémentaires, celles qui nécessiteront une
+authentification, la liste de vos endpoints. Votre base est solide, mais vous pouvez approfondir le tout avec la recherche, par exemple. Passez
+au chapitre suivant, nous allons étoffer nos endpoints grâce à quelques fonctionnalités avancées !_
+
+-----
+
+## Utilisez les fonctionnalités avancées des endpoints
+
+[Utilisez les fonctionnalités avancées des endpoints - Adoptez les API REST pour vos projets web - OpenClassrooms](https://openclassrooms.com/fr/courses/6573181-adoptez-les-api-rest-pour-vos-projets-web/6825136-utilisez-les-fonctionnalites-avancees-des-endpoints)
+
+<Vimeo vimeoId="390934206" />
+
+<br />
+
+Jusqu’à présent, nous avons uniquement vu des endpoints basiques pour obtenir une liste de ressources ou une ressource unique par ID. Mais il
+existe tellement **plus** de possibilités avec les API  ! 💪 Selon la manière dont vous concevez vos URI, vous pouvez créer des requêtes plus
+complexes comme la recherche, le classement, et plus encore. Nous reprendrons l’application InstaPhoto 📸 pour décider de quels types d’URI
+complexes vous aurez besoin.
+
+### Filtrez
+
+Et si vous vouliez que vos utilisateurs puissent rechercher des photos pour des lieux particuliers ? Faites entrer les filtres ! Vous pourriez
+concevoir un endpoint comme celui-ci :
+
+```shell
+GET /photos?location={locationId}
+```
+
+Ce  ”?” est nouveau ! Le point d’interrogation est un moyen pour l’API de savoir que vous passez un **paramètre**. Un paramètre est une donnée
+qui sera manipulée, utilisée d’une certaine manière par le client, le serveur ou le programme informatique visé : ici, l’API. Il vous permet de
+créer une requête qui peut changer selon le terme recherché. Dans ce cas, vous voulez que les utilisateurs puissent rechercher une location
+(ou un lieu) égale à = locationId. Ainsi, vous pouvez écrire tout ID de lieu dans le paramètre de requête, et vous pourrez voir des photos de
+ce lieu. 🙏🌍
+
+:::note ?
+Attends – je pensais que ces valeurs étaient uniquement appelées _endpoints_ quand elles contenaient le nom de domaine et l’URI !
+:::
+
+C’est une bonne remarque. Oui, les URI sont le chemin de la ressource, et un endpoint correspond au nom de domaine plus le chemin de la
+ressource.
+
+### Recherchez
+
+La recherche vous permet de faire une requête sur une liste de ressources correspondant à votre requête de recherche. OK, alors admettons que
+vous vouliez avoir un endpoint où les utilisateurs peuvent rechercher toutes les photos qui ont un quelconque rapport avec le snowboard 🏂.
+Votre endpoint pourrait être celui-ci :
+
+```shell
+GET /photos?search=snowboard
+```
+
+Si vous avez déjà utilisé la fonctionnalité de recherche sur Twitter, vous avez pu constater que leur API de recherche fonctionne de façon très
+similaire  !
+
+<figure>
+    <img src="https://user.oc-static.com/upload/2021/10/15/16343012047223_image57.png"
+         alt="L’API de recherche de Twitter  : l'URL, la fonctionnalité de recherche et le résultat de la page sont encadrés en vert." />
+    <figcaption>L’API de recherche de Twitter !</figcaption>
+</figure>
+
+:::note ?
+Quelle est la différence entre le filtrage et la recherche, alors ? 🤔
+:::
+
+C’est une question courante, qui dépend de la façon dont on trouve un élément. Pour filtrer, vous partez d’un élément plus petit et plus
+spécifique et vous collectez tous les items qui correspondent à cette valeur. Par exemple : vous allez chercher toutes les séries comiques qui
+commencent par la lettre C. Dans ce cas, vous filtrez.
+
+La recherche constitue une approche plus large et élargit votre périmètre à toute chose associée à une certaine valeur.
+
+### Triez
+
+Disons que vous voulez que vos utilisateurs voient tous leurs followers par ordre alphabétique ascendant et par nom de famille. Ce qui est
+assez complexe. Vous pouvez créer un endpoint pour cela !
+
+```shell
+GET /users/{userId}/followers?sort=lastName&order=asc
+```
+
+Le & est nouveau ici ! Il vous permet d’**enchaîner** différentes requêtes ensemble ! Par exemple, vous pouvez trier les utilisateurs par
+lastName (nom de famille) en **ordre ascendant**. Vous avez déjà vu un résultat trié quand vous naviguez sur le web. Mais si ! D’habitude, vous
+voulez voir les publications les plus **récentes** sur Twitter ou Instagram – ce qui constitue en fait un **tri par date** !
+
+Vous pouvez enchaîner tous types de requêtes différentes entre elles. Par exemple, si vous voulez voir tous les utilisateurs vérifiés avec le
+prénom (firstName) Jamie, vous pouvez faire la requête suivante :
+
+```shell
+GET /users?verified=true&firstName=Jamie
+```
+
+Si vous voulez voir toutes les photos prises à New York qui ont été postées le soir du 31 décembre et qui ont plus de 5 000 likes, vous pouvez
+faire la requête suivante :
+
+```shell
+GET /photos?location=NYC&created\_at=2018-12-31&likes\_greater\_than=5000
+```
+
+Et vous pouvez encore en ajouter ! ✨
+
+Pour que ces options fonctionnent, il vous faudra installer cette fonctionnalité en utilisant le langage de code que vous avez choisi pour
+l’application, car aucun d’entre eux n’est intégré à une API lorsque vous la créez. Ici, nous avons juste simplement illustré quelques-uns des
+moyens possibles dont vous pouvez utiliser les requêtes avancées dans votre API.
+
+### Paginez vos résultats
+
+InstaPhoto 📸 a décollé et rencontre un immense succès ! 🙏 Mais vous avez maintenant des milliers de photos dans votre base de données, ce
+qui a rendu vos endpoints /photos très lents, au grand dam de vos utilisateurs. 😰 Que faire ? Le moyen pour corriger cela se trouve dans ce
+qu’on appelle la **_pagination_**. Cela signifie que vos endpoints ne retournent qu’un **nombre limité** d’entrées par **numéro de page** dans
+votre réponse. Vous pouvez décider de combien d’items vous voulez sur chaque page, mais habituellement ce chiffre se situe entre 10 et 100.
+
+Pour faire plus simple, /photos renvoie **toutes** les photos de votre application. Au lieu d’avoir /photos, vous devez donc préciser la page
+que vous voulez obtenir dans la requête :
+
+```shell
+GET /photos?page=23
+```
+
+Ainsi, vous obtiendrez uniquement la **23e** page de photos qui en contient, disons 100 par exemple, et non la totalité d’entre elles. Le temps
+de chargement sera réduit et votre utilisateur sera ravi ! Pour voir les photos suivantes, on peut imaginer que votre utilisateur clique sur un
+bouton pour charger la suite. Et vous aurez donc :
+
+```shell
+GET /photos?page=24
+```
+
+Et ainsi de suite ! ✨
+
+De la même façon, lorsque vous effectuez une recherche Google, il n’est pas rare d’obtenir des millions de résultats ; du coup, Google ne
+renvoie qu’une page des résultats les plus haut classés, et vous pouvez parcourir le reste pour en voir plus.
+
+<figure>
+    <img src="https://user.oc-static.com/upload/2021/10/15/16343013017578_image40.png"
+         alt="1 million de résultats lorsque l'on cherche Kaamelott sur Google !" />
+    <figcaption>1 million de résultats lorsque l'on cherche Kaamelott sur Google !</figcaption>
+</figure>
+
+Google a besoin de paginer ses résultats pour ne pas surcharger votre UI.
+
+La pagination permet aux utilisateurs de votre API de n’appeler qu’une page de résultats à la fois, pour que votre client ou votre UI ne soit
+pas débordé par les résultats  !
+
+### Versionnez
+
+Le dernier outil de design important pour les API est le **versioning (ou** **_versionnage_****)**. En donnant une version à vos API, vous
+pourrez facilement suivre les changements et vous assurer que votre application puisse être **compatible pour les versions antérieures**. Cela
+signifie que vous pouvez continuer à mettre à jour votre API, tout en garantissant que les utilisateurs dépendants d’une version plus ancienne
+puissent continuer à l’utiliser. Par exemple, si certains de vos clients utilisent déjà la version 1 de votre API, vous pouvez publier une
+version 2 de votre API. Alors, les utilisateurs de la version 1 de l’API peuvent continuer à l’utiliser jusqu’à ce qu’ils soient prêts à passer
+à la version 2. Les développeurs peuvent versionner leurs API de deux manières :
+1. Ajoutez un champ **version** dans vos paramètres d’**en-tête** de requête : "accept-version": "1.3".
+2. Ajoutez une **version** à votre URI : **/v1/**.
+
+L’approche la plus courante est d’ajouter un **/v1** au début de votre URI :
+
+```shell
+GET /v1/photos
+```
+
+Les éléments ci-dessus sont des fonctionnalités basées sur le design et que vous devez prendre en compte pour le contenu de votre API, puisque
+vous devrez choisir votre propre langage ou framework. Nous aborderons ce sujet dans le dernier chapitre.
+
+### En résumé
+
+- Le filtrage, la recherche et le tri sont des moyens d’ajouter de la complexité à vos requêtes API.
+- La pagination aide vos clients et utilisateurs API à éviter d’être submergés par trop de données.
+- Le versionnage vous permet de continuer à mettre à jour votre API sans casser le code des personnes qui en dépendent déjà.
+
+_Vous venez de faire un sacré bout de chemin : vous avez construit votre première API et découvert les fonctionnalités avancées des endpoints.
+Mais qu’en est-il si vous souhaitez coder votre propre API ? Quels frameworks existent ? Quels langages utiliser ? Abordons cela rapidement
+dans le prochain et dernier chapitre de ce cours. 🎉_
+
+-----
+
+## Choisissez des frameworks pour construire votre API
+
+[Choisissez des frameworks pour construire votre API - Adoptez les API REST pour vos projets web - OpenClassrooms](https://openclassrooms.com/fr/courses/6573181-adoptez-les-api-rest-pour-vos-projets-web/6825316-choisissez-des-frameworks-pour-construire-votre-api)
+
+<Vimeo vimeoId="390934246" />
+
+<br />
+
+Tout au long de cette partie, nous avons seulement traité la théorie. Vous avez acquis des connaissances sur la conception d’endpoints, le
+filtrage, la recherche, le tri, la pagination et le versionnage. Mais comment construire l’une de ces API vous-même ? 🤔
+
+### Découvrez les frameworks les plus connus pour construire une API
+
+Le processus de développement d’une API dépend du langage ou de l’outil de programmation utilisé. Nous avons vu les meilleures pratiques de
+développement pour que vous soyez préparé au mieux une fois que vous plongerez dans un langage. Voici quelques outils et frameworks populaires
+utilisés par les développeurs :
+
+#### Express.js (JavaScript)
+
+<figure>
+    <img src="https://user.oc-static.com/upload/2021/10/15/16343014535069_image19.jpg"
+         alt="logo Express avec Node.js" />
+    <figcaption>Express avec Node.js</figcaption>
+</figure>
+
+[Express](https://expressjs.com/) utilise Node.js et le JavaScript. C’est un framework minimal et rapide. Il est très flexible et gère des
+applications complètes aussi bien que des API REST. Le plus gros inconvénient est qu’il n’y a pas de manière définie de faire les choses, ce
+qui peut être difficile pour les débutants.
+
+#### Ruby on Rails (Ruby)
+
+<figure>
+    <img src="https://user.oc-static.com/upload/2021/10/15/16343014745543_image58.png"
+         alt="Logo Ruby on Rails" />
+    <figcaption>Ruby on Rails</figcaption>
+</figure>
+
+[Ruby on Rails](https://rubyonrails.org/) est basé sur Ruby. C’est un framework populaire pour de nombreux développeurs. On le considère comme
+un framework magique, car derrière sa simplicité d’utilisation se cache une grande complexité. Cela aide les débutants à commencer dans le
+développement web plus facilement. De nombreuses librairies externes (appelées « Ruby gems ») sont disponibles, et la communauté de développeurs
+Rails est très vaste et met en ligne de très nombreux tutoriels. La courbe d’apprentissage de Rails devient très ardue une fois que vous
+plongez plus profondément dans le framework (pour comprendre la magie qui opère derrière).
+
+#### Django (Python)
+
+<figure>
+    <img src="https://user.oc-static.com/upload/2021/10/15/16343015035319_image47.png"
+         alt="Logo Django" />
+    <figcaption>Django</figcaption>
+</figure>
+
+[Django](https://www.djangoproject.com/) est basé sur Python. Il est utilisé par de grands noms comme Google, YouTube et Instagram. Le
+[framework REST de Django](https://www.django-rest-framework.org/) est facile à utiliser lorsque vous construisez vos API REST avec Django. Il
+demande un effort d’apprentissage aux débutants, mais possède d’excellentes fonctionnalités intégrées, comme l’authentification et la
+messagerie.
+
+:::info
+Vous voulez en savoir plus ? N’hésitez pas à suivre le cours [Mettez en place une API avec Django REST framework](https://openclassrooms.com/fr/courses/7192416-mettez-en-place-une-api-avec-django-rest-framework).
+:::
+
+#### Flask (Python)
+
+<figure>
+    <img src="https://user.oc-static.com/upload/2021/10/15/16343015194955_image2.png"
+         alt="Logo Flask" />
+    <figcaption>Flask</figcaption>
+</figure>
+
+[Flask](http://flask.pocoo.org/) utilise Python pour le web et le développement des API REST. C’est un framework minimaliste, facile
+d’apprentissage et d’utilisation. Flask comprend moins de fonctionnalités intégrées que Django, mais permet aux développeurs d’avoir davantage
+de choix dans les outils additionnels qu’ils utilisent.
+
+#### Spring (Java)
+
+<figure>
+    <img src="https://user.oc-static.com/upload/2021/10/15/16343015467408_image50.png"
+         alt="Logo Spring" />
+    <figcaption>Spring</figcaption>
+</figure>
+
+[Spring](https://spring.io/projects/spring-boot) est un framework web qui utilise Java, un langage très populaire. Il est utilisé par des sites
+web tels que Wix, TicketMaster et BillGuard. Il possède de nombreux outils liés qui boostent sa performance et vous permettent de mettre
+facilement votre business à l’échelle, mais il peut être difficile à prendre en main au début – surtout si vous ne maîtrisez pas Java.
+
+:::info
+Vous voulez en savoir plus ? N’hésitez pas à suivre la [partie 3](https://openclassrooms.com/fr/courses/6900101-creez-une-application-java-avec-spring-boot/7078007-creez-lapi-avec-les-bons-starters)
+du cours _Créez une application Java avec Spring Boot_.
+:::
+
+#### AWS API Gateway
+
+<figure>
+    <img src="https://user.oc-static.com/upload/2021/10/15/16343015630515_image3.png"
+         alt="Logo AWS API Gateway" />
+    <figcaption>AWS API Gateway</figcaption>
+</figure>
+
+[AWS API Gateway](https://aws.amazon.com/api-gateway/) et [AWS Lambda](https://aws.amazon.com/lambda/) sont des moyens de créer et d’utiliser
+des API REST en utilisant principalement une interface utilisateur (donc moins de code !). Ils vous permettent d’intégrer facilement votre site
+web avec tous les services AWS, et vous pouvez aisément scaler et gérer plus de requêtes avec leur infrastructure. Vous devez payer par requête
+effectuée par utilisateur à vos serveurs, mais le premier million est gratuit ! (Soyez prudent tout de même, le nombre de requêtes augmente
+rapidement).
+
+Le choix de l’outil doit avant tout **dépendre des besoins de votre application**. Assurez-vous de faire les recherches nécessaires sur les
+frameworks et les librairies disponibles, pour choisir ce qui correspond à vos besoins. Une fois votre API construite et déployée sur le web,
+vous pouvez utiliser Postman comme nous l’avons fait dans l’ensemble de ce cours, pour la tester !
+
+### En résumé
+
+- Il existe de nombreux outils et frameworks que vous pouvez utiliser pour mettre en pratique ces concepts.
+- Assurez-vous de bien faire vos recherches avant de choisir quel outil API vous convient le mieux.
+
+_Bravo, vous êtes arrivé au bout de ce cours. Rendez-vous dans le chapitre suivant pour une rapide conclusion._
+
+-----
+
+## Résumé du cours
+
+[Résumé du cours - Adoptez les API REST pour vos projets web - OpenClassrooms](https://openclassrooms.com/fr/courses/6573181-adoptez-les-api-rest-pour-vos-projets-web/6825441-resume-du-cours)
+
+<Vimeo vimeoId="390934267" />
+
+<br />
+
+Félicitations ! 👏 Je suis fière de vous ! Nous avons vu beaucoup de choses et vous êtes parvenu à la fin de ce cours ! Vous avez appris ce
+qu’est une API, à utiliser une API et enfin à en concevoir une. ✨
+
+Vous avez maintenant toutes les connaissances nécessaires pour :
+- identifier la valeur des API REST pour vos projets de code ;
+- formuler des requêtes et envoyer des réponses avec une API REST ;
+- concevoir des endpoints pour les API REST.
+
+Il ne vous reste plus qu’à mettre en pratique vos nouvelles compétences ; tout d’abord en vous mettant au défi de passer le quiz final, puis
+en intégrant des API dans vos propres projets de code ! 🙌
+
+Avant de vous laisser, voici un [lexique](https://s3-eu-west-1.amazonaws.com/course.oc-static.com/courses/6573181/Construisez+vos+projets+web+avec+les+APIs+REST_+le+lexique+.pdf)
+reprenant les principales notions abordées dans ce cours.
+
+<embed style={{width: "100%", height: "667px" }} src="https://s3-eu-west-1.amazonaws.com/course.oc-static.com/courses/6573181/Construisez+vos+projets+web+avec+les+APIs+REST_+le+lexique+.pdf"></embed>
+
+<figure>
+    <img src="https://user.oc-static.com/upload/2021/10/15/16343017102949_image63.png"
+         alt="Extrait du résumé du cours" />
+    <figcaption>Extrait du résumé du cours</figcaption>
+</figure>
+
+Happy coding !
+
+-----
+
+## Quiz : Concevez des API REST
+
+[Concevez des API REST - OpenClassrooms](https://openclassrooms.com/fr/courses/6573181-adoptez-les-api-rest-pour-vos-projets-web/exercises/4279)
+
+#### Compétences évaluées
+
+<i class="bi bi-check2-circle"></i> Concevoir des API REST
+
+-----
+
+#### Description
+
+Vous faites partie des nouveaux contributeurs de l’API Star Wars [SWAPI](https://swapi.dev/), qui vous a été présentée dans le quiz de la
+partie 2. Votre objectif : intégrer au sein de l’API des citations de chaque film. Pour y parvenir, vous devez concevoir de nouveaux endpoints.
+Ces derniers devront retourner :
+- toutes les citations ;
+- les citations des personnages ;
+- les citations des personnages par film.
+
+Nous vous conseillons de consulter la [documentation](https://swapi.dev/documentation) de l’API avant de réaliser ce quiz.
+
+Prêt ? Et c’est parti !
+
+-----
+
+#### Question 1 : Commencez par définir votre collection. Sachant que _citation_ se dit “quote” en anglais, comment allez-vous la nommer ?
+
+<i class="bi bi-circle"></i> ApiQuotes<br />
+<i class="bi bi-record-circle"></i> Quotes<br />
+<i class="bi bi-circle"></i> ApiQuote<br />
+<i class="bi bi-circle"></i> Quote<br />
+<br />
+
+_Selon la nomenclature, les collections sont un ensemble de ressources et sont toujours représentées au **pluriel**. La bonne réponse est donc
+Quotes._<br />
+_Les réponses 3 et 4 sont fausses car au singulier._<br />
+_Pour ce qui est de la réponse 1, nous n’avons pas besoin de préciser le terme API dans notre nom de collection._
+
+-----
+
+#### Question 2 : Maintenant que vous avez déterminé votre collection, comment nommez-vous votre ressource ?
+
+<i class="bi bi-circle"></i> ApiQuotes<br />
+<i class="bi bi-circle"></i> Quotes<br />
+<i class="bi bi-circle"></i> ApiQuote<br />
+<i class="bi bi-record-circle"></i> Quote<br />
+<br />
+
+_Selon la nomenclature, les ressources sont toujours au singulier. La bonne réponse est donc **Quote**._<br />
+_Les réponses 1 et 2 sont fausses car au pluriel._<br />
+_Pour ce qui est de la réponse 3, nous n’avons pas besoin de préciser le terme API dans notre nom de ressource._
+
+-----
+
+#### Question 3 : Le premier endpoint que vous devez créer doit retourner la liste de toutes les citations. Quelle URI allez-vous utiliser ?
+
+<i class="bi bi-circle"></i> READ /quotes/:quoteId<br />
+<i class="bi bi-record-circle"></i> GET /quotes<br />
+<i class="bi bi-circle"></i> READ /quotes<br />
+<i class="bi bi-circle"></i> GET /quotes/:quoteId<br />
+<br />
+
+_Pour obtenir cette nouvelle ressource, vous allez utiliser le verbe HTTP “GET” associé à la collection “quotes”. Rappelez-vous :_<br />
+_POST permet de créer une nouvelle ressource._<br />
+_PUT permet de mettre à jour une ressource._<br />
+_DELETE permet de supprimer une ressource._<br />
+_Les réponses 1 et 3 sont fausses car READ n’est pas un verbe HTTP. La réponse 4 retourne une citation : l’ID de la citation **quoteId** est
+précisée dans l’URI._
+
+-----
+
+#### Question 4 : À présent, vous devez obtenir une citation grâce à son ID, quelle URI allez-vous utiliser ?
+
+<i class="bi bi-circle"></i> PUT /quotes/:id<br />
+<i class="bi bi-circle"></i> POST /quotes/:id<br />
+<i class="bi bi-record-circle"></i> GET /quotes/:quoteId<br />
+<i class="bi bi-circle"></i> GET /quoteId/:quotes<br />
+<br />
+
+_Pour obtenir une ressource en particulier, vous devez utiliser GET, ainsi qu’un ID : ici **quoteID**. La bonne réponse est la 3._<br />
+_Les réponses 1 et 2 sont fausses : PUT s’utilise dans le cadre d’une mise à jour, tandis que POST est utilisé pour une création._<br />
+_La réponse 4 inverse les paramètres : on accède d’abord à la collection (ici quotes) avant d’accéder à la ressource (spécifiée ici avec
+**quoteId**)._
+
+-----
+
+#### Question 5 : Vous voulez maintenant que les utilisateurs de votre API puissent obtenir toutes les citations d’un personnage. Quelle URI utilisez-vous ?
+
+<i class="bi bi-circle"></i> GET /quotes/:quoteId/characters<br />
+<i class="bi bi-circle"></i> GET /people/:id/<br />
+<i class="bi bi-circle"></i> GET /quotes/:quoteId/characters/:id<br />
+<i class="bi bi-record-circle"></i> GET /people/:id/quotes<br />
+<br />
+
+_Selon la [documentation](https://swapi.dev/documentation#people), pour obtenir les informations d’un personnage, vous devez utiliser
+l’endpoint **/people/:id**. Le nom de votre collection est **quotes**. La bonne réponse est la 4._<br />
+_La réponse 2 nous retourne les informations d’un personnage mais pas ses citations : elle est donc fausse. Pour que la réponse 2 soit valide,
+il lui manque le paramètre **quoteId**._<br />
+_Les réponses 1 et 3 sont fausses car **characters** n’est pas une collection valide pour cette API : elle n’existe pas._
+
+-----
+
+#### Question 6 : Parmi les propositions suivantes, laquelle permet de supprimer une citation ?
+
+<i class="bi bi-circle"></i> DELETE /people/:quoteId<br />
+<i class="bi bi-circle"></i> DESTROY /quotes/:quoteId<br />
+<i class="bi bi-record-circle"></i> DELETE /quotes/:quoteId<br />
+<i class="bi bi-circle"></i> DESTROY /people<br />
+<br />
+
+_Pour supprimer une ressource, vous devez utiliser le verbe DELETE. De ce fait, les réponses 2 et 4 sont fausses._<br />
+_Ici nous voulons supprimer une ressource **Quote** qui fait partie de la collection **Quotes**. Il nous faut donc l’id de la citation. La
+bonne réponse est donc : DELETE /quotes/:quoteId._<br />
+_La réponse 1 serait juste si on voulait supprimer un personnage._
+
+-----
+
+#### Question 7 : Vous avez créé les endpoints pour obtenir la liste de toutes les citations, puis d’une citation en particulier. Maintenant, vous souhaitez créer un endpoint pour obtenir toutes les citations d’un film précis. Quelle URI utilisez-vous ?
+
+<i class="bi bi-record-circle"></i> GET /films/:id/quotes<br />
+<i class="bi bi-circle"></i> GET /films/:quoteId/quotes<br />
+<i class="bi bi-circle"></i> GET /movies/:id/quotes<br />
+<i class="bi bi-circle"></i> POST /movies/:id/films/:id/quotes<br />
+<br />
+
+_La [documentation](https://swapi.dev/documentation#films) nous indique que pour obtenir un film, il faut utiliser l’URI suivante :
+**films/:id**. Ici nous voulons récupérer les citations d’un film en particulier. On commence par le film **/films/:id**, ensuite on récupère
+les citations avec **/quotes**. On obtient la réponse 1 : **/films/:id/quotes**._<br />
+_La réponse 2 utilise l’ID de la citation et non celle du film dont on veut obtenir les citations._<br />
+_La réponse 3 est fausse : elle utilise la ressource **movies** et non **films**._<br />
+_La réponse 4 est fausse : POST sert à créer et non obtenir une ressource, de plus elle utilise la ressource **movies** et non **films**._
+
+-----
+
+#### Question 8 : Parmi les propositions suivantes, laquelle modifierait la citation “Luke, I am your father!” en “No, I am your father.” ?
+
+```json
+{
+    "title": "No, I am your father."
+}
+```
+
+<i class="bi bi-circle"></i> POST /films/:id/quotes<br />
+<i class="bi bi-circle"></i> POST /quotes/:quoteId/<br />
+<i class="bi bi-circle"></i> PUT /films/:id<br />
+<i class="bi bi-record-circle"></i> PUT /quotes/:quoteId<br />
+<br />
+
+_Dans cette situation, vous deviez mettre à jour l’attribut name avec une nouvelle valeur. Vous allez donc utiliser : PUT /quotes/:quoteId._<br />
+_Les réponses 1 et 2 sont fausses car POST s’utilise pour créer une ressource._<br />
+_La réponse 3 serait juste si vous vouliez mettre à jour le titre d’un film. Or, dans cette situation, vous voulez mettre à jour une citation
+**quoteId** qui fait partie de la collection **quotes**._
+
+-----
+
+#### Question 9 : Vous voulez étoffer votre API et permettre aux utilisateurs de passer plusieurs paramètres dans une requête. Quel signe utilisez-vous ?
+
+<i class="bi bi-circle"></i> $<br />
+<i class="bi bi-circle"></i> &<br />
+<i class="bi bi-record-circle"></i> ?<br />
+<i class="bi bi-circle"></i> :<br />
+<br />
+
+_Vous devez utiliser le point d’interrogation car c’est un moyen pour l’API de savoir que vous passez un **paramètre**. Rappelez-vous : un
+paramètre est une donnée qui sera manipulée, utilisée d’une certaine manière, que ce soit par le client, le serveur ou ici votre API !_
+
+-----
+
+#### Question 10 : Pour cette question, on considère qu’une ressource Quote a pour attributs :
+
+- **_from_ : le nom du personnage qui prononce la citation ;**
+- **_to_ : le nom du personnage à qui est adressée la citation ;**
+- **_title_ : la citation en question.**
+
+**Vous voulez permettre aux utilisateurs de filtrer les réponses et d’obtenir toutes les citations adressées à un personnage. Par exemple ici,
+toutes les citations qui sont adressées à Luke. Quelle URI utilisez-vous ?**
+
+<i class="bi bi-circle"></i> GET /people/1/quotes?to=Luke<br />
+<i class="bi bi-circle"></i> GET /quotes&to=Luke<br />
+<i class="bi bi-record-circle"></i> GET /quotes?to=Luke<br />
+<i class="bi bi-circle"></i> GET /quotes?from=Luke<br />
+<br />
+
+_L’attribut sur lequel vous devez effectuer une recherche est **to**. On obtient en premier toutes les citations grâce à l’URI **/quotes**,
+sur lequel on filtre les réponses grâce à l’attribut **to**. La bonne réponse est donc /quotes?to=Luke_<br />
+_La réponse 1 est fausse car on obtient toutes les citations prononcées par Obi-Wan et adressées à Luke. Dans notre cas, nous voulons **toutes**
+les citations adressées à Luke._<br />
+_La réponse 2 est fausse car le signe **&** s’utilise pour ajouter des paramètres ; pour que l’API comprenne que nous passons des paramètres il
+faut en premier lieu ajouter **?** avant vos paramètres._<br />
+_La réponse 4 est fausse car elle utilise l’attribut from et non to._

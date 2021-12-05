@@ -1,0 +1,487 @@
+---
+sidebar_position: 2
+---
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+import { Vimeo } from 'mdx-embed';
+
+# Identifiez les principales attaques web et les règles de sécurité à adopter
+
+## Tirez un maximum de ce cours
+
+[Tirez un maximum de ce cours - Sécurisez vos applications web avec l'OWASP - OpenClassrooms](https://openclassrooms.com/fr/courses/6179306-securisez-vos-applications-web-avec-lowasp/6519587-tirez-un-maximum-de-ce-cours)
+
+<Vimeo vimeoId="376328423" />
+
+<br />
+
+### Découvrez comment tirer le meilleur de ce cours
+
+Avant de plonger dans le contenu, voici comment utiliser les informations et les outils de ce cours pour **maximiser votre apprentissage !**
+
+En résumé, la meilleure façon de tirer le meilleur parti de ce cours est de :
+1. Regarder chaque vidéo pour comprendre les **concepts** abordés dans chaque chapitre et **pourquoi** ils sont importants.
+2. Lire le texte en bas de la vidéo pour entrer dans les **détails** et apprendre à travers l’exemple et la démonstration.
+3. Pratiquer en même temps que les **exercices** pour apprendre les compétences dont vous aurez besoin pour devenir un héros de la sécurité web.
+4. Vérifier votre compréhension à l'aide des **quiz**, et n'hésitez pas à revenir en arrière et à revoir si nécessaire !
+
+### Découvrez de quoi sera composé ce cours
+
+Dans ce cours, vous découvrirez les 10 vulnérabilités recensées par l'OWASP, _Open Web Application Security Project._ Vous apprendrez comment
+protéger le code de vos applications de ces attaques et comment vérifier que votre application est bien protégée.
+
+_Rendez-vous au chapitre suivant pour entrer dans le vif du sujet !_
+
+-----
+
+## Identifiez les risques de sécurité pour une entreprise
+
+[Identifiez les risques de sécurité pour une entreprise - Sécurisez vos applications web avec l'OWASP - OpenClassrooms](https://openclassrooms.com/fr/courses/6179306-securisez-vos-applications-web-avec-lowasp/6519629-identifiez-les-risques-de-securite-pour-une-entreprise)
+
+<Vimeo vimeoId="376328503" />
+
+<br />
+
+### Appréhendez l'importance de la sécurité
+
+En 2012, la société Yahoo a été **piratée**. À cause d'une mauvaise configuration de la sécurité des bases de données, les mots de passe des
+utilisateurs ont été rendus publics. Vous pouvez imaginer à quel point cela a nui à l’entreprise, et combien d'argent elle a perdu - sans
+parler de l'effet que cela a eu sur plus de 450 000 utilisateurs !
+
+:::note ?
+Une faille aussi importante aurait-elle pu être évitée ?
+:::
+
+Probablement ! 80 % des attaques sur les applications web sont dues à de mauvaises pratiques de développement, qui sont à l’origine des
+vulnérabilités découvertes et exploitées.
+
+De plus en plus d'entreprises utilisent des applications web pour traiter des données privées, telles que des **informations personnelles**
+(nom, date de naissance, numéro d'identification national, etc.) ou des **données bancaires**. Toutes ces données représentent un **attrait
+considérable** pour un attaquant.
+
+Une fuite de données due à un piratage a un **impact majeur** sur l’image d’une entreprise. Ces dommages se matérialisent bien souvent par des
+pertes financières. Le cas de Yahoo n’est pas une exception : de nombreuses entreprises sont victimes de piratages exposant les données des
+utilisateurs. Mais ce n'est pas tout, l'image de marque des entreprises piratées est également écornée en cas d'attaque.
+
+:::info
+Le site [https://haveibeenpwned.com/](https://haveibeenpwned.com/) répertorie les différentes fuites de données liées à des sites web largement
+utilisés.
+:::
+
+_Avez-vous cliqué sur le lien et regardé si l’un de vos comptes a déjà été compromis ?_
+
+Dans ce cours, nous parlerons des **atteintes à la protection des données** qui découlent d'**attaques courantes**. Ces violations sont
+spécifiquement liées aux **applications web**.
+
+### Découvrez comment les entreprises gèrent les risques
+
+La mise en place de pratiques de développement sécurisées au sein d'une entreprise peut représenter un budget considérable. Toutes les
+entreprises ont des actifs qu'elles doivent protéger. Ces actifs peuvent être des équipements physiques tels que des serveurs, mais aussi des
+données que l'entreprise doit protéger. C’est pour cette raison que les entreprises doivent mettre en place une politique de gestion des
+risques, comprenant la gestion de la responsabilité de la sécurité de l'entreprise.
+
+Cependant, cette politique ne sera pas la même en fonction de la valeur des actifs.
+
+:::info
+La **gestion du risque** consiste à déterminer la valeur d'un actif et le coût de sa protection.
+:::
+
+Prenons un exemple.
+
+Si j'ai un ensemble de données d'une valeur de 10 € et que je dois investir 100 € pour les sécuriser, est-ce que cela vaut la peine de les
+sécuriser ? Probablement pas.
+
+Mais qu'en est-il des données qui pourraient valoir des millions d’euros et qui nécessitent un investissement de 100 000 € pour les sécuriser ?
+
+### En résumé
+
+- Les atteintes à la protection des données sur les applications web sont courantes et se produisent même dans les grandes entreprises.
+- Une attaque sur une application web peut faire perdre à une entreprise beaucoup d'argent et sa réputation.
+- Le risque est mesuré en comparant la valeur des données au coût de leur sécurisation.
+
+_Nous venons de voir comment les entreprises peuvent gérer le risque. Dans le prochain chapitre, nous aborderons les réglementations à respecter._
+
+-----
+
+## Identifiez les règles de sécurité à appliquer par les entreprises
+
+[Identifiez les règles de sécurité à appliquer par les entreprises - Sécurisez vos applications web avec l'OWASP - OpenClassrooms](https://openclassrooms.com/fr/courses/6179306-securisez-vos-applications-web-avec-lowasp/6519695-identifiez-les-regles-de-securite-a-appliquer-par-les-entreprises)
+
+<Vimeo vimeoId="376328553" />
+
+<br />
+
+De nos jours, la plupart des informations se trouvent facilement sur le web. Un pirate n'a pas besoin d'entrer dans un immeuble pour obtenir
+des données, il peut le faire directement depuis chez lui ! Cela signifie que les entreprises doivent mettre en place des mesures de sécurité
+pour se protéger des attaques potentielles.
+
+### Découvrez les mesures de sécurité pour les applications web
+
+Il existe trois principes de sécurité qui peuvent être appliqués pour garantir la sécurité d’une application ou d’une infrastructure.
+1. **La confidentialité.** C'est l'assurance que les personnes non autorisées n'accèdent pas à des informations sensibles.
+2. **L'intégrité.** Elle permet d'être sûr que les données sont fiables et n'ont pas été modifiées par des personnes non autorisées.
+3. **La disponibilité.** C'est l’assurance qu'il n'y a pas de perturbation d'un service ou de l'accessibilité aux données.
+
+La sécurité de l'information repose sur l'équilibre entre ces trois principes.
+
+Ces principes fondamentaux sont des éléments clés dans l’élaboration des politiques de sécurité en entreprise. Mais il existe également
+**des réglementations imposées** pour certains secteurs d’activités qui influencent également les politiques de sécurité des entreprises.
+
+Il existe de nombreux règlements en fonction des domaines d’activité des entreprises, en voici quelques-uns qui pourront vous être utiles.
+
+### Identifiez les principales réglementations de sécurité pour les applications web
+
+En 2018, le **règlement général sur la protection des données (RGPD)** est entré en vigueur. Il modifie la manière dont les données personnelles
+sont **stockées** et **utilisées** et la façon dont les entreprises les **traitent**. Il permet aux résidents de l'Union européenne de
+contrôler leurs informations personnelles, comme leur nom, leur âge, leur affiliation politique et leur orientation sexuelle, par exemple.
+
+Les entreprises ne respectant pas le RGPD sont passibles d'une amende. Bien qu'il soit basé sur la législation de l'Union européenne, il
+concerne tous les pays car les applications web sont disponibles dans le monde entier. Les entreprises en dehors de l’UE qui font du business
+avec des entreprises européennes devront respecter le RGPD pour leurs applications web à destination du marché européen.
+
+:::note ?
+Comment puis-je être sûr que mon application web répond à ces normes ?
+:::
+
+Un des éléments primordial et de veiller à garantir la sécurité des données personnelles stockées et échangées via l’application web. Les
+données collectées doivent aussi répondre à un usage spécifique.
+
+De plus, il est nécessaire d’avoir la possibilité de **supprimer** les données personnelles à la demande du client. Par exemple, si un
+utilisateur veut se désabonner d'une newsletter, il faut s’assurer qu'il existe une option permettant le désabonnement. Une fois qu’une
+personne se désabonne, l'adresse e-mail doit être automatiquement supprimée de la base de données.
+
+:::info
+Jetez un coup d'œil au [**site web officiel du RGPD**](https://eugdpr.org/) (en anglais) pour avoir plus d'informations sur la façon dont vous
+pouvez développer votre application web selon les normes du règlement.
+:::
+
+#### Découvrez la norme PCI DSS
+
+La norme **Payment Card Industry Data Security Standard (PCI DSS)** est une norme établie pour toutes les entreprises qui traitent des
+**données bancaires**. La sécurisation des données bancaires met l'accent sur la sécurité lors de **la transmission, du traitement et du
+stockage** des données.
+
+De plus en plus de plateformes web et de solutions de stockage gèrent les applications pour les entreprises, il est essentiel que le
+fournisseur soit également conforme à la norme PCI DSS.
+
+Si vous créez une application web qui traite des données bancaires, comme une boutique en ligne ou un site web par abonnement, vous devez
+**chiffrer les transmissions pour garantir la sécurité des données en transit**. Les données bancaires transmises en texte clair constituent
+une violation de la norme PCI DSS, ce qui peut faire l’objet d’une amende.
+
+:::info
+Si vous souhaitez en savoir plus, voici le [site officiel du PCI DSS](https://www.pcisecuritystandards.org/) (en anglais).
+:::
+
+#### Appréhendez la réglementation du traitement des données de santé
+
+Les données de santé sont des données à caractère personnel particulières car considérées comme sensibles. Elles font à ce titre l’objet d’une
+protection spécifique inscrite dans de nombreux textes comme le règlement européen sur la protection des données personnelles, la loi
+Informatique et Libertés, le Code de la santé publique, etc., afin de garantir le respect de la vie privée des personnes.
+
+:::info
+Pour en savoir plus sur le traitement des données personnelles en France, rendez-vous sur le site de la [CNIL](https://www.cnil.fr/).
+:::
+
+#### Découvrez l'OWASP
+
+**L’Open Web Application Security Project (OWASP)** est un organisme impartial, mondial et sans but lucratif. Il évalue les **dix principaux
+risques pour** la **sécurité** des applications web et préconise **un développement logiciel sécurisé**.
+
+:::info
+L'[OWASP](https://www.owasp.org/index.php/Main_Page) organise des rencontres et des conférences ouvertes à tous à travers le monde. Il est donc
+possible de rencontrer et d’échanger avec la communauté pour effectuer une veille constante.
+:::
+
+En tant que développeur web, il est important d'apprendre comment sécuriser votre application, afin qu'elle ne soit pas vulnérable aux attaques
+courantes. Le **Top Ten de l'OWASP** fournit des lignes directrices à suivre permettant de respecter des bonnes pratiques pour protéger une
+application web. Cela vous permettra de prendre en compte la sécurité dès vos premiers développements et apportera également une crédibilité
+supplémentaire à vos clients ou à l’entreprise pour laquelle vous travaillez. De plus, si vous avez besoin de développer votre application web
+selon les normes **RGPD, PCI DSS ou autre**, vous devrez d'abord la sécuriser avec l’OWASP !
+
+### En résumé
+
+- **La confidentialité, l'intégrité et la disponibilité** sont les principes de base de la sécurité de l'information.
+- Le **RGPD** garantit la confidentialité des données pour les résidents de l'UE.
+- **PCI DSS** assure la conformité de la sécurité des sites qui traitent les données bancaires.
+- **Le traitements des données de santé** est réglementé par la CNIL et nécessite une prise en charge particulière.
+- L’**OWASP** est une organisation à but non lucratif qui propose des référentiels sur les risques de sécurité des applications web. Le
+**Top Ten 2017 de l'OWASP** est la dernière mise à jour sur les risques de sécurité des applications web aujourd'hui.
+
+_Dans les chapitres suivants, vous découvrirez une vue d'ensemble de l'_**_OWASP_** _et des_ _**dix principales attaques**._
+
+-----
+
+## Découvrez l'Open Web Application Security Project (OWASP)
+
+[Découvrez l'Open Web Application Security Project (OWASP) - Sécurisez vos applications web avec l'OWASP - OpenClassrooms](https://openclassrooms.com/fr/courses/6179306-securisez-vos-applications-web-avec-lowasp/6519752-decouvrez-lopen-web-application-security-project-owasp)
+
+<Vimeo vimeoId="376328631" />
+
+<br />
+
+Il existe une multitude d’attaques permettant de compromettre un système. Nous allons nous concentrer sur les attaques ciblant les applications
+web et sur la façon de les sécuriser.
+
+### Découvrez le principe d'une attaque web ?
+
+**Les attaques web** tirent parti des failles de sécurité de vos applications web. On parle également de **vulnérabilités**. Le Top Ten de
+l'OWASP est un document proposant une classification des attaques web les plus courantes ainsi que les contre-mesures associées.
+
+Lors du développement d’applications, les développeurs ne sont pas forcément au fait des mesures de sécurité à appliquer, et la sécurité
+représente souvent une contrainte budgétaire et opérationnelle.
+
+C'est pour cette raison qu'il est important de prendre en compte la sécurité dès les premiers développements. En effet, une prise en compte
+tardive de la sécurité pourra représenter un coût supplémentaire, sans parler du risque encouru en cas d’attaque.
+
+### Découvrez l’OWASP ?
+
+L'**Open Web Application Security Project** (OWASP) est une organisation à but non lucratif fondée en 2004 pour prévenir de manière proactive
+les attaques sur les applications web. Il s'agit du premier effort de normalisation des pratiques de développement sécurisé.
+
+En 2001, l'OWASP n'était pas une organisation officielle, mais plutôt un collectif qui préconisait des **pratiques de développement sécurisé**.
+
+Ce collectif a pris de l'ampleur et est devenu l’**OWASP foundation** en 2004, avec une norme éthique pour maintenir une neutralité et l'absence
+de pressions commerciales.
+
+L'OWASP n'est réglementée par aucune entreprise. Elle propose un référentiel neutre permettant d’accompagner les entreprises dans le processus
+de sécurisation ou d’audit de sécurité.
+
+### Découvrez comment le Top Ten de l'OWASP est utilisé par les entreprises
+
+Avec l'évolution d'Internet, les plus grandes entreprises ont une présence significative en ligne, ce qui les oblige à fournir et à maintenir
+des applications web.
+
+La plupart des processus internes utilisent également des applications web. Toute application qui traite des données sensibles peut être
+attaquée et nécessite donc une sécurité standardisée.
+
+Les entreprises qui ne traitent pas de données sensibles, mais qui ont besoin d'une plateforme web pour leur business, sont également exposées
+aux attaques web.
+
+Par exemple, une entreprise qui fournit des informations, comme un site d'actualité, peut ne pas avoir besoin des données personnelles de ses
+clients mais nécessite que le site web soit disponible pour permettre la continuité de service. Si une attaque faisait s'effondrer le site,
+cela aurait une incidence sur les revenus de l'entreprise.
+
+Le Top Ten de l'OWASP fournit une base de référence avec une **liste de contrôles** à effectuer pour atténuer les risques les plus courants en
+matière de sécurité. Cette **base de référence** est également utilisée pour répondre à des normes réglementaires plus strictes, telles que le
+RGPD par exemple.
+
+:::info
+Pour plus d'informations, reportez-vous sur la [page web de l’OWASP](https://www.owasp.org/index.php/Top_10-2017_Top_10) (en anglais).
+:::
+
+### Appréhendez l'OWASP Top Ten
+
+Dans le Top Ten de l’OWASP, les attaques sont classées par ordre d’importance. Les vulnérabilités présentes dans le Top Ten existent dans les
+applications web de tous les langages et frameworks. Il n'existe pas de langage de programmation exempt de vulnérabilités.
+
+Voici les 10 attaques les plus fréquentes contre les applications web, selon le Top Ten de l’OWASP en 2017.
+
+##### 1 - Injection
+
+Une attaque par injection est une attaque permettant l’injection de **code arbitraire** dans l’application. Cela se produit lorsque des données
+non maîtrisées sont exécutées par le moteur présent sur le backend de l’application. Les données de l’attaquant sont exécutées **sans
+autorisations adéquates**.
+
+L’injection de code non autorisée peut permettre à un attaquant d’accéder à des données auxquelles il n’a normalement pas accès.
+
+##### 2 - Piratage de session
+
+Beaucoup d'applications exigent qu'un utilisateur se connecte pour arriver sur des pages auxquelles lui seul a accès. L’application est
+vulnérable à une attaque si un utilisateur malveillant peut obtenir un **accès non autorisé** aux mots de passe, clés et jetons pour pirater
+la session d'un autre utilisateur.
+
+##### 3 - Exposition de données sensibles
+
+Les données stockées ou échangées via une application doivent être protégées pour éviter l’interception par une personne malveillante. Les
+bases de données qui enregistrent les données personnelles, les données de cartes de crédit, les noms d'utilisateur et les mots de passe
+représentent une cible de choix pour un pirate. Si ces données ne sont pas **chiffrées**, elles ne sont pas sécurisées et peuvent être
+récupérées lorsqu’elles sont en transit par exemple. L'utilisation de **techniques de chiffrement** et de pratiques de sécurité peut atténuer
+ce type d’attaques.
+
+##### 4 - Entités externes XML (XXE)
+
+Le **format XML** permet de faciliter l’échange de données sous forme d'arborescence. Il est largement utilisé sur Internet. Il peut être
+exploité via l’injection XXE ou XML External Entity. XML External Entity est une attaque contre les applications qui parsent des entrées XML
+(exemple flux RSS). Cette attaque a lieu lorsque l'analyseur XML est mal configuré et contient une référence à une entité externe.
+
+##### 5 - Contournement du contrôle d’accès.
+
+Cette attaque vise les fonctionnalités des applications web qui nécessitent un **contrôle d'accès**. Dans ce cas, les pirates peuvent utiliser
+l'URL pour contourner l'authentification, par exemple. Ce type d’exploitation peut par exemple révéler comment une base de données est
+organisée.
+
+##### 6 - Security Misconfiguration
+
+Une mauvaise configuration de sécurité est le plus souvent observée dans les en-têtes HTTP qui permettent de donner des indications sur la
+configuration du serveur, ou via la gestion des exceptions par défaut. Les codes d'erreur et les exceptions courantes peuvent donner à un
+attaquant un aperçu de l'application.
+
+##### 7 - Cross-Site Scripting (XSS)
+
+Les **failles XSS** se produisent chaque fois qu'une application inclut des **données non fiables** dans une nouvelle page web sans validation
+ou échappement. Les failles XSS permettent aux attaquants d'exécuter des scripts dans le navigateur de la victime, ce qui peut détourner des
+sessions utilisateur, altérer des sites web ou rediriger l'utilisateur vers un site malveillant.
+
+##### 8 - Désérialisation non sécurisée (Insecure Deserialisation)
+
+Une vulnérabilité de type “insecure deserialisation” permet à un utilisateur malveillant d'accéder et de modifier les fonctionnalités de
+l’application ciblée.
+
+##### 9 - Utilisation de composants présentant des vulnérabilités connues
+
+Même si votre application est sécurisée, vous devez vous assurer que le framework, les bibliothèques, les appels API et la plateforme que vous
+utilisez ne sont pas vulnérables.
+
+Lorsqu'une nouvelle vulnérabilité est découverte, un **correctif** est généralement proposé. Il faudra alors l’appliquer pour garantir la
+sécurité de l’application.
+
+##### 10 - Manque de surveillance et de monitoring
+
+Pour garantir la sécurité d’une application, il est nécessaire de surveiller et de **monitorer** les connexions. De nombreux serveurs
+vulnérables servent de rebond aux attaquants. La mise en place de monitoring permettra de détecter une anomalie sur le serveur.
+
+:::note ?
+Mais, est-il possible de sécuriser le code de toutes les attaques présentes dans le Top Ten de l'OWASP ?
+:::
+
+Absolument !
+
+Si vous utilisez les bonnes pratiques de sécurité et que vous êtes conscient des risques, vous avez une longueur d'avance !
+
+Rappelez-vous que 80 % des applications présentent des vulnérabilités communes telles que décrites dans l'OWASP. Apprendre à les connaître et
+utiliser des techniques simples de développement sécurisé dont nous parlerons dans ce cours vous aidera à créer un code de qualité !
+
+### En résumé
+
+Comme vous avez pu le voir, il y a dix types d'attaques qui sont spécifiés dans OWASP :
+- l'injection ;
+- le piratage de session ;
+- l'exposition de données sensibles ;
+- les entités externes XML (XXE) ;
+- le contournement des contrôles d'accès ;
+- security misconfiguration ou mauvaise configuration de sécurité ;
+- Cross-Site Scripting (XSS) ou failles XSS ;
+- la désérialisation non sécurisée ;
+- l'utilisation de composants présentant des vulnérabilités connues ;
+- le manque de surveillance et de monitoring.
+
+Assurez-vous de bien comprendre la différence entre ces dix types d'attaques et la façon dont elles peuvent être liées à votre application web.
+
+_Après un bref quiz, nous verrons comment mettre en œuvre les bonnes pratiques de développement du Top Ten de l'OWASP pour améliorer la
+sécurité d’une application web._
+
+-----
+
+## Quiz : Identifiez les principales attaques et les règles de sécurité à adopter
+
+[Identifiez les principales attaques et les règles de sécurité à adopter - OpenClassrooms](https://openclassrooms.com/fr/courses/6179306-securisez-vos-applications-web-avec-lowasp/exercises/3756)
+
+#### Compétences évaluées
+
+<i class="bi bi-check2-circle"></i> Identifiez les principales attaques web et les règles de sécurité à adopter
+
+-----
+
+#### Question 1 : Lorsqu’une application web est vulnérable, qu’est-ce que cela signifie ?
+
+<i class="bi bi-circle"></i> L'application web est prête à partir en production.<br />
+<i class="bi bi-record-circle"></i> L’application peut subir une attaque de la part d’une personne malveillante.<br />
+<i class="bi bi-circle"></i> L'application web ne sera jamais sécurisée et l'auteur doit en créer une nouvelle.<br />
+<i class="bi bi-circle"></i> L'application web ne sera jamais utilisée par une entreprise.<br />
+<br />
+
+_Une application vulnérable n'est pas sécurisée contre les attaques courantes. Cependant, ces vulnérabilités peuvent être corrigées à l'aide de
+pratiques de codage sécurisées. Il n'est pas nécessaire de créer une nouvelle application web._
+
+-----
+
+#### Question 2 : Quelles sont les exigences spécifiques du RGPD en termes de cybersécurité ?
+
+<i class="bi bi-record-circle"></i> La sécurisation des données personnelles<br />
+<i class="bi bi-circle"></i> La sécurisation de tous les serveurs web dans le monde<br />
+<i class="bi bi-circle"></i> L’implémentation d’une bonne pratique de gestion des données dans les entreprises<br />
+<i class="bi bi-circle"></i> L’utilisation de serveurs cloud pour toutes les applications web<br />
+<br />
+
+_Le règlement général sur la protection des données ou RGPD requiert que les applications web sécurisent les informations personnelles des
+résidents européens._
+
+-----
+
+#### Question 3 : Si vous deviez créer un site de commerce en ligne, quelle conformité aux normes serait requise ?
+
+<i class="bi bi-circle"></i> OWASP<br />
+<i class="bi bi-circle"></i> RGPD<br />
+<i class="bi bi-record-circle"></i> PCI DSS<br />
+<br />
+
+_PCI DSS est un règlement spécifique à tout site qui stocke et traite des données de carte de crédit, c’est donc le cas pour un site de
+commerce en ligne._
+
+-----
+
+#### Question 4 : Dans l'entreprise, qui est finalement tenu pour responsable en cas de violation de données ?
+
+<i class="bi bi-circle"></i> L’utilisateur<br />
+<i class="bi bi-circle"></i> Les agents de sécurité des serveurs web<br />
+<i class="bi bi-record-circle"></i> Le PDG<br />
+<i class="bi bi-circle"></i> Le département Informatique<br />
+<br />
+
+_Le PDG ou le président est responsable de l’approbation et du financement des politiques de sécurité. Les utilisateurs, les agents de sécurité
+et le service informatique ne peuvent être tenus pour responsables, car ils ne prennent pas de décision en matière de stratégie de sécurité._
+
+-----
+
+#### Question 5 : Que perdent les entreprises après une violation de données importante ?
+
+*Attention, plusieurs réponses sont possibles.*
+
+<i class="bi bi-square"></i> Des serveurs web<br />
+<i class="bi bi-check-square-fill"></i> De l’argent<br />
+<i class="bi bi-square"></i> Des employés<br />
+<i class="bi bi-check-square-fill"></i> La confiance des clients<br />
+<br />
+
+_Une entreprise perd de l'argent ainsi que la confiance de ses clients en cas d’attaque concernant les données des utilisateurs. Les clients
+s'inquiètent de la confidentialité de leurs données. La perte la plus importante pour une entreprise est son argent et sa réputation._
+
+-----
+
+#### Question 6 : Qu'est-ce qui différencie OWASP des autres réglementations de conformité d'entreprise ?
+
+<i class="bi bi-circle"></i> Les bonnes pratiques OWASP ne sont pas utilisées pour les applications web<br />
+<i class="bi bi-circle"></i> Il propose une procédure de traitement des incidents de sécurité<br />
+<i class="bi bi-circle"></i> Il se concentre uniquement sur les données de cartes de crédit<br />
+<i class="bi bi-record-circle"></i> Il permet d'identifier les attaques courantes dans les applications web<br />
+<br />
+
+_OWASP est spécifique aux applications web. La norme PCI DSS est spécifiquement axée sur les données de cartes de crédit._
+
+-----
+
+#### Question 7 : Qu’est ce que le Top 10 de l’OWASP ?
+
+<i class="bi bi-record-circle"></i> Les dix principales attaques courantes contre les applications web aujourd'hui<br />
+<i class="bi bi-circle"></i> Les hackers les plus recherchés par le FBI<br />
+<i class="bi bi-circle"></i> Dix techniques d'injection SQL<br />
+<i class="bi bi-circle"></i> Les sociétés de cartes de crédit les plus vulnérables aujourd'hui<br />
+<br />
+
+_OWASP Top Ten définit les dix principales attaques communes sur les applications web. Ce n'est pas spécifique aux injections SQL._
+
+-----
+
+#### Question 8 : Quels types de données peuvent être sécurisés par l'OWASP ?
+
+*Attention, plusieurs réponses sont possibles.*
+
+<i class="bi bi-check-square-fill"></i> Les données au repos/en stockage<br />
+<i class="bi bi-check-square-fill"></i> Les données en transmission<br />
+<i class="bi bi-check-square-fill"></i> Les données dans votre téléphone<br />
+<i class="bi bi-square"></i> Les données d’un rapport confidentiel<br />
+<br />
+
+_Les données doivent être protégées, qu'elles soient stockées, transmises depuis l'application web vers un lieu de stockage ou sur votre
+téléphone. Les données d'un rapport peuvent être sensibles, mais si elles sont sur papier, elles nécessitent une protection physique. OWASP ne
+définit pas les sauvegardes physiques._

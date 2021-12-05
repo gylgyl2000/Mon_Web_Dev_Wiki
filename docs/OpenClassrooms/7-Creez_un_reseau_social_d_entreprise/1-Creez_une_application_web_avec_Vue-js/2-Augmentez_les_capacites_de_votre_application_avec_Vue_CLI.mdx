@@ -1,0 +1,1029 @@
+---
+sidebar_position: 3
+---
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+import { Vimeo } from 'mdx-embed';
+
+# Augmentez les capacités de votre application avec Vue CLI
+
+## Créez un nouveau projet avec Vue CLI
+
+[Créez un nouveau projet avec Vue CLI - Créez une application web avec Vue.js - OpenClassrooms](https://openclassrooms.com/fr/courses/6390311-creez-une-application-web-avec-vue-js/6862871-creez-un-nouveau-projet-avec-vue-cli)
+
+![](https://user.oc-static.com/upload/2020/05/20/15899591126812_Bannee-dimension-720-798-02.png)
+
+Dans le développement frontend, il fut un temps où tout était fait à la main. Qu'il s'agisse d'intégrer la bonne feuille de style à certaines
+pages en fonction de son contenu, ou s'assurer de minimiser la taille du fichier JavaScript pour optimiser le temps de chargement d'une page.
+Petit à petit, nous avons adapté nos outils pour automatiser un certain nombre de process.
+
+C'est là qu'interviennent les outils de build (c'est-à-dire gulp, webpack, etc.) et l'interface en ligne de commande.
+
+De nos jours, pour la plupart des frameworks connus, une interface en ligne de commande (CLI) est obligatoire pour construire des applications
+en entreprise. Cela est notamment dû à la complexité qui entoure ces outils de build. Les outils CLI existent fondamentalement pour fournir aux
+développeurs une base standard facilitant le démarrage de projet. Ainsi, les développeurs consacrent davantage de temps à la construction de
+l'application plutôt qu'à sa configuration.
+
+### Installez Vue CLI
+
+Pour commencer à utiliser la CLI de Vue, la version de Node 8.9 ou supérieure est nécessaire (v8.11.0 ou + est recommandée). L'installation sur
+votre machine se fait en mettant cette ligne dans votre terminal (ou Windows PowerShell si vous êtes sur Windows) :
+
+```shell
+npm install -g @vue/cli
+# OU (selon si vous avez l’habitude d’utiliser npm ou yarn)
+yarn global add @vue/cli
+```
+
+Une fois l'installation terminée, vous devriez être en mesure d'exécuter :
+
+```shell
+vue --version
+# 4.x
+```
+
+Lorsque votre terminal affiche une version 3.x ou 4.x, cela signifie que Vue CLI a été installé avec succès !
+
+### Créez un nouveau projet
+
+<Vimeo vimeoId="413529428" />
+
+<br />
+
+Créer un nouveau projet avec Vue CLI est une opération simple. Lançons-nous et créons un projet ensemble :
+
+```shell
+vue create my-first-vue-cli-app
+```
+
+Vous devriez être invité à choisir un _preset_ ( vous pouvez le traduire par "préréglage") :
+
+<figure>
+    <img src="https://user.oc-static.com/upload/2020/04/23/15876409355056_15694212145585_oc-ss.png"
+         alt="Exemple de preset que vous verrez en utilisant la commande Vue create" />
+    <figcaption>Exemple de preset que vous verrez en utilisant la commande Vue create</figcaption>
+</figure>
+
+Un preset correspond aux options préconfigurées installées automatiquement avec chaque application. Comme votre installation de Vue CLI est
+nouvelle, vous verrez qu'elle ne dispose que d'un preset par défaut (Babel, ESLint), ainsi que d'une option permettant de sélectionner les
+fonctionnalités manuellement. Pour parcourir l'ensemble des configurations de Vue CLI, utilisez la touche "flèche vers le bas" pour déplacer la
+sélection, et appuyez sur Entrée pour choisir notre sélection.
+
+:::info
+Pour naviguer dans l'outil Vue CLI, vous devez utiliser :
+- les touches fléchées pour la direction ;
+- la touche Retour/Entrée pour choisir votre option ;
+- la barre d'espace pour sélectionner une option parmi les inputs de type "checkbox".
+:::
+
+<figure>
+    <img src="https://user.oc-static.com/upload/2020/04/23/15876409861916_15694214624254_oo-ss-1.png"
+         alt="Liste des choix possibles quand vous choisissez de configurer votre app manuellement" />
+    <figcaption>Liste des choix possibles quand vous choisissez de configurer votre app manuellement</figcaption>
+</figure>
+
+Une fois que vous avez choisi « Manually select features » (_sélectionner les fonctionnalités manuellement_), l'écran d'accueil suivant
+devrait apparaître :
+
+<figure>
+    <img src="https://user.oc-static.com/upload/2020/04/23/15876410348292_15694216033937_oc-ss-2.png"
+         alt="Lorsque vous choisissez CSS preprocessors, le cercle devient vert pour vous indiquer qu'il est sélectionné" />
+    <figcaption>Lorsque vous choisissez CSS preprocessors, le cercle devient vert pour vous indiquer qu'il est sélectionné</figcaption>
+</figure>
+
+:::info
+Par ailleurs, vous avez peut-être également remarqué que vous pouvez mettre en place vos outils de tests d'intégration à cet endroit. Même si
+nous n'aborderons pas les tests à proprement parler dans ce cours, je recommanderais les bibliothèques Jest pour les tests unitaires et Cypress
+pour les tests end-to-end (e2e).
+:::
+
+Les options présentées ici dépassent certes le cadre de ce cours, mais vous pouvez voir qu'il existe de nombreuses options pour configurer vos
+projets. Passons maintenant au préprocesseur CSS.
+1. Il vous sera utile si vous souhaitez activer le « mode historique » pour le routeur. Tapez `n` et appuyez sur la touche Retour.
+2. Pour notre préprocesseur CSS, nous choisirons `Sass/SCSS (with node-sass)`.
+3. Pour notre linter, nous choisirons `ESLint with error prevention only`.
+4. Pour la configuration de lint, choisissez `Lint on save`.
+5. Pour l'emplacement souhaité de la configuration, choisissez `In dedicated config files`.
+
+Vous disposez également d'une option permettant de sauvegarder cette configuration pour de futures applications, mais comme il s'agit d'une
+configuration temporaire, nous allons saisir `N` pour que notre configuration ne soit pas sauvegardée comme preset.
+
+:::info
+Vous n’avez pas tout ça qui s’affiche ? Pas de soucis, en utilisant le GUI, peut-être que ce sera plus simple pour vous (voir juste après Vue
+UI).
+:::
+
+Votre terminal va maintenant commencer à installer tous les paquets nécessaires pour la CLI. Les réglages de terminal diffèrent légèrement d'un
+utilisateur à l'autre, mais une fois que vous voyez quelque chose comme :
+
+```shell
+[1/4] 🔍 Resolving packages...
+[2/4] 🚚 Fetching packages...
+[3/4] 🔗 Linking dependencies...
+[4/4] 🔨 Building fresh packages...
+success Saved lockfile.
+✨ Done in 220.83s.
+⚓ Running completion hooks...
+
+📄 Generating README.md...
+
+🎉 Successfully created project my-first-vue-cli-app.
+👉 Get started with the following commands:
+
+$ cd my-first-vue-cli-app
+$ npm run serve
+```
+
+... cela veut dire qu'il va être temps de découvrir ce que vous avez installé 🤩!
+
+:::info
+Vue CLI dispose également d'une interface utilisateur très performante et agréable à utiliser lancée en local. Cette interface dispose d'une
+version en français pour celles et ceux qui préfèrent. Vous pouvez la lancer avec la commande `vue ui`.
+
+<figure>
+    <img src="https://user.oc-static.com/upload/2020/04/01/15857511629083_Capture%20d%E2%80%99e%CC%81cran%202020-04-01%20a%CC%80%2016.24.40.png"
+         alt="Surcouche d'Interface Vue CLI" />
+    <figcaption></figcaption>
+</figure>
+
+Pour en savoir plus, consultez la [documentation](https://cli.vuejs.org/guide/creating-a-project.html).
+:::
+
+### Découvrez l’architecture d’une application Vue CLI
+
+Lorsque vous ouvrez votre nouveau projet, `my-first-vue-cli-app`, dans votre éditeur de code, vous devriez voir quelque chose semblable à ce qui
+suit.
+
+Le principal contenu à connaître est le suivant :
+- **node_modules** - contient l'ensemble des dépendances qui permettent à votre application de faire tout ce qu'elle fait. Vous n'aurez que
+rarement (sinon jamais) besoin d'aller dans ce dossier, car il n'est généralement pas attaché au repository, mais directement géré par npm ;
+- **public** - ce répertoire contient le `favicon.ico` et le fichier `index.html` de base qui serviront à générer le reste de votre application ;
+- **src** - ce répertoire est celui dans lequel vous passerez 99 % de votre temps, car la quasi-totalité de votre code y sera située ;
+- **.gitignore** - ce fichier contient une liste de fichiers et/ou de répertoires qui ne seront pas attachés à un repository. Citons ici deux
+exemples courants avec le répertoire `/dist`, qui est généré de manière automatique à chaque build (et ne nécessite donc aucun suivi), et le
+répertoire `node_modules`, qui est automatiquement recréé à chaque lancement de la commande `npm install` ou `yarn install` ;
+- **package.json** - il s'agit du fichier de configuration de base de votre projet. Il comprend des métadonnées comme le nom et la version de
+votre projet, mais il contient également des informations essentielles comme les scripts pouvant être exécutés (comme _serve_, _build_, _lint_)
+et les dépendances requises pour votre projet :
+   - **serve** - il s'agit du script qui permet de lancer une environnement de développement en local,
+   - **build** - ce script permet de créer la version finale qui sera livrée à un client ou à l'utilisateur.
+
+Continuons et ouvrons ensuite le répertoire **src** :
+- **Assets** - il s'agit du répertoire dans lequel vous placerez les images et les autres ressources obligatoires auxquelles vous devrez
+peut-être faire référence dans votre application (c'est-à-dire les vidéos, les documents PDF, etc.).
+- **Components** - ce répertoire contiendra les composants de notre application. Si vous ne savez pas encore ce que sont les composants, ne
+vous inquiétez pas. Je traiterai ce sujet dans le prochain chapitre !
+- **main.js** - c'est ici que sont définies les options de configuration plus high-level de Vue. Ce fichier peut sembler légèrement différent
+de ce à quoi nous sommes habitués, mais l'instanciation d'une nouvelle application Vue devrait ressembler à ce que nous avons fait précédemment.
+
+En regardant cette liste, vous avez peut-être remarqué que j'ai omis un fichier important : **App.vue**. Nous sommes en effet sur le point de
+nous plonger dans l'un des aspects les plus intéressants de Vue : les composants monofichiers.
+
+Avant de passer au chapitre suivant, retournons dans le terminal et testons :
+
+```shell
+npm run serve
+```
+
+Cette commande lance un environnement de développement local (généralement à l'adresse http://localhost:8080) qui vous permet de voir et
+d'interagir avec les changements dans votre application au fur et à mesure que vous codez. C'est l'un des meilleurs outils créés pour les
+développeurs web, et la plupart ne peuvent pas imaginer la vie sans lui !
+
+Une fois que vous êtes dans votre environnement de développement local, je vous recommande vivement de consulter [Vue DevTools](https://github.com/vuejs/vue-devtools),
+qui est une véritable boîte à outils pour les développeurs utilisant Vue. Elle nous aide à créer des super applications Vue 🚀 !
+
+:::info
+Une fois que cette commande est lancée, le serveur sera toujours accessible. Dès que vous voulez couper cette connexion, exécutez la
+combinaison de touches suivantes dans votre console : Ctrl + C.
+:::
+
+### Entraînez-vous
+
+Vous trouverez le code source des exercices dans [le repo GitHub](https://github.com/amandinelemoult2109/Vue-fr) du cours dans le dossier
+`cafe-with-a-view`. Pour commencer, consultez la branche `P2C1-Begin`.
+
+#### Instructions
+
+1. Créer un nouveau projet avec Vue CLI qui est appelé _cli-version_ avec la configuration suivante :
+    - Préprocesseur CSS (Sass/SCSS) avec node-sass.
+    - ESLint avec prévention des erreurs uniquement.
+    - Lint on Save.
+    - Dans des fichiers de configuration dédiés.
+    - Ne pas enregistrer comme un preset.
+
+### En résumé
+
+Dans ce chapitre, vous avez appris :
+- comment installer Vue CLI ;
+- comment créer une nouvelle application Vue avec Vue CLI ;
+- comment configurer une application Vue avec Vue CLI ;
+- comment sont structurées les applications générées par Vue CLI.
+
+_Dans le chapitre suivant, nous allons en apprendre davantage sur le type de fichier particulier `*.vue`, qui deviendra votre meilleur ami :
+les composants monofichiers. Alors, c'est parti !_
+
+-----
+
+## Facilitez la maintenance grâce aux composants monofichiers
+
+[Facilitez la maintenance grâce aux composants monofichiers - Créez une application web avec Vue.js - OpenClassrooms](https://openclassrooms.com/fr/courses/6390311-creez-une-application-web-avec-vue-js/6863196-facilitez-la-maintenance-grace-aux-composants-monofichiers)
+
+![](https://user.oc-static.com/upload/2020/05/20/15899591710489_Bannee-dimension-720-798-02.png)
+
+### Appréhendez le problème de la complexité
+
+Lors de la création d'un site web, nous sommes très souvent amenés à répéter notre code et cela rend souvent la maintenance un peu difficile.
+Par exemple, la plupart des sites web ont un menu de navigation sur chaque page.
+
+```html
+<html>
+    <body>
+        <nav>
+            <a href="/">Accueil</a>
+            <a href="/about">À propos</a>
+            <a href="/contact">Contact</a>
+        </nav>
+        <p>Bienvenue sur notre page d'<a href="/">Accueil</a></p>
+    </body>
+</html>
+```
+
+Bien que cela soit assez simple à gérer sur une seule page, imaginez ce qui se passerait si quelqu'un devait modifier les liens de navigation.
+Si vous deviez mettre à jour la classe CSS pour actualiser les styles, cela nécessiterait au moins trois lignes de modifications de code pour
+chaque page qui utilise cette navigation. Par conséquent, cela crée de nombreuses possibilités de bugs.
+
+### Découvrez la solution : les composants
+
+Pour résoudre ce problème, le concept de composants a été popularisé. Ils permettent d'encapsuler un ensemble d'éléments HTML, de façon
+réutilisable et facilement maintenable.
+
+:::info
+L'architecture basée sur les composants est l'un des éléments les plus importants du développement frontend, car c'est elle qui fournit les
+bases pour des applications scalables (c'est-à-dire qui peuvent être déployées à une grande échelle) et maintenables. Prenons un exemple pour
+voir comment les composants fonctionnent.
+:::
+
+<Vimeo vimeoId="413529576" />
+
+<br />
+
+Les composants monofichiers vous permettent de créer des éléments HTML personnalisés qui encapsulent leur comportement d'une manière facilement
+maintenable. Ils constituent l'une des meilleures caractéristiques de Vue et peuvent être identifiés par leur extension .vue. Ils sont composés
+de trois blocs primaires :
+- Script - où vit votre JavaScript ;
+- Template - où vit votre HTML ;
+- Style - où vit votre CSS.
+
+Commençons par créer un exemple simple dans notre répertoire de composants :
+
+```javascript
+// ./components/HomeLink.vue
+<script>
+export default {
+    name: 'HomeLink'
+}
+</script>
+
+<template>
+    <a href="/">Accueil</a>
+</template>
+
+<style>
+    a {
+        text-decoration: none;
+    }
+</style>
+```
+
+Les composants monofichiers vous permettent d'encapsuler votre logique, votre contenu et vos styles de façon à faciliter leur maintenance et
+leur évolution. Vous tirerez également parti des meilleures pratiques, puisque le processus de construction séparera votre code en packages
+corrects au moment du build.
+
+### Utilisez les composants monofichiers
+
+Nous allons remanier notre exemple de navigation en utilisant notre nouveau composant dans Vue. Allez dans App.vue et tapez :
+
+```javascript
+<script>
+import HomeLink from './components/HomeLink.vue'
+
+export default {
+    name: 'App',
+    components: {
+        HomeLink
+    }
+}
+</script>
+
+<template>
+    <div id="app">
+    <nav>
+        <HomeLink />
+        <a href="/about">À propos</a>
+        <a href="/contact">Contact</a>
+    </nav>
+    <p>Bienvenue sur notre page d'<HomeLink /></p>
+</div>
+</template>
+```
+
+Revoyons ce qui vient de se passer :
+1. J'ai importé le composant `HomeLink` en utilisant l'importation ES6.
+2. J'ai enregistré le composant via la propriété `components`, qui prend un objet comme valeur avec des paires clé-valeur pour enregistrer les
+composants (dans l'exemple, j'utilise la notation abrégée ES6 pour définir les paires clé-valeur des objets. En ne définissant la valeur que
+comme une seule variable, JavaScript comprend qu'il faut la décomposer en : `"HomeLink" : Homelink`).
+3. Enfin, j'ai remplacé toutes les références de `<a href="/">Home</a>` par notre nouveau composant `<HomeLink />`.
+
+Cette action est très puissante, car toutes les modifications que vous souhaitez apporter au lien d'accueil peuvent maintenant être faites à
+partir d'un seul endroit. Et une fois que vous aurez fait ce changement, il sera appliqué automatiquement au reste de la page.
+
+### Gérez la communication entre vos composants : les props
+
+Bien que l'exemple ci-dessus soit utile car il peut être réutilisé, il est plutôt limité puisqu'il comporte une URL et un texte codés en dur.
+Imaginez si vous pouviez configurer les composants. Eh bien, c'est possible grâce aux `props` :
+
+<Vimeo vimeoId="413529673" />
+
+<br />
+
+`Props` est un attribut que vous pouvez définir au niveau du composant qui sera transmis directement au template.
+
+Prenons l'exemple de notre composant HomeLink et transformons-le en un composant plus générique : `NavLink`.
+
+```html
+// ./components/NavLink.vue
+<script>
+export default {
+    name: 'NavLink',
+    props: ['url', 'text']
+}
+</script>
+
+<template>
+    <a :href="url">{{ text }}</a>
+</template>
+```
+
+Nous définissons deux `props` pour notre nouveau composant :
+- `url` - qui alimentera notre attribut href ;
+- `text` - qui remplira le texte qui vit dans la balise `anchor`.
+
+Il sera utilisé comme ceci :
+
+```html
+<script>
+import NavLink from './components/NavLink.vue'
+
+export default {
+    name: 'App',
+    components: {
+        NavLink
+    }
+}
+</script>
+
+<template>
+    <div id="app">
+        <nav>
+            <NavLink url="/" text="Accueil" />
+            <NavLink url="/about" text="À propos" />
+            <NavLink url="/contact" text="Contact" />
+        </nav>
+    </div>
+</template>
+```
+
+Avec ce refactoring, notre application est plus facile à maintenir puisqu'il n'y a qu'un seul fichier qui contient toutes les configurations
+dont nous avons besoin. Elles seront ensuite appliquées dans toute notre application. En d'autres termes, une fois que nous aurons apporté une
+modification à ce fichier, elle sera appliquée de manière uniforme dans le reste de l'application.
+
+### Exercez-vous
+
+Vous trouverez le code source des exercices dans [le repo GitHub](https://github.com/amandinelemoult2109/Vue-fr) du cours dans le dossier
+`cafe-with-a-view`. Pour commencer, consultez la branche `P2C2-Begin`.
+
+#### Instructions
+
+1. Migrez le contenu de `index.html` vers `cli-version/src/App.vue`.
+2. Migrez le répertoire des `images` vers `cli-version/public`.
+3. Mettez à jour le chemin (_path_) des images dans `simpleMenu` pour qu'il soit relatif et non plus absolu (en supprimant le `.` qui préfixe
+l'URL).
+4. Créez un composant pour `MenuItem.vue` et migrez les éléments (_items_) du menu.
+5. Utilisez des props pour vous assurer que les données de `MenuItem` sont toujours correctement rendues et qu'elles peuvent toujours mettre à
+jour le total du panier (astuce : vous pouvez transmettre des fonctions dans les props).
+
+```javascript title="App.vue"
+<template>
+	<div id="app" class="app">
+		<h1>{{ restaurantName }}</h1>
+		<p class="description">
+			Bienvenue dans notre café {{ restaurantName }}! Nous sommes réputés pour
+			notre pain et nos merveilleuses pâtisseries. Faites vous plaisir dès le
+			matin ou avec un goûter réconfortant. Mais attention, vous verrez qu'il
+			est difficile de s'arrêter.
+		</p>
+
+		<section class="menu">
+			<h2>Menu</h2>
+			<MenuItem
+				v-for="item in simpleMenu"
+				:addToShoppingCart="addToShoppingCart"
+				:name="item.name"
+				:image="item.image"
+				:quantity="item.quantity"
+				:inStock="item.inStock"
+				:key="item.name"
+			/>
+		</section>
+
+		<aside class="shopping-cart">
+			<h2>Panier d'achat : {{ shoppingCart }} articles</h2>
+		</aside>
+
+		<h2>Contactez nous</h2>
+		<p>Adresse : {{ address }}</p>
+		<p>Téléphone : {{ phone }}</p>
+		<p>Email : {{ email }}</p>
+		<p>Horaires :</p>
+		<ul>
+			<li>L-V: 06:00 à 16:00</li>
+			<li>Samedi: 07:00 à 14:00</li>
+			<li>Dimanche: 07:00 à 12:00</li>
+		</ul>
+		<footer class="footer">
+			<p>{{ copyright }}</p>
+		</footer>
+	</div>
+</template>
+
+<script>
+import MenuItem from "./components/MenuItem"
+
+export default {
+	name: "App",
+	components: {
+		MenuItem
+	},
+	data() {
+		return {
+			address: "18 avenue du Beurre, Paris, France",
+			email: "hello@cafewithavue.bakery",
+			phone: "01 88 88 88 88",
+			restaurantName: "La belle vue",
+			shoppingCart: 0,
+			simpleMenu: [
+				{
+					name: "Croissant",
+					image: {
+						source: "/images/crossiant.jpg",
+						alt: "Un croissant"
+					},
+					inStock: true,
+					quantity: 1
+				},
+				{
+					name: "Baguette de pain",
+					image: {
+						source: "/images/french-baguette.jpeg",
+						alt: "Quatre baguettes de pain"
+					},
+					inStock: true,
+					quantity: 1
+				},
+				{
+					name: "Éclair",
+					image: {
+						source: "/images/eclair.jpg",
+						alt: "Éclair au chocolat"
+					},
+					inStock: false,
+					quantity: 1
+				}
+			]
+		}
+	},
+	computed: {
+		copyright() {
+			const currentYear = new Date().getFullYear()
+
+			return `Copyright ${this.restaurantName} ${currentYear}`
+		}
+	},
+	methods: {
+		addToShoppingCart(amount) {
+			this.shoppingCart += amount
+		}
+	}
+}
+</script>
+
+<style lang="scss">
+#app {
+	font-family: "Avenir", Helvetica, Arial, sans-serif;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	text-align: center;
+	color: #2c3e50;
+	margin-top: 60px;
+}
+</style>
+```
+
+```javascript title="MenuItem.vue"
+<script>
+export default {
+	name: "MenuItem",
+	props: ["addToShoppingCart", "image", "inStock", "name", "quantity"]
+}
+</script>
+
+<template>
+	<div class="menu-item">
+		<img class="menu-item__image" :src="image.source" :alt="image.alt" />
+		<div>
+			<h3>{{ name }}</h3>
+			<p v-if="inStock">En stock</p>
+			<p v-else>En rupture de stock</p>
+			<div>
+				<label for="add-item-quantity">Quantité : {{ quantity }}</label>
+				<input v-model.number="quantity" id="add-item-quantity" type="number" />
+				<button @click="addToShoppingCart(quantity)">
+					Ajouter au panier
+				</button>
+			</div>
+		</div>
+	</div>
+</template>
+
+<style></style>
+```
+
+<iframe width="100%" height="450px" background-color="white" src="https://monwikidevweb.la-loutre.fr/data/OpenClassrooms/algo/Creez_une_application_web_avec_Vue-js/cafe-with-a-vue/P2C2/index.html"></iframe>
+
+### En résumé
+
+Félicitations, vous avez appris à créer et à naviguer dans les composants ! Dans ce chapitre, vous avez appris à :
+- identifier des composants sur une page web ;
+- créer des composants avec des composants monofichiers ;
+- utiliser des composants dans d'autres composants ;
+- transférer des données dans des composants avec les props.
+
+_Maintenant, nous allons découvrir un élément essentiel pour toute application : la navigation par le routage !_
+
+-----
+
+## Gérez la navigation de votre application avec le routeur Vue
+
+[Gérez la navigation de votre application avec le routeur Vue - Créez une application web avec Vue.js - OpenClassrooms](https://openclassrooms.com/fr/courses/6390311-creez-une-application-web-avec-vue-js/6863526-gerez-la-navigation-de-votre-application-avec-le-routeur-vue)
+
+![](https://user.oc-static.com/upload/2020/05/20/15899591972056_Bannee-dimension-720-798-02.png)
+
+### Créez le routage de votre application monopage
+
+Comme nous l'avons vu précédemment, le terme « Applications monopages » (SPA) indique qu'une seule page est chargée. Cette dernière est ensuite
+mise à jour dynamiquement en fonction des besoins. Bien que cela soit puissant, il y a tout de même un défaut principal : les utilisateurs ont
+besoin d'URL différentes pour distinguer les différentes pages les unes des autres. Sinon, à chaque fois qu'un utilisateur essaie de revenir en
+arrière, il obtiendra toujours la même page !
+
+Pour résoudre ce problème, tous les grands frameworks disposent d'une solution de routage. La solution recommandée par Vue est la bibliothèque
+officielle [vue-router](https://github.com/vuejs/vue-router).
+
+<Vimeo vimeoId="413529722" />
+
+<br />
+
+### Installez Vue Router
+
+Pour ajouter Vue Router à notre application, nous utiliserons Vue CLI :
+
+```shell
+vue add router
+```
+
+Une fois l'installation terminée, vous devriez observer que la CLI a modifié un certain nombre de fichiers afin de s'assurer que tout
+fonctionne correctement. Si vous ouvrez votre fichier `main.js`, vous verrez que Vue CLI a automatiquement configuré la propriété Router en la
+rattachant à votre instance de Vue. De plus, un nouveau fichier est apparu, essentiel à la compréhension du routage : `router/index.js`.
+
+### Découvrez l’anatomie du routeur
+
+Lorsque vous ouvrez le fichier `router/index.js` dans votre éditeur de code, vous devriez voir quelque chose de similaire à ceci :
+
+```javascript
+import Vue from 'vue'
+import Router from 'vue-router'
+import Home from './views/Home.vue'
+
+Vue.use(Router)
+
+export default new Router({
+    routes: [
+        {
+            path: '/',
+            name: 'Home',
+            component: Home
+        },
+        {
+            path: '/about',
+            name: 'About',
+            // route level code-splitting
+            // this generates a separate chunk (about.[hash].js) for this route
+            // which is lazy-loaded when the route is visited.
+            component: () => import(/* webpackChunkName: "about" */ './views/About.vue')
+        }
+    ]
+})
+```
+
+Ici, les routes de notre application Vue sont définies via un tableau contenant des objets qui définissent chaque route. Chaque objet route
+contient trois propriétés clés :
+- path (chemin) - l'URL correspondant au composant ;
+- name (nom) - le nom de cette route pour l'étiquetage et le débuggage ;
+- component (composant) - le composant qui doit s'afficher lorsque le path est trouvé.
+
+### Comprenez le fonctionnement de Vue Router
+
+Il existe deux composants principaux que Vue Router utilise et que vous devrez apprivoiser pour vos applications :
+- `<router-view></router-view>` - il définit la zone de la page dans laquelle apparaîtra le composant que nous définissons dans chaque route.
+Il est particulièrement important si vous imbriquez des vues les unes dans les autres ;
+- `<router-link></router-link>` - similaire à la balise `anchor` en HTML, ce composant permet également la navigation de l'utilisateur dans
+l'application. Cependant, il est privilégié par rapport à l'utilisation d'une balise d'ancrage standard, car il dispose de fonctionnalités
+intégrées, comme le fait qu'il évite de recharger systématiquement la page.
+
+Ces deux composants constituent la base de l'utilisation de Vue Router dans nos composants. Ils facilitent la navigation dans une application
+Vue.
+
+### Créez des routes dynamiques
+
+Vous devrez parfois faire correspondre un modèle d'URL à une page spécifique. Par exemple, revenons à notre application de marché. Vous
+souhaitez avoir une page individuelle pour chaque élément du menu, mais vous souhaitez utiliser une même page `ItemDetail.vue` pour voir le
+détail de l'élément. Pour cela, vous avez besoin que la route passe l'information de manière dynamique.
+
+Vue Router règle ce problème en permettant le **matching de route dynamique**.
+
+Dans l'exemple que nous venons d'expliquer, vous pourriez configurer votre route de la façon suivante :
+
+```javascript
+const router = new VueRouter({
+    routes: [
+        // les parties dynamiques commencent par un deux-points
+        { path: '/item/:name', component: ItemDetail }
+    ]
+})
+```
+
+La variable dynamique qui pourra être modifiée dans l'URL est marquée par deux-points. 
+
+Cela permet ensuite au composant `ItemDetail` d'extraire les paramètres à utiliser :
+
+```javascript
+<div>Item: {{ $route.params.name }}</div>
+```
+
+Par conséquent, lorsque nous nous rendons à l'URL : `http://localhost:8080/item/croissant`, notre page affiche :
+
+```javascript
+<div>Article: croissant</div>
+```
+
+### Entraînez-vous
+
+Vous trouverez le code source des exercices dans le [repo GitHub](https://github.com/amandinelemoult2109/Vue-fr) du cours dans le dossier
+`cafe-with-a-view`. Pour commencer, consultez la branche `P2C3-Begin`.
+
+#### Instructions
+
+1. Sauvegardez temporairement le contenu de `App.vue` dans un fichier séparé car il sera écrasé par l'installation.
+2. Ajoutez le plugin `vue-router` à l'application et n'activez pas le mode historique lors de l'installation (_Use history mode for router?_ => `N`).
+3. Migrez les données temporairement sauvegardées de l'ancienne `App.vue` vers `Home.vue`.
+4. Créez une route statique pour la page de contact à l'url `/contact`.
+
+```javascript title="router/index.js"
+{
+    path: '/contact',
+    name: 'contact',
+    component: Contact
+  }
+```
+
+5. Migrez les coordonnées de `Home.vue` vers `Contact.vue`.
+
+```javascript title="Contact.vue"
+<script>
+export default {
+	name: "Contact",
+	data() {
+		return {
+			address: "18 avenue du Beurre, Paris, France",
+			email: "hello@cafewithavue.bakery",
+			phone: "01 88 88 88 88"
+		}
+	}
+}
+</script>
+
+<template>
+	<div>
+		<h2>Contactez nous</h2>
+		<p>Adresse : {{ address }}</p>
+		<p>Téléphone : {{ phone }}</p>
+		<p>Email : {{ email }}</p>
+		<p>Horaires :</p>
+		<ul>
+			<li>L-V: 06:00 à 16:00</li>
+			<li>Samedi: 07:00 à 14:00</li>
+			<li>Dimanche: 07:00 à 12:00</li>
+		</ul>
+	</div>
+</template>
+
+<style></style>
+```
+
+6. Ajoutez le lien du routeur de contact à `App.vue`.
+
+```javascript title="App.vue"
+<router-link to="/contact">Contact</router-link>
+```
+
+7. Activez le mode historique dans la configuration de votre routeur.
+
+```javascript title="router/index.js"
+const router = new VueRouter({
+  mode: 'history',
+  routes
+})
+```
+
+### En résumé
+
+Félicitations à vous 🙌 ! Le routage peut être un peu difficile à mettre en place, mais vous savez maintenant :
+- installer Vue Router sur votre application Vue CLI sans le mode history ;
+- configurer des routes ;
+- utiliser `router-view` et `router-link` pour gérer le routage ;
+- utiliser le matching dynamique de route pour vos pages personnalisées.
+
+_Maintenant que nous pouvons contrôler la façon dont notre utilisateur navigue à travers notre application, il est temps de découvrir comment
+contrôler le moment où notre code est exécuté pendant le chargement de page. Alors, rendez-vous au prochain chapitre !_
+
+-----
+
+## Déterminez quand votre code doit s’exécuter
+
+[Déterminez quand votre code doit s’exécuter - Créez une application web avec Vue.js - OpenClassrooms](https://openclassrooms.com/fr/courses/6390311-creez-une-application-web-avec-vue-js/6863766-determinez-quand-votre-code-doit-s-executer)
+
+![](https://user.oc-static.com/upload/2020/05/20/15899592159897_Bannee-dimension-720-798-02.png)
+
+### Découvrez le cycle de vie d’un composant
+
+L'un des indicateurs les plus couramment utilisés pour mesurer la performance d'un site est le temps nécessaire avant que l'utilisateur puisse
+interagir avec le site. Par conséquent, il vaut mieux éviter que notre code entier ne commence à s'exécuter que lorsque le chargement de la
+page se termine. Cela ajouterait du temps d'attente et dégraderait la performance de notre site. Et si je vous disais que le code peut
+s'exécuter à part, avant que vos composants ne soient affichés à l'écran ?
+
+Les frameworks JavaScript ont bien intégré ce besoin, et permettent d'exécuter notre code à différents moments. Pour résoudre ce problème, la
+plupart des frameworks utilisent le concept de **cycle de vie** des composants _(components lifecycle),_ qui définit une série d'étapes par
+lesquelles un composant passe, de sa création à sa disparition. Bien sûr, Vue ne déroge pas à la règle. 😎
+
+Il existe 3 étapes majeures dans le cycle de vie d'un composant :
+1. **Create** - qui représente la durée pendant laquelle le composant est en construction.
+2. **Mount** - qui représente le moment durant lequel le composant va être rendu sur notre page.
+3. **Destroy** - qui représente le moment où le composant va être retiré de la page.
+
+Il est très utile de connaître ces étapes, car vous aurez besoin de définir une stratégie concernant le moment où une action particulière doit
+s'exécuter. En effet, en planifiant au mieux le moment où chaque action se produit, vous vous assurez de la meilleure expérience utilisateur
+possible pour votre application.
+
+### Découvrez les hooks de cycle de vie
+
+Pour résoudre ce problème de timing, les frameworks comme Vue proposent des **hooks de cycle de vie** (life cycle hooks). Ils permettent
+d'accéder à des événements spécifiques autour de ces étapes. Nous pouvons ainsi réaliser des actions comme déclencher du code qui fait appel à
+des API, avant même l'apparition du composant sur la page. Les principaux hooks que nous verrons ici sont les suivants :
+1. `beforeCreate`
+2. `created`
+3. `beforeMount`
+4. `mounted`
+5. `beforeDestroy`
+6. `destroyed`
+
+Comme vous pouvez le voir dans la liste, chaque étape dont je vous ai parlé plus tôt est accompagnée d'une paire de hooks de cycle de vie, ce
+qui va vous permettre d'exécuter le code _avant_ et _après_ l'apparition de l'étape. Cela a son importance, car certaines actions ne sont tout
+simplement pas réalisables pendant certains hooks du cycle de vie. Par exemple, modifier des attributs sur un élément HTML pendant `beforeCreate`
+serait impossible puisque l'élément n'existe même pas encore.
+
+<figure>
+    <img src="https://user.oc-static.com/upload/2020/04/27/15879912651268_2C4_798_EN-01.png"
+         alt="Schéma du cycle de vie" />
+    <figcaption>Schéma du cycle de vie (life cycle) d'un composant</figcaption>
+</figure>
+
+:::info
+Pour une meilleure compréhension du cycle de vie d'un composant dans Vue, vous pouvez consulter le [diagramme de cycle de vie](https://fr.vuejs.org/v2/guide/instance.html)
+dans la documentation.
+:::
+
+### Utilisez des hooks de cycle de vie
+
+L'utilisation des hooks de cycle de vie est particulièrement facilitée par Vue.
+
+De la même façon que vous définiriez `data` ou `computed`, il s'agit simplement d'ajouter une autre propriété à votre objet de configuration de
+Vue. La seule différence réside dans le fait qu'il s'agit de fonctions plutôt que de simples chaînes de caractères :
+
+```javascript
+<template>
+	<h1>Je suis un nouveau composant !</h1>
+</template>
+
+<script>
+	export default {
+		data: { msg: 'Bonjour !' },
+		beforeCreate() { console.log('Je ne suis pas encore créé') },
+		created() { console.log('Je suis créé !') },
+		beforeMount() { console.log('Je vais bientôt être monté sur le DOM!') },
+		mounted() { console.log('Je suis monté sur le DOM!') },
+		beforeDestroy() { console.log('Je suis sur le point de disparaître du DOM !') },
+		destroyed() { console.log('Je suis supprimé') }
+	}
+</script>
+```
+
+À l'intérieur de vos hooks de cycle de vie, vous pouvez écrire n'importe quel code JavaScript dont vous avez l'habitude et faire référence à
+n'importe quelle propriété standard de Vue (par exemple, data, computed, etc.) avec le préfixe `this`, comme partout ailleurs.
+
+### Entraînez-vous
+
+Vous trouverez le code source des exercices dans [le repo GitHub du cours](https://github.com/amandinelemoult2109/Vue-fr) dans le dossier
+`cafe-with-a-view`. Pour commencer, consultez la branche `P2C4-Begin`.
+
+#### Instructions
+
+Utilisez un hook de cycle de vie avant que `MenuItem` ne soit rendu pour vérifier si la date de la journée est paire. Si c'est le cas, le prix
+de chaque article devrait être affiché avec une réduction de 10 %.
+
+```javascript title="components/MenuItem.vue"
+<script>
+export default {
+	name: "MenuItem",
+	props: ["addToShoppingCart", "image", "inStock", "name", "price", "quantity"],
+	data() {
+		return {
+			onSale: false
+		}
+	},
+	computed: {
+		generatedPrice() {
+			if (this.onSale) {
+				return (this.price * 0.9).toFixed(2)
+			} else {
+				return this.price
+			}
+		}
+	},
+	beforeMount() {
+		const today = new Date().getDate()
+
+		if (today % 2 === 0) {
+			this.onSale = true
+		}
+	}
+}
+</script>
+```
+
+### En résumé
+
+Fort de vos nouvelles connaissances sur les hooks de cycle de vie, vous pouvez maintenant :
+- définir une stratégie pour fixer le meilleur moment auquel un code donné va s'exécuter ;
+- implémenter des hooks de cycle de vie dans votre application en cas de besoin.
+
+_Avec cela en tête, passons au chapitre suivant, dans lequel nous résumerons tout ce que vous avez appris dans cette partie du cours, pour
+pouvoir très bientôt nous atteler au quiz de fin de partie ! 💪_
+
+-----
+
+## Résumé de la partie 2
+
+[Résumé de la partie 2 - Créez une application web avec Vue.js - OpenClassrooms](https://openclassrooms.com/fr/courses/6390311-creez-une-application-web-avec-vue-js/6864076-resume-de-la-partie-2)
+
+![](https://user.oc-static.com/upload/2020/05/20/15899592367525_Bannee-dimension-720-798-02.png)
+
+Dans cette partie du cours, nous avons découvert comment **construire et configurer une application Vue avec Vue CLI**. Vous êtes maintenant
+capable de :
+- créer et configurer une nouvelle application Vue à l'aide de **Vue CLI** ;
+- construire une application en l'architecturant avec **des composants** ;
+- ajouter et configurer **Vue Router** dans votre application ;
+- utiliser des **hooks de cycle de vie** pour déterminer quand votre code doit s'exécuter.
+
+Vous avez franchi une étape importante dans votre cheminement vers la création d'applications Web robustes avec Vue.js ! Vous êtes maintenant
+prêt à passer à la pratique avec l'activité de cette partie ! Alors, prêt à relever le défi ? 😎
+
+-----
+
+## Quiz : Passez à la vitesse supérieure avec Vue CLI
+
+[Passez à la vitesse supérieure avec Vue CLI - OpenClassrooms](https://openclassrooms.com/fr/courses/6390311-creez-une-application-web-avec-vue-js/exercises/3848)
+
+#### Compétences évaluées
+
+<i class="bi bi-check2-circle"></i> Augmenter les capacités d'une application avec Vue CLI
+
+-----
+
+#### Description
+
+Pour répondre aux questions, vous devrez cloner le [repo GitHub](https://github.com/amandinelemoult2109/Vue-fr) avec le code nécessaire.
+
+-----
+
+#### Question 1 : Quels sont les avantages à utiliser Vue CLI pour créer des applications web ?
+
+*Attention, plusieurs réponses sont possibles.*
+
+<i class="bi bi-check-square-fill"></i> Il permet d'utiliser très simplement Babel, TypeScript, ESLint, PostCSS, PWA, tests unitaires et tests
+end-to-end.<br />
+<i class="bi bi-check-square-fill"></i> Il dispose d'un système de plugin permettant à la communauté de construire et de partager des solutions
+réutilisables pour des besoins communs.<br />
+<i class="bi bi-check-square-fill"></i> Le code ES2015 natif peut être envoyé sans effort pour les navigateurs modernes.<br />
+<i class="bi bi-check-square-fill"></i> Il permet d'utiliser des composants à fichier unique (*.vue).<br />
+<br />
+
+_Vue CLI est un outil puissant qui permet aux développeurs de construire des applications robustes qui évoluent tout en étant facilement
+maintenables._
+
+-----
+
+#### Question 2 : Le composant `Counter` ne s'affiche pas sur la page d'accueil. Qu'est-ce qui peut bien se passer ici ?
+
+<i class="bi bi-circle"></i> Le composant n'a pas encore été importé.<br />
+<i class="bi bi-record-circle"></i> Le composant n'a pas été enregistré.<br />
+<i class="bi bi-circle"></i> Le composant n'a pas encore été créé.<br />
+<i class="bi bi-circle"></i> Le composant n'a pas été exporté correctement.<br />
+<br />
+
+_Même si le composant `Counter` a bien été importé, il doit encore être enregistré dans la propriété `components` pour être accessible dans
+le bloc `template`._
+
+-----
+
+#### Question 3 : Lorsqu'un utilisateur se connecte à la route `/login`, la page apparaît vide. Qu'est-ce qui peut bien se passer ici ?
+
+<i class="bi bi-record-circle"></i> Il n'y a pas d'objet route pour <code>/login</code> dans <code>router.js</code>.<br />
+<i class="bi bi-circle"></i> Le fichier <code>/views/Login.vue</code> n'est pas importé.<br />
+<i class="bi bi-circle"></i> Il manque à <code>app.vue</code> l'élément <code>&#x3c;router-view></code>, qui permet à Vue Router de rendre
+correctement les itinéraires.<br />
+<i class="bi bi-circle"></i> Il n'y a pas de fichier <code>/views/Login.vue</code>.<br />
+<br />
+
+_Pour que Vue Router puisse rendre une URL, celle-ci doit être correctement définie dans `router.js`._
+
+-----
+
+#### Question 4 : Parmi les hooks de cycle de vie suivants, lequel est le plus pertinent pour lancer des méthodes asynchrones, afin de récupérer des données depuis une API ?
+
+<i class="bi bi-record-circle"></i> <code>beforeMount</code><br />
+<i class="bi bi-circle"></i> <code>mounted</code><br />
+<i class="bi bi-circle"></i> <code>beforeDestroy</code><br />
+<i class="bi bi-circle"></i> <code>destroyed</code><br />
+<br />
+
+_Lorsque vous récupérez des données à partir d'une API externe, vous voulez prévoir le plus de temps possible pour éviter de faire attendre
+l'utilisateur trop longtemps. Or, tous les autres hooks du cycle de vie se déclenchent après l'apparition du composant à l'écran, ce qui
+augmenterait le temps d'attente perçu par l'utilisateur._
+
+-----
+
+#### Question 5 : L'application comporte actuellement les symboles de hachage `#` dans l'URL. Que devez-vous faire pour que les URL apparaissent comme des URL normaux ?
+
+<i class="bi bi-circle"></i> Ne pas inclure le symbole <code>#</code> lorsque vous définissez <code>href</code> sur un lien.<br />
+<i class="bi bi-circle"></i> Ajouter une propriété <code>standard</code> aux éléments d'ancrage.<br />
+<i class="bi bi-record-circle"></i> Configurer le routeur Vue pour utiliser le mode historique HTML5.<br />
+<i class="bi bi-circle"></i> Ajouter la prop <code>history</code> aux éléments <code>router-link</code>.<br />
+<br />
+
+_Par défaut, Vue Router utilise le mode `hash` pour s'assurer qu'il fonctionne sur tous les navigateurs, quelle que soit la configuration du
+serveur. Le mode historique HTML5 nécessite une configuration supplémentaire, que vous pouvez découvrir dans la documentation._
+
+-----
+
+#### Question 6 : L'application doit pouvoir rendre le nom d'un utilisateur sur la base de l'URL. Mais ça ne fonctionne pas comme souhaité actuellement. Pourquoi ?
+
+<i class="bi bi-circle"></i> Vue Router est incapable de gérer des routes dynamiques.<br />
+<i class="bi bi-circle"></i> Les paramètres doivent être définis dans des propriétés calculées.<br />
+<i class="bi bi-record-circle"></i> La concordance dynamique des routes n'est pas utilisée.<br />
+<i class="bi bi-circle"></i> Le composant nécessite une propriété dans Data spéciale pour permettre le routage dynamique.<br />
+<br />
+
+*La concordance dynamique des routes (_dynamic route matching_) permet à une application de cartographier des routes selon un modèle défini
+dans le routeur et indiqué par deux points `:`. Vous pouvez en savoir plus sur la [concordance dynamique des routes dans la documentation de Vue Router](https://router.vuejs.org/fr/guide/essentials/dynamic-matching.html).*
+
+-----
+
+#### Question 7 : Lorsque l'utilisateur clique sur le lien "À propos", cela déclenche un rafraîchissement de la page entière. Quel élément du Vue Router devrait être utilisé à la place pour éviter ce comportement ?
+
+<i class="bi bi-circle"></i> <code>&#60;router-view></code><br />
+<i class="bi bi-record-circle"></i> <code>&#60;router-link></code><br />
+<i class="bi bi-circle"></i> <code>&#60;router-anchor></code><br />
+<i class="bi bi-circle"></i> <code>&#60;router-url></code><br />
+<br />
+
+_Le `<router-link>` de Vue Router permet à l'utilisateur de naviguer en empêchant le rafraîchissement de la page entière. Pour plus
+d'informations, consultez [la documentation sur le router-link](https://router.vuejs.org/fr/api/#router-link)._

@@ -75,7 +75,7 @@ Vous êtes prêt à vous lancer dans l'API ! C’est parti !
 <br />
 <br />
 
-<embed style={{width: "100%", height: "667px" }} src={useBaseUrl("/pdf/Requirements_DW_P6.pdf")}></embed>
+<embed style={{width: "100%", height: "667px" }} src="/pdf/Requirements_DW_P6.pdf"></embed>
 
 
 ### Livrables
@@ -173,3 +173,134 @@ Ces cours peuvent vous aider dans la réussite de votre projet. Ils ne sont pas 
 §2.2 du livre Pro Git, par Scott Chacon et Ben Straub, traduit par Alex Girard
 
 * * *
+
+:::info installation et démarrage
+- Création du repository GitHub `GillesChassignet_6_01072021`.
+- Clonage du dossier GitHub en local.
+- `git init` dans le dossier local.
+- Installation de Angular : `npm install -g @angular/cli`.
+- Création du dossier "frontend".
+- Téléchargement du dossier "Web-Developer-P6-master.zip" sur [OpenClassrooms-Student-Center/Web-Developer-P6: Student repository for project 6 of the Web Developer Path](https://github.com/OpenClassrooms-Student-Center/Web-Developer-P6).
+- Décompression du dossier dans "GillesChassignet_6_01072021/frontend".
+
+```sh
+cd frontend
+npm install
+npm install --save-dev run-script-os
+npm start
+```
+
+`run-script-os` vous permettra d'utiliser des opérations spécifiques au système d'exploitation dans les scripts npm sans spécifier sur quel
+système d'exploitation vous vous trouvez. Ce n'est pas magique cependant... vous devez toujours écrire des scripts spécifiques au système
+d'exploitation.
+
+- [charlesguse/run-script-os](https://github.com/charlesguse/run-script-os)
+
+
+- http://localhost:8081/
+
+```sh
+cd backend
+npm init
+=> entry point: (index.js) server.js
+npm install --save nodemon
+npm install --save express
+npm install --save body-parser
+npm install --save mongoose
+```
+
+- Remplacer `bodyParser.json()` par `express.json()`
+
+`express.json()` est une fonction middleware intégrée dans Express. Cette méthode est utilisée pour analyser les requêtes
+entrantes avec les charges utiles JSON et est basée sur l'analyseur corporel ("bodyparser").
+
+Cette méthode renvoie le middleware qui analyse uniquement JSON et ne regarde que les demandes où l'en-tête de type de contenu
+correspond à l'option de type.
+
+```sh title=".gitignore"
+/node_modules
+```
+
+```sh
+npm install --save mongoose-unique-validator
+```
+
+`mongoose-unique-validator` est un plugin qui ajoute une validation de pré-enregistrement pour les champs uniques dans un schéma Mongoose.
+
+```sh
+npm install --save bcrypt
+```
+
+Une bibliothèque pour vous aider à hacher les mots de passe.
+
+- [Bcrypt — Wikipédia](https://fr.wikipedia.org/wiki/Bcrypt)
+
+```sh
+npm install --save jsonwebtoken
+```
+
+Implémentation de jeton Web JSON (symétrique et asymétrique).<br />
+JWT (`jsonwebtoken`) est un package npm qui est utilisé pour créer un jeton lorsque l'utilisateur se connecte à notre application.
+
+- [JWT(jsonwebtoken) Token Based Authentication using nodeJS. | by Onkar Shingate | Geek Culture | Medium](https://medium.com/geekculture/jwt-jsonwebtoken-token-based-authentication-using-nodejs-6af661d5a64)
+- [JSON Web Tokens - jwt.io](https://jwt.io/)
+
+```sh
+npm install --save multer
+```
+
+`multer` est un middleware node.js pour la gestion des données `multipart/form-data`, qui est principalement utilisé pour le
+téléchargement de fichiers. Il est écrit au-dessus du [busboy](https://github.com/mscdex/busboy) pour une efficacité maximale.
+
+- Création d'un dossier "images" dans backend
+
+```sh title=".gitignore"
+/node_modules
+/images
+```
+
+### MongoDB
+
+Public Key : qzlnoham
+Private Key : 4273d73b-3085-4ad5-b60c-82c455c482f5
+
+
+Public Key : bimqlfgd
+Private Key : ba99cffd-f2f9-4f95-b24c-899b073d9bd4
+
+Public Key : pyxrdhyr
+Private Key : 76d11c15-2d87-4d5f-8329-6fa741a4120a
+
+```sh
+npm install dotenv
+```
+
+`dotenv` est un module sans dépendance qui charge les variables d'environnement d'un fichier `.env` dans `process.env`. Le
+stockage de la configuration dans l'environnement séparé du code est basé sur la méthodologie de l'application Twelve-Factor.
+
+```sh
+npm install --save helmet
+```
+
+`helmet` vous aide à sécuriser vos applications Express en définissant divers en-têtes HTTP. _Ce n'est pas une solution miracle,
+mais cela peut aider !_
+
+Utilisation du module 'helmet' pour la sécurité en protégeant l'application de certaines vulnérabilités,
+il sécurise nos requêtes HTTP, sécurise les en-têtes, contrôle la prélecture DNS du navigateur, empêche le détournement de clics
+et ajoute une protection XSS mineure et protège contre le reniflement de TYPE MIME cross-site scripting, sniffing et clickjacking.
+
+`path` est un module qui fournit des utilitaires pour travailler avec les chemins de fichiers et de répertoires.
+
+`mongoose` est un outil de modélisation d'objets MongoDB conçu pour fonctionner dans un environnement asynchrone. Mongoose prend
+en charge à la fois les promesses ('promises') et les rappels ('callbacks').
+
+```sh
+npm install --save password-validator
+```
+
+- [tarunbatra/password-validator](https://github.com/tarunbatra/password-validator)
+
+Cette bibliothèque vise à simplifier les règles de validation des mots de passe, en supprimant toutes les parties répétées et en fournissant
+une API lisible et maintenable à utiliser.
+
+:::

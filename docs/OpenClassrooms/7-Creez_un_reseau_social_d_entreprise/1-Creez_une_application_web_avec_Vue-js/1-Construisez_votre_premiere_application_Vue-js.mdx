@@ -1,0 +1,1786 @@
+---
+sidebar_position: 2
+---
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+import { Vimeo } from 'mdx-embed';
+
+# Construisez votre première application Vue.js
+
+## Tirez un maximum de ce cours
+
+[Tirez un maximum de ce cours - Créez une application web avec Vue.js - OpenClassrooms](https://openclassrooms.com/fr/courses/6390311-creez-une-application-web-avec-vue-js/6390318-tirez-un-maximum-de-ce-cours)
+
+![](https://user.oc-static.com/upload/2020/05/20/15899589876255_Bannee-dimension-720-798-01.png)
+
+Pour tirer le maximum de ce cours, quelques conseils simples :
+- lisez le **texte** situé sous la vidéo pour découvrir comment mettre en œuvre ces concepts ;
+- entraînez-vous tout au long de la formation, en reproduisant les **exemples** et en suivant les **exercices** ;
+- vérifiez votre compréhension des concepts clés grâce aux **quiz** situés à la fin de chaque partie ;
+- **revenez** sur les concepts et les tâches qui se sont révélés les plus difficiles, afin de les maîtriser avant de passer à la suite. À
+certains moments, vous aurez l'impression d'avancer très vite, et à d'autres, particulièrement lentement : c'est normal ! Avancez à votre
+rythme, mais souvenez-vous que le plus important est que vous soyez capable de **mettre en pratique** ce que vous avez appris !
+
+### Exercices
+
+Il est important de mettre en pratique ce que vous avez appris dès que vous en avez l'occasion. Pour cela, vous pouvez réaliser l'exercice que
+vous trouverez à la fin de chaque chapitre. Tout au long de ce cours, nous allons construire une application web pour une boulangerie appelée
+`cafe-with-a-view`. Vous pouvez trouver le code source des exercices dans [le repo GitHub du cours](https://github.com/amandinelemoult2109/Vue-fr),
+dans le dossier _cafe-avec-vue_.<br />
+Pour vous permettre de commencer l'exercice de chaque chapitre, chaque chapitre aura deux branches :
+- `Begin` pour la branche où vous commencerez chaque exercice ;
+- la branche `Solution` qui est là pour que vous puissiez vérifier votre travail, ou que vous regardiez comment j'ai fait.
+
+Par exemple, les exercices du chapitre 2 de la partie 1 se trouvent dans les branches :
+- `P1C2-Début` ;
+- `Solution P1C2`.
+
+Ces exercices vous donneront une véritable expérience pratique des concepts que vous abordez dans chaque chapitre. L'idée est d'apprendre en
+faisant ou, en anglais, notre très cher _Learning by doing_ ! 😎
+
+### Quiz
+
+Les quiz de fin de partie sont vos alliés pour vérifier que vous avez bien compris les concepts clés. En développement, il est essentiel de
+mettre en pratique ce que vous avez appris pour avoir un retour immédiat.<br />
+C'est aussi l'occasion de retourner aux concepts que vous n'avez pas totalement maîtrisés.
+
+### Découvrez vos professeurs
+
+![](https://user.oc-static.com/upload/2020/05/20/15899676045108_Alexia-toulmet.png) 
+
+**Alexia Toulmet** est développeuse web JS. Passionnée par le front-end, elle aime travailler à la frontière entre design et développement.
+
+![](https://user.oc-static.com/upload/2020/05/20/15899675060816_Ben%20Hong.png)
+
+**Ben Hong** est un ingénieur full stack autodidacte de l'équipe Meltano de GitLab. Il est également cofondateur de Vue DC et de Vue Meetup, et
+contribue ainsi activement à la communauté des nombreux amateurs et adeptes de Vue.js. Il est passionné par la technologie, l'expérience
+utilisateur, les voyages à travers le monde et l'enseignement.
+
+Alors, vous êtes prêt à commencer ? Rejoignez-moi dans le prochain chapitre !
+
+-----
+
+## Créez votre première application Vue.js
+
+[Créez votre première application Vue.js - Créez une application web avec Vue.js - OpenClassrooms](https://openclassrooms.com/fr/courses/6390311-creez-une-application-web-avec-vue-js/6907296-creez-votre-premiere-application-vue-js)
+
+![](https://user.oc-static.com/upload/2020/05/20/15899589675524_Bannee-dimension-720-798-01.png)
+
+Bonjour et bienvenue dans ce cours sur le framework Vue.js. 👋 Entrons dans le vif du sujet et découvrons les applications monopages, ou
+_Single Page Applications_ (SPA).
+
+### Découvrez le monde des applications monopages
+
+Dans le modèle traditionnel du développement web, lorsqu'un utilisateur clique sur un lien pour aller sur une nouvelle page ou doit mettre à
+jour le contenu d'une page, la page entière doit généralement être rechargée. Cela signifie que même si l'utilisateur ne fait que soumettre un
+simple formulaire, une nouvelle page est générée pour gérer la réponse.
+
+Cependant, cela pose plusieurs problèmes, car :
+1. Pour les utilisateurs qui paient à la quantité de données consommées, la facture s'alourdit inutilement. En effet, ils doivent télécharger
+une page entière pour n'obtenir que de petites mises à jour.
+2. L'expérience utilisateur est ainsi souvent détériorée.
+
+Au début des années 2000, le concept d'applications monopages (_Single Page Applications_) s'est fait connaître mondialement, avec pour but de
+résoudre ces problèmes. Le concept fondamental des SPA est le suivant :
+1. Les utilisateurs ne chargent une page web qu'une seule fois.
+2. Les contenus de la page sont mis à jour de façon distincte plutôt qu'au niveau de la page entière, ce qui permet à l'utilisateur d'interagir
+de manière beaucoup plus dynamique.
+3. JavaScript contrôle le lancement de nouvelles pages au sein du même domaine, cela ne nécessite ainsi plus de rafraîchissement complet de la
+page.
+
+Cette idée a pu prendre vie au fur et à mesure, car les navigateurs et l'équipement des utilisateurs ont gagné en puissance.
+
+:::info
+Dans le web moderne, les SPA sont le plus souvent construites grâce à des frameworks frontend.
+:::
+
+### Découvrez notre framework : Vue
+
+Lorsqu'il s'agit d'apprendre à utiliser un framework frontend, de nombreuses options s'offrent à nous : React, Angular, Vue, Polymer, et bien
+d'autres. Mais pour se lancer, j'aurais tendance à vous conseiller Vue. En effet, sa courbe d'apprentissage est la plus facile pour tout
+développeur ayant des compétences basiques en HTML, CSS et JavaScript. Par conséquent, cela signifie que :
+1. Devenir membre contributeur d'un projet est beaucoup plus accessible.
+2. Les personnes qui ne sont pas expertes en JavaScript peuvent contribuer à un projet avec un minimum d'accompagnement.
+3. Les développeurs peuvent passer plus de temps à être productifs plutôt qu'à apprendre à utiliser un nouvel outil.
+
+De plus, Vue a été conçu dès le départ pour être aussi intuitif que possible pour les développeurs. Cela signifie que beaucoup de temps et
+d'efforts sont consacrés à la conception de l'outil, afin qu'une formation minimale suffise pour être efficace, et produire du code. De plus,
+sa communauté particulièrement accueillante et une documentation remarquable en font un choix incontournable comme premier framework avec
+lequel les développeurs devraient travailler.
+
+Mettons-nous au travail : voyons dès maintenant à quel point il est facile d'être opérationnel en moins de 2 minutes avec Vue !
+
+<Vimeo vimeoId="413528803" />
+
+<br />
+
+<nav className="algorithmes-nav">
+<div className="algorithmes-nav-code">
+
+```html
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <title>Ma première app Vue</title>
+</head>
+<body>
+    <div id="app">
+        <h1>{{ message }}</h1>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+    <script>
+        const app = new Vue({
+            el: '#app',
+            data: {
+                message: 'Bonjour 👋'
+            }
+        })
+    </script>
+</body>
+</html>
+```
+
+</div>
+<div className="algorithmes-nav-html">
+
+<iframe src="https://monwikidevweb.la-loutre.fr/data/OpenClassrooms/algo/Creez_une_application_web_avec_Vue-js/1-2-1/1-2-1.html"></iframe>
+
+</div>
+</nav>
+
+### Ajoutez Vue à votre site
+
+Alors que pour bon nombre de frameworks, vous devrez passer par des outils de build complexes comme webpack, force est de constater que l'ajout
+d'une instance de Vue.js à votre site est aussi simple que d'intégrer une balise `script` sur votre page HTML. Promis, c'est aussi facile que ça. 🤗
+
+Voici une simple page HTML avec le lien CDN (_content delivery network_) ou RDC, en français (pour _réseau de diffusion de contenu_) pour Vue.
+
+```html
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <title>Mon Application Vue.js</title>
+</head>
+<body>
+    <div id="app">
+        <h1>Ma première application Vue.js !</h1>
+        <p>J'ai hâte de créer des applications incroyables !</p>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+</body>
+</html>
+```
+
+Voici comment tester si Vue a été correctement chargé ou non.
+
+```html
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <title>Mon Application Vue.js</title>
+</head>
+<body>
+    <div id="app">
+        <h1>Ma première application Vue.js !</h1>
+        <p>J'ai hâte de créer des applications incroyables !</p>
+    </div>
+    <script>
+    // Vue n'est pas encore chargé donc une ReferenceError devrait être retournée
+    console.log(Vue)
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+    <script>
+        // La console devrait maintenant afficher une fonction
+        console.log(Vue)
+    </script>
+</body>
+</html>
+```
+
+Si vous ouvrez cette page dans votre navigateur et vérifiez la console JavaScript, vous devriez voir :
+
+<figure>
+    <img src="https://user.oc-static.com/upload/2020/03/31/15856655762116_P1CH1-Console.png"
+         alt="Dans la console Javascript" />
+    <figcaption>Dans la console Javascript</figcaption>
+</figure>
+
+Lorsque cette fonction s'affiche, cela signifie que vous avez bien réussi à charger Vue ! Félicitations !🎉
+
+### Définissez où Vue devrait apparaître sur votre page
+
+Même si nous sommes parvenus à charger Vue sur notre page, cela ne signifie pas encore que notre site est devenu une application monopage. Bien
+que le terme SPA (_application monopage_ ou _single-page application_) puisse nous faire penser que la page entière est contrôlée par
+JavaScript, la plupart des frameworks frontend permettent aux développeurs de contrôler quelle partie de la page est une SPA. En d'autres
+termes, vous pouvez décider de quel élément HTML le framework est responsable.
+
+Pour permettre à Vue d'accéder à notre page, nous devons commencer par créer une nouvelle instance de Vue.
+
+```html
+<!DOCTYPE html>
+<html lang="fr">
+<body>
+    <!-- Contenu temporairement caché pour cet exemple -->
+    <script>
+        const app = new Vue()
+    </script>
+</body>
+</html>
+```
+
+Ensuite, nous allons configurer notre instance de Vue en lui transmettant un objet contenant notre première configuration : l'emplacement de la
+page sur laquelle Vue est installé.
+
+```html
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <title>Mon Application Vue.js</title>
+</head>
+<body>
+    <div id="app">
+        <h1>Ma première application Vue.js !</h1>
+        <p>J'ai hâte de créer des applications incroyables !</p>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+    <script>
+        const app = new Vue({
+            el: '#app'
+        })
+    </script>
+</body>
+</html>
+```
+
+Cet objet de configuration ne possède qu'une seule propriété : « el », qui est l'abréviation d'_element_. Il est ensuite suivi d'un sélecteur
+CSS (c'est-à-dire `#app`, `div`, `.app`).
+
+Utiliser un sélecteur d'ID (c'est-à-dire `#app`) est considéré comme étant une bonne pratique, car votre application devra être reconnue de
+façon unique sur une page.
+
+Et, bien qu'il puisse accepter n'importe quel type de sélecteur CSS parmi ceux que vous utilisez habituellement, il **ne peut pas**
+sélectionner les éléments `<html>` ni `<body>`.
+
+### Apprenez à stocker des données
+
+#### Découvrez comment stocker les données
+
+Comme pour toute autre application, nous avons besoin de stocker les données afin de pouvoir les réutiliser et effectuer des actions pour l'utilisateur. Dans Vue, cela se concrétise par l'ajout d'une propriété « data » qui a comme valeur un objet. Elle peut accepter n'importe quelle paire clé - valeur classique que vous pourriez habituellement définir en JavaScript
+
+<figure>
+    <img src="https://user.oc-static.com/upload/2020/06/05/15913635826896_Capture%20d%E2%80%99e%CC%81cran%202020-06-05%20a%CC%80%2015.25.24.png"
+         alt="" />
+    <figcaption></figcaption>
+</figure>
+
+#### Découvrez comment afficher le rendu des données
+
+Lorsque nous voulons afficher nos données dans notre application web, Vue utilise la syntaxe en "moustache" (entre deux accolades) pour
+afficher le rendu des données. Elle est représentée par deux accolades, comme indiqué ci-dessous :
+
+```html
+<div id="#app">
+    <h1>VueMart</h1>
+    <h2>Panier</h2>
+    <ul>
+        <li>Pommes: {{ costOfApples }}€</li>
+        <li>Bananes: {{ costOfBananas }}€</li>
+        <li>Noix de coco: {{ costOfCoconuts }}€</li>
+    </ul>
+</div>
+```
+
+:::info
+Bien que l'espace entourant la variable dans `{{ costOfApples }}` soit optionnel, ce formatage est recommandé, car il facilite la lecture par
+rapport à l'alternative plus dense `{{costOfApples}}`.
+:::
+
+Cet exemple utilise les doubles accolades pour afficher la valeur d'une variable simplement, mais les doubles accolades peuvent aussi être
+utilisées pour afficher le rendu d'expressions JavaScript basiques. En voici quelques exemples :
+
+```html
+<!-- Réaliser le calcul -->
+{{ (2 + 8) * 10 }}
+
+<!-- Appeler des méthodes de string -->
+{{ "alexia".toUpperCase() }}
+
+<!-- Opérateurs ternaires -->
+{{ 2 > 0 ? 'Deux est plus grand que zéro' : 'Vous ne verrez jamais cette phrase' }}
+```
+
+### Entraînez-vous
+
+Vous trouverez le code source des exercices dans le repo [GitHub](https://github.com/amandinelemoult2109/Vue-fr) du cours, dans le dossier
+`cafe-avec-vue`. Pour commencer, consultez la branche `P1C2-Begin`.
+
+#### Instructions
+
+1. Ajoutez Vue.js à `index.html`  pour le convertir en application monopage.
+2. Votre application doit avoir une propriété dans `data` appelée `restaurantName`.
+3. Le nom du restaurant doit être rendu à l'aide de la syntaxe en moustache.
+
+
+```html {1,2,10,14-22} title="index.html"
+<div id="app" class="app">
+    <h1>{{ restaurantName }}</h1>
+    <p class="description">
+        Bienvenue dans notre café {{ restaurantName }} ! Nous sommes réputés
+        pour notre pain et nos merveilleuses pâtisseries. Faites vous plaisir
+        dès le matin ou avec un goûter réconfortant. Mais attention, vous verrez
+        qu'il est difficile de s'arrêter.
+    </p>
+    <footer class="footer">
+        <p>Copyright {{ restaurantName }} 2019</p>
+    </footer>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+<script>
+    const app = new Vue({
+        el: "#app",
+        data: {
+            restaurantName: "La belle vue"
+        }
+    })
+</script>
+```
+
+<nav className="algorithmes-nav">
+<div className="algorithmes-nav-code">
+
+```html
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <title>Ma première app Vue</title>
+</head>
+<body>
+    <div id="app" class="app">
+        <h1>{{ restaurantName }}</h1>
+        <p class="description">
+            Bienvenue dans notre café {{ restaurantName }} ! Nous sommes réputés
+            pour notre pain et nos merveilleuses pâtisseries. Faites vous plaisir
+            dès le matin ou avec un goûter réconfortant. Mais attention, vous verrez
+            qu'il est difficile de s'arrêter.
+        </p>
+        <footer class="footer">
+            <p>Copyright {{ restaurantName }} 2019</p>
+        </footer>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+    <script>
+        const app = new Vue({
+            el: "#app",
+            data: {
+                restaurantName: "La belle vue"
+            }
+        })
+    </script>
+</body>
+</html>
+```
+
+</div>
+<div className="algorithmes-nav-html">
+
+<iframe src="https://monwikidevweb.la-loutre.fr/data/OpenClassrooms/algo/Creez_une_application_web_avec_Vue-js/cafe-with-a-vue/P1C2/index.html"></iframe>
+
+</div>
+</nav>
+
+### En résumé
+
+Félicitations ! Vous êtes maintenant capable de :
+- installer Vue sur une page web sans l'aide d'outils de build ;
+- mettre en place une nouvelle instance de Vue ;
+- associer Vue à un élément HTML ;
+- définir un espace de stockage de données simple ;
+- afficher le rendu de données à l'aide des doubles accolades.
+
+_Nous allons ensuite commencer à aborder l'un des aspects les plus puissants des applications monopages : la gestion des données !_
+
+-----
+
+## Stockez et gérez des données
+
+[Stockez et gérez des données - Créez une application web avec Vue.js - OpenClassrooms](https://openclassrooms.com/fr/courses/6390311-creez-une-application-web-avec-vue-js/6861941-stockez-et-gerez-des-donnees)
+
+![](https://user.oc-static.com/upload/2020/05/20/15899590235028_Bannee-dimension-720-798-01.png)
+
+### Gardez vos données à jour
+
+Lors de la création d'une application, un des points les plus critiques est de s'assurer que les données sont toujours à jour et aussi faciles
+à maintenir que possible. Dans une page web traditionnelle, lorsqu'on écrit du contenu en HTML simple, le contenu est considéré comme des
+données « **codées en dur** » ou « **statiques** ». Ce contenu n'est pas censé être modifié en fonction d'autres variables de la page. Bien que
+cette pratique soit parfaitement adaptée à des données n'apparaissant qu'une seule fois sur le site, cela a ses limites. Cette méthode devient
+très difficile à gérer dans le temps, à mesure que les données sont propagées au sein d'une application.
+
+Prenons un exemple de panier d'achats.
+
+<figure>
+    <img src="https://user.oc-static.com/upload/2020/04/27/15879909408596_Schema_pomme_banane_noixcoco-01.png"
+         alt="Exemple avec un panier d'achats" />
+    <figcaption>Exemple avec un panier d'achats</figcaption>
+</figure>
+
+```html
+<html>
+<body>
+    <h1>VueMart</h1>
+    <h2>Panier</h2>
+    <ul>
+        <li>Pommes: 6€</li>
+        <li>Bananes: 2€</li>
+        <li>Noix de coco: 8€</li>
+    </ul>
+    <p>Total: 16€</li>
+</body>
+</html>
+```
+
+Dans l'exemple ci-dessus, nous pouvons voir que cette page contient une liste du contenu de la commande de l'utilisateur. Cependant, que se
+passerait-il si nous faisions passer le coût des bananes de 2 € à 10 € ? 🙃 Le montant total devrait également être mis à jour avec la bonne
+valeur. En d'autres termes, le total restera fixé à 16 €, à moins de le modifier manuellement en effectuant les calculs nécessaires pour le
+mettre à jour.
+
+### Découvrez les données réactives
+
+Si vous avez déjà utilisé Excel et des _spreadsheets_, vous êtes très probablement familier avec la création d'équations dans des cellules de
+données. Par exemple, dans l'illustration suivante, le montant total est généré en additionnant les montants des pommes, des bananes et des
+noix de coco. Si l'un des montants change, cela se reflète automatiquement dans le total, sans aucun effort supplémentaire de votre part.
+
+<figure>
+    <img src="https://user.oc-static.com/upload/2020/04/23/15876408326061_ezgif.com-video-to-gif%20%289%29.gif"
+         alt="Les données se mettent à jour automatiquement dans une spreadsheet" />
+    <figcaption>Les données se mettent à jour automatiquement dans une spreadsheet</figcaption>
+</figure>
+
+Comme vous pouvez le constater, lorsque le montant des pommes passe à 6, le total augmente automatiquement à 20. C'est l'essence même des
+données réactives puisqu'elles « réagissent » à toute modification et mettent à jour les valeurs concernées en conséquence.
+
+### Faites le lien entre les données réactives et Vue
+
+Grâce aux connaissances que vous avez acquises dans le chapitre précédent, mettons maintenant en place un data store pour notre petit marché
+Vue !
+
+<Vimeo vimeoId="413528896" />
+
+<br />
+
+```javascript
+const app = new Vue({
+    el: '#app',
+    data: {
+        costOfApples: 6,
+        costOfBananas: 2,
+        costOfCoconuts: 8
+    }
+})
+```
+
+Dans notre HTML, nous pouvons maintenant réécrire le contenu statique pour qu'il ressemble à ceci :
+
+```html
+<div id="app">
+    <h1>VueMart</h1>
+    <h2>Panier</h2>
+    <ul>
+        <li>Pommes: {{ costOfApples }}€</li>
+        <li>Bananes: {{ costOfBananas }}€</li>
+        <li>Noix de coco: {{ costOfCoconuts }}€</li>
+    </ul>
+    <p>Total: {{ costOfApples + costOfBananas + costOfCoconuts }}€</li>
+
+    <h2>Horaires d'ouverture</h2>
+    <p>Dimanche: 10h - 16h</p>
+    <p>Du lundi au vendredi : 09h - 17h</p>
+    <p>Samedi : 09h30 - 18h00</p>
+</div>
+```
+
+Comme vous pouvez le voir maintenant, le calcul du **montant total** est basé sur les trois variables : `costOfApples`, `costOfBananas` et
+`costOfCoconuts`. En cas de modification de l'une de ces valeurs, le total s'adaptera en conséquence. En d'autres termes, le data store fait
+en sorte que tout soit réactif pour que vous n'ayez plus à intervenir !
+
+<nav className="algorithmes-nav">
+<div className="algorithmes-nav-code">
+
+```html
+<div id="app">
+    <h1>Vue Mart</h1>
+    
+    <h2>Panier d'achat</h2>
+    <ul>
+        <li>Pommes: {{ costOfApples }}€</li>
+        <li>Bananes: {{ costOfBananas }}€</li>
+        <li>Noix de coco: {{ costOfCoconuts }}€</li>
+    </ul>
+    <p>Total: {{ costOfApples + costOfBananas + costOfCoconuts }}€</p>
+    
+    <h2>Horaires d'ouverture</h2>
+    <p>Dimanche: 10h - 16h</p>
+    <p>Du lundi au vendredi : 09h - 17h</p>
+    <p>Samedi : 09h30 - 18h00</p>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+<script>
+    const app = new Vue({
+        el: '#app',
+        data: {
+            costOfApples: 5,
+            costOfBananas: 2,
+            costOfCoconuts: 8
+        }
+    })
+</script>
+```
+
+</div>
+<div className="algorithmes-nav-html">
+
+<iframe src="https://monwikidevweb.la-loutre.fr/data/OpenClassrooms/algo/Creez_une_application_web_avec_Vue-js/1-3-1/1-3-1.html"></iframe>
+
+</div>
+</nav>
+
+Bien que notre solution fonctionne, elle n'est pas satisfaisante lorsque le contenu de notre panier augmente. En effet, cela crée un surplus de
+travail. Et il serait bien plus propre de pouvoir écrire à la place `{{ totalAmount }}`. Après tout, bien que le panier d'achats ne contienne
+que trois articles pour le moment, vous comprenez que cela puisse rapidement devenir incontrôlable à mesure que le panier se remplit.
+Heureusement pour nous, Vue dispose d'une propriété pour nous aider à traiter ce type de cas : les propriétés calculées.
+
+### Découvrez les propriétés calculées
+
+Les **propriétés calculées** (_computed properties_) nous permettent de définir une valeur réutilisable qui est mise à jour en fonction
+d'autres propriétés `data`. Comme pour la propriété `data`, nous commençons par ajouter une propriété `calculée` qui utilise un objet pour
+définir les propriétés que nous voulons.
+
+```javascript
+const app = new Vue({
+    el: '#app',
+    data: {
+        costOfApples: 6,
+        costOfBananas: 2,
+        costOfCoconuts: 8
+    },
+    computed: {}
+})
+```
+
+Cependant, contrairement à la propriété `data`, chaque propriété calculée doit être une fonction retournant une valeur. En effet, elle effectue
+des calculs et retourne le résultat souhaité.
+
+<Vimeo vimeoId="413529007" />
+
+<br />
+
+Comme je l'ai mentionné précédemment, notre but est de simplifier notre code HTML en utilisant `{{ totalAmount }}` au lieu de
+`{{ costOfApples + costOfBananas + costOfCoconuts }}`. Cela peut se faire de la manière suivante :
+
+```javascript
+const app = new Vue({
+    el: '#app',
+    data: {
+        costOfApples: 6,
+        costOfBananas: 2,
+        costOfCoconuts: 8
+    },
+    computed: {
+        totalAmount() {
+            return this.costOfApples + this.costOfBananas + this.costOfCoconuts
+        }
+    }
+})
+```
+
+:::info
+Cet exemple utilise la syntaxe ES6 pour définir une fonction (c'est-à-dire que `totalAmount() { ... }` est identique à
+`totalAmount: function() { ... })`. Cependant, **n'utilisez pas les fonctions fléchées**, car cela réinitialisera le contexte de `this`. Cela
+cassera l'application puisque vous avez besoin de `this` pour pointer vers l'instance de Vue, afin de faire référence aux propriétés de `data`.
+:::
+
+Avec ce refactoring, notre code est complet !
+
+```html
+<html>
+<body>
+    <div id="app">
+        <h1>VueMart</h1>
+        <h2>Panier</h2>
+        <ul>
+            <li>Pommes: {{ costOfApples }}€</li>
+            <li>Bananes: {{ costOfBananas }}€</li>
+            <li>Noix de coco: {{ costOfCoconuts }}€</li>
+        </ul>
+        <p>Total: {{ totalAmount }}€</p>
+
+        <h2>Horaires d'ouverture</h2>
+        <p>Dimanche: 10h - 16h</p>
+        <p>Du lundi au vendredi: 09h - 17h</p>
+        <p>Samesi: 09h30 - 18h00</p>
+    </div>
+
+    <script>
+    const app = new Vue({
+        el: '#app',
+        data: {
+            costOfApples: 6,
+            costOfBananas: 2,
+            costOfCoconuts: 8
+        },
+        computed: {
+            totalAmount() {
+                return this.costOfApples + this.costOfBananas + this.costOfCoconuts
+            }
+        }
+    })
+    </script>
+</body>
+</html>
+```
+
+<nav className="algorithmes-nav">
+<div className="algorithmes-nav-code">
+
+```html
+<div id="app">
+    <h1>Vue Mart</h1>
+    
+    <h2>Panier d'achat</h2>
+    <ul>
+        <li>Pommes: {{ costOfApples }}€</li>
+        <li>Bananes: {{ costOfBananas }}€</li>
+        <li>Noix de coco: {{ costOfCoconuts }}€</li>
+    </ul>
+    <p>Total: {{ totalAmount }}€</p>
+    
+    <h2>Horaires d'ouverture</h2>
+    <p>Dimanche: 10h - 16h</p>
+    <p>Du lundi au vendredi : 09h - 17h</p>
+    <p>Samedi : 09h30 - 18h00</p>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+<script>
+    const app = new Vue({
+        el: '#app',
+        data: {
+            costOfApples: 5,
+            costOfBananas: 2,
+            costOfCoconuts: 8
+        },
+        computed: {
+            totalAmount() {
+                return this.costOfApples + this.costOfBananas + this.costOfCoconuts
+            }
+        }
+    })
+</script>
+```
+
+</div>
+<div className="algorithmes-nav-html">
+
+<iframe src="https://monwikidevweb.la-loutre.fr/data/OpenClassrooms/algo/Creez_une_application_web_avec_Vue-js/1-3-2/1-3-2.html"></iframe>
+
+</div>
+</nav>
+
+Toutes les données de notre application sont maintenant dynamiques et prêtes à réagir à toute modification pouvant intervenir dans le panier de
+l'utilisateur. Bien joué ! 👏
+
+Pour le vérifier, vous pouvez par exemple vous rendre dans la console et taper `app.costOfApples = 4`. Toutes les données se mettent à jour
+automatiquement !
+
+### Entraînez-vous !
+
+Vous trouverez le code source des exercices dans le [repo GitHub](https://github.com/amandinelemoult2109/Vue-fr) du cours dans le dossier
+`cafe-with-a-vue`. Pour commencer, consultez la branche `P1C3-Begin`.
+
+#### Instructions
+
+1. Remplacez le nom du restaurant par "Café avec vue". Cela devrait être mis à jour partout sur le site.
+2. Déplacez les données sur le restaurant dans le data store (le numéro de téléphone, l'adresse email et l'adresse postale).
+3. Créez une propriété calculée pour le texte de copyright dans le footer.
+
+```html {11-13,22,31-33,36-41} title="index.html"
+<div id="app" class="app">
+    <h1>{{ restaurantName }}</h1>
+    <p class="description">
+        Bienvenue dans notre café {{ restaurantName }} ! Nous sommes réputés pour
+        notre pain et nos merveilleuses pâtisseries. Faites vous plaisir dès le
+        matin ou avec un goûter réconfortant. Mais attention, vous verrez qu'il
+        est difficile de s'arrêter.
+    </p>
+
+    <h2>Contactez nous</h2>
+    <p>Adresse : {{ address }}</p>
+    <p>Téléphone : {{ phone }}</p>
+    <p>Email : {{ email }}</p>
+    <p>Horaires :</p>
+    <ul>
+        <li>L-V: 06:00 à 16:00</li>
+        <li>Samedi: 07:00 à 14:00</li>
+        <li>Dimanche: 07:00 à 12:00</li>
+    </ul>
+
+    <footer class="footer">
+        <p>{{ copyright }}</p>
+    </footer>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script>
+    const app = new Vue({
+        el: "#app",
+        data: {
+            address: "18 avenue du Beurre, Paris, France",
+            email: "hello@cafewithavue.bakery",
+            phone: "01 88 88 88 88",
+            restaurantName: "La belle vue"
+        },
+        computed: {
+            copyright() {
+                const currentYear = new Date().getFullYear()
+                return `Copyright ${this.restaurantName} ${currentYear}`
+            }
+        }
+    })
+</script>
+```
+
+<nav className="algorithmes-nav">
+<div className="algorithmes-nav-code">
+
+```html
+<div id="app" class="app">
+    <h1>{{ restaurantName }}</h1>
+    <p class="description">
+        Bienvenue dans notre café {{ restaurantName }} ! Nous sommes réputés pour
+        notre pain et nos merveilleuses pâtisseries. Faites vous plaisir dès le
+        matin ou avec un goûter réconfortant. Mais attention, vous verrez qu'il
+        est difficile de s'arrêter.
+    </p>
+
+    <h2>Contactez nous</h2>
+    <p>Adresse : {{ address }}</p>
+    <p>Téléphone : {{ phone }}</p>
+    <p>Email : {{ email }}</p>
+    <p>Horaires :</p>
+    <ul>
+        <li>L-V: 06:00 à 16:00</li>
+        <li>Samedi: 07:00 à 14:00</li>
+        <li>Dimanche: 07:00 à 12:00</li>
+    </ul>
+
+    <footer class="footer">
+        <p>{{ copyright }}</p>
+    </footer>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+<script>
+    const app = new Vue({
+        el: "#app",
+        data: {
+            address: "18 avenue du Beurre, Paris, France",
+            email: "hello@cafewithavue.bakery",
+            phone: "01 88 88 88 88",
+            restaurantName: "La belle vue"
+        },
+        computed: {
+            copyright() {
+                const currentYear = new Date().getFullYear()
+                return `Copyright ${this.restaurantName} ${currentYear}`
+            }
+        }
+    })
+</script>
+```
+
+</div>
+<div className="algorithmes-nav-html">
+
+<iframe src="https://monwikidevweb.la-loutre.fr/data/OpenClassrooms/algo/Creez_une_application_web_avec_Vue-js/cafe-with-a-vue/P1C3/index.html"></iframe>
+
+</div>
+</nav>
+
+### En résumé
+
+Dans ce chapitre, vous avez découvert :
+- les données réactives et leur importance dans la création de données maintenables dans une application ;
+- comment utiliser `data` pour gérer les données dans votre application Vue.js ;
+- comment utiliser les propriétés calculées (_computed properties_) pour simplifier votre code et la gestion de vos données.
+
+_Grâce à ces nouvelles connaissances, nous sommes maintenant prêts à découvrir une puissante fonctionnalité de Vue qui fournira de nouvelles
+capacités à notre HTML : les directives._<br />
+_Alors, rendez-vous au chapitre suivant ! 🚀_
+
+-----
+
+## Utilisez les directives Vue pour gérer des problèmes courants
+
+[Utilisez les directives Vue pour gérer des problèmes courants - Créez une application web avec Vue.js - OpenClassrooms](https://openclassrooms.com/fr/courses/6390311-creez-une-application-web-avec-vue-js/6862376-utilisez-les-directives-vue-pour-gerer-des-problemes-courants)
+
+![](https://user.oc-static.com/upload/2020/05/20/15899590447692_Bannee-dimension-720-798-01.png)
+
+Lorsque l'on évoque les problèmes de frontend rencontrés par les développeurs, certains apparaissent encore et encore. Et plutôt que de laisser
+à chacun le soin d'inventer sa propre façon de faire, Vue nous fournit des **directives** pour accomplir les tâches les plus communes.
+
+<Vimeo vimeoId="413529074" />
+
+<br />
+
+<nav className="algorithmes-nav">
+<div className="algorithmes-nav-code">
+
+```html
+<div id="app">
+    <h1>Vue Mart</h1>
+    
+    <h2>Panier d'achat</h2>
+    <ul>
+        <li v-for="item in shoppingCart">
+            <a v-bind:href="item.url">{{ item.label }}</a> : {{ item.cost }}€
+        </li>
+    </ul>
+    <p>Total: {{ totalAmount }}€</p>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+<script>
+    const app = new Vue({
+        el: '#app',
+        data: {
+            shoppingCart : [
+                {
+                    label: 'Apples',
+                    cost: 10,
+                    url: '/apples.html'
+                },
+                {
+                    label: 'Bananas',
+                    cost: 2,
+                    url: '/bananas.html'
+                },
+                {
+                    label: 'Coconuts',
+                    cost: 28,
+                    url: '/coconuts.html'
+                }
+            ]
+        },
+        computed: {
+            totalAmount() {
+                let total = 0
+                this.shoppingCart.forEach(item => {
+                    total += item.cost
+                })
+                return total
+            }
+        }
+    })
+</script>
+```
+
+</div>
+<div className="algorithmes-nav-html">
+
+<iframe src="https://monwikidevweb.la-loutre.fr/data/OpenClassrooms/algo/Creez_une_application_web_avec_Vue-js/1-4-1/1-4-1.html"></iframe>
+
+</div>
+</nav>
+
+### Découvrez ce qu’est une directive
+
+Les directives nous fournissent un moyen standard pour résoudre les problèmes courants. Elles sont particulièrement puissantes et écrites de
+manière sémantique, afin que le code soit facile à comprendre. Les directives ressemblent à des attributs HTML avec une différence principale :
+elles disposent toutes du préfixe `v-`. Voici quelques directives courantes que vous rencontrerez dans les applications Vue :
+- `v-if`, `v-else-if`, `v-else`
+- `v-show`
+- `v-for`
+- `v-bind`
+- `v-on`
+- `v-model`
+
+Dans ce chapitre, nous allons passer ces directives en revue et voir comment les utiliser pour créer des applications Vue puissantes et
+facilement compréhensibles par tous.
+
+### Conditionnez l'affichage du contenu
+
+L'un des scénarios les plus courants dans n'importe quelle application frontend est le besoin d'afficher ou de masquer le contenu en fonction
+de certaines conditions. Par exemple, selon le niveau d'autorisation d'un utilisateur, il faudra déterminer de manière dynamique le contenu à
+afficher ou à ne pas afficher. Dans Vue, deux directives principales permettent de réaliser cela : `v-if` et `v-show`.
+
+#### v-if, v-else-if, v-else
+
+Comme le suggèrent les mots-clés de la directive, cette dernière suit la structure de rendu conditionnel standard `if/then` de JavaScript. En
+voici un exemple simple :
+
+```html
+<div id="app">
+    <!-- Si (if) l'utilisateur a les autorisations par défaut, afficher ce qui suit -->
+    <section v-if="userPermission === 'default'">...</section>
+    <!-- Sinon et si l'utilisateur a les autorisations administrateur, afficher ce qui suit -->
+    <section v-else-if="userPermission === 'admin'">...</section>
+    <!-- Si l'utilisateur n'a aucune autorisation afficher ce qui suit -->
+    <section v-else>...</section>
+</div>
+```
+
+:::caution
+Bien qu'il ressemble à une chaîne de caractères, le texte situé entre les guillemets des directives est interprété comme du JavaScript et non
+comme une chaîne de caractères.
+:::
+
+#### v-show
+
+Cette directive peut sembler très similaire à la directive `v-if` ; pourtant, les deux ne sont pas interchangeables. `v-show` est généralement
+utilisée dans le but de contrôler la visibilité d'un élément faisant l'objet d'une permutation (_toggle_, en anglais) fréquente. En voici un
+exemple courant :
+
+```html
+<div id="app">
+    <button @click="showModal = !showModal">Display Modal</button>
+    <div v-show="showModal" class="modal">...</div>
+</div>
+<script>
+    const app = new Vue({
+        el: '#app',
+        data: {
+            showModal: false
+        }
+    })
+</script>
+```
+
+:::info
+Vous n’avez pas encore vu la directive `v-on` (abrégée `@`), par exemple `@click`. Ceci n’est pas gênant pour la compréhension du but du code
+et ne vous inquiétez pas, on voit ça juste après !
+:::
+
+La principale différence entre les deux directives est que `v-show` permute la visibilité de l'élément HTML grâce au CSS, alors que `v-if`
+supprime complètement l'élément du DOM.
+
+### Bouclez sur votre contenu
+
+On peut également citer un autre scénario courant qui consiste à devoir répéter un élément HTML. Dans le cas où nous récupérons des données
+d’une API par exemple, et que nous souhaitons afficher chaque item récupéré (un produit, un article, un commentaire…) la directive `v-for`
+permet de réaliser cette tâche. Elle suit la syntaxe de boucle JavaScript standard `for ... in`. Prenons un exemple courant, le renvoi d'une
+liste. Dans notre exemple de panier d'achats, on aurait également pu écrire :
+
+```html
+<div id="app">
+    <h1>Vue Mart</h1>
+    <h2>Shopping Cart</h2>
+    <ul>
+        <li v-for="item in shoppingCart">
+            {{ item.label }} : {{ item.cost }}€
+        </li>
+    </ul>
+</div>
+
+<script>
+const app = new Vue({
+    el: '#app',
+    data: {
+        shoppingCart: [
+            { label: 'Pommes', cost: 6 },
+            { label: 'Bananes', cost: 2 },
+            { label: 'Noix de coco', cost: 8 }
+        ]
+    }
+})
+</script>
+```
+
+### Définissez des attributs HTML de façon dynamique
+
+Vous serez très souvent tenté d'utiliser une propriété `data` pour définir l'attribut d'un élément, plutôt que de le coder en dur. Il y a
+justement une directive faite exprès : la directive `v-bind`. C'est le cas, par exemple, lorsque vous effectuez une requête pour récupérer des
+données auprès d'une API et que vous avez besoin de renvoyer des données en fonction de ce qui est retourné. Voici un exemple :
+
+```html
+<div id="app">
+    <ul>
+        <li v-for="item in apiResponse">
+            <a v-bind:href="item.url">{{ item.name }}</a>
+        </li>
+    </ul>
+</div>
+
+<script>
+const app = new Vue({
+    el: '#app',
+    data: {
+        apiResponse: [
+            { name: 'GitHub', url: 'https://www.github.com' },
+            { name: 'Twitter', url: 'https://www.twitter.com' },
+            { name: 'Netlify', url: 'https://www.netlify.com' }
+        ]
+    }
+})
+</script>
+```
+
+:::info
+Vous auriez pu penser que nous pourrions faire `<a href=”{{ item.url }}”>...</a>`. Cependant, si vous faites ça, vous aurez dans le dur en HTML
+`<a href=”{{ item.url }}”>...</a>` et non pas `<a href=”[https://github.com](https://github.com)”>...</a>` par exemple.
+
+La directive `v-bind` est couramment utilisée via son abréviation « `:` ». En d'autres termes, au lieu d'écrire `v-bind:href="item.url"`, on
+écrit généralement plutôt `:href="item.url"`.
+:::
+
+### Écoutez des événements et répondez-y
+
+Lorsque vous souhaitez écouter certains événements sur un élément, Vue vous facilite la tâche avec la directive `v-on`.
+
+<Vimeo vimeoId="413529249" />
+
+<br />
+
+<nav className="algorithmes-nav">
+<div className="algorithmes-nav-code">
+
+```html
+<div id="app">
+    <h1>Ma couleur préférée</h1>
+
+    <div>
+        <h2>Montrer ma couleur préférée</h2>
+        <button @click="showColor">Cliquer ici !</button>
+    </div>
+    <div>
+        <h2>Changer ma couleur préférée</h2>
+        <label for="change-color">Changer la couleur :</label>
+        <input id="change-color" type="text" @keyup.enter="changeColor" />
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+<script>
+    const app = new Vue({
+        el: '#app',
+        data: {
+            favoriteColor: 'bleu',
+        },
+        methods: {
+            showColor() {
+                alert(this.favoriteColor)
+            },
+            changeColor() {
+                this.favoriteColor = document.getElementById('change-color').value
+            }
+        }
+    })
+</script>
+```
+
+</div>
+<div className="algorithmes-nav-html">
+
+<iframe src="https://monwikidevweb.la-loutre.fr/data/OpenClassrooms/algo/Creez_une_application_web_avec_Vue-js/1-4-2/1-4-2.html"></iframe>
+
+</div>
+</nav>
+
+<br />
+<br />
+
+Voici un exemple simple :
+
+```html
+<div id="app">
+    <button v-on:click="alert('Bonjour')">Cliquez ici !</button>
+</div>
+```
+
+:::info
+La directive `v-on` est couramment utilisée via son abréviation « `@` ». Au lieu d'écrire `v-on:click="alert('Bonjour')"`, on écrit
+généralement plutôt `@click="alert('Bonjour')"`.
+:::
+
+Cependant, nous aurons souvent besoin d'appeler des fonctions bien plus complexes qu'une seule ligne de JavaScript. Et c'est là que les
+méthodes entrent en jeu. Les **méthodes** vous permettent de définir des fonctions auxquelles votre application Vue aura accès. Elles sont
+définies comme la propriété `data`.
+
+```javascript
+const app = new Vue({
+    el: '#app',
+    data: {
+        favoriteColor: 'bleu'
+    },
+    computed: {
+        label() {
+            return ': ' + this.favoriteColor
+        }
+    },
+    methods: {
+        alertColor(color) {
+            alert('Ma couleur préférée est ' + color)
+        },
+        changeColor() {
+            console.log('Je veux changer ma couleur préférée !')
+        }
+    }
+})
+```
+
+Comme vous pouvez le constater, il faut un objet qui est en fait une fonction JavaScript standard. Cependant, vous voudrez parfois interagir
+avec des propriétés gérées dans Vue (c'est-à-dire, data, calculées, etc.). Tout comme vous désigneriez des propriétés `data` dans des valeurs
+calculées en les préfixant avec `this`, vous ferez la même chose ici !
+
+```javascript
+const app = new Vue({
+    el: '#app',
+    data: {
+        favoriteColor: 'bleu'
+    },
+    computed: {
+        label() {
+            return ': ' + this.favoriteColor
+        }
+    },
+    methods: {
+        alertColor(colorLabel) {
+            alert('Ma couleur préférée ' + colorLabel)
+        },
+        changeColor() {
+            // Change la propriété data
+            this.favoriteColor = 'turquoise'
+            // Appelle une méthode différente et passe une propriété calculée
+            this.alertColor(this.label)
+        }
+    }
+})
+```
+
+Maintenant que vous avez tout cela en tête, passons aux entrées !
+
+### Mettez à jour les données dans des formulaires
+
+Lorsque l'on travaille avec des formulaires, on préfère mettre à jour le data store en conséquence. Cela nous permet d'effectuer des tâches
+telles que lancer une validation, des calculs, etc. Même s'il est possible de réaliser cela manuellement avec une directive `v-on` avec `v-bind`,
+Vue fournit un moyen standard pour accomplir cette tâche avec `v-model`. Cela vous permet de définir la propriété `data` que vous souhaitez
+mettre à jour lorsque l'utilisateur interagit avec un formulaire.
+
+<Vimeo vimeoId="413529353" />
+
+<br />
+
+<nav className="algorithmes-nav">
+<div className="algorithmes-nav-code">
+
+```html
+<div id="app">
+    <h1>Ma couleur préférée</h1>
+
+    <div>
+        <h2>Montrer ma couleur préférée</h2>
+        <button @click="showColor">Cliquer ici !</button>
+    </div>
+    <div>
+        <h2>Changer ma couleur préférée : {{ favoriteColor }}</h2>
+        <label for="change-color">Changer la couleur :</label>
+        <input id="change-color" type="text" v-model="favoriteColor" />
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+<script>
+    const app = new Vue({
+        el: '#app',
+        data: {
+            favoriteColor: 'bleu',
+        },
+        methods: {
+            showColor() {
+                alert(this.favoriteColor)
+            }
+        }
+    })
+</script>
+```
+
+</div>
+<div className="algorithmes-nav-html">
+
+<iframe src="https://monwikidevweb.la-loutre.fr/data/OpenClassrooms/algo/Creez_une_application_web_avec_Vue-js/1-4-3/1-4-3.html"></iframe>
+
+</div>
+</nav>
+
+<br />
+<br />
+
+Voici un exemple :
+
+```html
+<div id="app">
+    <label for="username">Nom d'utilisateur</label>
+    <input id="username" type="text" v-model="username" />
+    <label for="pw">Mot de passe</label>
+    <input id="pw" type="password" v-model="password" />
+</div>
+<script>
+    const app = new Vue({
+        el: '#app',
+        data: {
+            username: '',
+            password: ''
+        }
+    })
+</script>
+```
+
+Maintenant, à chaque fois que l'utilisateur saisira des données dans les _inputs_ correspondants, le data store sera mis à jour en conséquence !
+
+### Entraînez-vous
+
+Vous trouverez le code source des exercices dans le [repo GitHub](https://github.com/amandinelemoult2109/Vue-fr) du cours dans le dossier
+`cafe-with-a-view`. Pour commencer, consultez la branche `P1C4-Begin`.
+
+#### Instructions
+
+<nav className="algorithmes-nav">
+<div className="algorithmes-nav-code">
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+		<link rel="stylesheet" href="./styles.css" />
+		<title>Cafe with a Vue</title>
+	</head>
+	<body>
+		<div id="app" class="app">
+			<h1>{{ restaurantName }}</h1>
+			<p class="description">
+				Bienvenue dans notre café {{ restaurantName }}! Nous sommes réputés pour
+				notre pain et nos merveilleuses pâtisseries. Faites vous plaisir dès le
+				matin ou avec un goûter réconfortant. Mais attention, vous verrez qu'il
+				est difficile de s'arrêter.
+			</p>
+
+			<section class="menu">
+				<h2>Menu</h2>
+				<div class="menu-item">
+					<img
+						class="menu-item__image"
+						src="https://via.placeholder.com/300x150"
+						alt=""
+					/>
+					<div>
+						<h3>Nom de l'article</h3>
+						<p>En stock</p>
+						<p>En rupture de stock</p>
+						<div>
+							<label for="add-item-quantity">Quantité :</label>
+							<input id="add-item-quantity" type="number" />
+							<button>Ajouter au panier d'achat</button>
+						</div>
+					</div>
+				</div>
+			</section>
+
+			<aside class="shopping-cart">
+				<h2>Panier d'achat: 0 articles</h2>
+			</aside>
+
+			<h2>Contactez nous</h2>
+			<p>Adresse : {{ address }}</p>
+			<p>Téléphone : {{ phone }}</p>
+			<p>Email : {{ email }}</p>
+			<p>Horaires :</p>
+			<ul>
+				<li>L-V: 06:00 à 16:00</li>
+				<li>Samedi: 07:00 à 14:00</li>
+				<li>Dimanche: 07:00 à 12:00</li>
+			</ul>
+
+			<footer class="footer">
+				<p>Copyright {{ restaurantName }} 2020</p>
+			</footer>
+		</div>
+
+		<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+		<script>
+			const app = new Vue({
+				el: "#app",
+				data: {
+					address: "18 avenue du Beurre, Paris, France",
+					email: "hello@cafewithavue.bakery",
+					phone: "01 88 88 88 88",
+					restaurantName: "La belle vue",
+					simpleMenu: [
+						{
+							name: "Croissant",
+							image: {
+								source: "./images/croissant.jpg",
+								alt: "Un croissant"
+							},
+							inStock: true,
+							quantity: 1
+						},
+						{
+							name: "Baguette de pain",
+							image: {
+								source: "./images/french-baguette.jpeg",
+								alt: "Quatre baguettes de pain"
+							},
+							inStock: true,
+							quantity: 1
+						},
+						{
+							name: "Éclair",
+							image: {
+								source: "./images/eclair.jpg",
+								alt: "Éclair au chocolat"
+							},
+							inStock: false,
+							quantity: 1
+						}
+					]
+				},
+				computed: {
+					copyright() {
+						const currentYear = new Date().getFullYear()
+
+						return `Copyright ${this.restaurantName} ${currentYear}`
+					}
+				}
+			})
+		</script>
+	</body>
+</html>
+```
+
+</div>
+<div className="algorithmes-nav-html">
+
+<iframe src="https://monwikidevweb.la-loutre.fr/data/OpenClassrooms/algo/Creez_une_application_web_avec_Vue-js/cafe-with-a-vue/P1C4-Begin/index.html"></iframe>
+
+</div>
+</nav>
+
+<br />
+
+[La page html](https://monwikidevweb.la-loutre.fr/data/OpenClassrooms/algo/Creez_une_application_web_avec_Vue-js/cafe-with-a-vue/P1C4-Begin/index.html)
+
+1. Utilisez la directive `v-for` pour afficher tous les éléments de `simpleMenu`.
+
+```html
+...
+<div v-for="item in simpleMenu" :key="item.name" class="menu-item">
+...
+<h3>{{ item.name }}</h3>
+...
+<label for="add-item-quantity">Quantité : {{ item.quantity }}</label>
+...
+<h2>Panier d'achat : {{ shoppingCart }} articles</h2>
+...
+data: {
+    shoppingCart: 0}
+```
+
+2. Utilisez la directive `v-if` pour indiquer si un article est "En stock" ou "En rupture de stock".
+
+```html
+<p v-if="item.inStock">En stock</p>
+<p v-else>En rupture de stock</p>
+```
+
+3. Utilisez la directive `v-bind` pour rendre dynamiquement chaque image du menu et remplir son texte `alt`.
+
+```html
+<img
+    class="menu-item__image"
+    :src="item.image.source"
+    :alt="item.image.alt"
+/>
+```
+
+4. Utilisez la directive `v-on` pour augmenter le total du panier lors de l'ajout d'un article du menu avec une fonction définie dans les
+méthodes appelées addToShoppingCart.
+
+```html
+<button @click="addToShoppingCart(item.quantity)">
+    Ajouter au panier
+</button>
+...
+methods: {
+    addToShoppingCart(amount) {
+        this.shoppingCart += amount
+    }
+}
+```
+
+5. Utiliser `v-model` pour permettre à l'utilisateur de mettre à jour le nombre d'articles qu'il souhaite mettre lorsqu'il fait un ajout au
+panier.
+
+```html
+<input
+    v-model.number="item.quantity"
+    id="add-item-quantity"
+    type="number"
+/>
+```
+
+<nav className="algorithmes-nav">
+<div className="algorithmes-nav-code">
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+		<link rel="stylesheet" href="./styles.css" />
+		<title>Cafe with a Vue</title>
+	</head>
+	<body>
+		<div id="app" class="app">
+			<h1>{{ restaurantName }}</h1>
+			<p class="description">
+				Bienvenue dans notre café {{ restaurantName }}! Nous sommes réputés pour
+				notre pain et nos merveilleuses pâtisseries. Faites vous plaisir dès le
+				matin ou avec un goûter réconfortant. Mais attention, vous verrez qu'il
+				est difficile de s'arrêter.
+			</p>
+
+			<section class="menu">
+				<h2>Menu</h2>
+				<div v-for="item in simpleMenu" :key="item.name" class="menu-item">
+					<img
+						class="menu-item__image"
+						:src="item.image.source"
+						:alt="item.image.alt"
+					/>
+					<div>
+						<h3>{{ item.name }}</h3>
+						<p v-if="item.inStock">En stock</p>
+						<p v-else>En rupture de stock</p>
+						<div>
+							<label for="add-item-quantity">
+                                Quantité : {{ item.quantity }}
+                            </label>
+							<input
+								v-model.number="item.quantity"
+								id="add-item-quantity"
+								type="number"
+							/>
+							<button @click="addToShoppingCart(item.quantity)">
+								Ajouter au panier
+							</button>
+						</div>
+					</div>
+				</div>
+			</section>
+
+			<aside class="shopping-cart">
+				<h2>Panier d'achat : {{ shoppingCart }} articles</h2>
+			</aside>
+
+			<h2>Contactez nous</h2>
+			<p>Adresse : {{ address }}</p>
+			<p>Téléphone : {{ phone }}</p>
+			<p>Email : {{ email }}</p>
+			<p>Horaires :</p>
+			<ul>
+				<li>L-V: 06:00 à 16:00</li>
+				<li>Samedi: 07:00 à 14:00</li>
+				<li>Dimanche: 07:00 à 12:00</li>
+			</ul>
+			<footer class="footer">
+				<p>{{ copyright }}</p>
+			</footer>
+		</div>
+
+		<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+		<script>
+			const app = new Vue({
+				el: "#app",
+				data: {
+					address: "18 avenue du Beurre, Paris, France",
+					email: "hello@cafewithavue.bakery",
+					phone: "01 88 88 88 88",
+					restaurantName: "La belle vue",
+					shoppingCart: 0,
+					simpleMenu: [
+						{
+							name: "Croissant",
+							image: {
+								source: "./images/croissant.jpg",
+								alt: "Un croissant"
+							},
+							inStock: true,
+							quantity: 1
+						},
+						{
+							name: "Baguette de pain",
+							image: {
+								source: "./images/french-baguette.jpeg",
+								alt: "Quatre baguettes de pain"
+							},
+							inStock: true,
+							quantity: 1
+						},
+						{
+							name: "Éclair",
+							image: {
+								source: "./images/eclair.jpg",
+								alt: "Éclair au chocolat"
+							},
+							inStock: false,
+							quantity: 1
+						}
+					]
+				},
+				computed: {
+					copyright() {
+						const currentYear = new Date().getFullYear()
+
+						return `Copyright ${this.restaurantName} ${currentYear}`
+					}
+				},
+				methods: {
+					addToShoppingCart(amount) {
+						this.shoppingCart += amount
+					}
+				}
+			})
+		</script>
+	</body>
+</html>
+```
+
+</div>
+<div className="algorithmes-nav-html">
+
+<iframe src="https://monwikidevweb.la-loutre.fr/data/OpenClassrooms/algo/Creez_une_application_web_avec_Vue-js/cafe-with-a-vue/P1C4-Solution/index.html"></iframe>
+
+</div>
+</nav>
+
+<br />
+
+[La page html](https://monwikidevweb.la-loutre.fr/data/OpenClassrooms/algo/Creez_une_application_web_avec_Vue-js/cafe-with-a-vue/P1C4-Solution/index.html)
+
+
+### En résumé
+
+Félicitations ! Vous avez acquis les compétences nécessaires pour utiliser les directives dans le but de :
+- afficher et masquer du contenu ;
+- réaliser une boucle à travers une liste de données et afficher le rendu de son contenu ;
+- mettre à jour des attributs HTML de façon dynamique ;
+- écouter des événements auxquels vous pouvez répondre ;
+- créer des fonctions JavaScript que Vue.js peut utiliser ;
+- configurer des formulaires pour que votre data store soit mis à jour au fur et à mesure que l'utilisateur interagit avec lui.
+
+_Il est temps pour nous de revoir ce que vous avez appris dans cette partie !_
+
+-----
+
+## Résumé de la partie 1
+
+[Résumé de la partie 1 - Créez une application web avec Vue.js - OpenClassrooms](https://openclassrooms.com/fr/courses/6390311-creez-une-application-web-avec-vue-js/6862851-resume-de-la-partie-1)
+
+![](https://user.oc-static.com/upload/2020/05/20/1589959071585_Bannee-dimension-720-798-01.png)
+
+Dans les chapitres précédents, vous avez découvert les principes fondamentaux de Vue et appris :
+1. Comment instancier une nouvelle **instance** de Vue.
+2. Comment mettre en place et gérer un **data store**.
+3. Comment utiliser les **valeurs calculées** pour améliorer la gestion des données.
+4. Comment utiliser les **directives** pour résoudre des problèmes courants.
+5. Comment créer des **fonctions réutilisables** avec les méthodes.
+
+_Vous êtes maintenant en mesure de créer des applications Web sans aucun outil de construction ! Cependant, vous pourriez commencer à voir
+quelques limites à cette façon de faire. Quand vous serez prêt, rejoignez-moi dans la partie suivante qui traite de Vue CLI et de la façon
+dont la plupart des applications en entreprise sont créées._
+
+-----
+
+## Quiz : Construisez une application Vue.js
+
+[Construisez une application Vue.js - OpenClassrooms](https://openclassrooms.com/fr/courses/6390311-creez-une-application-web-avec-vue-js/exercises/3846)
+
+#### Compétences évaluées
+
+<i class="bi bi-check2-circle"></i> Construire une application Vue.js
+
+-----
+
+#### Question 1 : Quelle directive pouvez-vous utiliser pour réaliser des boucles sur des éléments ?
+
+<i class="bi bi-circle"></i> <code>v-if</code><br />
+<i class="bi bi-circle"></i> <code>v-bind</code><br />
+<i class="bi bi-record-circle"></i> <code>v-for</code><br />
+<i class="bi bi-circle"></i> <code>v-model</code><br />
+<i class="bi bi-circle"></i> <code>v-show</code><br />
+<br />
+
+_La directive `v-for` vous permet d'afficher des listes sous la forme d'un tableau ou d'un objet qui utilise une syntaxe similaire à la
+syntaxe `for ... in ...` en JavaScript._
+
+-----
+
+#### Question 2 : Vrai ou faux ? Vous pouvez créer une application Vue.js sans aucun outil de build.
+
+<i class="bi bi-record-circle"></i> Vrai<br />
+<i class="bi bi-circle"></i> Faux<br />
+<br />
+
+_Bien que Vue.js dispose de ses propres outils de build pour les applications à plus grande échelle, la manière la plus simple est d'utiliser
+le lien CDN pour Vue. Un copier-coller et vous êtes prêt à créer une application complète !_
+
+-----
+
+#### Question 3 : Quelle propriété de configuration est utilisée pour créer un data store réactif ?
+
+<i class="bi bi-circle"></i> <code>el</code><br />
+<i class="bi bi-record-circle"></i> <code>data</code><br />
+<i class="bi bi-circle"></i> <code>computed</code><br />
+<i class="bi bi-circle"></i> <code>methods</code><br />
+<br />
+
+_La propriété data sur une instance de Vue vous permet de créer un data store réactif qui suit et met à jour l'utilisation de chaque propriété
+déclarée à l'intérieur._
+
+-----
+
+#### Question 4 : Si un utilisateur doit fréquemment afficher ou cacher un élément de la page, quelle est la meilleure directive à utiliser ?
+
+<i class="bi bi-circle"></i> <code>v-bind</code><br />
+<i class="bi bi-circle"></i> <code>v-for</code><br />
+<i class="bi bi-circle"></i> <code>v-model</code><br />
+<i class="bi bi-record-circle"></i> <code>v-show</code><br />
+<i class="bi bi-circle"></i> <code>v-if</code><br />
+<br />
+
+_La directive `v-show` permet de basculer la visibilité (_toggle_) d'un élément en CSS. C'est plus performant que `v-if`, où tout l'élément
+HTML est détruit et recréé à chaque affichage et chaque destruction._
+
+-----
+
+#### Question 5 : Ici, le code de notre développeur rend des données statiques. Pourquoi ? 🕵️‍♂️
+
+```html
+<div id="app">
+    <div v-for="item in results">
+        <img src="item.imageUrl" alt="item.title" />
+        <p>{{ item.title }}</p>
+    </div>
+</div>
+<script>
+const app = new Vue({
+    data: function() {
+        results: [
+            { title: 'Fraises', itemUrl: '/images/fraises.jpg' },
+            { title: 'Ananas', itemUrl: '/images/ananas.jpg' },
+            { title: 'Durian', itemUrl: '/images/durian.jpg' },
+        ]
+    }
+})
+</script>
+```
+
+<i class="bi bi-record-circle"></i> Il devrait utiliser la directive <code>v-bind</code>.<br />
+<i class="bi bi-circle"></i> Il aurait dû préfixer les propriétés avec <code>@</code>.<br />
+<i class="bi bi-circle"></i> Il a mal utilisé la boucle <code>v-for</code>.<br />
+<i class="bi bi-circle"></i> Il devrait utiliser la directive <code>v-on</code>.<br />
+<br />
+
+_La directive `v-bind` vous permet de manipuler les propriétés HTML en précisant à Vue de l'interpréter comme du JavaScript plutôt que comme
+une chaîne de caractères statique._
+
+-----
+
+#### Question 6 : Ce code ne fonctionne pas comme prévu. Quand l'utilisateur saisit du texte dans l'_input_, le data store ne se met pas à jour. Qu'est-ce qui peut bien poser problème ici ? 🤔
+
+```html
+<div id="app">
+    <form>
+        <label for="first-name">Prénom</label>
+        <input type="text" id="first-name" />
+    </form>
+    <p>Votre prénom est {{ firstName }}</p>
+</div>
+<script>
+const app = new Vue({
+    data: function() {
+        firstName: ''
+    }
+})
+</script>
+```
+
+<i class="bi bi-circle"></i> Il aurait fallu utiliser la propriété <code>computed</code>.<br />
+<i class="bi bi-circle"></i> Il faut utiliser une <code>méthode</code> pour récupérer la valeur de l'input.<br />
+<i class="bi bi-record-circle"></i> La directive <code>v-model</code> a été oubliée sur l'input.<br />
+<br />
+
+_La directive `v-model` est la manière la plus courante de s'assurer que les éléments d'un formulaire sont reliés à la bonne propriété du data
+store. Dans ce cas, ça devrait être `<input type="text" id="first-name" v-model="firstName" />`._
+
+-----
+
+#### Question 7 : Le code ci-dessous ne fonctionne pas comme prévu. Qu'est-ce qui ne va pas avec ce code ?
+
+```html
+<script>
+new Vue({
+    el: '#app',
+    data: {
+        message: 'Bien joué!'
+    },
+    methods: {
+        alertMessage() {
+            alert(message)
+        }
+    }
+})
+</script>
+```
+
+<i class="bi bi-circle"></i> Il doit utiliser la propriété <code>computed</code>.<br />
+<i class="bi bi-record-circle"></i> La propriété <code>message</code> aurait dû être précédée de <code>this</code>.<br />
+<i class="bi bi-circle"></i> Il n'y a pas de problème avec le code.<br />
+<br />
+
+_Lorsque vous souhaitez faire référence à une propriété dans l'instance Vue, vous devez fournir un contexte avec `this` pour vous assurer
+qu'elle fait référence à l'instance Vue actuelle._
+
+-----
+
+#### Question 8 : Jetez un coup d'œil au code ci-dessous. En supposant que le data store ne puisse pas être modifié, quelle technique peut-on utiliser pour rendre le HTML plus propre ?
+
+```html
+<div id="app">
+    <h1>{{ firstName + ' ' + lastName }}<h1>
+    <p>Site personnel de {{ firstName + ' ' + lastName }}.</p>
+</div>
+<script>
+const app = new Vue({
+    data: function() {
+        firstName: 'Tony',
+        lastName: 'Stark'
+    }
+})
+</script>
+```
+
+<i class="bi bi-circle"></i> Créer une méthode qui génère le nom complet.<br />
+<i class="bi bi-record-circle"></i> Créer une propriété calculée appelée <code>fullName</code>.<br />
+<i class="bi bi-circle"></i> Utiliser la directive <code>v-for</code> pour faire une boucle dans le data store.<br />
+<i class="bi bi-circle"></i> Le code n'a pas besoin d'être modifié.<br />
+<br />
+
+_Les propriétés calculées sont un excellent moyen d'éviter un encombrement du HTML puisqu'elles vous permettent d'assembler dynamiquement des
+données, tout en restant faciles à lire dans votre HTML._

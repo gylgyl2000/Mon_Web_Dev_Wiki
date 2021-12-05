@@ -1,0 +1,1620 @@
+---
+sidebar_position: 3
+---
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+import { Vimeo } from 'mdx-embed';
+
+# Protégez votre code avec l’OWASP
+
+## Protégez votre code contre l’injection
+
+[Protégez votre code contre l’injection - Sécurisez vos applications web avec l'OWASP - OpenClassrooms](https://openclassrooms.com/fr/courses/6179306-securisez-vos-applications-web-avec-lowasp/6520701-protegez-votre-code-contre-l-injection)
+
+<Vimeo vimeoId="376328700" />
+
+<br />
+
+Dans ce chapitre, nous allons voir la première vulnérabilité mais également la plus fréquente, l’injection. Nous verrons quels sont les types
+d’injection et comment s’en prémunir.
+
+### Découvrez l'injection
+
+Cette vulnérabilité permet à un attaquant d’**injecter des données non maîtrisées** qui seront exécutées par l’application et qui permettent
+d’effectuer des actions qui ne sont normalement pas autorisées.
+
+Ces injections peuvent par exemple être des **requêtes SQL** pour manipuler la base de données, du code JavaScript ou HTML.
+
+:::note ?
+À quel endroit un attaquant effectue une injection ?
+:::
+
+Dans une application web, il existe des champs ou des formulaires. Ce sont des composants des applications permettant la saisie de l’utilisateur.
+Ces champs sont généralement la cible d’injections. Ils se présentent sous la forme d'un formulaire HTML ou d'un champ texte. Ce que vous avez
+tapé est ensuite traité. Si vous tapez un nom d'utilisateur et un mot de passe, ils seront alors envoyés à la base de données pour pouvoir vous
+authentifier.
+
+:::info
+Le type d'attaque par injection le plus **connu** est l'**injection SQL**.
+:::
+
+Dans le cas d’une attaque par **injection SQL**, au lieu de mettre un nom d'utilisateur et un mot de passe sur une page de connexion, un
+utilisateur malveillant entrera des données directement interprétées par le moteur SQL, ce qui lui permettra de **modifier** le comportement de
+votre application.
+
+Prenons un exemple de requête SQL :
+
+```sql
+SELECT * FROM accounts WHERE username='$username' AND password='$password'
+```    
+
+- `SELECT` est un mot clé permettant de **sélectionner** un élément de la base de données.
+- Le caractère `*` indique que tous les éléments doivent être sélectionnés.
+- `FROM` permet d’indiquer la **table** à utiliser. Dans notre cas, le nom de la table est ‘accounts’.
+- `WHERE` spécifie ce que vous voulez sélectionner.
+- `username='$username' AND password='$password'` sont les paramètres spécifiques recherchés par cette requête.
+
+Cette requête peut être formalisée par : “Dans la liste des comptes, sélectionne le nom d'utilisateur et le mot de passe qui sont associés au
+données spécifiées.”
+
+Par exemple, disons que quelqu'un a créé un compte avec le nom d'utilisateur : ‘_John’,_ et le mot de passe : _`‘ThisIsMySUperS3cr3tPass’`_.
+La requête SQL sera la suivante :
+
+```sql
+SELECT * FROM accounts WHERE username='John' AND password='ThisIsMySUperS3cr3tPass'
+```
+
+Si l’utilisateur John et son mot de passe sont présents dans la base de données, l’utilisateur sera authentifié.
+
+Cette requête classique peut être contournée par le biais d’une injection SQL. L’exemple suivant nous montre un cas d’exploitation classique.
+
+```sql
+$username = 1' or '1' = '1’
+$password = 1’ or ‘1’= ’1’
+```
+
+C'est ce qu'on appelle une **instruction conditionnelle** ! Elle nécessite que les requêtes respectent des conditions pour s’exécuter.
+
+Dans ce champ, `“$username = 1” et “$password = 1”` sont comparés à l'instruction `'1=1'`. Ici, peu importent le username et le password entrés :
+l’instruction sera toujours valide.
+
+Si nous reprenons notre requête précédente, elle sera interprétée de la manière suivante :
+
+```sql
+SELECT * FROM accounts WHERE username=1' or ‘1’=’1' AND password=1' or ‘1’=’1''
+```
+
+Un utilisateur malveillant sera ainsi en mesure de s’authentifier avec n’importe quel compte de la base de données, en l'occurrence, ici, le
+premier compte de la table Account sera utilisé.
+
+### Sécurisez une application contre l’injection SQL
+
+Pour garantir une protection contre l’injection SQL, il est possible d’utiliser un **pare-feu** d'application web ou WAF, pour _Web Application
+Firewall_ en anglais. Ce pare-feu se place entre l'utilisateur et l’application web et permet de vérifier et d'intercepter les données envoyées.
+Toutefois il est également possible de sécuriser l’application directement dans le code.
+
+#### Validez les entrées
+
+**La validation des entrées** est une excellente pratique en tant que développeur web. Elle limite ce que l'utilisateur peut mettre dans la
+zone de texte. Avez-vous déjà été frustré lors de la création d'un compte parce qu'il n'était pas possible de créer un mot de passe sans
+chiffres ou lettres majuscules ?
+
+C'est parce que la validation des entrées a été implémentée : l'entrée est analysée après avoir appuyé sur Entrée. Cela n'empêchera pas
+l'injection, mais c'est une mesure que vous pouvez mettre en place pour limiter des attaques de base. En effet, les caractères spéciaux
+spécifiques à certains langages ne pourront pas être utilisés.
+
+:::note ?
+Quels types de caractères peut-on limiter lors de la saisie utilisateur ?
+:::
+
+Si vous avez dit le **signe égal** et **l'apostrophe,** vous êtes sur la bonne voie ! En effet, ces caractères sont interprétés par le moteur
+de base de données, ce qui veut dire que si un attaquant peut les rentrer dans un champ, ils pourront potentiellement altérer le fonctionnement ;
+c’est le principe d’une injection SQL. ![;)](https://openclassrooms.com/bundles/common/images/smiley/clin.png)
+
+#### Paramétrez vos variables !
+
+Vous pouvez écrire vos requêtes SQL en **paramétrant** les variables. C'est ce qu'on appelle une **requête préparée**. Examinons l'exemple
+précédent.
+
+```sql
+SELECT * FROM accounts WHERE username='$username' AND password='$password'
+```
+
+Pour l'instant, la requête connecte la variable $username directement à la base de données, la rendant vulnérable à l'injection. Avec une
+requête préparée, le code ressemblerait à ceci :
+
+```sql
+SELECT * FROM accounts WHERE username='@username' AND password='@password'
+```
+
+Les variables Nom d'utilisateur et Mot de passe sont paramétrées, elles seront donc désormais passées dans une méthode pour exécuter la requête
+au lieu de se connecter directement à la base de données.
+
+```sql
+$username = setUser(username)
+$password = setPassword(password)
+```
+
+Il existe de nombreuses façons de sécuriser les requêtes SQL, mais comme la requête ne se connecte pas directement à la base de données, il
+s'agit de l'une des meilleures pratiques pour sécuriser vos données contre l'injection SQL.
+
+Les langages Java, .NET, ColdFusion, PHP et Ruby ont également des fonctions intégrées pour paramétrer vos variables.
+
+#### Découvrez la différence entre requêtes SQL stockées ou dynamiques
+
+Lorsque vous codez un champ d’entrée utilisateur sur votre application web, vous devez écrire une **procédure SQL** pour que la base de données
+sache quelles données extraire. Il y a deux façons de le faire :  **stocké et dynamique**. Une procédure stockée est un ensemble d'instructions
+SQL précompilées, stockées dans une base de données et exécutées sur demande par le système de gestion de base de données qui manipule la base
+de données. Une procédure dynamique est une technique de programmation qui vous permet de **construire** des instructions SQL de manière
+dynamique lors de l'exécution. Les requêtes ne seront pas stockées mais dynamiquement créées.
+
+Pour sécuriser les requêtes SQL dynamiques, vous pouvez utiliser la fonction `sp_executesql` dans votre procédure SQL dynamique.
+
+Voyons un exemple d’implémentation avec les variables paramétrées ci-dessous :
+
+```sql
+CREATE PROCEDURE sp_owaspLogin
+@bind_username varchar(10)
+@bind_password varchar(10)
+AS
+BEGIN
+DECLARE @myquery varchar(100)
+SET @myquery = N’SELECT login FROM accounts WHERE username = @username AND password = @password’
+DECLARE @bind_user nvarchar(10) = N’@username’;
+DECLARE @bind_pass nvarchar(10) = N’@password’;
+EXEC sp_executesql @myquery, @bind_user, @username = @bind_username;
+```
+
+La requête SQL dynamique ci-dessus lie la variable ainsi que la fonction `sp_executesql` pour sécuriser le script.
+
+#### Utilisez un Object Relational Mapper (ORM)
+
+De nombreux langages disposent d'outils **ORM (Object Relational Mapper)** qui peuvent **obfusquer** votre requête, c’est-à-dire masquer son
+fonctionnement. Les modules ORM tels que _`pg`_ et _`knex`_ peuvent être utilisés avec des frameworks JavaScript.
+
+Regardons la requête SQL suivante :
+
+```sql
+SELECT * FROM accounts WHERE username='@username' AND password='@password'
+```
+
+Tout d'abord, notez que `@username et @password` sont paramétrés !
+
+Voici un exemple de la façon dont une requête correcte sera exécutée dans votre application web à l'aide de _knex_ Node.js.
+
+Dans le code ci-dessous, _knex_ **obfusque la requête**. Cela signifie qu'il masque ce à quoi ressemble vraiment la requête SQL, ce qui permet
+d’ajouter une couche de sécurité supplémentaire.
+
+```sql
+knex('accounts').where('username',john ).orWhere({password: ThisIsMySUperS3c3tPass , user: 'knex'})
+```
+
+#### Sécurisez vos applications avec l’API OWASP
+
+L'organisation OWASP dispose d'une API appelée _the OWASP Enterprise Security API_ (ESAPI). Elle peut être utilisée pour sécuriser vos
+applications web.
+
+:::info
+Pour en savoir plus sur l'ESAPI, visitez la [page web officielle](https://www.owasp.org/index.php/Category:OWASP_Enterprise_Security_API).
+:::
+
+### En résumé
+
+- Les injections peuvent inclure (mais sans s'y limiter) des commandes SQL, JavaScript, HTML ou OS.
+- Elles permettent de manipuler les entrées pour effectuer des actions et accéder à des données normalement non autorisées.
+- Vous pouvez prévenir les attaques par injection en sécurisant votre code avec la validation des entrées, les variables paramétrées, les ORM
+et les procédures SQL stockées.
+- Les procédures SQL dynamiques peuvent être dangereuses, donc assurez-vous d'utiliser la fonction executesql() dans la base de données pour
+les sécuriser.
+
+_Nous venons de voir comment se prémunir contre les injections ; dans le prochain chapitre, nous verrons comment sécuriser les mécanismes
+d’authentification dans votre application web._
+
+-----
+
+## Empêchez le piratage de session
+
+[Empêchez le piratage de session - Sécurisez vos applications web avec l'OWASP - OpenClassrooms](https://openclassrooms.com/fr/courses/6179306-securisez-vos-applications-web-avec-lowasp/6520013-empechez-le-piratage-de-session)
+
+<Vimeo vimeoId="376328747" />
+
+<br />
+
+L’**authentification** est une fonctionnalité cruciale dans votre application web pour permettre à vos utilisateurs d’accéder à leur données et
+à leur environnement. Dans ce chapitre, nous allons voir comment sécuriser l’authentification.
+
+### Définissez le piratage de session
+
+Le **piratage de session** (ou Broken Authentication) est l’attaque qui occupe la **deuxième place du classement de l’OWASP** depuis 2013.
+Considérant qu'elle occupait la troisième place en 2010, l'OWASP démontre que l’exploitation de l’authentification est une faille courante.
+
+Alors qu'est-ce que c'est et pourquoi est-ce une attaque si populaire ?
+
+Supposons que vous ayez un site qui exige que vous vous connectiez avec votre nom d'utilisateur et votre mot de passe pour accéder aux pages qui
+contiennent des informations sur votre compte. Lorsque vous vous connectez, les informations d'identification sont transmises à la base de
+données. Si le nom d'utilisateur et le mot de passe correspondent à ceux de la base de données, vous serez **authentifiés** pour une session.
+
+:::info
+Une **session** est une période de temps spécifiée pendant laquelle un utilisateur authentifié aura accès à des pages et à des activités
+spécifiques de l'application.
+:::
+
+À tout moment du processus d'authentification, un utilisateur malveillant peut **obtenir un accès non autorisé** à la session et avoir accès à
+des **données sensibles**.
+
+Une **session** peut inclure des données personnelles, des données financières et l'accès à des informations protégées ou à des secrets
+commerciaux, par exemple.
+
+:::notee ?
+À quoi ressemblent ces attaques ?
+:::
+
+Le piratage de l’authentification peut être automatisé avec l’utilisation de la technique de **force brute**, c’est-à-dire l’utilisation d’une
+multitude de couples identifiant/mot de passe de manière automatique, jusqu’à obtenir le bon.
+
+Lorsqu'un utilisateur malveillant a un accès non autorisé à une liste de noms d'utilisateur et de mots de passe, une attaque appelée
+**credential stuffing** peut être utilisée pour essayer toutes les combinaisons de noms d'utilisateur et de mots de passe, jusqu'à ce que le
+pirate s'authentifie.
+
+:::info
+Le credential stuffing est un type d’attaque où des informations de comptes volées, généralement des listes d'identifiants et des mots de passe
+associés, sont utilisés pour obtenir un accès non autorisé à des comptes utilisateurs par le biais de demandes de connexion automatisée
+adressées à des applications web.
+:::
+
+### Appréhendez l'utilisation de cookies
+
+Un cookie HTTP (également appelé _cookie web_, _cookie Internet_, _cookie de navigateur_ ou simplement _cookie_) est une petite donnée envoyée
+depuis un site web et stockée sur l'ordinateur de l'utilisateur par un navigateur web lorsque l'utilisateur navigue.
+
+Les cookies ont été conçus pour constituer un mécanisme fiable permettant aux sites web de mémoriser des informations importantes (telles que
+les éléments ajoutés au panier dans une boutique en ligne) ou d'enregistrer l'activité de navigation de l'utilisateur (en se connectant ou en
+enregistrant les pages consultées). Ils peuvent également être utilisés pour mémoriser des informations arbitraires que l'utilisateur a
+précédemment entrées dans des champs de formulaire, telles que des noms, des adresses, des mots de passe et des numéros de carte de crédit.
+Voilà pourquoi il représente un intérêt pour un attaquant.
+
+:::note ?
+Que se passe-t-il lorsqu'un site demande d'accepter des cookies ?
+:::
+
+Vous vous souvenez peut-être que votre navigateur vous a averti qu'un site web nécessite l'utilisation de **cookies** pour que vous puissiez
+l'utiliser ?
+
+HTTP ne peut pas enregistrer d'informations sur votre navigateur. Un cookie est donc un fichier tiers enregistré qui donne un accès
+personnalisé à l'utilisateur du site. Les **cookies ont été créés pour vous faciliter la vie**, de sorte à ce que vous n’ayez pas besoin de
+vous reconnecter ou d'entrer les mêmes données encore et encore. Ils aident un site web à se souvenir de ce que vous avez fait sur leur site
+pour personnaliser l'expérience. Ces cookies ne sont accessibles que par le site web qui les a créés.
+
+Il existe deux types de cookies : les cookies de suivi et les cookies de session.
+
+##### Découvrez les cookies de suivi
+
+Les cookies de suivi sont un type de cookie spécifique distribué, partagé et lu sur au moins deux sites web non liés, dans le but de collecter
+des informations ou éventuellement de vous présenter des données personnalisées.
+
+Supposons que j'achète des biscuits sur un site web appelé _koookiestore.com,_ et qu'il télécharge un cookie sur mon navigateur avec des
+informations qui m'identifient. Toutes mes activités sur ce site seront enregistrées sur _koookiestore.com_ via le cookie qui contient mon
+identifiant.
+
+<figure>
+    <img src="https://user.oc-static.com/upload/2019/11/12/15735532617311_image1.png"
+         alt="Image montrant le fonctionnement des cookies de suivi" />
+    <figcaption>Cookie de suivi</figcaption>
+</figure>
+
+Puis, je décide d'aller sur le site _funnikaaaats.com,_ et soudain je vois toutes ces annonces me montrant les biscuits que je regardais sur
+_koookiestore.com !_
+
+Mais seul _koookiestore.com_ peut accéder aux informations des cookies stockées sur son site, alors comment _funnikaaaats.com_ a découvert que
+j'aime ces cookies ?
+
+funnikaaaats.com a **intégré un code** pour koookiestore.com à l'intérieur de son site web afin qu'il puisse accéder à votre cookie
+koookistore.com. Et maintenant, ces informations sont stockées sous ce **cookie ID** dans koookiestore.com.
+
+Maintenant, le cookie de suivi de _koookiestore.com_ sait quels cookies et vidéos de chat vous aimez.
+
+Bien que les cookies de suivi ne peuvent pas être utilisés pour pirater une session, ils peuvent représenter un problème concernant la
+confidentialité et la vie privée, car ils permettent l’accès à vos habitudes de navigation.
+
+##### Découvrez les cookies de session
+
+**Les cookies de session** contiennent un **identifiant** qui identifie une session.
+
+Supposons que vous vous connectez au site web de votre banque et que vous recevez un cookie qui est stocké dans votre navigateur et qui vous
+garde connecté jusqu'à ce que la session expire.
+
+Dans ce cas, chaque session reçoit un **ID de session**. L'authentification peut être détournée si l'utilisateur malveillant devine le bon ID
+de session.
+
+**Avec le protocole HTTP**, les sites web n'ont pas la possibilité d'enregistrer des informations d'authentification ou de session sauf s'ils
+les stockent dans un fichier sur les navigateurs. C'est à ça que servent les cookies de session.
+
+Souvent, le navigateur enregistre un cookie qui contient les informations de session, l'ID de session, la date et l'heure d'expiration.
+
+Des token peuvent être utilisés pour l'authentification avec le Single Sign-On (SSO). Un utilisateur reçoit un ticket ou un jeton après
+authentification, afin de se connecter à une session. Le pirate peut accéder au jeton et le réutiliser pour s’authentifier sans avoir besoin
+d'un nom d'utilisateur ou d'un mot de passe.
+
+##### Protégez vos cookies !
+
+Voici quelques recommandations pour garantir la sécurité des cookies :
+- assurez-vous que les cookies sont chiffrés lors de la transmission via HTTPS ;
+- ne stockez pas d'informations d'identification en texte clair dans vos cookies ;
+- définissez une date d'expiration pour vos cookies-session.
+
+### Prévenez votre application des authentifications non autorisées
+
+Des recommandations simples peuvent être appliquées :
+- exigez de vos utilisateurs qu'ils aient un mot de passe fort, c'est-à-dire contenant des majuscules, des minuscules, des chiffres et des
+caractères spéciaux. Il sera ainsi plus difficile pour un utilisateur malveillant de trouver le mot de passe ;
+- il est également recommandé d'exiger des utilisateurs qu'ils changent régulièrement leur mot de passe en cas d’attaque de credential stuffing ;
+- mettez en place le verrouillage de compte lorsqu'un utilisateur essaie de se connecter un trop grand nombre de fois sans y parvenir. Cela
+permet d'empêcher les attaques de force brute ;
+- changez ou désactivez les comptes par défaut ;
+- implémentez une authentification forte, c’est-à-dire avec plusieurs facteurs d’authentification, comme la validation par SMS ou par mail, par
+exemple.
+
+Heureusement, il existe des frameworks pour vous aider à implémenter plus facilement un code sécurisé, quel que soit le langage que vous
+utilisez :
+- **ASP.NET Core Identity Framework** peut être intégré dans votre application web pour personnaliser vos besoins d'authentification. L'ajout
+d'ASP.NET Core IdentityServer vous permet d'utiliser les techniques de développement sécurisé pour l'authentification par jeton.
+- **Ruby** a des fonctions (gems) comme **omniauth** qui peuvent être implémentées pour l'authentification.
+- **Java** a **javax.security.auth**, et l'**API Java Authentication and Authorization Service (JAAS),** qui peuvent configurer votre
+authentification de la bonne façon !
+- **PHP** a **PHPSec** peuvent être utilisés pour gérer la sécurité et les sessions.
+
+### Prévenez l'authentification malveillante
+
+Voici un exemple d'entrée avant qu'elle ne soit transmise à la base de données.
+
+```sql
+//Remove all characters from the email except letters, digits and !#$%&'*+-=?^_`{|}~@.[]
+echo filter_var($dirtyAddress, FILTER_SANITIZE_EMAIL);
+```
+
+Une bonne pratique pour la **validation des entrées** est de vérifier **toutes les entrées** en supprimant les caractères non pertinents.
+
+En **Java**, vous pouvez créer une méthode pour hacher le mot de passe avec le framework Spring.
+
+:::info
+Le **hachage** permet de générer une empreinte unique pour une entrée. Le problème est qu’il est possible d’utiliser des rainbow tables,
+c’est-à-dire des listes de hash préalablement calculés, puis de les utiliser avec une attaque de force brute. Pour éviter ce genre d’attaque,
+il est possible d’ajouter un **sel** permettant d’ajouter une donnée supplémentaire, et ainsi renforcer la sécurité.
+:::
+
+Mais comment faire, concrètement ?
+
+Tout d'abord, vous allez créer un objet pour l'algorithme de chiffrement, et le saler.
+
+Le salage est une méthode permettant de renforcer la sécurité des informations qui sont destinées à être hachées (par exemple des mots de passe)
+en y ajoutant une donnée supplémentaire afin d’empêcher que deux informations identiques conduisent à la même _empreinte (au même hash)_. Le
+but du salage est de lutter contre les attaques par analyse fréquentielle (permettant l’analyse des fréquences des caractères employés), les
+attaques utilisant des rainbow tables, les attaques par dictionnaire et les attaques par force brute.
+
+Un **sel** est une **séquence aléatoire** utilisée en plus du chiffrement pour rendre le hachage imprévisible.
+
+Prenons un exemple :
+
+```sql
+MessageDigest md = MessageDigest.getInstance("MD5");
+md.update(salt);
+```
+
+Ensuite, vous entrerez votre mot de passe en utilisant l'objet salé pour assigner le hachage formaté à `hashedPassword`.
+
+```sql
+byte[] hashedPassword = md.digest(passwordToHash.getBytes(StandardCharsets.UTF_8))) ;
+```
+
+Quel que soit le langage dans lequel vous développez, il existe plusieurs solutions qui peuvent vous permettre de sécuriser votre mécanisme
+d'authentification !
+
+Adopter les meilleures pratiques pour la gestion des sessions et des jetons est également important car il s'agit d'une autre forme
+d'authentification. Les **cookies de session et les jetons** peuvent rendre vos **sessions vulnérables**.
+
+Voici quelques conseils pour vous aider à développer vos mécanismes d'identification et de validation de session :
+- ne mettez pas l’ID de session dans l’URL ;
+- limitez la durée de l'ID de session ;
+- modifiez le nom d'ID de session par défaut.
+
+**PHP** possède une bibliothèque appelée **SessionManager** avec des fonctions qui peuvent être utilisées pour valider les sessions avec des
+restrictions.
+
+Voici un exemple de la fonction `preventHijacking()` du gestionnaire de sessions utilisé pour limiter une session à un hôte et à une adresse
+IP spécifiques. Si l'hôte et l'adresse IP ne sont pas identiques, ils ne s'authentifieront pas. Cela permet de sécuriser le mécanisme
+d'authentification.
+
+```sql
+static protected function preventHijacking()
+{
+if(!isset($_SESSION['IPaddress']) || !isset($_SESSION['userAgent']))
+return false;
+if ($_SESSION['IPaddress'] != $_SERVER['REMOTE_ADDR'])
+return false;
+if( $_SESSION['userAgent'] != $_SERVER['HTTP_USER_AGENT'])
+return false;
+return true
+}
+```
+
+### Connaissez votre niveau de protection
+
+:::note ?
+Si j'implémente toutes ces règles, mon application web sera-t-elle sécurisée ?
+:::
+
+Peu importe le nombre de couches de sécurité et de fonctionnalités que vous ajoutez à votre code, il y a toujours des attaques auxquelles vous
+ne serez pas préparé.
+
+Restez informé des nouvelles vulnérabilités afin de sécuriser votre application contre de futures attaques.
+
+:::caution !
+Votre application n'est **jamais** sûre à 100% car le risque zéro n’existe pas !
+:::
+
+Cependant, en respectant ces règles, vous pouvez prévenir les attaques courantes et réduire votre **surface d'attaque de 80 %**.
+
+### En résumé
+
+- Le piratage d’authentification peut se produire lorsque les cookies ne sont pas sécurisés.
+- Utilisez la validation des entrées et limitez le nombre d'essais de connexion.
+- Les attaques par force brute et credentials stuffing sont courantes.
+- Protégez les identifiants de session au moyen d’algorithme de chiffrement.
+- Limitez la durée des sessions.
+
+_Dans le prochain chapitre, nous verrons comment protéger les données en transit._
+
+-----
+
+## Protégez les données en transit
+
+[Protégez les données en transit - Sécurisez vos applications web avec l'OWASP - OpenClassrooms](https://openclassrooms.com/fr/courses/6179306-securisez-vos-applications-web-avec-lowasp/6520126-protegez-les-donnees-en-transit)
+
+<Vimeo vimeoId="376328815" />
+
+<br />
+
+L'**exposition des données sensibles** est la troisième vulnérabilité dans le top 10 de l’OWASP. Les données stockées et transmises dans
+l’application doivent respecter les bonnes pratiques de sécurité. Dans ce chapitre, nous aborderons la sécurisation des données échangées.
+
+Mais comment faire pour sécuriser ces données échangées ? Eh bien, cela passe par la sécurisation de la couche de transport lors de l’échange
+des données.
+
+### Découvrez comment les données transitent la couche de transport
+
+Lorsque vous surfez sur Internet, votre navigateur utilise le les protocole HTTP (Hypertext Transfer Protocol) pour afficher les pages web, et
+le protocole **Transmission Control Protocol/Internet Protocol (TCP/IP)** pour les transmettre.
+
+OK. Imaginons que vous tapez une URL dans votre barre de navigateur et que vous cliquez sur Entrée.
+
+Votre navigateur va lancer une connexion TCP, qui va envoyer des requêtes GET et POST pour vous connecter au serveur web associé au nom de
+domaine ou à l'adresse IP.
+
+Si le serveur web établit la **connexion TCP** avec le navigateur, une réponse avec le code status et le fichier demandé (généralement le
+fichier index.html pour la page web) sera transmise. Mais dans notre cas, les données transitent en HTTP et pas en HTTPS...
+
+Ceci nous amène à la première vulnérabilité. Les données transitant en HTTP peuvent être interceptées, car elles transitent en clair.
+
+:::note ?
+Mais alors… Comment un utilisateur malveillant peut avoir accès à cette connexion TCP ?
+:::
+
+### Comprenez l’attaque de l’homme du milieu (MITM)
+
+Prenons un exemple. Vous avez décidé d'aller dans votre endroit préféré pour boire un café et vous utilisez le **Wi-Fi gratuit** pour surfer
+sur certains sites. À votre insu, un pirate a décidé d'utiliser un sniffer réseau, qui enregistre les **transmissions TCP** directement sur son
+ordinateur.
+
+Vous surfez et vous vous connectez à un site en HTTP pour envoyer des articles de blog. Le pirate sera en mesure d'accéder à vos informations
+d'identification et au contenu de votre blog, car celui-ci n'était pas chiffré ! Votre session a été détournée et l'attaquant peut ainsi voler
+vos données.
+
+L'attaque de l'homme du milieu (_Man in the Middle_, en anglais) est l'une des principales causes de **détournement de session**. L'attaquant
+se place au milieu de votre communication, intercepte les connexions réseau et capte ainsi tout ce que vous envoyez.
+
+**Le vol de données** et le **détournement de session** ne sont que quelques exemples de ce qu'un attaquant peut faire une fois sur le réseau.
+D'une façon ou d'une autre, si les données sont envoyées en HTTP et sont en clair, il suffit de peu d'efforts pour interpréter les données.
+
+:::note ?
+Mais... Comment je peux résoudre ce problème ?
+:::
+
+### Utilisez HTTPS
+
+:::note ?
+Attends… C'est quoi, HTTPS ?
+:::
+
+HTTPS est la variante sécurisée de HTML qui utilise les protocoles **Secure Sockets Layer/Transport Layer Security** (SSL/TLS) pour chiffrer
+les transmissions.
+
+Cela permet d'ajouter une couche de sécurité lorsque les données sont en transit.
+
+En règle générale, si vous devez vous authentifier avec un mot de passe n'importe où sur le site, utilisez HTTPS pour **protéger** le mot de
+passe lorsqu'il est transmis sur le réseau.
+
+Je vous conseille de configurer l'ensemble de votre application web avec HTTPS, qu'elle traite ou non des informations sensibles. En effet,
+Google marquera tous les sites HTTP comme non sécurisés pour conduire plus de sites à utiliser HTTPS. Avoir un site configuré avec HTTPS
+augmentera la confiance de vos utilisateurs.
+
+:::info
+Pour en savoir plus, vous pouvez visiter la page de [recommandations](https://security.googleblog.com/2018/02/a-secure-web-is-here-to-stay.html)
+de Google.
+:::
+
+:::note ?
+Comment utiliser le protocole TLS pour sécuriser une application ?
+:::
+
+Tout d'abord, obtenez un **certificat SSL** et ajoutez-le à votre serveur. Ce certificat est nécessaire pour chiffrer les données en cours de
+transmission.
+
+Ensuite, codez vos pages avec HTTPS !
+
+:::info
+Si vous voulez en savoir plus sur le processus d'obtention d'un certificat SSL pour votre application web, vous pouvez utiliser
+[OpenSSL](https://www.openssl.org/) (en anglais) ou consulter [ce tutoriel](https://github.com/zaproxy/zap-core-help/wiki/HelpUiDialogsOptionsDynsslcert)
+(en anglais).
+:::
+
+### Mettez en place le HTTPS
+
+Pour créer un serveur web pour votre application web, **Node.js** est une plateforme populaire. Cependant, il utilise HTTP par défaut pour la
+transmission de données. 
+
+Pour utiliser HTTPS, Il suffit de spécifier l'utilisation du module HTTPS sur Node.js.
+
+Pour démarrer un serveur HTTP sur Node.js, le code est le suivant :
+
+```javascript
+var http = require('http');
+http.createServer(function (req, res) {
+
+}).listen(8080);
+```
+
+Il vous suffit d'ajouter un S et vous pouvez maintenant démarrer un serveur HTTPS tout aussi facilement (avec un certificat SSL, bien sûr).
+
+```javascript
+var https = require('https');
+https.createServer(function (req, res) {
+
+}).listen(8080);
+```
+
+**ASP.NET** a un module appelé **SecureWebPageModule,** qui peut être ajouté au web.config avec l'ajout suivant :
+`<secureWebPages enabled="true">`.
+
+`[RequireHttps]` peut également être utilisé dans le fichier `AccountController.cs`. Enfin, ASP. NET prend en charge la réécriture d'URL.
+
+Avec **Ruby on Rails**, vous pouvez exécuter un **serveur web NGINX** en utilisant HTTPS, et créer votre certificat :
+- sur le fichier `production.rb`, changez la valeur `config.force_ssl = true;`
+- sur `application.rb`, écrivez la ligne `config.force_ssl = (ENV[ENABLE_HTTPS"] == "yes") ;`
+- utilisez Rack pour forcer SSL en intégrant la gem rack-ssl.
+
+Quel que soit le langage que vous utilisez, assurez-vous que votre page de connexion et toutes les pages web qui font partie de la session
+utilisent HTTPS.
+
+### Sécurisez les requêtes GET et POST
+
+Lorsque vous mettez en place des connexions TCP dans vos requêtes, quelques règles de sécurité peuvent être mises en place.
+
+:::info
+Lorsque la connexion TCP est établie entre le navigateur et le serveur web, les informations envoyées sont divisées en trois parties. Tout
+d'abord, il y aura une requête GET ou POST avec une URL spécifique. Ensuite, il y a un en-tête (header) et le corps de la requête (body).
+:::
+
+:::note ?
+OK... Mais pourquoi parle-t-on de tout ça ?
+:::
+
+Je vais vous l'expliquer tout de suite !
+
+Une requête GET ressemble à ceci :
+
+```text
+GET /index.html HTTP:1.1
+Header:
+Body:
+```
+
+Ses paramètres sont présents dans l'URL, et sont mis en cache dans le navigateur.
+
+Il est préférable d'utiliser une requête GET lorsque vous **récupérez** des informations. Cela signifie que vous pouvez interroger la base de
+données, mais sans modification.
+
+Une requête POST ressemble à ceci :
+
+```text
+POST https://securesite.com/resetpassword.php
+Header:
+Body: password=password123 (encrypted)
+```
+
+Les requêtes POST sont utilisées pour apporter des **modifications** à la base de données et doivent donc être **transmises** avec un
+chiffrement par TLS.
+
+Ces requêtes ne permettent pas de sauvegarder les données en cache dans le navigateur, rendant ainsi les paramètres contenus dans le corps de
+la requête facilement piratables.
+
+:::note ?
+Comment être sûr que mes requêtes GET et POST ne sont pas exposées à des vulnérabilités ?
+:::
+
+:::info
+Vous pouvez coder jusqu'à obtenir quelque chose de parfait, mais il est également possible d'utiliser des modules externes comme Ajax, Axios
+ou jQuery.
+:::
+
+Ces modules externes vous permettront de vous assurer que vous utilisez HTTPS pour toutes vos requêtes GET et POST.
+
+:::note ?
+D'accord.... Je vois bien que je dois faire de nombreuses choses pour sécuriser mes données. Mais il doit bien exister un système de sécurité
+par défaut sur mon navigateur, non ?
+:::
+
+### Tirez parti de la sécurité par défaut de votre navigateur
+
+Tout à fait ! Parlons maintenant de **Cross-Origin Resource Sharing (CORS)**.
+
+Votre navigateur fournit une sécurité à vos requêtes GET et POST par défaut. Lorsqu'une demande est faite, elle ne sera autorisée que si elle a
+la **même origine**.
+
+Cela signifie qu'elle doit avoir les mêmes nom de domaine, port, hôtes et schémas. Cette restriction n'est pas toujours utile si les requêtes
+nécessitent une transmission vers un autre port ou domaine. Lorsque cela se produit, l'application web est exposée à une attaque **CSRF**.
+
+:::info
+Le **cross-site request forgery (CSRF)** est un type de vulnérabilité des services d'authentification web. L’objet de cette attaque est de
+transmettre à un utilisateur authentifié une requête HTTP falsifiée qui pointe sur une action interne au site, afin qu'il l'exécute sans en
+avoir conscience et en utilisant ses propres droits.
+:::
+
+:::note ?
+Comment résoudre ce problème ?
+:::
+
+CORS peut être implémenté pour éviter les attaques CSRF, en ajoutant des politiques pour limiter l'accès à une origine spécifique ou un type de
+requête HTTP, par exemple.
+
+### Adoptez les bonnes pratiques
+
+Voici quelques recommandations pour protéger vos données en transit :
+1. N'utilisez GET que pour récupérer des informations.
+2. Utilisez POST pour les informations qui seront manipulées.
+3. Toutes les requêtes POST doivent utiliser HTTPS/SSL pour s'assurer que le corps est chiffré.
+4. Vérifiez tous les modules tiers que vous utilisez pour créer des requêtes GET/POST et utilisez HTTPS pour chacun d'entre eux !
+
+### En résumé
+
+- Utilisez le HTTPS pour l'ensemble de votre site, même s'il ne contient pas de données sensibles.
+- Utilisez les requêtes GET pour récupérer les informations et POST pour modifier les informations.
+- Sécurisez vos cookies pour qu'ils soient transmis par l'en-tête et via HTTPS.
+- Sécurisez vos sessions en ajoutant une date d'expiration, en sécurisant l'ID et en ne mettant pas cet ID dans l'URL.
+- L'utilisation du chiffrement dans la couche Transport peut prévenir les attaques MITM !
+
+_Nous venons de voir comment protéger les données en transit. Dans le prochain chapitre, nous verrons comment protéger les données stockées
+sur votre application._
+
+-----
+
+## Protégez les données stockées sur une application
+
+[Protégez les données stockées sur une application - Sécurisez vos applications web avec l'OWASP - OpenClassrooms](https://openclassrooms.com/fr/courses/6179306-securisez-vos-applications-web-avec-lowasp/6520207-protegez-les-donnees-stockees-sur-une-application)
+
+<Vimeo vimeoId="376328861" />
+
+<br />
+
+Dans le chapitre précédent, nous avons parlé de la sécurisation des **données lors de leur transmission**.
+
+Mais où sont stockées les données et comment les protéger ?
+
+Lorsque vous visitez un site web et que vous entrez des données dans un formulaire, comme un nom d’utilisateur et un mot de passe, ces données
+sont ensuite envoyées et une requête sur la base de données est effectuée, pour vérifier que l’utilisateur existe et que le mot de passe entré
+est le bon. S’ils correspondent, le serveur vous donne accès à vos données stockées sur la base de données.
+
+Les **données stockées** sont donc le contenu de la base de données. Typiquement, une base de données contiendra des **données sensibles** sur
+un site qui nécessite une **authentification**.
+
+Nous savons comment effectuer des requêtes dans la base de données afin de prévenir les modifications non autorisées et l'exposition de la base
+de données. Mais si un attaquant arrive à contourner l’authentification, comment pouvons-nous restreindre son accès aux données ?
+
+Pour cela, il existe un moyen sûr, le **chiffrement des données**.
+
+### Découvrez les algorithmes de hachage
+
+Pour protéger certaines données stockées sur une application, il est possible d’utiliser des algorithmes de hachage.
+
+L'intérêt des algorithmes de hachage est qu’ils permettent de calculer une empreinte (ou _hash_) d’une chaîne de caractères, par exemple. Cette
+empreinte est utile pour éviter de stocker en clair le mot de passe dans la base de données.
+
+Prenons un exemple. Nous avons une chaîne de caractères _`password123`_. Nous allons utiliser un algorithme de hachage pour obtenir une
+empreinte.
+
+Dans notre exemple, nous allons utiliser les algorithmes de hachage SHA1 et MD5. Nous obtenons l'empreinte suivante :
+
+```text
+sha1:bab1298d948ebb34bd0f3faf5e596ebc0b27c615
+md5:7576f3a00f6de47b0c72c5baf2d505b0
+```
+
+:::info
+**SHA-1** (Secure Hash Algorithm) et **MD5** (message-digest algorithm) sont des fonctions de hachage cryptographique.
+:::
+
+La chaîne de caractères _`password123`_ est désormais stockée sous la forme d'un hash MD5, rendant sa lecture impossible pour un utilisateur
+malveillant.
+
+Cependant, certains attaquants réussiront tout de même à contourner ce mécanisme. Comme pour les cookies, il est possible d’effectuer une
+attaque par **rainbow table**, c’est-à-dire qu’un attaquant va préalablement **calculer des hash de mots de passe puis les utiliser avec une
+attaque de brute force pour trouver le bon**.
+
+Comme pour l'authentification, il est possible de contourner cette attaque en utilisant le salage.
+
+Sachez qu'il existe de nombreux algorithmes de hachage : Bcrypt, Scrypt, SHA, MD5, Argon5 et PBKDF2, par exemple. Contrairement aux algorithmes
+SHA et MD5, **Argon5, PBKDF2, Bcrypt** et **Scrypt** sont plus axés sur la sécurité que sur l'efficacité. Cela signifie que le cassage de ces
+algorithmes exige plus de ressources.
+
+**Argon5** est un des algorithmes de hachage les plus puissants et fortement recommandés par l'**OWASP**.
+
+### Sécurisez une base de données
+
+#### Gérez l'authentification
+
+Pour sécuriser l’authentification, il existe de bonnes pratiques de sécurité simples à appliquer :
+- supprimer les comptes par défaut en changeant les mots de passe connus ;
+- utiliser le principe de _moindre privilège_ pour vous assurer qu'un ou deux comptes seulement ont des privilèges élevés.
+
+:::info
+**Le principe de moindre privilège** est un autre concept fondamental de la sécurité des systèmes d’information. Avec le moins de privilèges
+possible, vous vous assurez que tous les membres de l'organisation n'ont que les droits dont ils ont besoin sur le réseau pour exercer leur
+fonction _spécifique_ définie, ni plus ni moins.
+:::
+
+#### Cachez des données sensibles dans une base de données
+
+Il existe plusieurs techniques qui permettent de cacher les données sensibles d’une base de données et donc de sécuriser une application.
+- **L'anonymisation** est une technique recommandée par l’OWASP pour cacher des données privées en chiffrant, brouillant et supprimant des
+parties des données. Par exemple, si une demande est faite pour la date de naissance d'une personne pour s’authentifier, seule l'année sera
+fournie par la base de données.
+- **La pseudonymisation** est une technique recommandée par le RGPD. Elle remplace les données personnelles par des identifiants et des
+pseudonymes artificiels pour cacher les données sensibles.
+- **La minimisation des données** permet de se conformer à l'ensemble de règles du RGPD. L'entreprise doit uniquement demander, enregistrer et
+traiter les données personnelles requises. En d'autres termes, toute donnée personnelle demandée doit avoir un motif commercial solide.
+
+Il existe deux façons d'appliquer ces techniques à votre base de données.
+- **Le masquage dynamique des données** est un moyen d'appliquer des règles d'anonymisation sur les colonnes de données sensibles. Lorsqu'une
+demande est faite pour récupérer les données des colonnes masquées, elle n'apparaîtra pas dans sa forme complète. Ces données peuvent également
+être cachées aux administrateurs de bases de données avec des rôles qui bloquent l'accès aux données sensibles.
+
+Sur SQL Server, l'option _masked with_ applique différentes fonctions de masquage. L’option par défaut prend la valeur sensible et la remplace
+par une autre valeur lorsqu'elle est affichée. L'exemple ci-dessous montre son application sur une colonne Date de naissance.
+
+```sql
+Birthdate DATE
+MASKED WITH (FUNCTION = 'default()') NOT NULL,
+```
+
+**MongoDB** a la possibilité d'utiliser un module appelé **Mongo Mask**. Il peut être utilisé comme ceci sur l’application :
+`var mongoMask = require('mongo-mask')`. Sur la base de données, MongoDB a des accès en lecture seule qui peuvent être spécifiés dans le code.
+- **Cloner et générer des masques de données** utilisant plusieurs bases de données. En utilisant le même schéma, une base de données
+supplémentaire utilisée pour récupérer des informations peut contenir des données masquées pour les colonnes sensibles déjà présentes.
+
+SQL Server, SQL Clone et SQL Data Generator peuvent être utilisés pour créer une autre base de données avec des données générées pour masquer
+les données sensibles lors de leur récupération. Contrairement au masquage dynamique des données, il ne s'agit pas d'un masquage actif. Il
+s'agit d'une redirection de requête vers une autre base de données avec des données générées pour remplacer les données sensibles.
+
+### En résumé
+
+- Sécurisez votre base de données avec le chiffrement.
+- Utilisez des algorithmes de hachage sécurisés tels que Argon5, Scrypt, Bcrypt et PBKDF2.
+- Utilisez pas les algorithmes de hachage SHA et MD5 avec salage.
+- Les tables Rainbow automatisent les connexions avec des mots de passe préhashés !
+- Le masquage des données peut être utilisé pour sécuriser les données sensibles d’une base de données.
+
+_Nous venons de voir comment sécuriser les données stockées dans votre application. Dans le prochain chapitre, nous verrons comment sécuriser
+les contrôles d’accès._
+
+-----
+
+## Empêchez l'exploitation des contrôles d'accès
+
+[Empêchez l'exploitation des contrôles d'accès - Sécurisez vos applications web avec l'OWASP - OpenClassrooms](https://openclassrooms.com/fr/courses/6179306-securisez-vos-applications-web-avec-lowasp/6520299-empechez-lexploitation-des-controles-dacces)
+
+<Vimeo vimeoId="376329296" />
+
+<br />
+
+Passons maintenant à la gestion des contrôles d'accès et à leur sécurisation.
+
+### Comprenez le principe du contrôle d'accès
+
+Imaginez une **application web** avec **quatre niveaux d’accès** pour quatre groupes de personnes.
+
+Le premier groupe aura un accès limité, le deuxième groupe aura un accès un peu plus privilégié, le troisième groupe aura encore plus d’accès.
+Enfin, le quatrième groupe aura les accès administrateur ou _root_.
+
+Ces niveaux d’accès sont appelés _rôles_.
+
+:::info
+Pour en savoir plus, vous pouvez visiter cet aide-mémoire de l’[OWASP](https://github.com/OWASP/CheatSheetSeries/blob/master/cheatsheets/Access_Control_Cheat_Sheet.md).
+:::
+
+Imaginons les **quatre rôles suivant.**
+
+| Rôle | Niveau d'accès |
+|------|----------------|
+| guppy | 1 |
+| poisson | 2 |
+| dauphin | 3 |
+| baleine | 4 |
+
+Dans cet exemple, vous devrez créer un **accès** pour chaque rôle. Assurez-vous que les rôles guppy, poisson et dauphin ont des accès limités.
+Le rôle baleine, lui, peut accéder à tout ce que les autres peuvent faire : c’est l’administrateur.
+
+Le **contrôle d'accès** consiste à configurer votre application web pour s'assurer que les utilisateurs ne peuvent accéder qu'aux données
+permises par leur rôle.
+
+L'authentification valide une identité, comme un nom d'utilisateur et un mot de passe. Une fois authentifié, vous pourrez accéder à certaines
+pages. Si les contrôles d’accès ne sont pas verrouillés, vous pourrez accéder à des pages et à des fonctionnalités auxquelles vous n'êtes
+normalement pas autorisé à accéder, parfois sans le savoir.
+
+### Découvrez les attaques contre le contrôle d'accès
+
+#### Appréhendez la restriction URL
+
+Les attaques courantes contre le contrôle d'accès se produisent lorsqu'une **URL** permet de **contourner l'authentification**. Les pirates
+informatiques utilisent la connaissance des formats et des modèles pour deviner l'URL des pages privilégiées qui n'ont pas été configurées de
+manière sécurisée. Pour se protéger contre ce type d'attaque, il est possible de mettre en place une **restriction URL**.
+
+Prenons le cas d’une attaque utilisant les rôles que nous avons définis précédemment.
+
+Un utilisateur du groupe guppy se connecte, et le lien de la page principale ressemble à ceci :
+
+```text
+https://webdevfightshacker.bla/guppy_login.html
+```
+
+Vous remarquerez qu’il y a une structure définie. La page de login `guppy_login.html` est définie comme page principale.
+
+Un attaquant pourra par exemple être en mesure de deviner la page d’authentification d’un autre rôle en devinant les pages des autres groupes
+(`poisson_login.html`, par exemple).
+
+```text
+https://webdevfightshacker.bla/whale_login.html
+```
+
+#### Comprenez les références directes d'objets non sécurisées (IDOR)
+
+Un utilisateur malveillant dispose de techniques pour accéder à une grande partie du code d'une application web. Une partie de ce code peut
+révéler **comment une base de données est organisée**. Le fait de fournir quelques informations sur la structure de l’application web peut
+permettre à un utilisateur non autorisé d’effectuer des actions malveillantes et de contourner les accès prédéfinis.
+
+Par exemple, si vous accédez à votre compte sur un site et que vous êtes sur la page principale, vous remarquez que l'**adresse URL** ressemble
+à ceci :
+
+```text
+https://webdevfightshacker.bla/index.php/view?account=3453
+```
+
+Ici le **numéro 3453** correspond a un nombre dans la base de données. Une personne malveillante pourrait ici modifier ce nombre pour accéder à
+un compte en particulier.
+
+```text
+https://webdevfightshacker.bla/index.php/view?account=1
+```
+
+Dans l'exemple ci-dessus, chaque compte est considéré comme un objet. Lorsque vous faites une référence directe à cet objet dans l'URL en
+ajoutant `account=1`, vous donnez à l’attaquant un indice sur la façon dont votre application web et votre base de données sont configurées.
+
+Il pourra ainsi exploiter ces faiblesses pour accéder à certaines parties non autorisées de l'application.
+
+#### Découvrez l'attaque null byte (octet nul)
+
+Une **attaque d'octet nul** tire parti des **références de l'objet**. Les noms de page par défaut peuvent être basés sur la configuration du
+**modèle, de la vue** et du **contrôleur (MVC)** que beaucoup d'applications web utilisent.
+
+Cela permet à un attaquant d'utiliser ces connaissances pour extraire une partie du code source de votre page !
+
+Regardons un site web avec un lien de menu intitulé `About_us.htm`. Ceci montre que toutes les pages se terminent par `.htm` ou similaire.
+
+```text
+webdevfightshacker.bla/fight/default.aspx?content=about_us.htm
+```
+
+L’attaquant sait aussi que le fichier _`default.aspx.cs`_ est la page principale, et veut y jeter un coup d’œil pour plus d'informations.
+
+Un **octet nul (./)** fait croire au navigateur que l'URL est complète. La chaîne de caractères qui suit l'octet nul peut donner à l’attaquant
+l'occasion de montrer le contenu de n'importe quel fichier.
+
+```text
+webdevfightshacker.bla/fight/default.aspx?content=%20./default.aspx.cs%00.htm
+```
+
+Cet exemple montre la page _`default.asps.cs.`_. Il sera ici possible d'accéder à n'importe quelle page et donc de contourner les contrôles
+d'accès mis en place.
+
+**Les références directes d'objet** peuvent également apparaître dans un **code d'erreur**. L’attaquant peut commencer à manipuler les entrées
+pour voir quels types d'exceptions et d'erreurs apparaissent et ce qu'elles disent.
+
+#### Sécurisez les contrôles d’accès
+
+1. Au lieu de nommer vos pages cibles avec un sens, utilisez un tableau de valeurs clés qui font référence à vos objets.
+2. Modifiez les noms par défaut de vos pages web.
+3. Assurez-vous que toutes les pages ont un contrôle d'authentification.
+4. Personnalisez vos exceptions et vos codes d'erreur.
+
+### En résumé
+
+- Les applications web avec authentification ne garantissent pas que toutes les pages sont verrouillées par contrôle d’accès.
+- Les références directes aux objets peuvent amener un attaquant à comprendre les modèles et la configuration des applications web.
+- N'utilisez pas de noms prévisibles ou de références directes à la base de données dans l'URL.
+- Prévenez les attaques d'octets nuls en protégeant votre code source.
+- Utilisez des références d'objet indirectes avec des paramètres et des combinaisons clé-valeur.
+- Personnalisez vos codes d'erreur pour qu'ils ne révèlent pas les attributs de la base de données.
+
+_Dans le prochain chapitre, nous aborderons les failles XSS et comment s’en prémunir._
+
+-----
+
+## Stoppez le cross-site scripting (XSS)
+
+[Stoppez le cross-site scripting (XSS) - Sécurisez vos applications web avec l'OWASP - OpenClassrooms](https://openclassrooms.com/fr/courses/6179306-securisez-vos-applications-web-avec-lowasp/6520368-stoppez-le-cross-site-scripting-xss)
+
+<Vimeo vimeoId="376329347" />
+
+<br />
+
+Dans ce chapitre, nous allons aborder les failles de cross-site scripting ou _XSS_.
+
+### Définissez le cross-site scripting ?
+
+**Les attaques cross-site scripting ou _XSS_** sont faites pour prendre le contrôle de votre **navigateur**. Un attaquant qui y parvient aura
+potentiellement accès à vos **cookies** et à vos **sessions** qui peuvent contenir des **données sensibles !** Ces attaques peuvent également
+permettre d’apporter des modifications non autorisées à une application web et créer des liens qui vous mèneront vers des **sites malveillants !**
+
+#### Découvrez les attaques utilisant XSS
+
+Avec une attaque XSS, un attaquant va essayer de prendre le contrôle de votre navigateur en injectant un **script JavaScript** dans
+l'application web. Il pourra l’injecter directement dans un formulaire, mais il peut également l’injecter dans l'URL, l'en-tête HTTP ou
+d'autres parties du framework utilisé.
+
+Contrairement aux injections SQL, il ne s'agit pas de requêtes et de commandes SQL sur une base de données. **Une faille XSS s’exécute dans le
+code de l'application web.**
+
+Revenons à la page de connexion avec le nom d'utilisateur et le mot de passe. Au lieu du nom d'utilisateur, le pirate va entrer :
+
+`<script> I haxx000red you </script>`
+
+Sur une page de connexion qui n'est pas sécurisée, il y aura une boîte de dialogue qui s’affichera. De plus, l'URL qui se trouve maintenant
+dans votre barre d'adresse peut être utilisée pour exécuter directement ce script. Il est également possible d'effectuer la même attaque avec
+une image, par exemple.
+
+```javascript
+<img src oneerror= “alert(haaxxxx000red 4ever!)”>
+```
+
+L'URL dans la barre d'adresse après l'exécution du script pourrait ressembler à ceci :
+
+`webdevfightshacker.bla/index.html?query=<img src + onerror%3Dalert%45%haaxxxx%87”....>`
+
+Notez que le domaine sur l'URL a l'air légitime, mais à la fin de l'URL, on peut voir le script qui a été ajouté. Ce lien peut exécuter du
+code arbitraire sur le navigateur. Un attaquant pourra transmettre cette URL à une cible qui exécutera l'**attaque XSS dans son environnement**.
+
+:::info
+Pour en savoir plus sur les attaques XSS, consultez l'aide-mémoire de l'[OWASP](https://www.owasp.org/index.php/XSS_Filter_Evasion_Cheat_Sheet#Basic_XSS_Test_Without_Filter_Evasion)
+(en anglais).
+:::
+
+Les attaques XSS ciblent également les **cookies**, exposant leur contenu dans une fenêtre pop-up. Par exemple, si vous avez envoyé une
+demande de connexion à un serveur web et qu'il répond par un cookie avec vos identifiants en texte clair, un script XSS s'exécutera sur votre
+navigateur et affichera une fenêtre pop-up avec vos identifiants qui étaient sur le cookie.
+
+:::note ?
+Comment puis-je éviter cette attaque de cookie ?
+:::
+
+Une option consiste à ajouter un **flag `HttpOnly`** à vos cookies. Ce flag permet d’empêcher un script d'accéder aux cookies. **`HttpOnly`**
+est un flag à mettre à `true` dans la plupart des frameworks. Par exemple, Node.js a un module de cookies avec HttpOnly, et un middleware
+appelé **Helmet**.
+
+**Express PHP** a une fonction **`setcookie()`**  qui permet de configurer **`HttpOnly`**  comme paramètre, et **ASP.NET** a l'option
+`_CookieHTTpOnly_` et `_CookieSecure_`.
+
+:::caution !
+Attention cependant, l’option HttpOnly peut ne pas fonctionner sur les navigateurs obsolètes.
+
+Les attaques XSS sont passées de la troisième à la septième place du Top Ten de l'OWASP parce que les navigateurs ont renforcé leur sécurité,
+rendant ces attaques plus difficiles.
+:::
+
+#### Respectez les bonnes pratiques
+
+- **Appliquez la validation des données d'entrée** : pour empêcher les attaques communes, il est possible de blacklister certains caractères
+comme les balises script.
+- **Appliquez la transformation des entrées** : vous pouvez encoder toutes vos entrées dans une entité de caractères HTML ou du texte pour
+qu'il n'exécute aucun script. Il existe des fonctions simples et des bibliothèques qui peuvent vous aider à encoder tout votre HTML et
+JavaScript.
+- Configurez vos cookies avec le flag **HttpOnly**.
+
+### Découvrez les vulnérabilités CSRF (Cross-Site Request Forgery) ?
+
+Un pirate peut créer un **lien XSS** et le distribuer par le biais de l'ingénierie sociale pour accéder au navigateur d'un utilisateur.
+
+:::info
+L’ingénierie sociale est un type d’attaque ne reposant pas sur une faille technique.
+:::
+
+Si l'utilisateur clique sur le lien alors qu'une session est encore ouverte sur sa banque, le pirate peut **détourner un jeton de session**
+dans le navigateur (en temps réel) pour accéder à cette session.
+
+Ces requêtes peuvent également rester inactives jusqu'à ce que l'utilisateur ait créé une session sur son navigateur. Regardons l’exemple
+ci-dessous :
+
+```xss
+GET http://bank.com/transfer.do?acct=BOB&amount=100 HTTP/1.1
+```
+
+Dans notre exemple, ce lien XSS est un formulaire de demande GET, mais il pourrait aussi bien s'agir d'un formulaire de demande POST. Ce lien
+effectue une **transaction bancaire**.
+
+Cette transaction bancaire se produit **à l'insu de** l'utilisateur qui peut ou non réaliser que le navigateur a toujours la session bancaire
+ouverte.
+
+#### Protégez votre application contre une faille CSRF ?
+
+1. Exiger la réauthentification pour toutes les demandes des utilisateurs.
+2. Utiliser un jeton unique pour chaque demande.
+3. Utiliser des jetons anti-falsification qui valident le jeton côté client par rapport au jeton côté serveur web.
+4. Effectuer des recherches sur les bibliothèques CSRF basées sur la sécurité.
+
+### En résumé
+
+- Une faille **cross-site scripting ou XSS** est un script qui peut être exécuté dans votre site web.
+- Empêcher une faille XSS avec validation de l'entrée et un encodage de l'entrée.
+- Protégez vos cookies en activant l'option HttpOnly.
+- Les attaques CSRF peuvent se produire via social engineering.
+- Les attaques CSRF effectuent des transactions à l'insu de l'utilisateur.
+
+_Dans le prochain chapitre, nous verrons les vulnérabilités XXE et comment s’en prémunir._
+
+-----
+
+## Protégez votre code contre les failles XXE et la désérialisation non sécurisée
+
+[Protégez votre code contre les failles XXE et la désérialisation non sécurisée - Sécurisez vos applications web avec l'OWASP - OpenClassrooms](https://openclassrooms.com/fr/courses/6179306-securisez-vos-applications-web-avec-lowasp/6520493-protegez-votre-code-contre-les-failles-xxe-et-la-deserialisation-non-securisee)
+
+<Vimeo vimeoId="376329047" />
+
+<br />
+
+Pour sécuriser son code, il est important de respecter les bonnes pratiques de sécurité mais aussi d’utiliser des fonctions qui permettent
+d’ajouter des mesures de sécurité supplémentaires. Dans ce chapitre, nous allons définir ce que sont les failles XXE et découvrir comment
+s’en prémunir.
+
+### Découvrez les XML External Entities (XXE)
+
+Pour comprendre ce que sont les XXE, il faut d’abord définir le langage XML. Le **langage XML (_Extensible Markup Language_)** a été créé pour
+**stocker, partager** et **transporter des données entre systèmes**. Il est indépendant de la plateforme et du langage.
+
+XML est utilisé pour transmettre des données d'une plateforme à l'autre. Beaucoup d'applications web utilisent XML pour gérer les données. Il
+ressemble à HTML, mais fonctionne différemment car HTML est utilisé pour présenter les données en hypertexte sur un navigateur.
+
+Revenons au **formulaire de connexion** d'un utilisateur. Ici, vous vous inscrivez sur un site avec votre nom, votre adresse e-mail et votre
+numéro de téléphone. Une fois que vous avez appuyé sur _Entrée_, les informations que vous avez tapées deviennent des éléments sous forme XML.
+
+```xml
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<users>
+    <user>
+        <username>Batman</username>
+        <email>batman@superheroes.bla</email>
+        <phone>888-123-4567</phone>
+    </user>
+</users>
+```
+
+En XML, il existe des entités internes et externes.
+
+Une **entité interne** est essentiellement une référence XML à un objet interne. Le code ci-dessous représente une entité interne.
+
+```xml
+<!ENTITY superhero "Batman">
+<!ENTITY origin "Gotham City">
+<character>&superhero;&origin;</character>
+```
+
+Une **entité externe** est une référence XML à une source externe comme un **chemin de fichier** ou une **URL**, des **images**, des
+**références de documents** ou des **liens de fichiers**. Lorsque cette balise d'entité externe est intégrée à une page web, elle sera
+directement affichée depuis son emplacement externe.
+
+Dans l’exemple ci-dessous, la première entité externe, le super-héros, est une URL référencée. La deuxième entité externe, l'origine, fait
+référence à un **chemin de fichier** sur un système de fichiers Linux. Le contenu du fichier sur ce chemin sera **affiché sur la page web**.
+Le mot clé **SYSTEM** inclut le fichier référencé dans le document XML.
+
+```xml
+<!ENTITY superhero SYSTEM "http://www.batman.bla">
+<!ENTITY origin SYSTEM "file:///usr/batman">
+<character>&superhero;&origin;</character>
+```
+
+### Découvrez le fonctionnement d'une attaque XXE
+
+Une attaque XXE ou _injection XXE_ est un type d'attaque contre une application qui utilise XML. Cette attaque se produit lorsque l'entrée XML
+contenant une référence à une entité externe est traitée par un analyseur XML mal configuré. Cette attaque peut entraîner la divulgation de
+données confidentielles, un déni de service, une falsification de requête côté serveur et d'autres impacts sur le système.
+
+:::note ?
+Comment un pirate peut-il tirer profit d'une XXE ?
+:::
+
+Regardons la ligne du code ci-dessous.
+
+`<!ENTITY origin SYSTEM "file:///usr/batman">`
+
+Lorsque cette entité est référencée, elle **affichera** le contenu du fichier  `/usr/batman.`
+
+Un attaquant peut avoir délibérément choisi de placer ce chemin d'accès dans le XML pour obtenir un **accès non autorisé** au contenu de ce
+fichier. Cette attaque est une forme d’injection.
+
+:::note ?
+Comment fonctionne l'attaque par injection XML ?
+:::
+
+Pour une page de connexion normale, un développeur web créera une requête AJAX POST vers une page de connexion qui utilisera un nom XML et un
+mot de passe comme identifiants.
+
+Une requête POST est créée pour aller à l'URL `webdevfightshacker.bla/login.html`.
+
+Une fois sur la page de connexion, les données XML présentes dans la variable **xmlHero** rempliront le formulaire Nom et mot de passe.
+
+La demande POST fournit une réponse pour indiquer le succès ou l'échec.
+
+```xml
+var xmlHero = "
+<hero>
+    <name>Batgirl</name>
+    <password>ilovebatman</password>
+</hero>”;
+$.ajax
+({
+    type: "POST",
+    url: "webdevfightshacker.bla/login.html",
+    data: xmlHero,
+    success: function(response)
+    { console.log(response);
+    }
+});
+```
+
+Le code ci-dessus montre une **requête POST** qui **envoie les données XML** assignées à la variable xmlHero.
+
+La page de connexion qui reçoit cette requête POST utilise ensuite une **fonction d'analyse XML** pour lire le contenu et l'affecter aux
+variables qui correspondent au nom d'utilisateur et au mot de passe du formulaire.
+
+Une **injection XXE** est utilisée pour lire le contenu d'un fichier et l'afficher sur le navigateur. Imaginons que le pirate soit intéressé
+par un dossier spécial appelé _secretpower_ dans le répertoire de _Batgirl._
+
+Le pirate commence à créer une description de type de document pour une entité nommée _`hax`_ et lui donne le chemin du fichier.
+
+```html
+<!DOCTYPE hax [<!ELEMENT hax ANY >
+<!ENTITY hax SYSTEM “C:\Users\SBatgirl\Desktop\secretpower”>>
+```
+
+Ensuite, la variable `hax` est référencée comme une entité de caractère externe XML.
+
+```xml
+var xmlHero = "
+<hero>
+    <name>&hax;</name>
+    <password>ilovebatman</password>
+</hero>”;
+```
+
+Dans ce cas, l’attaquant sera en mesure de récupérer le mot de passe de Batgirl et d’accéder à ses données.
+
+### Protégez votre code contre les injections XXE
+
+Il existe un moyen de **désactiver** les entités externes dans tous les langages. Il s'agit généralement d'une balise binaire **vrai/faux**.
+
+Par exemple, dans un **analyseur XML PHP**, le code ressemblerait à ceci :
+
+`libxml_disable_entity_loader (true) ;`
+
+Et en **Java** :
+
+```java
+factory.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+```
+
+Il existe d'autres **API d'analyse XML** qui peuvent avoir des entités externes activées par défaut.
+
+:::info
+Pour obtenir la liste de ces API, vous pouvez consultez cette [page](https://github.com/OWASP/CheatSheetSeries/blob/master/cheatsheets/XML_External_Entity_Prevention_Cheat_Sheet.md).
+:::
+
+### Découvrez la désérialisation non sécurisée
+
+La désérialisation non sécurisée est une vulnérabilité qui se produit lorsque des données non fiables sont utilisées pour abuser de la logique
+d'une application, causer un déni de service (DoS, Deny of Service), ou même exécuter du code arbitraire. Cette vulnérabilité occupe la 8e
+place du classement OWASP.
+
+Pour comprendre la désérialisation non sécurisée, il faut d’abord comprendre ce qu’est la sérialisation.
+
+Pour cet exemple, nous allons prendre un objet, comme un nom d'utilisateur et un mot de passe, et le mettre dans la base de données. Pour
+pouvoir être stocké, l'objet devra être converti en flux d'octets pour être transporté à travers le réseau afin d'accéder à la base de données.
+C'est ce qu'on appelle la **_sérialisation_**. Lorsqu'il y a un appel pour ce même objet dans la base de données, il doit être **désérialisé**
+(conversion du flux d'octets en objet) avant son utilisation.
+
+Ce **processus de sérialisation/désérialisation des objets** ne se produit pas seulement avec les bases de données. Un objet peut changer son
+état en un flux d'octets lorsqu'il est stocké dans un fichier, d'ordinateur à ordinateur ou en se déplaçant sur le réseau.
+
+Ces objets peuvent être des cookies, des flux vocaux, des jetons ou des fichiers cache, par exemple.
+
+La **désérialisation non sécurisée** est une vulnérabilité qui expose les données à une attaque **MITM** (homme du milieu), que nous avons vue
+précédemment, ou à une injection de code qui peut changer l'intégrité de l'objet quand il est désérialisé.
+
+:::info
+**Java** dispose de bibliothèques dédiées à la sérialisation et à la désérialisation. **YAML** dispose de bibliothèques dédiées à la
+sérialisation pour différents langages de programmation.
+:::
+
+Par exemple, un cookie avec un identifiant de session et des informations d'identification est envoyé par le navigateur au serveur web
+exécutant **Java**.
+
+Ce cookie est sérialisé en utilisant la **classe Java OutputStream** avec un constructeur. À partir de là, le code malveillant peut être
+injecté par un attaquant au moment de la sérialisation.
+
+Le cookie est désérialisé à l’aide de la classe ObjectInputStream de Java, sans constructeur. Le constructeur est créé après la création de
+l'objet. Sans vérification ni validation des entrées pendant le processus de désérialisation.
+
+Un attaquant peut utiliser une classe Java Serializable ou Externalizable car elles sont déjà disponibles dans la bibliothèque. Les valeurs
+peuvent être manipulées pour créer des fonctionnalités différentes de celles de l'objet d'origine.
+
+Voici un exemple avec Java :
+
+```java
+public class Hacked extends Serializable {
+    private String cmd;
+    private void readObject(ObjectInputStream hackedbinary) {
+        hackedbinary.defaultReadObject();
+        Runtime.getRuntime().exec(cmd);
+    }
+}
+```
+
+Cette classe **Hacked** crée une bibliothèque utilisée dans le système. La valeur de la variable de classe est appelée _cmd_ (qui correspond à
+l’invite de commande).
+
+Les méthodes `readObject() defaultReadObject()` désérialisent le binaire pour coïncider avec le processus de sérialisation au début.
+
+Le fichier `Runtime.getRuntime().exec(cmd)` ouvre une invite de commande permettant à l’attaquant de modifier efficacement la fonctionnalité
+de l'objet original.
+
+#### Prévenez la désérialisation non sécurisée
+
+Dans l'exemple ci-dessus, la **classe Java ObjectInputStream** restreint l'utilisation arbitraire de cette bibliothèque en l'enveloppant dans
+la bibliothèque SerialKiller. La [bibliothèque Java SerialKiller](https://github.com/ikkisoft/SerialKiller) a été créée pour pallier les
+problèmes de désérialisation.
+
+Pour empêcher l'accès privilégié non autorisé à l'aide de l'objet désérialisé, une mesure défensive consisterait à valider les données
+d'entrée et à vérifier la fonctionnalité de l'objet.
+
+### En résumé
+
+- **Des entités XML externes** peuvent être utilisées pour révéler des données sensibles, des images et des références de documents
+enregistrées sur un ordinateur.
+- **Les entités XML externes** devraient être désactivées.
+- **La désérialisation non sécurisée** est la capacité d'un attaquant à changer l'état du code pendant sa conversion en binaire.
+- **La désérialisation non sécurisée** peut être évitée en créant des contrôles sur l'état du code.
+
+_Dans le prochain chapitre, nous aborderons la sécurisation de votre environnement de développement._
+
+-----
+
+## Sécurisez votre environnement de développement
+
+[Sécurisez votre environnement de développement - Sécurisez vos applications web avec l'OWASP - OpenClassrooms](https://openclassrooms.com/fr/courses/6179306-securisez-vos-applications-web-avec-lowasp/6520557-securisez-votre-environnement-de-developpement)
+
+<Vimeo vimeoId="376329100" />
+
+<br />
+
+### Faites face aux vulnérabilités connues
+
+Il est important de faire des recherches sur les outils de votre environnement de développement pour être au courant de toutes les
+vulnérabilités et des méthodes d'atténuation. Documentez tous les modules, API et bibliothèques utilisés, ainsi que les vulnérabilités connues
+afin de garder une trace des actions effectuées.
+
+:::note ?
+Comment savoir si un des outils que j'utilise présente une vulnérabilité connue ?
+:::
+
+Pensez à consulter les bases de données sur le web. La base de données [Common Vulnerabilities and Exposures](https://cve.mitre.org/) (en
+anglais), créée par le MITRE, est un excellent outil à utiliser.
+
+:::info
+Le MITRE est une organisation à but non lucratif qui effectue des travaux liés à la cybersécurité.
+:::
+
+Voici quelques conseils pour vous assurer que votre environnement est sécurisé :
+- **documentez** les versions de chaque composant de votre application, y compris le firmware de la carte réseau du serveur ;
+- examinez vos composants physiques, vos applications, votre système d'exploitation, vos API, vos bibliothèques et les versions des langages
+utilisées.
+
+### Identifiez votre environnement pour éviter les failles de sécurité
+
+Vous pouvez appliquer toutes les pratiques de programmation sécurisée que vous connaissez, mais si vous vous retrouvez avec votre application
+web dans un **environnement qui n'est pas sécurisé**, cela peut l'ouvrir à **d'autres attaques**.
+
+Il est très important d'avoir une **bonne configuration de sécurité** pour l'environnement qui héberge votre application web afin d'assurer sa
+disponibilité et son intégrité. Par ailleurs, il faudra également mettre en place des couches de sécurité telles qu'un pare-feu (WAF). Ce
+pare-feu devra être configuré de manière optimale pour s'assurer que seuls les ports requis sont ouverts afin de renforcer la sécurité. Un
+outil comme un SIEM (_Security information management system)_ peut détecter les événements et assurer la gestion de la sécurité du serveur.
+
+En dehors du serveur d'application web et du pare-feu, se trouve le **serveur physique** lui-même. En règle générale, les services cloud qui
+fournissent cet espace ont déjà mis en place des mesures de sécurité. Assurez-vous que les **normes de conformité pour le service cloud**
+utilisées sont conformes aux **exigences de la politique de sécurité** de votre application web. La configuration de sécurité du serveur
+physique et du pare-feu pour la plateforme de cloud nécessitent une configuration stricte.
+
+**Le contrôle d'accès** pour les composants externes de l'environnement, tels que la plateforme et l'administration du serveur, sont d'autres
+moyens par lesquels un attaquant peut obtenir un contrôle non autorisé à une application web. Ces facteurs doivent être correctement
+configurés et documentés.
+
+### Sécurisez votre environnement
+
+Après avoir pris connaissance des composants de votre environnement, vous devez vous assurer que les configurations sont à la hauteur de la
+sécurité requise. La bonne gestion des vulnérabilités est un élément critique pour maintenir la sécurité de votre application web.
+
+Prenons un exemple concret.
+
+Supposons que la plateforme sur laquelle est hébergée votre application web dispose d'une **console d'administration**. Votre patron insiste
+sur le fait que la plateforme a la réputation d'être sécurisée et qu'elle utilise un service cloud populaire ! Il vous dit aussi que tout est
+configuré et qu'il vous suffit de paramétrer votre application web sur la plateforme. Tout est sécurisé !
+
+Le site est **détourné**, et devinez quoi ? Les pirates avaient un **accès complet** à votre application web parce qu'ils pouvaient accéder à
+la **console d'administration**. Apparemment, certaines des **informations d'identification par défaut** n'ont pas été supprimées, et comme
+ces informations d'identification sont déjà connues des attaquants, ils attendent que la même application web apparaisse avec les paramètres
+par défaut !
+
+La sécurisation de votre code avec l’OWASP n’a pas d’intérêt si un attaquant a accès au code source et peut se connecter directement dans la
+console d'administration.
+
+Quelle est la leçon à tirer ici ? Sécurisez toutes vos applications externes !
+
+Une mauvaise configuration de sécurité peut se produire à n'importe quel niveau, y compris les services réseau, la plateforme, le serveur web,
+le serveur d'applications, la base de données, les frameworks, le code personnalisé et les machines virtuelles, conteneurs ou stockage
+préinstallés.
+
+:::info
+Vous pouvez en apprendre davantage avec sur cette page du site de l'[OWASP](https://www.owasp.org/index.php/Top_10-2017_A6-Security_Misconfiguration)
+(en anglais).
+:::
+
+Pour les **services réseau**, vous allez examiner l'infrastructure de votre serveur web et vous assurer que les meilleures pratiques sont
+utilisées pour sécuriser vos services. Vous avez des serveurs FTP de base de données ou _LDAP_ (Lightweight Directory Access Protocol) qui
+peuvent être compromis par les mauvaises personnes ! Les systèmes d'authentification doivent suivre les meilleures pratiques de sécurité.
+
+Voici quelques bonnes questions à poser :
+- Existe-t-il des pare-feux pour toutes les applications et tous les serveurs ?
+- Est-ce que seuls les ports nécessaires sont ouverts avec des ensembles de règles limités ?
+- Les pare-feux limitent-ils le type de trafic sur les ports ouverts ?
+- De plus, y a-t-il un processus mis en place pour détecter les anomalies dans le trafic web ?
+
+Le **trafic web** devrait également être surveillé pour déceler les anomalies. Imaginez si quelqu'un commençait à effectuer des scans de ports
+pour rechercher périodiquement les ports ouverts. Il y a des outils qui peuvent détecter de tels événements pour avertir les administrateurs
+qu'il y a une tentative possible de piratage du site.
+
+Concernant **l'application et la plateforme**, nous avons parlé du nom d'utilisateur et des mots de passe par défaut pour les serveurs, les
+applications et les bases de données. Nous avons également passé en revue la détection et l'enregistrement des événements possibles.
+Assurez-vous qu'ils ne révèlent pas les informations de base sur votre site, telles que les noms d'utilisateur, les fichiers, les
+configurations IP et les données de base pour l'entreprise et les personnes.
+
+Tous les aspects **administratifs** tels que les répertoires et les fichiers de configuration pour toutes les applications doivent être
+protégés des regards indiscrets. Protégez le code source et la structure des fichiers en vous assurant que le serveur web est verrouillé.
+
+Toutes vos applications sont hébergées sur des systèmes d'exploitation. Assurez-vous que les applications ont un accès **minimal** au système
+d'exploitation, car le piratage du système d'exploitation est un moyen sûr de prendre le contrôle de votre application.
+
+Vous disposez également de jetons d'accès, de mots de passe d'authentification et de clés de chiffrement ! Protégez-les également.
+
+Enfin, les **exceptions** et les **codes d'erreur** en disent long sur votre application, votre code source, le fonctionnement du réseau, la
+structure des fichiers de votre base de données, les répertoires de fichiers et plus encore. Les attaquants cherchent ce type d'information.
+Une stack trace peut être utile lorsque vous déboguez votre application ; cependant, si elle est utilisée à des fins malveillantes, la
+quantité d'informations qu'elle peut révéler peut être dangereuse !
+
+:::info
+Une stack trace est la représentation des piles d'exécution à un moment donné lors de l'exécution d'un programme informatique.
+:::
+
+### En résumé
+
+- Lors de la conception d'une application web, évaluez les composants présentant des vulnérabilités connues.
+- Les composants peuvent présenter de nouvelles vulnérabilités tout au long du cycle de vie du produit.
+- Patchez toujours les zones présentant de nouvelles vulnérabilités.
+- Votre travail n'est pas terminé après que vous ayez écrit un code sécurisé.
+- Assurez-vous que les pare-feux et les plateformes sont protégés et configurés de manière à respecter les bonnes pratiques de sécurité.
+- Connectez-vous avec les administrateurs de bases de données pour vous assurer que la base de données est sécurisée.
+
+_Vous êtes arrivé au bout de cette partie ! Bravo ! Réalisez le quiz pour valider vos connaissances._
+
+-----
+
+## Quiz : Protégez votre code avec l'OWASP
+
+[Protégez votre code avec l'OWASP - OpenClassrooms](https://openclassrooms.com/fr/courses/6179306-securisez-vos-applications-web-avec-lowasp/exercises/3757)
+
+#### Compétences évaluées
+
+<i class="bi bi-check2-circle"></i> Protéger du code avec l'OWASP
+
+-----
+
+#### Question 1 : Choisissez les meilleurs moyens pour sécuriser une application web contre une attaque par injection en utilisant `$username = '1' ou '1' = '1'`.
+
+*Attention, plusieurs réponses sont possibles.*
+
+<i class="bi bi-check-square-fill"></i> Validation d'entrée<br />
+<i class="bi bi-check-square-fill"></i> Paramétrage des variables<br />
+<i class="bi bi-check-square-fill"></i> Utilisation du mappage relationnel objet (ORM)<br />
+<i class="bi bi-square"></i> Pas d’utilisation d’une base de données SQL<br />
+<br />
+
+*La validation des entrées, le paramétrage de vos variables et l’ORM sont tous de bons moyens de sécuriser vos formulaires d’entrée contre
+une attaque par injection. Il n'est pas toujours possible d'éviter d'utiliser une base de données SQL.*
+
+-----
+
+#### Question 2 : Que peut potentiellement faire l'attaque d'injection SQL suivante ?
+
+```sql
+SELECT * FROM accounts WHERE username='1' or ‘1’=’1'; DROP TABLE accounts;
+```
+
+<i class="bi bi-circle"></i> Elle sélectionne un compte et supprime le reste des comptes<br />
+<i class="bi bi-record-circle"></i> Elle révèle tous les comptes à l'attaquant et supprime la table des comptes de la base de données<br />
+<i class="bi bi-circle"></i> Elle crée une boîte de dialogue qui affiche le premier nom d'utilisateur<br />
+<i class="bi bi-circle"></i> Elle change le langage de la base de données en Java<br />
+<br />
+
+*La première partie de la requête sélectionne tous les comptes avec un nom d'utilisateur et un mot de passe dans la table des comptes. La
+deuxième partie supprime tout ce qui se trouve dans la table des comptes.*
+
+-----
+
+#### Question 3 : Quelle est la meilleure manière de sécuriser un identifiant et un mot de passe lors de leur transport vers une base de données ?
+
+<i class="bi bi-circle"></i> Les chiffrer sur la page de connexion<br />
+<i class="bi bi-record-circle"></i> Les chiffrer avec HTTPS<br />
+<i class="bi bi-circle"></i> Ils peuvent rester en clair<br />
+<i class="bi bi-circle"></i> Utiliser une procédure SQL stockée<br />
+<br />
+
+*La meilleure pratique consiste à utiliser HTTPS dans vos demandes de page de connexion. Une fois que le mot de passe est dans la base de
+données, chiffrez-le à l'aide d'un algorithme de hachage suggéré.*
+
+-----
+
+#### Question 4 : Quelles sont les meilleures pratiques pour traiter les demandes GET et POST ?
+
+*Attention, plusieurs réponses sont possibles.*
+
+<i class="bi bi-check-square-fill"></i> Utiliser les requêtes GET pour récupérer des informations<br />
+<i class="bi bi-square"></i> Utiliser les requêtes GET pour modifier les informations<br />
+<i class="bi bi-square"></i> Utiliser les requêtes POST pour récupérer des informations<br />
+<i class="bi bi-check-square-fill"></i> Utilisez les requêtes POST pour modifier les informations<br />
+<br />
+
+*Les requêtes GET révèlent des informations dans l'URL. Elles doivent donc être utilisées pour extraire des informations de la base de données.
+Les demandes POST cachent des informations dans le corps et sont considérées comme plus sécurisées. Elles doivent être utilisés lors de la
+modification d'informations dans la base de données.*
+
+-----
+
+#### Question 5 : Quelles méthodes peuvent être utilisées pour l'anonymisation par masquage des données ?
+
+*Attention, plusieurs réponses sont possibles.*
+
+<i class="bi bi-check-square-fill"></i> La suppression de certaines parties de données<br />
+<i class="bi bi-check-square-fill"></i> Le chiffrement des données<br />
+<i class="bi bi-check-square-fill"></i> Le brouillage des données<br />
+<i class="bi bi-square"></i> Le stockages des données en mémoire<br />
+<br />
+
+*Masquer, chiffrer et brouiller les données sont trois méthodes de masquage des données utilisées pour sécuriser les données sensibles.*
+
+-----
+
+#### Question 6 : Quels sont les deux algorithmes de hachage les plus puissants aujourd’hui ?
+
+<i class="bi bi-circle"></i> SHA1 et MD5<br />
+<i class="bi bi-record-circle"></i> Argon5 et Bcrypt<br />
+<i class="bi bi-circle"></i> TLS et SSL<br />
+<i class="bi bi-circle"></i> Scrypt et PBDFK2<br />
+<br />
+
+*Argon5, Bcrypt, SHA1, MD5, Scrypt et PBDFK2 sont tous des algorithmes de hachage recommandés pour sécuriser les données. SHA1 et MD5 sont
+sûrs s'ils sont utilisés avec des techniques de salage. TLS et SSL sont des protocoles TCP/IP. Les deux algorithmes les plus puissants
+aujourd’hui sont Argon5 et Bcrypt.*
+
+-----
+
+#### Question 7 : Quel est un bon moyen d'empêcher un attaquant d'apprendre le nom d’objets d’une base de données et de les utiliser dans une URL ?
+
+<i class="bi bi-record-circle"></i> Utiliser des paires clé-valeur au lieu de références de page directes avec des noms significatifs<br />
+<i class="bi bi-circle"></i> Numéroter les pages progressivement<br />
+<i class="bi bi-circle"></i> Utiliser les codes d'erreur par défaut<br />
+<i class="bi bi-circle"></i> Utiliser les noms de page par défaut dans la structure MVC<br />
+<br />
+
+*Une pratique recommandée pour éviter les références directes aux objets de la base de données consiste à utiliser des paires clé-valeur. La
+numérotation incrémentielle des pages, l’utilisation de codes d’erreur par défaut et l’utilisation de noms de page par défaut sont toutes des
+pratiques à éviter.*
+
+-----
+
+#### Question 8 : Que fait HttpOnly pour les cookies ?
+
+<i class="bi bi-circle"></i> Il active les cookies pour HTTP seulement<br />
+<i class="bi bi-record-circle"></i> Il n'autorise pas les scripts malveillants à accéder aux cookies<br />
+<i class="bi bi-circle"></i> Il permet de voler des informations d'identification<br />
+<i class="bi bi-circle"></i> Il décode les cookies<br />
+<br />
+
+*Lors de l'utilisation d’HttpOnly, l'application web est protégée contre les scripts malveillants pouvant accéder aux cookies.*
+
+-----
+
+#### Question 9 : Parmi les propositions suivantes, quels sont les exemples d'entités externes XML ?
+
+*Attention, plusieurs réponses sont possibles.*
+
+<i class="bi bi-square"></i> Code pour un champ d'alerte<br />
+<i class="bi bi-check-square-fill"></i> Images<br />
+<i class="bi bi-check-square-fill"></i> Références de documents<br />
+<i class="bi bi-square"></i> Dossier qui stocke des bibliothèques de code<br />
+<i class="bi bi-check-square-fill"></i> Liens de fichiers<br />
+<br />
+
+*Les entités externes XML sont des images, des références de documents et des liens de fichiers.*
+
+-----
+
+#### Question 10 : Qu’est-ce que la désérialisation non sécurisée ?
+
+<i class="bi bi-record-circle"></i> Un attaquant qui modifie le code en cours de désérialisation<br />
+<i class="bi bi-circle"></i> Un attaquant qui modifie le code après sa désérialisation<br />
+<i class="bi bi-circle"></i> Un attaquant qui modifie le code de Java en bytecode Java<br />
+<br />
+
+*La désérialisation non sécurisée est une attaque qui se produit pendant le processus de sérialisation. Le code est modifié lorsqu'il est
+converti en binaire, puis exécuté lorsqu'il est désérialisé à son état d'origine.*
+
+-----
+
+#### Question 11 : En plus des règles de l’OWASP, quelles autres couches de sécurité peuvent aider à protéger votre application web ?
+
+*Attention, plusieurs réponses sont possibles.*
+
+<i class="bi bi-check-square-fill"></i> Un pare-feu de serveur physique<br />
+<i class="bi bi-check-square-fill"></i> Un pare-feu d’application web<br />
+<i class="bi bi-check-square-fill"></i> Des services cloud sécurisés<br />
+<i class="bi bi-square"></i> Un gardien de sécurité à côté du serveur<br />
+<br />
+
+*Les pare-feux sur les serveurs physiques, les pare-feux d'applications web et les services de cloud sécurisés sont tous des composants
+importants pour la sécurisation d’une application web sur un serveur. Un agent de sécurité n'est pas en mesure d'empêcher les attaques de
+réseau.*
+
+-----
+
+#### Question 12 : Lorsque vous encodez votre entrée pour la convertir en entités de texte et de caractères, il s’agit de :
+
+<i class="bi bi-circle"></i> Un script intersite<br />
+<i class="bi bi-circle"></i> Une validation d'entrée<br />
+<i class="bi bi-record-circle"></i> Une transformation d'entrée<br />
+<i class="bi bi-circle"></i> Un éditeur de code<br />
+<br />
+
+*La transformation d'entrée consiste à coder les valeurs d'entrée pour empêcher un code scripté de s'exécuter sur une application web.*

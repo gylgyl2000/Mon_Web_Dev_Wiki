@@ -1,0 +1,897 @@
+---
+sidebar_position: 2
+---
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+import { Vimeo } from 'mdx-embed';
+
+# Utilisez des API REST pour vos projets de code
+
+## Tirez un maximum de ce cours
+
+[Tirez un maximum de ce cours - Adoptez les API REST pour vos projets web - OpenClassrooms](https://openclassrooms.com/fr/courses/6573181-adoptez-les-api-rest-pour-vos-projets-web/6573188-tirez-un-maximum-de-ce-cours)
+
+<Vimeo vimeoId="390933847" />
+
+<br />
+
+Tout d’abord, je vous souhaite la bienvenue dans ce cours sur les API REST  ! 🎉
+
+Avant de vous plonger dans son contenu, sachez que vous allez apprendre plein de nouvelles notions, utiliser de nouveaux outils ; alors
+assurez-vous de savoir utiliser ces informations et ces outils pour **optimiser votre apprentissage** !
+
+En résumé, la meilleure manière de tirer avantage de tout ce cours est de :
+- regarder chaque vidéo pour comprendre en quoi les concepts traités dans chaque chapitre sont importants ;
+- lire le texte sous la vidéo pour apprendre à implémenter ces concepts ;
+- pratiquer en testant les concepts au fur et à mesure ;
+- tester votre compréhension des concepts clés grâce aux **quiz** de fin de partie.
+
+### Rencontrez vos professeurs !
+
+#### Kassandre Pedro
+
+<figure>
+    <img src="https://user.oc-static.com/upload/2021/10/15/16342877594145_image64.jpg"
+         alt="Kassandre Pedro" />
+    <figcaption>Kassandre Pedro</figcaption>
+</figure>
+
+Kassandre a fait des études de langue (coréen) avant de faire partie de la deuxième promotion de 42 Paris en 2014. Elle n’a cessé de coder
+depuis !
+
+Elle a travaillé dans plusieurs startups avant d'atterrir chez GitHub en 2018.
+
+Avec les années, elle se spécialise en back-end. Elle s’est installée au plus près des montagnes à Lyon, pour s’adonner à sa deuxième passion :
+les sports de glisse.
+
+Après avoir lancé Seacher en 2018 avec deux amis, elle travaille désormais chez Pexels, une banque d’images gratuite appartenant à Canva.
+Ayant une appétence forte pour l’éducation, elle est aussi freelance sur son temps libre, pour transmettre sa passion et son expérience.
+
+#### Rina Schiller
+
+<figure>
+    <img src="https://user.oc-static.com/upload/2021/10/15/16342878124714_image56.png"
+         alt="Rina Schiller" />
+    <figcaption>Rina Schiller</figcaption>
+</figure>
+
+Rina est une ingénieure logiciel qui se passionne pour la construction de technologies au service du changement social. Elle a travaillé comme
+ingénieure logiciel chez JPMorgan Chase. Elle est diplômée du Hunter College de New York, où elle a étudié les médias numériques,
+l'informatique et les études de genre. Elle travaille actuellement sur son master en informatique à l'université de Cornell. Elle travaille
+principalement dans le développement de backend en Java et Python, mais a également de l'expérience en interface utilisateur. 👏
+
+:::note ?
+Mais, pourquoi y a-t-il deux auteurs dans ce cours ?
+:::
+
+Rina a écrit la version originale (en anglais) de ce cours. Kassandre a ensuite adapté le cours de Rina en français. Elle a retravaillé les
+contenus, les exemples et a tourné les vidéos d'introduction.
+
+### Qu'allez-vous apprendre dans ce cours ?
+
+Dans ce cours, vous allez dans un premier temps vous initier au fonctionnement des API : comprendre ce qu’est une API, son fonctionnement, ce
+qui caractérise une API et en particulier une API REST, car c’est ce type d’API que nous allons étudier dans ce cours !
+
+Ensuite viendra le temps de la pratique ⚙️; vous verrez comment sont structurées les requêtes et les réponses et vous commencerez par formuler
+des requêtes sur une API afin d’obtenir vos premières données. Puis, vous utiliserez l’API de GitHub afin de créer, modifier et supprimer des
+ressources directement sur votre profil GitHub.
+
+Enfin, vous utiliserez toutes les connaissances acquises durant les deux premières parties pour construire votre première API REST.
+
+La plupart des termes utilisés dans ce cours ont été choisis pour vous faire comprendre la logique des API simplement. Certains mots ont été
+employés dans le but de faciliter la compréhension de ce cours. Les API sont un sujet vaste et il y a tant à apprendre qu’on ne pourrait les
+résumer en un cours de quelques heures. Vous verrez dans d’autres cours ces termes employés de façon différente. Tout est compatible.
+
+Vous êtes prêt ? Alors rejoignez-moi dans le prochain chapitre et commencez par découvrir ce qu’est une API. 🙌
+
+-----
+
+## Initiez-vous au fonctionnement des API
+
+[Initiez-vous au fonctionnement des API - Adoptez les API REST pour vos projets web - OpenClassrooms](https://openclassrooms.com/fr/courses/6573181-adoptez-les-api-rest-pour-vos-projets-web/6816951-initiez-vous-au-fonctionnement-des-api)
+
+<Vimeo vimeoId="390933875" />
+
+<br />
+
+### Découvrez ce qu’est une API
+
+C’est dimanche. Vous vous réveillez tard, et même si vous savez que vous devriez vous lever, vous voulez juste rester enroulé bien au chaud
+dans votre couette et vous vous dites qu’en ce mois de février, partir profiter de la douceur du Portugal ne serait pas une mauvaise idée.
+Alors, vous ouvrez une application de comparateur de vols et voilà ! ✨ Vous trouvez plusieurs offres de différentes compagnies aériennes pour
+Lisbonne ! Bon, l’avion, ce n’est pas très écolo et entre nous les horaires ne sont pas top, alors vous tentez le train. Vous ouvrez une
+application pour réserver un billet de train et pareil ! Vous trouvez plusieurs offres de trains pour Lisbonne en passant par l’Espagne. Et
+tout ça sans avoir à aller chercher l’information sur le site de chaque compagnie ferroviaire ou aérienne. Pas mal, non ?
+
+Vous avez l’habitude de voir toutes ces données défiler sans arrêt sous vos yeux comme par magie, que ce soit sur les réseaux sociaux ou les
+applications de comparatifs en tout genre. De votre point de vue, c’est assez simple : les informations arrivent au fur et à mesure sans effort ;
+sauf qu’en coulisse, c’est autre chose ! En effet, un gros travail est effectué pour rendre cela possible et pour que cela fonctionne, il nous
+faut l’un des outils les plus importants : **une API**.
+
+:::note ?
+API par ci, API par là, OK OK, mais que signifie _API_, au juste ? 🤔
+:::
+
+API est une abbréviation et signifie **_Application Programming Interface_** (ou **_interface de programmation d’application_**, en français).
+Pour faire simple : c’est un moyen de communication entre deux logiciels, que ce soit entre différents composants d’une application ou entre
+deux applications différentes.
+
+:::note ?
+OK OK OK... mais du coup, quel est le lien entre une API et le fait de scroller par exemple Instagram non stop jusque 2 h du matin, ou comparer
+des vols pour Lisbonne ? 🤔
+:::
+
+### Découvrez le fonctionnement des API
+
+Eh bien, pour répondre à cette question, vous devez connaître un peu plus le fonctionnement d’une API. Mais avant, revoyons ensemble les bases
+d’une communication serveur et client.
+
+Prenons l’exemple d'Air France, une compagne aérienne française. Quelque part dans le monde, les serveurs d'Air France ont accès à toutes les
+données que vous voulez voir pour un trajet Paris-Lisbonne : les différents avions, les tarifs, les statuts des vols, etc. Pour que vous
+puissiez y avoir accès, votre navigateur (que l’on appelle le **_client_**) doit recevoir ces informations de quelqu’un.
+
+Ce quelqu’un, c’est le **serveur**. L’application doit avoir une conversation avec le serveur.
+
+<figure>
+    <img src="https://user.oc-static.com/upload/2021/10/15/16342881003768_image5.png"
+         alt="Une conversation typique entre client et serveur : à gauche l'ordinateur client envoie une requête au serveur à droite. Puis le serveur à droite retourne une réponse au client." />
+    <figcaption>Une conversation typique entre client et serveur</figcaption>
+</figure>
+
+Cela ressemble à ça :
+- Client : « Salut serveur, est-ce que je pourrais avoir un avion pour Lisbonne le 10 décembre ?» 🤔
+- Serveur : « Voilà, tous les transports disponibles vers Lisbonne le 10 décembre! » 🎉
+
+Ou alors, si le serveur ne parvient pas à trouver les données, il pourrait répondre comme ceci :
+- Serveur : « Désolé, en fait il n’y a pas de vols disponibles le 10 décembre. » 🙁
+
+C’est ce qu’on appelle la **communication entre client et serveur** : le **client** formule une **requête** (ou une demande) pour obtenir une
+information et le **serveur** envoie une **réponse** contenant les données demandées si cela est possible.
+
+:::note ?
+Et du coup, l’API, elle se place où, dans ce schéma ? Et le rapport avec Air France ?
+:::
+
+En web, un service web et une API sont tous les deux des moyens de communication. Un service web standard facilite seulement la communication entre deux machines via un réseau. Une API facilite l’interaction entre deux applications différentes afin qu’elles puissent communiquer entre elles : elle sert d’intermédiaire. Le client va demander à l’API une information, celle-ci va aller chercher cette information dans la base de données puis la renvoyer au client dans un second temps.
+
+<figure>
+    <img src="https://user.oc-static.com/upload/2021/10/19/1634632670253_web_API.png"
+         alt="Une conversation entre le client, l'API et la base de données : l'API au milieu récupère des données de la BDD à droite, puis la BDD retourne des données à l'API." />
+    <figcaption>Une conversation entre le client, l'API et la base de données</figcaption>
+</figure>
+
+Les API permettent la communication entre de nombreux **composants** différents de votre application, mais aussi entre des composants de votre
+application et d’autres **développeurs**. Elles agissent ainsi comme un intermédiaire qui transmet des messages à travers un système de requêtes
+et de réponses.
+
+Reprenons notre exemple avec Air France. ✈️
+
+On crée une application de comparateur de vols que l’on va l’appeler VolScanner. Celle-ci ne peut pas accéder directement aux informations
+d'Air France ou de toute autre compagnie aérienne. En effet, l’application n’a pas accès à leurs base de données... Mais si Air France a une
+API à qui on peut demander des informations et qui partage certaines données de la base de données avec d’autres applications, alors VolScanner
+peut demander des informations à l’API d'Air France. L’API lui renvoie alors des données que VolScanner peut partager !
+
+Ainsi, VolScanner peut comparer les prix entre les différentes compagnies qui ont mis en place un vol le 10 décembre pour Lisbonne. À vous les
+délicieuses _pasteis de nata_ ! ✨
+
+Les API peuvent communiquer :
+- d’un logiciel à un logiciel ;
+- d’un client à un serveur ;
+- ou d’un logiciel à des développeurs.
+
+Je suis certaine que vous avez déjà vu un exemple d’utilisation d’une API pour communiquer entre logiciels et développeurs : sur certains sites,
+vous pouvez utiliser votre compte Google ou Facebook pour vous identifier sans avoir à créer un identifiant et un mot de passe.
+
+C’est parce que Google et Facebook ont construit des API que d’autres développeurs peuvent utiliser dans leurs propres sites Internet pour
+s’occuper de l’inscription et de la connexion des utilisateurs à leur place.
+
+<figure>
+    <img src="https://user.oc-static.com/upload/2021/10/15/16342882206815_image42.png"
+         alt="Screenshot d'une interface proposant une identifications par un service externe de type connexion avec Facebook, Google ou adresse e-mail." />
+    <figcaption>Les API rendent possibles les identifications par un service externe !</figcaption>
+</figure>
+
+Et du coup, comment c’est possible techniquement ? 🤔
+
+Les API créent des méthodes **standardisées** et **réutilisables** qui permettent aux développeurs d’accéder à des données spécifiques lors de
+la construction d’applications.
+
+Prenons un exemple. Quand vous sortez manger, le menu du restaurant offre une grande quantité d’options déjà prédéterminées. Cela vous
+simplifie la tâche car vous savez ce que vous pouvez commander, et donc obtenir plus rapidement votre plat. Cela donne également une meilleure
+compréhension de ce que vous voulez pour le chef. Au final, vous n’avez qu’à demander à la serveuse (API) un plat du menu qu’elle transmettra
+en cuisine, la cuisine prépare votre plat, le remet à la serveuse qui vous le ramène. 🙌
+
+### Observez comment utiliser les API en tant que développeur
+
+En tant que développeur, vous serez certainement amené à utiliser diverses API dans votre vie professionnelle ou pour vos projets personnels.
+Il existe deux types principaux : les API privées et les API publiques. Voyons ensemble de quoi il s'agit ! 🕵🏻‍♀️
+
+#### Les API privées
+
+Les API **privées** garantissent que les personnes en dehors de votre entreprise ou de votre application n’ont pas accès aux données
+disponibles de votre base de données. Par exemple, si les développeurs d'OpenClassrooms voulaient construire une application **interne** pour
+que les RH puissent gérer et analyser des informations de recrutement, il y aurait de nombreuses données que les salariés voudraient voir,
+créer, et modifier. Pour que les utilisateurs puissent interagir avec les données, les développeurs d’OpenClassrooms pourraient créer une API
+pour que les RH puissent accéder aux données de recrutement à travers leur application, sans pour autant donner ces accès aux utilisateurs de
+la plateforme comme vous et moi.
+
+Une API peut être utilisée comme un **tampon** ou une couche intermédiaire entre la base de données et la personne qui veut accéder ou manipuler
+les données. Une requête directe et non contrôlée sur une base de données pourrait engendrer le chaos ! 🤯
+
+Et si quelqu’un supprimait accidentellement un cours ou modifiait quelque chose qu’il n’aurait pas dû toucher ? La base de données est la
+fondation de toutes les données au sein d’une application, donc il ne faut surtout pas qu’elle soit facilement accessible ou manipulable par
+n‘importe qui. Question de sécurité ! 🔥
+
+Une API permet un niveau de sécurité supplémentaire pour mieux gérer l’accès et les modifications des données, en attribuant ce qu’on appelle
+des _droits_ aux personnes qui en ont besoin. Ainsi, on s’assure de contrôler les utilisateurs qui auront ou non accès à la base de données.
+
+Ainsi, moi seule peux modifier mes informations personnelles sur mon profil OpenClassrooms.
+
+Une API **privée** permet _uniquement_ aux utilisateurs **autorisés** au sein de votre entreprise ou de votre application d'utiliser l’API qui
+peut accéder à la base de données.
+
+#### Les API publiques
+
+Contrairement aux API privées, les API que l’on appelle _publiques_ sont utilisables par d’autres personnes, qu’elles soient sur votre
+application ou non. Elles permettent aux développeurs de récolter les données d’une autre application pour améliorer ou enrichir leurs propres
+projets sans autorisation stricte. Il existe de nombreuses manières d’utiliser des données provenant d’API tierces (ou externes), mais en voici
+quelques-unes :
+1. Imaginons que vous vouliez construire un site web qui répertorie les conditions météo des stations de ski. Plutôt que de collecter vos
+propres données météorologiques, vous pouvez utiliser une [API de météo](https://openweathermap.org/api) et y trouver vos données ! 🌤
+2. Si vous êtes auteur-compositeur-interprète et que vous voulez créer un site web pour que vos fans puissent écouter votre musique, au lieu de
+construire votre propre lecteur de musique en streaming, vous pouvez utiliser [l’API de Spotify](https://developer.spotify.com/documentation/web-api/)
+et écouter votre musique directement sur votre site web ! 🎵
+3. Vous voulez créer une page de fans pour votre série télé favorite (Kaamelot, bien sûr), en réunissant tous les comptes Instagram des
+différents acteurs sur un seul site web – devinez quoi, il existe une [API Instagram](https://developers.facebook.com/docs/instagram-api/?locale=fr_FR)
+pour vous aider à le faire ! 🌅
+
+Il existe également certaines API à mi-chemin entre une API publique et privée. Cela peut se produire quand différentes **requêtes** de l’API
+sont possibles uniquement en fonction du niveau d’**accès** dont vous disposez. 🔐 Nous y reviendrons plus tard lorsque nous traiterons de
+l’authentification. 😉
+
+Il existe des milliers d’API publiques que les développeurs peuvent utiliser de différentes façons pour améliorer leurs projets. Vous trouverez
+ici une liste de ces [API disponibles publiquement](https://github.com/toddmotto/public-apis) que vous pouvez utiliser !
+
+### En résumé
+
+- Les API permettent de communiquer des données.
+- Elles permettent la communication entre différents composants de votre application **et** entre votre application et d’autres développeurs,
+par l’utilisation de **requêtes** et de **réponses**.
+- Elles donnent un moyen d’accès aux données de façon réutilisable et standardisée.
+- Les développeurs peuvent utiliser des API publiques et privées.
+- Les API publiques sont utilisables par tous sans restriction.
+- Les API privées sont utilisables seulement par ceux qui ont un accès et y sont autorisés.
+
+_Pourquoi utiliser une API REST en particulier et pas une simple API ? REST possède de nombreux avantages. Regardons ensemble dans le chapitre
+suivant !_
+
+-----
+
+## Identifiez les avantages d’une API REST
+
+[Identifiez les avantages d’une API REST - Adoptez les API REST pour vos projets web - OpenClassrooms](https://openclassrooms.com/fr/courses/6573181-adoptez-les-api-rest-pour-vos-projets-web/6817216-identifiez-les-avantages-d-une-api-rest)
+
+<Vimeo vimeoId="390933902" />
+
+<br />
+
+Bien ! Maintenant que vous savez ce qu’est une API, parlons de ce qui compose une **API REST**. Nous utiliserons REST dans ce cours, car c’est
+le plus populaire. C’est l’un des standards de création d’API les plus logiques, efficaces, et utilisés. Et, d’après le
+[rapport 2017 de l’état d’intégration des API de Cloud Elements](https://jaxenter.com/state-of-api-integration-report-136342.html) (en anglais),
+83 % des API sont des API REST.
+
+### Comprenez tous les avantages de REST
+
+REST signifie **_Re_**_presentational_ **_S_**_tate_ **_T_**_ransfer_ (ou _transfert d’état de représentation_, en français), et constitue un
+ensemble de **normes**, ou de lignes directrices **architecturales** qui structurent la façon de communiquer les données entre votre application
+et le reste du monde, ou entre différents composants de votre application.
+
+Nous utilisons l’adjectif RESTful pour décrire les API REST. Toutes les API REST sont un type d’API – mais toutes les API ne sont pas RESTful !
+
+Les API RESTful se basent sur le protocole **HTTP** pour transférer les informations – le même protocole sur lequel la communication web est
+fondée ! Donc, lorsque vous voyez **http** au début d’une URL, comme [**http**://twitter.com](https://twitter.com/) – votre navigateur utilise
+HTTP pour faire une requête de ce site web au serveur. REST fonctionne de la même façon  !
+
+:::info
+Si vous ne vous souvenez plus de ce qu’est le protocole HTTP, jetez un œil à ce chapitre du cours [**Comprendre le web**](https://openclassrooms.com/fr/courses/1946386-comprendre-le-web/6874807-decouvrez-les-protocoles).
+:::
+
+Il y a **six** lignes directrices architecturales clés pour les API REST. Voyons ensemble de quoi il s’agit :
+
+#### #1 : Client-serveur separation
+
+L’une des normes de REST est la **séparation du client et du serveur**. Nous avons un peu abordé la question des clients et des serveurs dans
+le chapitre précédent, il est temps d’approfondir un peu le sujet !
+
+Un **client** est celui qui va utiliser l’API. Cela peut être une application, un navigateur ou un logiciel. Par exemple : en tant que
+développeur, vous utiliserez peut-être l’API de Twitter. Comme je l’ai dit précédemment, un client peut aussi être un logiciel ou un navigateur,
+qu’il s’agisse de Chrome, Safari ou Firefox. Quand un navigateur se rend sur twitter.com, il formule une requête à l’API de Twitter et utilise
+les données de l’API afin que vous puissiez accéder aux derniers tweets.
+
+Un **serveur** est un ordinateur distant capable de récupérer des données depuis la base de données, de les manipuler si besoin et de les
+renvoyer à l’API, comme ce gros ordinateur au milieu :
+
+<figure>
+    <img src="https://user.oc-static.com/upload/2021/10/15/16342884885794_image37.png"
+         alt="Une relation client-serveur typique : le serveur au centre, récupère et renvoie des données de 4 ordinateurs." />
+    <figcaption>Une relation client-serveur typique</figcaption>
+</figure>
+
+De façon générale, il existe une séparation entre le client et le serveur. Cette séparation permet au client de s’occuper uniquement de la
+récupération et de l’affichage de l’information et permet au serveur de se concentrer sur le stockage et la manipulation des données. Chacun
+son rôle !
+
+Les API REST offrent un **moyen de communication standardisé entre le client et les données**. En gros, peu importe comment le serveur est
+construit ou comment le client est codé, du moment qu’ils structurent tous les deux leur communication selon les lignes directrices
+architecturales REST, en utilisant le protocole HTTP, ils pourront communiquer entre eux ! 👌
+
+C’est particulièrement utile lorsque de grandes équipes de développeurs travaillent sur une même application. Vous pouvez avoir une équipe qui
+travaille indépendamment sur le backend tandis que l’autre travaille sur le frontend. Comme l’API REST communique entre les deux, cela permet
+aux développeurs de scaler plus facilement les applications et aux équipes de travailler de manière plus efficace. 🤝
+
+#### #2 : Stateless
+
+L’un des autres aspects uniques des API REST est qu’elles sont **stateless** – _sans état_, en français – ce qui signifie que le serveur ne
+sauvegarde aucune des requêtes ou réponses précédentes.
+
+:::note ?
+Mais le rôle du serveur est de stocker et manipuler les données. Comment est-ce que cela pourrait fonctionner si on ne garde pas une trace des
+requêtes, alors ? 🤔
+:::
+
+Pour revenir à notre métaphore de l’API en tant que serveuse, imaginons que vous demandiez des frites à votre serveuse. 🍟 Elle se rend à la
+cuisine, récupère vos frites, et revient avec votre commande. Parfait !
+
+Houla... mais attendez ! Vous venez de vous souvenir que vous voulez également du ketchup avec vos frites. Vous demandez donc à votre serveuse :
+« Excusez-moi, je pourrais avoir du ketchup avec ? »  « Avec quoi ? » Une serveuse **stateless** n’aurait aucune idée de ce dont vous parlez…
+car elle ne se souviendrait pas que vous venez de commander des frites ! Elle se charge seulement de transférer les commandes de la cuisine au
+client.
+
+:::note ?
+OK, mais alors concrètement, qu’est-ce que cela signifie pour les API REST ? 🤔
+:::
+
+Étant donné que chaque message est isolé et indépendant du reste, il vous faudra vous assurer d’envoyer avec la requête que vous formulez
+toutes les **données nécessaires** pour être sûr d’avoir la réponse la plus précise possible. Cela nous donnerait quelque chose comme :
+« Est-ce que je pourrais avoir du ketchup sur les **frites** que **j’ai** commandées à **ma** table ? » Avec toutes ces informations, votre
+serveuse pourra identifier à quelles frites il faut ajouter du ketchup !
+
+**Le fait d’être stateless** rend chaque requête et chaque réponse très **déterminée** et **compréhensible**. Donc, si vous êtes développeur
+et que vous voyez la requête API de quelqu’un d’autre dans un code déjà existant, vous serez capable de comprendre l’objet de la requête sans
+contexte ! 👌
+
+#### #3 : Cacheable (ou _sauvegardable_, en français)
+
+La réponse doit contenir l’information sur la capacité ou non du client de mettre les données **en cache**, ou de les sauvegarder. Si les
+données **peuvent être mises en cache**, la réponse doit être accompagnée d’un numéro de version. Ainsi, si votre utilisateur formule deux fois
+la même requête (c’est-à-dire s’il veut revoir une page) et que les informations n’ont pas changé, alors votre serveur n’a pas besoin de
+rechercher les informations une deuxième fois. À la place, le client peut simplement mettre en cache les données la première fois, puis charger
+à nouveau les mêmes données la seconde fois. 💪
+
+Une mise en cache efficace peut réduire le nombre de fois où un client et un serveur doivent interagir, ce qui peut aider à accélérer le temps
+de chargement pour l’utilisateur ! 👏
+
+Vous avez peut-être entendu le terme **_cache_** en référence à, par exemple, « Rafraîchissez le cache de votre navigateur ». Un cache est un
+moyen de **sauvegarder** des données pour pouvoir répondre plus facilement aux prochaines requêtes qui seront **identiques**. Quand vous allez
+sur de nombreux sites web depuis votre navigateur, celui-ci peut sauvegarder ces requêtes pour pouvoir compléter lui-même le site que vous
+voulez atteindre ou charger la page plus rapidement la prochaine fois que vous vous y rendez. Pratique !.
+
+#### #4 : Uniforme Interface (interface uniforme)
+
+Lors de la création d’une API REST, les développeurs acceptent d’utiliser les mêmes normes. Ainsi, chaque API a une **interface uniforme**.
+L’interface constitue un contrat entre le client et le service, que partagent toutes les API REST. C’est utile, car lorsque les développeurs
+utilisent des API, cela leur permet d'être sûrs qu’ils se comprennent entre eux.
+
+Une API REST d’une application peut communiquer _de la même façon_ avec une autre application entièrement différente.
+
+#### #5 : Layered system (système de couches)
+
+Chaque composant qui utilise REST n’a pas accès aux composants au-delà du composant précis avec lequel il interagit.
+
+:::note ?
+Que… quoi ? C’est-à-dire ? 🤔
+:::
+
+Cela signifie qu’un client qui se connecte à un composant intermédiaire n’a aucune idée de ce avec quoi ce composant interagit ensuite. Par
+exemple, si vous faites une requête à l’API Facebook pour récupérer les derniers posts : vous n’avez aucune idée des composants avec lesquels
+l’API Facebook communique...
+
+Cela encourage les développeurs à créer des composants indépendants, facilitant le remplacement ou la mise à jour de chacun d’entre eux.
+
+#### #6 : Code on demand (code à la demande)
+
+Le code à la demande signifie que le serveur peut étendre sa fonctionnalité en envoyant le code au client pour téléchargement. C’est facultatif,
+car tous les clients ne seront pas capables de télécharger et d’exécuter le même code – donc ce n’est pas utilisé habituellement, mais au moins,
+vous savez que ca existe !
+
+### Découvrez les alternatives aux API REST
+
+REST n’est qu’**un** type d’API. Il existe des alternatives qui vous seront également utiles à connaître, notamment les API **SOAP**.
+
+SOAP est l’acronyme de **_Simple Object Access Protocol_**, ou _protocole simple d’accès aux objets_, en français. Contrairement à REST, il est
+considéré comme un protocole, et non comme un style d’architecture.
+
+Les API SOAP étaient les API les plus courantes avant l’arrivée de REST. REST utilise le protocole HTTP pour communiquer, SOAP d’un autre côté
+peut utiliser de multiples moyens de communication. Le souci, c’est la complexité qui en ressort, car les développeurs doivent se coordonner
+pour s’assurer qu’ils communiquent de la même manière afin d’éviter les problèmes. De plus, le SOAP peut demander plus de bande passante, ce
+qui entraîne des temps de chargement beaucoup plus longs. REST a été créé pour résoudre certains de ces problèmes grâce à sa nature plus légère
+et plus flexible.
+
+De nos jours, le SOAP est plus fréquemment utilisé dans les applications de grandes entreprises, puisqu’on peut y ajouter des couches de
+sécurité, de confidentialité des données, et d’intégrité supplémentaires. REST peut être tout aussi sécurisé, mais a besoin d’être implémenté,
+c’est-à-dire d'être développé au lieu d’être juste intégré comme avec le SOAP.
+
+### En résumé
+
+- Toutes les API ne sont pas RESTful et les API REST ont des lignes directrices architecturales spécifiques.
+- Les avantages clés des API REST sont les suivants :
+    - la séparation du client et du serveur, qui aide à scaler plus facilement les applications ;
+    - le fait d’être stateless, ce qui rend les requêtes API très spécifiques et orientées vers le détail ;
+    - la possibilité de mise en cache, qui permet aux clients de sauvegarder les données, et donc de ne pas devoir constamment faire des
+    requêtes aux serveurs.
+- SOAP est un autre type d’API, mais est plus utilisé dans les grandes entreprises.
+
+_Vous venez de voir la structure d’une API REST et ses avantages ; il est temps de voir ce qui constitue une API REST : les ressources.
+Suivez-moi dans le prochain chapitre, et attaquons-nous aux ressources !_
+
+-----
+
+## Utilisez les ressources et collections REST
+
+[Utilisez les ressources et collections REST - Adoptez les API REST pour vos projets web - OpenClassrooms](https://openclassrooms.com/fr/courses/6573181-adoptez-les-api-rest-pour-vos-projets-web/6817356-utilisez-les-ressources-et-collections-rest)
+
+<Vimeo vimeoId="390933919" />
+
+<br />
+
+Maintenant que vous savez que les API REST servent d’intermédiaires et aident les développeurs à manipuler des données, regardons de plus près
+à quoi ressemblent réellement ces données.
+
+### Appréhendez les données REST via l’utilisation des ressources
+
+Les données REST sont représentées dans ce qu’on appelle des **_ressources_**. 
+
+Une ressource peut être tout type d’objet **nominal** (on lui attribue un nom) que vous pouvez utiliser pour représenter les données dans votre
+application. Vous savez, une personne, un lieu, ou autre chose ! 😉 Pour faire simple, voyez les ressources comme des boîtes dans lesquelles
+vous rangerez des objets par catégorie et sur lesquelles vous collez une étiquette pour savoir quoi mettre dedans.
+
+Vous trouvez que c’est abstrait ? C’est le but, afin que vous puissiez représenter n’importe quel élément de donnée sous la forme que vous
+souhaitez.
+
+Chaque **ressource** comporte des informations supplémentaires sur les données contenues. Si on prend l’exemple d’une application qui liste les
+héros Marvel, une des ressources pourrait être _Superhero_ et on pourrait avoir par exemple un nom, une description, etc., comme information
+supplémentaire.
+
+Les ressources sont regroupées dans un groupe que l’on appelle une **collection**. On s’y réfère avec la forme au **pluriel** du nom de la
+ressource. Par exemple une ressource superhero donnerait superheroes.
+
+:::info
+Par convention, tous les champs d’une ressource et le nom d’une collection sont en anglais. Ils sont traduits ici en français pour une
+meilleure compréhension du cours, mais privilégiez toujours l’anglais !
+:::
+
+Imaginons que vous créez une API pour qu’une boutique de skateboards ait un service de livraison en ligne. Ce que vous voulez, c’est que d’un
+côté vos clients puissent acheter des skateboards sur le site web, et de l’autre que vos salariés puissent ajouter des produits et mettre
+l’inventaire à jour.
+
+Procédons étape par étape et déterminons ensemble les ressources, leurs informations supplémentaires et les collections.
+
+Pour **une boutique de skateboards,** vos ressources pourraient être :
+- Client ;
+- Staff ;
+- Basket (panier) ;
+- Skateboard ;
+- Inventory (inventaire).
+
+Une ressource _Skateboard_ pourrait comporter comme informations supplémentaires : nom,  marque, id,  prix.
+
+Vos collections seraient donc :
+
+| **Ressource** | **Collection** |
+|---------------|----------------|
+| skateboard | skateboards |
+| client | clients |
+
+:::caution !
+Cette liste est un exemple et ne contient pas tous les exemples cités précédemment.
+:::
+
+Bien ! Nous avons nos collections ainsi que les ressources correspondantes et leurs informations supplémentaires. Continuons avec notre exemple
+de boutique de skateboards et suivons ensemble le parcours de la requête d’un client via notre API.
+
+Quand un client achète un skateboard en utilisant votre application web, cela donne :
+- votre API envoie la requête du navigateur (le client) aux serveurs de l’application pour l’achat d’un skateboard ;
+- la requête met à jour l’**inventaire** pour qu’il y ait un skateboard de moins ;
+- la requête met à jour l’historique de commandes du **client** pour ajouter le skateboard à son historique d'achats. 😁
+
+Super ! Vous savez maintenant comment et sous quelle forme _stocker_ les données que vous voulez utiliser dans votre API via des ressources et
+des collections. Mais du coup, comment pouvez-vous y _accéder_ ? Comment savoir où les _récupérer_, ces données ?
+
+### URI et Endpoints
+
+Le **path (ou _chemin_)** que vous donnez à votre API lui permet de savoir exactement **où** se trouvent les données que vous voulez récupérer.
+Vous pouvez imaginer cela comme le fait de parcourir vos propres fichiers sur votre ordinateur. Vous devez aller de dossier en dossier pour
+trouver vos données, et chaque photo ou document que vous sauvegardez a son propre path, ou _chemin de fichier_, en français. Par exemple,
+votre photo de série préférée pourrait se trouver au bout de ce path :
+
+```shell
+MyComputer/Images/Series/gameofthrones.jpg
+```
+
+Les API REST stockent également les données de façon similaire, et un URI constitue le chemin pour y arriver.
+
+Si une ressource est l’objet qui stocke vos données, pour les récupérer vous allez avoir besoin d’un identifiant de ressource uniforme, ou
+**_URI_** pour **_U_**_niform_ **_R_**_esource_ **_I_**_dentifier_. L’URI est le moyen d’identifier votre ressource, comme une étiquette.
+
+Imaginons que vous créez une API pour un site web qui présenterait toutes les informations de Game of Thrones, que ce soit sur le livre ou la
+série. L’URI qui listerait tous les personnages pourrait être la suivante :
+
+```shell
+/characters
+```
+
+Si vous voulez voir les informations sur _un seul_ personnage, qui porte l’ID 123, votre URI serait le suivant :
+
+```shell
+/characters/123
+```
+
+Tout comme les paths pour les fichiers, les URI peuvent avoir des ressources **imbriquées**. Si vous voulez obtenir uniquement _le nom_ du
+personnage qui vous intéresse, votre URI pourrait ressembler à ceci :
+
+```shell
+/characters/123/description
+```
+
+Wouhou ! Voilà du progrès ! Le souci, c’est que sans l’adresse réelle du site web, l’API ne saura pas du tout où chercher l’URI pour commencer !
+C’est là que les **endpoints** (ou _points de terminaison_, en français) interviennent !
+
+Un endpoint est une URL/URI qui fait partie d’une API. Si un URI est comme un chemin de fichier, alors un endpoint est comme l’adresse complète
+du fichier. Il vous suffit d’ajouter votre **nom de domaine** au début de votre URI, et vous avez un endpoint ! Par exemple, si le nom de
+domaine de notre app est _gameofthrones-informations.com_, nous aurons :
+
+```shell
+https://gameofthrones-informations.com/characters
+```
+
+:::note ?
+Houla, attends deux secondes, c’est quoi la différence entre URI et URL ?
+:::
+
+Toutes les URL sont des URI, mais toutes les URI ne sont pas des URL 🤯. L’URI permet d’identifier une ressource tandis que l’URL permet de la
+localiser.
+
+On confond souvent les deux. On va tout simplifier avec un exemple ! Reprenons notre site de Game of Thrones. Si le personnage de Jon Snow a
+pour ID 890, alors l’URI serait `/characters/890`. L’URL serait `https://gameofthrones-informations.com/characters/890`.
+
+**L’URL de la requête** est l’endpoint complet que vous utilisez pour votre requête. Il associe le nom de domaine + le path de votre ressource.
+À présent, vous savez comment accéder aux données que vous souhaitez !
+
+Au fait, pas besoin de créer votre propre API de GoT – il en existe déjà une et vous pouvez la découvrir ici : [**anapioficeandfire.com**](https://anapioficeandfire.com/)**.** ⚔️
+
+### Distinguez XML et JSON
+
+Une fois que vous avez le bon endpoint sur lequel faire votre requête, il est temps pour vous d’obtenir vos données ! C’est là que vous obtenez
+les informations sur les ressources que vous avez créées.
+
+Le terme _données_ est un terme général qui décrit toute information envoyée ou reçue, tandis que que le terme _ressource_ décrit plus
+précisément les **éléments** qui sont contenus dans cette information.
+
+Les données des API REST peuvent utiliser deux langages : XML et JSON. Si une API renvoie un set de données en XML ou en JSON, le contenu
+restera le même, mais la forme change. Le format de données est différent.
+
+##### **Le XML**
+
+En **XML**, chaque élément de donnée a une balise ouvrante et une balise fermante qui peut également avoir des balises imbriquées :
+
+```xml
+<series>
+    <serie>
+        <titre>Game Of Thrones</titre>
+        <realisateur>Random</realisateur>
+    </serie>
+    <serie>
+        <titre>Peaky Blinders</titre>
+        <realisateur>Random</realisateur>
+    </serie>
+</series>
+<series>
+    <serie>
+        <titre>Game Of Thrones</titre>
+        <realisateur>Random</realisateur>
+    </serie>
+    <serie>
+        <titre>Peaky Blinders</titre>
+        <realisateur>Random</realisateur>
+    </serie>
+</series>
+```
+
+Vous pouvez voir une balise ouvrante pour la **collection** en haut – series – entre crochets `< >`. La balise fermante à la fin est identique,
+sauf qu’on y ajoute une barre oblique `/` au début : `</series>`, qui indique que c’est une balise fermante. Chaque **ressource** listée a la
+balise ouvrante `<serie>` et la balise fermante `</serie>`. Au sein de chaque ressource se trouvent davantage d’informations, comme "titre" et
+"réalisateur".
+
+#### Le JSON
+
+Le **JSON** stocke les données sous un format de clé-valeur avec comme clé le type de données, suivi de deux points **:** , suivi de la valeur
+de la donnée. Les données JSON sont entourées d'accolades `{ }`, et chaque paire clé-valeur est envoyée comme chaîne de caractères avec des
+guillemets autour `""`.
+
+Ce qui nous donne ceci :
+
+```json
+{ "titre" :"Game of Thrones" }
+```
+
+Les tableaux, ou listes, en JSON sont entourées de crochets `[ ]`. L’exemple ci-dessous montre comment une liste complète peut être considérée
+comme la valeur de la clé "series". Les mêmes données en XML ci-dessus seraient représentées ainsi en JSON :
+
+```json
+{ "series": [
+    {
+        "titre": "Game Of Thrones",
+        "realisateur": "Alan Taylor"
+    },
+    {
+        "tire": "Peaky Blinders",
+        "realisateur": "Otto Bathurst"
+    }
+]}
+```
+
+Le JSON est généralement considéré comme :
+1. Plus facile à analyser avec du code.
+2. Plus court.
+3. Plus rapide à lire et à écrire pour les machines.
+4. Très "léger" et efficace grâce à sa structure en arborescence et sa syntaxe simple.
+
+Voici quelques exemples d’API réelles qui renvoient du JSON et du XML :
+- Penguin Random House : [XML](https://reststop.randomhouse.com/resources/authors/3446/).
+- Potter API : [JSON](https://github.com/Laboratoria/LIM011-data-lovers/blob/master/src/data/potter/potter.json).
+- Ghibli API: [JSON](https://ghibliapi.herokuapp.com/)
+
+Comme vous pouvez le constater, le JSON est le langage de données le plus utilisé ; c’est pour cette raison que nous l’utiliserons dans le
+reste de ce cours  !
+
+### En résumé
+
+- Une ressource est un objet de type nominal utilisé pour sauvegarder des données dans une API.
+- Une ressource peut contenir des informations supplémentaires.
+- Les ressources sont regroupées en collection et sont nommées au pluriel.
+- Vous pouvez accéder aux ressources dans les API avec des URI.
+- Les données REST peuvent être en langage JSON ou XML, mais le JSON est le plus courant.
+
+_Et maintenant, revenons sur tout ce que nous avons appris avec le quiz de cette première partie._
+
+_Une fois que vous aurez terminé ce quiz, je vous retrouve dans la seconde partie, dans laquelle nous allons sauter dans le grand bain et
+utiliser une API !_
+
+-----
+
+## Quiz : Servez-vous des API REST pour vos projets de code
+
+[Servez-vous des API REST pour vos projets de code - OpenClassrooms](https://openclassrooms.com/fr/courses/6573181-adoptez-les-api-rest-pour-vos-projets-web/exercises/4277)
+
+#### Compétences évaluées
+
+<i class="bi bi-check2-circle"></i> Utiliser des API REST pour des projets de code
+
+-----
+
+#### Question 1 : Qu’est-ce qu’une API ?
+
+<i class="bi bi-circle"></i> Un nouveau langage informatique<br />
+<i class="bi bi-circle"></i> Un set de données qui circule entre différentes applications<br />
+<i class="bi bi-circle"></i> Un intermédiaire entre un client et une base de données d’une application ou d’un logiciel<br />
+<i class="bi bi-record-circle"></i> Un système pour communiquer entre clients et bases de données<br />
+<i class="bi bi-circle"></i> Un nouveau protocole qui remplacera le protocole HTTP<br />
+<br />
+
+_Une API est une interface qui sert d’intermédiaire entre plusieurs logiciels. C’est aussi un groupe de règles que les développeurs s’engagent
+à respecter pour faciliter la communication entre plusieurs logiciels ou applications. Les requêtes sont effectuées par le client et permettent
+d’effectuer des actions sur la base de données._
+
+-----
+
+#### Question 2 : Dans quels cas utilisez-vous une API dite "publique" ?
+
+*Attention, plusieurs réponses sont possibles.*
+
+<i class="bi bi-check-square-fill"></i> Pour obtenir la liste des meilleurs films sortis au cinéma en 2020<br />
+<i class="bi bi-square"></i> Pour modifier le contenu de ce cours OpenClassrooms<br />
+<i class="bi bi-check-square-fill"></i> Pour obtenir des données météorologiques pour une application de surf<br />
+<i class="bi bi-check-square-fill"></i> Pour obtenir votre nom d’utilisateur sur votre profil GitHub<br />
+<br />
+
+_Impossible de modifier le contenu de ce cours sans aucune autorisation de la part d'OpenClassrooms : c’est la seule réponse fausse ! Pour le
+reste, il est tout à fait possible d’obtenir ces données publiquement._
+
+-----
+
+#### Question 3 : Que pourrez-vous faire avec une API privée ?
+
+*Attention, plusieurs réponses sont possibles.*
+
+<i class="bi bi-square"></i> Obtenir les derniers 50 tweets de Barrack Obama<br />
+<i class="bi bi-check-square-fill"></i> Modifier les données de votre compte OpenClassrooms<br />
+<i class="bi bi-check-square-fill"></i> Modifier le contenu de ce cours OpenClassrooms<br />
+<i class="bi bi-square"></i> Supprimer la dernière vidéo de la chaîne Twitch de votre streamer préféré<br />
+<br />
+
+_Pour modifier vos données personnelles sur OpenClassrooms ou bien ce cours, il vous faudrait avoir des droits précis sur l’API : impossible
+de les modifier sans être authentifié. Ce sont donc les deux bonnes réponses._
+
+-----
+
+#### Question 4 : Imaginons : vous construisez une API pour une chaîne de boulangeries 🥖. Vous voulez que les utilisateurs puissent trouver les boulangeries, accéder au menu et acheter vos croissants et vos différents pains. Lesquelles de ces URI seraient appropriées pour les ressources de votre API ?
+
+*Attention, plusieurs réponses sont possibles.*
+
+<i class="bi bi-check-square-fill"></i> /bakeries<br />
+<i class="bi bi-check-square-fill"></i> /bakeries/123/pastries<br />
+<i class="bi bi-square"></i> /bakeries/icecream<br />
+<i class="bi bi-check-square-fill"></i> /bakeries/123<br />
+<br />
+
+_Réponses 1, 2 et 4._
+
+_/bakeries liste les boulangeries, bakeries/123 retourne une boulangerie particulière, bakeries/123/pastries retourne les viennoiseries de la
+boulangerie 123._
+
+_Par contre, bakeries/icecream ne retourne rien de valide dans notre cas._
+
+-----
+
+#### Question 5 : Si vous voulez que votre API retourne la liste des viennoiseries de la chaîne de boulangeries, quel serait le bon format XML ?
+
+<i class="bi bi-circle"></i>
+
+```xml
+</bakery>
+    </pastries>croissant<pastries>
+    </pastries>chausson aux Pommes<pastries>
+<bakery>
+```
+
+<i class="bi bi-record-circle"></i>
+
+```xml
+<pastries>
+    <name>croissant</name>
+    <name>pain au chocolat</name>
+</pastries>
+```
+
+<i class="bi bi-circle"></i>
+
+```xml
+<pastries>croissant</pastries>
+
+<pastries>pain au chocolat</pastries>
+```
+
+<i class="bi bi-circle"></i>
+
+```xml
+<pastry>croissant<pastry>
+</pastry>pain au chocolat</pastry>
+```
+
+_Pour le format XML, on stocke entre crochets les valeurs. Ici, nous voulons lister les viennoiseries (pastries). Chaque ressource est listée
+au sein de la collection (pastries). La bonne réponse est la deuxième !_
+
+-----
+
+#### Question 6 : Si vous voulez que votre API retourne la liste des viennoiseries de la chaîne de boulangeries, quel serait le bon format JSON ?
+
+<i class="bi bi-record-circle"></i>
+
+```json
+[ "pastries":
+    { "name": "Croissant" },
+    { "name": "Pain au Chocolat" }
+]
+```
+
+<i class="bi bi-circle"></i>
+
+```json
+[ pastries:
+{ name: Croissant },
+{ name: Pain au Chocolat },
+]
+```
+
+<i class="bi bi-circle"></i>
+
+```json
+"pastries":
+    "name": "Croissant",
+    "name": "Pain au chocolat"
+```
+
+<i class="bi bi-circle"></i>
+
+```json
+{ "pastries":
+    { "name": "Croissant" },
+    { "name": "Pain au chocolat"}
+}
+```
+
+
+_Le format JSON est un format “clé”: “valeur”, le tout entouré d’accolades. Si plusieurs éléments sont contenus dans une clé, on les stocke
+dans un array ou tableau. La bonne réponse est donc la première. Il manque les guillemets pour la deuxième, les accolades pour la troisième et
+les crochets pour la dernière._
+
+-----
+
+#### Question 7 : Vous voulez construire un site qui liste les meilleurs bars d’une ville donnée 🍻 — vous décidez donc d’utiliser une API qui retourne les 10 meilleurs bars d’une ville. Laquelle de ces URI est correcte et vous retourne les meilleurs bars pour Paris ?
+
+<i class="bi bi-circle"></i> cities/bars<br />
+<i class="bi bi-record-circle"></i> /cities/paris/bars<br />
+<i class="bi bi-circle"></i> cities/bars/paris<br />
+<i class="bi bi-circle"></i> paris/cities/bar<br />
+<i class="bi bi-circle"></i> bars/cities/paris<br />
+<br />
+
+_Partons de la collection qui nous intéresse et précisons l’URI pas à pas. La collection qui nous intéresse est "cities". Nous avons besoin de
+la ville de Paris, puis nous cherchons les bars. Dans cet ordre, cela nous donne donc /cities/paris/bars. On obtient la liste des bars de la
+ville de Paris : réponse 2._
+
+-----
+
+#### Question 8 : Selon l’URI suivante : /cities/paris/bars, que représente cities ?
+
+<i class="bi bi-circle"></i> Le nom du serveur qui nous retourne les informations.<br />
+<i class="bi bi-record-circle"></i> Cities est une collection de ressources City.<br />
+<i class="bi bi-circle"></i> Cities est l’ID des villes que nous voulons obtenir.<br />
+<i class="bi bi-circle"></i> La ville pour qui l’API a été créée.<br />
+<br />
+
+_Réponse 2 ! Une collection est un groupe de ressources et s’écrit toujours au pluriel. Pour une ressource skateboard, une collection se
+nommerait "skateboards"._
+
+-----
+
+#### Question 9 : Laquelle de ces réponses est juste au sujet des ressources ?
+
+<i class="bi bi-circle"></i> Une ressource est un type d’authentification<br />
+<i class="bi bi-circle"></i> Une ressource est un ensemble de normes qui définit les règles d’une API<br />
+<i class="bi bi-record-circle"></i> Une ressource est le cœur d’une API et contient des données que le client veut obtenir ou manipuler<br />
+<i class="bi bi-circle"></i> Une ressource est un groupe de collections<br />
+<i class="bi bi-circle"></i> Une ressource est l’ensemble des champs d’une collection<br />
+<br />
+
+_Une ressource est le cœur d’une API et représente la donnée que l’utilisateur va vouloir manipuler. On lui attribue un nom et est toujours au
+singulier. Pour une collection skateboards, la ressource serait Skateboard._
+
+-----
+
+#### Question 10 : Parmi les propositions suivantes, lesquelles sont vraies concernant les API stateless ?
+
+*Attention, plusieurs réponses sont possibles.*
+
+<i class="bi bi-square"></i> Stateless signifie que vous pouvez utiliser n’importe quel type d’API : REST ou SOAP<br /> 
+<i class="bi bi-square"></i> Les API stateless retournent toutes les informations sur l’état d’une API afin d’améliorer sa mise à jour<br />
+<i class="bi bi-check-square-fill"></i> Une API stateless API signifie que toutes les informations nécessaires seront envoyées en une seule fois
+au sein de la requête<br />
+<i class="bi bi-check-square-fill"></i> Si une API est stateless, cela signifie que le serveur ne stocke pas en base de données les requêtes et
+réponses, ce qui rend plus facilement une API scalable sur plusieurs serveurs<br />
+<br />
+
+_Une API stateless signifie que le serveur ne sauvegarde aucune des requêtes ou réponses précédentes. Toutes les informations doivent être
+envoyées dans une même requête pour faciliter la récupération d’une donnée précise._
+
+-----
+
+#### Question 11 : Quelle est la différence entre une API REST et une API SOAP ?
+
+<i class="bi bi-circle"></i> Une API SOAP est plus rapide et plus efficace qu’une API REST grâce à la manière dont sont encodées les données<br />
+<i class="bi bi-record-circle"></i> REST est moins compliqué à utiliser que SOAP grâce au standard de communication via HTTP<br />
+<i class="bi bi-circle"></i> SOAP est un protocole, tandis que REST est seulement un style architectural qui utilise le protocole HTTP<br />
+<br />
+
+_Contrairement à REST, SOAP est considéré comme un protocole, et non comme un style d’architecture. REST utilise le protocole HTTP et ses
+standards et utiliser principalement une URL contrairement à SOAP._

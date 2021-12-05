@@ -7,6 +7,7 @@ import styles from './index.module.css';
 import HomepageTechno from '../components/HomepageTechno';
 /* import HomepageFeatures from '../components/HomepageFeatures'; */
 import HomepageTopics from '../components/HomepageTopics';
+import useBaseUrl from '@docusaurus/useBaseUrl';
 
 function HomepageHeader() {
   const {siteConfig} = useDocusaurusContext();

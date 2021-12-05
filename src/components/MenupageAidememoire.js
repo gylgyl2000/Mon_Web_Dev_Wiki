@@ -6,7 +6,7 @@ const AideMemoireList = [
   {
     title: 'JavaScript',
     Svg: require('../../static/img/JavaScript.svg').default,
-    Url: './JavaScript/menu',
+    Url: '/Mon_Web_Dev_Wiki/docs/Aide-memoire/JavaScript/menu',
   },
 ];
 

@@ -1,0 +1,1147 @@
+---
+sidebar_position: 3
+---
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+import { Vimeo } from 'mdx-embed';
+
+# Formulez des requêtes et envoyez des réponses avec une API REST
+
+## Utilisez Postman pour formuler vos requêtes
+
+[Utilisez Postman pour formuler vos requêtes - Adoptez les API REST pour vos projets web - OpenClassrooms](https://openclassrooms.com/fr/courses/6573181-adoptez-les-api-rest-pour-vos-projets-web/7498761-utilisez-postman-pour-formuler-vos-requetes)
+
+<Vimeo vimeoId="390933946" />
+
+<br />
+
+### Identifiez les avantages de Postman
+
+Vous savez déjà qu’une API REST implique l’envoi de **requêtes** du client à l’API, qui passe la requête au serveur, l’API récupère la
+**réponse** et la renvoie enfin au client. Dans ce chapitre, nous allons voir comment formuler ces requêtes grâce à [Postman](https://www.postman.com/).
+
+Cette interface graphique est utilisée par de nombreux développeurs. Elle facilite la construction de nos requêtes. C’est donc l’outil idéal
+pour tester des API sans devoir utiliser de code.
+
+C’est également celui que nous allons utiliser dans ce cours !
+
+:::note ?
+OK, mais pourquoi utiliser Postman en particulier ?
+:::
+
+Parce que cette interface offre beaucoup d’avantages :
+- Vous pouvez l’utiliser quel que soit le langage avec lequel vous programmez.
+- Son interface utilisateur est simple : vous effectuez vos requêtes facilement.
+- Vous n’avez pas besoin de savoir coder, ou d’utiliser une application.
+
+### Téléchargez Postman
+
+L’heure est venue de vous lancer : [téléchargez Postman](https://www.getpostman.com/downloads/). 
+
+Choisissez votre système d’exploitation. Postman est disponible pour Linux, Windows et OS X. Les instructions sont en anglais. ![:)](https://openclassrooms.com/bundles/common/images/smiley/smile.png)
+
+<figure>
+    <img src="https://user.oc-static.com/upload/2021/10/15/16342915919742_image39.png"
+         alt="La page d'accueil de Postman : à gauche de l'interface les icônes proposent de télécharger votre système d'exploitation." />
+    <figcaption>La page d'accueil de Postman</figcaption>
+</figure>
+
+Une fois que vous l’aurez fait, vous allez être redirigé sur une page pour télécharger le logiciel. Cliquez sur le bouton **Download the App**.
+
+<figure>
+    <img src="https://user.oc-static.com/upload/2021/10/15/16342916538503_image54.png"
+         alt="Le bouton de téléchargement de Postman pour MacBook" />
+    <figcaption>Le bouton de téléchargement de Postman pour MacBook</figcaption>
+</figure>
+
+Parfait ! Et maintenant, passons à la formulation des requêtes. 😃
+
+### Formulez une requête sur Postman
+
+#### La structure d’une requête
+
+Chaque requête a une structure spécifique qui a cette forme :
+
+Verbe HTTP + URI + Version HTTP + Headers + Body (facultatif)
+
+<figure>
+    <img src="https://user.oc-static.com/upload/2021/10/15/16342923226613_image51.png"
+         alt="Une structure de requête typique en 3 couches superposées : en bas le body, au milieu les Headers, au-dessus le verbe HTTP, l'URI et la version HTTP." />
+    <figcaption>Une structure de requête typique</figcaption>
+</figure>
+
+L’aspect peut varier en fonction du logiciel ou du langage utilisé.
+
+#### Visualisez une requête sur Postman
+
+Maintenant que vous avez lancé le logiciel, regardons ensemble à quoi ressemble une requête sur Postman.
+
+Vous devriez avoir cette vue :
+
+<figure>
+    <img src="https://user.oc-static.com/upload/2021/10/15/16342917731495_image25.png"
+         alt="Le champ utilisé pour réaliser une requête dans Postman est entouré en vert dans l'onglet Workspaces de l'interface." />
+    <figcaption>Champ utilisé pour réaliser une requête dans Postman</figcaption>
+</figure>
+
+Houlà… c’est un peu compliqué, non ?
+
+Pas de panique, détaillons ensemble chaque zone une à une en suivant la structure d’une requête :
+
+<figure>
+    <img src="https://user.oc-static.com/upload/2021/10/15/16342918745995_image44.png"
+         alt="Exemple de verbe HTTP avec GET : affiché à gauche." />
+    <figcaption>Exemple de verbe HTTP avec GET</figcaption>
+</figure>
+
+##### Le verbe
+
+Commençons avec le verbe. Les **verbes HTTP** correspondent à différents types d’actions que vous pouvez accomplir avec votre requête. Ceux
+que vous rencontrerez le plus couramment sont **GET** (obtenir), **PUT** (mettre), **POST** (publier), et **DELETE** (supprimer). Ne vous y
+attardez pas trop pour le moment, nous les étudierons tous plus en détail plus tard !
+
+<figure>
+    <img src="https://user.oc-static.com/upload/2021/10/15/16342919431006_image17.png"
+         alt="L’URL d’une requête complète comprend le nom de domaine : api.github.com, et l'URI (le chemin de la ressource) : /users/faceboook" />
+    <figcaption>L’URL d’une requête complète comprend le nom de domaine : api.github.com, et l'URI (le chemin de la ressource) : /users/faceboook</figcaption>
+</figure>
+
+##### L’URI
+
+Passons à l’**URI**. Un URI est le moyen d’identifier les ressources. Par exemple, si vous voulez voir tous les utilisateurs sur votre site
+web, le path serait le suivant :
+
+`/users`
+
+OK, mais imaginons que vous vouliez obtenir les informations d’un utilisateur spécifique. Dans ce cas-là, il vous faudrait préciser son ID. On
+obtiendrait quelque chose comme ceci :
+
+`users/:user_id`
+
+:::note ?
+Pourquoi on utilisait un nombre avant, et tout d’un coup tu nous mets  _:user\_id_ ? 🤔
+:::
+
+On utilise `:user\_id` pour matérialiser l’ID de l’utilisateur, c’est ce qu’on appelle un placeholder. En pratique, avec un ID réel, le path
+ressemblerait plutôt à ça : `users/145`.
+
+<figure>
+    <img src="https://user.oc-static.com/upload/2021/10/15/16342920531745_image62.png"
+         alt="Les Headers Content-Type et Authorization sont affichés dans une requête." />
+    <figcaption>Headers dans une requête</figcaption>
+</figure>
+
+Un **header** (ou **_en-tête_**) vous permet de faire passer des informations supplémentaires sur le message. Par exemple :
+- De quel langage s’agit-il ?
+- À quelle date l’envoyez-vous ?
+- Quel logiciel la personne utilise-t-elle ?
+- Quelle est votre clé d’authentification ?
+
+Les headers sont représentés par une paire **clé et valeur**, et il existe de nombreux types d’options différents pour eux. Par exemple :
+
+Date : Mardi 19 Janvier 2019 18:15:41 GMT
+
+Utilisateur-Agent : Mozilla/5.0 (Macintosh; Intel Mac OS X 10\_10\_5)
+
+Vous pouvez consulter la [**liste complète**](https://developer.mozilla.org/fr/docs/Web/HTTP/Headers) des différentes options pour les headers.
+
+<figure>
+    <img src="https://user.oc-static.com/upload/2021/10/15/16342921751565_image52.png"
+         alt="Le body (ou corps de message, en français) est affiché depuis l'onglet Body de la requête." />
+    <figcaption>Le body (ou corps de message, en français)</figcaption>
+</figure>
+
+##### Le body
+
+Pour finir, parlons du **body** ! Pour formuler une requête, il n’est utilisé qu’avec **PUT** (mise à jour) ou **POST** (création). Il contient
+les données réelles de la ressource que vous essayez de créer ou de mettre à jour. Les données sont envoyées sous format JSON.
+
+Petit rappel : le JSON est largement utilisé ; toutefois il se peut que certaines API n’acceptent que le XML. Vous trouverez cette information
+dans la documentation de l’API que vous utiliserez.
+
+Prenons un exemple ! Vous voulez ajouter ou mettre à jour les informations d’un utilisateur ; vous ajouterez donc les détails de l’utilisateur
+(prénom, nom , adresse…) dans le body, en JSON.
+
+Notez que le body est facultatif dans ces deux cas. Cela signifie qu’il est tout à fait possible d’envoyer un body vide en fonction des actions
+de l’API visée.
+
+Vous en apprendrez plus à ce sujet dans les prochains chapitres. 🕵🏻‍♀️
+
+### Obtenez une réponse avec Postman
+
+Structure des requêtes ✅ ! Passons aux réponses.
+
+Le format du message de **réponse** est très similaire à celui de la requête :
+
+Version HTTP + Code de réponse HTTP + Headers + Body
+
+<figure>
+    <img src="https://user.oc-static.com/upload/2021/10/15/16342922542899_image32.png"
+         alt="Une structure de réponse typique en 3 couches superposées : en bas le Body, au milieu le Header et au-dessus la version et le code HTTP." />
+    <figcaption>Une structure de réponse typique</figcaption>
+</figure>
+
+Dans Postman, vous verrez un message de réponse comme celui-ci :
+
+<figure>
+    <img src="https://user.oc-static.com/upload/2021/10/15/16342924233035_image8.png"
+         alt="Un message de réponse typique de Postman est affiché sur l'interface dans l'onglet Body." />
+    <figcaption>Un message de réponse typique</figcaption>
+</figure>
+
+:::note ?
+Attends deux secondes... Le body ? Mais il n'est pas censé être utilisé seulement pour faire une requête avec POST et PUT ? 🤔
+:::
+
+Pour formuler une requête, oui ! Mais pour les réponses, le **body** contient l’information que vous avez demandée, et que l’API vous renvoie.
+Celle-ci est matérialisée au sein du body sous la forme d’un JSON ou en XML. L’image ci-dessus montre une réponse d’une requête réussie, faite
+à l’API GitHub.
+
+:::note ?
+Et si elle échoue ? Que se passe-t-il ? On obtient une information différente ? 🤔
+:::
+
+Exactement ! Si la requête échoue, le **body** peut contenir un message d’erreur :
+
+<figure>
+    <img src="https://user.oc-static.com/upload/2021/10/15/16342925278833_image34.png"
+         alt="Une requête qui échoue" />
+    <figcaption>Une requête qui échoue</figcaption>
+</figure>
+
+Mais le message ne suffit pas, et entre nous il peut arriver que des API n’envoient pas de messages du tout – que la requête soit un succès ou
+non. Cela peut arriver, même si c’est rare ! Dans ce cas, votre meilleur allié sera le **code de réponse HTTP** !
+
+### Analysez le code de réponse HTTP
+
+Le code de réponse HTTP aide le développeur et/ou le client à comprendre le **statut** de la réponse. Jetons un œil sur les exemples obtenus avec Postman :
+
+<figure>
+    <img src="https://user.oc-static.com/upload/2021/10/15/16342925714163_image67.png"
+         alt="Un code de statut HTTP 200 OK pour une requête réussie" />
+    <figcaption>Un code de statut HTTP pour une requête réussie</figcaption>
+</figure>
+
+<figure>
+    <img src="https://user.oc-static.com/upload/2021/10/15/16342925927817_image53.png"
+         alt="Un code de statut HTTP 404 Not found pour un échec" />
+    <figcaption>Un code de statut HTTP pour un échec</figcaption>
+</figure>
+
+Lorsqu’un client vous envoie une requête comme « Salut, pourriez-vous m’envoyer tous les tweets de cet utilisateur ? », vous pouvez vous
+représenter le code de réponse comme un feu de signalisation 🚥 qui vous dit par exemple :
+
+**VERT ✅** : « Cette requête a été traitée avec succès. »
+
+ou
+
+**ROUGE 🔴** : « Nous n’avons rien trouvé pour cette requête ! »
+
+Il existe de nombreux codes de réponse différents – vous connaissez probablement le **404 not found** (ou _introuvable_, en français). Vous
+l’avez peut-être vu sur quelques sites web. Par exemple, si vous essayez d’aller sur une page qui n’existe pas sur GitHub, vous verrez quelque
+chose comme ça :
+
+<figure>
+    <img src="https://user.oc-static.com/upload/2021/10/15/163429262514_image6.jpg"
+         alt="Page de réponse 404 GitHub" />
+    <figcaption>Page de réponse 404 GitHub</figcaption>
+</figure>
+
+Un autre code de réponse important à connaître est le **200 OK** – qui signifie que votre requête a réussi, et que votre réponse est prête !
+En général, les règles de base pour les codes de réponse HTTP sont les suivantes :
+- 100+ ➡ Information
+- 200+ ➡ Succès
+- 300+ ➡ Redirection
+- 400+ ➡ Erreur client
+- 500+ ➡ Erreur serveur
+
+Les codes HTTP sont très codifiés, et chaque nombre correspond à une réponse particulière. De ce fait, toutes les API renverront une 404 si la
+ressource est introuvable, et cela permet aux développeurs de comprendre de quel type de réponse il s’agit. C’est une sorte de nomenclature
+générale respectée par tous.
+
+Si vous avez un doute sur un code HTTP, n’hésitez pas à consulter [**cette documentation**](https://developer.mozilla.org/fr/docs/Web/HTTP/Status)
+qui contient de plus amples informations et détails !
+
+### En résumé
+
+- **Postman** est un logiciel gratuit qui vous permet d’effectuer des requêtes API sans coder.
+- Les requêtes prennent la forme suivante :<br />
+Verbe HTTP + URI + Version HTTP + Headers + Body facultatif.
+- Les verbes HTTP sont des types d’**actions** que l’on peut faire lors de la formulation d’une requête.
+- Les réponses prennent la forme suivante :<br />
+Code de réponse HTTP + Version HTTP + Headers + Body.
+- Les codes de réponse HTTP sont des sortes de **feux de signalisation** 🚦 avec des codes spécifiques, pour informer les clients si la requête
+est un succès ou un échec.
+- Les codes HTTP sont codifiés en fonction du type de réponse ; vous trouverez la liste [ici](https://developer.mozilla.org/fr/docs/Web/HTTP/Status).
+
+_Dans le chapitre suivant, nous allons remonter nos manches et commencer à travailler avec de vraies API ! Pour que votre apprentissage soit le
+plus efficace, il est important de connaître les formats généraux de requêtes et de réponses, ainsi que de savoir à quoi ressemble une réponse
+réussie ou non !_
+
+-----
+
+## Réalisez vos premières requêtes sur une API
+
+[Réalisez vos premières requêtes sur une API - Adoptez les API REST pour vos projets web - OpenClassrooms](https://openclassrooms.com/fr/courses/6573181-adoptez-les-api-rest-pour-vos-projets-web/6818136-realisez-vos-premieres-requetes-sur-une-api)
+
+<Vimeo vimeoId="390933983" />
+
+<br />
+
+Dans le chapitre précédent, nous avons parlé des verbes HTTP et de la façon dont ils permettent de réaliser des **actions** spécifiques lors
+de la formulation d’une requête API. Rappelez-vous, j’avais mentionné GET, POST, PUT et DELETE. Eh bien, il est temps d’en apprendre un peu
+plus, et surtout de les utiliser ! 🙌
+
+### Découvrez le CRUD
+
+Le CRUD est la liste des actions de base que vous pouvez effectuer sur une ressource. C’est un acronyme qui signifie **_C_**_reate_ (créer),
+**_R_**_ead_ (lire), **_U_**_pdate_ (mettre à jour), et **_D_**_elete_ (supprimer). Bien que le CRUD ne constitue pas vraiment un mécanisme
+technique en soi, chaque **action CRUD** est associée à un **verbe HTTP**. Voici la cartographie :
+
+| **Action CRUD** | **Verbe HTTP associé** |
+|-----------------|------------------------|
+| Create (Créer) | POST (Publier) |
+| Read (Lire) | GET (Obtenir) |
+| Update (Mettre à jour) | PUT (Mettre) |
+| Delete (Supprimer) | DELETE (Supprimer) |
+
+### Obtenez des résultats avec votre première requête GET
+
+Maintenant que nous avons vu tout le contexte qui se cache derrière une API, il est temps de pratiquer ! 🏋️‍♀️ Utilisons une API pour obtenir des
+données. Nous utiliserons le verbe HTTP **GET** et l’[API GitHub](https://developer.github.com/v3/) (de [GitHub](https://github.com/)) pour
+obtenir des données sur un utilisateur GitHub spécifique.
+
+:::info
+GitHub est une plateforme qu’utilisent les développeurs pour stocker leur code et travailler seul ou en équipe. Cela permet de faciliter la
+collaboration entre développeurs d'un même projet. En tant que développeur, vous l’utiliserez beaucoup ! Si vous êtes curieux de connaître son
+fonctionnement, allez voir le cours [**Gérez du code avec Git et GitHub**](https://openclassrooms.com/fr/courses/7162856-gerez-du-code-avec-git-et-github).
+:::
+
+Pour faire une requête sur l’API, utilisons le logiciel [Postman](https://www.getpostman.com/downloads/) que vous avez téléchargé précédemment.
+
+Prêt ? Allons- y ! 🚀
+
+Commencez par ouvrir le programme.
+
+Nous l’avions survolé lors du dernier chapitre, mais il est toujours bon de revoir ce que nous avons appris. Détaillons un peu ce que nous
+voyons, de haut en bas ! 🕵️
+
+<figure>
+    <img src="https://user.oc-static.com/upload/2021/10/15/16342941462718_image26.png"
+         alt="Interface utilisateur Postman avec 3 encadrés : - En haut à gauche, un menu déroulant encadré en noir - En-dessous : le bouton Params encadré en rouge - A droite du bouton : l'onglet Headers encadré en bleu" />
+    <figcaption>Interface utilisateur Postman</figcaption>
+</figure>
+
+- La première ligne (encadrée en noir) vous permet de sélectionner votre type de requête dans le menu déroulant (dans notre cas, ce sera GET) 🤫.
+- À côté, vous pouvez remplir la case avec l’URL complète de votre requête.
+- Il y a un petit bouton (encadré en rouge) nommé _Params_. Si vous cliquez dessus, vous aurez un emplacement pour définir les valeurs clés de
+vos paramètres.
+- À droite (encadré en bleu), vous pouvez cliquer sur **Headers**. Cela vous permettra de définir vos headers de requête.
+- Et pour finir, en dessous, en jaune, vous pouvez voir l’emplacement du body de votre réponse.
+
+:::note ?
+Nous voulons obtenir des informations sur un utilisateur. Mais comment faire ? Quelle URL utiliser ? 🤔
+:::
+
+Avant de faire une requête sur l’API GitHub et d'obtenir un utilisateur en particulier, vous devez avant tout faire une chose très importante :
+consulter la [documentation GitHub](https://developer.github.com/v3) ! Et plus précisément la section [Users](https://developer.github.com/v3/users/),
+car c’est celle-ci qui nous intéresse. La documentation, c’est le mode d’emploi d’une API. C’est ainsi que vous trouverez les ressources, URI
+et endpoints que vous pouvez utiliser pour récupérer des données.
+
+Allez sur la section Users de l’API GitHub via cette URL : [https://developer.github.com/v3/users/](https://developer.github.com/v3/users/).
+
+La partie qui nous intéresse ici est celle qui nous permet d’obtenir **un seul utilisateur** (Get a user en anglais). Cliquez dessus !
+
+<figure>
+    <img src="https://user.oc-static.com/upload/2021/10/15/16342942349835_image66.png"
+         alt="La documentation GitHub est affichée. A droite, Get a user est encadré en vert." />
+    <figcaption>Accédez à la documentation GitHub et cliquez sur Get a user</figcaption>
+</figure>
+
+<figure>
+    <img src="https://user.oc-static.com/upload/2021/10/15/16342942787421_image33.png"
+         alt="Le texte correspondant à la documentation sur l'utilisateur unique" />
+    <figcaption>Le texte correspondant à la documentation sur l'utilisateur unique</figcaption>
+</figure>
+
+Voici ce que dit la documentation en français :
+
+> **Obtenir un utilisateur unique**
+> 
+> Fournit les informations disponibles publiquement sur quelqu’un ayant un compte GitHub.
+> 
+> Les applications GitHub avec la permission utilisateur Plan peuvent utiliser cet endpoint pour récupérer des informations sur le plan GitHub
+d’un utilisateur. L’application GitHub doit être authentifiée en tant qu’utilisateur. Voir « Identifier et autoriser les utilisateurs pour les
+applications GitHub » pour plus de détails sur l’authentification. Pour un exemple de réponse, voir « Réponse avec l’information du plan GitHub ».
+> 
+> La clé e-mail dans la réponse ci-dessous correspond à votre adresse e-mail visible publiquement depuis votre page de profil GitHub. Lors de
+la création de votre profil, vous pouvez sélectionner une adresse e-mail principale comme « publique », ce qui fournit une entrée e-mail pour
+cet endpoint. Si vous ne choisissez pas d’adresse e-mail publique pour e-mail, alors sa valeur sera nulle. Vous ne voyez que les adresses e-mail
+visibles publiquement lorsque vous êtes authentifié dans GitHub. Pour plus d’informations, voir Authentification.
+> 
+> L’API Emails vous permet de lister toutes vos adresses e-mail, et d’ajouter un toggle à une adresse e-mail principale pour qu’elle soit
+visible publiquement. Pour plus d’informations, voir « API Emails ».
+
+La documentation nous apprend plusieurs choses :
+1. Cette section fournit les informations disponibles publiquement sur quelqu’un ayant un compte GitHub.
+2. On peut accéder aux informations d’un utilisateur via **GET /users/:username**.
+3. Un exemple de réponse :
+
+<figure>
+    <img src="https://user.oc-static.com/upload/2021/10/15/16342944095738_image55.png"
+         alt="Un exemple de réponse est affiché et encadré au milieu de l'interface." />
+    <figcaption>Un exemple de réponse</figcaption>
+</figure>
+
+Parfait ! 🙌
+
+Si on résume, cela signifie que, pour obtenir la donnée user de l’utilisateur “tenderlove” (oui oui c’est un vrai login, cet homme existe et
+est d’ailleurs un des contributeurs de [Ruby on Rails](https://rubyonrails.org/) 👌), vous allez dans Postman et entrez
+[https://api.github.com/users/tenderlove](https://api.github.com/users/tenderlove) dans l’URL, puis appuyez sur Send (Envoyer).
+
+<figure>
+    <img src="https://user.oc-static.com/upload/2021/10/15/16342945795506_image16.png"
+         alt="La requête GET est entourée en vert et contient une adresse HTTP." />
+    <figcaption>Requête GET</figcaption>
+</figure>
+
+Et voilà ! Vous avez effectué votre première requête GET avec succès !
+
+Vous pouvez remplacer tenderlove par votre login GitHub et observer la réponse. 😉 N’hésitez pas à comparer les données récupérées par l’API
+et celles de GitHub : vous verrez, ce sont les mêmes !
+
+Voici comment faire en vidéo :
+
+<Vimeo vimeoId="467403751" />
+
+<br />
+
+**GET** est le verbe HTTP le plus utilisé. Il permet de faire une **requête** afin de récupérer un groupe de données mais aussi des données
+précises. Comme vous l’avez vu avec l’API GitHub, avec une requête GET vous allez obtenir des données précises grâce à un **ID** ; dans notre
+exemple, votre nom d’utilisateur GitHub. Notez la façon dont votre navigateur (ou client) utilise une API pour afficher les données sur un
+site web. Ici, la réponse est sous un format JSON.
+
+:::info
+Rappelez-vous, en JSON, la réponse est affichée sous un format clé-valeur.
+:::
+
+Vous pouvez même effectuer des requêtes GET directement depuis votre navigateur, car les endpoints REST utilisent le même protocole HTTP que le
+web. Essayez d’aller sur [**https://api.github.com/users/tenderlove**](https://api.github.com/users/tenderlove) maintenant, et vous verrez !
+
+### Utilisez la documentation pour connaître le mode d’emploi de l’API
+
+Comme vous pouvez le constater, la documentation d’une API ressemble à un manuel d’utilisation très très détaillé. Étant donné que chaque API
+est différente, vous ne sauriez pas les utiliser sans une documentation claire et précise.
+
+:::note ?
+Quelles informations nous donne cette documentation ? ✋
+:::
+
+La documentation liste tous les appels API possibles, les requêtes et réponses typiques, mais surtout les verbes à utiliser pour chaque requête.
+Cette [API Ghibli](https://ghibliapi.herokuapp.com/) constitue un bon exemple.
+
+<figure>
+    <img src="https://user.oc-static.com/upload/2021/10/15/16342947406992_image59.png"
+         alt="Documentation de l’API Ghibli. A gauche, les réponses renvoyées par l'API sont affichées, à droite la réponse s'affiche sous forme d'array." />
+    <figcaption>Documentation de l’API Ghibli</figcaption>
+</figure>
+
+Dans cet exemple, pour récupérer tous les films Ghibli, vous voyez qu’il vous suffit de faire une requête GET sur
+[https://ghibliapi.herokuapp.com/films](https://ghibliapi.herokuapp.com/films). Vous avez aussi une indication sur les messages d’erreur que
+renvoie l’API en cas de mauvais format de la requête (400) ou d’absence de ressources trouvées (404). Vous voyez aussi qu’en cas de succès,
+vous obtiendrez une réponse sous forme d’un **array** (ou tableau) qui contiendra la liste des films Ghibli. Un exemple de cette donnée se
+trouve sur la droite dans l’encadré.
+
+:::info
+Chaque fois que vous voulez utiliser une API, commencez par consulter la documentation.
+:::
+
+### En résumé
+
+- CRUD signifie _create (créer), read (lire), update (mettre à jour) et delete (supprimer)_.
+- GET est le verbe HTTP pour obtenir des données, et il est généralement utilisé avec un ID pour obtenir une donnée spécifique.
+- Les applications utilisent GET pour présenter des informations sur des pages web.
+- Utilisez Postman pour tester les API.
+- La documentation est le manuel d’utilisation d’une API.
+- La documentation vous permet de trouver la liste des endpoints accompagnée du verbe HTTP correspondant.
+
+_Que ce soit à des fins personnelles ou professionnelles, utiliser une API c’est utiliser des données. Ces données sont parfois sensibles et il
+est important de les sécuriser. Abordons à présent un élément que je considère comme **ultra important** : la sécurité des données et
+l’authentification._
+
+-----
+
+## Authentifiez une API pour plus de sécurité
+
+[Authentifiez une API pour plus de sécurité - Adoptez les API REST pour vos projets web - OpenClassrooms](https://openclassrooms.com/fr/courses/6573181-adoptez-les-api-rest-pour-vos-projets-web/6818386-authentifiez-une-api-pour-plus-de-securite)
+
+<Vimeo vimeoId="390934009" />
+
+<br />
+
+### Comprenez l’importance de l’authentification pour une API
+
+Avant d’aborder d’autres verbes HTTP, il est important que nous parlions davantage de l’**authentification**. L’authentification constitue
+simplement un moyen pour les API de garantir que le client a les **autorisations** nécessaires pour accéder aux données et les manipuler. 🔐
+Si je crée une API, je ne veux pas que n’importe qui puisse changer le mot de passe de n’importe quel utilisateur, n’est-ce pas ? 🔥
+
+Lorsque nous avions fait notre requête **GET** avec l’API GitHub, nous n’avions pas besoin d’authentification pour obtenir des données
+utilisateurs. Pourquoi ? Rappelez-vous : il existe des API privées... et… des API publiques !
+
+:::note ?
+Ah, GitHub est une API publique !
+:::
+
+Oui et non. GitHub est une API qui possède **une partie publique** qui vous permet de faire des requêtes sans autorisation, comme nous l’avons
+fait dans le chapitre précédent. Cependant, **toute l’application n’est pas publique**. Une partie des endpoints nécessite une authentification,
+afin d’avoir les autorisations nécessaires pour mettre à jour des données.
+
+Si vous voulez modifier, ajouter ou supprimer des données, GitHub doit vous donner l’autorisation de le faire. Vous ne voulez pas que n’importe
+qui puisse remplacer votre photo de profil par celle de Homer Simpson, duh ! 🍩 Donc, pour que ce soit possible, GitHub doit disposer d’un
+processus d’**authentification**.
+
+Une des méthodes d’authentification les plus utilisées consiste à exiger qu’un développeur s’inscrive par le site web de l’API pour obtenir
+**un token ou _clé_**. Une fois le token obtenu, le développeur l’utilise dans sa requête pour s’identifier, et voilà. 🎉
+
+:::note ?
+C’est quoi un token, au juste ? Une sorte de code ? 🤔
+:::
+
+Eh bien, en quelque sorte ! Un token est généralement une chaîne longue et unique de lettres et de chiffres aléatoires que l’on assigne à un
+utilisateur. Le token est un peu comme un numéro de passeport : il est unique et permet de vous identifier. L’API peut donc l’utiliser pour
+savoir **qui** effectue la requête, et surtout de quel niveau d’**autorisation** cette personne dispose.
+
+Les autorisations peuvent décrire des accès spécifiques à certaines fonctionnalités, comme le nombre de requêtes que l’on peut envoyer mais
+aussi quelles actions on peut effectuer (si on est un administrateur ou non, par exemple)... La documentation de l’API se doit de fournir
+toutes les informations sur les fonctionnalités accessibles à travers un token d’authentification.
+
+:::note ?
+Comment ajouter le token à la requête ? 🤔
+:::
+
+On l’envoie soit dans les **paramètres du header**, soit dans l’endpoint lui-même.
+
+Pour illustrer ce qu’on vient de voir, nous allons regarder ensemble comment obtenir un token GitHub pas à pas !
+
+Pour commencer, allez sur ce lien : [https://github.com/settings/tokens.](https://github.com/settings/tokens)
+
+Vous devriez obtenir cette page :
+
+<figure>
+    <img src="https://user.oc-static.com/upload/2021/10/15/1634295159695_image15.png"
+         alt="Page GitHub" />
+    <figcaption>Page GitHub qui vous permet d'obtenir un token</figcaption>
+</figure>
+
+Vous êtes à présent sur la partie qui vous permet de demander à GitHub de vous donner un token afin de pouvoir effectuer des opérations via
+l’API GitHub.
+
+Cliquez sur **Generate new token**.
+
+<figure>
+    <img src="https://user.oc-static.com/upload/2021/10/15/16342952140365_image23.png"
+         alt="Page GitHub pour générer un token : Les éléments Note, repo et delete_repo sont encadrés en vert." />
+    <figcaption>Génération d'un token</figcaption>
+</figure>
+
+Dans notre cas, nous voulons que GitHub nous donne l’autorisation pour deux choses :
+1. Effectuer des actions sur les repositories GitHub.
+2. Supprimer des repositories GitHub.
+
+:::info
+Un repo (**repository**, ou _répertoire_) est un espace de stockage pour le code dans GitHub. Si vous voulez en savoir plus à ce sujet,
+consultez ce [**chapitre**](https://openclassrooms.com/fr/courses/7162856-gerez-du-code-avec-git-et-github/7165707-saisissez-lutilite-des-depots-distants-sur-github)
+du cours **Gérez du code avec Git et GitHub**.
+:::
+
+Suivez l’exemple ci-dessus et n’oubliez pas d’inscrire dans la section **Note** une information qui vous permettra plus tard de vous souvenir à
+quoi servait ce token. Cela peut être le nom d’une application, de votre API, etc. Dans mon cas, j’ai indiqué OpenClassrooms.😄 Cliquez ensuite
+sur **Generate token** (générer un token), et tada ! 🎉
+
+<figure>
+    <img src="https://user.oc-static.com/upload/2021/10/15/16342953687326_image9.png"
+         alt="Le ruban de génération de token est affiché au milieu." />
+    <figcaption>Génération de token</figcaption>
+</figure>
+
+Votre token sera visible à l’emplacement du marqueur noir. J’ai choisi de masquer le mien. 🙊
+
+:::info
+Un token est personnel et privé autant que votre code de carte bleue, alors gardez-le pour vous !
+:::
+
+L’encadré bleu explique qu'il faut copier votre token personnel car vous ne serez plus en mesure de le voir.
+
+:::caution
+Gardez-le précieusement et **copiez-le**, ou faites une capture d’écran afin de ne pas le perdre. Nous allons l’utiliser dans les chapitres
+suivants ! 🙋🏻‍♀️
+:::
+
+Après avoir copié soigneusement votre token, rechargez la page. Vous devriez voir apparaître comme ci-dessus votre nouveau token par le nom que
+vous lui avez attribué ; dans mon cas : Open Classrooms. Vous verrez aussi les actions qu’il vous permet de faire sur l’API GitHub ; dans notre
+cas, les deux que nous avons séléctionnés : *delete_repo* et *repo*.
+
+<figure>
+    <img src="https://user.oc-static.com/upload/2021/10/15/16342954768847_image60.png"
+         alt="Actions possibles avec le token : delete_repo et repo. Ici, OpenClassroooms__delete_repo, repo est encadré en vert." />
+    <figcaption>Actions possibles avec le token</figcaption>
+</figure>
+
+Nous avons vu ensemble comment utiliser des API. Sauf que les API peuvent être créées par des entreprises, des services, ou des développeurs
+indépendants. Comment être certain qu’elles sont fiables ?
+
+### Privilégiez la sécurité : choisissez vos API avec discernement
+
+Comme vous l’avez appris précédemment, il existe des milliers d’API différentes que vous pouvez utiliser dans vos projets. Comme toujours, il
+est important de garder en tête la sécurité de vos données et de votre application. En tant que développeur, vous êtes responsable de la
+sécurité des données de vos utilisateurs ! Vous devez vous assurer que vos API proviennent d’une source fiable.
+
+:::note ?
+Mais comment faire ? Comment puis-je savoir si une API est fiable ou non ? 🤔
+:::
+
+Il existe quelques méthodes simples et rapides pour vérifier si une API est fiable ou non. Les API de qualité auront plusieurs mesures de
+sécurité comme **l’authentification, l’autorisation et le cryptage**. Elles auront aussi été mises à jour récemment ; vous saurez donc qu’elles
+sont mises à jour en fonction des derniers standards de sécurité.
+
+Prenons un exemple ! Sur GitHub, vous trouverez l’API Pokémon nommée [PokeApi](https://github.com/PokeAPI/pokeapi/) qui a été mise à jour
+récemment. 👇
+
+<figure>
+    <img src="https://user.oc-static.com/upload/2021/10/15/16342955631865_image4.png"
+         alt="Un exemple d’une API mise à jour récemment #PokeApi est affiché et encadré en vert." />
+    <figcaption>Un exemple d’une API mise à jour récemment #PokeApi</figcaption>
+</figure>
+
+Vous pouvez constater sur leur GitHub que la date de leur dernier commit est assez récente ; vous savez donc que cette API est maintenue et
+mise à jour. 😉
+
+Avant chaque utilisation d’une API externe, vérifiez la date de la dernière mise à jour sur GitHub ou bien sur leur site Internet, lisez la
+documentation et si vous avez des doutes (ou non), regardez en ligne des avis ou posez simplement la question à un autre développeur.
+
+### En résumé
+
+- Pour obtenir un token d’authentification GitHub, vous pouvez :
+    - aller sur [https://github.com/settings/developers](https://github.com/settings/developers) et cliquer sur **Personal Access Tokens**
+    (tokens d’accès personnel) ;
+    - cliquer sur **Generate new token** (générer nouveau token) et saisir « Open Classrooms » dans les notes ;
+    - vous verrez alors toutes les différentes options d’autorisation dont vous voulez doter votre API ;
+    - choisissez toutes celles que vous voulez tester. Nous avons utilisé Repo et Delete (supprimer) ;
+    - cliquez sur **Generate token** (générer token) et obtenez votre token API personnel ; 👏
+    - assurez-vous de copier et sauvegarder ce token, car nous l’utiliserons par la suite.
+- L’authentification est nécessaire pour garantir que seules les personnes avec les _autorisations adéquates_ peuvent accéder à votre API.
+- Les clés ou tokens API sont couramment utilisés dans une requête pour authentifier un utilisateur.
+- Assurez-vous de bien vérifier la fiabilité d’une API avant de l’utiliser.
+- Vous pouvez trouver les indications de mise à jour d’une API sur GitHub ou sur son site Internet.
+
+_GET n’a plus de secret pour vous, vous avez créé votre compte GitHub et obtenu votre premier token. Il est temps de passer à la vitesse
+supérieure et de jouer avec l’API GitHub ! 🚀_
+
+-----
+
+## Entraînez-vous avec l’API GitHub
+
+[Entraînez-vous avec l’API GitHub - Adoptez les API REST pour vos projets web - OpenClassrooms](https://openclassrooms.com/fr/courses/6573181-adoptez-les-api-rest-pour-vos-projets-web/6820251-entrainez-vous-avec-l-api-github)
+
+<Vimeo vimeoId="390934047" />
+
+<br />
+
+### Manipulez des données avec l’API GitHub
+
+On avance, on avance ! Maintenant que vous avez un token d’authentification, vous pouvez utiliser l’API pour mettre à jour votre profil GitHub !
+
+Dans ce chapitre, nous allons pratiquer et utiliser le reste des opérations CRUD – Create (créer), Update (mettre à jour) et Delete (supprimer) –
+et leurs verbes HTTP équivalents – POST (publier), PUT (mettre) et DELETE (supprimer).
+
+:::info
+Je vous invite vivement à suivre pas à pas les étapes suivantes et à pratiquer afin de maximiser votre apprentissage. 💪
+:::
+
+### Créez un repo GitHub avec la méthode POST
+
+Pour **créer** quelque chose de nouveau, ou une nouvelle ressource, on utilise le verbe HTTP **POST** (publier). Qu’il s’agisse d’un nouveau
+tweet, d’une nouvelle photo ou d’une nouvelle _publication_ (vous comprenez ? 😉). Par exemple, dès que vous remplissez un formulaire en ligne
+ou que vous en utilisez un pour vous inscrire et vous créer un nouveau compte, le verbe associé par défaut est POST.
+
+:::note ?
+Comment l’API sait-elle ce qu’on essaie de **créer** quelque chose ? 🤔
+:::
+
+C’est là qu’intervient le **body** ! Vous vous souvenez ? On l’a vu dans les chapitres précédents. Le body accompagne les requêtes POST et PUT
+pour contenir des informations supplémentaires. Vous pouvez intégrer les données que vous voulez créer dans le body de votre requête en
+utilisant du **JSON**.
+
+Mettons tout ça en pratique ; je vous assure que ça fera sens ! 💪
+
+On veut créer un nouveau repo sur GitHub pour notre API. Super, mais comment faire ? 1re étape : la documentation !
+
+Regardons ce que nous dit la documentation GitHub au sujet des repositories : [https://developer.github.com/v3/repos](https://developer.github.com/v3/repos/#create).
+
+<figure>
+    <img src="https://user.oc-static.com/upload/2021/10/15/16342958184705_image48.png"
+         alt="Documentation GitHub concernant les repositories : l'article" />
+    <figcaption>Documentation GitHub concernant les repositories</figcaption>
+</figure>
+
+Houlà, on a beaucoup de choix ! Nous, ce qu’on veut, c’est créer un nouveau repo. Cliquez en bas à droite sur
+[**Create a repository for the authenticated user**](https://docs.github.com/en/rest/reference/repos#create-a-repository-for-the-authenticated-user).
+
+<figure>
+    <img src="https://user.oc-static.com/upload/2021/10/15/16342958978969_image20.png"
+         alt="Documentation pour créer un nouveau repo. 3 éléments sont encadrés en vert : - En haut," />
+    <figcaption>Documentation pour créer un nouveau repo</figcaption>
+</figure>
+
+Dans le premier encadré en vert, on peut lire _“Crée un nouveau repository pour un utilisateur authentifié”._
+
+Pour créer un nouveau repository, il faut faire une requête **POST** vers **/user/repos**.
+
+Parfait, on avance ! Maintenant, scrollez un peu et vous tomberez sur les paramètres.
+
+L’encadré vert vous montre que le paramètre **name** est obligatoire.
+
+Mais ce n’est pas tout ! La documentation nous donne un exemple de requête et de réponse réussies.
+
+<figure>
+    <img src="https://user.oc-static.com/upload/2021/10/15/16342959575963_image43.png"
+         alt="Une réponse réussie est affichée et entourée en vert." />
+    <figcaption>Une réponse réussie</figcaption>
+</figure>
+
+Nous avons notre endpoint, notre verbe http, nos paramètres et même un exemple ! Allons faire cette requête. 🙌Lancez Postman !
+
+Sélectionnez POST dans le menu déroulant puis tapez l’endpoint pour créer un nouveau repo via l’API GitHub :
+[https://api.github.com/user/repos](https://api.github.com/user/repos) ; et appuyez sur Send.
+
+<figure>
+    <img src="https://user.oc-static.com/upload/2021/10/15/1634296038817_image22.png"
+         alt="Un message d'erreur est affiché et encadrée en vert." />
+    <figcaption>Message d'erreur</figcaption>
+</figure>
+
+:::note ?
+Arf, mais on a une erreur. Qu’est-ce que c’est ? 🤔
+:::
+
+Le message nous indique qu’une authentification est nécessaire. Le code de réponse HTTP est 401 : Unauthorized (401 Non autorisé). Eh oui,
+notre token ! 😄
+
+Reprenez votre token d’authentification API GitHub, celui que vous avez précieusement gardé. Ajoutez-le, comme sur l’image suivante, dans
+l’onglet Headers sous forme de clé-valeur où la clé sera Authorization et la valeur sera Token, votre token. Si mon token est _abcde_, alors la
+valeur sera : _token abcde_.
+
+Ensuite, appuyez sur Send et regardez la réponse. 👇🏼
+
+<figure>
+    <img src="https://user.oc-static.com/upload/2021/10/15/16342961228461_image41.png"
+         alt="Statut de la requête avec le token : à droite" />
+    <figcaption>Statut de la requête avec le token</figcaption>
+</figure>
+
+Encore une erreur ?! Mmmh... on a le bon endpoint, le token. Cette fois-ci, le code de réponse HTPP est : 400 Bad Request. Mais oui ! Il nous
+manque les paramètres 🙄. Eh oui, on demande à GitHub de nous créer un repo, mais on ne lui donne pas les informations.
+
+Cliquez sur la section Body, puis sur Raw, binary et sélectionnez JSON.
+
+<figure>
+    <img src="https://user.oc-static.com/upload/2021/10/18/16345469127628_image44.png"
+         alt="Interface affichée depuis l'onglet Body. JSON est affiché et encadré dans une liste déroulante." />
+    <figcaption>Sélectionnez JSON</figcaption>
+</figure>
+
+Maintenant, on peut ajouter nos paramètres sous forme de clé-valeur. Il nous faut un nom de repo qui est obligatoire, et ajoutons une
+description.
+
+```json
+{
+    "name": "OpenClassrooms API",
+    "description": "Nouveau repo !"
+}
+```
+
+Appuyez sur Send et observez la réponse. 👇🏼
+
+<figure>
+    <img src="https://user.oc-static.com/upload/2021/10/15/16342964698404_image12.png"
+         alt="Le repo a été créé" />
+    <figcaption>Le repo a été créé</figcaption>
+</figure>
+
+Wooohooo, notre repository a été créé 🎉. Le code de réponse HTTP est bien 201 Created. L’API nous renvoie les informations du nouveau repo
+crée. On peut aussi vérifier sur GitHub si le repo apparaît bien dans notre liste, et c’est le cas ! 👇🏼🎉
+
+<figure>
+    <img src="https://user.oc-static.com/upload/2021/10/15/16342965053232_image7.png"
+         alt="Vérification de la création du repo : le repo GitHub créé est affiché et encadré en vert." />
+    <figcaption>Vérification de la création du repo</figcaption>
+</figure>
+
+Pour **créer** un repo GitHub en utilisant l’API GitHub, nous avons :
+- consulté la [documentation](https://api.github.com/user/repos) GitHub pour trouver l'endpoint adapté : POST user/repos ;
+- ajouté notre token d’authentification à nos paramètres dans le header avec Postman ;
+- ajouté les détails de notre repo à notre body en JSON avec Postman ;
+- vu qu’une fois que nous avons effectué une requête réussie avec notre API, le repo est apparu sur l’UI de notre profil GitHub !
+
+Consultez la vidéo pour revoir comment faire :
+
+<Vimeo vimeoId="467403788" />
+
+<br />
+
+Et voilà ! Vous avez un nouveau repo ! Et si maintenant on essayait de le modifier avec l’API GitHub ? 💪
+
+### Mettez à jour un repo GitHub avec les méthodes PUT/PATCH
+
+Vous avez **créé** votre repo GitHub, mais la description ne vous plaît plus trop, vous changez d’avis et vous voulez la modifier ! Vous pouvez
+utiliser PUT pour **mettre à jour** une ressource déjà existante dans votre API.
+
+:::note ?
+Sur Internet, on croise souvent PUT avec PATCH ? Les deux signifient la même chose ou est-ce qu’ils sont différents ? 🤔
+:::
+
+- PUT : met à jour la ressource complète (c’est-à-dire, remplace tout).
+- PATCH : met à jour uniquement la partie de la ressource qui a été envoyée.
+
+On ne va pas s’attarder ici sur la différence entre les deux. Mais si vous ne savez pas lequel utiliser et pour quelle situation : consultez la
+documentation de l’API !
+
+Et c’est ce que nous allons faire ! Reprenons la documentation des repos GitHub mais cette fois-ci cliquons sur
+[Update a repository](https://docs.github.com/en/rest/reference/repos#update-a-repository).
+
+Pour mettre à jour un repo, il nous faut utiliser la méthode PATCH sur l’endpoint /repos/:Owner/:repo.
+
+Les deux points ( : ) devant _owner_ et _repo_ signifient qu’il nous faut l’identifiant unique du repository que vous voulez modifier, et celui
+du owner (propriétaire) du repo : vous, en l'occurrence.
+
+Changez le verbe par PATCH. Puis entrez l’endpoint correspondant. Mon username est Kadaaran et mon repo se nomme OpenClassrooms-API. Changez
+Kadaaran par votre username et OpenClassrooms-API par votre nom de repo s’il est différent. Dans la section Body, tapez une nouvelle description.
+Dans mon cas, j’ai mis : Paragraphe ci-dessus à revoir.
+
+```json
+{
+    "description": "Ceci est une nouvelle description plus cool que la précédente ☀️"
+}
+```
+
+<figure>
+    <img src="https://user.oc-static.com/upload/2021/10/15/16342967079435_image10.png"
+         alt="Changement de la description encadré en vert." />
+    <figcaption>Changement de la description</figcaption>
+</figure>
+
+Appuyez sur Send et regardez la réponse. 👇🏼
+
+<figure>
+    <img src="https://user.oc-static.com/upload/2021/10/15/1634296894872_image31.png"
+         alt="Description mise à jour et entourée en vert dans l'interface." />
+    <figcaption>Description mise à jour</figcaption>
+</figure>
+
+Notre repo a été mis à jour ! 🎉 Nous obtenons la réponse avec le body : le code de réponse HTTP est bien 200 OK.
+
+Vous pouvez vérifier sur GitHub et vous devriez voir votre nouvelle description apparaître. 👇🏼
+
+<figure>
+    <img src="https://user.oc-static.com/upload/2021/10/15/16342969646845_image45.png"
+         alt="La nouvelle description est affichée au milieu du screenshot." />
+    <figcaption>La nouvelle description</figcaption>
+</figure>
+
+Pour **mettre à jour** un repo GitHub, nous avons :
+- vérifié la documentation GitHub pour l’URI approprié : PATCH /repos/wner/:repo ;
+- utilisé Postman, changé notre verbe HTTP en PATCH, et saisi le propriétaire et le nom de repository que nous voulons modifier, ainsi que
+changé la description dans le body ;
+- vu la nouvelle description de notre repository dans notre UI GitHub
+
+<Vimeo vimeoId="467403787" />
+
+<br />
+
+Bravo ! Vous avez créé un repo, puis vous l’avez modifié. Essayons à présent de le supprimer ! 💪
+
+### Supprimez votre repo GitHub avec la méthode DELETE
+
+Vous décidez à présent que vous n’avez pas réellement besoin de votre repo GitHub – alors allez-y et supprimez-le avec DELETE !
+
+Allez hop ! On reprend la même gymnastique que pour les requêtes précédentes. Tout d’abord : la documentation ! Comment supprime-t-on un
+repository GitHub ?
+
+Dans la liste des méthodes disponibles, nous trouvons : [Delete a repository](https://docs.github.com/en/rest/reference/repos#delete-a-repository).
+Cliquez dessus !
+
+<figure>
+    <img src="https://user.oc-static.com/upload/2021/10/15/16342970351174_image38.png"
+         alt="Documentation pour supprimer un repo" />
+    <figcaption>Documentation pour supprimer un repo</figcaption>
+</figure>
+
+Selon la documentation, pour supprimer un repository GitHub, il nous faut utiliser le verbe DELETE sur l’endpoint /repos/Owner/:repo. Si la
+requête est un succès, alors nous devrions avoir 204 No Content (204 Aucun contenu) comme réponse. Essayons avec Postman.
+
+<figure>
+    <img src="https://user.oc-static.com/upload/2021/10/15/16342974078793_image28.png"
+         alt="Suppression d'un repo" />
+    <figcaption>Suppression d'un repo</figcaption>
+</figure>
+
+Tapez les informations nécessaires : votre username et le nom du repo que vous souhaitez supprimer. Pas besoin de body pour DELETE, cliquez sur
+none. Puis cliquez sur Send et regardez la réponse obtenue. 👇🏼
+
+<figure>
+    <img src="https://user.oc-static.com/upload/2021/10/15/1634297546126_image61.png"
+         alt="Le repo est supprimé : status : 204 no content est encadré en vert." />
+    <figcaption>Le repo est supprimé</figcaption>
+</figure>
+
+Et voilà ! Votre repository est supprimé à tout jamais ! 🎉 Nous obtenons un body vide et un statut 204 No Content comme l’a indiqué la
+documentation.
+
+Vérifiez sur GitHub que votre repo a bien été supprimé. 👇🏼
+
+<figure>
+    <img src="https://user.oc-static.com/upload/2021/10/15/16342977512888_image36.png"
+         alt="Vérification de la suppression" />
+    <figcaption>Vérification de la suppression</figcaption>
+</figure>
+
+Vous avez vu comment fonctionnent POST, PUT et DELETE et vous les avez vous-même utilisés avec l’API GitHub et Postman. Félicitations ! 👏
+
+Vous les avez utilisés dans le contexte d’un repo GitHub, mais vous pouvez utiliser ces verbes HTTP pour tout type de fonctionnalité, en
+fonction de l’API.
+- Vous avez vu dans la documentation GitHub que l’URI correct est le même que pour Update, mais avec un nouveau verbe HTTP :
+DELETE /repos/:Owner/:repo.
+- Vous avez vu que notre repo est supprimé et ne se trouve plus dans notre UI GitHub !
+
+Voici comment faire en vidéo :
+
+<Vimeo vimeoId="467403766" />
+
+<br />
+
+### En résumé
+
+- Vous pouvez utiliser POST pour **créer** des ressources.
+- PUT ou PATCH vous permet de **mettre à jour** des ressources.
+- DELETE vous permet de **supprimer** des ressources !
+
+_Dans la prochaine partie, nous allons étudier les meilleures pratiques lorsque vous concevez vous-même une API ! Mais avant, il est temps de
+réviser ce que vous venez d’apprendre avec le quiz de fin de partie !_
+
+-----
+
+## Quiz : Servez-vous des API REST pour vos projets de code
+
+[Servez-vous des API REST pour vos projets de code - OpenClassrooms](https://openclassrooms.com/fr/courses/6573181-adoptez-les-api-rest-pour-vos-projets-web/exercises/4278)
+
+#### Compétences évaluées
+
+<i class="bi bi-check2-circle"></i> Formuler des requêtes et envoyer des réponses avec une API REST
+
+-----
+
+#### Question 1 : Vous recevez un code de réponse HTTP 200. Qu’est-ce que cela signifie ?
+
+<i class="bi bi-record-circle"></i> La requête a été un succès<br />
+<i class="bi bi-circle"></i> La requête a été redirigée<br />
+<i class="bi bi-circle"></i> Une erreur serveur<br />
+<i class="bi bi-circle"></i> La ressource n'existe pas<br />
+<br />
+
+_Réponse 1._<br />
+_Les codes de réponses HTTP permettent de donner des indications au client sur le succès ou non de la requête._<br />
+_200 signifie que la requête a été un succès, une erreur serveur se situe dans les 500, une ressource inexistante serait 404 et une redirection
+se situe dans les 300._<br />
+_Rappelez-vous :_
+- _100+ ➡ Information_
+- _200+ ➡ Succès_
+- _300+ ➡ Redirection_
+- _400+ ➡ Erreur client_
+- _500+ ➡ Erreur serveur_
+
+-----
+
+#### Question 2 : Vous recevez un code de réponse HTTP 404. Qu’est-ce que cela signifie ?
+
+<i class="bi bi-circle"></i> La requête a été un succès<br />
+<i class="bi bi-record-circle"></i> La ressource n'existe pas<br />
+<i class="bi bi-circle"></i> La requête a été redirigée<br />
+<i class="bi bi-circle"></i> Une erreur serveur<br />
+<br />
+
+_Réponse 2._<br />
+_Une ressource inexistante a pour code HTTP : 404._<br />
+_200 signifie que la requête a été un succès._<br />
+_Une erreur serveur se situe dans les 500._<br />
+_Une redirection serait 301._
+
+-----
+
+#### Question 3 : Qu’est-ce que le CRUD ?
+
+<i class="bi bi-circle"></i> Le CRUD est un système qui permet aux développeurs d’obtenir un accès privilégié à la base de données d’une API
+grâce à un token.<br />
+<i class="bi bi-record-circle"></i> CRUD est un acronyme que les développeurs utilisent pour parler des règles d’architecture d’une API, et
+chaque lettre représente une règle.<br />
+<i class="bi bi-circle"></i> Le CRUD est une liste d’actions qui permettent à l’utilisateur de savoir d'où vient la donnée qu’il demande, et
+qui contient des règles spécifiques sur le design de l’API et la représentation des ressources.<br />
+<i class="bi bi-circle"></i> Le CRUD est une liste d’actions que peut effectuer l’utilisateur avec une API REST. C’est un acronyme, pour
+lequel chaque lettre représente une action sous forme d’un verbe HTTP.<br />
+<br />
+
+_Réponse 2._<br />
+_Le CRUD est la liste des actions de base que vous pouvez effectuer sur une ressource. C’est l’acronyme de **C**reate, **R**ead, **U**pdate
+et **D**elete._
+
+-----
+
+#### Question 4 : Quels sont les 4 verbes HTTP et leur action CRUD correspondante ?
+
+<i class="bi bi-circle"></i>
+
+- GET – Create
+- PUT – Update
+- POST – Read
+- DELETE – Destroy
+
+<i class="bi bi-circle"></i>
+
+- GET – Update
+- PUT – Read
+- POST – Create
+- DELETE – Delete
+
+<i class="bi bi-record-circle"></i>
+
+- GET – Read
+- PUT – Update
+- POST – Create
+- DELETE – Delete
+
+<i class="bi bi-circle"></i>
+
+- GET – Read
+- PUT – Edit
+- POST – Update
+- DELETE – Destroy
+
+_Réponse 3._<br />
+_Les quatre verbes HTTP et leur action CRUD sont :_
+- _GET – Read,_
+- _PUT – Update,_
+- _POST – Create,_
+- _DELETE – Delete._
+
+_GET permet d’obtenir des ressources._<br />
+_PUT permet de mettre à jour une ressource._<br />
+_POST permet de créer une nouvelle ressource._<br />
+_DELETE permet de supprimer une ressource._<br />
+
+-----
+
+#### Question 5 : Pour répondre aux questions 5 à 9, rendez-vous sur la documentation en angais de l’API [Star Wars](https://swapi.dev/). Vous pourrez effectuer les requêtes via le site Internet SWAPI ou via Postman, à votre convenance. Nous vous conseillons d’utiliser Postman pour vous familiariser avec ce logiciel.**
+
+**Avant de répondre aux questions, nous vous conseillons de lire attentivement la [documentation](https://swapi.dev/documentation), puis
+rendez-vous sur l’onglet Authentication.**
+
+**Après lecture, que pouvez-vous observer sur l’API ?**
+
+<i class="bi bi-record-circle"></i> L’API est publique.<br />
+<i class="bi bi-circle"></i> L’API est privée.<br />
+<i class="bi bi-circle"></i> L’API est en partie publique mais nécessite une authentification avec token pour certains endpoints.<br />
+<i class="bi bi-circle"></i> L’API n’est pas disponible.<br />
+<br />
+
+_On note cette mention : “Swapi is a completely open API. No authentication is required”._<br />
+_Cela signifie que l’API est publique, et qu’elle ne nécessite pas d’authentification pour accéder aux données._<br />
+_Si l’API était privée, nous n’aurions pas pu y avoir accès._<br />
+
+-----
+
+#### Question 6 : En vous aidant de la documentation, effectuez une requête GET sur Postman avec l’URI suivante : /people/obi-wan. Qu’observez-vous ?
+
+<i class="bi bi-circle"></i> Vous obtenez les détails et informations sur le personnage Obi-Wan Kenobi.<br />
+<i class="bi bi-record-circle"></i> La ressource n’existe pas, et l’API me retourne une erreur 404.<br />
+<i class="bi bi-circle"></i> Le serveur retourne une erreur 500.<br />
+<br />
+
+_Réponse 2._<br />
+
+<figure>
+    <img src="https://user.oc-static.com/upload/2021/10/15/16342990355835_image1.png"
+         alt="" />
+    <figcaption></figcaption>
+</figure>
+
+_Cet endpoint n’existe pas. La documentation de l’API nous explique que pour récupérer les informations de la ressource People, on utilise un
+:id._<br />
+_Il nous aurait fallu effectuer une requête sur l’endpoint suivant : https://swapi.dev/api/people/10, pour obtenir les informations d’Obi-Wan
+Kenobi._
+
+-----
+
+#### Question 7 : Notre prochaine étape est de récupérer les informations du personnage Obi-Wan Kenobi.
+
+**Avec l’aide de la documentation, effectuez une requête qui vous permet de récupérer la liste de TOUS les personnages.**
+
+**Trouvez Obi-Wan Kenobi parmi les résultats, en vous aidant de la documentation et du body de réponse.**
+
+**Quel endpoint permettrait d’obtenir des informations sur Obi-Wan Kenobi ?**
+
+<i class="bi bi-circle"></i> https://swapi.dev/api/people/3/<br />
+<i class="bi bi-circle"></i> https://swapi.dev/api/people/obi-wan/<br />
+<i class="bi bi-circle"></i> https://swapi.dev/api/character/10/<br />
+<i class="bi bi-record-circle"></i> https://swapi.dev/api/people/10/<br />
+<br />
+
+_Réponse 4._
+
+<figure>
+    <img src="https://user.oc-static.com/upload/2021/10/15/16342994219276_image21.png"
+         alt="Screenshot affichant le résultat de la requête." />
+    <figcaption></figcaption>
+</figure>
+
+_La réponse 1 nous retourne le personnage de R2-D2._<br />
+
+_Les réponses 2 et 3 retournent un code erreur 404 NOT FOUND._
+
+-----
+
+#### Question 8 : En vous aidant de la documentation et en vous basant sur la réponse précédente : quelle URI correspond à sa planète natale ?
+
+<i class="bi bi-record-circle"></i> /planets/20<br />
+<i class="bi bi-circle"></i> /planet/20/homeland<br />
+<i class="bi bi-circle"></i> /planets/20/homeland<br />
+<i class="bi bi-circle"></i> /planet/20<br />
+<br />
+
+_Il s’agit de_ /planets/20.<br />
+_La réponse précédente était : [https://swapi.dev/api/people/10/](https://swapi.dev/api/people/10/)._<br />
+_La [documentation](https://swapi.dev/documentation#people) de la ressource People nous indique que l’attribut homeworld retourne l’URL d’une
+ressource **Planet** sur laquelle la personne est née ou a habité._<br />
+_En nous basant sur le body de réponse, on note que l’URL est [https://swapi.dev/api/planets/20](https://swapi.dev/api/planets/20) – de ce
+fait l’URI sera /planets/20._<br />
+_Les réponses 2, 3 et 4 nous retournent un code d’erreur HTTP 404 NOT FOUND car ces routes n'existent pas. Aucune ressource n’y est accessible._
+
+-----
+
+#### Question 9 : Faites une requête GET avec la réponse précédente. Votre mission est de récupérer les informations de sa planète natale et notamment l’attribut _climate_.
+
+**Quel est l’attribut climate de sa planète natale ?**
+
+<i class="bi bi-record-circle"></i> temperate<br />
+<i class="bi bi-circle"></i> frozen<br />
+<i class="bi bi-circle"></i> arid<br />
+<br />
+
+_Il s’agit de l’attribut climate “temperate”._
+
+<figure>
+    <img src="https://user.oc-static.com/upload/2021/10/15/16342996596175_image13.png"
+         alt="Screenshot affichant l'attribut climate 'temperate'" />
+    <figcaption></figcaption>
+</figure>
+
+_Il vous faut faire une requête avec l’endpoint suivant : [https://swapi.dev/api/planets/20](https://swapi.dev/api/planets/20)._<br />
+_Le body nous retourne les informations de la planète natale de Kenobi : Stewjon. L’attribut climate a pour valeur temperate._

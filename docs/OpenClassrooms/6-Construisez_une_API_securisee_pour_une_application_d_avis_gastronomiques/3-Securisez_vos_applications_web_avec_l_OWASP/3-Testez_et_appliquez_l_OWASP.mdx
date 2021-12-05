@@ -1,0 +1,324 @@
+---
+sidebar_position: 4
+---
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+import { Vimeo } from 'mdx-embed';
+
+# Testez et appliquez l'OWASP
+
+## Testez la sécurité de votre application
+
+[Testez la sécurité de votre application - Sécurisez vos applications web avec l'OWASP - OpenClassrooms](https://openclassrooms.com/fr/courses/6179306-securisez-vos-applications-web-avec-lowasp/6520583-testez-la-securite-de-votre-application)
+
+<Vimeo vimeoId="376329144" />
+
+<br />
+
+Pour vérifier la sécurité d’une application web, il est nécessaire de réaliser des tests de sécurité.
+
+### Réalisez des tests
+
+Ces tests font partie du processus de **développement d’une application web** ; cependant, il est nécessaire de les réaliser tout au long du
+cycle de vie de l’application pour s’assurer que la sécurité est toujours maintenue.
+
+Une partie des tests consiste à effectuer des **scans de vulnérabilité**. Ces scans utilisent des attaques typiques basées sur les dix
+principaux risques de sécurité de l'OWASP et les vulnérabilités connues des composants du framework utilisé. Ils permettront d’identifier
+rapidement une vulnérabilité commune ou une mauvaise configuration.
+
+Une fois que l’application respecte les bonnes pratiques de sécurité de base de l’OWASP, il sera possible d’apporter des mesures de sécurité
+supplémentaires pour être conforme aux normes telles que PCI DSS par exemple. Les tests de sécurité doivent fournir à l'entreprise une bonne
+idée du niveau de sécurité de son application web.
+
+Toutefois, cela ne signifie pas qu'une application web est conforme et prête à être utiliser. Une entreprise **ne peut pas utiliser ses propres
+services** pour prouver qu'elle est accréditée, parce qu'il serait difficile de rester impartial par rapport à des lignes directrices strictes.
+Un prestataire tiers est tenu de certifier la **conformité** d'une application web.
+
+Les prestataires tiers spécialisés dans la conformité de la sécurité des applications web utilisent des techniques d'analyse des vulnérabilités
+et de tests d’intrusion pour vérifier la sécurité de l'application web. Dans le cas de l'OWASP, la sécurité de l'application web et de ses
+composants sera testée.
+
+Vous devriez vérifier régulièrement la **conformité à l'OWASP**. Ensuite, retestez à mesure que de nouvelles vulnérabilités et de nouveaux
+correctifs apparaissent. Toute nouvelle vulnérabilité devra être **atténuée** pour satisfaire les normes en vigueur.
+
+Les entreprises sont responsables de l'**acquisition** et du **maintien** de la conformité en fonction de leurs exigences en matière de
+sécurité.
+
+### Découvrez différentes techniques de tests
+
+Savoir qu'il faut tester, c'est bien. Mais quelles sont les techniques de tests ?
+
+#### Le fuzzing
+
+**Le fuzzing** est une technique utilisée pour tester les zones où les données sont entrées sur votre application web. Il teste les entrées
+aléatoirement pour s'assurer que les **techniques de validation appropriées** sont utilisées. Le fuzzing va permettre de tester l'injection
+SQL et les attaques XSS, par exemple !
+
+#### L’audit de code
+
+**L'audit de code** peut être effectué manuellement ou à l'aide d'un outil automatisé. Il implique souvent une analyse ligne par ligne du code
+source pour trouver les éléments ou fonctions vulnérables.
+
+Ce test garantit que les fonctions vulnérables communes ne sont pas utilisées dans le code. Cela peut permettre de détecter des injections SQL,
+par exemple.
+
+Bien que votre code puisse réussir un test d'analyse de code, il peut toujours être vulnérable au contrôle d'accès, au piratage de session,
+aux problèmes de configuration dans le framework et aux algorithmes cryptographiques faibles.
+
+#### Découvrez les modèles de menace (Threat Modeling)
+
+Un **modèle de menace** est un processus par lequel des menaces potentielles, telles que les vulnérabilités structurelles (c'est-à-dire
+inhérentes à la structure de votre application) peuvent être identifiées, énumérées et classées par ordre de priorité.
+
+Lorsqu'une entreprise établit un **modèle de menace**, elle tient compte des différents adversaires qui tenteront de compromettre le système.
+En fonction du profil des adversaires, vous pouvez établir un modèle de menace afin de déterminer quelles parties doivent être verrouillées
+pour atténuer votre risque.
+
+Voici quelques questions que vous pouvez poser pour créer votre modèle de menace :
+- Quelles sont les données que vous devez protéger ?
+- Qui exploitera les données ?
+- Quelle est la probabilité qu'une vulnérabilité soit exploitée ?
+- Quels dommages cette exploitation peut-elle causer ?
+- Quelle est votre protection contre cet exploit ?
+
+### Corrigez les vulnérabilités zero day
+
+Vous ne pouvez jamais être entièrement sûr que votre application web ne sera pas attaquée via l’exploitation d’une vulnérabilité qui n’a pas
+de correctif. C'est ce qu'on appelle les _**vulnérabilités zero day**_.
+
+Lorsque des vulnérabilités zero day sont découvertes, les éditeurs de logiciels développent un **correctif** pour corriger la vulnérabilité.
+Cependant, dans de nombreux cas, le correctif est appliqué après avoir fait beaucoup de dégâts. C'est pour cette raison qu'il est important de
+maintenir la sécurité de votre application et de la défendre contre les vulnérabilités en la patchant régulièrement.
+
+Ces différents éléments peuvent vous permettre de réduire le risque de compromission et d’améliorer la sécurité de votre application tout au
+long de son cycle de vie.
+
+### En résumé
+
+- L'entreprise ne peut pas simplement s'accréditer comme étant conforme aux réglementations telles qu'OWASP ou PCI-DSS.
+- Elle aura besoin d'un prestataire tiers spécialisé dans l'examen de la conformité.
+- Les règlements peuvent être très stricts pour les grandes entreprises, de sorte qu'il faut parfois des mois d'essais pour obtenir la
+certification.
+- L'analyse de vulnérabilité et les tests d’intrusion sont parfaits pour tester les attaques sur une application web.
+- L’audit de code source permet d’identifier les fonctionnalités vulnérables.
+- Le threat modeling peut vous permettre d'identifier les potentiels attaquants et d’ajuster vos défenses.
+- Les vulnérabilités zero day représentent un risque majeur pour vos applications.
+
+_Maintenant que vous avez adopté des pratiques de développement sécurisé pour fournir un produit de qualité, voyons comment appliquer le cycle
+de vie du développement sécurisé._
+
+-----
+
+## Appliquez le cycle de vie du développement logiciel sécurisé
+
+[Appliquez le cycle de vie du développement logiciel sécurisé - Sécurisez vos applications web avec l'OWASP - OpenClassrooms](https://openclassrooms.com/fr/courses/6179306-securisez-vos-applications-web-avec-lowasp/6520633-appliquez-le-cycle-de-vie-du-developpement-logiciel-securise)
+
+<Vimeo vimeoId="376329187" />
+
+<br />
+
+Les logiciels de production sont généralement créés en utilisant le cycle de vie de développement logiciel (SDLC). Il est possible de tenir
+compte des vulnérabilités pendant ce cycle de vie. Voyons comment faire dans ce chapitre.
+
+### Découvrez si le cycle de vie du développement logiciel (SDLC) est adéquat ?
+
+Le cycle de vie du développement logiciel commence généralement par les phases de **collecte des exigences, de conception, de mise en œuvre,
+d’essais et de diffusion (évolution)**. Ce cycle de base ne tient pas compte des vulnérabilités. Les pratiques de codage sécurisé que nous
+avons apprises dans ce cours ne font étonnamment pas partie du cycle de vie moyen de développement d'un logiciel. La sécurité n'est en effet
+pas une priorité dans la plupart des cycles de développement logiciel. Il n'est donc pas surprenant que **80 % des applications web en
+production** aujourd'hui soient vulnérables aux attaques courantes !
+
+#### Découvrez comment est gérée la sécurité dans un cycle de vie logiciel traditionnel
+
+Dans un cycle de vie classique, la sécurité n'est pas prise en compte dès le début de l'élaboration de l'application.
+
+Alors que se passe-t-il lorsque des vulnérabilités apparaissent lors des tests ?
+
+Les problèmes sont renvoyés à l'équipe de développement. Mais la reconception et le développement d'un grand nombre de fonctionnalités de base
+peuvent s'avérer coûteux.
+
+Que se passe-t-il lorsque des vulnérabilités apparaissent après la sortie du logiciel ?
+
+Puisqu'il est déjà en production, vous ne pouvez pas revenir en arrière et réparer le code original. Maintenant, vous devez créer un patch et
+espérer que les clients l'appliqueront.
+
+### Ajoutez la sécurité au cycle de vie du développement logiciel
+
+De nombreuses organisations, dont l'OWASP, ont proposé un **cycle de vie intégré de la sécurité (SDLC)** ou un **cycle de vie de développement
+logiciel sécurisé (SSDLC)**. Il y a encore beaucoup de débats à ce sujet ; cependant, dans la production d'applications web à grande échelle,
+la sécurité sera très probablement intégrée dans le modèle SDLC déjà utilisé par les entreprises.
+
+Dans ce cours, nous avons vu comment intégrer la sécurité dans les phases de conception et de mise en œuvre du cycle de vie.
+
+### En résumé
+
+- Le cycle SDLC est utilisé par les organisations qui ont de grands projets logiciels.
+- Traditionnellement, il n'inclut pas le développement sécurisé comme partie intégrante du processus.
+- Le fait de ne pas assurer la sécurité dans le cycle SDLC entraîne une augmentation du temps et de l'argent consacrés à la correction du code
+non sécurisé.
+- Utilisez SSDLC pour ajouter la sensibilisation à la sécurité dans chaque phase du SDLC.
+
+_Vous êtes presque arrivé à la fin de ce cours ! Dans le chapitre suivant, je vous propose un résumé des 10 vulnérabilités recensées par
+l'OWASP._
+
+-----
+
+## Résumé du cours
+
+[Résumé du cours - Sécurisez vos applications web avec l'OWASP - OpenClassrooms](https://openclassrooms.com/fr/courses/6179306-securisez-vos-applications-web-avec-lowasp/6520696-resume-du-cours)
+
+<Vimeo vimeoId="376329227" />
+
+<br />
+
+Bravo, vous êtes arrivé à la fin de ce cours ! Vous en savez désormais plus sur les différentes vulnérabilités identifiées par l'OWASP.
+
+Vous trouverez ci-dessus un récapitulatif de ces dix vulnérabilités.
+
+### OWASP TOP TEN 2017
+
+Les dix principales vulnérabilités web, identifiées par l'OWASP :
+
+1. **L’injection :** elle permet d’injecter du code arbitraire pour effectuer des actions qui seront interprétées par l’application. Pour
+bloquer ce genre d’attaque, il est possible d’utiliser des fonctions sécurisées ou encore de valider les entrées utilisateurs.
+2. **Le piratage de session :** il se produit lorsque le système d’authentification a été contourné, par exemple en utilisant la technique de
+force brute. Pour se protéger contre ce type d’attaque, il faudra non seulement forcer les utilisateurs à utiliser des mots de passe forts,
+mais également sécuriser l’utilisation des cookies de session, par exemple.
+3. **L'exposition de données sensibles :** elle se produit en cas de fuite de données, par exemple. Pour se protéger contre ce type d’attaque,
+il faudra utiliser des solutions de chiffrement pour sécuriser les données en transit et celles stockées sur l’application.
+4. **Les entités externes XML (XXE) :** les vulnérabilités XXE peuvent être utilisées pour accéder à des données internes de l’application
+normalement non accessibles. Pour éviter ce type d’attaque, il est possible de désactiver les entités externes.
+5. **Le contournement des contrôles d'accès :** les contrôles d’accès permettent d’empêcher un utilisateur d’accéder aux données d’un autre
+utilisateur. Pour éviter qu’un attaquant puisse exploiter cette vulnérabilité, assurez-vous que toutes les pages de votre application ont un
+contrôle d'authentification.
+6. **Les mauvaises configurations de sécurité :** elles peuvent être à l’origine de nombreuses attaques. Assurez-vous de garder à jour les
+composants de votre application pour éviter qu’une vulnérabilité ne soit exploitée.
+7. **Les scripts XSS (cross-site scripting) :** les failles XSS permettent à un attaquant d’injecter du code JavaScript. Utilisez la validation
+et la transformation des entrées utilisateurs pour les éviter.
+8. **La désérialisation non sécurisée :** cette vulnérabilité peut permettre à un attaquant de mener une attaque d’élévation de privilège, de
+replay ou encore d’injection. Pour éviter ce type d’attaque, il est possible d’implémenter des contrôles sur l’état du code.
+9. **L'utilisation de composants contenant des vulnérabilités connues :** une application est basée sur de nombreux composants. Pour éviter
+l’exploitation d’une vulnérabilité, il faudra maintenir à jour et identifier les éléments de votre application.
+10. **Le manque de monitoring et de surveillance :** le monitoring et la surveillance permettront de détecter une intrusion ou un comportement
+suspicieux au plus tôt. Vérifiez régulièrement vos logs et mettez en place des reportings.
+
+_Maintenant que vous connaissez les fondements de l’OWASP et comment sécuriser vos applications web, il ne vous reste plus qu’à appliquer ce
+que vous avez appris pour vos futurs développements. Bon développement ! ![:)](https://openclassrooms.com/bundles/common/images/smiley/smile.png)_
+
+-----
+
+## Quiz : Testez et appliquez l'OWASP
+
+[Testez et appliquez l'OWASP - OpenClassrooms](https://openclassrooms.com/fr/courses/6179306-securisez-vos-applications-web-avec-lowasp/exercises/3758)
+
+#### Compétences évaluées
+
+<i class="bi bi-check2-circle"></i> Tester et appliquer l'OWASP
+
+-----
+
+#### Question 1 : Que faut-il faire pour s’assurer qu’une application web est conforme aux réglementations en vigueur ?
+
+<i class="bi bi-record-circle"></i> Faire réaliser des tests de sécurité par une entreprise constituant un tiers de confiance<br />
+<i class="bi bi-circle"></i> Faire certifier son application auprès de l’État<br />
+<i class="bi bi-circle"></i> Mettre en place un login mot de passe pour tous les utilisateurs<br />
+<i class="bi bi-circle"></i> Mettre à jour son application web toutes les semaines<br />
+<br />
+
+*Pour pouvoir être conforme, une entreprise doit faire appel à une entité externe afin de vérifier qu’elle est conforme aux normes en vigueur.
+Il n’est pas possible de faire certifier son application directement auprès de l’État.*
+
+-----
+
+#### Question 2 : Qu’est-ce que le threat modeling ?
+
+<i class="bi bi-circle"></i> Un processus qui permet d’identifier la structure d’une application<br />
+<i class="bi bi-record-circle"></i> Un processus par lequel des menaces potentielles peuvent être identifiées, énumérées et classées par ordre
+de priorité<br />
+<i class="bi bi-circle"></i> Un processus par lequel les vulnérabilités seront exploitées avant qu’un attaquant ne puisse le faire<br />
+<i class="bi bi-circle"></i> Un processus qui permet de sécuriser le code d’une application<br />
+<br />
+
+*Le threat modeling est un processus utilisé dans les entreprises matures en sécurité pour identifier les menaces en amont.*
+
+-----
+
+#### Question 3 : Qu’est-ce qu’une vulnérabilité zero day ?
+
+<i class="bi bi-circle"></i> Une vulnérabilité exploitée par un attaquant<br />
+<i class="bi bi-circle"></i> Une vulnérabilité qui possède un correctif qui n’a pas été appliqué<br />
+<i class="bi bi-record-circle"></i> Une vulnérabilité qui ne possède pas encore de correctif<br />
+<i class="bi bi-circle"></i> Une vulnérabilité qui a été découverte le jour de l’an<br />
+<br />
+
+*Une vulnérabilité zero day est une vulnérabilité qui ne possède pas encore de correctif. Elle est critique pour une entreprise car elle peut
+être exploitée à tout moment par un attaquant.*
+
+-----
+
+#### Question 4 : Quelles sont les phases du cycle de développement logiciel ?
+
+<i class="bi bi-circle"></i> Collecte des vulnérabilités, identification et exploitation des correctifs<br />
+<i class="bi bi-record-circle"></i> Collecte des exigences, conception, mise en œuvre, essais et diffusion<br />
+<i class="bi bi-circle"></i> Définition du langage utilisé, création et protection de l’application<br />
+<i class="bi bi-circle"></i> Développement de l’application, installation des composants et mise en place du serveur<br />
+<br />
+
+*Le cycle de développement logiciel (SDLC) est composé des phases de collecte des exigences, de conception, de mise en œuvre, d’essais et de
+diffusion. Il est important de respecter ce processus pour assurer la conception de l’application de bout en bout. Toutefois il ne prend pas
+en compte la sécurité.*
+
+-----
+
+#### Question 5 : Qu’est ce qu’un test d’intrusion ?
+
+<i class="bi bi-circle"></i> Un processus illégal qui permet d’exploiter les vulnérabilités d’une application<br />
+<i class="bi bi-record-circle"></i> Un test de sécurité simulant l’exploitation de vulnérabilités par un attaquant<br />
+<i class="bi bi-circle"></i> Une fuite de données<br />
+<i class="bi bi-circle"></i> Un problème de sécurité<br />
+<br />
+
+*Un test d’intrusion permet de faire tester une application par des consultants qui simuleront des attaques potentielles pour trouver des
+vulnérabilités et les corriger avant qu’elles ne soient exploitées par de réels attaquants.*
+
+-----
+
+#### Question 6 : Pour quelles raisons effectuer une veille concernant la sécurité est important ?
+
+*Attention, plusieurs réponses sont possibles.*
+
+<i class="bi bi-square"></i> Cela permet de développer plus vite une application<br />
+<i class="bi bi-square"></i> Cela permet de monitorer une application web<br />
+<i class="bi bi-check-square-fill"></i> Cela permet d’identifier les menaces en cours<br />
+<i class="bi bi-check-square-fill"></i> Cela permet de s’informer sur les nouvelles vulnérabilités<br />
+<br />
+
+*La veille sécurité fait partie des bonnes pratiques de sécurité pour identifier et protéger son application en amont.*
+
+-----
+
+#### Question 7 : Qu’est-ce que l’audit de code source ?
+
+<i class="bi bi-record-circle"></i> Une analyse permettant de détecter en amont les fonctions vulnérables de l’application web<br />
+<i class="bi bi-circle"></i> Une analyse permettant l’exploitation de vulnérabilité<br />
+<i class="bi bi-circle"></i> Une analyse permettant de tester les fonctions d’authentification<br />
+<i class="bi bi-circle"></i> Une analyse permettant de tester l’application contre les dénis de service<br />
+<br />
+
+*L’audit de code source peut se comparer aux tests d’intrusion, mais dans ce cas les auditeurs auront un accès au code pour leur permettre
+d’identifier les fonctions vulnérables.*
+
+-----
+
+#### Question 8 : Qu’est-ce que le fuzzing ?
+
+*Attention, plusieurs réponses sont possibles.*
+
+<i class="bi bi-square"></i> Une technique permettant de corriger les vulnérabilités d’une application<br />
+<i class="bi bi-check-square-fill"></i> Une technique utilisée pour tester les zones où les données sont entrées sur une application web<br />
+<i class="bi bi-square"></i> Une technique permettant de tester les fonctions d’authentification<br />
+<i class="bi bi-check-square-fill"></i> Une technique permettant de tester l'injection SQL et les attaques XSS, entre autres<br />
+<br />
+
+*Le fuzzing est une technique de recherche de vulnérabilités automatisée pour détecter des bugs par l’insertion de chaînes de caractères
+destinées à faire crasher l’application. Elle permet notamment de tester l'injection SQL et les attaques XSS.*
