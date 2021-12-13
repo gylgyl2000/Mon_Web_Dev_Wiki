@@ -1,0 +1,406 @@
+---
+sidebar_position: 2
+---
+
+# devhints
+
+[Vue.js cheatsheet](https://devhints.io/vue)
+
+[Vue.js](https://vuejs.org/) est un framework JavaScript open source Model-view-viewmodel pour la création d'interfaces utilisateur et
+d'applications à page unique.
+
+-----
+
+Expressions
+----------
+
+-----
+
+### Expressions
+
+```html
+<div id="app">
+    <p>I have a {{ product }}</p>
+    <p>{{ product + 's' }}</p>
+    <p>{{ isWorking ? 'YES' : 'NO' }}</p>
+    <p>{{ product.getSalePrice() }}</p>
+</div>
+```
+
+Voir : [Delimiters - API — Vue.js](https://fr.vuejs.org/v2/api/index.html#delimiters)
+
+-----
+
+### Liaison (Binding)
+
+```html
+<a v-bind:href="url">...</a>
+```
+
+#### Syntaxe abrégée
+
+```html
+<a :href="url">...</a>
+```
+
+#### True or false ajoutera ou supprimera l'attribut
+
+```html
+<button :disabled="isButtonDisabled">...
+```
+
+#### Si isActive est vrai, la classe 'active' apparaîtra
+
+```html
+<div :class="{ active: isActive }">...
+```
+
+#### Couleur de style définie sur la valeur activeColor
+
+```html
+<div :style="{ color: activeColor }">
+```
+
+Voir : [v-bind - API — Vue.js](https://fr.vuejs.org/v2/api/#v-bind)
+
+-----
+
+### Directives
+
+#### Élément inséré/supprimé en fonction de la véracité
+
+```html
+<p v-if="inStock">{{ product }}</p>
+```
+
+```html
+<p v-else-if="onSale">...</p>
+<p v-else>...</p>
+```
+
+#### Bascule la propriété CSS `display: none`
+
+```html
+<p v-show="showProductDetails">...</p>
+```
+
+#### Liaison de données bidirectionnelle
+
+```html
+<input v-model="firstName" >
+```
+
+| Méthode | Description |
+| --- | --- |
+| `v-model.lazy="..."` | Synchronise l'entrée après l'événement de changement |
+| `v-model.number="..."` | Renvoie toujours un nombre |
+| `v-model.trim="..."` | Supprime les espaces |
+
+Voir : [Directives - API — Vue.js](https://fr.vuejs.org/v2/api/#Directives)
+
+-----
+
+### Actions/Événements
+
+#### Appelle la méthode addToCart sur le composant
+
+```html
+<button v-on:click="addToCart">...
+```
+
+#### Syntaxe abrégée
+```html
+<button @click="addToCart">...
+```
+
+#### Les arguments peuvent être passés
+```html
+<button @click="addToCart(product)">...
+```
+
+#### Pour empêcher le comportement par défaut (par exemple, le rechargement de la page)
+```html
+<form @submit.prevent="addProduct">...
+```
+
+#### Déclencher une seule fois
+```html
+<img @mouseover.once="showImage">...
+```
+
+| Méthode | Description |
+| --- | --- |
+| `.stop` | Arrêter toute propagation d'événement |
+| `.self ` | Déclencher uniquement si event.target est l'élément lui-même |
+
+#### Exemple de saisie au clavier
+```html
+<input @keyup.enter="submit">
+```
+
+#### Appel onCopy lorsque control-c est pressé
+```html
+<input @keyup.ctrl.c="onCopy">
+```
+
+Voir : [Gestion des évènements — Vue.js](https://fr.vuejs.org/v2/guide/events.html)
+
+-----
+
+### Rendu de liste
+
+#### La `:key` est toujours recommandée
+
+```html
+<li v-for="item in items"
+    :key="item.id">
+  {{ item }}
+</li>
+```
+
+#### Pour accéder à la position dans le tableau
+
+```html
+<li v-for="(item, index) in items">...
+```
+
+#### Pour parcourir (itérer) les objets
+
+```html
+<li v-for="(value, key) in object">...
+```
+
+#### Utiliser `v-for` avec un composant
+
+```html
+<cart-product v-for="item in products"
+              :product="item"
+              :key="item.id">
+```
+
+Voir : [Rendu de liste — Vue.js](https://fr.vuejs.org/v2/guide/list.html)
+
+-----
+
+Composants
+--------
+
+-----
+
+### Component anatomy
+
+```js
+Vue.component('my-component', {
+  components: {
+    // Components that can be used in the template
+    ProductComponent,
+    ReviewComponent
+  },
+  props: {
+    // The parameters the component accepts
+    message: String,
+    product: Object,
+    email: {
+      type: String,
+      required: true,
+      default: "none"
+      validator: function (value) {
+        // Should return true if value is valid
+      }
+    }
+  },
+  data: function() {
+    // `data` must be a function
+    return {
+      firstName: 'Vue',
+      lastName: 'Mastery'
+    }
+  },
+  computed: {
+    // Return cached values until dependencies change
+    fullName: function () {
+      return this.firstName + ' ' + this.lastName
+    }
+  },
+  watch: {
+    // Called when firstName changes value
+    firstName: function (value, oldValue) { ... }
+  },
+  methods: { ... },
+  template: '<span>{{ message }}</span>',
+  // Can also use backticks in `template` for multi-line
+})
+```
+
+See: [Components Basics](https://vuejs.org/v2/guide/components.html)
+
+-----
+
+### Lifecycle hooks
+
+| Method | Description |
+| --- | --- |
+| `beforeCreate` | After the instance has been initialized [#](https://vuejs.org/v2/api/#beforeCreate) |
+| `created` | After the instance is created [#](https://vuejs.org/v2/api/#created) |
+| `beforeMount` | Before the first render [#](https://vuejs.org/v2/api/#beforeMount) |
+| `mounted` | After the instance has been mounted [#](https://vuejs.org/v2/api/#mounted) |
+| `beforeUpdate` | When data changes, before the DOM is patched [#](https://vuejs.org/v2/api/#beforeUpdate) |
+| `updated` | After a data change [#](https://vuejs.org/v2/api/#updated) |
+| `beforeDestroy` | Before the instance is destroyed [#](https://vuejs.org/v2/api/#beforeDestroy) |
+| `destroyed` | After a Vue instance has been destroyed [#](https://vuejs.org/v2/api/#destroyed) |
+
+See: [Lifecycle Hooks](https://vuejs.org/v2/api/#Options-Lifecycle-Hooks)
+
+-----
+
+### Custom events
+
+#### Set listener on component, within its parent
+
+```html
+<button-counter v-on:incrementBy="incWithVal">
+```
+
+#### Inside parent component
+
+```js
+methods: {
+  incWithVal: function (toAdd) { ... }
+}
+```
+
+#### Inside button-counter template
+
+```js
+this.$emit(
+    'incrementBy', // Custom event name
+    5 // Data sent up to parent
+  )
+```
+
+Use props to pass data into child components,
+custom events to pass data to parent elements.
+
+See: [Custom Events](https://vuejs.org/v2/guide/components-custom-events.html)
+
+-----
+
+Single file components
+--------
+
+-----
+
+### Single file
+
+```html
+<template>
+  <p>{{ greeting }} World!</p>
+</template>
+
+<script>
+module.exports = {
+  data: function () {
+    return {
+      greeting: 'Hello'
+    }
+  }
+}
+</script>
+
+<style scoped>
+p {
+  font-size: 2em;
+  text-align: center;
+}
+</style>
+```
+
+See: [Single File Components](https://vuejs.org/v2/guide/single-file-components.html)
+
+-----
+
+### Separation
+
+```html
+<template>
+  <div>This will be pre-compiled</div>
+</template>
+<script src="./my-component.js"></script>
+<style src="./my-component.css"></style>
+```
+
+See: [What About Separation of Concerns?](https://vuejs.org/v2/guide/single-file-components.html#What-About-Separation-of-Concerns)
+
+-----
+
+Slots
+--------
+
+-----
+
+### Using a single slot
+
+#### Component template
+
+```html
+<div>
+  <h2>I'm a title</h2>
+  <slot>
+    Only displayed if no slot content
+  </slot>
+</div>
+```
+
+#### Use of component with data for slot
+
+```html
+<my-component>
+  <p>This will go in the slot</p>
+</my-component>
+```
+
+See: [Slots](https://vuejs.org/v2/guide/components-slots.html)
+
+-----
+
+### Multiple slots
+
+#### Component template
+
+```html
+<div class="container">
+  <header>
+    <slot name="header"></slot>
+  </header>
+  <main>
+    <slot>Default content</slot>
+  </main>
+  <footer>
+    <slot name="footer"></slot>
+  </footer>
+</div>
+```
+
+#### Use of component with data for slots
+
+```html
+<app-layout>
+  <h1 slot="header">Page title</h1>
+  <p>the main content.</p>
+  <p slot="footer">Contact info</p>
+</app-layout>
+```
+
+See: [Slots](https://vuejs.org/v2/guide/components-slots.html)
+
+-----
+
+Also see
+--------
+
+* [Vue CLI](https://cli.vuejs.org/) _(cli.vuejs.org)_
+* [Vue Router](https://router.vuejs.org/) _(router.vuejs.org)_
+* [Vue DevTools](https://chrome.google.com/webstore/detail/vuejs-devtools/nhdogjmejiglipccpnnnanhbledajbpd?hl=en) _(chrome.google.com)_
+* [Nuxt.js](https://nuxtjs.org/) _(nuxtjs.org)_
+* [Vue.js v1.0.28 cheatsheet](vue@1.0.28/) _Legacy version_
+

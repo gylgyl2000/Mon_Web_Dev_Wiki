@@ -1,0 +1,1256 @@
+---
+sidebar_position: 4
+---
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+import { Vimeo } from 'mdx-embed';
+
+# Créez des composants réutilisables dans Vue.js
+
+## Gérez les styles de votre application
+
+[Gérez les styles de votre application - Créez une application web avec Vue.js - OpenClassrooms](https://openclassrooms.com/fr/courses/6390311-creez-une-application-web-avec-vue-js/6864346-gerez-les-styles-de-votre-application)
+
+![](https://user.oc-static.com/upload/2020/05/20/15899592715233_Bannee-dimension-720-798-03.png)
+
+Nous l'avons vu précédemment, Vue est facile d'utilisation. Et c'est notamment dû à l'amélioration continue. Si vous ne souhaitez pas travailler
+avec un outil, pas de problème ; en revanche, le jour où vous en aurez besoin, sa configuration sera très simple ! Et c'est encore plus pratique
+si vous souhaitez ajouter du style à votre application, c'est-à-dire gérer le CSS de votre application.
+
+### Configurez un préprocesseur
+
+Actuellement, lorsqu'il s'agit d'écrire du CSS, la plupart des codebases frontend utilisent un **préprocesseur** (comme Sass, LESS, etc.).
+
+:::info
+Les préprocesseurs permettent d'étendre les fonctionnalités CSS comme les opérateurs, les fonctions, les mixins, et bien d'autres choses.
+:::
+
+Et pour utiliser des préprocesseurs, les styles sont généralement écrits dans un format de fichier spécifique :
+- Sass ⇒ *.sass ou *.scss
+- LESS ⇒ *.less
+
+Pour tirer parti de la puissance des préprocesseurs, tout en les maintenant couplés à votre composant, vous pouvez utiliser la prop **lang**.
+
+Après avoir configuré votre application Vue CLI avec le bon préprocesseur (comme nous l'avions fait dans la partie précédente), il suffit de
+passer la prop **lang** au bloc de style. Assurez-vous de bien mettre le préprocesseur souhaité, ici `scss`.
+
+```html
+<template>
+...
+</template>
+<script>
+...
+</script>
+<style lang="scss">
+.button {
+    &.is-small { ... }
+    &.is-large { ... }
+}
+</style>
+```
+
+Maintenant, vous avez le pouvoir des préprocesseurs CSS entre vos mains. ⚡️💪
+
+### Gérez le CSS
+
+Un grand pouvoir implique de grandes responsabilités. Pour comprendre comment gérer votre CSS, il faut comprendre de quelle façon `style` est
+compilé en production.
+
+#### Gérez le style global par défaut
+
+Lorsque `style` ne comporte aucune configuration additionnelle, les styles sont appliqués de manière générale, à chaque fois que le composant
+est rendu.
+
+Donc, si notre composant ressemble à ce qui suit :
+
+```html
+<template>
+    <main>
+        <h1>Bonjour</h1>
+        <button>Cliquez ici!</button>
+    </main>
+</template>
+<script>
+export default {
+    name: 'HomePage'
+}
+</script>
+<style>
+button {
+    background-color: blue;
+}
+</style>
+```
+
+...l'HTML correspondant devrait ressembler à cela :
+
+```html
+<html>
+    <head>
+        <style>
+            button {
+                background-color: blue;
+            }
+        </style>
+    </head>
+<body>
+    <main>
+        <h1>Bonjour</h1>
+        <button> Cliquez ici !</button>
+    </main>
+</body>
+</html>
+```
+
+:::info
+Cela peut sembler étrange puisque la plupart des modèles traditionnels intègrent un fichier .css au lieu d'incruster le bloc de style, mais
+c'est en fait très efficace. Cela garantit en effet que les utilisateurs ne reçoivent que la CSS dont ils ont besoin, au lieu de télécharger du
+code superflu, qui ne sera jamais utilisé.
+:::
+
+#### Utilisez des styles délimités
+
+La technique des styles délimités (_scoped styles_) est devenue populaire récemment. Elle permet de fournir un attribut `scoped` au bloc de
+style, afin que le CSS ne s'applique qu'aux éléments du composant courant. Pour ce faire, un attribut `data` personnalisé est ajouté à la
+classe CSS et à l'élément HTML, afin que les styles restent « scopés », donc délimités. Grâce à cela, les effets de cascade sont minimisés en
+limitant leur périmètre d'action.
+
+Cependant, cela n'empêchera pas les styles plus spécifiques de prendre le dessus si quelqu'un écrit des sélecteurs génériques plus spécifiques.
+Il est donc très important d'utiliser de bonnes techniques d'architecture CSS !
+
+##### Avant le build
+
+```html
+<style scoped>
+.example {
+    color: red;
+}
+</style>
+<template>
+    <div class="exemple">hello !</div>
+</template>
+```
+
+##### Après le build
+
+```html
+<style>
+.example[data-v-f3f3eg9] {
+    color: red;
+}
+</style>
+<template>
+    <div class="exemple" data-v-f3f3eg9>hello !</div>
+</template>
+```
+
+#### Ajoutez des modules CSS
+
+Bien que la technique des **scoped styles** puisse être efficace pour certains cas, l'un de ses principaux inconvénients vient du fait qu'elle
+peut être affectée par des styles présentant une plus grande spécificité. Ce n'est généralement pas un problème important pour la plupart des
+styles, mais cela peut devenir problématique lorsque des CSS tierces s'ajoutent et que des éléments comme `.button` sont courants.
+
+Les modules CSS sont appréciés pour les possibilités de modularité et de composition de CSS offertes, comme illustré ci-dessous :
+
+```html
+<style module>
+.red {
+    color: red;
+}
+.bold {
+    font-weight: bold;
+}
+</style>
+```
+
+Comme pour les **styles délimités**, vous n'avez qu'à ajouter un attribut `module` à `<style>` et il ajoutera vos styles avec un hash aléatoire
+par défaut.
+
+```html
+<style>
+.red-vj29193 {
+    color: red;
+}
+.bold-vj2914 {
+    font-weight: bold;
+}
+</style>
+```
+
+Cependant, l'utilisation des modules CSS nécessite d'ajouter la classe CSS avec le style `$` dans une classe `v-bind:class`.
+
+```html
+<template>
+    <h1 :class="$style.red">Mon titre en rouge</h1>
+</template>
+<style module>
+.red {
+    color: red;
+}
+</style>
+```
+
+Même s'il faut s'habituer à la syntaxe, les avantages des modules CSS l'emportent souvent sur le temps nécessaire à l'intégration de la nouvelle
+façon d'écrire les classes. Cependant, si vous ou votre équipe n'avez pas besoin de modules CSS, vous n'avez pas à vous soucier du tout de
+cette nouvelle syntaxe.
+
+### Découvrez des stratégies pour gérer les styles de votre application
+
+#### Maintenez vos styles couplés à votre composant
+
+En gardant vos styles au bas niveau, vous vous assurez que les futurs développeurs connaîtront le contexte dans lequel le style a été créé.
+Cela vous évite de passer un temps considérable à essayer de créer un design system ultra perfectionné. L'avantage, c'est que cela permet
+d'améliorer la maintenabilité à long terme de votre application, tout en tirant parti du découpage du code fourni par Vue.
+
+Par exemple, en langage CSS traditionnel, vous pourriez écrire les styles de votre bouton comme suit :
+
+##### style.css
+
+```css
+.button {
+    background-color: blue;
+    color: white;
+    border-radius: 10px;
+}
+```
+
+Cependant, même s'il ne s'agit que d'une seule classe CSS, imaginez ce qui se passerait s'il y avait encore plus de styles. Cela signifie que
+les utilisateurs téléchargeraient toutes ces données, qu'ils utilisent les styles ou non. De plus, cela ne simplifie pas les choses lorsque
+l'on travaille avec du code existant, car il est difficile de refactoriser sans connaître les effets de bord possibles.
+
+En revanche, si nous gérions nos styles avec Vue...
+
+**src/components/CustomButton.vue**
+
+```javascript
+<template>
+    <button class="button">{{ text }}</button>
+</template>
+<script>
+export default {
+    name: 'CustomButton',
+    props: ['text']
+}
+</script>
+<style>
+.button {
+    background-color: blue;
+    color: white;
+    border-radius: 10px;
+}
+</style>
+```
+
+N'importe quel développeur peut comprendre avec facilité la façon dont le code est lié, les effets de bord ne constituent plus vraiment un
+sujet de préoccupation. C'est pratique, n'est-ce pas ?
+
+#### Ne généralisez les styles que lorsque vous avez un cas de réutilisation
+
+Il peut être tentant de tester et de s'en tenir aux méthodes traditionnelles de CSS, en mettant tous les styles dans un fichier CSS partagé.
+Mais ce n'est pas forcément une bonne idée. 😑 En effet, ce fichier ne peut pas être parsé de manière intelligente lorsque l'utilisateur visite
+une page. Donc, à moins que vous ne voyiez un grand nombre de réutilisations de styles à travers différents composants, ma recommandation
+générale est de ne pas les extraire dans un fichier CSS générique, mais de s'en tenir au style composant par composant.
+
+### Entraînez-vous
+
+Vous trouverez le code source des exercices dans [le repo GitHub du cours](https://github.com/amandinelemoult2109/Vue-fr) dans le dossier
+`cafe-with-a-view`. Pour commencer, consultez la branche `P3C1-Begin`.
+
+#### Instructions
+
+1. Migrez tous les styles des sites statiques `styles.css` dans les fichiers des composants respectifs.
+2. Utilisez votre préprocesseur préféré si vous le souhaitez !
+
+```css title="public/styles.css"
+.description {
+  max-width: 960px;
+  font-size: 1.2rem;
+  margin: 0 auto;
+}
+
+.footer {
+  text-align: center;
+  font-style: italic;
+}
+
+.menu {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.menu-item {
+  display: flex;
+  width: 500px;
+  justify-content: space-between;
+  margin-bottom: 30px;
+}
+
+.menu-item__image {
+  max-width: 300px;
+}
+
+.shopping-cart {
+  position: absolute;
+  right: 30px;
+  top: 0;
+}
+```
+
+```html title="views/Home.vue"
+...
+<style lang="scss">
+.description {
+	max-width: 960px;
+	font-size: 1.2rem;
+	margin: 0 auto;
+}
+
+.footer {
+	font-style: italic;
+	text-align: center;
+}
+
+.menu {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+
+.shopping-cart {
+	position: absolute;
+	right: 30px;
+	top: 0;
+}
+</style>
+```
+
+```html title="components/MenuItem.vue"
+...
+<style lang="scss">
+.menu-item {
+	display: flex;
+	width: 500px;
+	justify-content: space-between;
+	margin-bottom: 30px;
+
+	&__image {
+		max-width: 300px;
+	}
+}
+</style>
+```
+
+### En résumé
+
+Dans ce chapitre, vous avez découvert :
+- l'utilisation de préprocesseurs dans un composant monofichier ;
+- les stratégies de gestion des styles avec les scoped styles ;
+- les stratégies de gestion des styles avec les CSS Modules ;
+- les stratégies de gestion des styles au fur et à mesure que vous créez des composants.
+
+_Dans le chapitre suivant, nous nous pencherons encore davantage sur la façon dont les composants peuvent communiquer entre eux._
+
+-----
+
+## Passez des datas entre les composants
+
+[Passez des datas entre les composants - Créez une application web avec Vue.js - OpenClassrooms](https://openclassrooms.com/fr/courses/6390311-creez-une-application-web-avec-vue-js/6864701-passez-des-datas-entre-les-composants)
+
+![](https://user.oc-static.com/upload/2020/05/20/15899595489163_Bannee-dimension-720-798-03.png)
+
+Dans les chapitres précédents, vous avez appris à utiliser les props pour passer des données vers un composant. Cependant, cela n'était qu'une
+utilisation basique des props. Que se passerait-il si nous voulions être plus explicites sur le type de données qui doivent être passées ? Et
+si nous voulions nous assurer que la prop est passée en continu pour que notre composant bénéficie des propriétés dont il a besoin ? Jetons un
+œil à tout ça. 👀
+
+<Vimeo vimeoId="413529792" />
+
+<br />
+
+### Définissez des props en tant qu'objets
+
+Définir les props comme un simple tableau de chaînes de caractères a l'avantage d'être facile à lire et à comprendre. Mais ça manque justement
+de complexité. Or, nous avons besoin de complexité pour nous assurer que nos props fonctionnent comme nous le souhaitons, peu importe qui
+utilise la prop.
+
+Par exemple, dans le code ci-dessous, vous remarquerez que le composant prend trois props différentes :
+- list ;
+- title ;
+- count.
+
+```html
+<template>
+    <div>
+        <h1>{{ title }} #{{ count }}</h1>
+        <ul>
+            <li v-for="item in list" :key="item">{{ item }}</li>
+        </ul>
+    </div>
+</template>
+<script>
+export default {
+    props: ['list', 'title', 'count']
+}
+</script>
+```
+
+Cependant, ces props ont des exigences spécifiques, ce qui pose problème. Par exemple, `title` devrait être une `string` mais `list` devrait
+posséder un comportement itératif, comme un `array` ou un `object`. Plutôt que d'espérer que ce soient bien les bonnes données qui sont passées,
+en croisant les doigts, ce serait quand même bien mieux de pouvoir empêcher le mauvais type de données de passer. Eh bien, c'est possible en
+définissant les props à l'aide d'un objet au lieu d'un tableau de chaînes de caractères.
+
+```html
+<template>
+    <div>
+        <h1>{{ title }} #{{ count }}</h1>
+        <ul>
+            <li v-for="item in list" :key="item">{{ item }}</li>
+        </ul>
+    </div>
+</template>
+<script>
+export default {
+    props: {
+        list: {},
+        title: {},
+        count: {}
+    }
+}
+</script>
+```
+
+Ici, la valeur de `props` est un objet. Les propriétés de cet objet correspondent à chacune des props que vous souhaitez utiliser. Pour cela,
+à chaque fois, une clé correspondant au nom de la prop (par exemple, `list`) à laquelle est associée un objet servira à définir la configuration
+de l'objet.
+
+Comme je vous l'ai dit, nous voulons éviter de recevoir le mauvais type de données dans chaque prop. Il faut donc commencer par configurer le
+type de prop attendu avec la clé `type` qui prend comme valeur un type de données JavaScript.
+
+```html
+<template>
+    <div>
+        <h1>{{ title }} #{{ count }}</h1>
+        <ul>
+            <li v-for="item in list" :key="item">{{ item }}</li>
+        </ul>
+    </div>
+</template>
+<script>
+export default {
+    props: {
+        list: {
+            type: Array
+        },
+        title: {
+            type: String
+        },
+        count: {
+            type: Number
+        }
+    }
+}
+</script>
+```
+
+:::info
+Pour avoir une liste complète des différents types de props, consultez [la documentation officielle](https://fr.vuejs.org/v2/guide/components-props.html).
+:::
+
+Par ailleurs, si notre composant a besoin de certaines props pour fonctionner ou avoir l'apparence souhaitée, ce serait génial de pouvoir le
+configurer. Vous vous en doutez, si je vous dis ça, c'est que Vue rend cela possible. 😏 Il suffit d'ajouter la clé `required` qui prend un
+booléen en valeur dans notre objet de configuration.
+
+```html
+<template>
+    <div>
+        <h1>{{ title }} #{{ count }}</h1>
+        <ul>
+            <li v-for="item in list" :key="item">{{ item }}</li>
+        </ul>
+    </div>
+</template>
+<script>
+export default {
+    props: {
+        list: {
+            type: Array
+        },
+        title: {
+            type: String,
+            required: true
+        },
+        count: {
+            type: Number
+        }
+    }
+}
+</script>
+```
+
+:::info
+Par défaut, la valeur de `required` est `false`.
+:::
+
+Cet objet nous permet même de définir une valeur par défaut sur les propriétés afin de fournir un contenu par défaut, dans le cas où la prop
+n'est jamais définie. Pour cela, il vous suffit de préciser la clé `default` et de lui associer la valeur souhaitée selon vos besoins. Dans
+notre exemple, cela pourrait ressembler à ce qui suit :
+
+```html
+<template>
+    <div>
+        <h1>{{ title }} #{{ count }}</h1>
+        <ul>
+            <li v-for="item in list" :key="item">{{ item }}</li>
+        </ul>
+    </div>
+</template>
+<script>
+export default {
+    props: {
+        list: {
+            type: Array,
+            default: () => []
+        },
+        title: {
+            type: String,
+            required: true
+        },
+        count: {
+            type: Number,
+            default: 1
+        }
+    }
+}
+</script>
+```
+
+:::info
+Vous avez peut-être remarqué que `Array` a une valeur par défaut qui utilise une fonction anonyme pour retourner un tableau vide. Nous ne
+l'aborderons pas dans ce cours, mais sachez que les valeurs par défaut des `Arrays` et des `Objects` doivent être retournées par une fonction
+pour que cela fonctionne correctement.
+:::
+
+### Entraînez-vous
+
+Vous trouverez le code source des exercices dans [le repo GitHub du cours](https://github.com/amandinelemoult2109/Vue-fr) dans le dossier
+`cafe-with-a-view`. Pour commencer, consultez la branche `P3C2-Begin`.
+
+#### Instructions
+
+Utilisez la syntaxe en objet pour définir les propriétés associées à `props` dans `MenuItem.vue`.
+
+```html title="components/MenuItem.vue"
+<script>
+export default {
+	name: "MenuItem",
+	props: ["addToShoppingCart", "image", "inStock", "name", "price", "quantity"],
+...
+</script>
+```
+
+```html title="components/MenuItem.vue"
+<script>
+export default {
+	name: "MenuItem",
+	props: {
+		addToShoppingCart: {
+			type: Function,
+			required: true
+		},
+		image: {
+			type: Object,
+			required: true
+		},
+		inStock: {
+			type: Boolean,
+			required: true
+		},
+		name: {
+			type: String,
+			required: true
+		},
+		price: {
+			type: Number,
+			required: true
+		},
+		quantity: {
+			type: Number,
+			defaut: 1
+		}
+	},
+...
+</script>
+```
+
+### En résumé
+
+Dans ce chapitre, vous avez acquis les connaissances pour :
+- définir des props à l'aide d'un objet ;
+- définir des types de prop pour minimiser les bugs potentiels ;
+- utiliser la prop `required` ;
+- définir une valeur par défaut sur une prop.
+
+_Cependant, bien que les props soient parfaites pour passer des informations du composant parent à l'enfant, elles ne fonctionnent pas dans
+l'autre sens. En d'autres termes, comment communiquer l'information du composant enfant au composant parent ? Nous allons étudier une façon de
+réaliser cette opération dans le prochain chapitre !_
+
+-----
+
+## Émettez des événements vers des composants parents
+
+[Émettez des événements vers des composants parents - Créez une application web avec Vue.js - OpenClassrooms](https://openclassrooms.com/fr/courses/6390311-creez-une-application-web-avec-vue-js/6864936-emettez-des-evenements-vers-des-composants-parents)
+
+![](https://user.oc-static.com/upload/2020/05/20/15899595857555_Bannee-dimension-720-798-03.png)
+
+Nous avons beaucoup appris sur la façon de communiquer depuis les composants parents vers les composants enfants, mais qu'en est-il de la
+communication vers les parents ? 👩‍👧‍👦 La manière la plus courante est d'émettre des événements personnalisés.
+
+### Révisez les événements
+
+En développement web, les [événements](https://developer.mozilla.org/fr/docs/Apprendre/JavaScript/Building_blocks/Ev%C3%A8nements) sont des
+actions ou des occurrences qui se produisent pendant l'utilisation d'un site web. Voici des exemples courants d'événements :
+- lorsqu'un utilisateur clique sur un élément ;
+- lorsqu'un utilisateur appuie sur une touche du clavier ;
+- lorsqu'un formulaire est soumis ;
+- lorsque la fenêtre d'un navigateur est redimensionnée.
+
+Lorsque ces actions se produisent, des événements sont **émis** afin que nous puissions y répondre en utilisant des techniques comme les
+gestionnaires d'événements. Un **objet événement** (_event-object_) est alors automatiquement passé aux événements. Il contiendra des
+fonctionnalités supplémentaires ou des informations sur l'événement. Par exemple, lorsqu'un utilisateur appuie sur une touche du clavier,
+l'objet événement peut nous indiquer quelle touche a été actionnée.
+
+### Créez un événement personnalisé
+
+Dans le monde du frontend, la gestion des événements est répandue. Comme nous l'avons vu précédemment avec la directive `v-on`, nous pouvons
+facilement écouter des événements courants et déclencher des fonctions à volonté. Cependant, ce serait bien pratique de pouvoir définir nos
+propres événements personnalisés faisant l'objet d'une émission, non ? Heureusement, c'est très facile à réaliser avec la fonctionnalité
+intégrée `$emit` de Vue. Voyons cela en action ! 🔍
+
+<Vimeo vimeoId="413529920" />
+
+<br />
+
+#### Utilisez $emit
+
+La fonction `$emit` prend deux paramètres :
+- le nom de l'événement (qui doit être défini en _kebab-case_) ;
+- un payload optionnel que vous pouvez utiliser pour passer des données à l'écouteur de l'événement.
+
+##### src/ChildComponent.vue
+
+```html
+<template>
+    <button @click="emitCustomEvent">Emit Event</button>
+</template>
+<script>
+export default {
+    methods: {
+        emitCustomEvent() {
+            this.$emit('custom-event-name', { message: 'Mon message personnalisé' })
+        }
+    }
+}
+</script>
+```
+
+:::info
+Le payload est généralement défini comme un objet. Cela permet de passer autant de propriétés que souhaité à travers un seul événement.
+:::
+
+#### Écoutez et répondez à un événement émis
+
+Une fois qu'un événement est émis, le composant parent qui utilise le composant enfant est capable d'écouter l'événement via la directive
+`v-on`. Pour cela, vous devez :
+1. Ajouter un écouteur d'événement (_listener_) `v-on` avec le nom de l'événement personnalisé sur le composant émettant l'événement.
+2. Lui assigner une méthode recevant le payload comme premier argument s'il existe.
+
+##### src/ParentComponent.vue
+
+```html
+<template>
+    <div>
+        <p>{{ message }}</p>
+        <!-- Écoute les événements personnalisés et y assigne une méthode -->
+        <ChildComponent @custom-event-name="setMessage" />
+    </div>
+</template>
+<script>
+import ChildComponent from './ChildComponent'
+export default {
+    components: { ChildComponent },
+    data () {
+        return {
+            message: 'Hello'
+        }
+    },
+    methods: {
+        // Définit la méthode utilisée par le payload pour mettre à jour la propriété data
+        setMessage(payload) {
+            this.message = payload.message
+        }
+    }
+}
+</script>
+```
+
+:::caution
+Attention cependant : cette technique ne fonctionne que lorsqu'on communique directement depuis un composant enfant vers un composant parent.
+En d'autres termes, ne vous attendez pas à ce que votre événement soit émis dans l'ensemble de l'application.
+:::
+
+### Entraînez-vous
+
+Vous trouverez le code source des exercices dans [le repo GitHub du cours](https://github.com/amandinelemoult2109/Vue-fr) dans le dossier
+`cafe-with-a-view`. Pour commencer, consultez la branche `P3C3-Begin`.
+
+#### Instructions
+
+1. Supprimez la prop `addToShoppingCart` du `MenuItem`.
+2. Créez une nouvelle méthode appelée `updateShoppingCart` dans `MenuItem` qui émet un événement appelé `add-items-to-cart` à `Home.vue` pour
+mettre à jour le panier.
+
+```html {5-8} title="components/MenuItem.vue"
+<script>
+export default {
+	name: "MenuItem",
+	props: {
+		addToShoppingCart: {
+			type: Function,
+			required: true
+		},
+		image: {
+			type: Object,
+			required: true
+		},
+		inStock: {
+			type: Boolean,
+			required: true
+		},
+		name: {
+			type: String,
+			required: true
+		},
+		price: {
+			type: Number,
+			required: true
+		},
+		quantity: {
+			type: Number,
+			defaut: 1
+		}
+	},
+	data() {
+		return {
+			onSale: false
+		}
+	},
+	computed: {
+		generatedPrice() {
+			if (this.onSale) {
+				return (this.price * 0.9).toFixed(2)
+			} else {
+				return this.price
+			}
+		}
+	},
+	beforeMount() {
+		const today = new Date().getDate()
+
+		if (today % 2 === 0) {
+			this.onSale = true
+		}
+	}
+}
+</script>
+```
+
+```html {40-44} title="components/MenuItem.vue"
+<script>
+export default {
+	name: "MenuItem",
+	props: {
+		image: {
+			type: Object,
+			required: true
+		},
+		inStock: {
+			type: Boolean,
+			required: true
+		},
+		name: {
+			type: String,
+			required: true
+		},
+		price: {
+			type: Number,
+			required: true
+		},
+		quantity: {
+			type: Number,
+			defaut: 1
+		}
+	},
+	data() {
+		return {
+			onSale: false
+		}
+	},
+	computed: {
+		generatedPrice() {
+			if (this.onSale) {
+				return (this.price * 0.9).toFixed(2)
+			} else {
+				return this.price
+			}
+		}
+	},
+	methods: {
+		updateShoppingCart(quantity) {
+			this.$emit("add-items-to-cart", quantity)
+		}
+	},
+	beforeMount() {
+		const today = new Date().getDate()
+
+		if (today % 2 === 0) {
+			this.onSale = true
+		}
+	}
+}
+</script>
+```
+
+### En résumé
+
+Dans ce chapitre, vous avez appris à :
+- définir des événements personnalisés dans les composants ;
+- émettre des événements personnalisés à partir de composants enfants ;
+- écouter des événements personnalisés à partir de composants enfants ;
+- utiliser le payload des événements personnalisés pour effectuer des actions supplémentaires.
+
+_Dans la leçon suivante, nous étudierons une nouvelle technique pour passer des données aux composants : les slots. Alors, on se retrouve au
+prochain chapitre. 👋_
+
+-----
+
+## Créez des composants flexibles en utilisant les slots
+
+[Créez des composants flexibles en utilisant les slots - Créez une application web avec Vue.js - OpenClassrooms](https://openclassrooms.com/fr/courses/6390311-creez-une-application-web-avec-vue-js/6865121-creez-des-composants-flexibles-en-utilisant-les-slots)
+
+![](https://user.oc-static.com/upload/2020/05/20/15899597714554_Bannee-dimension-720-798-03.png)
+
+Même si les props sont très puissantes, elles ajoutent un niveau de complexité dans l'interaction avec un composant, puisqu'elles demandent
+un certain niveau de connaissance afin d'utiliser le composant de manière adéquate. De plus, on peut facilement se retrouver au milieu d'un
+« bazar de props » lorsqu'un composant a besoin de plusieurs props pour fonctionner correctement.
+
+```html
+<custom-banner size="small" left-icon="info" text="Hello" />
+```
+
+Dans le cas où votre composant nécessiterait une solution plus flexible, Vue peut vous aider avec la technique des `slots`.
+
+<Vimeo vimeoId="413530010" />
+
+<br />
+
+### Découvrez les slots
+
+L'élément `<slot>` sert d'emplacement pour du contenu que le développeur peut définir dynamiquement sans props prédéterminées. 
+
+Prenons un exemple. À l'aide du composant `custom-banner`, nous voulons que les utilisateurs puissent définir différentes bannières
+personnalisées. L'idée ici est justement d'éviter notre bazar de props. Par exemple, imaginons que nous voulions que notre composant
+`CustomBanners` rende le résultat suivant  :
+
+```html
+<div class="small">
+    <p><icon name="info" /> Bannière d'information</p>
+</div>
+<div class="small">
+    <p><icon name="warning" />Bannière de warning<icon name="warning" /></p>
+</div>
+```
+
+Si cela avait été réalisé uniquement avec des props, le résultat pourrait ressembler à ceci :
+
+```html
+<custom-banner
+    size="small"
+    left-icon="info"
+    text="Bannière information"
+/>
+<custom-banner
+    size="small"
+    left-icon="warning"
+    text="Bannière attention"
+    right-icon="warning"
+/>
+```
+
+Plus important encore, le bloc Template du composant `CustomBanner` ressemblerait à ceci :
+
+##### src/components/CustomBanner.vue
+
+```html
+<template>
+    <div :class="size">
+        <p><icon v-if="leftIcon" :name="leftIcon" /> {{ text }} <icon v-if="rightIcon" :name="rightIcon" /></p>
+    </div>
+</template>
+```
+
+Même dans cet exemple simple, le bloc Template semble déjà assez difficile à lire. Alors que si on avait utilisé des slots...
+
+##### src/components/CustomBanner.vue
+
+```html
+<template>
+    <div :class="size">
+        <slot></slot>
+    </div>
+</template>
+```
+
+Et voilà ! Comme vous pouvez le voir, le slot devient un espace ouvert où le développeur peut passer n'importe quel contenu personnalisé,
+sans avoir besoin d'utiliser un grand nombre de conditions pour gérer différents scénarios de props.
+
+#### Définissez le contenu par défaut d'un slot
+
+De la même façon qu'il est possible de définir une valeur par défaut pour les props, vous pouvez également définir le contenu par défaut d'un
+slot. C'est particulièrement utile lorsque vous souhaitez afficher un contenu standard, à moins que le développeur ne définisse un contenu
+personnalisé.
+
+Pour donner un contenu par défaut à notre `CustomBanner`, tout ce que nous avons à faire est de placer le contenu par défaut à l'intérieur des
+balises `slot` dans le bloc Template.
+
+```html
+<template>
+    <div :class="size">
+        <slot>Bonjour !</slot>
+    </div>
+</template>
+```
+
+### Découvrez comment utiliser plusieurs slots
+
+Vous vous demandez peut-être aussi : « Et si je veux utiliser plusieurs slots dans un composant ? » Et ce serait une excellente question ! 🕵️‍♀️🕵️‍♂️
+Prenons l'exemple d'un simple composant `Card` :
+
+```html
+<template>
+    <div class="card">
+        <h2>Titre de la carte</h2>
+        <p>Texte de la carte</p>
+        <button>Action</button>
+    </div>
+</template>
+```
+
+Dans ce composant, nous utilisons des props pour effectuer la configuration, mais nous savons que ce sera un cauchemar à gérer s'il s'agrandit.
+Ici, trois slots différents pourraient être définis par un développeur. Pour résoudre ce problème, nous avons besoin de **slots nommés**.
+
+Les slots nommés permettent d'attribuer des noms aux slots afin que les développeurs puissent s'y référer plus tard. Ainsi, dans l'instance de
+notre composant `Card`, nous donnons simplement une prop `name` à chaque slot.
+
+```html
+<template>
+    <div class="card">
+        <slot name="title">Titre de la carte</slot>
+        <slot name="text">Texte de la carte</slot>
+        <slot name="action">Action</slot>
+    </div>
+</template>
+```
+
+Lorsque nous voulons invoquer notre composant (à partir de la v2.6 de Vue.js et plus), il suffit d'utiliser la directive `v-slot` sur un
+élément `template` comme ici :
+
+```html
+<template>
+    <Card>
+        <template v-slot:title>
+            <h3>Donner des noms aux slots est utile</h3>
+        </template>
+        <template v-slot:text>
+            <p>Maintenant, on peut ajouter ce que l'on veut ici en donnant le nom du slot !</p>
+        </template>
+        <template v-slot:action>
+            <a href="#">En savoir plus</a>
+        </template>
+    </Card>
+</template>
+```
+
+### Entraînez-vous
+
+Vous trouverez le code source des exercices dans [le repo GitHub du cours](https://github.com/amandinelemoult2109/Vue-fr) dans le dossier
+`cafe-with-a-view`. Pour commencer, consultez la branche `P3C4-Begin`.
+
+#### Instructions
+
+Refactorez le composant `BaseButton` en utilisant des slots plutôt que les props qui sont définies pour le moment.
+
+```html {4,10} title="components/BaseButton.vue"
+<script>
+export default {
+    name: 'BaseButton',
+    props: ['text']
+}
+</script>
+
+<template>
+    <button v-on="$listeners">
+        {{ text }}
+    </button>
+</template>
+```
+
+```html {9} title="components/BaseButton.vue"
+<script>
+export default {
+    name: 'BaseButton'
+}
+</script>
+
+<template>
+    <button v-on="$listeners">
+        <slot></slot>
+    </button>
+</template>
+```
+
+```html {15-18} title="components/MenuItem.vue"
+<template>
+	<div class="menu-item">
+		<img class="menu-item__image" :src="image.source" :alt="image.alt" />
+		<div>
+			<h3>{{ name }}</h3>
+			<p>
+				Prix : {{ generatedPrice }}
+				<span v-if="onSale">(10% de réduction !)</span>
+			</p>
+			<p v-if="inStock">En stock</p>
+			<p v-else>En rupture de stock</p>
+			<div>
+				<label for="add-item-quantity">Quantité : {{ quantity }}</label>
+				<input v-model.number="quantity" id="add-item-quantity" type="number" />
+				<BaseButton
+					@click="updateShoppingCart(quantity)"
+					text="Ajouter au panier"
+				/>
+			</div>
+		</div>
+	</div>
+</template>
+```
+
+```html {15-17} title="components/MenuItem.vue"
+<template>
+	<div class="menu-item">
+		<img class="menu-item__image" :src="image.source" :alt="image.alt" />
+		<div>
+			<h3>{{ name }}</h3>
+			<p>
+				Prix : {{ generatedPrice }}
+				<span v-if="onSale">(10% de réduction !)</span>
+			</p>
+			<p v-if="inStock">En stock</p>
+			<p v-else>En rupture de stock</p>
+			<div>
+				<label for="add-item-quantity">Quantité : {{ quantity }}</label>
+				<input v-model.number="quantity" id="add-item-quantity" type="number" />
+				<BaseButton @click="updateShoppingCart(quantity)">
+					Ajouter au panier
+				</BaseButton>
+			</div>
+		</div>
+	</div>
+</template>
+```
+
+### En résumé
+
+Dans ce chapitre, vous avez découvert :
+- les difficultés induite par le bazar de props ;
+- la définition de slots sur des composants ;
+- la définition de contenu par défaut dans les slots ;
+- l'utilisation de slots nommés pour gérer plusieurs slots.
+
+_Rendez-vous dans le prochain chapitre pour passer en revue ce que nous avons appris dans cette partie du cours ! 🚀_
+
+-----
+
+## Résumé de la partie 3
+
+[Résumé de la partie 3 - Créez une application web avec Vue.js - OpenClassrooms](https://openclassrooms.com/fr/courses/6390311-creez-une-application-web-avec-vue-js/6865311-resume-de-la-partie-3)
+
+![](https://user.oc-static.com/upload/2020/05/20/15899597875573_Bannee-dimension-720-798-03.png)
+
+Nous avons abordé de nombreux concepts essentiels, félicitations à vous ! 💪
+
+Vous êtes maintenant plus que capable de créer des applications robustes avec Vue.js ! Ensemble, nous avons appris à :
+- tirer parti des différentes **stratégies CSS pour gérer les styles** ;
+- concevoir des composants réutilisables avec une **architecture basée sur les composants** ;
+- utiliser des techniques comme les **props** et les **slots** pour communiquer des données aux composants enfants ;
+- **émettre des événements** à partir de composants enfants pour communiquer avec les composants parents.
+
+La prochaine partie du cours aborde un concept intermédiaire, recommandé si vous souhaitez en savoir plus sur la manière de gérer les données
+pour une application plus conséquente, comme pourrait l'être une application en prod d'une entreprise. Cependant, et j'insiste sur ce point,
+vous avez déjà à ce stade tout ce qu'il vous faut pour être un développeur Vue.js productif et créer de superbes applications Web !
+Félicitations pour tout le travail accompli !
+
+-----
+
+## Quiz : Créez des composants réutilisables avec Vue.js
+
+[Créez des composants réutilisables avec Vue.js - OpenClassrooms](https://openclassrooms.com/fr/courses/6390311-creez-une-application-web-avec-vue-js/exercises/3849)
+
+#### Compétences évaluées
+
+<i class="bi bi-check2-circle"></i> Créer des composants réutilisables dans Vue.js
+
+-----
+
+#### Question 1 : Si vous souhaitez passer des données à un composant enfant, quelle technique devez-vous utiliser ?
+
+<i class="bi bi-circle"></i> Propriétés calculées<br />
+<i class="bi bi-circle"></i> Methods<br />
+<i class="bi bi-record-circle"></i> Props<br />
+<i class="bi bi-circle"></i> Data store<br />
+<br />
+
+_Les props sont des attributs personnalisés que vous pouvez enregistrer dans un composant afin qu'il puisse accéder à ces données. Pour plus
+d'informations, vous pouvez consulter [la documentation sur les props](https://fr.vuejs.org/v2/guide/components.html)._
+
+-----
+
+#### Question 2 : Il y a actuellement un bug dans notre application. Comme vous le voyez ci-dessous, un composant affiche différents types de données dans le message, tels que des arrays et des objets.
+
+```html
+<template>
+    <p>{{ message }}</p>
+</template>
+<script>
+export default {
+    props: ['message']
+}
+</script>
+```
+
+**Quel est le meilleur moyen d'éviter ce genre de problème ?**
+
+<i class="bi bi-circle"></i> Définir la propriété <code>required</code> dans la prop.<br />
+<i class="bi bi-record-circle"></i> Définir le type de propriété avec une valeur <code>String</code>.<br />
+<i class="bi bi-circle"></i> Définir une propriété <code>default</code> dans la prop.<br />
+<i class="bi bi-circle"></i> Définir un nom de prop personnalisé qui indique aux autres développeurs de n'utiliser que des chaînes de
+caractères.<br />
+<br />
+
+_En définissant le `type` à `String` pour la prop, cela permettra à Vue de protéger la prop contre la réception d'autres types de données, ce
+qui empêchera le bug de se produire._
+
+-----
+
+#### Question 3 : Un développeur essaie d'utiliser les techniques SCSS dans le bloc de code ci-dessous.
+
+```html
+<template>
+    <div class="form-wrapper">
+        <label class="form-label">Nom du formulaire</label>
+        <input class="form-input" type="text" />
+    </div>
+</template>
+<style>
+.form {
+    &-wrapper { margin: 25px 0; }
+    &-label { font-size: 1.2rem; }
+    &-input { padding: 10px 5px; }
+}
+</style>
+```
+
+**Qu’a-t-il mal fait ?**
+
+<i class="bi bi-circle"></i> Il doit ajouter l'attribut <code>scss</code> au bloc <code>&#60;style></code>.<br />
+<i class="bi bi-record-circle"></i> Il doit ajouter l'attribut <code>lang="scss"</code> au bloc <code>&#60;style></code>.<br />
+<i class="bi bi-circle"></i> Il doit envelopper les styles dans un bloc <code>&#60;scss></code>.<br />
+<i class="bi bi-circle"></i> Il doit ajouter l'attribut <code>preprocessor="scss"</code> au bloc <code>&#60;style></code>.<br />
+<br />
+
+_Les préprocesseurs peuvent être activés en ajoutant l'attribut `lang` avec le préprocesseur souhaité._
+
+-----
+
+#### Question 4 : Quelle méthode a permis de générer le CSS suivant ?
+
+```css
+.nav-item[data-12vr93] { ... }
+```
+
+<i class="bi bi-circle"></i> Global CSS<br />
+<i class="bi bi-record-circle"></i> Scoped CSS<br />
+<i class="bi bi-circle"></i> CSS Modules<br />
+<br />
+
+_Le Scoped CSS est une technique qui a été créée pour éviter la collision des sélecteurs CSS grâce à l'utilisation d'attributs data générés de
+manière dynamique._
+
+-----
+
+#### Question 5 : Lorsqu'un composant enfant doit transmettre des données à son parent, quelle technique est-il possible d'utiliser ?
+
+<i class="bi bi-circle"></i> Les props<br />
+<i class="bi bi-record-circle"></i> Les événements personnalisés<br />
+<i class="bi bi-circle"></i> Les slots<br />
+<i class="bi bi-circle"></i> Les propriétés calculées<br />
+<br />
+
+_Les événements personnalisés vous permettent de définir un événement à écouter pour le composant parent._
+
+-----
+
+#### Question 6 : Quelle méthodologie a été utilisée pour générer le CSS suivant ?
+
+```css
+.nav-item-vje2901e { ... }
+```
+
+<i class="bi bi-circle"></i> Global CSS<br />
+<i class="bi bi-circle"></i> Scoped CSS<br />
+<i class="bi bi-record-circle"></i> Modules CSS<br />
+<br />
+
+_Les modules CSS sont une technique qui ajoute un hachage unique généré dynamiquement pour minimiser les collisions CSS et les effets
+secondaires._
+
+-----
+
+#### Question 7 : Lorsque vous définissez un événement personnalisé, outre le nom de l'événement, quel autre paramètre pouvez-vous également définir ?
+
+<i class="bi bi-circle"></i> Le type<br />
+<i class="bi bi-record-circle"></i> Un payload<br />
+<i class="bi bi-circle"></i> Required<br />
+<i class="bi bi-circle"></i> Des variations de noms<br />
+<br />
+
+_En plus de pouvoir faire écouter un événement aux éléments parents, les composants enfants peuvent transmettre des données avec l'événement
+par le biais d'un payload._
+
+-----
+
+#### Question 8 : Quels sont les avantages des slots ?
+
+*Attention, plusieurs réponses sont possibles.*
+
+<i class="bi bi-check-square-fill"></i> Ça donne accès à une API flexible permettant aux développeurs de placer du contenu.<br />
+<i class="bi bi-check-square-fill"></i> Ils permettent de créer différentes configurations sans avoir à fournir plusieurs props.<br />
+<i class="bi bi-check-square-fill"></i> Ça permet aux développeurs de désigner l'endroit où leur contenu apparaîtra de manière intuitive avec
+des emplacements nommés.<br />
+<i class="bi bi-square"></i> Les slots garantissent que tout le contenu fourni entre les balises d'ouverture et de fermeture d'un modèle est
+supprimé.<br />
+<br />
+
+_Les slots sont une technique puissante qui vous permet de définir des zones dans votre composant qui peuvent accepter du contenu de manière
+flexible._

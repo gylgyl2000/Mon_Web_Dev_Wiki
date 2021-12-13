@@ -1,0 +1,515 @@
+---
+sidebar_position: 2
+---
+
+# OpenClassrooms
+
+**Sources :**
+- [MySQL :: A Quick Guide to Using the MySQL APT Repository - MySQL Documentation](https://dev.mysql.com/doc/mysql-apt-repo-quick-guide/en/)
+- [MySQL On Linux (Beginners Tutorial) - Like Geeks](https://likegeeks.com/mysql-on-linux-beginners-tutorial/)
+
+
+**Failed to restart mysql.service: Unit mysql.service is masked.**
+
+```shell
+systemctl unmask mysql.service
+service mysql start
+```
+
+## Installer MySQL
+
+Mettre à jour APT :
+
+```sh title="shell"
+sudo apt update
+```
+
+Installer :
+
+```sh title="shell"
+sudo apt install mysql-server
+```
+
+> ```sh title="shell"
+> sudo apt install mysql-community-server
+> ```
+
+### Vérifiez si MySQL est installé
+
+```sh title="shell"
+mysql --version
+```
+
+### Démarrer MySQL et activer au démarrage
+
+```sh title="shell"
+sudo systemctl start mysql
+```
+
+```sh title="shell"
+sudo service mysql start
+```
+
+Si vous redémarrez le système, vous remarquerez que MySQL ne fonctionne pas. Nous devons donc lui permettre de s'exécuter au démarrage
+du système.
+
+```sh title="shell"
+sudo systemctl enable mysql
+```
+
+Vérifiez si MySQL est en cours d'exécution
+
+```sh title="shell"
+sudo systemctl status mysql
+```
+
+Redémarrer MySQL
+
+```sh title="shell"
+sudo systemctl restart mysql
+```
+
+### Définir le mot de passe root pour MySQL
+
+```sh title="shell"
+sudo mysql_secure_installation
+```
+
+### Vérifier la version de MySQL
+
+```sh title="shell"
+mysql --version
+```
+
+### Accéder au shell MySQL
+
+```sh title="shell"
+sudo mysql -u root -p
+```
+
+-u : avec un utilisateur => ici, l'utilisateur root.<br />
+-p : dire à MySQL qu'on va taper le mot de passe de l'utilisateur.
+
+### Créer un utilisateur sur MySQL
+
+```sql
+mysql> CREATE USER 'user'@'localhost' IDENTIFIED BY 'password';
+```
+
+Remplacez « utilisateur » par le nom d'utilisateur de votre choix. 'localhost' est l'hôte sur lequel vous allez créer l'utilisateur. Et dans
+« mot de passe », entrez le mot de passe de ce nouvel utilisateur. De même, il est recommandé que ce soit un mot de passe fort.
+
+## Créer une base `CREATE DATABASE`
+
+```sql title="sql"
+mysql> CREATE DATABASE nomdelabase;
+```
+
+## Sélectionner la base `USE`
+
+```sql title="sql"
+mysql> USE nomdelabase;
+```
+
+## Lister les bases de données `SHOW DATABASE`
+
+```sql title="sql"
+mysql> SHOW DATABASE
+```
+
+## Créer une table `CREATE TABLE`
+
+```sql title="sql"
+mysql> CREATE TABLE utilisateur (
+    -> id INTEGER NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    -> nom VARCHAR(100),
+    -> prenom VARCHAR(100),
+    -> email VARCHAR(255) NOT NULL UNIQUE
+    -> );
+```
+
+## Voir les tables `SHOW TABLES`
+
+```sql title="sql"
+mysql> SHOW TABLES;
+```
+
+## Voir le contenu d'une table `SHOW COLUMNS`
+
+```sql title="sql"
+mysql> SHOW COLUMNS FROM nomdelatable;
+```
+
+## Insérez des objets `INSERT INTO` `VALUES`
+
+```sql title="sql"
+mysql> INSERT INTO utilisateur (`nom`, `prenom`, `email`)
+VALUES
+('Doe', 'John', 'john@yahoo.fr'),
+('Smith', 'Jane', 'jane@hotmail.com'),
+('Dupont', 'Sebastien', 'sebastien@orange.fr'),
+('Martin', 'Emilie', 'emilie@gmail.com');
+```
+
+## Lire les objets `SELECT`
+
+```sql title="sql"
+mysql> SELECT * FROM utilisateur;
+```
+
+```sql title="sql"
+mysql> SELECT `nom`, `prenom`, `email` FROM utilisateur;
+```
+
+## Mettez à jour un objet `UPDATE`
+
+```sql title="sql"
+mysql> UPDATE `utilisateur` SET `email` = 'quentind@gmail.com' WHERE `id` = '1';
+```
+
+## Supprimez un objet `DELETE FROM`
+
+```sql title="sql"
+mysql> DELETE FROM `utilisateur` WHERE `id` = '2';
+```
+
+## Sélectionner un objet `SELECT` `FROM` `WHERE`
+
+### Sélectionner un objet unique
+
+```sql title="sql"
+mysql> SELECT * FROM aliment WHERE id = 4;
+mysql> SELECT * FROM aliment WHERE nom = “poire”;
+```
+
+### Sélectionner un objet avec critère de comparaison
+
+```sql title="sql"
+mysql> SELECT * FROM aliment WHERE calories < 90;
+mysql> SELECT * FROM aliment WHERE calories > 90;
+mysql> SELECT * FROM aliment WHERE calories >= 90;
+mysql> SELECT * FROM aliment WHERE calories <= 90;
+```
+
+### Sélectionner un objet avec comparaison de texte `SELECT` `FROM` `WHERE` `LIKE`
+
+```sql title="sql"
+/* Texte se terminant par "gmail.com" */
+mysql> SELECT * FROM utilisateur WHERE email LIKE “%gmail.com”;
+/* Texte commençant par "gmail.com" */
+mysql> SELECT * FROM utilisateur WHERE email LIKE “gmail.com%”;
+/* Texte contenant "gmail.com" au début ou à la fin */
+mysql> SELECT * FROM utilisateur WHERE email LIKE “%gmail.com%”;
+```
+
+## Ordonner des objets `ORDER BY`
+
+```sql title="sql"
+/* Ordonner une colonne par ordre croissant */
+mysql> SELECT * FROM aliment ORDER BY calories ASC;
+mysql> SELECT * FROM utilisateurs ORDER BY prenom ASC
+/* Ordonner une colonne par ordre décroissant */
+mysql> SELECT * FROM aliment ORDER BY calories DESC;
+mysql> SELECT * FROM utilisateurs ORDER BY prenom DESC;
+/* Combinaison de commandes */
+mysql> SELECT * FROM aliment WHERE calories < 90 ORDER BY calories DESC;
+```
+
+## Comptez le nombre d’objets `SELECT COUNT`
+
+```sql title="sql"
+mysql> SELECT COUNT(*) FROM utilisateur WHERE email LIKE "%gmail.com";
+```
+
+```sql title="sql"
+/* Compter tous les utilisateurs */
+mysql> SELECT COUNT(*) FROM utilisateur;
+/* Compter tous les noms de famille */
+mysql> SELECT COUNT(nom) FROM utilisateur;
+/* Compter uniquement les noms de familles différents */
+mysql> SELECT COUNT(DISTINCT nom) FROM utilisateur;
+```
+
+## Effectuez des opérations sur des données chiffrées `AVG` `SUM` `MAX` `MIN`
+
+```sql title="sql"
+/* Connaître la moyenne de teneur en sucre des aliments */
+mysql> SELECT AVG(sucre) FROM aliment;
+/* Connaître la somme de teneur en sucre des aliments */
+mysql> SELECT SUM(sucre) FROM aliment;
+/* Connaître le maximum de teneur en sucre des aliments */
+mysql> SELECT MAX(sucre) FROM aliment;
+/* Connaître le minimum de teneur en sucre des aliments */
+mysql> SELECT MIN(sucre) FROM aliment;
+/* Connaître la teneur moyenne en calories des aliments de 30 kcal ou plus */
+mysql> SELECT AVG(calories) FROM aliment WHERE calories >= 30;
+```
+
+## Sauvegardez les requêtes `CREATE VIEW`
+
+```sql title="sql"
+/* Les utilisateurs dont l’adresse mail est une adresse Gmail */
+mysql> CREATE VIEW utilisateurs_gmail_vw AS SELECT * FROM utilisateur WHERE email LIKE "%gmail.com";
+/* Récupérer les utilisateurs avec une adresse Gmail */
+mysql> SELECT * FROM utilisateurs_gmail_vw;
+/* afficher les utilisateurs dont l’adresse e-mail est une adresse Gmail ET dont le prénom contient la lettre “m” */
+mysql> SELECT * FROM utilisateurs_gmail_vw WHERE prenom LIKE "%m%";
+```
+
+## Extraire des informations `JOIN`
+
+### Via une relation 1 à plusieurs
+
+Spécifier à MySQL de joindre les tables “utilisateur” et “langue” en lui précisant que l’id de langue et langue_id de l’utilisateur doivent
+être égaux.
+
+Extraire tous les utilisateurs avec les langues qui leur sont associées.
+
+```sql title="sql"
+/* Tout sélectionner dans la table "utilisateur" */
+SELECT * FROM `utilisateur`
+/* Joindre la table "langue" */
+JOIN `langue`
+/* Préciser que l'`id` de `langue` est le champ `langue_id` de la table `utilisateur`. */
+ON `utilisateur`.`langue_id` = `langue`.`id`;
+```
+
+### Via une relation plusieurs à plusieurs
+
+La **table de liaison** sert à stocker des relations entre un utilisateur et un aliment précis.
+
+Relier tous les utilisateurs aux aliments qu’ils ont scannés.
+
+```sql title="sql"
+/* Tout sélectionner dans la table "utilisateur" */
+SELECT * FROM `utilisateur`
+/* Joindre la table de liaison "utilisateur_aliment" */
+JOIN `utilisateur_aliment`
+/* Préciser que l'`id` de `utilisateur` est le champ `utilisateur_id` de la table de liaison `utilisateur_aliment` */
+ON (utilisateur.id = utilisateur_aliment.utilisateur_id)
+/* Joindre la table "aliment" */
+JOIN `aliment`
+/* Préciser que l'`id` de `aliment` est la champ `utilisateur_id` de la table de liaison `utilisateur_aliment` */
+ON (aliment.id = utilisateur_aliment.utilisateur_id)
+```
+
+## Modifiez la structure d’un objet `ALTER TABLE`
+
+### Ajoutez un champ `ADD`
+
+```sql title="sql"
+ALTER TABLE langue ADD code VARCHAR(100);
+```
+
+### Supprimez un champ `DROP`
+
+```sql title="sql"
+ALTER TABLE utilisateur DROP nom;
+```
+
+### Modifiez un champ `MODIFY`
+
+```sql title="sql"
+ALTER TABLE utilisateur MODIFY email VARCHAR(500) NOT NULL;
+```
+
+### Renommez un champ `CHANGE`
+
+```sql title="sql"
+ALTER TABLE langue CHANGE code code_pays VARCHAR(100);
+```
+
+## Ajoutez une relation un à plusieurs
+
+```sql
+/* Créer une nouvelle table */
+CREATE TABLE reduction (
+id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+valeur VARCHAR(100) NOT NULL
+);
+
+/* Insérer des valeurs */
+INSERT INTO reduction (valeur) VALUES ('-30%');
+INSERT INTO reduction (valeur) VALUES ('-50%');
+
+/* Résultat */
+SELECT * FROM reduction;
++----+--------+
+| id | valeur |
++----+--------+
+|  1 | -30%   |
+|  2 | -50%   |
++----+--------+
+
+/* Ajouter un champ à la table */
+ALTER TABLE aliment
+ADD reduction_id INT;
+
+/* Modifier ce champ pour lier la référence */
+ALTER TABLE aliment
+ADD FOREIGN KEY (reduction_id)
+REFERENCES reduction (id)
+ON DELETE SET NULL;
+
+/* Résultat */
+SELECT * FROM aliment WHERE id=1;
++----+-------+-------------+-------+----------+----------+-----------+------+--------------+
+| id | nom   | marque      | sucre | calories | graisses | proteines | bio  | reduction_id |
++----+-------+-------------+-------+----------+----------+-----------+------+--------------+
+|  1 | pomme | sans marque |  19.1 |       72 |      0.2 |       0.4 |    0 |         NULL |
++----+-------+-------------+-------+----------+----------+-----------+------+--------------+
+
+/* Ajouter la relation de l'objet */
+UPDATE aliment SET reduction_id = 1 WHERE id = 1;
+
+/* Résultat */
+SELECT * FROM aliment WHERE id=1;
++----+-------+-------------+-------+----------+----------+-----------+------+--------------+
+| id | nom   | marque      | sucre | calories | graisses | proteines | bio  | reduction_id |
++----+-------+-------------+-------+----------+----------+-----------+------+--------------+
+|  1 | pomme | sans marque |  19.1 |       72 |      0.2 |       0.4 |    0 |            1 |
++----+-------+-------------+-------+----------+----------+-----------+------+--------------+
+
+/* Vérifier */
+SELECT * from aliment
+JOIN reduction
+ON aliment.reduction_id = reduction.id
+WHERE aliment.id = 1;
++----+-------+-------------+-------+----------+----------+-----------+------+--------------+----+--------+
+| id | nom   | marque      | sucre | calories | graisses | proteines | bio  | reduction_id | id | valeur |
++----+-------+-------------+-------+----------+----------+-----------+------+--------------+----+--------+
+|  1 | pomme | sans marque |  19.1 |       72 |      0.2 |       0.4 |    0 |            1 |  1 | -30%   |
++----+-------+-------------+-------+----------+----------+-----------+------+--------------+----+--------+
+```
+
+## Ajoutez une relation plusieurs à plusieurs
+
+```sql
+/* Créer une nouvelle table */
+CREATE TABLE appareil (
+id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+type VARCHAR(100) NOT NULL
+);
+
+/* Insérer des valeurs */
+INSERT INTO appareil (type) VALUES ('iphone');
+
+INSERT INTO appareil (type) VALUES ('android');
+
+INSERT INTO appareil (type) VALUES ('pc');
+
+INSERT INTO appareil (type) VALUES ('mac');
+
+/* Résultat */
+SELECT * FROM appareil;
++----+---------+
+| id | type    |
++----+---------+
+|  1 | iphone  |
+|  2 | android |
+|  3 | pc      |
+|  4 | mac     |
++----+---------+
+
+/* Créer une table de liaison */
+CREATE TABLE utilisateur_appareil (
+utilisateur_id INT NOT NULL,
+appareil_id INT NOT NULL,
+
+FOREIGN KEY (utilisateur_id)
+REFERENCES utilisateur (id)
+ON DELETE RESTRICT
+ON UPDATE CASCADE,
+
+FOREIGN KEY (appareil_id)
+REFERENCES appareil (id)
+ON DELETE RESTRICT
+ON UPDATE CASCADE,
+
+PRIMARY KEY (utilisateur_id, appareil_id)
+);
+
+/* Vérifier la création de la table de liaison */
+SELECT * FROM utilisateur_appareil;
+Empty set (0.00 sec)
+
+/* Vérifier la table */
+SELECT * FROM utilisateur WHERE id = 1;
++----+---------+------------------+-----------+
+| id | prenom  | email            | langue_id |
++----+---------+------------------+-----------+
+|  1 | quentin | qentin@gmail.com |         1 |
++----+---------+------------------+-----------+
+
+/* Ajouter des relations */
+INSERT INTO utilisateur_appareil (utilisateur_id, appareil_id) VALUES (1, 2);
+
+INSERT INTO utilisateur_appareil (utilisateur_id, appareil_id) VALUES (1, 4);
+
+/* Résultat */
+SELECT * FROM utilisateur_appareil;
++----------------+-------------+
+| utilisateur_id | appareil_id |
++----------------+-------------+
+|              1 |           2 |
+|              1 |           4 |
++----------------+-------------+
+
+/* Retrouver les relations */
+SELECT * FROM utilisateur
+JOIN utilisateur_appareil
+ON utilisateur.id = utilisateur_appareil.utilisateur_id
+JOIN appareil
+ON appareil.id = utilisateur_appareil.appareil_id
+WHERE utilisateur.id = 1;
++----+---------+------------------+-----------+----------------+-------------+----+---------+
+| id | prenom  | email            | langue_id | utilisateur_id | appareil_id | id | type    |
++----+---------+------------------+-----------+----------------+-------------+----+---------+
+|  1 | quentin | qentin@gmail.com |         1 |              1 |           2 |  2 | android |
+|  1 | quentin | qentin@gmail.com |         1 |              1 |           4 |  4 | mac     |
++----+---------+------------------+-----------+----------------+-------------+----+---------+
+```
+
+## Suppression d'un objet unique `ON DELETE`
+
+**Empêche la suppression sous condition**
+
+```sql
+ON DELETE RESTRICT;
+ou
+ON DELETE NO ACTION;
+```
+
+**Supprime la famille et remplace les objets par NULL**
+
+```sql
+ON DELETE SET NULL;
+```
+
+**Supprime tous les objets reliés**
+
+```sql
+ON DELETE CASCADE;
+```
+
+## Mise à jour d'un objet `ON UPDATE`
+
+**Empêche la mise à jour sous condition**
+
+```sql
+ON UPDATE RESTRICT;
+ou
+ON UPDATE NO ACTION;
+```
+
+**Met à jour la famille et remplace les objets par NULL**
+
+```sql
+ON UPDATE SET NULL;
+```
+
+**Met à jour tous les objets reliés**
+
+```sql
+ON UPDATE CASCADE;
+```

@@ -1,0 +1,544 @@
+---
+sidebar_position: 3
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+import { Vimeo } from 'mdx-embed';
+
+# Manipulez vos données avec les opérations CRUD
+
+## Insérez des données dans votre BDD
+
+[Insérez des données dans votre BDD - Implémentez vos bases de données relationnelles avec SQL - OpenClassrooms](https://openclassrooms.com/fr/courses/6971126-implementez-vos-bases-de-donnees-relationnelles-avec-sql/7142248-inserez-des-donnees-dans-votre-bdd)
+
+<Vimeo vimeoId="497953029" />
+
+<br />
+
+Dans cette deuxième partie, vous allez découvrir comment manipuler vos données. À chaque chapitre, vous apprendrez à **créer**, **lire**,
+**mettre à jour** et **supprimer** des données. C’est ce qu’on appelle les _opérations CRUD_.
+
+<figure>
+    <img src="https://user.oc-static.com/upload/2021/01/18/16109606135318_2c1-1_CRUD_static.png"
+         alt="Create-Créer, Read-Lire, Update-Mettre à jour, Delete-Effacer" />
+    <figcaption>L’acronyme CRUD où MAJ signifie Mettre À Jour</figcaption>
+</figure>
+
+Votre base de données est bien vide pour l’instant... 😢 Ne désespérez pas, nous allons justement apprendre à la remplir en y ajoutant un ou
+plusieurs objets.
+
+Commencez d'abord par télécharger la [base de donnée Foodly de cette partie 2](https://github.com/OpenClassrooms-Student-Center/Course-implementez-BDD-SQL/blob/master/partie_2/foodly.sql).
+(Reportez-vous à [cette section du cours](https://openclassrooms.com/fr/courses/6971126-implementez-vos-bases-de-donnees-relationnelles-avec-sql/7142232-creez-votre-base-de-donnees-bdd)
+pour retrouver comment mettre à jour votre BDD depuis GitHub).
+
+C’est parti !
+
+### Insérez des objets uniques pour alimenter votre BDD
+
+Première étape : vous allez ajouter un utilisateur à votre BDD, car une application sans utilisateurs n’est pas une BDD.
+
+> Imaginez qu’un nouvel utilisateur s’inscrive sur Foodly. Comment l’application ferait-elle pour inscrire cet utilisateur dans la base MySQL ?
+
+:::info
+Elle utiliserait la commande SQL **`INSERT INTO`**. Cette commande prend en compte :
+- les paramètres de la table dans laquelle vous souhaitez ajouter l’objet (ici la table “utilisateur”) ;
+- l’ordre des colonnes (ou caractéristiques de l’objet) ;
+- ainsi que les valeurs correspondantes pour l’objet.
+:::
+
+<figure>
+    <img src="https://user.oc-static.com/upload/2021/01/18/16109606563636_2c1-2_insert-into_static.png"
+         alt="Schéma représentant de gauche à droite : un utilisateur qui s'inscrit et qui génère une commande INSERT INTO, qui est envoyée à la BDD, puis qui intégré dans l'application Foodly." />
+    <figcaption>Insertion d’un utilisateur dans la BDD de Foodly</figcaption>
+</figure>
+
+Souvenez-vous, votre table “utilisateur” dispose de 4 champs :
+
+| **Nom du champ** | **Descriptif du champ** | **Exemple de valeur** |
+|------------------|-------------------------|-----------------------|
+| _id_ | identifiant unique de l'utilisateur dans la BDD | 1 |
+| _nom_ | nom de famille de l'utilisateur | Durantay |
+| _prenom_ | prénom de l'utilisateur | Quentin |
+| _email_ | email de l'utilisateur | quentin@gmail.com |
+
+:::info
+Remarquez que je ne me préoccupe pas de l’id. Je pourrais tout à fait le renseigner. Mais souvenez-vous, nous l’avons configuré de manière à
+ce que MySQL l’auto-incrémente pour nous. Du coup, soyons fainéants et laissons MySQL gérer ce paramètre pour nous !
+:::
+
+Voici, par exemple, la commande pour m’ajouter en tant qu’utilisateur dans la base :
+
+```sql
+INSERT INTO `utilisateur` (`nom`, `prenom`, `email`)
+VALUES
+('Durantay', 'Quentin', 'quentin@gmail.com');
+```
+
+:::caution
+Si vous exécutez cette commande plusieurs fois, vous remarquerez un message d’erreur. C’est tout à fait normal. Souvenez-vous, l’e-mail d’un
+utilisateur a été configuré dans le schéma de la table comme une valeur **unique**. Vous ne pouvez donc pas créer un 2e utilisateur avec le
+même e-mail.
+:::
+
+Voyons ensemble ce qui vient de se passer :
+1. On indique en SQL qu’on souhaite ajouter un objet avec **`INSERT INTO`**.
+2. On écrit ensuite le nom de la table dans laquelle on souhaite ajouter l’objet, ici “utilisateur”.
+3. On écrit ensuite entre parenthèses la liste des colonnes que l’on va ajouter, ainsi que leur ordre.
+4. On ajoute le mot clé SQL **`VALUES`** qui indique qu’on va ensuite déclarer les valeurs que l’on souhaite ajouter.
+5. On écrit la liste des valeurs de l’objet qu’on souhaite ajouter, dans **le même ordre** que les colonnes citées en 3.
+
+Pour bien comprendre le fonctionnement de cette commande, je vous invite à “jouer” avec en essayant d’insérer d’autres utilisateurs. Par
+exemple vous-même. 😉
+
+Vous pouvez aussi changer l’ordre des colonnes et des valeurs pour voir si ça fonctionne toujours !
+
+### Insérez plusieurs objets à la fois
+
+Vous avez désormais une application avec un utilisateur, mais il va vous en falloir plusieurs ! Je ne sais pas vous, mais je trouve ça
+fastidieux d’avoir à écrire une commande pour chaque utilisateur que j’ajoute.
+
+SQL a pensé à nous ! Il est possible d’**ajouter plusieurs objets en une seule commande** en séparant leurs valeurs par des virgules, comme
+dans la commande ci-dessous grâce à laquelle j’ajoute 4 utilisateurs à la BDD :
+
+```sql
+INSERT INTO `utilisateur` (`nom`, `prenom`, `email`)
+VALUES
+('Doe', 'John', 'john@yahoo.fr'),
+('Smith', 'Jane', 'jane@hotmail.com'),
+('Dupont', 'Sebastien', 'sebastien@orange.fr'),
+('Martin', 'Emilie', 'emilie@gmail.com');
+```
+
+Assez simple, non ?
+
+Dans les faits, vous allez user et abuser de cette commande pour ajouter différents objets dans votre base. Réutilisons-la justement pour
+ajouter des aliments.
+
+Souvenez-vous, la table “aliment” est constituée des colonnes suivantes :
+
+| **Nom du champ** | **Descriptif du champ** | **Exemple de valeur** |
+|------------------|-------------------------|-----------------------|
+| _id_ | identifiant unique de l'aliment dans la BDD | 1 |
+| _nom_ | nom de l'aliment | poire |
+| _marque_ | marque de l'aliment | Monoprix |
+| _calories_ | nombre de calories contenues dans l'aliment (en kcal) | 72 |
+| _sucre_ | la concentration en sucre de l’aliment (en grammes) | 19,1 |
+| _graisses_ | la concentration en graisses de l’aliment (en grammes) | 0,2 |
+| _proteines_ | la concentration en protéines de l’aliment (en grammes) | 0,4 |
+
+Voici la commande pour ajouter les aliments poire, pomme, œuf et lait d’amande à notre BDD :
+
+```sql
+INSERT INTO `aliment` (`nom`, `marque`, `sucre`, `calories`, `graisses`, `proteines`)
+VALUES
+('poire', 'monoprix', 27.5, 134, 0.2, 1.1),
+('pomme', 'monoprix', 19.1, 72, 0.2, 0.4),
+('oeuf', 'carrefour', 0.6, 82, 5.8, 6.9),
+('lait d\'amande', 'bjorg', 4.5, 59, 3.9, 1.1, TRUE);
+```
+
+:::info
+Vous vous demandez sûrement pourquoi certaines valeurs sont entre guillemets simples, d’autres entre backticks (`) et certaines sans rien.
+:::
+
+<figure>
+    <img src="https://user.oc-static.com/upload/2021/01/18/16109607655779_2c1-3_ponctuation_static.png"
+         alt="Récapitulatif visuel du paragraphe rédigé ci-dessous" />
+    <figcaption>La rédaction des valeurs selon leur type</figcaption>
+</figure>
+
+Les explications sont simples :
+- Pour signaler à SQL des noms de tables ou colonnes, utilisez des backticks.
+- Pour les valeurs de type texte (souvenez-vous, les types **TEXT** ou **VARCHAR**), vous devez les écrire entre guillemets. Si un guillemet
+est présent dans le texte (comme dans l’exemple plus haut avec 'lait d\'amande'), vous devez mettre un backslash (\) avant ce dernier pour dire
+à SQL qu’il fait partie intégrante de la valeur.
+- Pour le reste (les valeurs de type **BOOLEAN, INTEGER** ou **FLOAT**), pas besoin de guillemets !
+
+### À vous de jouer !
+
+Essayez maintenant de créer un nouvel aliment. Partons sur une boîte de conserve de haricots verts. En voici les données nutritionnelles :
+
+| **nom** | **marque** | **calories** | **sucre** | **graisses** | **proteines** | **bio** |
+|---------|------------|--------------|-----------|--------------|---------------|---------|
+| haricots verts | Monoprix | 25 | 3 | 0 | 1,7 | FALSE |
+
+À partir de ce tableau, j’aimerais que vous ajoutiez cet aliment dans la BDD de Foodly. Regardez bien comment nous nous y sommes pris jusqu’ici.
+Je suis sûr que vous pouvez le faire ! 🙌
+
+Retrouvez ici la correction de la commande pour ajouter votre conserve de haricots !
+
+<Vimeo vimeoId="497578093" />
+
+<br />
+
+### En résumé
+
+- On ajoute un objet à une table avec la commande **`INSERT INTO`**.
+- Lors de l’utilisation de cette commande, on mentionne **quelles sont les colonnes (et dans quel ordre)** que l’on va remplir. Et on **les
+sépare par des virgules**.
+- On peut ajouter **un ou plusieurs objets** à la fois, là aussi, en **les séparant par des virgules**.
+
+_Vous voici capable de créer des objets dans votre BDD, pour la remplir. Mais une fois ceux-ci dans la base, comment les récupérer pour en lire
+le contenu ? C’est ce que vous allez voir dans le chapitre suivant !_
+
+-----
+
+## Sélectionnez les données présentes dans votre BDD
+
+[Sélectionnez les données présentes dans votre BDD - Implémentez vos bases de données relationnelles avec SQL - OpenClassrooms](https://openclassrooms.com/fr/courses/6971126-implementez-vos-bases-de-donnees-relationnelles-avec-sql/7142258-selectionnez-les-donnees-presentes-dans-votre-bdd)
+
+![](https://user.oc-static.com/upload/2021/01/27/16117513909844_BANNERS_P2C2.png)
+
+### Lisez les objets que vous venez de créer
+
+:::note ?
+Comment lire la totalité des objets d’une table ?
+:::
+
+Vous venez d’ajouter vos premières données dans votre BDD, c’est top ! Mais à quoi cela servirait si vous ne pouvez pas les récupérer par la
+suite ?
+
+Reprenons l’exemple de l’application Foodly. L’objectif des utilisateurs de cette application est de savoir quelle est la composition des
+aliments qu’ils envisagent d’acheter. C’est bien beau d’avoir une BDD, mais encore faut-il que l’application puisse y lire les objets.
+
+C’est ce à quoi on va s’attaquer dans ce chapitre... Nous allons voir ensemble les commandes qui vous permettent de récupérer et lire la donnée
+contenue dans la base de Foodly.
+
+Commençons par une question simple : comment faire pour afficher tous les utilisateurs présents dans votre BDD ?
+
+Comme pour les commandes d’insertion, vous allez devoir indiquer la table dans laquelle vous souhaitez récupérer la donnée, ici “utilisateur”.
+
+:::info
+Le mot clé pour récupérer et lire de la donnée est **SELECT**. En commençant une commande SQL par ce mot, MySQL (et les autres SGBD) comprend
+que vous souhaitez sélectionner (et donc récupérer) de la donnée.
+:::
+
+Tapez cette commande dans votre terminal :
+
+```sql
+SELECT * FROM utilisateur;
+```
+
+<figure>
+    <img src="https://user.oc-static.com/upload/2021/01/17/16108775044064_image1.png"
+         alt="Voici ce que vous devriez voir apparaître après avoir saisi la commande" />
+    <figcaption>Voici ce que vous devriez voir apparaître après avoir saisi la commande</figcaption>
+</figure>
+
+Et là, tadaa ! MySQL vous affiche la table “utilisateur” sous forme de tableau récapitulatif, avec chaque objet sur sa propre ligne.
+
+<figure>
+    <img src="https://user.oc-static.com/upload/2021/01/18/16109610872927_2c2-1_static.png"
+         alt="Récapitulatif visuel du paragraphe rédigé ci-dessous" />
+    <figcaption>La commande SELECT</figcaption>
+</figure>
+
+Décortiquons ensemble la commande que nous venons d’effectuer pour arriver à ce résultat :
+- **SELECT**, comme nous l’avons vu, indique à MySQL que nous souhaitons récupérer de la donnée ;
+- **\*** indique que l’on souhaite récupérer toutes les colonnes (ou champs) présents dans cette table (ici : id, nom, prenom et email) ;
+- **FROM** table permet à MySQL de comprendre depuis quelle table nous souhaitons récupérer de la donnée.
+
+### Lisez quelques colonnes seulement
+
+:::note ?
+C’est super ça, mais je suis réellement obligé de récupérer **toutes** les colonnes à chaque fois ?
+:::
+
+Avant que je vous réponde, tapez cette commande dans votre terminal :
+
+```sql
+SELECT `nom`, `prenom`, `email` FROM utilisateur;
+```
+
+Que remarquez-vous après l’avoir tapée ? Eh oui, la colonne **id** n’est plus visible dans le tableau récapitulatif !
+
+<figure>
+    <img src="https://user.oc-static.com/upload/2021/01/17/16108777243186_image29.png"
+         alt="Écran du terminal suite à la commande saisie" />
+    <figcaption>Écran du terminal suite à la commande saisie</figcaption>
+</figure>
+
+De la même manière qu’on précisait les colonnes que l’on souhaitait ajouter avec INSERT, on peut préciser celles que l’on veut que
+l’application lise avec **SELECT**.
+
+Pour cela, il suffit de mentionner les noms de colonnes que l’on souhaite récupérer après le mot clé **SELECT**, comme dans l’exemple ci-dessus.
+
+### À votre tour d’essayer !
+
+Je vous propose de lister tous les noms et les calories associées pour chaque aliment présent dans la BDD de Foodly. Comment feriez-vous ?
+
+Je vous laisse essayer. Lorsque vous avez terminé, regardez la correction avec le screencast ci-dessous.
+
+<Vimeo vimeoId="497578135" />
+
+<br />
+
+### En résumé
+
+- Les objets d’une table se lisent avec la commande **SELECT FROM**.
+- Lors de l’utilisation de cette commande, on mentionne **quelles sont les colonnes** que l’on veut afficher **en les séparant par des virgules**.
+
+_Et voilà ! Vous savez récupérer et lire la donnée présente dans votre base. Mais imaginons que vous souhaitiez modifier cette donnée. Comment
+faire ? C’est ce que vous allez voir dans le chapitre suivant._
+
+-----
+
+## Mettez à jour les données de votre BDD
+
+[Mettez à jour les données de votre BDD - Implémentez vos bases de données relationnelles avec SQL - OpenClassrooms](https://openclassrooms.com/fr/courses/6971126-implementez-vos-bases-de-donnees-relationnelles-avec-sql/7142260-mettez-a-jour-les-donnees-de-votre-bdd)
+
+![](https://user.oc-static.com/upload/2021/01/26/16116829831612_BANNERS_%20P2C3.png)
+
+### Mettez à jour un objet en particulier
+
+Admettons maintenant qu’un utilisateur souhaite mettre à jour son e-mail via l’application. Comment Foodly traduirait ceci en commande SQL pour
+MySQL ?
+
+Ici, le mot clé magique est **`UPDATE`**, qui signifie “mise à jour” en anglais. Plutôt logique. 😉
+
+Tapez cette commande dans votre terminal pour changer l’e-mail du premier utilisateur :
+
+```sql
+UPDATE `utilisateur` SET `email` = 'quentind@gmail.com' WHERE `id` = '1';
+```
+
+Vous devriez avoir un message qui confirme ce changement. Si vous lisez à nouveau les données de votre BDD sur la table “utilisateur”, vous
+remarquerez que l’e-mail de l’utilisateur avec l’id 1 est celui qu’on vient de taper.
+
+<figure>
+    <img src="https://user.oc-static.com/upload/2021/01/18/16109611689416_2c3-1_static.png"
+         alt="Récapitulatif visuel du paragraphe rédigé ci-dessous" />
+    <figcaption>La commande UPDATE</figcaption>
+</figure>
+
+Décomposons cette commande ensemble :
+
+| **Mot clé** | **Description** |
+|-------------|-----------------|
+| _UPDATE table_ | Signifie à SQL que vous souhaitez mettre à jour de la donnée dans votre BDD. Vous indiquez aussi la table dans laquelle se trouve(nt) le ou les objets que vous souhaitez modifier. |
+| _SET colonne = valeur_ | Sert à indiquer à SQL quelles sont la ou les colonnes à modifier, et quelles sont la ou les valeurs qu’elles doivent désormais prendre. |
+| _WHERE colonne = valeur_ | C’est ce qu’on appelle un filtre. Vous allez les voir plus en détail dans la partie 3, mais sachez qu’ils servent à restreindre la commande en cours à un ou des objets répondant à des conditions précises. Ici, on va mettre à jour uniquement l’objet dont l’id est 1, soit le premier utilisateur ! |
+
+:::info
+Il est tout à fait possible d’utiliser `UPDATE` sans filtres (sans `WHERE`). Néanmoins, la commande modifierait tous les objets de notre table.
+C’est très rarement ce que l’on souhaite. 😨
+:::
+
+### À vous de jouer !
+
+Nous avons oublié de préciser le type de pomme vendue à Intermarché. Il s'agit d'une pomme **golden**. Comment feriez-vous pour rectifier le
+tir ?
+
+Essayez de faire la modification dans votre terminal, puis regardez la correction avec le sccrencast :
+
+<Vimeo vimeoId="497578156" />
+
+<br />
+
+### En résumé
+
+- On met à jour les objets d’une table avec la commande **`UPDATE`**.
+- Lors de l’utilisation de cette commande, on mentionne **quelles sont les colonnes** qu’on souhaite mettre à jour avec **`SET`**.
+- Si on ne filtre pas avec **`WHERE`**, on risque de **mettre à jour tous les objets** de la table. Ce qui est rarement ce que l’on souhaite !
+
+_Vous voici capable de modifier la donnée présente dans votre BDD ! Allons encore plus loin : imaginez que vous souhaitiez supprimer de la
+donnée. Vous allez voir dans le chapitre suivant comment cela se passe !_
+
+-----
+
+## Supprimez des objets dans votre BDD
+
+[Supprimez des objets dans votre BDD - Implémentez vos bases de données relationnelles avec SQL - OpenClassrooms](https://openclassrooms.com/fr/courses/6971126-implementez-vos-bases-de-donnees-relationnelles-avec-sql/7142266-supprimez-des-objets-dans-votre-bdd)
+
+![](https://user.oc-static.com/upload/2021/01/26/16116830270273_BANNERS_%20P2C4.png)
+
+### Supprimez un objet en particulier
+
+Finissons par un dernier cas d’usage. Admettons qu’un utilisateur souhaite se **désinscrire** de Foodly. Il faudrait alors le supprimer de
+votre BDD. Mais comment faire ?
+
+:::info
+Ici, le mot clé est **`DELETE`**. Signifiant “supprimer” en anglais.
+:::
+
+:::caution !
+Attention toutefois, cette commande est très simple à utiliser, parfois trop même ! Une fois la donnée supprimée de votre BDD, impossible de la
+récupérer ! À utiliser avec **parcimonie**.
+:::
+
+Voici par exemple la commande pour supprimer le deuxième utilisateur :
+
+```sql
+DELETE FROM `utilisateur` WHERE `id` = '2';
+```
+
+Une fois cette commande effectuée, vous pouvez vérifier qu’elle a fonctionné en listant les utilisateurs (commande **`SELECT`**).
+
+Vous n’en n’avez désormais plus que 3, l’ancien 2e ayant disparu (pour de bon) !
+
+Là aussi, il vaut mieux utiliser cette commande avec **`WHERE`** pour en limiter l’effet. Si vous ne le faites pas, vous risqueriez de supprimer
+tous les objets d’une table ! Dans notre cas, adieu à nos utilisateurs. 😨
+
+### À vous de jouer !
+
+Bon, on va dire qu’on s’est complètement trompé pour notre pomme golden. Même en la modifiant précédemment dans la BDD de Foodly, les données
+sont complètement fausses. Comment feriez-vous pour la supprimer définitivement de la BDD ?
+
+Reprenez votre terminal et essayez de supprimer la pomme golden. Vérifiez votre commande avec ce screencast :
+
+<Vimeo vimeoId="497578180" />
+
+<br />
+
+### En résumé
+
+- On supprime les objets d’une table avec la commande **`DELETE`**.
+- Si on ne filtre pas avec **`WHERE`**, on risque de **supprimer tous les objets** de la table. Ce qui est rarement ce que l’on souhaite !
+
+_Ajouter, lire, modifier, supprimer… Vous maîtrisez désormais les opérations CRUD ! Bravo ! 👏_
+
+_Il est maintenant temps d’apprendre comment effectuer des opérations SQL avancées pour donner du sens à votre donnée. C’est dans la partie
+suivante que vous allez l’apprendre !_
+
+-----
+
+## Quiz : Manipulez des données avec les opérations CRUD
+
+[Manipulez des données avec les opérations CRUD - OpenClassrooms](https://openclassrooms.com/fr/courses/6971126-implementez-vos-bases-de-donnees-relationnelles-avec-sql/exercises/4008)
+
+#### Compétences évaluées
+
+<i class="bi bi-check2-circle"></i> Manipuler des données avec les opérations CRUD
+
+-----
+
+#### Description
+
+Reprenons notre BDD Moviz du précédent quiz. Cette base doit contenir des films, or elle n’en contient actuellement aucun !
+
+Si vous ne l’avez plus, voici le lien pour la télécharger : [https://github.com/OpenClassrooms-Student-Center/Course-implementez-BDD-SQL/blob/master/partie\_2/moviz.sql](https://github.com/OpenClassrooms-Student-Center/Course-implementez-BDD-SQL/blob/master/partie_2/moviz.sql).
+
+Commencez donc par ajouter des films puis vous essaierez :
+- de les lire depuis votre base ;
+- de les modifier ;
+- et enfin de les supprimer.
+
+Pour rappel, voici le schéma de la table “film” :
+
+| **Nom du champ** | **Type du champ** | **Description du champ** |
+|------------------|-------------------|--------------------------|
+| _nom_ | VARCHAR(255) | le nom du film |
+| _date_de_sortie_ | DATE | la date de sortie du film |
+| _synopsis_ | TEXT | la description du scénario du film |
+| _langue_ | VARCHAR(255) | la langue principale du film |
+| _budget_ | INTEGER | le budget de production du film |
+
+Et les trois films que l’on va ajouter puis manipuler :
+
+| **Nom** | **Date de sortie** | **Budget** | **Synopsis** | **Langue** |
+|---------|--------------------|------------|--------------|------------|
+| Titanic | 04 avril 1998 | 200 000 000 $ | L'histoire du plus grand paquebot de son époque, et de sa funeste fin. | anglais |
+| Skyfall | 26 octobre 2012 | 200 000 000 $ | Dans cet épisode le plus sombre de la saga, James Bond retourne à ses origines. | anglais |
+| La La Land | 25 janvier 2017 | 30 000 000 $ | Une histoire d'amour à Los Angeles sous forme de comédie musicale. | anglais |
+
+Avant de passer aux questions suivantes, essayez de créer les trois films vous-même. Cela vous aidera grandement dans la compréhension du cours
+et des questions.
+
+De plus, manipuler le SGBD via le SQL dans la réalité est toujours bien plus efficace pour apprendre que de “simplement” répondre à des
+questions. 😉
+
+-----
+
+#### Question 1 : Quelle commande crée les trois films ?
+
+<i class="bi bi-circle"></i>
+
+```sql
+INSERT INTO `film` (`nom`, `budget`, `synopsis`, `langue`, `date_de_sortie`)
+VALUES
+(`Titanic`, `1998-04-04`, `L'histoire du plus grand paquebot de son époque, et de sa funestre fin.`, `anglais`, 200000000),
+(`Skyfall`, `2012-10-26`, `Dans cet épisode le plus sombre de la saga, James Bond retourne à ses origines.`, `anglais`, 200000000),
+(`La La Land`, `2017-01-25`,  `Une histoire d'amour à Los Angeles sous forme de comédie musicale.`, `anglais`, 30000000);
+```
+
+<i class="bi bi-circle"></i>
+
+```sql
+UPDATE INTO `film` (`nom`, `date_de_sortie`, `synopsis`, `langue`, `budget`)
+VALUES
+(`Titanic`, `1997-04-04`, `L'histoire du plus grand paquebot de son époque, et de sa funestre fin.`, `français`, 15000000),
+(`Skyfall`, `2015-10-26`, `Dans cet épisode le plus sombre de la saga, James Bond retourne à ses origines.`, `allemand`, 85000000),
+(`La La Land`, `2017-01-15`,  `Une histoire d'amour à Los Angeles sous forme de comédie musicale.`, `anglais`, 30000000);
+```
+
+<i class="bi bi-record-circle"></i>
+
+```sql
+INSERT INTO `film` (`nom`, `date_de_sortie`, `synopsis`, `langue`, `budget`)
+VALUES
+(`Titanic`, `1998-04-04`, `L'histoire du plus grand paquebot de son époque, et de sa funestre fin.`, `anglais`, 200000000),
+(`Skyfall`, `2012-10-26`, `Dans cet épisode le plus sombre de la saga, James Bond retourne à ses origines.`, `anglais`, 200000000),
+(`La La Land`, `2017-01-25`,  `Une histoire d'amour à Los Angeles sous forme de comédie musicale.`, `anglais`, 30000000);
+```
+
+_La commande pour ajouter des objets est INSERT INTO, suivi de la table dans laquelle insérer les objets (ici, “film”), puis du nom des
+colonnes que l’on souhaite renseigner, et enfin, de VALUES, avec les valeurs de chaque objet dans l’ordre des colonnes mentionné précédemment._
+
+-----
+
+#### Question 2 : Quelle commande permet de lire les titres et dates de sorties des films que l’on vient d’ajouter ?
+
+<i class="bi bi-circle"></i> <code>SELECT * FROM film;</code><br />
+<i class="bi bi-record-circle"></i> <code>SELECT `nom`, `date_de_sortie` FROM film;</code><br />
+<i class="bi bi-circle"></i> <code>DELETE * FROM film;</code><br />
+<br />
+
+_SELECT, quand il est utilisé avec des colonnes spécifiques (au contraire de “*”, qui signifie “toutes les colonnes”), n’affichera que les
+colonnes mentionnées._
+
+-----
+
+#### Question 3 : Quelle serait la fin d’une commande pour filtrer sur le film Titanic uniquement ?
+
+<i class="bi bi-record-circle"></i> <code>WHERE `nom` = “Titanic”;</code><br />
+<i class="bi bi-circle"></i> <code>WHERE `Titanic`:</code><br />
+<i class="bi bi-circle"></i> <code>DELETE * FROM film;</code><br />
+<br />
+
+_Ici, WHERE, suivi de la condition sur le titre égal à “Titanic”, restreindra la commande à ce film uniquement._
+
+-----
+
+#### Question 4 : Si on utilisait UPDATE sans WHERE, que se passerait-il ?
+
+<i class="bi bi-circle"></i> On supprimerait tous les objets d’une table.<br />
+<i class="bi bi-record-circle"></i> On mettrait à jour tous les objets d’une table.<br />
+<i class="bi bi-circle"></i> Le commande ne fonctionnerait pas.<br />
+<br />
+
+_Par défaut, une commande UPDATE, mais aussi SELECT ou DELETE, s’applique sur tous les objets d’une table en l’absence de WHERE._
+
+-----
+
+#### Question 5 : Quelle commande permet de mettre à jour le budget de Skyfall ?
+
+<i class="bi bi-record-circle"></i> <code>UPDATE `film` SET `budget` = 200500000 WHERE `nom` = “Skyfall”;</code><br />
+<i class="bi bi-circle"></i> <code>INSERT INTO `film` SET `budget` = 200500000 WHERE `nom` = “Skyfall”;</code><br />
+<i class="bi bi-circle"></i> <code>UPDATE `film` SET `budget` = 200500000 WHERE `nom` = “Titanic”;</code><br />
+<br />
+
+_La mise à jour d’un objet implique une commande UPDATE. SET sert à indiquer la colonne que l’on souhaite modifier, et avec quelle valeur.
+Ensuite, on utilise WHERE pour filtrer sur le bon film._
+
+-----
+
+#### Question 6 : Quelle commande permet de supprimer La La Land ?
+
+<i class="bi bi-circle"></i> <code>DELETE `film` WHERE `nom` = “La La Land”;</code><br />
+<i class="bi bi-record-circle"></i> <code>DELETE FROM `film` WHERE `nom` = “La La Land”;</code><br />
+<i class="bi bi-circle"></i> <code>DELETE `film`;</code><br />
+<br />
+
+_Supprimer implique la commande DELETE, puis FROM pour signaler dans quelle table supprimer l’objet. Enfin, on filtre le bon objet avec WHERE._
+

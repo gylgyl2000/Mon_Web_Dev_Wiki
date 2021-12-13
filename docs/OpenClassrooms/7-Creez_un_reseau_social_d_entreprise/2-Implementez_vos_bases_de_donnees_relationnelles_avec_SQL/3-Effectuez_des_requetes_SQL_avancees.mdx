@@ -1,0 +1,1195 @@
+---
+sidebar_position: 4
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+import { Vimeo } from 'mdx-embed';
+
+# Effectuez des requêtes SQL avancées
+
+## Extrayez des informations spécifiques de votre BDD
+
+[Extrayez des informations spécifiques de votre BDD - Implémentez vos bases de données relationnelles avec SQL - OpenClassrooms](https://openclassrooms.com/fr/courses/6971126-implementez-vos-bases-de-donnees-relationnelles-avec-sql/7142269-extrayez-des-informations-specifiques-de-votre-bdd)
+
+<Vimeo vimeoId="497953053" />
+
+<br />
+
+Maintenant que votre base de données est remplie, il serait temps d’en extraire des informations pertinentes. En effet, il serait peu utile
+d’avoir une BDD si cette dernière ne pouvait que stocker de l’information et la ressortir “bêtement”.
+
+Vous allez apprendre dans cette partie comment extraire uniquement l’information qui vous intéresse, et en tirer quelques enseignements !
+
+Avant tout, téléchargez la [base de données Foodly](https://github.com/OpenClassrooms-Student-Center/Course-implementez-BDD-SQL/blob/master/partie_3/foodly.sql)
+pour cette partie.
+
+Vous êtes prêt ? Allons-y !
+
+### Isolez un objet unique
+
+Dans la partie précédente, à chaque fois que vous lisiez de la donnée, c’était celle d’une table toute entière.
+
+:::info
+Pour rappel, une commande telle que `SELECT * FROM aliment;` va vous afficher **tous les aliments** de votre BDD.
+:::
+
+Or, c’est rarement ce que l’on souhaite.
+
+Imaginons un utilisateur dans votre application Foodly. Il est en train de scanner un aliment lors de ses courses. L’application demandera à la
+BDD de lui **restituer l’aliment en question**.
+
+Pour ce faire, il existe une commande en SQL que l’application pourra utiliser pour récupérer **uniquement** cet aliment.
+
+:::info
+Il s’agit de la commande **`WHERE`**.
+:::
+
+Si vous vous souvenez bien, vous aviez utilisé cette commande dans la partie précédente afin de restreindre une commande à un seul aliment ou
+utilisateur, grâce à son id.
+
+Par exemple, la commande :
+
+```sql
+SELECT * FROM aliment WHERE id = 4;
+```
+
+va nous restituer uniquement l’aliment dont l’id est le numéro 4 !
+
+**`WHERE` ne se limite pas uniquement aux id**. Comment écririez-vous la commande pour récupérer l’aliment poire uniquement ? Réfléchissez bien,
+je suis sûr que vous pouvez trouver !
+
+Vous donnez votre langue au chat ? 🐱
+
+La voici :
+
+```sql
+SELECT * FROM aliment WHERE nom = “poire”;
+```
+
+Eh oui, c’est aussi simple que ça !
+
+Vous pouvez appliquer `WHERE` à n’importe quelle colonne en utilisant le nom de cette colonne.
+
+:::info
+À noter que `WHERE` peut s'exécuter avec `SELECT`, mais aussi avec n’importe quelle autre commande : vous pouvez l’utiliser avec `UPDATE` ou
+`DELETE` pour ne mettre à jour ou supprimer qu’un objet spécifique, et non tous les objets de votre table !
+:::
+
+### Isolez plusieurs objets répondant à un critère de comparaison
+
+OK, c’est utile de ne pouvoir sélectionner qu’un seul objet. Mais admettons que votre utilisateur souhaite voir tous les aliments bio de son
+hypermarché, ou bien ceux qui ne sont pas trop caloriques.
+
+:::note ?
+Comment traduire cela en SQL ?
+:::
+
+`WHERE` fonctionne avec un principe de comparaison. Dans vos précédentes commandes, vous utilisiez l’opérateur égal (=) pour indiquer que vous
+ne vouliez **que** l’objet dont le nom était égal à une valeur.
+
+Or, vous pouvez utiliser tous les opérateurs classiques, tels que :
+- supérieur à ( > );
+- inférieur à ( < );
+- supérieur ou égal à (>=) ;
+- et inférieur ou égal à (<=).
+
+> Par exemple, comment afficher tous les aliments dont la teneur en calories n’excède pas (strictement) 90 kcal ?
+> 
+> Je vous laisse un peu de temps pour tester la commande de votre côté…
+> 
+> Voici la réponse :
+
+```sql
+SELECT * FROM aliment WHERE calories < 90;
+```
+
+:::info
+Et voilà, vous voici désormais prêt à filtrer vos commandes comme bon vous semble avec le mot clé `WHERE` !
+:::
+
+### Isolez des objets à partir d’une comparaison sur du texte
+
+:::caution
+La limite de `WHERE` est que la comparaison ne peut s’effectuer que sur des **données chiffrées**.
+:::
+
+Dès que vous souhaitez filtrer une donnée sur du texte, en dehors de l’opérateur égal, ça devient impossible.
+
+:::note ?
+Vraiment impossible ?
+:::
+
+:::info
+Non ! Il existe un autre mot clé pour effectuer des comparaisons sur du texte : il s’agit du mot clé **`LIKE`**.
+:::
+
+Ce dernier permet de sélectionner les objets dont le texte d’une colonne répond à un modèle spécifique. C’est en fait lui-même un opérateur,
+car il s’ajoute au sein d’une commande `WHERE`.
+
+> Prenons par exemple cette commande :
+> ```sql
+> SELECT * FROM utilisateur WHERE email LIKE “%gmail.com”;
+> ```
+> 
+> À votre avis, que donne cette commande ?
+> 
+> Tapez-la dans votre terminal et regardez. 😉
+
+Eh oui, elle vous affiche tous les utilisateurs dont l’e-mail se termine par “gmail.com”.
+
+<figure>
+    <img src="https://user.oc-static.com/upload/2021/01/18/16109613837168_P3_email%20LIKE_static.png"
+         alt="Récapitulatif visuel du paragraphe rédigé ci-dessous" />
+    <figcaption>L’utilisation du pourcentage (%)</figcaption>
+</figure>
+
+:::info
+Ce “%gmail.com” signifie que vous souhaitez récupérer tout texte finissant par “gmail.com”. Le pourcentage (%) indique à SQL :
+- “il peut y avoir autant de texte que tu veux, et aussi long que tu veux **avant** le “gmail.com” ;
+- “ne prête pas attention au contenu qu’il y a avant _gmail.com_.”
+
+Si vous souhaitiez récupérer le texte qui commence par “gmail.com” vous écririez : “gmail.com%”.
+
+Enfin, si vous cherchiez tout texte qui contient “gmail”, peu importe qu’il soit au début ou à la fin, vous écririez “%gmail%”.
+:::
+
+### Ordonnez les objets récupérés pour chaque requête
+
+Reprenons l’exemple de notre utilisateur qui cherche à afficher les aliments peu caloriques dans Foodly.
+
+Grâce à ce que vous avez appris, vous pouvez désormais afficher les aliments dont les calories ne dépassent pas un certain seuil.
+
+:::note ?
+Ne serait-il pas encore plus utile pour notre utilisateur d’afficher les aliments par **ordre croissant** de calories ?
+:::
+
+C’est possible en SQL. Et ce, grâce au mot clé **`ORDER BY`**.
+
+<figure>
+    <img src="https://user.oc-static.com/upload/2021/01/18/1610961499497_P3_ORDER-BY_static_V3.png"
+         alt="Récapitulatif visuel du paragraphe rédigé ci-dessous" />
+    <figcaption>Le mot clé ODER BY</figcaption>
+</figure>
+
+Ce mot clé vous permet d’ordonner une colonne par ordre croissant (_ascending_ en anglais, d’où le mot clé SQL **`ASC`**), ou décroissant
+(_descending_ en anglais, soit le mot clé**`DESC`**).
+
+Voici donc la commande à effectuer pour afficher les aliments par ordre croissant de calories :
+
+```sql
+SELECT * FROM aliment ORDER BY calories ASC;
+```
+
+Bien sûr, vous pouvez mixer les commandes entre elles ! Voici la commande pour n’afficher que les aliments dont les calories ne dépassent pas
+90 kcal, mais de manière décroissante :
+
+```sql
+SELECT * FROM aliment WHERE calories < 90 ORDER BY calories DESC;
+```
+
+:::info
+Cette commande fonctionne aussi avec le texte ! Si vous effectuez un `ORDER BY` sur une colonne de texte, celle-ci sera ordonnée :
+- soit dans l’ordre alphabétique (`ASC`).
+
+Par exemple, `SELECT * FROM utilisateurs ORDER BY prenom ASC;` affiche les utilisateurs avec les prénoms affichés par ordre alphabétique ;
+
+- soit dans l’ordre opposé ( `DESC` ).
+
+Par exemple : `SELECT * FROM utilisateurs ORDER BY prenom DESC;` affiche les utilisateurs avec les prénoms affichés par ordre anti-alphabétique.
+:::
+
+### À vous de jouer !
+
+Imaginons que je vous demande tous les aliments qui ne sont pas bio dans la base, classés par ordre décroissant de contenance en protéines.
+
+Comment allez-vous faire cela ?
+
+Prenez un peu de temps pour y réfléchir, tentez d’effectuer la commande vous-même, et on se retrouve pour la correction dans le screencast
+ci-dessous. 👇
+
+```sql
+mysql > SELECT * FROM aliment WHERE bio = false ORDER BY proteines DESC;
+```
+
+<Vimeo vimeoId="497578203" />
+
+<br />
+
+### En résumé
+
+- Vous avez appris comment **filtrer** la donnée que vous souhaitez récupérer avec la commande **`WHERE`** (et les opérateurs comme **`=`** ou
+**`LIKE`**).
+- Vous savez désormais **ordonner** les résultats d’une requête SQL avec la commande **`ORDER BY`**.
+
+_Et si nous allions encore un peu plus loin dans les requêtes SQL ? Voyons au chapitre suivant comment effectuer des opération mathématiques.
+Rien que ça !_
+
+-----
+
+## Effectuez des opérations et sauvegardez vos requêtes
+
+[Effectuez des opérations et sauvegardez vos requêtes - Implémentez vos bases de données relationnelles avec SQL - OpenClassrooms](https://openclassrooms.com/fr/courses/6971126-implementez-vos-bases-de-donnees-relationnelles-avec-sql/7152961-effectuez-des-operations-et-sauvegardez-vos-requetes)
+
+![](https://user.oc-static.com/upload/2021/01/26/16116830811436_BANNERS_%20P3C2.png)
+
+### Comptez le nombre d’objets récupérés via une requête
+
+Combien d’objets répondent à un critère (ou une requête SQL) donné ?
+
+Par exemple, admettons qu’un utilisateur de Foodly souhaite savoir combien il existe d’aliments bio, ou que vous souhaitiez compter le nombre
+d’utilisateurs dans l’application.
+
+:::note ?
+Comment pourrait-on retranscrire cela en SQL ?
+:::
+
+Il existe le mot clé **`COUNT`**, qui permet justement cela. Appliqué à n’importe quelle commande SQL de type `SELECT`, il vous donnera le
+**nombre d’objets** récupérés plutôt que leur valeur.
+
+:::info
+En plus de ne faire “que compter”, `COUNT` est bien plus rapide à effectuer qu’un `SELECT` “classique” pour votre base de données. Le SGBD et
+la BDD arriveront à retrouver le résultat de votre commande bien plus rapidement (parfois, la différence se compte en minutes !). Privilégiez-le
+avant d’effectuer des requêtes sur un large groupe de données !
+:::
+
+Vous souvenez-vous de la commande que nous avions effectuée pour récupérer uniquement les utilisateurs dont l’e-mail était un Gmail ? Comment
+l’adapter pour connaître le nombre d’utilisateurs avec une adresse Gmail dans la base ?
+
+C’est simple, voici la commande :
+
+```sql
+SELECT COUNT(*) FROM utilisateur WHERE email LIKE "%gmail.com";
+```
+
+Copiez et collez cette commande dans votre terminal. Que voyez-vous ?
+
+MySQL vous affiche le nombre d’objets plutôt que leur contenu. Vous voyez donc combien d’utilisateurs répondent à ce critère.
+
+:::info
+En appliquant un `COUNT(*)`, vous comptez le nombre d’objets. Mais vous pouvez aussi restreindre le comptage à une colonne spécifique en
+écrivant `COUNT(colonne)`. Enfin, vous pouvez aussi compter le nombre d’éléments uniques d’une colonne avec `COUNT(DISTINCT colonne)`.
+:::
+
+> Par exemple, `SELECT COUNT(*) FROM utilisateur;` compte tous les utilisateurs, tandis que `SELECT COUNT(nom) FROM utilisateur;` compte tous
+les noms de famille.
+
+Ok, vous allez me dire qu’on trouve exactement le même nombre. Et c’est vrai. Compter dans une colonne prend vraiment son sens en comptant le
+nombre de **valeurs distinctes**.
+
+> Par exemple, `SELECT COUNT(DISTINCT nom) FROM utilisateur;` comptera uniquement les noms de familles différents, vous permettant de voir si
+certains utilisateurs ont le même nom !
+
+### Effectuez des opérations sur des données chiffrées
+
+:::note ?
+Si l’on peut compter, pourquoi ne pas directement effectuer des opérations ?
+:::
+
+Admettons que l’on souhaite connaître le total calorique d’un groupe d’articles, ou bien la contenance moyenne en sucre d’un groupe d’aliments :
+au lieu de tout noter à la main depuis la base de données, laissez MySQL effectuer ces opérations pour vous !
+
+Pour cela, il existe plusieurs mots clés que vous pouvez appliquer à une colonne lors d’une requête pour en modifier le résultat :
+- `AVG` : nous donne la moyenne de la colonne sur la sélection ;
+- `SUM` : nous donne la somme de la colonne sur la sélection ;
+- `MAX` : nous donne le maximum de la colonne sur la sélection ;
+- `MIN` : nous donne le minimum de la colonne sur la sélection.
+
+<figure>
+    <img src="https://user.oc-static.com/upload/2021/01/18/16109617725758_P3_operations_static.png"
+         alt="Récapitulatif visuel du paragraphe rédigé ci-dessus" />
+    <figcaption>Les règles d'opération</figcaption>
+</figure>
+
+Envie de connaître le maximum de teneur en sucre des aliments dans notre base ? Rien de plus simple :
+
+```sql
+SELECT MAX(sucre) FROM aliment;
+```
+
+Plus compliqué : quelle est la teneur moyenne en calories des aliments de 30 kcal ou plus :
+
+```sql
+SELECT AVG(calories) FROM aliment WHERE calories >= 30;
+```
+
+#### À vous de jouer !
+
+Je vous laisse tester ces opérations avec `MIN` et `SUM` !
+
+Pour voir à quoi cela ressemble dans le terminal, voici un screencast explicatif où je reprends une à une toutes ces commandes sur la liste
+des aliments qui ne sont pas bio :
+
+Compter le nombre d'aliments non bio :
+
+```sql
+SELECT COUNT(*) FROM aliment WHERE bio = false; /* 14 */
+```
+
+Combien de proteines a l'aliment non bio qui en a le plus :
+
+```sql
+SELECT MAX(proteines) FROM aliment WHERE bio = false; /* 26.2 */
+```
+
+Combien de proteines a l'aliment non bio qui en a le moins :
+
+```sql
+SELECT MIN(proteines) FROM aliment WHERE bio = false; /* 0 */
+```
+
+Quelle moyenne en proteines ont les aliments non bio :
+
+```sql
+SELECT AVG(proteines) FROM aliment WHERE bio = false; /* 7.128571520958628 */
+```
+
+<Vimeo vimeoId="497578223" />
+
+<br />
+
+:::info
+Grâce à ces fonctions simples, vous pouvez commencer à analyser les données de votre BDD. Vous devenez ainsi un vrai data analyste !
+:::
+
+### Sauvegardez vos requêtes avec CREATE VIEW
+
+Je ne sais pas vous, mais personnellement, je déteste faire deux fois la même chose.
+
+Vous imaginez devoir retaper la même commande SQL à chaque fois que vous souhaitez extraire le même type de données ? Un enfer. 😨
+
+Heureusement pour nous, MySQL peut nous aider !
+
+:::info
+MySQL a un système de “vues” qui permet de créer des **tables temporaires** à partir d’une commande SQL. Entendez par là que vous allez
+“sauvegarder” une commande SQL pour ne plus avoir à la réeffectuer à chaque fois !
+:::
+
+Admettons que vous souhaitiez sauvegarder dans une vue la commande suivante : les utilisateurs dont l’adresse mail est une adresse Gmail.
+Comment faites-vous ?
+
+Eh bien, vous utilisez la commande **`CREATE VIEW`** !
+
+Voici la commande :
+
+```sql
+CREATE VIEW utilisateurs_gmail_vw AS SELECT * FROM utilisateur WHERE email LIKE "%gmail.com";
+```
+
+<figure>
+    <img src="https://user.oc-static.com/upload/2021/01/18/16109618304011_P3_CREATE%20VIEW-creer-une-vue_static.png"
+         alt="Récapitulatif visuel de la commande. utilisateurs_gmail_vw = nom de la vue à créer. AS SELECT*FROM utilisateur = depuis la table" />
+    <figcaption>La commande CREATE VIEW</figcaption>
+</figure>
+
+Je viens de créer la vue “utilisateurs_gmail_vw”. Cette dernière s’utilise désormais comme une table.
+
+Ainsi, pour récupérer les utilisateurs avec une adresse Gmail, plus besoin d’écrire ma requête compliquée !
+
+Je n’ai plus qu’à écrire :
+
+```sql
+SELECT * FROM utilisateurs_gmail_vw;
+```
+
+<figure>
+    <img src="https://user.oc-static.com/upload/2021/01/18/16109619652866_P3_CREATE%20VIEW-faire-appel-vue_static.png"
+         alt="Récapitulatif visuel de la commande.  SELECT*FROM = récupéer la donnée. utilisateurs_gmail_vw =depuis la vue utilisateurs_gmail_vw" />
+    <figcaption>Utilisation de la commande CREATION VIEW avec SELECT * FROM</figcaption>
+</figure>
+
+:::info
+La convention chez les utilisateurs de SQL est de toujours préfixer le nom d’une vue avec “_vw”, pour la distinguer des “vraies” tables.
+:::
+
+Le plus utile avec cela, c’est que la vue se comporte comme une vraie table. Vous pouvez ainsi réappliquer d’autres commandes SQL sur cette
+dernière.
+
+> Par exemple : afficher les utilisateurs dont l’adresse e-mail est une adresse Gmail ET dont le prénom contient la lettre “m” :
+
+```sql
+SELECT * FROM utilisateurs_gmail_vw WHERE prenom LIKE "%m%";
+```
+
+:::info
+Grâce aux vues, vous pouvez “raccourcir” des requêtes SQL complexes et rébarbatives, vous permettant d’aller encore plus loin dans vos analyses !
+:::
+
+#### À vous de jouer !
+
+Essayez à présent par vous-même la création d'une vue. Créez une vue reprenant notre liste des aliments non bio, classés par contenance en
+protéines (de manière décroissante).
+
+```sql
+SELECT * FROM aliment WHERE bio = false ORDER BY proteines DESC;
+```
+
+```sql
+CREATE VIEW aliments_non_bio_vw AS SELECT * FROM aliment WHERE bio = false ORDER BY proteines DESC;
+```
+
+```sql
+SELECT * FROM aliments_non_bio_vw;
+```
+
+```sql
+SELECT * FROM aliments_non_bio_vw WHERE proteines > 10;
+```
+
+Si vous êtes coincé, la solution est disponible ci-dessous. 👇
+
+<Vimeo vimeoId="497578240" />
+
+<br />
+
+### En résumé
+
+- Vous avez appris à effectuer des opérations mathématiques simples avec des mots clés comme **`COUNT`** ou **`AVG`**.
+- Vous savez sauvegarder des requêtes avec `CREATE VIEW`.
+
+_Avec ce que vous avez appris dans le chapitre précédent et celui-ci, vous êtes devenu un champion des requêtes SQL avancées ! Mais il manque
+encore une corde à votre arc : écrire des requêtes permettant de récupérer des relations entre différents objets. Voyons ensemble comment faire,
+dans le chapitre suivant !_
+
+-----
+
+## Implémentez des relations entre vos données grâce à JOIN
+
+[Implémentez des relations entre vos données grâce à JOIN - Implémentez vos bases de données relationnelles avec SQL - OpenClassrooms](https://openclassrooms.com/fr/courses/6971126-implementez-vos-bases-de-donnees-relationnelles-avec-sql/7142285-implementez-des-relations-entre-vos-donnees-grace-a-join)
+
+<Vimeo vimeoId="497953070" />
+
+<br />
+
+Les bases de données SQL sont dites de type “**relationnel**”. Cela sous-entend que leur force réside sur leur capacité à **relier plusieurs
+types de données entre elles**.
+
+Pour l’instant, vous avez utilisé de la donnée sans relations. Par exemple, pour récupérer ou mettre à jour un utilisateur ou un aliment.
+
+Or, si vous reprenez l’exemple de Foodly, l’application doit stocker les aliments qu’un utilisateur a scannés. Pour ce faire, il faut **stocker
+les relations entre ces mêmes utilisateurs et certains aliments**.
+
+Nous verrons comment mettre en place de telles relations dans la partie 4. Mais en attendant, voyons comment récupérer des objets selon les
+relations qu’ils ont entre eux.
+
+### Extrayez des informations via une relation 1 à plusieurs
+
+Beaucoup d’utilisateurs vont utiliser Foodly, et ce, dans plusieurs pays.
+
+Afin de pouvoir s’adapter à chacun, l’application va devoir **stocker la langue préférée** de chaque utilisateur. Pour ce faire, la table
+“langue” a été rajoutée à la base de données Foodly [que vous avez téléchargée](https://github.com/OpenClassrooms-Student-Center/Course-implementez-BDD-SQL/blob/master/partie_3/foodly.sql)
+au début de cette partie.
+
+Chaque utilisateur est relié à une langue. Et chaque langue peut être reliée à plusieurs utilisateurs.
+
+<figure>
+    <img src="https://user.oc-static.com/upload/2021/01/18/16109621275269_3c2_one-to-many.png"
+         alt="Schéma représentant 2 utilisateurs reliés à une langue 1 et un utilisateurs relié à une langue 2" />
+    <figcaption>La relation un à plusieurs entre les utilisateurs et les langues</figcaption>
+</figure>
+
+:::info
+On parle alors d’une _relation 1 à plusieurs_ entre utilisateur et langue (_one-to-many_, en anglais).
+:::
+
+Pour matérialiser une telle relation dans une base SQL telle que MySQL, on suit un principe assez simple :
+
+1. Dans ce cas spécifique, une langue est reliée à plusieurs utilisateurs. On crée donc cet objet normalement, comme vous avez pu le faire
+précédemment.
+
+```sql
+INSERT INTO `langue` VALUES ('français');
+```
+
+2. Chaque utilisateur se voyant relié à une langue, c’est l’utilisateur qui va devoir stocker l’id unique de la langue associée.<br />
+Par convention, on utilise comme nom de ce champ `{nom de l’objet associé}_id` (donc ici, `langue_id`).
+
+Les utilisateurs de la base de données mise à jour dans la partie 2 ont ainsi un champ `langue_id`, où est stocké l’id de la langue qu’ils
+souhaitent utiliser.
+
+> Par exemple, le premier utilisateur a comme langue_id 1, soit l’id du français dans la table des langues.
+
+Imaginez désormais qu’on vous demande de ressortir toutes les langues utilisées par les 10 premiers utilisateurs, ou tous les utilisateurs
+ayant configuré Foodly en anglais.
+
+Ce serait fastidieux de tout vérifier à la main, non ? 😨
+
+:::info
+Eh bien, ne vous inquiétez pas. Il existe une commande qui est justement là pour régler ce genre de problème. La commande **`JOIN`**. 🙌
+:::
+
+Grâce à cette commande, vous allez pouvoir **expliquer à MySQL comment joindre deux tables selon un identifiant qu’elles ont en commun**.
+
+Partons du principe que :
+- la langue_id du premier utilisateur est le français ;
+- l’id du français est 1.
+
+Vous allez spécifier à MySQL de **joindre** les tables “utilisateur” et “langue” **en lui précisant que l’id de langue et langue_id de
+l’utilisateur doivent êtres égaux** !
+
+Prenons un exemple. Regardons tous les utilisateurs avec les langues qui leur sont associées. Tapez cette commande dans votre terminal :
+
+```sql
+SELECT * FROM `utilisateur`
+JOIN `langue`
+ON `utilisateur`.`langue_id` = `langue`.`id`;
+```
+
+Vous devriez obtenir [ce tableau](https://s3-eu-west-1.amazonaws.com/course.oc-static.com/courses/6971126/P3-C2-Tableau+resultats-relation+un+%C3%A0+plusieurs.xlsx),
+où sont visibles les langues utilisées par chaque utilisateur.
+
+| id | prenom | email | langue_id | id | nom | code_pays |
+|----|--------|-------|-----------|----|-----|-----------|
+| 1	 | quentin	| qentin@gmail.com	    | 1 | 1	| français | fr-fr |
+| 2	 | marie	| marie@hotmail.fr	    | 1 | 1	| français | fr-fr |
+| 5	 | pierre	| pp@orange.fr	        | 1 | 1	| français | fr-fr |
+| 6	 | lisa	    | lisadv@gmail.com	    | 1 | 1	| français | fr-fr |
+| 7	 | éléonore	| glunt@sfr.com	        | 1 | 1	| français | fr-fr |
+| 10 | fabienne	| fabienne@yopmail.com	| 1 | 1	| français | fr-fr |
+| 3	 | vincent	| vm@yahoo.com	        | 2 | 2	| anglais | en-uk |
+| 4	 | marc	    | marc@gmail.com	    | 2 | 2	| anglais | en-uk |
+| 8	 | henry	| henry@outlook.fr	    | 2 | 2	| anglais | en-uk |
+| 9	 | lionel	| hpp@gmail.com	        | 2 | 2	| anglais | en-uk |
+
+Que s’est-il passé dans cette commande ?
+- Nous avons demandé à MySQL de sélectionner tous les utilisateurs.
+    - ``SELECT * FROM `utilisateur``
+- Auxquels nous voulons joindre les langues.
+    - ``JOIN `langue``
+- En précisant à MySQL de les relier, en considérant que l’id de la langue est stockée dans chaque utilisateur dans le champ langue_id.
+    - ``ON `utilisateur`.`langue_id` = `langue`.`id``
+
+<figure>
+    <img src="https://user.oc-static.com/upload/2021/01/18/16109622117939_P3_LANGUE_static.png"
+         alt="Récapitulatif visuel du paragraphe rédigé ci-dessus" />
+    <figcaption>L'utilisation de la commande JOIN</figcaption>
+</figure>
+
+:::info
+Ici, vous avez utilisé la commande SQL pour lier **la totalité** d’une table (utilisateur) avec une autre (langue). Mais on peut tout à fait
+**limiter cette jointure** à seulement **quelques objets** en particulier.
+:::
+
+### À vous de jouer !
+
+Admettons que je vous demande de me donner tous les noms de famille des utilisateurs ayant sélectionné le français. Comment feriez-vous cela ?
+
+```sql
+SELECT * FROM utilisateur JOIN langue ON utilisateur.langue_id = langue.id WHERE langue.nom = 'français';
+```
+
+Testez la commande et vérifiez la solution ci-dessous :
+
+<Vimeo vimeoId="497578310" />
+
+<br />
+
+Voilà, vous pouvez désormais relier entre elles deux tables unies par une relation 1 à plusieurs. Vous pouvez être fier de vous ! 👏
+
+Maintenant, passons à la prochaine étape : les relations plusieurs à plusieurs.
+
+### Obtenez des informations complexes via une relation plusieurs à plusieurs
+
+Reprenons ensemble l’idée première de l’application Foodly. Cette dernière sert à des utilisateurs (comme vous et moi) à scanner des aliments.
+
+Une fois ces aliments scannés, il serait plus qu’utile que la base de données les garde en mémoire, afin que les utilisateurs puissent les
+retrouver par la suite (pour par exemple faire leur prochaine liste de courses).
+
+Pour ce faire, il faudrait un moyen de stocker dans la BDD tous les aliments qui ont été scannés par un utilisateur précis. Sachant que :
+- un même utilisateur peut stocker plusieurs aliments scannés ;
+- un aliment peut lui-même être scanné par plusieurs utilisateurs.
+
+<figure>
+    <img src="https://user.oc-static.com/upload/2021/01/18/16109643615497_3c2_Many-to-many.png"
+         alt="Schéma représentant des utilisateurs reliés à plusieurs aliments" />
+    <figcaption>La relation un à plusieurs entre les utilisateurs et les aliments</figcaption>
+</figure>
+
+On parle ici de _relation plusieurs à plusieurs_. **Chaque objet d’une table pouvant être relié à plusieurs objets de l’autre table, et vice
+versa.**
+
+Or, tout ce que sait faire MySQL (et les bases de données SQL en général), c’est de stocker une valeur unique par champ. **Il n’est pas
+possible par exemple de stocker plusieurs id d’aliments au sein d’un même utilisateur.**
+
+:::info
+Par défaut, le SQL ne sait modéliser que des relations 1 à plusieurs.
+:::
+
+:::note ?
+Comment faire dans ce cas ? 🤔
+:::
+
+Vous allez “tricher”. Une relation plusieurs à plusieurs, c’est une multitude de relations 1 à plusieurs.
+
+:::note ?
+Hum, oui mais encore ?
+:::
+
+Regardez les tables présentes dans la BDD que vous avez téléchargées pour cette partie. Voyez-vous une table appelée `utilisateur_aliment` ?
+
+Celle-ci contient des `utilisateur_id` et des `aliment_id`. Vous l’avez peut-être deviné : elle sert à **stocker des relations entre un
+utilisateur et un aliment précis**.
+
+:::info
+On appelle **_table de liaison_** ce genre de table.<br />
+Par convention, elle prend le nom `{table1}_{table2}`, et sert à relier les tables 1 et 2 qui y sont stockées, en sauvegardant l’id d’un objet
+de la table 1, à l’id de l’objet de la table 2 correspondant.
+:::
+
+En récupérant tous les objets présents dans cette base, qui ne sont autres que des relations 1 à plusieurs vers utilisateur et aliment, on peut
+reconstituer les relations plusieurs à plusieurs entre ces mêmes utilisateurs et aliments !
+
+<figure>
+    <img src="https://user.oc-static.com/upload/2021/01/21/16112243601326_3c2_table-liaison%20copie.png"
+         alt="schéma représentant à gauche des utilisateurs et à droites des aliments. Tous sont reliés grâce à la table de liaison, au centre." />
+    <figcaption>La table de liaison relie les utilisateurs aux aliments</figcaption>
+</figure>
+
+:::note ?
+Comment cela se passe-t-il côté SQL ? 😉
+:::
+
+Eh bien, il s’agit toujours d’un bon vieux `JOIN` !
+
+Voici la commande pour relier tous les utilisateurs aux aliments qu’ils ont scannés :
+
+```sql
+SELECT * FROM utilisateur
+JOIN utilisateur_aliment ON (utilisateur.id = utilisateur_aliment.utilisateur_id)
+JOIN aliment ON (aliment.id = utilisateur_aliment.aliment_id);
+```
+
+:::info
+Décomposons cette commande ensemble :
+- Nous avons demandé à MySQL de sélectionner tous les utilisateurs.
+   - ``SELECT * FROM `utilisateur``
+- Auxquels nous voulons joindre la table utilisateur_aliment.
+   - ``JOIN `utilisateur_aliment``
+- En précisant à MySQL de les relier en considérant que l’id de l’utilisateur est stocké en tant que utilisateur_id dans la table
+utilisateur_aliment.
+   - `ON (utilisateur.id = utilisateur_aliment.utilisateur_id)`
+- À ce `JOIN`, on veut à nouveau lier de la donnée de la table aliment, soit un nouveau `JOIN`.
+   - ``JOIN `aliment``
+- Pour ce faire, on précise à MySQL que l’id de l’aliment est stocké dans utilisateur_aliment en tant que aliment_id.
+   - `ON (aliment.id = utilisateur_aliment.utilisateur_id)`
+:::
+
+On obtient ce [magnifique tableau](https://s3-eu-west-1.amazonaws.com/course.oc-static.com/courses/6971126/P3-C2-Tableau+resultats-relation+plusieurs+%C3%A0+plusieurs.xlsx) où sont liés tous les utilisateurs aux aliments qu’ils ont scannés.
+
+| id | prenom | email | langue_id | utilisateur_id | aliment_id | id | nom | marque | sucre | calories | graisses | proteines | bio | reduction_id |
+|----|--------|-------|-----------|----------------|------------|----|-----|--------|-------|----------|----------|-----------|-----|--------------|
+| 1	 | quentin	| qentin@gmail.com	    | 1	| 1	 | 7	| 7	 | saumon	       | guyader	 | 0	| 206	| 12.3	| 22.1	| 0	|   |
+| 1	 | quentin	| qentin@gmail.com	    | 1	| 1	 | 3	| 3	 | banane	       | chiquita	 | 24	| 101	| 0.3	| 1.1	| 0	|   |
+| 1	 | quentin	| qentin@gmail.com	    | 1	| 1	 | 5	| 5	 | compote	       | andros	     | 11	| 51	| 0	    | 0.5	| 0	|   |
+| 1	 | quentin	| qentin@gmail.com	    | 1	| 1	 | 17	| 17 | pomme de terre  | doréac	     | 21.1	| 104	| 0.2	| 2.8	| 0	|   |
+| 2	 | marie	| marie@hotmail.fr	    | 1	| 2	 | 2	| 2	 | poire	       | sans marque | 27.5	| 134	| 0.2	| 1.1	| 1	|   |
+| 2	 | marie	| marie@hotmail.fr	    | 1	| 2	 | 19	| 19 | baguette	       | sans marque | 36.1	| 185	| 1.2	| 7.5	| 0	|   |
+| 2	 | marie	| marie@hotmail.fr	    | 1	| 2	 | 14	| 14 | café	           | carte noire | 0	| 0	    | 0	    | 0	    | 0	|   |
+| 3	 | vincent	| vm@yahoo.com	        | 2	| 3	 | 4	| 4	 | jambon	       | herta	     | 0.2	| 34	| 0.8	| 6.6	| 0	|   |
+| 3	 | vincent	| vm@yahoo.com	        | 2	| 3	 | 15	| 15 | jus d'orange	   | innocent	 | 16	| 74	| 0	    | 1.6	| 0	|   |
+| 3	 | vincent	| vm@yahoo.com	        | 2	| 3	 | 12	| 12 | filet de poulet | le gaulois	 | 0	| 121	| 1.8	| 26.2	| 0	|   |
+| 4	 | marc	    | marc@gmail.com	    | 2	| 4	 | 5	| 5	 | compote	       | andros	     | 11	| 51	| 0	    | 0.5	| 0	|   |
+| 4	 | marc	    | marc@gmail.com	    | 2	| 4	 | 4	| 4	 | jambon	       | herta	     | 0.2	| 34	| 0.8	| 6.6	| 0	|   |
+| 4	 | marc	    | marc@gmail.com	    | 2	| 4	 | 7	| 7	 | saumon	       | guyader     | 0	| 206	| 12.3	| 22.1	| 0	|   |
+| 5	 | pierre	| pp@orange.fr	        | 1	| 5	 | 1	| 1	 | pomme	       | sans marque | 19.1	| 72	| 0.2	| 0.4	| 0	| 1 |
+| 5	 | pierre	| pp@orange.fr	        | 1	| 5	 | 18	| 18 | oeuf	           | naturalia	 | 0.4	| 74	| 5.1	| 6.5	| 1	|   |
+| 5	 | pierre	| pp@orange.fr	        | 1	| 5	 | 3	| 3	 | banane	       | chiquita	 | 24	| 101	| 0.3	| 1.1	| 0	|   |
+| 6	 | lisa	    | lisadv@gmail.com	    | 1	| 6	 | 2	| 2	 | poire	       | sans marque | 27.5	| 134	| 0.2	| 1.1	| 1	|   |
+| 6	 | lisa	    | lisadv@gmail.com	    | 1	| 6	 | 12	| 12 | filet de poulet | le gaulois	 | 0	| 121	| 1.8	| 26.2	| 0	|   |
+| 6	 | lisa	    | lisadv@gmail.com	    | 1	| 6	 | 6	| 6	 | steak haché	   | charal	     | 0.8	| 68	| 4.8	| 4.8	| 0	|   |
+| 7	 | éléonore	| glunt@sfr.com	        | 1	| 7	 | 16	| 16 | jus de pomme	   | andros	     | 24	| 100	| 0.2	| 0.2	| 1	|   |
+| 7	 | éléonore	| glunt@sfr.com	        | 1	| 7	 | 19	| 19 | baguette	       | sans marque | 36.1	| 185	| 1.2	| 7.5	| 0	|   |
+| 7	 | éléonore	| glunt@sfr.com	        | 1	| 7	 | 1	| 1	 | pomme	       | sans marque | 19.1	| 72	| 0.2	| 0.4	| 0	| 1 |
+| 8	 | henry	| henry@outlook.fr	    | 2	| 8	 | 3	| 3	 | banane	       | chiquita	 | 24	| 101	| 0.3	| 1.1	| 0	|   |
+| 8	 | henry	| henry@outlook.fr	    | 2	| 8	 | 5	| 5	 | compote	       | andros	     | 11	| 51	| 0	    | 0.5	| 0	|   |
+| 9	 | lionel	| hpp@gmail.com	        | 2	| 9	 | 18	| 18 | oeuf	           | naturalia	 | 0.4	| 74	| 5.1	| 6.5	| 1	|   |
+| 9	 | lionel	| hpp@gmail.com	        | 2	| 9	 | 9	| 9	 | riz	           | oncle benz	 | 28.2	| 130	| 0.3	| 2.7	| 0	|   |
+| 9	 | lionel	| hpp@gmail.com	        | 2	| 9	 | 14	| 14 | café	           | carte noire | 0	| 0	    | 0	    | 0	    | 0	|   |
+| 10 | fabienne	| fabienne@yopmail.com	| 1	| 10 | 16	| 16 | jus de pomme    | andros	     | 24	| 100	| 0.2	| 0.2	| 1	|   |
+| 10 | fabienne	| fabienne@yopmail.com	| 1	| 10 | 3	| 3	 | banane	       | chiquita	 | 24	| 101	| 0.3	| 1.1	| 0	|   |
+
+
+### À vous de jouer !
+
+Admettons que vous souhaitiez voir tous les aliments sélectionnés par les utilisateurs dont l’adresse e-mail et une adresse Gmail. Comment
+feriez-vous ?
+
+```sql
+SELECT * FROM utilisateurs_gmail_vw
+JOIN utilisateur_aliment ON (utilisateurs_gmail_vw.id = utilisateur_aliment.utilisateur.id)
+JOIN aliment ON (aliment.id = utilisateur_aliment.aliment_id)
+```
+
+Faites le test et vérifiez votre commande avec ce screencast :
+
+<Vimeo vimeoId="497578331" />
+
+<br />
+
+Vous voilà capable de relier entre elles deux tables ayant une relation plusieurs à plusieurs, via leur table de liaison. Vous êtes très fort. 💪
+
+### En résumé
+
+- Vous savez désormais **joindre** plusieurs objets entre eux grâce au mot clé **JOIN**.
+- Et ce, que ce soit pour une relation **un à plusieurs** ou pour une relation **plusieurs à plusieurs** grâce à une **table de liaison**.
+
+_Maintenant que vous savez donner du sens à la donnée présente dans votre BDD, il vous reste une ultime partie !_
+
+_Vous allez y apprendre comment modifier la structure d’une base de données, afin de la faire évoluer selon les besoins de votre application._
+
+-----
+
+```sql
+mysql> SHOW tables;
++---------------------+
+| Tables_in_foodly    |
++---------------------+
+| aliment             |
+| langue              |
+| utilisateur         |
+| utilisateur_aliment |
++---------------------+
+4 rows in set (0,00 sec)
+```
+
+```sql
+mysql> SHOW COLUMNS FROM aliment;
++-----------+--------------+------+-----+---------+----------------+
+| Field     | Type         | Null | Key | Default | Extra          |
++-----------+--------------+------+-----+---------+----------------+
+| id        | int          | NO   | PRI | NULL    | auto_increment |
+| nom       | varchar(100) | NO   |     | NULL    |                |
+| marque    | varchar(100) | YES  |     | NULL    |                |
+| sucre     | float        | YES  |     | NULL    |                |
+| calories  | int          | NO   |     | NULL    |                |
+| graisses  | float        | YES  |     | NULL    |                |
+| proteines | float        | YES  |     | NULL    |                |
+| bio       | tinyint(1)   | YES  |     | 0       |                |
++-----------+--------------+------+-----+---------+----------------+
+8 rows in set (0,01 sec)
+```
+
+```sql
+mysql> SELECT * FROM aliment;
++----+------------------+-------------+-------+----------+----------+-----------+------+
+| id | nom              | marque      | sucre | calories | graisses | proteines | bio  |
++----+------------------+-------------+-------+----------+----------+-----------+------+
+|  1 | pomme            | sans marque |  19.1 |       72 |      0.2 |       0.4 |    0 |
+|  2 | poire            | sans marque |  27.5 |      134 |      0.2 |       1.1 |    1 |
+|  3 | banane           | chiquita    |    24 |      101 |      0.3 |       1.1 |    0 |
+|  4 | jambon           | herta       |   0.2 |       34 |      0.8 |       6.6 |    0 |
+|  5 | compote          | andros      |    11 |       51 |        0 |       0.5 |    0 |
+|  6 | steak haché      | charal      |   0.8 |       68 |      4.8 |       4.8 |    0 |
+|  7 | saumon           | guyader     |     0 |      206 |     12.3 |      22.1 |    0 |
+|  8 | haricots verts   | bonduelle   |   5.8 |       25 |      0.1 |       1.5 |    0 |
+|  9 | riz              | oncle benz  |  28.2 |      130 |      0.3 |       2.7 |    0 |
+| 10 | pâtes completes  | barilla     |    64 |      353 |      2.7 |        14 |    1 |
+| 11 | blanc de dinde   | père dodu   |   0.6 |       98 |      0.9 |        22 |    0 |
+| 12 | filet de poulet  | le gaulois  |     0 |      121 |      1.8 |      26.2 |    0 |
+| 13 | muesli           | bjorg       |  26.5 |      170 |        5 |       3.5 |    1 |
+| 14 | café             | carte noire |     0 |        0 |        0 |         0 |    0 |
+| 15 | jus d‘orange     | innocent    |    16 |       74 |        0 |       1.6 |    0 |
+| 16 | jus de pomme     | andros      |    24 |      100 |      0.2 |       0.2 |    1 |
+| 17 | pomme de terre   | doréac      |  21.1 |      104 |      0.2 |       2.8 |    0 |
+| 18 | oeuf             | naturalia   |   0.4 |       74 |      5.1 |       6.5 |    1 |
+| 19 | baguette         | sans marque |  36.1 |      185 |      1.2 |       7.5 |    0 |
+| 20 | lait d‘amande    | bjorg       |   6.1 |       80 |      5.3 |       1.5 |    1 |
++----+------------------+-------------+-------+----------+----------+-----------+------+
+20 rows in set (0,00 sec)
+```
+
+```sql
+mysql> SHOW COLUMNS FROM langue;
++--------+--------------+------+-----+---------+----------------+
+| Field  | Type         | Null | Key | Default | Extra          |
++--------+--------------+------+-----+---------+----------------+
+| id     | int          | NO   | PRI | NULL    | auto_increment |
+| nom    | varchar(100) | NO   |     | NULL    |                |
++--------+--------------+------+-----+---------+----------------+
+2 rows in set (0.01 sec)
+```
+
+```sql
+mysql> SELECT * FROM langue;
+
++----+----------+
+| id | nom      |
++----+----------+
+|  1 | français |
+|  2 | anglais  |
++----+----------+
+2 rows in set (0.01 sec)
+```
+
+```sql
+mysql> SHOW COLUMNS FROM utilisateur;
++-----------+--------------+------+-----+---------+----------------+
+| Field     | Type         | Null | Key | Default | Extra          |
++-----------+--------------+------+-----+---------+----------------+
+| id        | int          | NO   | PRI | NULL    | auto_increment |
+| nom       | varchar(100) | YES  |     | NULL    |                |
+| prenom    | varchar(100) | YES  |     | NULL    |                |
+| email     | varchar(255) | NO   | UNI | NULL    |                |
+| langue_id | int          | NO   | MUL | NULL    |                |
++-----------+--------------+------+-----+---------+----------------+
+4 rows in set (0.01 sec)
+```
+
+```sql
+mysql> SELECT * FROM utilisateur;
++----+-------------+------------+----------------------+-----------+
+| id | nom         | prenom     | email                | langue_id |
++----+-------------+------------+----------------------+-----------+
+|  1 | durantay    | quentin    | qentin@gmail.com     |         1 |
+|  2 | dupont      | marie      | marie@hotmail.fr     |         1 |
+|  3 | miller      | vincent    | vm@yahoo.com         |         2 |
+|  4 | zuckerberg  | marc       | marc@gmail.com       |         2 |
+|  5 | paul        | pierre     | pp@orange.fr         |         1 |
+|  6 | de vauclerc | lisa       | lisadv@gmail.com     |         1 |
+|  7 | gluntig     | éléonore   | glunt@sfr.com        |         1 |
+|  8 | cavill      | henry      | henry@outlook.fr     |         2 |
+|  9 | hopper      | lionel     | hpp@gmail.com        |         2 |
+| 10 | tember      | fabienne   | fabienne@yopmail.com |         1 |
++----+-------------+------------+----------------------+-----------+
+10 rows in set (0,00 sec)
+```
+
+```sql
+mysql> SHOW COLUMNS FROM utilisateur_aliment;
++----------------+------+------+-----+---------+-------+
+| Field          | Type | Null | Key | Default | Extra |
++----------------+------+------+-----+---------+-------+
+| utilisateur_id | int  | NO   | MUL | NULL    |       |
+| aliment_id     | int  | NO   | MUL | NULL    |       |
++----------------+------+------+-----+---------+-------+
+2 rows in set (0,00 sec)
+```
+
+```sql
+mysql> SELECT * FROM utilisateur_aliment;
++----------------+------------+
+| utilisateur_id | aliment_id |
++----------------+------------+
+|              1 |          7 |
+|              1 |          3 |
+|              1 |          5 |
+|              2 |          2 |
+|              2 |         19 |
+|              2 |         14 |
+|              3 |          4 |
+|              3 |         15 |
+|              3 |         12 |
+|              1 |         17 |
+|              4 |          5 |
+|              4 |          4 |
+|              4 |          7 |
+|              5 |          1 |
+|              5 |         18 |
+|              5 |          3 |
+|              6 |          2 |
+|              6 |         12 |
+|              6 |          6 |
+|              7 |         16 |
+|              7 |         19 |
+|              7 |          1 |
+|              8 |          3 |
+|              8 |          5 |
+|              9 |         18 |
+|              9 |          9 |
+|              9 |         14 |
+|             10 |         16 |
+|             10 |          3 |
++----------------+------------+
+29 rows in set (0,00 sec)
+```
+
+------
+
+## Quiz : Effectuez des requêtes SQL avancées
+
+[Effectuez des requêtes SQL avancées - OpenClassrooms](https://openclassrooms.com/fr/courses/6971126-implementez-vos-bases-de-donnees-relationnelles-avec-sql/exercises/4009)
+
+#### Compétences évaluées
+
+<i class="bi bi-check2-circle"></i> Effectuer des requêtes SQL avancées
+
+-----
+
+#### Description
+
+Reprenons notre BDD Moviz du précédent quiz. J’ai un peu adapté cette base. Vous pouvez la télécharger ici : [https://github.com/OpenClassrooms-Student-Center/Course-implementez-BDD-SQL/blob/master/partie\_3/moviz.sql](https://github.com/OpenClassrooms-Student-Center/Course-implementez-BDD-SQL/blob/master/partie_3/moviz.sql)
+
+En plus de la table “film” qui a évolué pour inclure la note_id, j’ai rajouté les tables “note” et “pays_de_sortie” ainsi que la table de
+liaison “film_pays_de_sortie”.
+
+Il existe donc une relation un à plusieurs entre “film” et “note”, et une relation plusieurs à plusieurs entre “film” et “pays_de_sortie”.
+
+Voici le schéma mis à jour de la table “film” :
+
+| **Nom du champ** | **Type du champ** | **Description du champ** |
+|------------------|-------------------|--------------------------|
+| _nom_ | VARCHAR(255) | le nom du film |
+| _date_de_sortie_ | DATE | la date de sortie du film |
+| _synopsis_ | TEXT | la description du scénario du film |
+| _langue_ | VARCHAR(255) | la langue principale du film |
+| _budget_ | INTEGER | le budget de production du film |
+| note_id | INTEGER | l'id de l'objet note associé au film |
+
+Le schéma de la table “note” est disponible ici :
+
+| **Nom du champ** | **Type du champ** | **Description du champ** |
+|------------------|-------------------|--------------------------|
+| _note_ | INTEGER | la note sur 5 |
+
+Et enfin, voici le schéma de “pays_de_sortie” :
+
+| **Nom du champ** | **Type du champ** | **Description du champ** |
+|------------------|-------------------|--------------------------|
+| _nom_ | VARCHAR(255) | le nom du pays |
+
+-----
+
+#### Question 1 : Quelle est la commande qui permet de récupérer uniquement le film Skyfall ?
+
+<i class="bi bi-record-circle"></i> <code>SELECT * FROM film WHERE nom LIKE "Skyfall";</code><br />
+<i class="bi bi-circle"></i> <code>SELECT * FROM film WHERE id = 1;</code><br />
+<i class="bi bi-circle"></i> <code>SELECT * FROM film ORDER BY nom = "Skyfall";</code><br />
+<br />
+
+_Ici, on souhaite récupérer le film dont le nom est “Skyfall”. Filtrer se fait avec le mot clé WHERE auquel on ajoute la règle de comparaison.
+Ici, on cherche à matcher exactement le mot “Skyfall” sur la colonne “nom”, d’où l’utilisation de l’opérateur d’égalité._
+
+> `SELECT * FROM film WHERE nom = "Skyfall";`
+
+```sql
+mysql> SELECT * FROM film WHERE nom = "Skyfall";
++----+----------------+-----------------------------------------------------------------------------------+---------+-----------+---------+---------+
+| id | date_de_sortie | synopsis                                                                          | langue  | budget    | nom     | note_id |
++----+----------------+-----------------------------------------------------------------------------------+---------+-----------+---------+---------+
+|  2 | 2012-10-26     | Dans cet épisode le plus sombre de la saga, James Bond retourne à ses origines.   | anglais | 200000000 | Skyfall |       5 |
++----+----------------+-----------------------------------------------------------------------------------+---------+-----------+---------+---------+
+1 row in set (0,00 sec)
+```
+
+-----
+
+#### Question 2 : Quels sont les films dont le budget est supérieur ou égal à 100 000 000 $ ?
+
+<i class="bi bi-record-circle"></i> Titanic et Skyfall<br />
+<i class="bi bi-circle"></i> Titanic, Skyfall et La La Land<br />
+<i class="bi bi-circle"></i> Titanic uniquement<br />
+<br />
+
+_Ici, on souhaite récupérer plusieurs films selon un opérateur de comparaison sur la colonne “budget”. Il s’agit de l’opérateur supérieur ou
+égal (>=) qui se place lui aussi après un WHERE. La commande est donc :_<br />
+`SELECT * FROM film WHERE budget >= 100000000;`
+
+```sql
+mysql> SELECT * FROM film WHERE budget >= 100000000;
++----+----------------+-----------------------------------------------------------------------------------+---------+-----------+---------+---------+
+| id | date_de_sortie | synopsis                                                                          | langue  | budget    | nom     | note_id |
++----+----------------+-----------------------------------------------------------------------------------+---------+-----------+---------+---------+
+|  1 | 1998-04-04     | L‘histoire du plus grand paquebot de son époque, et de sa funeste fin.            | anglais | 200000000 | Titanic |       4 |
+|  2 | 2012-10-26     | Dans cet épisode le plus sombre de la saga, James Bond retourne à ses origines.   | anglais | 200000000 | Skyfall |       5 |
++----+----------------+-----------------------------------------------------------------------------------+---------+-----------+---------+---------+
+2 rows in set (0,00 sec)
+```
+
+-----
+
+#### Question 3 : Quels sont les films dont le synopsis contient le mot “histoire” ?
+
+<i class="bi bi-circle"></i> Skyfall uniquement<br />
+<i class="bi bi-circle"></i> Skyfall et La La Land<br />
+<i class="bi bi-record-circle"></i> Titanic et La La Land<br />
+<br />
+
+_Ici, ou souhaite récupérer plusieurs films dont la colonne “synopsis” contient le mot "histoire". Pour ce faire, on utilise toujours un
+filtre après WHERE. Il s’agit du filtre LIKE, auquel on ajoute le texte à comparer, et on indique à MySQL que ce texte se situe au milieu
+d’une phrase grâce aux pourcentages avant et après le mot, soit “%histoire%”. La commande à taper est donc :_<br />
+`SELECT * FROM film WHERE synopsis LIKE "%histoire%";`
+
+```sql
+mysql> SELECT * FROM film WHERE synopsis LIKE "%histoire%";
++----+----------------+-------------------------------------------------------------------------+---------+-----------+------------+---------+
+| id | date_de_sortie | synopsis                                                                | langue  | budget    | nom        | note_id |
++----+----------------+-------------------------------------------------------------------------+---------+-----------+------------+---------+
+|  1 | 1998-04-04     | L‘histoire du plus grand paquebot de son époque, et de sa funeste fin.  | anglais | 200000000 | Titanic    |       4 |
+|  3 | 2017-01-25     | Une histoire d‘amour à Los Angeles sous forme de comédie musicale.      | anglais |  30000000 | La La Land |       3 |
++----+----------------+-------------------------------------------------------------------------+---------+-----------+------------+---------+
+2 rows in set (0,00 sec)
+```
+
+-----
+
+#### Question 4 : Combien y-a-t-il de films ?
+
+<i class="bi bi-circle"></i> 1<br />
+<i class="bi bi-circle"></i> 2<br />
+<i class="bi bi-record-circle"></i> 3<br />
+<br />
+
+_Ici, on souhaite compter le nombre de films. Cela est possible grâce au mot clé COUNT qui, adossé à une commande SELECT, permet de retourner
+le nombre d’objets matchés. La commande à taper est :_<br />
+`SELECT COUNT(*) FROM film;`
+
+```sql
+mysql> SELECT COUNT(*) FROM film;
++----------+
+| COUNT(*) |
++----------+
+|        3 |
++----------+
+1 row in set (0,01 sec)
+```
+
+-----
+
+#### Question 5 : Quels sont les mots clés permettant d’effectuer des opérations arithmétiques sur des requêtes SQL ?
+
+<i class="bi bi-record-circle"></i> SUM, AVG, MAX, MIN<br />
+<i class="bi bi-circle"></i> SOMME, MOYENNE, MAXIMUM, MINIMUM<br />
+<i class="bi bi-circle"></i> SUM, AVE, MAXI, MINI<br />
+<br />
+
+_Les mots clés disponibles sont SUM pour faire une somme, AVG pour faire une moyenne, MAX pour retrouver un maximum, et MIN pour retrouver un
+minimum._
+
+-----
+
+#### Question 6 : Combien de films ont une note inférieure à 4 ?
+
+<i class="bi bi-record-circle"></i> 1<br />
+<i class="bi bi-circle"></i> 2<br />
+<i class="bi bi-circle"></i> 3<br />
+<br />
+
+_Ici, il faut relier les tables “film” et “note” grâce au mot clé JOIN, en précisant à MySQL (grâce au mot clé ON) quelles sont les colonnes
+qui permettent de relier les deux tables (ici, l’id de chaque note, et la “note_id” de chaque film). La commande est donc :_
+
+```sql
+mysql> SELECT * FROM film JOIN note
+    -> ON (film.note_id = note.id)
+    -> WHERE note.note < 4;
+```
+
+-----
+
+#### Question 7 : Qu’est-ce qu’une table de liaison ?
+
+<i class="bi bi-circle"></i> C’est une table qui permet de lier deux tables ayant une relation un à plusieurs entre elles.<br />
+<i class="bi bi-record-circle"></i> C’est une table qui permet de relier deux tables ayant une relation plusieurs à plusieurs entre elles.<br />
+<i class="bi bi-circle"></i> C’est une table qui regroupe toutes les vues présentes dans une BDD.<br />
+<br />
+
+_La table de liaison est une table qui permet de lier deux tables entre elles, en stockant des objets avec l’id de chaque table, afin d’en
+matérialiser les relations plusieurs à plusieurs sous forme de relations un à plusieurs._
+
+-----
+
+#### Question 8 : Sélectionnez les bonnes associations de films avec leurs pays de sortie.
+
+<i class="bi bi-circle"></i> Skyfall en France, Angleterre et USA.<br />
+<i class="bi bi-record-circle"></i> Titanic en France, USA et Allemagne.<br />
+<i class="bi bi-circle"></i> La La Land aux USA uniquement.<br />
+<br />
+
+_Ici, nous sommes face à une relation plusieurs à plusieurs. Il faut donc passer par la table de liaison “film_pays_de_sortie”, qu’on JOIN à
+la fois à “film” et à “pays_de_sortie”. La commande qui permet de vérifier la solution est donc :_
+
+```sql
+mysql> SELECT * FROM film
+    -> JOIN film_pays_de_sortie
+    -> ON (film.id = film_pays_de_sortie.film_id)
+    -> JOIN pays_de_sortie
+    -> ON (pays_de_sortie.id = film_pays_de_sortie.pays_de_sortie_id);
++----+----------------+-----------------------------------------------------------------------------------+---------+-----------+------------+---------+---------+-------------------+----+------------+
+| id | date_de_sortie | synopsis                                                                          | langue  | budget    | nom        | note_id | film_id | pays_de_sortie_id | id | nom        |
++----+----------------+-----------------------------------------------------------------------------------+---------+-----------+------------+---------+---------+-------------------+----+------------+
+|  1 | 1998-04-04     | L‘histoire du plus grand paquebot de son époque, et de sa funeste fin.            | anglais | 200000000 | Titanic    |       4 |       1 |                 1 |  1 | france     |
+|  1 | 1998-04-04     | L‘histoire du plus grand paquebot de son époque, et de sa funeste fin.            | anglais | 200000000 | Titanic    |       4 |       1 |                 2 |  2 | usa        |
+|  1 | 1998-04-04     | L‘histoire du plus grand paquebot de son époque, et de sa funeste fin.            | anglais | 200000000 | Titanic    |       4 |       1 |                 4 |  4 | allemagne  |
+|  2 | 2012-10-26     | Dans cet épisode le plus sombre de la saga, James Bond retourne à ses origines.   | anglais | 200000000 | Skyfall    |       5 |       2 |                 1 |  1 | france     |
+|  2 | 2012-10-26     | Dans cet épisode le plus sombre de la saga, James Bond retourne à ses origines.   | anglais | 200000000 | Skyfall    |       5 |       2 |                 3 |  3 | angleterre |
+|  3 | 2017-01-25     | Une histoire d‘amour à Los Angeles sous forme de comédie musicale.                | anglais |  30000000 | La La Land |       3 |       3 |                 1 |  1 | france     |
+|  3 | 2017-01-25     | Une histoire d‘amour à Los Angeles sous forme de comédie musicale.                | anglais |  30000000 | La La Land |       3 |       3 |                 3 |  3 | angleterre |
+|  3 | 2017-01-25     | Une histoire d‘amour à Los Angeles sous forme de comédie musicale.                | anglais |  30000000 | La La Land |       3 |       3 |                 5 |  5 | italie     |
+|  3 | 2017-01-25     | Une histoire d‘amour à Los Angeles sous forme de comédie musicale.                | anglais |  30000000 | La La Land |       3 |       3 |                 6 |  6 | espagne    |
++----+----------------+-----------------------------------------------------------------------------------+---------+-----------+------------+---------+---------+-------------------+----+------------+
+9 rows in set (0,00 sec)
+```
+
+-----
+
+```sql title="Tables"
+mysql> SHOW TABLES
++---------------------+
+| Tables_in_moviz     |
++---------------------+
+| film                |
+| film_pays_de_sortie |
+| note                |
+| pays_de_sortie      |
++---------------------+
+4 rows in set (0,00 sec)
+```
+
+```sql title="Table 'film'"
+mysql> SELECT * FROM film
++----+----------------+-----------------------------------------------------------------------------------+---------+-----------+------------+---------+
+| id | date_de_sortie | synopsis                                                                          | langue  | budget    | nom        | note_id |
++----+----------------+-----------------------------------------------------------------------------------+---------+-----------+------------+---------+
+|  1 | 1998-04-04     | L‘histoire du plus grand paquebot de son époque, et de sa funeste fin.            | anglais | 200000000 | Titanic    |       4 |
+|  2 | 2012-10-26     | Dans cet épisode le plus sombre de la saga, James Bond retourne à ses origines.   | anglais | 200000000 | Skyfall    |       5 |
+|  3 | 2017-01-25     | Une histoire d‘amour à Los Angeles sous forme de comédie musicale.                | anglais |  30000000 | La La Land |       3 |
++----+----------------+-----------------------------------------------------------------------------------+---------+-----------+------------+---------+
+3 rows in set (0,00 sec)
+```
+
+```sql title="Table de liaison 'film_pays_de_sortie'"
+mysql> SELECT * FROM film_pays_de_sortie;
++---------+-------------------+
+| film_id | pays_de_sortie_id |
++---------+-------------------+
+|       1 |                 1 |
+|       2 |                 1 |
+|       3 |                 1 |
+|       1 |                 2 |
+|       2 |                 3 |
+|       3 |                 3 |
+|       1 |                 4 |
+|       3 |                 5 |
+|       3 |                 6 |
++---------+-------------------+
+9 rows in set (0,00 sec)
+```
+
+```sql title="Table 'note'"
+mysql> SELECT * FROM note;
++----+------+
+| id | note |
++----+------+
+|  1 |    1 |
+|  2 |    2 |
+|  3 |    3 |
+|  4 |    4 |
+|  5 |    5 |
++----+------+
+5 rows in set (0,00 sec)
+```
+
+```sql title="Table 'pays_de_sortie'"
+mysql> SELECT * FROM pays_de_sortie;
++----+------------+
+| id | nom        |
++----+------------+
+|  1 | france     |
+|  2 | usa        |
+|  3 | angleterre |
+|  4 | allemagne  |
+|  5 | italie     |
+|  6 | espagne    |
++----+------------+
+6 rows in set (0,00 sec)
+```
+

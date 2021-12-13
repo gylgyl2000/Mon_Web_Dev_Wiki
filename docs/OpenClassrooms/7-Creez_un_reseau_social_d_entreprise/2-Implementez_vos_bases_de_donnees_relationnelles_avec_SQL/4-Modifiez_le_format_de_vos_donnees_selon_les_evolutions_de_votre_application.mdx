@@ -1,0 +1,1097 @@
+---
+sidebar_position: 5
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+import { Vimeo } from 'mdx-embed';
+
+# Modifiez le format de vos données selon les évolutions de votre application
+
+## Modifiez la structure d’un objet avec ALTER TABLE
+
+[Modifiez la structure d’un objet avec ALTER TABLE - Implémentez vos bases de données relationnelles avec SQL - OpenClassrooms](https://openclassrooms.com/fr/courses/6971126-implementez-vos-bases-de-donnees-relationnelles-avec-sql/7142288-modifiez-la-structure-d-un-objet-avec-alter-table)
+
+<Vimeo vimeoId="497953098" />
+
+<br />
+
+Insérer de la donnée, la modifier, la supprimer, ou bien en tirer des informations utiles est désormais à votre portée. Bien joué !
+
+Mais il reste une chose à voir, une chose importante dont vous aurez toujours besoin si vous souhaitez adapter votre BDD aux évolutions de
+votre application.
+
+Vous voyez laquelle c’est ? 🤔
+
+Il s’agit de la **modification de la structure** de la BDD en elle-même. Commençons simplement par l’ajout et la suppression de champs.
+
+### Ajoutez un champ
+
+#### Ajoutez un champ aux aliments
+
+Le dernier rapport sur l’utilisation de Foodly vient de tomber. Dans celui-ci, les utilisateurs ont pu voter pour les améliorations qu’ils
+souhaiteraient voir apparaître dans l’application.
+
+La plus demandée était celle de voir la contenance en vitamines de chaque aliment.
+
+Sachant cela, l’équipe de Foodly organise une réunion concernant l’implémentation d’une telle fonctionnalité. Le design est prêt, les
+développeurs ont codé l’interface, mais il manque une chose cruciale pour récupérer la contenance en vitamines dans l’application : l’ajout de
+cette donnée dans la BDD.
+
+Prenons l’exemple de la vitamine C.
+
+Cette colonne n’apparaît nulle part dans le schéma de la table aliment. Il nous faut la créer.
+
+De la même manière que vous l’avez fait lors de la première partie, il faudra spécifier son type à MySQL. Pour ce faire, utilisez la commande
+**`ALTER TABLE`**.
+
+Voyons à quoi ressemble la commande SQL pour rajouter cette colonne, puis décortiquons-la ensemble :
+
+```sql
+ALTER TABLE aliment ADD vitamines_c FLOAT;
+```
+
+Ici, on signale à MySQL :
+- de modifier la structure d’une table avec **`ALTER TABLE`** ;
+- quelle table modifier (ici “aliment”) ;
+- que la modification va faire ajouter une colonne avec **`ADD`**;
+- le nom de cette nouvelle colonne (ici “vitamines_c”) ;
+- enfin, le type de la colonne (ici, **`FLOAT`**, car les vitamines sont stockées usuellement en mg/100g, valeur décimale).
+
+<figure>
+    <img src="https://user.oc-static.com/upload/2021/01/18/16109647551199_P4_ALTER-TABLE.png"
+         alt="Récapitulatif visuel du paragraphe rédigé ci-dessus" />
+    <figcaption>La commande ALTER TABLE</figcaption>
+</figure>
+
+:::info
+À noter que le type n’est parfois pas seul. On peut aussi (comme dans la partie 1), mentionner à MySQL qu’on rajoute une colonne qui est :
+- une clé primaire (**PRIMARY KEY**) ;
+- avec une valeur par défaut (**DEFAULT valeur_par_défaut**) ;
+- non nulle (**NOT NULL**). Auquel cas il faudra préciser une valeur par défaut, MySQL créant la colonne avec la valeur “NULL” pour tous les
+objets existants dans cette table ;
+- etc.
+:::
+
+### À vous de jouer !
+
+Faisons un petit exercice :
+
+> Admettons que l’on souhaite rajouter une colonne à la table “langue”. Cette colonne, c’est [le code ISO des langues](http://www.lingoes.net/en/translator/langcode.htm)
+(par exemple : “fr-fr” pour le Français de métropole).
+
+Comment feriez-vous cela ?
+
+```sql
+ALTER TABLE langue ADD code VARCHAR(100);
+```
+
+```sql
+mysql> SELECT * FROM langue;
++----+----------+------+
+| id | nom      | code |
++----+----------+------+
+|  1 | français | NULL |
+|  2 | anglais  | NULL |
++----+----------+------+
+2 rows in set (0.00 sec)
+```
+
+```sql
+mysql> UPDATE langue SET code = 'fr-fr' WHERE id = 1;
+
+mysql> UPDATE langue SET code = 'en-uk' WHERE id = 2;
+
+mysql> SELECT * FROM langue;
++----+----------+-------+
+| id | nom      | code  |
++----+----------+-------+
+|  1 | français | fr-fr |
+|  2 | anglais  | en-uk |
++----+----------+-------+
+2 rows in set (0.00 sec)
+```
+
+Tentez de créer la colonne et de la remplir par vous-même pour le Français et l’Anglais. Voici la correction :
+
+<Vimeo vimeoId="497578353" />
+
+<br />
+
+:::info
+Vous savez désormais ajouter un champ à une table. 🙌
+:::
+
+### Supprimez un champ
+
+#### Supprimez un champ aux aliments
+
+Le management de chez Foodly nous mentionne d’autres changements à effectuer sur l’application, qui impliquent la BDD. C’est une nouvelle
+surprenante !
+
+Les utilisateurs de Foodly n’utilisent que très rarement la fonctionnalité pour savoir si un aliment est bio ou non. 😢
+
+Les développeurs, dans leur volonté de toujours diminuer la dette technique (à savoir, le code à maintenir), souhaitent retirer l’affichage bio
+de la fiche des aliments sur Foodly.
+
+En tant que gestionnaire de la BDD, vous pensez qu’il serait pratique de faire de même de votre côté, pour éviter de maintenir un champ qui ne
+sera plus mis à jour.
+
+Pour ce faire, rien de plus simple : supprimons la colonne “bio” de la table “aliment” avec `DROP`.
+
+Voici la commande SQL pour le faire :
+
+```sql
+ALTER TABLE aliment DROP bio;
+```
+
+Décomposons cette commande ensemble :
+- On modifie toujours la structure d’une table avec **`ALTER TABLE`**.
+- On lui signale à nouveau quelle table modifier (ici, “aliment”).
+- On lui indique que la modification va supprimer une colonne avec **`DROP`**.
+- On mentionne le nom de la colonne à supprimer (ici, “bio”).
+
+<figure>
+    <img src="https://user.oc-static.com/upload/2021/01/18/16109647839763_P4_DROP.png"
+         alt="Récapitulatif visuel du paragraphe rédigé ci-dessus" />
+    <figcaption>Utilisation de DROP</figcaption>
+</figure>
+
+Vous voyez, c’est vraiment très simple. 😉
+
+:::caution
+Il faut néanmoins faire attention lorsqu’on utilise cette commande. Une fois la colonne supprimée, celle-ci est **définitivement détruite** et
+ne peut plus être récupérée. Vous perdez l’information pour tous les objets présents en base. **À utiliser avec parcimonie !**
+:::
+
+### À vous de jouer !
+
+Maintenant, admettons que le service légal de Foodly vous dise que stocker des noms de famille va à l’encontre des conditions de protection des
+données des utilisateurs.
+
+Comment feriez-vous pour supprimer les noms de famille ?
+
+```sql
+mysql> SELECT * FROM utilisateur;
++----+-------------+------------+----------------------+-----------+
+| id | nom         | prenom     | email                | langue_id |
++----+-------------+------------+----------------------+-----------+
+|  1 | durantay    | quentin    | qentin@gmail.com     |         1 |
+|  2 | dupont      | marie      | marie@hotmail.fr     |         1 |
+|  3 | miller      | vincent    | vm@yahoo.com         |         2 |
+|  4 | zuckerberg  | marc       | marc@gmail.com       |         2 |
+|  5 | paul        | pierre     | pp@orange.fr         |         1 |
+|  6 | de vauclerc | lisa       | lisadv@gmail.com     |         1 |
+|  7 | gluntig     | éléonore   | glunt@sfr.com        |         1 |
+|  8 | cavill      | henry      | henry@outlook.fr     |         2 |
+|  9 | hopper      | lionel     | hpp@gmail.com        |         2 |
+| 10 | tember      | fabienne   | fabienne@yopmail.com |         1 |
++----+-------------+------------+----------------------+-----------+
+10 rows in set (0,00 sec)
+```
+
+```sql
+mysql> ALTER TABLE utilisateur DROP nom;
+```
+
+```sql
+mysql> SELECT * FROM utilisateur;
++----+------------+----------------------+-----------+
+| id | prenom     | email                | langue_id |
++----+------------+----------------------+-----------+
+|  1 | quentin    | qentin@gmail.com     |         1 |
+|  2 | marie      | marie@hotmail.fr     |         1 |
+|  3 | vincent    | vm@yahoo.com         |         2 |
+|  4 | marc       | marc@gmail.com       |         2 |
+|  5 | pierre     | pp@orange.fr         |         1 |
+|  6 | lisa       | lisadv@gmail.com     |         1 |
+|  7 | éléonore   | glunt@sfr.com        |         1 |
+|  8 | henry      | henry@outlook.fr     |         2 |
+|  9 | lionel     | hpp@gmail.com        |         2 |
+| 10 | fabienne   | fabienne@yopmail.com |         1 |
++----+------------+----------------------+-----------+
+10 rows in set (0,00 sec)
+```
+
+Essayez de la faire. Si vous êtes coincé, là correction est juste ici 👇
+
+<Vimeo vimeoId="497578371" />
+
+<br />
+
+:::info
+Ajouter, supprimer, vous voilà maître en matière de modification de schéma de table ! Enfin… pas trop vite ! Que se passerait-il si vous deviez
+modifier une colonne existante ?
+:::
+
+C’est ce que vous allez voir par la suite.
+
+### Modifiez un champ existant
+
+#### Modifiez un champ des aliments
+
+Le management de Foodly revient encore une fois vers vous !
+
+Après avoir regardé des utilisateurs se servir de Foodly, ils se sont rendu compte que les utilisateurs souhaiteraient pouvoir filtrer les
+aliments selon leurs apports calorifiques avec plus de précision.
+
+Pour ce faire, les développeurs vous indiquent qu’ils vont devoir comparer les calories de deux aliments entre eux, et ce, à la virgule près.
+
+Or, les calories sont actuellement stockées sous forme d’entiers (sans décimales, du coup). Comment les modifier ?
+
+Voici la commande pour effectuer cette opération :
+
+```sql
+ALTER TABLE aliment MODIFY calories FLOAT;
+```
+
+:::info
+Analysons cette commande :
+- On modifie toujours la structure d’une table avec **`ALTER TABLE`**.
+- On lui signale à nouveau quelle table modifier (ici, “aliment”).
+- On lui indique que la modification va modifier le type d’une colonne avec **`MODIFY`**.
+- On mentionne le nom de la colonne à modifier (ici, “calories”).
+- On indique le nouveau type de la colonne (ici, **`FLOAT`**).
+:::
+
+<figure>
+    <img src="https://user.oc-static.com/upload/2021/01/18/16109648446119_P4_MODIFY-FLOAT.png"
+         alt="Récapitulatif visuel du paragraphe rédigé ci-dessus" />
+    <figcaption>L'utilisation de FLOAT</figcaption>
+</figure>
+
+### À vous de jouer !
+
+Les développeurs viennent vous voir affolés ! Certains utilisateurs ne peuvent pas s’inscrire car leur email dépasse les 255 caractères.
+
+Pourriez-vous augmenter la limite à 500 ?
+
+```sql
+mysql> SHOW COLUMNS FROM utilisateur;
++-----------+--------------+------+-----+---------+----------------+
+| Field     | Type         | Null | Key | Default | Extra          |
++-----------+--------------+------+-----+---------+----------------+
+| id        | int          | NO   | PRI | NULL    | auto_increment |
+| nom       | varchar(100) | YES  |     | NULL    |                |
+| prenom    | varchar(100) | YES  |     | NULL    |                |
+| email     | varchar(255) | NO   | UNI | NULL    |                |
+| langue_id | int          | NO   | MUL | NULL    |                |
++-----------+--------------+------+-----+---------+----------------+
+4 rows in set (0.01 sec)
+```
+
+```sql
+mysql> ALTER TABLE utilisateur MODIFY email VARCHAR(500) NOT NULL;
+
+mysql> SHOW COLUMNS FROM utilisateur;
++-----------+--------------+------+-----+---------+----------------+
+| Field     | Type         | Null | Key | Default | Extra          |
++-----------+--------------+------+-----+---------+----------------+
+| id        | int          | NO   | PRI | NULL    | auto_increment |
+| nom       | varchar(100) | YES  |     | NULL    |                |
+| prenom    | varchar(100) | YES  |     | NULL    |                |
+| email     | varchar(500) | NO   | UNI | NULL    |                |
+| langue_id | int          | NO   | MUL | NULL    |                |
++-----------+--------------+------+-----+---------+----------------+
+4 rows in set (0.01 sec)
+```
+
+Tentez par vous-même. Une fois fait, voici la correction :
+
+<Vimeo vimeoId="497578391" />
+
+<br />
+
+:::info
+Plutôt pratique de savoir modifier le type d’une colonne, non ? Mais que se passerait-il si vous souhaitiez changer le nom de cette dernière ?
+
+Découvrons-le !
+:::
+
+### Renommez un champ des aliments
+
+Ce coup-ci, c’est la designer de Foodly qui revient vers vous : les utilisateurs sont perturbés… 😨 Pour chaque aliment, la valeur en protéines,
+vitamines, matières grasses est mentionnée au pluriel. Alors que les sucres, eux, sont mentionnés au singulier. Ce qui perturbe la compréhension
+des aliments par les utilisateurs.
+
+Comment renommer cette colonne dans la BDD ?
+
+Voici la commande à effectuer :
+
+```sql
+ALTER TABLE aliment CHANGE sucre sucres FLOAT;
+```
+
+:::info
+Voici les explications de cette commande :
+- On modifie toujours la structure d’une table avec **`ALTER TABLE`**.
+- On lui signale à nouveau quelle table modifier (ici, “aliment”).
+- On lui indique que la modification va modifier le nom d’une colonne avec **`CHANGE`**.
+- On mentionne le nom de la colonne à renommer, **ainsi que** son nouveau nom (ici, “sucre” devient “sucres”).
+- On indique le nouveau type de la colonne (ici, **`FLOAT`**).
+:::
+
+C’est une spécificité propre à MySQL : pour renommer une colonne, il faut aussi indiquer son type. Ce qui n’est pas nécessaire si vous utilisez
+un autre SGBD. Cela permet de modifier à la fois le nom et le type d’une colonne dans une seule commande. Et ce, même si vous ne souhaitez pas
+le modifier (réutilisez alors le même type 😉).
+
+### À vous de jouer !
+
+A présent, les développeurs trouvent que le nom “code” dans la table des langues est peu explicite. Ils aimeraient qu’elle s’appelle
+“code_pays”.
+
+Pouvez-vous implémenter ce changement ?
+
+```sql
+mysql> SELECT * FROM langue;
++----+----------+-------+
+| id | nom      | code  |
++----+----------+-------+
+|  1 | français | fr-fr |
+|  2 | anglais  | en-uk |
++----+----------+-------+
+2 rows in set (0.00 sec)
+```
+
+```sql
+mysql> ALTER TABLE langue CHANGE code code_pays VARCHAR(100);
+
+mysql> SELECT * FROM langue;
++----+----------+-----------+
+| id | nom      | code_pays |
++----+----------+-----------+
+|  1 | français | fr-fr     |
+|  2 | anglais  | en-uk     |
++----+----------+-----------+
+2 rows in set (0.00 sec)
+```
+
+Une fois que vous aurez essayé, retrouvez ci-dessous la correction 👇
+
+[Télécharger la vidéo](https://openclassrooms.com/fr/courses/6971126-implementez-vos-bases-de-donnees-relationnelles-avec-sql/7142288-modifiez-la-structure-d-un-objet-avec-alter-table#popin-download-video)
+
+### En résumé
+
+- Vous savez que toute modification de la structure d’un objet s’effectue avec une commande **`ALTER TABLE`**.
+- Pour ajouter un champ à un objet, il vous faut utiliser le mot clé **`ADD`**.
+- Pour supprimer un champ, le mot clé est **`DROP`**.
+- Pour modifier un champ, le mot clé est **`MODIFY`** pour en modifier la structure, **`CHANGE`** pour le renommer.
+
+_Vous voilà capable de totalement modifier le schéma d’une table d’une BDD MySQL. Vous êtes presque maître en BDD MySQL. 👌_
+
+_Presque ? Il vous reste encore à apprendre à modifier des relations dans une table ! Ne vous inquiétez pas, vous allez tout comprendre dans le
+chapitre suivant._
+
+-----
+
+## Ajoutez une relation un à plusieurs
+
+[Ajoutez une relation un à plusieurs - Implémentez vos bases de données relationnelles avec SQL - OpenClassrooms](https://openclassrooms.com/fr/courses/6971126-implementez-vos-bases-de-donnees-relationnelles-avec-sql/7142296-ajoutez-une-relation-un-a-plusieurs)
+
+<Vimeo vimeoId="497953128" />
+
+<br />
+
+Voyons dans ce chapitre comment ajouter une relation un à plusieurs, en créant notre table "famille". Puis retrouvez dans le chapitre suivant
+comment ajouter une relation plusieurs à plusieurs avec la création de la table "lieu".
+
+### Ajoutez une nouvelle table “famille”
+
+Nous avons obtenu une nouvelle demande d’amélioration de l’application de la part des utilisateurs !
+
+Ces derniers aimeraient pouvoir trier les aliments selon leur “famille”. Par exemple, regrouper ensemble les fruits, les légumes, les viandes,
+etc.
+
+Les développeurs pensent qu’il serait utile de séparer ces familles des aliments. En effet, ils pensent que les familles d’aliments pourront
+être utilisées de manière indépendante, pas forcément uniquement sur les fiches des aliments.
+
+Par exemple, pour effectuer un résumé de la consommation en fruits ou légumes d’une personne sur un mois, ou la répartition au sein de ses
+courses.
+
+:::info
+Pour cela, il faudrait que les familles d’aliments soient sur une table distincte de celle des aliments !
+:::
+
+Maintenant que vous savez **joindre** plusieurs tables entre elles, il est temps de construire une telle relation entre tables. Qu’en
+dites-vous ?
+
+Avant de pouvoir relier les aliments à leur famille, il faut d’abord… eh bien, créer la table famille !
+
+Pour l’instant, un objet de type famille ne devra contenir que le nom de cette famille (“fruit”, “viande”, etc.).
+
+Vous avez déjà vu comment créer une table. Je vous fais confiance pour créer celle-ci. 😉
+
+C’est fait ? Voici la correction :
+
+```sql
+CREATE TABLE famille (
+id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+nom VARCHAR(100) NOT NULL
+);
+```
+
+:::info
+Vous ne comprenez pas cette commande ou vous ne vous souvenez plus des types ? Je vous invite à relire le [troisième chapitre de la première partie](https://openclassrooms.com/fr/courses/6971126-implementez-vos-bases-de-donnees-relationnelles-avec-sql/7142232-creez-votre-base-de-donnees-bdd). 😉
+:::
+
+Maintenant que cette table est créée, insérons un objet dans celle-ci. Disons, l’objet qui va représenter les légumes.
+
+Vous vous souvenez de la commande ? La voici :
+
+```sql
+INSERT INTO famille (`nom`) VALUES ('légumes');
+```
+
+:::info
+Vous êtes perdu face à cette commande ? Relisez le [premier chapitre de la deuxième partie](https://openclassrooms.com/fr/courses/6971126-implementez-vos-bases-de-donnees-relationnelles-avec-sql/7142248-inserez-des-donnees-dans-votre-bdd). 😉
+:::
+
+Et voilà, vous voici en possession d’une nouvelle table “famille” qui dispose d’un objet “légumes”.
+
+Passons à la suite et adaptons notre BDD pour stocker la relation entre les aliments et leur famille.
+
+### Ajoutez la relation entre famille et aliment
+
+Une des choses à déterminer lors de l’ajout d’une relation, c’est de savoir si :
+- c’est une relation **un à plusieurs** ;
+- ou une relation **plusieurs à plusieurs**.
+
+Ici, un aliment peut avoir une seule famille, mais une famille peut être présente sur plusieurs aliments. Par exemple, une poire et une pomme
+font partie de la famille “fruits”.
+
+:::info
+Il s’agit donc d’une relation un à plusieurs.
+:::
+
+Dans le cadre d’une telle relation, **c’est l’objet qui se trouve du côté “plusieurs” de la relation qui va être modifié**, ici les aliments.
+On va devoir y stocker l’id de l’objet “un” associé, par exemple “fruits”.
+
+Ici, les aliments vont donc devoir être mis à jour pour y stocker une référence à leur famille. Cette référence, par convention, sera l’id de
+la famille.
+
+Voici les étapes que l’on va suivre :
+1. Ajout du champ famille_id sur les aliments.
+2. Modification de ce champ pour signaler à MySQL que c’est une **référence** à la table famille.
+3. Modification d’un objet pour y stocker une relation.
+
+Concernant l’ajout du champ famille_id aux aliments, vous devriez vous en sortir seul. 😉
+
+C’est une clé primaire (un id), vous commencez à bien les connaître. Et pour ajouter un champ à un schéma, vous venez juste de le voir dans le
+chapitre précédent !
+
+Au cas où, voici la commande :
+
+```sql
+ALTER TABLE aliment
+ADD famille_id INT NOT NULL;
+```
+
+Ensuite, ça se complique. Il faut qu’on indique à MySQL que ce champ est une **référence** à une autre table, en lui précisant quel champ de
+cette autre table on référence.
+
+Pour modifier le champ famille_id, on utilise la commande :
+
+```sql
+ALTER TABLE aliment
+ADD FOREIGN KEY (famille_id) REFERENCES famille (id)
+ON DELETE CASCADE;
+```
+
+:::note ?
+Houlà, ça fait peur 😨
+:::
+
+Voyons ensemble ce que cette commande signifie :
+- La première partie, vous la connaissez. 😉 On signale à MySQL qu’on souhaite modifier la table “aliment”, pour y ajouter une colonne (enfin,
+plutôt y ajouter une contrainte, dans ce cas précis).
+- On dit à MySQL que la colonne “famille_id” est **une clé étrangère** (***foreign key*** en anglais), soit une référence à une colonne d’une
+autre table (ici, avec la partie `FOREIGN KEY (famille_id)`).
+- On indique ensuite **ce à quoi cette clé fait référence**. Soit, dans notre cas, la colonne “id” de la table “famille” (soit la commande
+`REFERENCES famille(id)`).
+- Enfin, sûrement la partie la plus obscure pour vous, on indique à MySQL **le comportement à adopter en cas de suppression** de l’objet
+“unique” (ici, la “famille”).
+
+:::note ?
+Hé, mais je n’ai rien compris au dernier point !
+:::
+
+Laissez-moi vous expliquer. 🤔
+
+Admettons que je vienne de créer ma famille “fruits”, et qu’elle soit reliée à mes objets “pomme” et “poire”.
+
+Que se passe-t-il si je supprime la famille “fruits” ?
+
+Eh bien, MySQL a besoin de le savoir. Pour cela, on lui indique via la commande **`ON DELETE`**.
+
+Cette dernière peut prendre une option parmi celles-ci :
+- **`RESTRICT`** ou **`NO ACTION`** : MySQL va empêcher la suppression tant que “fruits” est référencé sur au moins un objet “aliment”.
+- **`SET NULL`** : MySQL va autoriser la suppression de “fruits”, et remplacer “famille_id” sur “pomme” et “poire” par la valeur NULL.
+- **`CASCADE`** : l’option la plus courante, mais la plus dangereuse. 😨 Ici, MySQL va supprimer “poire” et “pomme” en même temps que “fruits”
+(il va donc supprimer tous les objets reliés).
+
+<figure>
+    <img src="https://user.oc-static.com/upload/2021/01/18/1610964972865_P4_ON-DELETE.png"
+         alt="Récapitulatif visuel du paragraphe rédigé ci-dessus" />
+    <figcaption>Actions de la commande ON DELETE</figcaption>
+</figure>
+
+Voilà, MySQL sait que “famille_id” est une référence à l’id de la table famille !
+
+Reste maintenant à mettre à jour vos aliments !
+
+Pareil ici, vous avez toutes les compétences en main pour le faire. Sauriez-vous par exemple ajouter la relation de l’objet “haricots verts”
+vers la famille “légumes” ?
+
+Voici la commande :
+
+```sql
+UPDATE `aliment` SET `famille_id` = '1' WHERE `nom` = 'haricots verts';
+```
+
+:::info
+N’oubliez pas, “légumes” ayant été ajouté en premier à la table “famille”, il a l’id numéro 1. Si vous êtes perdu, [relisez la partie 2](https://openclassrooms.com/fr/courses/6971126-implementez-vos-bases-de-donnees-relationnelles-avec-sql/7142248-inserez-des-donnees-dans-votre-bdd) !
+:::
+
+Pour vérifier que cela a bien fonctionné, vous pouvez sélectionner les haricots verts avec leur famille grâce à un **JOIN**.
+
+```sql
+SELECT * FROM aliment
+JOIN famille ON aliment.famille_id = famille.id
+WHERE aliment.nom = "haricots verts";
+```
+
+Grâce à cette commande, vous verrez apparaître un tableau récapitulatif, où la famille de “haricots verts” est bien “légumes”.
+
+:::info
+Perdu à nouveau ? Ne vous inquiétez pas, [relisez le chapitre 3 de la partie précédente](https://openclassrooms.com/fr/courses/6971126-implementez-vos-bases-de-donnees-relationnelles-avec-sql/7142285-implementez-des-relations-entre-vos-donnees-grace-a-join),
+sur la commande `JOIN`.
+:::
+
+Il ne vous reste plus qu’à ajouter les autres familles vous-même, rajouter sa famille à chaque aliment, et le tour est joué !
+
+Pour ce faire, vous n’avez qu’à réeffectuer les commandes précédentes en les adaptant. C’est un super moyen de revoir tout ce que vous avez pu
+apprendre lors de ce cours !
+
+### À vous de jouer !
+
+Faisons un petit exercice :
+
+On souhaite rajouter les réductions disponibles sur les aliments. Une réduction pouvant être la même pour plusieurs aliments mais chaque
+aliment pouvant n’avoir qu’une seule réduction, il s’agit d’une relation un à plusieurs.
+
+Les réductions sont uniquement constituées d’un champ “valeur”, qui va contenir la réduction au format texte.
+
+Comment feriez-vous pour créer cette table et la lier aux aliments ?
+
+```sql
+mysql> CREATE TABLE reduction (
+    -> id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    -> valeur VARCHAR(100) NOT NULL
+    -> );
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> INSERT INTO reduction (valeur) VALUES ('-30%');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> INSERT INTO reduction (valeur) VALUES ('-50%');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> SELECT * FROM reduction;
++----+--------+
+| id | valeur |
++----+--------+
+|  1 | -30%   |
+|  2 | -50%   |
++----+--------+
+2 rows in set (0.00 sec)
+
+mysql> ALTER TABLE aliment ADD reduction_id INT;
+Query OK, 0 rows affected (0.01 sec)
+Records: 0 Duplicates: 0 Warnings: 0
+
+mysql> ALTER TABLE aliment ADD FOREIGN KEY (reduction_id) REFERENCES reduction (id) ON DELETE SET NULL;
+Query OK, 20 rows affected (0.02 sec)
+Records: 20 Duplicates: 0 Warnings: 0
+
+mysql> SELECT * FROM aliment WHERE id=1;
++----+-------+-------------+-------+----------+----------+-----------+------+--------------+
+| id | nom   | marque      | sucre | calories | graisses | proteines | bio  | reduction_id |
++----+-------+-------------+-------+----------+----------+-----------+------+--------------+
+|  1 | pomme | sans marque |  19.1 |       72 |      0.2 |       0.4 |    0 |         NULL |
++----+-------+-------------+-------+----------+----------+-----------+------+--------------+
+1 row in set (0.00 sec)
+
+mysql> UPDATE aliment SET reduction_id = 1 WHERE id = 1;
+Query OK, 1 rows affected (0.01 sec)
+Rows matched: 1 Changed: 1 Warnings: 0
+
+mysql> SELECT * FROM aliment WHERE id=1;
++----+-------+-------------+-------+----------+----------+-----------+------+--------------+
+| id | nom   | marque      | sucre | calories | graisses | proteines | bio  | reduction_id |
++----+-------+-------------+-------+----------+----------+-----------+------+--------------+
+|  1 | pomme | sans marque |  19.1 |       72 |      0.2 |       0.4 |    0 |            1 |
++----+-------+-------------+-------+----------+----------+-----------+------+--------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT * from aliment
+    -> JOIN reduction
+    -> ON aliment.reduction_id = reduction.id
+    -> WHERE aliment.id = 1;
++----+-------+-------------+-------+----------+----------+-----------+------+--------------+----+--------+
+| id | nom   | marque      | sucre | calories | graisses | proteines | bio  | reduction_id | id | valeur |
++----+-------+-------------+-------+----------+----------+-----------+------+--------------+----+--------+
+|  1 | pomme | sans marque |  19.1 |       72 |      0.2 |       0.4 |    0 |            1 |  1 | -30%   |
++----+-------+-------------+-------+----------+----------+-----------+------+--------------+----+--------+
+1 row in set (0.00 sec)
+```
+
+Je vous laisse faire, vous en êtes capable. 💪 Une fois essayé, voici la correction :
+
+<Vimeo vimeoId="497578418" />
+
+<br />
+
+### En résumé
+
+- Vous savez ajouter une relation un à plusieurs entre deux objets en **ajoutant** à l’objet A **un champ qui contiendra l’id** (ou clé primaire)
+de l’objet B.
+
+_Voyons au chapitre suivant comment ajouter un relation plusieurs à plusieurs entre deux objets._
+
+-----
+
+## Ajoutez une relation plusieurs à plusieurs
+
+[Ajoutez une relation plusieurs à plusieurs - Implémentez vos bases de données relationnelles avec SQL - OpenClassrooms](https://openclassrooms.com/fr/courses/6971126-implementez-vos-bases-de-donnees-relationnelles-avec-sql/7153111-ajoutez-une-relation-plusieurs-a-plusieurs)
+
+![](https://user.oc-static.com/upload/2021/01/26/16116831263516_BANNERS_%20P4C3.png)
+
+Vous avez créé votre nouvelle table "famille" ? Souvenez-vous on aimerait ensuite ajouter le type de magasin où sont présents les aliments. Un
+même aliment pouvant être présent dans plusieurs lieux, nous allons créer une relation plusieurs à plusieurs. Voyons comment faire !
+
+### Ajoutez une nouvelle table “lieu”
+
+La dernière demande de mise à jour des utilisateurs est arrivée !
+
+Ces derniers réclament une chose en théorie simple : pouvoir visualiser dans l’application de Foodly dans quel magasin sont disponibles leurs
+aliments préférés. Par exemple, savoir si leur jambon de prédilection est disponible aussi bien à Carrefour que chez Leclerc.
+
+Les développeurs se sont de nouveau regroupés : il va falloir stocker les **lieux de vente** dans la BDD.
+
+Un lieu pouvant vendre plusieurs aliments, et ces mêmes aliments pouvant être vendus dans plusieurs lieux, vous allez devoir créer une
+**relation plusieurs à plusieurs**.
+
+Mais avant toute chose, il vous faut créer la nouvelle table des lieux de vente (que nous allons sobrement appeler “lieu”).
+
+Un lieu de vente, c’est :
+- un nom (exemple : Carrefour City) ;
+- un type (exemple : supermarché).
+
+Je vous laisse créer la table vous-même ? Après tout, vous avez toutes les cartes en main pour le faire !
+
+Allez-y, je vous attends. 😉
+
+Bon, allez, au cas où, voici la correction :
+
+```sql
+CREATE TABLE lieu (
+id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+nom VARCHAR(100) NOT NULL,
+type VARCHAR(100) NOT NULL
+);
+```
+
+:::info
+Vous êtes perdu face à cette commande ? Revoyez la [partie 1 du cours](https://openclassrooms.com/fr/courses/6971126-implementez-vos-bases-de-donnees-relationnelles-avec-sql/7139618-installez-votre-systeme-de-gestion-de-base-de-donnees-sgbd) !
+:::
+
+OK, une fois la table créée, insérons un lieu dans cette dernière, partons sur un simple Carrefour City (oui, ça se sent que je suis citadin ? 😆).
+
+Pareil ici, vous devriez pouvoir écrire cette commande vous-même, j’en suis sûr. 🙌
+
+Au cas où, voici la correction :
+
+```sql
+INSERT INTO `lieu` (`nom`, `type`) VALUES ('Carrefour City', 'supermarché');
+```
+
+:::info
+Vous n’êtes pas sûr de ce que cette commande signifie ? Relisez la partie 2 du cours !
+:::
+
+Ça y est, la nouvelle table est créée, et un objet y a été inséré. Passons maintenant aux choses sérieuses en créant la relation plusieurs à
+plusieurs avec les aliments.
+
+### Ajoutez la table de liaison
+
+Si vous vous souvenez de la partie 3, vous savez que MySQL (et les bases de données SQL en général) ne savent techniquement pas stocker autre
+chose que des relations un à plusieurs.
+
+Pour les relations plusieurs à plusieurs, on “triche”, via une **table de liaison** où on va stocker chaque relation, comme si c’était une
+double relation un à plusieurs.
+
+En fait, les aliments vont avoir des relations un à plusieurs avec la table de liaison. Les lieux, eux aussi, vont disposer de telles relations
+avec cette table. Et c’est en **reliant ces deux tables via cette table de liaison** que vous allez pouvoir ressortir les relations entre lieux
+et aliments.
+
+Pour ce faire, une table de liaison doit être créée. Par convention, elle doit toujours avoir cette forme :
+- Son nom doit regrouper les deux tables qu’elle relie, sous la forme : “table1_table2”.
+- Elle n’a que deux champs à stocker : “table1_id” et “table2_id”. Soit les id de chaque objet qu’elle relie.
+    - Ces id sont donc des **références** aux id des autres tables.
+- Sa clé primaire n’est autre que l’association de ces deux id (association qui doit toujours être unique).
+
+Dans notre cas, cela donne ceci en commande SQL :
+
+```sql
+CREATE TABLE aliment_lieu (
+aliment_id INT NOT NULL,
+lieu_id INT NOT NULL,
+FOREIGN KEY (aliment_id) REFERENCES aliment (id) ON DELETE RESTRICT ON UPDATE CASCADE,
+FOREIGN KEY (lieu_id) REFERENCES lieu (id) ON DELETE RESTRICT ON UPDATE CASCADE,
+PRIMARY KEY (aliment_id, lieu_id)
+);
+```
+
+Décortiquons cette commande ensemble :
+- On **crée une nouvelle table** avec le nom des deux tables qu’elle relie (ici la table “aliment”, ainsi que la table “lieu”).
+- On **ajoute les références** aux id de ces deux tables :
+    - “aliment_id”, qui est une référence aux id de la table “aliment” ;
+    - “lieu_id”, qui est une référence aux id de la table “lieu” ;
+    - on signale à MySQL **comment mettre à jour** la BDD en cas de suppression ou de mise à jour d’un objet de “aliment_lieu”.
+- On explique à MySQL que l’id de cette table sera l’association entre les deux id précédents.
+
+:::info
+Vous vous demandez ce que signifie **`ON UPDATE`** ? Eh bien, c’est le comportement que doit adopter MySQL en cas de **mise à jour** d’un champ.
+Il peut avoir les mêmes options que **`ON DELETE`**, que vous avez vu dans le chapitre précédent. 😉
+:::
+
+<figure>
+    <img src="https://user.oc-static.com/upload/2021/01/18/16109652325493_P4_ON-UPDATE.png"
+         alt="Récapitulatif visuel de la commande. RESTRICT ou NO ACTION : empêche la mise à jour sous conditions. SET NULL : met à jour la famille et remplace les object par NULL. CASCADE : met à jour tous les objets reliés" />
+    <figcaption>Actions de la commande ON UPDATE</figcaption>
+</figure>
+
+:::note ?
+C’est bien beau tout ça, mais comment ajoute-t-on une relation entre les lieux et les aliments ?
+:::
+
+Pas de panique, ça arrive !
+
+Admettons que le “blanc de dinde” présent dans notre BDD soit vendu chez “Carrefour City”. Il vous faudrait alors créer un objet dans
+“aliment_lieu”, avec l’id de “blanc de dinde” ainsi que l’id de “Carrefour City”.
+
+Retrouvez ces id dans votre BDD et écrivez la commande SQL pour créer cette relation.
+
+Sachant que 11 est l’id du “blanc de dinde”, 1 celui du “Carrefour City”, cela donne ça :
+
+```sql
+INSERT INTO `aliment_lieu` (`aliment_id`, `lieu_id`) VALUES ('11', '1');
+```
+
+Et voilà, le fait que le blanc de dinde soit vendu à Carrefour est stocké en base de données. Bravo à vous. 👏
+
+Enfin, pour retrouver cette relation, il vous faudra faire un **double JOIN**. Rappelez-vous, nous avions vu ça ensemble dans
+[la partie 2](https://openclassrooms.com/fr/courses/6971126-implementez-vos-bases-de-donnees-relationnelles-avec-sql/7142248-inserez-des-donnees-dans-votre-bdd).
+
+Cela ressemble à ça :
+
+```sql
+SELECT * FROM aliment
+JOIN aliment_lieu ON aliment.id = aliment_lieu.aliment_id
+JOIN lieu ON lieu.id = aliment_lieu.lieu_id
+WHERE aliment.id = 11;
+```
+
+:::info
+Ici, on joint la table aliment à la table lieu **via** la table de liaison, comme si c’était une simple relation un à plusieurs répétée.
+:::
+
+En sortie, MySQL vous affichera bien le “blanc de dinde” avec son lieu de vente associé : “Carrefour City” !
+
+### À vous de jouer !
+
+On souhaite savoir quels sont les appareils sur lesquels les utilisateurs ont installé Foodly (par exemple : mac, pc, android, etc.).
+
+Un utilisateur peut utiliser Foodly sur plusieurs appareils, et un même appareil peut être commun à plusieurs utilisateurs. Il s’agit d’une
+relation plusieurs à plusieurs.
+
+Un appareil est uniquement constitué de son type au format texte.
+
+```sql
+mysql> CREATE TABLE appareil (
+    -> id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    -> type VARCHAR(100) NOT NULL
+    -> );
+Query OK, 0 rows affeected (0.01 sec)
+
+mysql> INSERT INTO appareil (type) VALUES ('iphone');
+Query OK, 1 rows affeected (0.00 sec)
+
+mysql> INSERT INTO appareil (type) VALUES ('android');
+Query OK, 1 rows affeected (0.00 sec)
+
+mysql> INSERT INTO appareil (type) VALUES ('pc');
+Query OK, 1 rows affeected (0.00 sec)
+
+mysql> INSERT INTO appareil (type) VALUES ('mac');
+Query OK, 1 rows affeected (0.00 sec)
+
+mysql> SELECT * FROM appareil;
++----+---------+
+| id | type    |
++----+---------+
+|  1 | iphone  |
+|  2 | android |
+|  3 | pc      |
+|  4 | mac     |
++----+---------+
+4 rows in set (0.00 sec)
+
+mysql> CREATE TABLE utilisateur_appareil (
+    -> utilisateur_id INT NOT NULL,
+    -> appareil_id INT NOT NULL,
+    -> FOREIGN KEY (utilisateur_id) REFERENCES utilisateur (id) ON DELETE RESTRICT ON UPDATE CASCADE,
+    -> FOREIGN KEY (appareil_id) REFERENCES appareil (id) ON DELETE RESTRICT ON UPDATE CASCADE,
+    -> PRIMARY KEY (utilisateur_id, appareil_id)
+    -> );
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> SELECT * FROM utilisateur_appareil;
+Empty set (0.00 sec)
+
+mysql> SELECT * FROM utilisateur WHERE id = 1;
++----+---------+------------------+-----------+
+| id | prenom  | email            | langue_id |
++----+---------+------------------+-----------+
+|  1 | quentin | qentin@gmail.com |         1 |
++----+---------+------------------+-----------+
+1 row in set (0.00 sec)
+
+mysql> INSERT INTO utilisateur_appareil (utilisateur_id, appareil_id) VALUES (1, 2);
+Query OK, 1 rows affected (0.01 sec)
+
+mysql> INSERT INTO utilisateur_appareil (utilisateur_id, appareil_id) VALUES (1, 4);
+Query OK, 1 rows affected (0.01 sec)
+
+mysql> SELECT * FROM utilisateur_appareil;
++----------------+-------------+
+| utilisateur_id | appareil_id |
++----------------+-------------+
+|              1 |           2 |
+|              1 |           4 |
++----------------+-------------+
+2 row in set (0.00 sec)
+
+mysql> SELECT * FROM utilisateur
+    -> JOIN utilisateur_appareil
+    -> ON utilisateur.id = utilisateur_appareil.utilisateur_id
+    -> JOIN appareil
+    -> ON appareil.id = utilisateur_appareil.appareil_id
+    -> WHERE utilisateur.id = 1;
++----+---------+------------------+-----------+----------------+-------------+----+---------+
+| id | prenom  | email            | langue_id | utilisateur_id | appareil_id | id | type    |
++----+---------+------------------+-----------+----------------+-------------+----+---------+
+|  1 | quentin | qentin@gmail.com |         1 |              1 |           2 |  2 | android |
+|  1 | quentin | qentin@gmail.com |         1 |              1 |           4 |  4 | mac     |
++----+---------+------------------+-----------+----------------+-------------+----+---------+
+2 row in set (0.00 sec)
+```
+
+:::note ?
+Comment feriez-vous pour créer cette table et la lier aux utilisateurs ?
+:::
+
+Je crois en vous pour effectuer cette opération seul 🙌 Si vous êtes bloqué, la correction est disponible ici :
+
+<Vimeo vimeoId="497578465" />
+
+<br />
+
+### En résumé
+
+- Vous savez ajouter une relation plusieurs à plusieurs entre deux objets **en créant une table de liaison** qui **contiendra les id de chaque
+objet**.
+
+_Vous voilà arrivé à la fin de ce cours. Retrouvez-moi au chapitre suivant pour la conclusion !_
+
+-----
+
+## Terminez votre apprentissage
+
+[Terminez votre apprentissage - Implémentez vos bases de données relationnelles avec SQL - OpenClassrooms](https://openclassrooms.com/fr/courses/6971126-implementez-vos-bases-de-donnees-relationnelles-avec-sql/7142305-terminez-votre-apprentissage)
+
+<Vimeo vimeoId="497953156" />
+
+<br />
+
+Vous voici à la conclusion de ce cours, bravo ! 👏 Il ne vous reste plus qu'un dernier effort avec la réalisation du dernier quiz.
+
+Vous avez normalement toutes les bases en main pour implémenter votre propre BDD. Que ce soit pour un projet personnel, le travail, ou par
+simple curiosité, j’espère de tout cœur que ce cours vous aura été utile.
+
+J’ai personnellement adoré écrire ce cours, qui m’a moi-même été d’une grande aide pour me remettre dans le bain des BDD relationnelles !
+
+Je vous souhaite tout le meilleur pour la suite, et n’oubliez pas, continuez d’apprendre de nouvelles choses sur OpenClassrooms !
+
+-----
+
+## Quiz : Transformez la structure d’une base de données
+
+[Transformez la structure d’une base de données - OpenClassrooms](https://openclassrooms.com/fr/courses/6971126-implementez-vos-bases-de-donnees-relationnelles-avec-sql/exercises/4010)
+
+#### Compétences évaluées
+
+<i class="bi bi-check2-circle"></i> Transformer la structure d’une base de données
+
+-----
+
+#### Description
+
+Reprenons notre BDD Moviz du précédent quiz. Vous pouvez la télécharger ici : [https://github.com/OpenClassrooms-Student-Center/Course-implementez-BDD-SQL/blob/master/partie\_4/moviz.sql](https://github.com/OpenClassrooms-Student-Center/Course-implementez-BDD-SQL/blob/master/partie_4/moviz.sql).
+
+Souvenez-vous, j’ai modifié le schéma de la BDD entre la partie 2 et la partie 3 pour y ajouter la relation un à plusieurs entre “film” et
+“note”, ainsi que la relation plusieurs à plusieurs entre “film” et “pays_de_sortie”.
+
+Dans ce quiz, nous allons faire comme si vous implémentiez vous-même ces changements.
+
+Pour rappel, voici le schéma mis à jour de la table “film” :
+
+| **Nom du champ** | **Type du champ** | **Description du champ** |
+|------------------|-------------------|--------------------------|
+| _nom_ | VARCHAR(255) | le nom du film |
+| _date_de_sortie_ | DATE | la date de sortie du film |
+| _synopsis_ | TEXT | la description du scénario du film |
+| _langue_ | VARCHAR(255) | la langue principale du film |
+| _budget_ | INTEGER | le budget de production du film |
+| note_id | INTEGER | l'id de l'objet note associé au film |
+
+Le schéma de la table “note” est disponible ici :
+
+| **Nom du champ** | **Type du champ** | **Description du champ** |
+|------------------|-------------------|--------------------------|
+| _note_ | INTEGER | la note sur 5 |
+
+Et enfin, voici le schéma de “pays_de_sortie” :
+
+| **Nom du champ** | **Type du champ** | **Description du champ** |
+|------------------|-------------------|--------------------------|
+| _nom_ | VARCHAR(255) | le nom du pays |
+
+-----
+
+#### Question 1 : Quels sont les mots clés disponibles dans une commande de type ALTER TABLE ?
+
+<i class="bi bi-record-circle"></i> ADD, DROP, CHANGE, MODIFY<br />
+<i class="bi bi-circle"></i> AJOUTER, SUPPRIMER, MODIFIER<br />
+<i class="bi bi-circle"></i> ADD, DROP, CHANGE<br />
+<br />
+
+_ALTER TABLE sert à modifier la structure d’un objet, et de la table associée. ADD permet d’ajouter un champ, DROP de le supprimer, CHANGE de
+le renommer, MODIFY de modifier son type._
+
+-----
+
+#### Question 2 : Comment fait-on pour ajouter une relation un à plusieurs entre deux objets existants déjà en base ?
+
+<i class="bi bi-record-circle"></i> On rajoute l’id de l’objet “un” comme colonne dans l’objet “plusieurs” avec comme nom “objet_id”.<br />
+<i class="bi bi-circle"></i> On utilise une commande SQL avec le mot clé JOIN.<br />
+<i class="bi bi-circle"></i> On supprime et recrée les deux objets.<br />
+<br />
+
+_Pour effectuer une relation un à plusieurs, l’objet “un” de la relation doit être mentionné dans l’objet “plusieurs”. La convention en SQL
+est de reprendre son id (sa clé primaire) comme clé étrangère dans l’objet plusieurs._
+
+-----
+
+#### Question 3 : Dans la BDD Moviz, quelle est la commande qui permet de rajouter le champ “note_id” à la table “film” ?
+
+<i class="bi bi-circle"></i> <code>ALTER TABLE film ADD note_id;</code><br />
+<i class="bi bi-record-circle"></i> <code>ALTER TABLE film ADD note_id INTEGER NOT NULL;</code><br />
+<i class="bi bi-circle"></i> <code>ALTER TABLE film ADD note_id VARCHAR(100);</code><br />
+<br />
+
+_Pour ajouter un champ à un objet (et donc, à sa table), on utilise une commande de type ALTER TABLE avec le mot clé ADD. Comme on souhaite
+ajouter un champ qui sera une clé étrangère, il est du même type qu’une clé primaire, soit un entier (INTEGER) non nul (NOT NULL)._
+
+-----
+
+#### Question 4 : Quelle est la commande qui permet de supprimer le budget sur les films ?
+
+<i class="bi bi-circle"></i> <code>ALTER TABLE film REMOVE budget;</code><br />
+<i class="bi bi-record-circle"></i> <code>ALTER TABLE film DROP budget;</code><br />
+<i class="bi bi-circle"></i> <code>ALTER TABLE film DELETE budget;</code><br />
+<br />
+
+_Pour supprimer un champ à un objet (et donc, à sa table), on utilise une commande de type ALTER TABLE avec le mot clé DROP suivi du nom du
+champ à supprimer._
+
+-----
+
+#### Question 5 : Quelle est la commande qui permet de modifier le type du champ “budget” d’entier vers décimal ?
+
+<i class="bi bi-record-circle"></i> <code>ALTER TABLE film MODIFY budget FLOAT;</code><br />
+<i class="bi bi-circle"></i> <code>ALTER TABLE film MODIFY budget VARCHAR(100);</code><br />
+<i class="bi bi-circle"></i> <code>ALTER TABLE film CHANGE budget FLOAT;</code><br />
+<br />
+
+_Pour modifier le type d’un champ, on utilise une commande de type ALTER TABLE avec le mot clé MODIFY suivi du nom du champ et de son nouveau
+type (ici, décimal, soit FLOAT)._
+
+-----
+
+#### Question 6 : Quelle est la commande qui permet de renommer le budget sur les films en “cout_de_production” ?
+
+<i class="bi bi-circle"></i> <code>ALTER TABLE film CHANGE budget cout_de_production;</code><br />
+<i class="bi bi-record-circle"></i> <code>ALTER TABLE film CHANGE budget cout_de_production FLOAT;</code><br />
+<i class="bi bi-circle"></i> <code>ALTER TABLE film MODIFY budget cout_de_production;</code><br />
+<br />
+
+_Pour renommer un champ, on utilise une commande de type ALTER TABLE avec le mot clé CHANGE suivi du nom du champ et de son nouveau nom. MySQL
+oblige, on doit aussi repréciser son type (ici FLOAT, car on l’a modifié à la question précédente)._
+
+-----
+
+#### Question 7 : Comment crée-t-on une relation plusieurs à plusieurs entre deux objets existants déjà en base ?
+
+<i class="bi bi-circle"></i> On supprime et recrée les deux tables.<br />
+<i class="bi bi-record-circle"></i> On crée une table de liaison qui va stocker les relations entre ces deux objets.<br />
+<i class="bi bi-circle"></i> On joint les tables avec un JOIN.<br />
+<br />
+
+_Rappelez-vous, la table de liaison regroupe les relations plusieurs à plusieurs comme s’il s’agissait de relations un à plusieurs. Pour ce
+faire, elle contient 2 colonnes, chacune étant une clé étrangère vers chaque objet de la relation plusieurs à plusieurs._
+
+-----
+
+#### Question 8 : Quelle est la commande qui permet de créer la table de liaison entre “film” et “pays_de_sortie” ?
+
+<i class="bi bi-record-circle"></i>
+
+```sql
+CREATE TABLE film_pays_de_sortie (
+film_id INT NOT NULL,
+pays_de_sortie_id INT NOT NULL,
+FOREIGN KEY (film_id) REFERENCES film (id) ON DELETE RESTRICT ON UPDATE CASCADE,
+FOREIGN KEY (pays_de_sortie_id) REFERENCES pays_de_sortie (id) ON DELETE RESTRICT ON UPDATE CASCADE,
+PRIMARY KEY (film_id, pays_de_sortie_id)
+);
+```
+
+<i class="bi bi-circle"></i>
+
+```sql
+CREATE TABLE film_pays_de_sortie;
+```
+
+<i class="bi bi-circle"></i>
+
+```sql
+CREATE TABLE film_pays_de_sortie (
+film_id INT NOT NULL,
+pays_de_sortie_id INT NOT NULL
+);
+```
+
+*La table de liaison doit avoir pour nom “nom_objet_1_nom_objet_2”, soit ici “film_pays_de_sortie” et stocker deux champs, qui sont les clés
+étrangères de chaque autre table, soit ici “film_id” (clé étrangère vers l’id de “film”) et “pays_de_sortie_id” (clé étrangère vers l’id de
+“pays_de_sortie”).*

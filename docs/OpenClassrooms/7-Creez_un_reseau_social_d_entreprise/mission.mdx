@@ -7,3 +7,218 @@ import { Vimeo } from 'mdx-embed';
 import useBaseUrl from '@docusaurus/useBaseUrl';
 
 # Mission
+
+### Scénario
+
+[Créez un réseau social d’entreprise - OpenClassrooms](https://openclassrooms.com/fr/paths/185/projects/677/assignment)
+
+Vous êtes développeur depuis plus d'un an chez **CONNECT-E**, une petite agence web regroupant une douzaine d'employés.
+
+Votre directrice, Stéphanie, invite toute l'agence à prendre un verre pour célébrer une bonne nouvelle ! Elle vient de signer un contrat pour
+un nouveau projet ambitieux ! 🥂
+
+Le client en question est **Groupomania**, un groupe spécialisé dans la grande distribution et l'un des plus fidèles clients de l'agence.
+
+<figure>
+    <img src="https://user.oc-static.com/upload/2019/09/04/15676009353158_image2.png"
+         alt="Le logo de Groupomania" />
+    <figcaption>Le logo de Groupomania</figcaption>
+</figure>
+
+Le projet consiste à construire un **réseau social interne** pour les employés de Groupomania. Le but de cet outil est de faciliter les
+interactions entre collègues. Le département RH de Groupomania a laissé libre cours à son imagination pour les fonctionnalités du réseau et a
+imaginé plusieurs briques pour favoriser les échanges entre collègues.
+
+Stéphanie vous envoie un message via l’outil de messagerie instantanée de l’entreprise.
+
+
+<figure>
+    <img src="https://user.oc-static.com/upload/2019/11/19/15741782856137_15718405231143_fakechat%20%2810%29.png"
+         alt="La conversation entre Sophie et vous" />
+    <figcaption>La conversation entre Sophie et vous</figcaption>
+</figure>
+
+Quelques minutes plus tard, vous recevez un mail de Stéphanie.
+
+<div class="courriel-container">
+<div class="courriel-header">
+
+<strong>De</strong> : Stéphanie R<br />
+<strong>À</strong> : Moi<br />
+<strong>Sujet : Lancement projet Groupomania</strong><br />
+<br />
+
+</div>
+<div class="courriel-main">
+
+Bonjour,
+
+Comme convenu, voici les <a href="https://s3-eu-west-1.amazonaws.com/course.oc-static.com/projects/DWJ_FR_P7/Groupomania_Specs_FR_DWJ_VF.pdf">
+spécifications fonctionnelles</a>. Tu trouveras également les <a href="https://s3-eu-west-1.amazonaws.com/course.oc-static.com/projects/DWJ_FR_P7/Groupomania_Logos+(3).zip">
+logos</a> de l’organisation pour l’habillage du site.
+
+Par ailleurs, Groupomania et moi avons convenu que l’un des employés du groupe testera un MVP du produit, avec une seule des deux
+fonctionnalités proposées.
+
+Cela nous permettra de nous assurer que nous répondons à leurs attentes.
+
+Après plusieurs réunions avec Groupomania, il semble que les paramètres du projet changent régulièrement, je pense qu’une organisation “agile”
+serait plus adaptée pour s’adapter aux besoins du client au fur et à mesure des commentaires et affiner l’application au fil de l’eau.
+
+Je suis à ta disposition pour toute question.
+
+Stéphanie
+
+</div>
+</div>
+<br />
+
+<div class="courriel-container">
+<div class="courriel-header">
+
+<strong>De</strong> : Moi<br />
+<strong>À</strong> : Stéphanie R<br />
+<strong>Sujet : RE : Lancement projet Groupomania</strong><br />
+<br />
+
+</div>
+<div class="courriel-main">
+
+Merci Stéphanie pour toutes ces informations !
+
+Si je comprends bien, je dois fournir une première version d’une des fonctionnalités proposées par Groupomania et j’ai carte blanche concernant
+la forme que cela va prendre ?
+
+Merci pour ces précisions.
+
+</div>
+</div>
+<br />
+<div class="courriel-container">
+<div class="courriel-header">
+
+<strong>De</strong> : Stéphanie R<br />
+<strong>À</strong> : Moi<br />
+<strong>Sujet : RE : re : Lancement projet Groupomania</strong><br />
+<br />
+
+</div>
+<div class="courriel-main">
+
+Oui, c’est ça !
+
+La seule contrainte est que le client utilise une base de données relationnelles qui se manipule avec le langage SQL pour le stockage de
+données. Il faudra donc en tenir compte lorsque tu construiras ton application. Tu devras t’assurer que l’utilisateur puisse requêter les
+données requises depuis SQL et puisse soumettre ces changements à la base de données SQL. Les données de connexion doivent également être
+sécurisées.
+
+Merci.
+
+Stéphanie
+
+</div>
+</div>
+<br />
+<div class="courriel-container">
+<div class="courriel-header">
+
+<strong>De</strong> : Moi<br />
+<strong>À</strong> : Stéphanie R<br />
+<strong>Sujet : RE : re : re : Lancement projet Groupomania</strong><br />
+<br />
+
+</div>
+<div class="courriel-main">
+
+Ah oui, je vois ! Peux-tu me préciser quelles tâches entrent dans le périmètre de ma mission ?
+
+Merci
+
+</div>
+</div>
+<br />
+<div class="courriel-container">
+<div class="courriel-header">
+
+<strong>De</strong> : Stéphanie R<br />
+<strong>À</strong> : Moi<br />
+<strong>Sujet : Re : re : re : re : Lancement projet Groupomania</strong><br />
+<br />
+
+</div>
+<div class="courriel-main">
+
+Bien sûr. Tu vas devoir :<br />
+- choisir la fonctionnalité que tu vas développer,<br />
+- estimer le temps que tu passeras sur le développement de chaque fonctionnalité,<br />
+- développer la première version de l'application.
+
+Deux dernières choses, tu devras faire en sorte que la web app puisse se connecter et se déconnecter à l’application et que la session de
+l’utilisateur persiste pendant qu’il est connecté.
+
+Pour ce projet, il faut que tu utilises un framework Front-End. Tu peux utiliser celui que tu préfères (React, Vue, Angular, Ember, Meteor,
+Aurelia...). Par contre, le projet doit être codé en Javascript, donc n'utilise pas le framework Symfony par exemple. Enfin, tes pages devront
+respecter les standards WCAG.
+
+Bon courage et à dispo si besoin ! \u{1F603} 😄
+
+Stéphanie
+
+</div>
+</div>
+
+<br />
+<br />
+
+Avec tous ces éléments en tête, vous vous attaquez à la réalisation de ce beau projet.
+
+<embed style={{width: "100%", height: "667px" }} src="https://monwikidevweb.la-loutre.fr/data/OpenClassrooms/pdf/Groupomania_Specs_FR_DWJ_VF.pdf"></embed>
+
+### Livrables
+
+- Le **lien** du repo GitHub contenant le code de l’application.
+
+:::info
+Pour faciliter votre passage au jury, déposez sur la plateforme, dans un dossier nommé “_P7_nom_prenom_”, tous les livrables du projet. Chaque
+livrable doit être nommé avec le numéro du projet et selon l'ordre dans lequel il apparaît, par exemple “_P7_01_lienGithub_”.
+:::
+
+### Soutenance
+
+La soutenance, d’une durée maximum de 30 minutes, se déroulera en deux parties :
+- **Partie 1 – 20 minutes : Simulation d'une réunion professionnelle.**<br />
+_L’évaluateur jouera le rôle de Stéphanie, la directrice de l’agence (il pourra vous interrompre pour vous poser des questions)._
+   - [~ 20 minutes] Vous réaliserez une présentation de votre site en mettant en avant les fonctionnalités améliorées. L’évaluateur doit être
+    capable de cloner l’application et de la lancer.
+- **Partie 2 – 10 minutes : Retour sur la soutenance**
+   - Échange de questions/réponses : l’évaluateur pourra revenir sur certains points pour vous questionner sur vos choix.
+   - L’évaluateur vous fera un débrief de votre soutenance et de vos livrables.
+
+### Compétences évaluées
+
+<i class="bi bi-pencil-square"></i> Authentifier un utilisateur et maintenir sa session<br />
+<i class="bi bi-pencil-square"></i> Personnaliser le contenu envoyé à un client web<br />
+<i class="bi bi-pencil-square"></i> Gérer un stockage de données à l'aide de SQL<br />
+<i class="bi bi-pencil-square"></i> Implémenter un stockage de données sécurisé en utilisant SQL<br />
+
+-----
+
+## Cours
+
+[Créez un réseau social d’entreprise - OpenClassrooms](https://openclassrooms.com/fr/paths/185/projects/677/courses)
+
+Ces cours peuvent vous aider dans la réussite de votre projet. Ils ne sont pas obligatoires.
+
+- [Créez une application web avec Vue.js - OpenClassrooms](https://openclassrooms.com/fr/courses/6390311-creez-une-application-web-avec-vue-js)
+- [Implémentez vos bases de données relationnelles avec SQL - OpenClassrooms](https://openclassrooms.com/fr/courses/6971126-implementez-vos-bases-de-donnees-relationnelles-avec-sql)
+
+-----
+
+## Ressources
+
+[Créez un réseau social d’entreprise - OpenClassrooms](https://openclassrooms.com/fr/paths/185/projects/677/resources)
+
+### Site web
+
+- [Introduction — Vue.js](https://fr.vuejs.org/v2/guide/index.html)
+

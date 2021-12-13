@@ -57,6 +57,12 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
           },
           {
             type: 'doc',
+            docId: 'Outils/menu',
+            position: 'right',
+            label: 'Outils',
+          },
+          {
+            type: 'doc',
             docId: 'Aide-memoire/menu',
             position: 'right',
             label: 'Aide-mémoire',

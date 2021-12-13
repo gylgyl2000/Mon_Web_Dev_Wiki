@@ -1,0 +1,883 @@
+---
+sidebar_position: 2
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+import { Vimeo } from 'mdx-embed';
+
+# Créez votre base de données avec MySQL pour stocker les données de votre application
+
+## Découvrez le système de gestion de base de données (SGBD)
+
+[Découvrez le système de gestion de base de données (SGBD) - Implémentez vos bases de données relationnelles avec SQL - OpenClassrooms](https://openclassrooms.com/fr/courses/6971126-implementez-vos-bases-de-donnees-relationnelles-avec-sql/7139618-decouvrez-le-systeme-de-gestion-de-base-de-donnees-sgbd)
+
+<Vimeo vimeoId="497952979" />
+
+<br />
+
+Bienvenue dans ce cours sur les bases de données ! Je vais vous apprendre à les utiliser comme j’ai appris à le faire par moi-même il y a
+quelques années : en pratiquant. ![:)](https://openclassrooms.com/bundles/common/images/smiley/smile.png)
+
+### Découvrez votre mission dans ce cours
+
+Dans ce cours, nous allons **créer ensemble une base de données (BDD) pour une application imaginaire, Foodly**. Cette application permet à des
+internautes de sélectionner les aliments qu’ils souhaitent acheter pour voir leur composition en protéines, graisses, sucres, etc.
+
+<figure>
+    <img src="https://user.oc-static.com/upload/2021/01/18/16109580409026_P1C1-S1-1_Foodly-logo_static.png"
+         alt="Un rond jaune avec dedans écrit Foodly et un demi citron" />
+    <figcaption></figcaption>
+</figure>
+
+:::info
+J’utiliserai tout au long du cours l'abréviation **BDD pour _base de données_**. Vous découvrirez quelques autres abréviations que je vous
+expliquerai au fur et à mesure, mais c’est surtout celle-ci que vous devez retenir pour l’instant !
+:::
+
+La BDD de Foodly va donc stocker les données dont l’application a besoin pour fonctionner, à savoir  :
+- les utilisateurs inscrits ;
+- les aliments disponibles.
+
+Chacune de ces données aura des caractéristiques, comme l’e-mail pour l’utilisateur ou les calories pour les aliments. Nous allons les voir par
+la suite.
+
+<figure>
+    <img src="https://user.oc-static.com/upload/2021/01/18/16109581026744_P1C1-S1_pre%CC%81sentation-fil-rouge_static.png"
+         alt="A gauche un bonhomme et des aliments qui relient par des flèches vers la droite une base de données" />
+    <figcaption>Les données utilisateur et aliment à stocker dans la BDD Foodly</figcaption>
+</figure>
+
+À la fin de ce cours, **vous aurez créé plusieurs utilisateurs en base, de nombreux aliments, ainsi qu’un moyen de lier les utilisateurs aux
+aliments qu’ils ont achetés**.
+
+Avant de mettre les mains dans le cambouis, on doit passer par une partie pas forcément plaisante, mais indispensable : **le choix et
+l’installation de notre système de gestion de bases de données**. Car sans lui, pas de BDD.
+
+Installer des logiciels sur son ordinateur n’est pas la chose la plus drôle. Pour avoir dû installer deux fois d’affilée toutes les librairies
+(petits programmes qui nous permettent de coder) sur mon ordinateur professionnel, après me l’être fait voler, je peux vous l’assurer, personne
+n’aime ça. 😆 Je vous promets de faire au mieux pour rendre cela plaisant et aller droit au but.
+
+Votre objectif une fois cette partie finie : **être capable de choisir votre système de gestion de base de données et de l’installer**.
+
+### Choisissez votre SGBD
+
+:::note ?
+Qu’est-ce qu’un système de gestion de bases de données, ou _SGBD_ ?
+:::
+
+:::info
+Voici une deuxième abréviation que je vous conseille de retenir, car vous allez la rencontrer plusieurs fois dans ce cours : SGBD, pour
+_système de gestion de bases de données_.
+:::
+
+**Le SGBD est le logiciel qui va vous permettre de manipuler les données d’une base.** C’est ce logiciel qui **commande les interactions avec
+votre base** pour y récupérer, ajouter, modifier ou supprimer des données.
+
+Pour échanger avec votre base, vous allez donc donner des ordres à votre SGBD. Des ordres en français ? Pas exactement ! Ces ordres, vous allez
+les lui donner dans un langage très simple : le langage SQL. Pas d’inquiétude, on va avancer pas à pas ensemble pour que vous puissiez prendre
+en main ce langage !
+
+Le SQL, abréviation de **_Structured Query Language_** (en français, _langage de requête structurée_), est **un langage informatique qui vous
+permet d'interagir avec vos bases de données.** C’est le plus répandu ; par conséquent il est indispensable de le connaître. On va donc s’en
+servir pour gérer notre base de données pour la suite du cours.
+
+:::note ?
+Quel est le lien entre le SGBD et le langage SQL ?
+:::
+
+Imaginez qu’un utilisateur arrive sur Foodly. Il scanne un aliment présent dans son supermarché pour connaître ses caractéristiques
+nutritionnelles. Que va faire notre application ?  **L’application va traduire cette recherche en SQL** et l’envoyer **au SGBD**, qui va
+**récupérer l’aliment** en question dans le stockage de la base de données, pour ensuite **le redonner à l’application**. L’utilisateur
+retrouvera ainsi son aliment avec toutes ses caractéristiques.
+
+<figure>
+    <img src="https://user.oc-static.com/upload/2021/01/18/16109582002923_P1C1-S2_Lien-SGBD-SQL_static.png"
+         alt="Illustration représentant de gauche à droite, un utilisateur qui fait une action sur Foodly. Cela envoie une requête SQL, qui va être envoyée au SGBD puis va être traitée par la BDD pour finalement faire apparaître l'information demandée sur l'a" />
+    <figcaption>La relation entre le langage SQL et le SGBD lors d'une action sur l'application</figcaption>
+</figure>
+
+**Chaque SGBD implémente sa propre syntaxe du SQL en plus des normes communes à tous.** Vous vous demandez sûrement pourquoi il existe
+différents SGBD et comment en choisir un plutôt qu’un autre. C’est exactement ce que je vais vous expliquer dans la suite de ce chapitre.
+
+:::note ?
+Pourquoi connaître tous les SGBD du marché ?
+:::
+
+Petite anecdote : j’ai appris à coder des BDD avec PostgreSQL (un autre SGBD dont on va parler juste après). Certains de mes amis autodidactes
+ont appris avec SQLite ou MySQL. Un conseil : partez du principe que, dans 90 % des cas, le SGBD utilisé dans votre entreprise ne sera pas
+celui avec lequel vous aurez appris à implémenter une BDD.  Je vous encourage donc à **maîtriser les bases du SQL et sa logique**, comme ça,
+vous vous en sortirez quel que soit le SGBD.
+
+### Découvrez les différents SGBD
+
+#### MySQL
+
+**[MySQL](https://www.mysql.com/fr/) est le plus connu des SGBD. C’est le plus utilisé, car il était (auparavant) open-source** (ce qui veut
+dire que son code et son utilisation étaient gratuits). J’insiste sur le “auparavant”, car MySQL a depuis été racheté par Oracle Corporation,
+et n’est plus open-source. Néanmoins, il en existe une “copie” open-source appelée MariaDB, qui suit les mêmes règles de langage que MySQL (et
+que je vous recommande).
+
+MySQL est surtout connu pour être le SGBD utilisé par les sites WordPress, ce qui a fait grandement augmenter sa popularité.
+
+Malgré cette popularité, c’est un peu la “tête de mule” des SGBD. Il ne suit pas rigoureusement la syntaxe préconisée par le SQL. Il est aussi
+parfois trop “permissif” sur les requêtes SQL, provoquant des erreurs.
+
+Mais c’est un SGBD robuste, qui fonctionne très bien, même sur de grandes quantités de données ! Par exemple, c’était pendant longtemps le seul
+SGBD utilisé par Facebook.
+
+:::info
+Pour ce cours, nous avons choisi MySQL car c’est **le SGBD le plus répandu sur le marché**. Vous pourrez appliquer vos connaissances dans la
+plupart des situations. Qui plus est, **il est gratuit**, ce qui nous arrange bien. 😉
+
+Je vous montre au chapitre suivant, comment l'installer.
+:::
+
+#### Oracle Database
+
+**[Oracle](https://www.oracle.com/fr/database/) est le SGBD édité par Oracle Corporation** (oui, la même entreprise que celle qui a racheté
+MySQL). C’est très cher, mais utile pour traiter un très gros volume de données. Du coup, ce sont presque exclusivement les grandes entreprises
+qui l’utilisent.
+
+Mais même en entreprise (il est par exemple utilisé par Samsung), Oracle tend à se faire rattraper par les SGBD open-source type MariaDB ou
+PostgreSQL. Il est en réelle perte de vitesse sur le marché.
+
+#### PostgreSQL
+
+> Ah, mon SGBD préféré ! ❤️
+
+**[PostgreSQL](https://www.postgresql.org/) est “l’autre” grand SGBD open-source disponible sur le marché.** Moins utilisé que MySQL car
+longtemps confiné au monde linuxien (système d’exploitation Linux 😉), et plus obscur aux yeux des débutants.
+
+Mais c’est en train de changer car c’est le SGBD qui suit le plus les recommandations du SQL, ainsi que le plus rapide (ces dernières années).
+Il est notamment utilisé par Instagram ou par Spotify.
+
+#### SQLite
+
+**[SQLite](https://www.sqlite.org/index.html), c’est le “petit frère”. Mais petit ne veut pas dire moins puissant, bien au contraire.**
+
+À l’instar des autres SGBD, SQLite stocke toute la base de données dans un seul et unique fichier. Peu propice à l’utilisation sur un grand
+nombre de données, c’est un SGBD très simple à configurer et qui “ne prend pas la tête”.  C’est d’ailleurs le SGBD qu’on utilise quand on
+développe une base de données “en local” (sur son ordinateur), alors qu’une fois “en production” (sur un serveur spécifique généralement
+utilisé par votre entreprise ou vos clients), on va utiliser MySQL ou PostgreSQL. C’est aussi le SGBD utilisé par vos applications Android
+(par exemple pour vos films Netflix en mode hors-connexion) pour stocker de la donnée !
+
+Pour vous aider, voici un tableau récapitulatif des forces et faiblesses de chaque SGBD :
+
+|   | **MySQL** | **Oracle Database** | **PostgreSQL** | **SQLite** |
+|---|-----------|---------------------|----------------|------------|
+| **Popularité** | ✅ très répandu | ✅ utilisé par les grands groupes ayant un grand nombre de données | ❌ moins répandu que les autres | ✅ répandu pour le prototypage |
+| **Prix** | ✅ gratuit (licence fermée) | ❌ très cher (licence fermée) | ✅ gratuit (open-source) | ✅ gratuit (open-source) |
+| **Similarité avec le langage SQL** | ❌ ne suit pas toujours la syntaxe SQL | ❌ ne suit pas toujours la syntaxe SQL | ✅ suit la syntaxe SQL de très près | ✅ suit bien la syntaxe SQL |
+| **Entreprises utilisatrices** | ℹ️ utilisé par Facebook | ℹ️ utilisé par Samsung | ℹ️ utilisé par Spotify | ℹ️ utilisé pour les apps Android |
+
+### En résumé
+
+- **Le langage SQL sert à communiquer entre votre application et votre base de données.** Mais c’est le SGBD qui récupère la commande en SQL
+pour en sortir de la donnée depuis la base.
+- MySQL est un **système de gestion de bases de données (SGBD)**. C’est même le plus répandu sur le marché.
+
+_Maintenant que vous savez ce qu'est un SGBD et à quoi il va vous servir, installons-le sur votre ordinateur !_
+
+-----
+
+## Installez le SGBD MySQL
+
+[Installez le SGBD MySQL - Implémentez vos bases de données relationnelles avec SQL - OpenClassrooms](https://openclassrooms.com/fr/courses/6971126-implementez-vos-bases-de-donnees-relationnelles-avec-sql/7152681-installez-le-sgbd-mysql)
+
+![](https://user.oc-static.com/upload/2021/01/26/16116828498443_BANNERS_P1C2.png)
+
+Avant de pouvoir utiliser MySQL, il faut tout naturellement l’installer sur votre ordinateur. Pour cela, suivez le tutoriel correspondant à
+votre système d’exploitation (Windows, MacOS ou Linux Ubuntu).
+
+### Installez MySQL sur Windows
+
+Voici la procédure pour installer MySQL sur Windows.
+
+#### 1. Téléchargez le programme d’installation de MySQL et lancez-le
+
+Rendez-vous sur [https://dev.mysql.com/downloads/installer/](https://dev.mysql.com/downloads/installer/) et sélectionnez le programme
+d’installation à télécharger.
+
+:::info
+Je vous conseille de télécharger le deuxième programme (la version “community”), qui dispose d’options supplémentaires par rapport au premier
+(la version “web”).
+:::
+
+<figure>
+    <img src="https://user.oc-static.com/upload/2021/01/16/16107956005992_image34.png"
+         alt="Écran d'installation MySQL où l'on indique sur quel bouton cliquer pour l'installation sur Windows." />
+    <figcaption>Écran d'installation MySQL</figcaption>
+</figure>
+
+Une fois le programme téléchargé, lancez-le en double-cliquant dessus ; vous devriez arriver sur cette fenêtre :
+
+<figure>
+    <img src="https://user.oc-static.com/upload/2021/01/16/16107956870231_image19.png"
+         alt="Fenêtre d'acceptation des conditions générales de MYSQL" />
+    <figcaption>Fenêtre d'acceptation des conditions générales</figcaption>
+</figure>
+
+:::info
+Vous êtes maintenant dans le programme d’installation ! Acceptez les conditions d’utilisation et cliquez sur Suivant.
+:::
+
+Sur l’écran suivant, on vous demandera de faire un choix. Sélectionnez “Developer Default” pour installer MySQL dans son entièreté.
+
+<figure>
+    <img src="https://user.oc-static.com/upload/2021/01/16/16107957786734_image2.png"
+         alt="Sélection du paramétrage par défaut" />
+    <figcaption>Sélection du paramétrage par défaut</figcaption>
+</figure>
+
+:::info
+Les autres options sont utiles si vous utilisez MySQL via un outil externe, ou que vous avez déjà votre base de données. Cliquez ensuite sur
+Suivant.
+:::
+
+Une fois arrivé sur la dernière étape, validez et c’est bon, MySQL est installé sur votre machine ! Il nous reste maintenant à le lancer.
+
+#### 2. Lancez MySQL sur votre ordinateur
+
+Pour lancer MySQL sur Windows, **double-cliquez sur la console MySQL**. Celle-ci doit avoir apparu dans vos programmes, suite à l’installation
+précédente.
+
+Une fois celle-ci lancée, vous vous retrouvez dans un terminal. C’est ici que vous allez pouvoir gérer votre future base de données.
+
+#### 3. Créez le mot de passe de l’utilisateur root de votre BDD
+
+Avant de pouvoir lancer MySQL, il vous faut créer un utilisateur dit _root_, qui sera l’utilisateur nous permettant de manipuler notre BDD.
+
+:::note ?
+Utilisateur “root”, qui est-ce ?
+:::
+
+En informatique, et notamment dans le monde des bases de données, **l’utilisateur dit “root” (ou _racine_) est un utilisateur qui a tous les
+droits (création, suppression, mise à jour)**. C’est celui qu’on utilise pour installer des logiciels sur notre machine. Mais attention à ne
+jamais l’utiliser en production ! En effet, il serait très dangereux qu’un utilisateur puisse l’utiliser, car il obtiendrait l’accès à toutes
+nos données. 😨
+
+:::info
+**“Utiliser en production”** désigne l’utilisation de votre base par votre application, depuis un **serveur**. Alors que “l’utilisation
+**en local**” signifie l’utilisation sur votre **ordinateur**, à des fins de développement uniquement.
+:::
+
+Pour créer le mot de passe “root”, utilisez la commande  **`mysqladmin -u root password 'votresupermotdepassetrescomplique'`**  (vous l’aurez
+compris, remplacez le mot de passe par celui que vous aurez choisi).
+
+Vous pouvez vous féliciter, vous venez d’installer MySQL sur votre Windows ! 👏
+
+### Installez MySQL sur Mac
+
+La manière la plus simple et efficace pour installer MySQL sur Mac est de passer par Homebrew.
+
+#### 1. Installez le gestionnaire Homebrew
+
+:::note ?
+Késako ?
+:::
+
+Homebrew est un **gestionnaire de paquets**. C’est un petit **programme que vous pouvez utiliser dans votre terminal pour installer toutes
+sortes de choses**. C’est le gestionnaire open-source le plus répandu sur Mac. Très polyvalent, il va vous permettre d’installer MySQL sur
+votre machine. Mais il peut aussi vous permettre d’installer toutes sortes de programmes, allant de navigateurs comme Google Chrome à des
+langages de programmation comme Python !
+
+Pour installer Homebrew, rendez-vous sur le site web de Homebrew : [https://brew.sh/index\_fr](https://brew.sh/index_fr)
+
+<figure>
+    <img src="https://user.oc-static.com/upload/2021/01/16/16107963112625_image21.png"
+         alt="La page d’accueil de Homebrew" />
+    <figcaption>La page d’accueil de Homebrew</figcaption>
+</figure>
+
+- Ouvrez votre terminal (j’utilise iTerm2, disponible ici : [https://www.iterm2.com/](https://www.iterm2.com/) ; mais vous pouvez utiliser le
+terminal natif de votre Mac).
+- Copiez-collez la ligne de commande disponible sur le site dans votre terminal et appuyez sur “enter”. À l’heure actuelle, cette ligne de
+commande est :    
+
+`/bin/bash -c "$(curl -fsSL [https://raw.githubusercontent.com/Homebrew/install/master/install.sh](https://raw.githubusercontent.com/Homebrew/install/master/install.sh))”`
+
+<figure>
+    <img src="https://user.oc-static.com/upload/2021/01/16/16107979269654_image18.png"
+         alt="La commande dans votre terminal" />
+    <figcaption>La commande dans votre terminal</figcaption>
+</figure>
+
+:::info
+L’installation de Homebrew devrait se lancer.
+:::
+
+Une fois celle-ci terminée, vous pouvez vérifier que l’installation s’est bien déroulée en tapant **`brew help`**. Vous devriez voir ceci
+apparaître sur votre terminal :
+
+<figure>
+    <img src="https://user.oc-static.com/upload/2021/01/18/16109585541384_image9%20copie.png"
+         alt="Données affichées dans votre terminal après avoir saisi la commande brew help" />
+    <figcaption>Données affichées dans votre terminal</figcaption>
+</figure>
+
+L’écran liste les commandes disponibles via Homebrew.
+
+:::caution !
+Si ce n’est pas le cas, tentez de réinstaller Homebrew. Soyez sûr d’avoir une connexion Internet fiable, et que votre compte utilisateur a les
+privilèges administrateur.
+:::
+
+#### 2. Installez MySQL via Homebrew
+
+Maintenant que Homebrew est installé, il est temps d’installer MySQL ! Pour ce faire, rien de plus simple : utilisez la commande d’installation
+de Homebrew :  **`brew install [le nom de ce qu’on souhaite installer]`**.
+
+:::info
+La commande complète pour installer MySQL est donc `brew install mysql`. Appuyez sur “enter” pour la valider.
+:::
+
+Vous venez d’installer MySQL, mais il vous faut encore le démarrer ! Ne désespérez pas, c’est encore une fois très simple, et tout se fait via
+Homebrew.
+
+#### 3. Démarrez MySQL avec Homebrew
+
+Pour que Homebrew puisse démarrer des processus (ici, celui de MySQL), utilisez la commande `brew tap homebrew/services`.
+
+Une fois cette commande effectuée, **démarrez MySQL** grâce à la commande **`brew services start mysql`**.
+
+Pour **vérifier** que le processus de MySQL est bien lancé, utilisez `**brew services list**`. Si vous voyez apparaître MySQL dans la liste,
+c’est que tout s’est bien passé !
+
+Vous pouvez même le **vérifier doublement** en tapant la commande **`mysql -V`** qui vous permet de regarder quelle version de MySQL est
+actuellement en train de tourner sur votre machine (dans mon cas, la version 8.0.21).
+
+<figure>
+    <img src="https://user.oc-static.com/upload/2021/01/16/16107972725158_image37.png"
+         alt="Écran confirmant l’installation de Homebrew" />
+    <figcaption>Écran confirmant l’installation de Homebrew</figcaption>
+</figure>
+
+#### 4. Créez le mot de passe de l’utilisateur root de votre BDD
+
+Il vous reste une ultime commande et le tour est joué ! C’est celle qui vous permet de créer le mot de passe de l’utilisateur “root”.
+
+:::note ?
+Utilisateur “root”, qui est-ce ?
+:::
+
+En informatique, et notamment dans le monde des bases de données, **l’utilisateur dit “root” (ou _racine_) est un utilisateur qui a tous les
+droits (création, suppression, mise à jour)**. C’est celui qu’on utilise pour installer des logiciels sur notre machine. Mais attention à ne
+jamais l’utiliser en production ! En effet, il serait très dangereux qu’un utilisateur puisse l’utiliser, car il obtiendrait l’accès à toutes
+nos données. 😨
+
+:::info
+**Utiliser “en production”** désigne l’utilisation de votre base par votre application, depuis un **serveur**. Alors que “**l’utilisation en
+local**” signifie l’utilisation sur votre **ordinateur**, à des fins de développement uniquement.
+:::
+
+Pour créer le mot de passe “root”, utilisez la commande : **`mysqladmin -u root password 'votresupermotdepassetrescomplique'`**. Vous l’aurez
+compris, remplacez le mot de passe par celui que vous aurez choisi. 😉
+
+<figure>
+    <img src="https://user.oc-static.com/upload/2021/01/16/16107983185313_image4.png"
+         alt="Screenshot de la commande dans le terminal" />
+    <figcaption>La commande dans votre terminal</figcaption>
+</figure>
+
+Vous pouvez vous féliciter, vous venez d’installer MySQL sur votre Mac ! 👏
+
+### Installez MySQL sur Linux (Ubuntu)
+
+La manière la plus simple et efficace pour installer MySQL sur Linux est de passer par le **terminal**. Le terminal, c’est un programme qui
+vous permet de lancer des commandes de programmation (vous savez, le fameux écran avec du texte bizarre comme dans Matrix). Il se trouve dans
+vos programmes (il est installé par défaut sur Linux).
+
+#### 1. Installez MySQL via le terminal
+
+Sur Linux, la vie est très simple car vous disposez d’un super gestionnaire de paquets : **APT**. C’est un petit programme que vous pouvez
+utiliser dans votre terminal pour installer toutes sortes de choses. Très polyvalent, il va vous permettre d’installer MySQL sur votre machine.
+Mais il peut aussi vous permettre d’installer toutes sortes de programmes, comme par exemple des langages de programmation comme Python !
+
+Commencez par mettre à jour APT en tapant dans votre terminal la commande **`sudo apt update`**. Appuyez sur “enter” pour la valider.
+
+Une fois cette commande effectuée, installez MySQL en tapant la commande **`sudo apt install mysql-community-server`**.
+
+MySQL est  maintenant installé sur votre machine, il reste à le démarrer et le configurer.
+
+#### 2. Démarrez MySQL avec le terminal
+
+Pour démarrer MySQL, il vous faut lancer le “service” de MySQL. C’est-à-dire faire comprendre à votre ordinateur qu’il doit lancer MySQL et le
+laisser tourner.
+
+Pour ce faire, entrez la commande **`sudo service mysql start`** dans votre terminal.
+
+MySQL tourne (enfin 🙌🏼), mais il vous reste à le configurer.
+
+#### 3. Créez le mot de passe de l’utilisateur root de votre BDD
+
+Il vous reste une ultime commande et le tour est joué ! C’est celle qui vous permet de créer le mot de passe de l’utilisateur “root”.
+
+:::note ?
+Utilisateur “root”, qui est-ce ?
+:::
+
+En informatique, et notamment dans le monde des bases de données, **l’utilisateur dit “root” (ou _racine_) est un utilisateur qui a tous les
+droits (création, suppression, mise à jour)**. C’est celui qu’on utilise pour installer des logiciels sur notre machine. Mais attention à ne
+jamais l’utiliser en production ! En effet, il serait très dangereux qu’un utilisateur puisse l’utiliser, car il obtiendrait l’accès à toutes
+nos données. 😨
+
+:::info
+**Utiliser “en production”** désigne l’utilisation de votre base par votre application, depuis un **serveur**. Alors que “**l’utilisation en
+local**” signifie l’utilisation sur votre **ordinateur**, à des fins de développement uniquement.
+:::
+
+Pour créer le mot de passe “root”, utilisez la commande **`mysqladmin -u root password 'votresupermotdepassetrescomplique'`**. Vous l’aurez
+compris, remplacez le mot de passe par celui que vous aurez choisi. 😉
+
+<figure>
+    <img src="https://user.oc-static.com/upload/2021/01/16/16107990064241_image4.png"
+         alt="Screenshot de la commande dans votre terminal" />
+    <figcaption>La commande dans votre terminal</figcaption>
+</figure>
+
+Vous pouvez vous féliciter, vous venez d’installer MySQL sur votre Linux ! 👏
+
+### En résumé
+
+- La première chose à faire pour utiliser un SGBD est de **créer un utilisateur “root”**, qui aura tous les droits pour créer et modifier des
+bases de données.
+
+_Maintenant que MySQL est installé sur votre machine, il est temps de l’utiliser pour créer votre première base de données. Suivez-moi dans le
+prochain chapitre pour créer la BDD qui servira à l’application Foodly !_
+
+-----
+
+## Créez votre base de données (BDD)
+
+[Créez votre base de données (BDD) - Implémentez vos bases de données relationnelles avec SQL - OpenClassrooms](https://openclassrooms.com/fr/courses/6971126-implementez-vos-bases-de-donnees-relationnelles-avec-sql/7142232-creez-votre-base-de-donnees-bdd)
+
+<Vimeo vimeoId="497953006" />
+
+<br />
+
+On rentre dans le dur ! Il est temps de créer votre première base de données.
+
+Comme expliqué précédemment, nous allons créer une base appelée Foodly, où nous allons stocker les utilisateurs ainsi que les aliments de notre
+application fictive.
+
+### Créez votre BDD avec CREATE DATABASE
+
+:::note ?
+Pourquoi ai-je besoin d’une base de données ?
+:::
+
+**Une application, c’est le code informatique qui vous permet d’effectuer des actions**. Par exemple, commander un taxi ou écrire du texte. Or,
+cette application a besoin de données pour exister, données qu’elle va piocher dans une BDD.
+
+:::info
+Prenez Le Bon Coin : le code de l’application vous permet de voir des listes d’objets à acheter près de chez vous, de contacter leur
+propriétaire, etc. Mais pour connaître ces objets, numéros de téléphone, adresses, **Le Bon Coin a dû aller les chercher dans une base de
+données** (probablement MySQL 😉).
+:::
+
+Créons la base qui contiendra nos objets.
+
+:::note ?
+C’est quoi un objet ?
+:::
+
+Moi aussi, à une époque, j’étais comme vous, perdu dans le jargon propre aux BDD.
+- Dans une BDD, on stocke plusieurs choses. Et même un peu ce qu’on veut. **Un objet**, c’est chacune de ces “choses”. Imaginons que vous soyez
+au marché. Un objet, c’est une volaille, un fruit, etc.
+- Si on reprend notre exemple de l’application Foodly, une pomme ou une poire sont chacune **une instance** d’un objet “fruit”.
+
+Chaque application est associée à une base de données. Foodly étant une seule et unique application, nous allons créer une seule BDD. Base
+qu’on va tout naturellement appeler… Foodly. 😉
+
+:::info
+Une application complexe peut être reliée à plusieurs BDD à la fois, et ce, pour plusieurs raisons. Par exemple, Facebook utilise plusieurs BDD
+pour des besoins spécifiques (certaines gèrent mieux la recherche, les autres le stockage…), mais surtout pour des raisons de taille de la
+donnée ! Vous vous doutez qu’avec plus d’un milliard d’utilisateurs, il leur faut plusieurs bases. 😉
+:::
+
+:::caution !
+Attention lorsqu’on **nomme les bases de données** ! Tout comme beaucoup de “noms” en informatique (variables, objets, identifiants…), ceux-ci
+**ne doivent pas contenir de caractères spéciaux ou d’espaces**. Il est même recommandé de **n’utiliser que des caractères minuscules**.
+:::
+
+Pour activer MySQL dans votre terminal, il va falloir exécuter la commande **`mysql -u root -p`**. Cette commande signale que vous souhaitez
+lancer MySQL, avec l’utilisateur root en saisissant le mot de passe (vous vous en souvenez ? Nous en avons parlé précédemment 😉). Justement,
+MySQL nous demande ledit mot de passe. Entrez celui que vous avez créé précédemment, et le tour est joué !
+
+<figure>
+    <img src="https://user.oc-static.com/upload/2021/01/17/16108510052879_image15.png"
+         alt="Écran du terminal suite à l’entrée de votre mot de passe" />
+    <figcaption>Écran du terminal suite à l’entrée de votre mot de passe</figcaption>
+</figure>
+
+Pour créer une base, on utilise la commande `CREATE DATABASE nomdelabase;`.
+
+:::note ?
+Pourquoi ce point-virgule à la fin de la ligne ?
+:::
+
+C’est une obligation pour signaler à SQL qu’on a **terminé une instruction**. Imaginez, vous êtes en train de monter un meuble Ikea. Pour
+passer d’une étape à une autre, vous regardez les différentes cases du schéma de montage, souvent numérotées. Eh bien, le point-virgule, c’est
+l’équivalent de la fin d’une case pour SQL.
+
+Pour créer la base de Foodly, la commande à taper devient `CREATE DATABASE foodly;`.
+
+<figure>
+    <img src="https://user.oc-static.com/upload/2021/01/18/16109590771773_image15%20copie.png"
+         alt="Écran du terminal après avoir saisi la commande. il est écrit Query Ok, 1 row affected (0,01 sec)" />
+    <figcaption>Écran du terminal après avoir saisi la commande</figcaption>
+</figure>
+
+:::info
+SQL vous indique que la commande a fonctionné en répondant `Query OK`. La base est créée, bravo ! 👏
+:::
+
+Il reste néanmoins un problème : MySQL ne sait pas que vous souhaitez spécifiquement utiliser cette base de données. Car vous pourriez en avoir
+plusieurs ! Imaginez que vous travailliez sur plusieurs projets à la fois, vous pourriez très bien avoir une base de données pour chacun.
+
+Pour sélectionner la base que vous venez de créer, utilisez la commande `USE nomdelabase;`, qui devient donc… `USE foodly;` (vous commencez à
+comprendre la logique ? 😉).
+
+<figure>
+    <img src="https://user.oc-static.com/upload/2021/01/17/16108514484339_image32.png"
+         alt="Écran du terminal pour l’utilisation de la BDD" />
+    <figcaption>Écran du terminal pour l’utilisation de la BDD</figcaption>
+</figure>
+
+Une fois `USE foodly;` exécutée, ça y est, **la base Foodly est sélectionnée et vous travaillez uniquement dans cette dernière**.
+
+:::caution !
+Si jamais vous aviez besoin de changer de base de données, alors vous devriez répéter cette commande pour passer sur la nouvelle base.
+:::
+
+Avant d’aller plus loin, je vous propose de réaliser les différentes commandes dans votre terminal et de vérifier la bonne saisie avec ce
+screencast :
+
+<Vimeo vimeoId="497578061" />
+
+<br />
+
+### Testez l’activation de votre BDD avec SHOW TABLES
+
+Pour tester l’activation de votre base de données, vous allez y insérer votre premier objet. Dans son état actuel, votre base vide ne vous
+sert pas à grand-chose...
+
+#### Définissez les types de données
+
+Avant de pouvoir insérer quoi que ce soit, vous devez d’abord créer une table. En effet, **chaque “table” est l’équivalent d’une feuille de
+travail dans un logiciel type Excel ou Google Sheets**, qui stocke toutes les occurrences d’un objet en particulier.
+
+Qui dit base de données dit **type de données**. MySQL doit savoir quelle **forme** auront vos objets avant de vous laisser les manipuler dans
+chaque table. C’est l’équivalent en SQL de la modélisation de bases de données où vous devez déclarer les objets que vous souhaitez stocker et
+ce qu’ils vont contenir. 
+
+:::info
+Le type de donnée est comme un papier d'identité. Il est commun à toutes les personnes d’un pays et permet de les identifier selon des critères
+précis. Le modèle de données, c’est pareil, mais pour chaque objet de la base de données.
+:::
+
+Quand on parle de type en base de données, on peut parler de deux types :
+- **Les types d’objets, catégorisés par leur nom.** Par exemple, vous avez ici deux objets dont les noms sont _utilisateur_ et _aliment_. La
+convention veut qu’on utilise des noms en minuscules et au singulier.
+- **Les types de champs**, dont on va parler juste après.
+
+#### Créez vos deux tables !
+
+Pour votre base Foodly, **vous avez deux tables à créer** :
+- une pour les objets de type utilisateur ;
+- une autre pour les objets de type aliment.
+
+**Je vous propose de copier-coller cette commande** pour créer la table des utilisateurs. Je vais ensuite vous l’expliquer, ne vous en faites
+pas.
+
+```sql
+CREATE TABLE utilisateur (
+id INTEGER NOT NULL AUTO_INCREMENT PRIMARY KEY,
+nom VARCHAR(100),
+prenom VARCHAR(100),
+email VARCHAR(255) NOT NULL UNIQUE
+);
+```
+
+:::info
+On obtient bien `Query OK`, donc tout s’est bien passé. 👌
+:::
+
+:::note ?
+Mais que vient-on de faire ?
+:::
+
+**Votre objet utilisateur va être composé de plusieurs caractéristiques**, aussi appelées **champs**. Tout comme votre passeport qui recense
+votre nom ou votre âge, eh bien, pour vos utilisateurs, on va faire de même.
+
+Chacun de ces champs doit avoir un **type**, pour que MySQL comprenne à quoi “va ressembler” la donnée qui sera stockée dans ce champ. Par
+exemple, est-ce que le champ contiendra du texte, des chiffres, etc.
+
+Ici, on déclare plusieurs champs qui seront partagés par tous les utilisateurs. Voici un tableau récapitulatif du schéma des utilisateurs :
+
+| **Nom du champ** | **Type du champ et options** | **Description** |
+|------------------|------------------------------|-----------------|
+| **id** | PRIMARY KEY _(option)_ | Champ spécial **obligatoire** dans toutes les tables. Indique à MySQL que ce champ sera l'identifiant permettant **d'identifier** les objets. |
+|   | INTEGER _(type)_ | Champ numérique sous forme de nombre entier. |
+|   | NOT NULL _(option)_ | Ce champ ne peut pas être nul. |
+|   | AUTO\_INCREMENT _(option)_ | Ce champ sera créé par MySQL **automatiquement**, pas besoin de s'en soucier ! MySQL va utiliser l'id précédent et y ajouter +1 lors de l'ajout d'un nouvel objet. |
+| **nom** | VARCHAR(100) _(type)_ | Champ sous forme de texte, limité à 100 caractères. |
+| **prenom** | VARCHAR(100) _(type)_ | Champ sous forme de texte, limité à 100 caractères. |
+| **email** | VARCHAR(255) _(type)_ | Champ sous forme de texte, limité à 255 caractères. |
+|   | NOT NULL _(option)_ | Ce champ ne peut pas être nul. |
+|   | UNIQUE _(option)_ | Ce champ ne peut pas avoir la même valeur en double. |
+
+:::info
+Une option dans un champ est un attribut optionnel qui va modifier le comportement de ce champ. Retrouvez sur le site de MySQL tous
+[les types de champs disponibles sur le SGBD (en anglais).](https://dev.mysql.com/doc/refman/8.0/en/data-types.html)
+:::
+
+Au tour des aliments ! Copiez-collez cette commande pour créer leur table :
+
+```sql
+CREATE TABLE aliment (
+id INTEGER NOT NULL AUTO\_INCREMENT PRIMARY KEY,
+nom VARCHAR(100) NOT NULL,
+marque VARCHAR(100),
+sucre FLOAT,
+calories INTEGER NOT NULL,
+graisses FLOAT,
+proteines FLOAT,
+bio BOOLEAN DEFAULT false
+);
+```
+
+:::note ?
+Que signifient ces nouveaux types de données ?
+:::
+
+Voici leur explication :
+- `FLOAT` signifie que le champ contiendra des chiffres décimaux ;
+- `BOOLEAN` est un type de champ très connu en informatique. Il ne peut stocker que les valeurs `true` (vrai) ou `false` (faux) ;
+- `DEFAULT` sert à indiquer une valeur par défaut. Utile pour ne pas avoir à spécifier une valeur tout le temps ! Ici, on indique que la valeur
+par défaut sera la valeur `false`.
+
+Et pour les champs, c’est assez simple :
+- **id** : l'identification de l'objet ;
+- **nom** : le nom de l’aliment (ex. : lait de soja) ;
+- **marque** : sa marque (ex. : Bjorg) ;
+- **sucre, calories, graisses, proteines** : la contenance de chaque élément en grammes (ex. : “2” pour 2 grammes) ;
+- **bio** : si l’aliment est bio ou non.
+
+Voici un exemple de ce que donnerait cette table avec quelques aliments :
+
+| **id** | **nom** | **marque** | **calories** | **sucre** | **graisses** | **proteines** | **bio** |
+|--------|---------|------------|--------------|-----------|--------------|---------------|---------|
+| 1 | Pomme | Monoprix | 65 | 14,4 | 0,4 | 0,4 | FALSE |
+| 2 | Oeuf bio | Carrefour | 167 | 0 | 11,1 | 14,2 | TRUE |
+| 3 | Brique de lait | Intermarché | 414 | 43,2 | 13,5 | 28,8 | FALSE |
+
+:::note ?
+Comment je vérifie que ma BDD est bonne ?
+:::
+
+Pour vérifier que tout ce que vous avez fait fonctionne, rien de plus simple ! On demande à MySQL de nous afficher toutes les tables présentes
+dans notre base grâce à la commande **`SHOW tables;`** .
+
+<figure>
+    <img src="https://user.oc-static.com/upload/2021/01/18/16109594886225_image16%20copie.png"
+         alt="Écran du terminal après avoir saisi la commande SHOW tables" />
+    <figcaption>Écran du terminal après avoir saisi la commande SHOW tables</figcaption>
+</figure>
+
+:::info
+On voit bien que la BDD contient les tables aliment et utilisateur, qui ne sont autres que vos types d’objets.
+:::
+
+On peut même aller encore plus loin en demandant à MySQL de nous afficher le **schéma** de chaque table grâce à la commande
+**`SHOW COLUMNS FROM lenomdematable;`**.
+
+:::info
+**Le schéma d’une table est un tableau récapitulant les caractéristiques des champs des objets** présents dans cette table. Vous souvenez-vous
+de notre métaphore du passeport ? Le schéma vous indique ce qui se trouve dans le passeport (date de naissance, nom…).
+:::
+
+Pour lire le schéma de vos tables, il vous faut taper **`SHOW COLUMNS FROM utilisateur;`** et **`SHOW COLUMNS FROM aliment;`**. Si vous obtenez
+le même résultat que sur ces screenshots, c’est que vous avez tout bon !
+
+<figure>
+    <img src="https://user.oc-static.com/upload/2021/01/17/16108543070098_image24.png"
+         alt="" />
+    <figcaption></figcaption>
+</figure>
+
+<figure>
+    <img src="https://user.oc-static.com/upload/2021/01/17/16108543285909_image6.png"
+         alt="Affichage des schémas des tables utilisateur et aliment" />
+    <figcaption>Affichage des schémas des tables utilisateur et aliment</figcaption>
+</figure>
+
+Vous avez saisi ces nouvelles commandes dans votre terminal ? Vérifiez-les grâce au screencast récapitulatif :
+
+<Vimeo vimeoId="497578078" />
+
+<br />
+
+:::info
+Lors des parties suivantes, je vous demanderai parfois de télécharger un fichier afin de mettre votre BDD à jour.
+
+Pour ce faire, j’ai créé un projet GitHub disponible ici : [https://github.com/OpenClassrooms-Student-Center/Course-implementez-BDD-SQL](https://github.com/OpenClassrooms-Student-Center/Course-implementez-BDD-SQL).
+
+À chaque fois que vous souhaiterez mettre à jour votre BDD :
+1. Téléchargez le fichier correspondant depuis GitHub, chaque dossier sur GitHub représentant la partie du cours dans laquelle vous vous trouvez.
+2. Placez ce fichier dans le dossier correspondant à votre utilisateur Windows, Mac ou Linux.
+3. Allez dans votre terminal, entrez la commande `mysql -u root -p nom_de_la_base_de_donnees < nom_du_fichier.sql` puis tapez votre mot de
+passe root (que vous venez de créer dans cette partie !). Prenez bien soin de remplacer “nom_de_la_base_de_donnees” par le nom de la BDD que
+vous souhaitez mettre à jour (par exemple, foodly) et “nom_du_fichier” par le nom du fichier téléchargé (par exemple, foodly.sql).
+:::
+
+Et voilà, votre BDD est à jour !
+
+### En résumé
+
+- Pour créer une base de données, on utilise la commande **`CREATE DATABASE;`**.
+- Une table est un espace dans votre base de données qui va stocker des objets de même type. On la crée avec la commande **`CREATE TABLE;`**.
+- Pour vérifier la création des tables, on utilise la commande **`SHOW COLUMNS FROM table;`** qui permet de voir la structure de cette table.
+
+_Vous voici en possession de la BDD de Foodly. Néanmoins, elle est encore bien vide ! Passons au chapitre suivant pour apprendre comment la
+remplir. 😉_
+
+-----
+
+## Quiz : Créez une base de données avec MySQL
+
+[Créez une base de données avec MySQL - OpenClassrooms](https://openclassrooms.com/fr/courses/6971126-implementez-vos-bases-de-donnees-relationnelles-avec-sql/exercises/4007)
+
+#### Compétences évaluées
+
+<i class="bi bi-check2-circle"></i> Créer une base de données avec MySQL
+
+-----
+
+#### Description
+
+Ce quiz, comme tous ceux qui vont suivre, est structuré autour d’un cas pratique. Celui-ci vous permet de vous assurer que vous maîtrisez les
+notions développées dans chaque partie de ce cours.
+
+Pour pouvoir répondre correctement, il va vous falloir créer une base de données fonctionnelle comme nous venons de le faire avec Foodly.
+
+Vous allez devoir créer une BDD similaire à celle d’Allociné. Cette base contiendra le nom de différents films, ainsi que les acteurs,
+réalisateurs et notes des internautes.
+
+:::info
+Créez votre base de données au fur et à mesure des questions de ce quiz.
+:::
+
+-----
+
+#### Question 1 : Afin de pouvoir utiliser MYSQL et de créer votre base de données, il vous faut créer l’utilisateur root. Ouvrez-votre terminal. Comment connectez-vous MySQL avec l'utilisateur root ?
+
+<i class="bi bi-record-circle"></i> <code>mysql -u root -p</code> puis on tape le mot de passe de l’utilisateur root.<br />
+<i class="bi bi-circle"></i> <code>mysqladmin -u root -p</code> puis on tape le mot de passe de l’utilisateur root.<br />
+<i class="bi bi-circle"></i> <code>mysqladmin -u root password</code> puis on tape le mot de passe de l’utilisateur root.<br />
+<br />
+
+_L’utilisateur root, est l’utilisateur vous permettant de manipuler votre BDD._<br />
+_MySQL est la commande pour lancer… MySQL. 😆_<br />
+_Puis “-u” sert à mentionner avec quel utilisateur on se connecte (ici, “root”). Enfin, “-p” indique qu’on va ensuite taper le mot de passe de
+cet utilisateur._
+
+-----
+
+#### Question 2 : MySQL est désormais prêt à être utilisé. Vous allez appeler votre base de données Moviz. Quelle commande saisissez-vous pour créer la base de données de votre projet ?
+
+<i class="bi bi-circle"></i> <code>CREATE BASE moviz;</code><br />
+<i class="bi bi-circle"></i> <code>CREATE DATABASE project;</code><br />
+<i class="bi bi-record-circle"></i> <code>CREATE DATABASE moviz;</code><br />
+<br />
+
+_Pour créer une BDD, on utilise la commande CREATE DATABASE suivie du nom de la base._
+
+-----
+
+#### Question 3 : La base de données Moviz comprend 4 tables différentes. Les 4 tables sont :
+
+- film ;
+- acteur ;
+- realisateur ;
+- note.
+
+**La table film comprend les données suivantes :**
+- nom : le nom du film ;
+- date_de_sortie : la date de sortie du film ;
+- synopsis : la description du scénario du film ;
+- langue : la langue principale du film ;
+- budget : le budget de production du film.
+
+**Créez la table film.**
+
+:::info
+Pour vous aider à trouver les champs de cette table, allez voir dans le [chapitre du cours](https://openclassrooms.com/fr/courses/6971126-implementez-vos-bases-de-donnees-relationnelles-avec-sql/7142232-creez-votre-base-de-donnees-bdd)
+quel est le type de données équivalent ! Ne vous inquiétez pas, vous avez toutes les clés pour réussir 🙌.
+:::
+
+**Quelle est la commande à réaliser pour créer la table ?**
+
+<i class="bi bi-circle"></i> 
+
+```sql
+CREATE TABLE film (
+nom VARCHAR(255) NOT NULL,
+date_de_sortie DATE,
+synopsis TEXT,
+langue VARCHAR(255),
+budget INT
+);
+```
+
+<i class="bi bi-record-circle"></i> 
+
+```sql
+CREATE TABLE film (
+id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+nom VARCHAR(255) NOT NULL,
+date_de_sortie DATE,
+synopsis TEXT,
+langue VARCHAR(255),
+budget INT
+);
+```
+
+<i class="bi bi-circle"></i> 
+
+```sql
+CREATE TABLE film (
+id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+nom DATE NOT NULL,
+date_de_sortie VARCHAR(255),
+synopsis TEXT,
+langue VARCHAR(255),
+budget TEXT
+);
+```
+
+_Créer une table se fait avec la commande CREATE TABLE, suivie du nom de la table, puis des colonnes (ou champs) de la future table._
+
+-----
+
+#### Question 4 : Vous avez créé votre table film, mais vous aimeriez vous en assurer. Quelle commande permet de vérifier la création de la table film ?
+
+<i class="bi bi-record-circle"></i> <code>SHOW tables;</code><br />
+<i class="bi bi-circle"></i> <code>SHOW databases;</code><br />
+<i class="bi bi-circle"></i> <code>SHOW me the money;</code><br />
+<br />
+
+_SHOW tables permet de voir toutes les tables d’une BDD, et ainsi, d'en vérifier la création._
+
+-----
+
+#### Question 5 : Votre table film est bien créée, mais vous aimeriez à présent vérifier sa structure. Quelle commande faites-vous ?
+
+<i class="bi bi-circle"></i> <code>SHOW FIELDS FROM film;</code><br />
+<i class="bi bi-record-circle"></i> <code>SHOW COLUMNS FROM film;</code><br />
+<i class="bi bi-circle"></i> <code>SHOW STRUCTURE FROM film;</code><br />
+<br />
+
+_La commande pour voir la structure d’une table est celle qui permet d’en voir les colonnes. Soit `SHOW COLUMNS FROM` suivie du nom de la table._
+

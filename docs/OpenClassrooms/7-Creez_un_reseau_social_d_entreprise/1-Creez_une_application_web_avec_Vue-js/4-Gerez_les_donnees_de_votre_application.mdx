@@ -1,0 +1,1310 @@
+---
+sidebar_position: 5
+---
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+import { Vimeo } from 'mdx-embed';
+
+# Gérez les données de votre application
+
+## Découvrez le principe de state management
+
+[Découvrez le principe de state management - Créez une application web avec Vue.js - OpenClassrooms](https://openclassrooms.com/fr/courses/6390311-creez-une-application-web-avec-vue-js/6865336-decouvrez-le-principe-de-state-management)
+
+![](https://user.oc-static.com/upload/2020/05/20/1589959826441_Bannee-dimension-720-798-04.png)
+
+Lorsque l'on travaille avec des applications monopages (SPA), le concept de _state management_ (gestion d'état) est un sujet couramment abordé.
+
+Et même si ce sujet peut souvent mener à des discussions très complexes, le principal objectif recherché par tous est le suivant :
+
+> s'assurer que l'application utilise les bonnes données à tout moment.
+
+Sur cette base, nous pouvons définir le **state** (ou _état_, en français) comme un instantané du data store à un moment donné. De multiples
+states sont utilisés à travers une application, ce qui explique la complexité inhérente à la gestion de ces éléments. Après tout, chaque
+composant utilisé contient sa propre propriété `data`, ce qui signifie qu'il gère son propre state. Une fois que l'on ajoute la complexité du
+passage de données entre composants, cela devient effectivement très compliqué.
+
+Pour illustrer cela, combien y a-t-il d'instances de state représentées dans l'exemple suivant ?
+
+##### src/components/GroceryList.vue
+
+```html
+<template>
+    <div>
+        <h1>{{ pageTitle }}</h1>
+        <ul>
+            <ListItem
+                v-for="item in list"
+                :key="item"
+                :item="item"
+            />
+        </ul>
+    </div>
+</template>
+<script>
+import ListItem from './components/ListItem.vue'
+export default {
+    name: 'GroceryList',
+    components: {
+        ListItem
+    },
+    data() {
+        return {
+            list: ['pommes', 'bananes', 'cerises'],
+            pageTitle: 'Ma liste de courses'
+        }
+    }
+}
+</script>
+```
+
+À première vue, il semblerait qu'il y ait deux instances d'état : le composant parent `<GroceryList>` et le composant enfant `<ListItem>`.
+Pourtant, il s'avère que nous sommes en réalité en présence de 4 instances de state au total :
+1. GroceryList.
+2. ListItem item="pommes".
+3. ListItem item="bananes".
+4. ListItem item="cerises".
+
+Pour comprendre cela, imaginez que le composant `<ListItem>` ait été défini comme suit :
+
+```html
+<template>
+    <div>
+        <input type="checkbox" v-model="isPurchased" />
+        <label>{{ item }}</label>
+    </div>
+</template>
+<script>
+export default {
+    name: 'ListItem',
+    props: {
+        item: String
+    },
+    data() {
+        return {
+            isPurchased: false
+        }
+    }
+}
+</script>
+```
+
+Comme vous pouvez l'imaginer, chaque article de `<GroceryList>` doit pouvoir gérer le fait qu'il a été acheté ou non. Si les composants enfants
+partageaient un state unique, alors le fait de cocher un seul article mettrait automatiquement à jour les autres composants 😱.
+
+### Récupérez vos datas à la source unique de vérité
+
+Dans les discussions autour de la gestion du state, et parmi les termes couramment cités, apparaît l'idée d'une « source unique de vérité »
+(qui est aussi parfois abrégée en « SSoT » pour _Single Source of Truth_). Le concept fondamental derrière une source unique de vérité est
+d'éviter la duplication inutile de données dans l'application.
+
+Bien que cela puisse paraître anodin à première vue, le fait de stocker plusieurs copies des mêmes données dans une application est souvent la
+principale cause de bugs dans un système, car cela permet l'existence de différents jeux des « mêmes » données en même temps. Au lieu de
+n'avoir à mettre à jour qu'un seul jeu de données, l'application devra gérer plusieurs jeux de données, ce qui est problématique, car :
+- du point de vue du code, cela s'avère bien plus difficile à gérer, car il existe une dépendance qu'il est facile d'oublier à mesure que le
+système se complexifie ;
+- des bugs apparaissent en plus grand nombre à la suite de cette fragmentation.
+
+C'est pour cette raison que le concept de source unique de vérité est essentiel au succès de tout système de gestion du state.
+
+### Entraînez-vous
+
+Vous trouverez le code source des exercices dans [le repo GitHub du cours](https://github.com/amandinelemoult2109/Vue-fr), dans le dossier
+`cafe-with-a-view`. Pour commencer, consultez la branche `P4C1-Begin`.
+
+#### Instructions
+
+1. Évaluez le state actuel de l'application et déterminez où se trouvent les différentes propriétés des données.
+2. Créez un plan ou un document visuel représentant la structure du state de l'application.
+
+:::info Analyse du state de Cafe with a Vue
+
+**Données Globales**
+
+Voici les données qui ont le plus besoin d'être partagées entre plusieurs composants au fur et à mesure où l'application grossit :
+- Restaurant Name
+- Menu Items
+- Shopping Cart
+
+**Données Locales**
+
+Les informations ci-dessous sont typiquement contenues dans une seule page donc n'ont pas besoin d'être partagées entre plusieurs composants :
+- Contact
+
+**Note** : Il s'agit ici d'une interprétation possible de comment les données sont organisées. Il y a plusieurs moyens de le faire, et sentez
+vous libre de tester différentes idées quand vous construisez des applications.
+:::
+
+### En résumé
+
+Dans notre vision du système de gestionnaire de state idéal, ce dernier devrait être capable de :
+- créer un espace de stockage de données unique qui servira de source unique de vérité pour toutes les données partagées ;
+- permettre à n'importe quel composant de récupérer des données directement ;
+- permettre à n'importe quel composant de modifier le data store unique directement.
+
+_Par chance, l'écosystème Vue.js dispose d'un système de state management capable de faire cela à notre place : Vuex. Hâte d'en savoir plus ?
+Rendez-vous au prochain chapitre ! 🚀_
+
+-----
+
+## Créez un data store centralisé avec Vuex
+
+[Créez un data store centralisé avec Vuex - Créez une application web avec Vue.js - OpenClassrooms](https://openclassrooms.com/fr/courses/6390311-creez-une-application-web-avec-vue-js/6869761-creez-un-data-store-centralise-avec-vuex)
+
+![](https://user.oc-static.com/upload/2020/05/20/15899598448174_Bannee-dimension-720-798-04.png)
+
+**Vuex** est un gestionnaire d'état et une bibliothèque pour les applications Vue.js. En d'autres termes, le but unique de Vuex est de nous
+aider à créer un store centralisé qui nous permettra d'avoir cette "source unique de vérité" pour récupérer nos datas.
+
+### Installez Vuex
+
+Grâce à Vue CLI, il suffit d'exécuter la commande suivante dans notre terminal pour ajouter Vuex à notre projet :
+
+```shell
+vue add vuex
+```
+
+Une fois Vuex ajouté à votre application par Vue CLI, vous devriez voir un résultat similaire dans votre terminal :
+
+<figure>
+    <img src="https://user.oc-static.com/upload/2020/04/03/15859090743929_15694861994517_vuex-install.png"
+         alt="Output de l'installation de Vuex dans le terminal" />
+    <figcaption>Ce que vous devriez voir dans votre terminal</figcaption>
+</figure>
+
+Cela signifie que Vuex est bien installé dans votre application. Tout ça en un clic, on s'en sort bien, non 😎 ? Maintenant, voyons voir quels
+changements ont été apportés à notre application.
+
+#### src/main.js
+
+```javascript
+import Vue from 'vue'
+import App from './App.vue'
+import store from './store'
+
+Vue.config.productionTip \= false
+
+new Vue({
+    store,
+    render: h => h(App)
+}).$mount('#app')
+```
+
+En regardant le fichier `main.js` de plus près, vous remarquerez que le plugin a introduit le `store` en tant que nouvelle configuration sur
+notre instance de Vue. De la même manière que nous configurerions une propriété `data` pour mettre en place un nouveau data store, vous pouvez
+considérer cette propriété `store` comme le data store global que nous allons configurer avec Vuex.
+
+Jetons un œil au fichier dans lequel toute la magie Vuex a lieu : `src/store.js`.
+
+### Rencontrez store/index.js
+
+```javascript
+import Vue from 'vue'
+import Vuex from 'vuex'
+
+Vue.use(Vuex)
+
+export default new Vuex.Store({
+    state: {
+
+    },
+    mutations: {
+
+    },
+    actions: {
+
+    }
+})
+```
+
+En parcourant `store/index.js`, vous remarquerez une nouvelle ligne de code que nous n'avions pas encore rencontrée :
+
+```javascript
+Vue.use(Vuex)
+```
+
+Cette syntaxe est utilisée pour le [système de plugins Vue](https://fr.vuejs.org/v2/guide/plugins.html). Cette méthode permet d'ajouter une
+fonctionnalité globale à notre instance de Vue. Et comme notre but est d'ajouter un data store global dans notre application, le système de
+plugin est parfait pour ajouter Vuex à notre application.
+
+Ensuite, comme pour la mise en place d'une nouvelle instance de Vue avec `new Vue()`, Vuex est installé de la même manière avec `new Vuex.Store()`.
+Et vous pouvez également lui passer des options de configuration, exactement comme pour une nouvelle instance de Vue.
+
+### Configurez Vuex
+
+Comme nous le voyons dans `store/index.js`, l'initialisation d'un nouveau store Vuex ne nécessite qu'une seule configuration. Cela se fait par
+un objet contenant trois clés : (1) state, (2) mutations et (3) actions.
+
+```javascript
+import Vue from 'vue'
+import Vuex from 'vuex'
+
+Vue.use(Vuex)
+
+export default new Vuex.Store({
+    state: {
+
+    },
+    mutations: {
+
+    },
+    actions: {
+
+    }
+})
+```
+
+### Entraînez-vous
+
+Vous trouverez le code source des exercices dans [le repo GitHub du cours](https://github.com/amandinelemoult2109/Vue-fr), dans le dossier
+`cafe-with-a-view`. Pour commencer, consultez la branche `P4C2-Begin`.
+
+#### Instructions
+
+1. Ajoutez Vuex à l'application.
+2. Vérifiez que la boilerplate pour le store est bien présente dans un fichier comme `store/index.js`.
+
+```javascript title="store/index.js"
+import Vue from 'vue'
+import Vuex from 'vuex'
+
+Vue.use(Vuex)
+
+export default new Vuex.Store({
+    state: {
+    },
+    mutations: {
+    },
+    actions: {
+    },
+    modules: {
+    }
+})
+```
+
+### En résumé
+
+Dans ce chapitre, nous avons appris :
+- ce qu'est Vuex : une bibliothèque de gestion d'état permettant de créer un store centralisé qui deviendra la seule source de vérité de notre
+app ;
+- comment installer Vuex sur notre application ;
+- le fonctionnement de la structure de Vuex.
+
+_Maintenant que nous avons ajouté Vuex à notre projet avec succès, il est temps de découvrir son fonctionnement ! C'est parti dans le chapitre
+suivant ! 🚀_
+
+-----
+
+## Récupérez des données depuis Vuex
+
+[Récupérez des données depuis Vuex - Créez une application web avec Vue.js - OpenClassrooms](https://openclassrooms.com/fr/courses/6390311-creez-une-application-web-avec-vue-js/6870051-recuperez-des-donnees-depuis-vuex)
+
+![](https://user.oc-static.com/upload/2020/05/20/15899602015333_Bannee-dimension-720-798-04.png)
+
+Maintenant que nous avons installé Vuex dans notre application, il est temps pour nous de comprendre son fonctionnement. Et comme Vuex nous
+sert de store global, nous devrions commencer par apprendre dès maintenant comment stocker et récupérer les données qui s'y trouvent.
+Commençons tout de suite ! 🚀
+
+### Stockez des données dans Vuex
+
+Dans Vuex, notre data store est défini en tant que `state` dans l'objet de configuration `store/index.js`. Il s'agit d'un nouveau terme à
+apprendre, mais vous pouvez comparer cela à la propriété `data` que nous utilisons depuis le début.
+
+<Vimeo vimeoId="413530181" />
+
+<br />
+
+<figure>
+    <img src="https://user.oc-static.com/upload/2020/04/27/15879920195864_15694885347961_Screen_Shot_2019-08-12_at_7.57.01_PM.png"
+         alt="Une comparaison entre le state du store Vuex et le data store d'un objet de config standard Vue" />
+    <figcaption>Une comparaison entre le state du store Vuex et le data store d'un objet de config standard Vue</figcaption>
+</figure>
+
+Lorsqu'il s'agit de stocker des données dans Vuex, c'est aussi simple que d'ajouter des paires clé-valeur, comme vous le feriez dans tout autre
+objet JavaScript normal.
+
+```javascript
+export default new Vuex.Store({
+    state: {
+        month: 8,
+        day: 12,
+        year: 2008
+    }
+})
+```
+
+:::note ?
+Du coup, cela veut dire que je devrais tout mettre dans le state Vuex plutôt que dans le data store des composants ?
+:::
+
+Il peut paraître tentant de tout mettre dans le store global ; mais ce n'est pas ce qu'il faut faire, car une partie de ce qui rend
+l'architecture par composants aussi puissante est sa capacité à découper un certain nombre de sujets. L'idée est de remonter les données à un
+niveau global uniquement lorsque vous constaterez qu'il est nécessaire d'accéder aux données à partir de plusieurs composants.
+
+### Récupérez des données dans Vuex
+
+Maintenant que nous savons comment définir les données dans Vuex, l'étape suivante consiste naturellement à déterminer comment accéder à nos
+données depuis nos composants. Il existe deux façons de faire.
+
+#### Utilisez `$store`
+
+Au fur et à mesure que vous allez approfondir des techniques plus avancées de Vue et que vous développerez vos connaissances, vous découvrirez
+des propriétés qui sont précédées du symbole dollar. En voici quelques exemples :
+- `this.$options` ;
+- `this.$parent` ;
+- `this.$children` ;
+- etc.
+
+Il s'agit de propriétés spécifiques à l'instance de Vue sur laquelle vous travaillez ; elles sont précédées du signe dollar afin de garantir
+que ces méthodes sont bien utilisées comme prévu.
+
+Comme notre `store` Vuex est injecté à un niveau global à travers tous nos composants, cela signifie que nous avons accès à une propriété
+`$store` qui nous permettra d'accéder directement à Vuex dans sa totalité.
+
+Si on reprend notre exemple situé plus haut, nous pourrions accéder à notre `state` via `$store` par ce qui suit :
+
+```html
+<template>
+    <p>La date stockée dans Vuex est le {{ $store.state.day }}-{{ $store.state.month }}-{{ $store.state.year }}.</p>
+</template>
+```
+
+Cependant, notre template commence à être un peu encombré. Il serait pratique d'avoir un moyen plus simple de faire référence au store,
+n'est-ce pas ? Eh bien, heureusement pour nous, il y a : `mapState` !
+
+#### Utilisez `mapState`
+
+Vuex nous fournit un moyen d'associer le state à des variables que nous pouvons appeler dans nos composants, évitant ainsi de devoir appeler
+`$store` à chaque fois : `mapState`. Cette méthode nous permet de demander à Vuex les propriétés de state de notre choix, et il les ajoutera à
+nos propriétés calculées.
+
+```javascript
+export default new Vuex.Store({
+    state: {
+        month: 8,
+        day: 12,
+        year: 2008
+    }
+}
+```
+
+```html
+<template>
+    <p>La date stockée dans Vuex est le {{ day }}-{{ month }}-{{ year }}.</p>
+</template>
+
+<script>
+import { mapState } from 'vuex'
+
+export default {
+    computed: {
+        ...mapState(['year', 'month', 'day'])
+    }
+}
+</script>
+```
+
+::💁 
+Vous pouvez remarquer que j'utilise ici la [syntaxe de décomposition](https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Op%C3%A9rateurs/Syntaxe_d%C3%A9composition)
+(_spread operator_) "..." avant mapState. Cela n'est pas obligatoire, mais il est courant d'utiliser cette syntaxe de décomposition pour
+définir d'autres propriétés calculées.
+:::
+
+En cas de conflit sur les noms, vous aurez peut-être besoin de donner un nom différent à vos variables du state Vuex dans votre composant, ce
+qui est facilement réalisable en switchant l'argument depuis un tableau vers un objet, comme ici :
+
+```html
+<template>
+    <p>La date stockée dans Vuex est le {{ day }}-{{ uniqueMonth }}-{{ customYear }}.</p>
+</template>
+
+<script>
+import { mapState } from 'vuex'
+
+export default {
+    computed: {
+        ...mapState({
+            customYear: 'year',
+            uniqueMonth: 'month',
+            day: 'day'
+        })
+    }
+}
+</script>
+```
+
+Dans cet objet, la clé représente le nouveau nom que vous voulez utiliser pour référencer votre valeur, tandis que la valeur correspond à la
+propriété de state que Vuex doit référencer.
+
+:::info
+Pour plus d'informations sur le state dans Vuex, vous pouvez consulter [la documentation officielle sur state](https://vuex.vuejs.org/fr/guide/state.html).
+:::
+
+Ceci étant dit, vous remarquerez probablement que nous sommes en train d'assembler notre date manuellement. Si cette date était référencée à
+plusieurs endroits dans l'application, cela serait très difficile à maintenir. Si seulement il existait un moyen de définir des propriétés
+calculées dans un store Vuex...
+
+### Découvrez les getters
+
+Lorsque `store.js` est généré à la base, il laisse de côté une des propriétés qui est très utile dans de nombreux scénarios : les **« getters »,
+ou _accesseurs_**. Les **accesseurs** peuvent être vus comme l'équivalent de la propriété calculée (_computed_) dans Vue.
+
+<Vimeo vimeoId="413530280" />
+
+<br />
+
+<figure>
+    <img src="https://user.oc-static.com/upload/2020/05/04/15885823079235_15694889633907_Screen_Shot_2019-08-12_at_7.56.52_PM.png"
+         alt="Une comparaison entre le getters du store Vuex et la propriété computed dans une configuration Vue classique" />
+    <figcaption>Une comparaison entre le getters du store Vuex et la propriété computed dans une configuration Vue classique</figcaption>
+</figure>
+
+Cette comparaison montre la manière dont les accesseurs dans un store Vuex correspondent théoriquement à la propriété calculée dans un objet de
+configuration Vue standard.
+
+Ainsi, dans notre exemple de date, voilà la manière avec laquelle nous définirions notre date formatée :
+
+```javascript
+export default new Vuex.Store({
+    state: {
+        month: 7,
+        day: 23,
+        year: 2010
+    },
+    getters: {
+        formattedDate: state => {
+            return `${state.day}-${state.month}-${state.year}`
+        }
+    }
+}
+```
+
+Comme vous pouvez le voir dans l'exemple, chaque **accesseur** est une fonction qui reçoit le **state** comme argument et retourne une valeur à
+laquelle nous pourrons accéder plus tard.
+
+Ensuite, nous pouvons simplifier notre code encore davantage dans le composant, grâce à `mapGetters`, qui fonctionne comme `mapState`.
+
+```html
+<template>
+    <p>La date stockée dans Vuex est le {{ formattedDate }}.</p>
+</template>
+
+<script>
+import { mapGetters } from 'vuex'
+
+export default {
+    computed: {
+        ...mapGetters(['formattedDate'])
+    }
+}
+</script>
+```
+
+Et tout comme `mapState`, `mapGetters` peut également prendre un objet qui vous permet de définir des noms personnalisés pour les accesseurs
+que vous référencez.
+
+:::info
+Pour plus d'informations sur les accesseurs, vous pouvez consulter [la documentation officielle sur les accesseurs](https://vuex.vuejs.org/fr/guide/getters.html).
+:::
+
+### Entraînez-vous
+
+Vous trouverez le code source des exercices dans [le repo GitHub du cours](https://github.com/amandinelemoult2109/Vue-fr), dans le dossier
+`cafe-with-a-view`. Pour commencer, consultez la branche `P4C3-Begin`.
+
+#### Instructions
+
+1. Migrez les données du `shoppingCart` vers Vuex.
+2. Migrez les données relatives à `restaurantName` vers Vuex.
+3. Migrez les données de `simpleMenu` vers Vuex.
+4. Migrez `copyright` vers les accesseurs (_getters_).
+
+```html title="views/Home.vue"
+...
+<script>
+import MenuItem from "../components/MenuItem"
+
+export default {
+	name: "Home",
+	components: {
+		MenuItem
+	},
+	data() {
+		return {
+			restaurantName: "La belle vue",
+			shoppingCart: 0,
+			simpleMenu: [
+				{
+					name: "Croissant",
+					image: {
+						source: "/images/crossiant.jpg",
+						alt: "Un croissant"
+					},
+					inStock: true,
+					quantity: 1,
+					price: 2.99
+				},
+				{
+					name: "Baguette de pain",
+					image: {
+						source: "/images/french-baguette.jpeg",
+						alt: "Quatre baguettes de pain"
+					},
+					inStock: true,
+					quantity: 1,
+					price: 3.99
+				},
+				{
+					name: "Éclair",
+					image: {
+						source: "/images/eclair.jpg",
+						alt: "Éclair au chocolat"
+					},
+					inStock: false,
+					quantity: 1,
+					price: 4.99
+				}
+			]
+		}
+	},
+	computed: {
+		copyright() {
+			const currentYear = new Date().getFullYear()
+
+			return `Copyright ${this.restaurantName} ${currentYear}`
+		}
+	},
+	methods: {
+		addToShoppingCart(amount) {
+			this.shoppingCart += amount
+		}
+	}
+}
+</script>
+```
+
+```html title="views/Home.vue"
+...
+<script>
+import MenuItem from "../components/MenuItem"
+import { mapGetters, mapState } from "vuex"
+
+export default {
+	name: "Home",
+	components: {
+		MenuItem
+	},
+	computed: {
+		...mapGetters({
+			copyright: "copyright"
+		}),
+		...mapState({
+			restaurantName: "restaurantName",
+			shoppingCart: "shoppingCart",
+			simpleMenu: "simpleMenu"
+		})
+	},
+	methods: {
+		addToShoppingCart(amount) {
+			this.shoppingCart += amount
+		}
+	}
+}
+</script>
+```
+
+```javascript title="store/index.js"
+import Vue from "vue"
+import Vuex from "vuex"
+
+Vue.use(Vuex)
+
+export default new Vuex.Store({
+	state: {
+		restaurantName: "La belle vue",
+		shoppingCart: 0,
+		simpleMenu: [
+			{
+				name: "Croissant",
+				image: {
+					source: "/images/crossiant.jpg",
+					alt: "Un croissant"
+				},
+				inStock: true,
+				quantity: 1,
+				price: 2.99
+			},
+			{
+				name: "Baguette de pain",
+				image: {
+					source: "/images/french-baguette.jpeg",
+					alt: "Quatre baguettes de pain"
+				},
+				inStock: true,
+				quantity: 1,
+				price: 3.99
+			},
+			{
+				name: "Éclair",
+				image: {
+					source: "/images/eclair.jpg",
+					alt: "Éclair au chocolat"
+				},
+				inStock: false,
+				quantity: 1,
+				price: 4.99
+			}
+		]
+	},
+	getters: {
+		copyright: (state) => {
+			const currentYear = new Date().getFullYear()
+
+			return `Copyright ${state.restaurantName} ${currentYear}`
+		}
+	},
+	mutations: {},
+	actions: {},
+	modules: {}
+})
+```
+
+### En résumé
+
+Dans ce chapitre, vous avez appris à :
+- définir le data store dans Vuex avec **state** ;
+- récupérer des propriétés depuis Vuex dans vos composants avec `$store` ;
+- définir des propriétés calculées à l'aide d'**accesseurs** dans Vuex ;
+- récupérer le **state** depuis Vuex avec mapState ;
+- récupérer des accesseurs depuis Vuex avec mapGetters.
+
+_Dans le chapitre suivant, nous verrons comment mettre à jour et modifier notre store dans Vuex avec les mutations et les actions. Alors,
+rendez-vous au chapitre suivant !_
+
+-----
+
+## Modifiez vos données dans Vuex
+
+[Modifiez vos données dans Vuex - Créez une application web avec Vue.js - OpenClassrooms](https://openclassrooms.com/fr/courses/6390311-creez-une-application-web-avec-vue-js/6870776-modifiez-vos-donnees-dans-vuex)
+
+![](https://user.oc-static.com/upload/2020/05/20/15899602304117_Bannee-dimension-720-798-04.png)
+
+### Découvrez les mutations
+
+Dans le chapitre précédent, nous avons appris à définir notre espace de stockage de données dans Vuex avec `state` et des accesseurs, mais
+également à récupérer nos données avec des méthodes comme `mapState` et `mapGetters`. Dans ce chapitre, nous allons passer à l'étape suivante
+dans la gestion de notre data store : mettre à jour et modifier nos données dans Vuex avec les **mutations**.
+
+<Vimeo vimeoId="413530387" />
+
+<br />
+
+Comme nous l'avons vu dans la structure initiale de store.js :
+
+```javascript
+import Vue from 'vue'
+import Vuex from 'vuex'
+
+Vue.use(Vuex)
+
+export default new Vuex.Store({
+	state: {
+	},
+	mutations: {
+	},
+	actions: {
+	}
+})
+```
+
+La deuxième clé définie dans le store est appelée **_mutation_**. Comme son nom l'indique, elle contiendra un objet de toutes les propriétés
+responsables de modifications du `state`.
+
+#### Définissez une mutation
+
+Si nous prenons l'exemple traditionnel du compteur, nous pouvons définir une mutation comme suit :
+
+```javascript
+export default new Vuex.Store({
+	state: {
+		count: 0
+	},
+	mutations: {
+		INCREASE_COUNT(state) {
+			state.count += 1
+		}
+	},
+	actions: {
+	}
+})
+```
+
+:::info
+La convention de nommage pour les mutations consiste à utiliser uniquement des majuscules avec des underscores pour séparer les mots. Cela
+fait partie des bonnes pratiques et permet d'indiquer clairement qu'il ne s'agit pas de fonctions normales à appeler par hasard.
+:::
+
+Par défaut, la mutation reçoit le `state` en premier argument. Ce dernier peut ensuite être utilisé pour effectuer les modifications
+nécessaires. Dans l'exemple ci-dessus, nous ne faisons qu'incrémenter `state.count` de 1.
+
+Cependant,  cette technique a ses limites car nous pourrions envisager de rendre la valeur incrémentée dynamique. Heureusement, les mutations
+peuvent prendre un deuxième argument : le paramètre **payload**.
+
+```javascript
+export default new Vuex.Store({
+	state: {
+		count: 0
+	},
+	mutations: {
+		INCREASE_COUNT(state, payload) {
+			state.count += Number(payload)
+		}
+	},
+	actions: {
+	}
+})
+```
+
+Dans l'exemple révisé, nous autorisons maintenant l'utilisateur à :
+- transmettre de combien nous voulons que `state.count` soit incrémentée ;
+- fixer une valeur par défaut de 1, au cas où l'utilisateur oublie de transmettre une valeur ;
+- convertir la valeur en nombre pour qu'elle ne s'ajoute pas comme chaîne de caractères par accident.
+
+#### Actez une mutation
+
+Lorsqu'il s'agit de modifier le state d'une application, il est **essentiel** que cela soit fait au bon moment. En d'autres termes, une
+attention et un soin particuliers sont accordés à ces événements, afin de s'assurer que toute erreur soit facilement identifiée. Par
+conséquent, plutôt que d'invoquer la mutation comme une fonction normale, nous utilisons une action spéciale : **commit**.
+
+Lorsqu'une mutation est actée, l'action commit prend deux paramètres :
+- nom de la mutation ;
+- payload (facultatif).
+
+```javascript
+this.$store.commit('INCREMENT_COUNT', 2)
+```
+
+:::caution
+En revanche, même s'il est techniquement possible d'appeler des mutations directement à partir des composants, je ne vais pas vous le montrer,
+car ce n'est pas considéré comme une bonne pratique dans les applications Vue.js.
+:::
+
+Lorsqu'une mutation est actée, la modification est faite immédiatement. En d'autres termes, les mutations Vuex sont **synchrones**, ce qui
+signifie qu'il n'est par exemple pas possible de récupérer des données d'une API dans une mutation.
+
+:::info
+L'avantage, c'est que votre state se transforme en timeline historique, dans laquelle vous pouvez retracer les modifications apportées à ce
+state, chaque mutation se produisant étape par étape.
+:::
+
+Bien sûr, vous vous demandez probablement de quelle manière il faudrait acter les mutations. Pour répondre à cette question, nous allons devoir
+parler des **actions**.
+
+### Découvrez les actions
+
+Jusqu'à présent, nous avons appris que :
+- `State` contient notre data store global ;
+- les accesseurs (_getters_) servent de propriétés calculées à nos espaces de stockage de données ;
+- les mutations nous permettent de mettre à jour/modifier le state.
+
+La dernière pièce du puzzle est les **actions**. Elles nous servent à coordonner la logique derrière les mutations. En d'autres termes, elles
+sont similaires à la propriété `methods` dans une instance de Vue.
+
+<Vimeo vimeoId="413530448" />
+
+<br />
+
+<figure>
+    <img src="https://user.oc-static.com/upload/2020/04/27/1587999992018_15694897862639_Screen_Shot_2019-08-12_at_7.55.31_PM.png"
+         alt="Les actions dans le store Vuex sont similaires à la propriété methods dans une instance Vue" />
+    <figcaption>Les actions dans le store Vuex sont similaires à la propriété methods dans une instance Vue</figcaption>
+</figure>
+
+### Définissez une action
+
+Pour continuer avec notre exemple de compteur, nous pourrions définir notre action de la façon suivante :
+
+```javascript
+export default new Vuex.Store({
+	state: {
+		count: 0
+	},
+	mutations: {
+		INCREASE_COUNT(state, amount = 1) {
+			state.count += Number(amount)
+		}
+	},
+	actions: {
+		incrementCount(context, amount) {
+			context.commit('INCREMENT_COUNT', amount)
+		}
+	}
+})
+```
+
+Une action est composée d'un nom, du paramètre `context` et d'un **payload** optionnel (comme pour les mutations). Dans l'exemple ci-dessus :
+- `incrementCount` est le nom de l'action ;
+- le paramètre `context` nous donne accès aux mêmes méthodes et propriétés dans l'instance du store Vuex (par exemple, commit, state, getters,
+etc.) ;
+- `amount` est le payload que nous devons transmettre à la mutation, afin qu'elle augmente de la bonne valeur.
+
+:::info
+Comme je l'ai fait dans cet exemple, vous pouvez renommer le payload comme vous le souhaitez. Cependant, sachez simplement qu'il est désigné
+comme le _payload_ lorsque l'on parle d'une implémentation.
+:::
+
+### Découvrez l'utilité des actions
+
+Sur la base de l'exemple ci-dessus, vous vous demandez peut-être pourquoi ne pas simplement appeler la mutation directement. Mais que se
+passerait-il lorsqu'il faut diminuer le `count` d'une certaine valeur ?
+
+```javascript
+export default new Vuex.Store({
+	state: {
+		count: 0
+	},
+	mutations: {
+		INCREASE_COUNT(state, amount = 1) {
+			state.count += Number(amount)
+		},
+		DECREASE_COUNT(state, amount = 1) {
+			state.count -= Number(amount)
+		}
+	},
+	actions: {
+		incrementCount(context, amount) {
+			context.commit('INCREMENT_COUNT', amount)
+		}
+	}
+})
+```
+
+Une certaine logique est nécessaire pour déterminer quand déclencher chaque mutation. Pour tenir compte de cela, rendons notre action
+générique de la manière suivante :
+
+```javascript
+export default new Vuex.Store({
+	state: {
+		count: 0
+	},
+	mutations: {
+		INCREASE_COUNT(state, amount = 1) {
+			state.count += Number(amount)
+		},
+		DECREASE_COUNT(state, amount = 1) {
+			state.count -= Number(amount)
+		}
+	},
+	actions: {
+		updateCount(context, amount) {
+			if (amount >= 0) {
+				context.commit('INCREASE_COUNT', amount)
+			} else {
+				context.commit('DECREASE_COUNT', amount)
+			}
+		}
+	}
+})
+```
+
+:::note ?
+Pourquoi ne pas simplement réunir les mutations en une seule ?
+:::
+
+Nous pourrions rendre la mutation générique à quelque chose comme `CHANGE_COUNT`, mais en regardant l'historique, cela nous fournirait moins
+de détails, ce qui rend les choses plus difficiles à débugger. Par conséquent, il est préférable que les mutations gardent un seul usage.
+Laissez la logique aux actions.
+
+De plus, comme le paramètre `context` peut être utilisé pour accéder à de nombreuses propriétés différentes du store Vuex, vous allez
+découvrir une technique de codage courante qui est l'[affectation par décomposition](https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Op%C3%A9rateurs/Affecter_par_d%C3%A9composition)
+(_desctructuring_, en anglais). Elle est faite pour simplifier le code et le rendre plus facile à lire. Avec notre exemple, cela ressemblerait
+à ce qui suit :
+
+```javascript
+export default new Vuex.Store({
+	state: {
+		count: 0
+	},
+	mutations: {
+		INCREASE_COUNT(state, amount = 1) {
+			state.count += Number(amount)
+		},
+		DECREASE_COUNT(state, amount = 1) {
+			state.count -= Number(amount)
+		}
+	},
+	actions: {
+		updateCount({ commit }, amount) {
+			if (amount >= 0) {
+				commit('INCREASE_COUNT', amount)
+			} else {
+				commit('DECREASE_COUNT', amount)
+			}
+		}
+	}
+})
+```
+
+En plus de nous donner la liberté de déterminer la logique du moment où les mutations sont déclenchées, les `actions` sont **asynchrones**.
+Cela signifie que vous ne pouvez appeler des API et acter des mutations qu'en cas de réussite. Ou en fonction de ce que vous souhaitez réaliser.
+
+Maintenant que nous savons comment définir les actions, la question suivante se pose : comment les utiliser dans nos composants ?
+
+#### Utilisez les actions dans les composants
+
+Tout comme il existe un terme spécial pour invoquer les mutations (c'est-à-dire acter ou « commit »), il existe aussi un terme spécial pour
+les actions : **propager (_dispatch_)**. En d'autres termes, vous envoyez l'action pour exécuter une tâche. Donc, si vous vouliez propager une
+action depuis votre composant, cela ressemblerait à ce qui suit :
+
+```html
+<template>
+	<div>
+		<p>{{ count }}</p>
+		<button @click="sendUpdateCountAction">Increment</button>
+	</div>
+</template>
+
+<script>
+import { mapState } from 'vuex'
+
+export default {
+	computed: {
+		...mapState(['count'])
+	},
+	methods: {
+		sendUpdateCountAction() {
+			this.$store.dispatch('updateCount')
+		}
+	}
+}
+</script>
+```
+
+Cependant, comme pour `mapState` et `mapGetters`, il existe un équivalent pour les actions : `mapActions`.
+
+```html
+<template>
+	<div>
+		<p>{{ count }}</p>
+		<button @click="updateCount">Increment</button>
+	</div>
+</template>
+
+<script>
+import { mapState, mapActions } from 'vuex'
+
+export default {
+	computed: {
+		...mapState(['count'])
+	},
+	methods: {
+		...mapActions(['updateCount'])
+	}
+}
+</script>
+```
+
+Vous connaissez maintenant les principaux éléments de Vuex !
+
+### Entraînez-vous
+
+Vous trouverez le code source des exercices dans [le repo GitHub du cours](https://github.com/amandinelemoult2109/Vue-fr), dans le dossier
+`cafe-with-a-view`. Pour commencer, consultez la branche `P4C4-Begin`.
+
+#### Instructions
+
+1. Migrez l'événement d'ajout au panier de `Home.vue` et `MenuItem.vue` vers Vuex.
+2. Créez une mutation qui met à jour le `state` du shoppingCart.
+3. Créez une action qui peut être déclenchée depuis `MenuItem.vue` qui met à jour le panier d'achat dans `Home.vue`.
+
+
+```html {8,47-51} title="views/Home.vue"
+<template>
+	<div>
+		...
+		<section class="menu">
+			<h2>Menu</h2>
+			<MenuItem
+				v-for="item in simpleMenu"
+				@add-items-to-cart="addToShoppingCart" <!--  supprimer -->
+				:name="item.name"
+				:image="item.image"
+				:price="item.price"
+				:quantity="item.quantity"
+				:inStock="item.inStock"
+				:key="item.name"
+			/>
+		</section>
+
+		<div class="shopping-cart">
+			<h2>Panier: {{ shoppingCart }} articles</h2>
+		</div>
+
+		<footer class="footer">
+			<p>{{ copyright }}</p>
+		</footer>
+	</div>
+</template>
+
+<script>
+import MenuItem from "../components/MenuItem"
+import { mapGetters, mapState } from "vuex"
+
+export default {
+	name: "Home",
+	components: {
+		MenuItem
+	},
+	computed: {
+		...mapGetters({
+			copyright: "copyright"
+		}),
+		...mapState({
+			restaurantName: "restaurantName",
+			shoppingCart: "shoppingCart",
+			simpleMenu: "simpleMenu"
+		})
+	},
+	methods: {									<!-- Supprimer -->
+		addToShoppingCart(amount) {
+			this.shoppingCart += amount
+		}
+	}
+}
+</script>
+```
+
+```html {8-11} title="components/MenuItem.vue"
+<script>
+import { mapActions } from "vuex" <!-- Ajouter -->
+import BaseButton from "./BaseButton.vue"
+
+export default {
+	...
+	methods: {
+		<!-- updateShoppingCart(quantity) {				<!-- Modifier -->
+			this.$emit("add-items-to-cart", quantity)
+		} -->
+		...mapActions(["updateShoppingCart"])
+	},
+	...
+}
+</script>
+```
+
+```javascript {17-26} title="storee/index.js"
+import Vue from "vue"
+import Vuex from "vuex"
+
+Vue.use(Vuex)
+
+export default new Vuex.Store({
+	state: {
+		...
+	},
+	getters: {
+		copyright: (state) => {
+			const currentYear = new Date().getFullYear()
+
+			return `Copyright ${state.restaurantName} ${currentYear}`
+		}
+	},
+	mutations: {
+		ADD_ITEMS_TO_SHOPPING_CART(state, amount) {
+			state.shoppingCart += amount
+		}
+	},
+	actions: {
+		updateShoppingCart({ commit }, amount) {
+			commit("ADD_ITEMS_TO_SHOPPING_CART", amount)
+		}
+	},
+	modules: {}
+})
+```
+
+### En résumé
+
+Dans ce chapitre, vous avez découvert :
+- ce que sont les mutations et les actions ;
+- comment utiliser les mutations pour mettre à jour le state ;
+- comment utiliser les actions pour gérer vos mutations ;
+- comment déclarer et utiliser des actions dans vos composants.
+
+_C'est maintenant le moment de passer en revue nos acquis de la partie. Rendez-vous au prochain chapitre !_
+
+-----
+
+## Résumé de la partie 4
+
+[Résumé de la partie 4 - Créez une application web avec Vue.js - OpenClassrooms](https://openclassrooms.com/fr/courses/6390311-creez-une-application-web-avec-vue-js/6871196-resume-de-la-partie-4)
+
+![](https://user.oc-static.com/upload/2020/05/20/15899603266314_Bannee-dimension-720-798-04.png)
+
+Dans cette partie du cours, nous avons appris comment **gérer le state global d'une application avec Vuex**.
+- Configurer une application Vue pour utiliser **Vuex** avec Vue CLI.
+- Définir et récupérer des données depuis le **state** (état) de Vuex.
+- Définir et récupérer des données calculées depuis les **accesseurs** (getters) de Vuex.
+- Définir et acter des modifications du state de Vuex avec les **mutations**.
+- Définir et propager des mutations avec les **actions** Vuex.
+
+Félicitations ! Vous avez maintenant acquis une compétence essentielle pour construire une application qui scale à grande échelle. C'est
+maintenant le bon moment pour tester vos connaissances avec un quiz préparé juste pour vous. Bonne chance ! 🍀
+
+-----
+
+## Quiz : Gérez les données de votre application
+
+[Gérez les données de votre application - OpenClassrooms](https://openclassrooms.com/fr/courses/6390311-creez-une-application-web-avec-vue-js/exercises/3851)
+
+#### Compétences évaluées
+
+<i class="bi bi-check2-circle"></i> Gérer les données d'une application
+
+-----
+
+#### Question 1 : Pourquoi la gestion d'état (_state management_) est-elle importante ?
+
+*Attention, plusieurs réponses sont possibles.*
+
+<i class="bi bi-check-square-fill"></i> La synchronisation des données d'une application peut devenir trop complexe à mesure qu'une
+application se développe et s'étend.<br />
+<i class="bi bi-check-square-fill"></i> Cela nous permet de créer une source unique de vérité pour les données de notre application.<br />
+<i class="bi bi-square"></i> Elle garantit que toutes les copies de données sont indépendantes les unes des autres.<br />
+<i class="bi bi-check-square-fill"></i> Les composants de notre application doivent pouvoir accéder aux données et les mettre à jour, quel que
+soit leur emplacement dans la codebase.<br />
+<br />
+
+_Il est difficile de synchroniser les données à mesure qu'une application se développe et prend de l'ampleur. Les modèles de gestion d'état
+tels que Vuex sont essentiels pour réussir à construire une application à plus grande échelle. La réussite de la gestion d'un state est très
+souvent liée au respect du principe de source unique de vérité._
+
+-----
+
+#### Question 2 : Quelle partie de Vuex est chargée d'apporter directement des modifications au data store ?
+
+<i class="bi bi-circle"></i> Le state<br />
+<i class="bi bi-circle"></i> Les getters<br />
+<i class="bi bi-circle"></i> Les actions<br />
+<i class="bi bi-record-circle"></i> Les mutations<br />
+<br />
+
+_Les mutations sont la seule façon d'apporter des changements au store Vuex._
+
+-----
+
+#### Question 3 : Quelle partie de Vuex est responsable de la gestion des données dans le store ?
+
+<i class="bi bi-record-circle"></i> Le state<br />
+<i class="bi bi-circle"></i> Les getters<br />
+<i class="bi bi-circle"></i> Les actions<br />
+<i class="bi bi-circle"></i> Les mutations<br />
+<br />
+
+_Vuex utilise le state comme data store, ce qui est analogue à la propriété `data` que nous utilisons dans les instances de Vue._
+
+-----
+
+#### Question 4 : Quelle partie de Vuex est responsable de la gestion de la logique qui peut déclencher des changements dans le data store ?
+
+<i class="bi bi-circle"></i> Le state<br />
+<i class="bi bi-circle"></i> Les getters<br />
+<i class="bi bi-record-circle"></i> Les actions<br />
+<i class="bi bi-circle"></i> Les mutations<br />
+<br />
+
+_Comme la seule responsabilité d'une mutation est la mise à jour du store, la responsabilité des actions est de gérer la logique et de
+déclencher les appels asynchrones, ce qui peut déclencher autant de mutations que nécessaire._
+
+-----
+
+#### Question 5 : Quel est le mot clé pour déclencher une mutation ?
+
+<i class="bi bi-circle"></i> <code>trigger</code><br />
+<i class="bi bi-record-circle"></i> <code>commit</code><br />
+<i class="bi bi-circle"></i> initiate<br />
+<i class="bi bi-circle"></i> call<br />
+<br />
+
+_Le mot clé `commit` permet d'appeler des mutations.
+
+-----
+
+#### Question 6 : Actuellement, un développeur utilise les getters de la manière suivante :
+
+```javascript
+import Vue from 'vue'
+import Vuex from 'vuex'
+
+Vue.use(Vuex)
+
+export default new Vuex.Store({
+	state: {
+		price: 40
+	},
+	getters: {
+		getPrice: state => state.price
+	}
+})
+```
+
+**Qu’est-ce qui est incorrect ?**
+
+<i class="bi bi-circle"></i> Les getters ne doivent être utilisés que pour les fonctions asynchrones.<br />
+<i class="bi bi-record-circle"></i> Les getters sont destinés à être utilisés comme des propriétés calculées plutôt que de simplement
+récupérer un état, puisque l'on peut y accéder directement par des méthodes comme mapState.<br />
+<i class="bi bi-circle"></i> Les getters doivent être utilisés pour faire muter l'état.<br />
+<i class="bi bi-circle"></i> Il n'y a pas de problème avec ce code.<br />
+<br />
+
+_Les getters sont utilisés pour calculer l'état dérivé sur la base de l'état actuel du store. Les exemples comprennent le filtrage d'une liste
+d'articles ou le renvoi de la longueur de la liste. SI vous voulez en apprendre plus, vous pouvez jeter un œil à la [documentation officielle des getters (ou accesseurs, en français).](https://vuex.vuejs.org/fr/guide/getters.html)._
+
+-----
+
+#### Question 7 : Un développeur essaie de débugger le code suivant :
+
+```javascript
+import Vue from 'vue'
+import Vuex from 'vuex'
+
+Vue.use(Vuex)
+
+export default new Vuex.Store({
+	state: {
+		price: 40
+	},
+	mutations: {
+		fetchPrice (state) {
+			const response = fetch('/api/price')
+			state = response
+		}
+	}
+})
+```
+
+*Attention, plusieurs réponses sont possibles.*
+
+<i class="bi bi-check-square-fill"></i> Les mutations sont des transactions synchrones.<br />
+<i class="bi bi-check-square-fill"></i> Les mutations ne peuvent pas contenir de code asynchrone comme la récupération de données à partir
+d'une API.<br />
+<i class="bi bi-check-square-fill"></i> Elles doivent utiliser une <code>action</code> pour récupérer les données et ensuite acter une
+mutation avec <code>commit</code> qui met à jour l'état.<br />
+<i class="bi bi-square"></i> Elles doivent utiliser des getters à la place des mutations.<br />
+<br />
+
+_Les mutations sont uniquement destinées à la mise à jour de l'état, alors que les actions asynchrones nécessitent l'utilisateur d'actions._
+
+-----
+
+#### Question 8 : Quelle est la syntaxe la plus courante pour accéder aux actions d'un store Vuex dans un composant ?
+
+<i class="bi bi-circle"></i> <code>...generateActions()</code><br />
+<i class="bi bi-circle"></i> <code>...listActions()</code><br />
+<i class="bi bi-record-circle"></i> <code>...mapActions()</code><br />
+<i class="bi bi-circle"></i> <code>...getActions()</code><br />
+<br />
+
+_Bien que vous puissiez accéder aux actions de Vuex via `this.$store.dispatch`, il est plus courant d'utiliser `map` pour définir les
+propriétés que vous souhaitez voir disponibles dans Vue._
+
