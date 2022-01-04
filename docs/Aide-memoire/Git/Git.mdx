@@ -1,0 +1,279 @@
+---
+sidebar_position: 2
+---
+
+# Git
+
+**repository** : dépôt
+
+**pull** : extraction
+
+**pull requests** : demandes de pull
+
+**Untracked** : non suivi
+
+**staging** : prêt à partager
+
+**commit** : enregistrer officiellement dans le dépôt local
+
+
+`cd` se déplacer dans les dossiers
+
+`mkdir` créer un dossier
+
+`--global` configuration pour tous les projets Git
+
+### Configuration `git config`
+
+#### Identité
+
+```shell
+git config --global user.name "John Doe"
+git config --global user.email johndoe@example.com
+```
+
+#### Vérification des paramètres
+
+```
+git config --list
+```
+
+#### Coloration
+
+```shell
+git config --global color.diff auto
+git config --global color.status auto
+git config --global color.branch auto
+```
+
+#### Éditeur
+
+```shell
+// Éditeur
+git config --global core.editor vim
+git config --global core.editor notepad++
+
+// Outil de merge
+git config --global merge.tool vimdiff
+```
+
+### Création d'un dépôt local
+
+`git init` crée un dossier caché /.git/
+
+### Initialiser un dépôt
+
+`touch index.html`
+
+`git status`
+
+`git add index.html`
+
+`git status`
+
+`git commit -m "Ajout du fichier index.html"`
+
+### Relier le dépôt local au dépôt distant
+
+`git remote add origin https://github.com/EtudiantOC/OpenclassroomsProject.git`
+
+`git branch -M main`
+
+### Envoyer des commits du repository vers le dépôt distant GitHub
+
+`git push -u origin main`
+
+### Accédez à un dépôt distant "OC"
+
+`git init`
+
+`git remote add OC https://github.com/OpenClassrooms-Student-Center/ProjetOpenSource.git`
+
+`git branch -M main` se placer sur la branche locale “main” pour éviter tout conflit avec la branche “master”
+
+### Dupliquer le dépôt distant en local
+
+`git pull OC main`
+
+### Lister les branches
+
+`git branch`
+
+### Créer une branche
+
+`git branch nouvelleBranche`
+
+### Basculer vers une branche
+
+`git checkout nouvelleBranche`
+
+créer un fichier : `touch fichier.txt`<br />
+indexer le fichier : `git add fichier.txt`<br />
+commiter le fichier : `git commit -m "Création fichier.txt"`<br />
+envoyer sur le dépôt distant : `git push -u origin nouvelleBranche`
+
+### Fusionner une branche
+
+fusionner la branche nouvelleBranche avec la branche main :<br />
+`git checkout main`<br />
+`git merge nouvelleBranche`
+
+### Supprimer une branche
+
+`git branch -d nouvelleBranche`
+
+`git branch -D nouvelleBranche` si la branche possède des modifications
+
+### Revenir en arrière entre `add` et `commit` avec la remise `stash`
+
+Permet de mettre de côté `add` d'un fichier modifiè avant le `commit`
+
+`git stash`
+
+Changer de branche
+
+Lister les remises :
+
+`git stash list`
+
+Appliquer la remise :
+
+`git stash apply stash@{1}`
+
+### Revenir en arrière après `commit`
+
+Récupérer l'identifiant du commit :
+
+`git log`
+
+```shell
+commit 6d045b8dc63f1620786447cd976b5e0e4758fe58 (HEAD -> main)
+Author: gylgyl2000 <gylgyl2000@gmail.com>
+Date:   Fri Jul 2 13:24:46 2021 +0200
+
+    releases
+
+commit 1a284b53a93bc8f97c8e9ffec064ce6324338473
+Author: gylgyl2000 <gylgyl2000@gmail.com>
+Date:   Thu Jul 1 17:18:50 2021 +0200
+
+    new releases
+
+commit f71afb91d7c8eb583082716b28b636b6a8b68751 (origin/main)
+Author: gylgyl2000 <gylgyl2000@gmail.com>
+Date:   Tue Feb 23 18:31:22 2021 +0100
+
+    releases
+```
+
+Supprimer de la branche master le dernier commit :
+
+`git reset --hard HEAD^`
+
+Changer de branche et appliquer le commit :
+
+`git reset --hard 6d045b8d`
+
+### Modifier le message du commit
+
+`git commit --amend -m "nouveauMessage"`
+
+### Ajouter un fichier oublié dans un commit
+
+`git add fichierOublie.txt`
+
+`git commit --amend --no-edit`
+
+### Annuler un commit public
+
+`git revert HEAD^`
+
+### Accès en SSH
+
+`ssh-keygen -t rsa -b 4096 -c "johnndoe@example.com"`
+
+récupérer le fichier : .ssh/id_rsa.pub et copier le contenu
+
+### Réinitialiser Git (revenir à l'état précédent)
+
+`git reset`
+
+--hard | revenir à n'importe quel commit et supprime tout le reste<br />
+--mixed  | permettre de revenir juste après le dernier commit ou le commit spécifié, sans supprimer les modifications en cours.
+Il permet aussi, dans le cas de fichiers indexés mais pas encore commités, de désindexer les fichiers.<br />
+--soft | permettre de se placer sur un commit spécifique afin de voir le code à un instant donné, ou de créer une branche partant
+d'un ancien commit. Elle ne supprime aucun fichier, aucun commit, et ne crée pas de HEAD détaché.
+
+### Annulé un commit et en faire un autre
+
+`git revert HEAD`
+
+### Consulter l'historique du projet
+
+`git log`
+
+`git reflog` en fait encore plus
+
+Récupérer les 8 premiers caractères du SHA pour revenir à l'action donnnée :
+
+`git checkout e789e7c`
+
+### Examiner le contenu d’un fichier ligne par ligne
+
+`git blame fichier.txt`
+
+### Sélectionner un ou plusieurs commits et les migrer sur la branche master
+
+`git cherry-pick d356940 de966d4`
+
+
+-----
+
+```shell
+➜  ~ git --help
+usage : git [--version] [--help] [-C <chemin>] [-c <nom>=<valeur>]
+           [--exec-path[=<chemin>]] [--html-path] [--man-path] [--info-path]
+           [-p | --paginate | -P | --no-pager] [--no-replace-objects] [--bare]
+           [--git-dir=<chemin>] [--work-tree=<chemin>] [--namespace=<nom>]
+           <commande> [<args>]
+
+Ci-dessous les commandes Git habituelles dans diverses situations :
+
+démarrer une zone de travail (voir aussi : git help tutorial)
+   clone             Cloner un dépôt dans un nouveau répertoire
+   init              Créer un dépôt Git vide ou réinitialiser un existant
+
+travailler sur la modification actuelle (voir aussi : git help revisions)
+   add               Ajouter le contenu de fichiers dans l'index
+   mv                Déplacer ou renommer un fichier, un répertoire, ou un lien symbolique
+   restore           restaurer les fichiers l'arbre de travail
+   rm                Supprimer des fichiers de la copie de travail et de l'index
+   sparse-checkout   Initialiser et modifier l'extraction partielle
+
+examiner l'historique et l'état (voir aussi : git help revisions)
+   bisect            Trouver par recherche binaire la modification qui a introduit un bogue
+   diff              Afficher les changements entre les validations, entre validation et copie de travail, etc
+   grep              Afficher les lignes correspondant à un motif
+   log               Afficher l'historique des validations
+   show              Afficher différents types d'objets
+   status            Afficher l'état de la copie de travail
+
+agrandir, marquer et modifier votre historique
+   branch            Lister, créer ou supprimer des branches
+   commit            Enregistrer les modifications dans le dépôt
+   merge             Fusionner deux ou plusieurs historiques de développement ensemble
+   rebase            Réapplication des commits sur le sommet de l'autre base
+   reset             Réinitialiser la HEAD courante à l'état spécifié
+   switch            Basculer de branche
+   tag               Créer, lister, supprimer ou vérifier un objet d'étiquette signé avec GPG
+
+collaborer (voir aussi : git help workflows)
+   fetch             Télécharger les objets et références depuis un autre dépôt
+   pull              Rapatrier et intégrer un autre dépôt ou une branche locale
+   push              Mettre à jour les références distantes ainsi que les objets associés
+
+'git help -a' et 'git help -g' listent les sous-commandes disponibles et
+quelques concepts. Voir 'git help <commande>' ou 'git help <concept>'
+pour en lire plus à propos d'une commande spécifique ou d'un concept.
+Voir 'git help git' pour un survol du système.
+```

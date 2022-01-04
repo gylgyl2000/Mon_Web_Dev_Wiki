@@ -73,6 +73,12 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
             position: 'right',
             label: 'Algorithmes',
           },
+          {
+            type: 'doc',
+            docId: 'Lexique/lexique',
+            position: 'right',
+            label: 'Lexique',
+          },
           /* {to: '/blog', label: 'Blog', position: 'left'}, */
           {
             href: 'https://github.com/gylgyl2000/Mon_Web_Dev_Wiki',

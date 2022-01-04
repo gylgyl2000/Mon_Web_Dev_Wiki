@@ -1,0 +1,682 @@
+---
+sidebar_position: 2
+---
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+import { Vimeo } from 'mdx-embed';
+
+# Back-end Node.js Express
+
+## Aperçu
+
+Ce sont les API que l'App Node.js Express exportera :
+
+
+| MÉthodEs	| Urls	                    | Actions |
+|-----------|---------------------------|---------|
+| GET	    | api/forums	            | obtenir tous les FORUMS |
+| GET	    | api/forums/:id	        | obtenir un forum par son id |
+| POST	    | api/forums	            | ajouter un nouveau forum |
+| PUT	    | api/forums/:id	        | mettre à jour le forum par son id |
+| DELETE	| api/forums/:id	        | supprimer le forum par son id |
+| DELETE	| api/forums	            | supprimer tous les forums |
+| GET	    | api/forums?title=[kw]	| trouver tous les forums dont le titre contient 'kw' |
+
+## Structure du projet
+
+- `db.config.js` exporte les paramètres de configuration pour la connexion MySQL et Sequelize.
+- le serveur `Web Express` dans `server.js` où nous configurons CORS, initialisons et exécutons les API REST Express.
+- Ensuite, nous ajoutons la configuration de la base de données MySQL dans `models/index.js`, créons le modèle de données Sequelize dans
+`models/tutorial.model.js`.
+-  Tutoriel contrôleur dans les contrôleurs.
+- Routes pour gérer toutes les opérations CRUD (y compris la recherche personnalisée) dans `tutorial.routes.js`.
+
+## Mise en œuvre
+
+### Créer une application Node.js
+
+Tout d'abord, nous créons un dossier :
+
+```shell
+$ mkdir groupomania-forum
+$ cd groupomania-forum
+```
+
+Ensuite, nous initialisons l'application Node.js avec un fichier package.json :
+
+```shell
+npm init
+
+name: (groupomania-forum) 
+version: (1.0.0) 
+description: Node.js Rest Apis with Express, Sequelize & MySQL.
+entry point: (index.js) server.js
+test command: 
+git repository: 
+keywords: nodejs, express, sequelize, mysql, rest, api
+author: bezkoder
+license: (ISC)
+
+Is this ok? (yes) yes
+```
+
+```shell title=" Initialisation npm"
+➜  GillesChassignet_7_01072021 git:(master) npm init
+This utility will walk you through creating a package.json file.
+It only covers the most common items, and tries to guess sensible defaults.
+
+See `npm help init` for definitive documentation on these fields
+and exactly what they do.
+
+Use `npm install <pkg>` afterwards to install a package and
+save it as a dependency in the package.json file.
+
+Press ^C at any time to quit.
+package name: (gilleschassignet_7_01072021) groupomania-forum
+version: (1.0.0) 
+description: Réseau social interne du groupe Groupomania
+entry point: (index.js) server.js
+test command: 
+git repository: (https://github.com/gylgyl2000/GillesChassignet_7_01072021.git) 
+keywords: nodejs, express, sequelize, mysql, rest, api
+author: Gilles Chassignet
+license: (ISC) 
+About to write to /home/gilles/OpenClassrooms/GillesChassignet_7_01072021/GillesChassignet_7_01072021/package.json:
+
+{
+  "name": "groupomania-forum",
+  "version": "1.0.0",
+  "description": "Réseau social interne du groupe Groupomania",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gylgyl2000/GillesChassignet_7_01072021.git"
+  },
+  "keywords": [
+    "nodejs",
+    "express",
+    "sequelize",
+    "mysql",
+    "rest",
+    "api"
+  ],
+  "author": "Gilles Chassignet",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/gylgyl2000/GillesChassignet_7_01072021/issues"
+  },
+  "homepage": "https://github.com/gylgyl2000/GillesChassignet_7_01072021#readme"
+}
+
+
+Is this OK? (yes) 
+```
+
+Nous devons installer les modules nécessaires : express, sequelize, mysql2et body-parser.
+
+Exécutez la commande :
+
+```shell
+npm install express sequelize mysql2 body-parser cors --save
+```
+
+:::info
+- **Node.js :** https://nodejs.org/fr/<br />
+Node.js® est un environnement d’exécution JavaScript construit sur le moteur JavaScript V8 de Chrome.
+
+- **express :** https://www.npmjs.com/package/express<br />
+Framework Web rapide, sans opinion et minimaliste pour node.
+
+- **sequelize :** https://www.npmjs.com/package/sequelize<br />
+Sequelize est un outil ORM Node.js basé sur la promesse pour Postgres, MySQL, MariaDB, SQLite, DB2 et Microsoft SQL Server. Il offre une
+prise en charge solide des transactions, des relations, un chargement rapide et paresseux, une réplication en lecture et plus encore.
+
+- **mysql2 :** Node MySQL 2 : https://www.npmjs.com/package/mysql2<br />
+Client MySQL pour Node.js axé sur les performances. Prend en charge les instructions préparées, les encodages non utf8, le protocole de
+journalisation binaire, la compression, SSL (bien plus)[https://github.com/sidorares/node-mysql2/tree/master/documentation]
+
+- **body-parser :** https://www.npmjs.com/package/body-parser<br />
+Intergiciel (middleware) d'analyse corporelle (body parsing) Node.js.<br />
+Analysez les corps des requêtes entrantes dans un middleware avant vos gestionnaires, disponibles sous la propriété `req.body`.
+
+- **cors :** https://www.npmjs.com/package/cors<br />
+CORS est un package node.js pour fournir un middleware Connect/Express qui peut être utilisé pour activer (CORS)[https://fr.wikipedia.org/wiki/Cross-origin_resource_sharing]
+avec diverses options.
+:::
+
+### Configurer le serveur Web Express
+
+Dans le dossier racine, créons un nouveau fichier *server.js* :
+
+```javascript title="server.js"
+const express = require("express");
+const bodyParser = require("body-parser");
+const cors = require("cors");
+
+const app = express();
+
+let corsOptions = {
+    origin: "http://localhost:8081"
+};
+
+app.use(cors(corsOptions));
+
+// analyse les requêtes de type de contenu - application/json
+app.use(bodyParser.json());
+
+// analyse les demandes de type de contenu - application/x-www-form-urlencoded
+app.use(bodyParser.urlencoded({ extended: true }));
+
+// route simple
+app.get("/", (req, res) => {
+    res.json({ message: "Bienvenue dans le réseau social interne du groupe Groupomania." });
+});
+
+// défini le port, écoute les demandes
+const PORT = process.env.PORT || 8080;
+app.listen(PORT, () => {
+    console.log(`Le serveur s'exécute sur le port ${PORT}.`);
+});
+```
+
+Ce que nous avons fait :
+- importer les modules express, body-parser et cors :
+    - Express est pour construire l'API Rest,
+    - body-parser aide à analyser la demande et à créer l'objet `req.body`,
+    - cors fournit un middleware Express pour activer CORS avec diverses options.
+- créer une application Express, puis ajouter les middlewares `body-parser` et `cors` en utilisant la méthode `app.use()`. Notez que nous
+définissons l'origine : http://localhost:8081.
+- définir une route GET simple à tester.
+- écouter sur le port 8080 pour les requêtes entrantes.
+
+Exécutons maintenant l'application avec la commande : `node server.js`.
+
+Ouvrez votre navigateur avec l'url http://localhost:8080/ , vous verrez :
+
+```html title="localhost:8080"
+{"message":"Bienvenue sur le réseau social interne du groupe Groupomania."}
+```
+
+Oui, le premier pas est fait. Nous allons travailler avec Sequelize dans la section suivante.
+
+### Configurer la base de données MySQL & Sequelize
+
+Dans le dossier *app*, nous créons un séparé dossier *config* pour la configuration avec le fichier *db.config.js* comme ceci :
+
+```javascript title="app/config/db.config.js"
+module.exports = {
+    HOST: "localhost",
+    USER: "root",
+    PASSWORD: "M&rlin2004",
+    DB: "forumdb",
+    dialect: "mysql",
+    pool: {
+        max: 5,
+        min: 0,
+        acquire: 30000,
+        idle: 10000
+    }
+};
+```
+
+Les cinq premiers paramètres sont pour la connexion MySQL.
+`pool` est facultatif, il sera utilisé pour la configuration du pool de connexions Sequelize :
+- `max` : nombre maximum de connexion dans le pool,
+- `min` : nombre minimum de connexion dans le pool,
+- `idle` : temps maximum, en millisecondes, pendant lequel une connexion peut être inactive avant d'être libérée,
+- `acquire` : temps maximum, en millisecondes, que ce pool essaiera d'obtenir la connexion avant de lancer une erreur.
+
+Pour plus de détails, veuillez visiter [API Reference for the Sequelize constructor](https://sequelize.org/master/class/lib/sequelize.js~Sequelize.html#instance-constructor-constructor).
+
+### Initialiser Sequelize
+
+Nous allons initialiser Sequelize dans le dossier *app/models* qui contiendra le modèle à l'étape suivante.
+
+Créez maintenant *app/models/index.js* avec le code suivant :
+
+```javascript title="app/models/index.js"
+const dbConfig = require("../config/db.config.js");
+
+const Sequelize = require("sequelize");
+const sequelize = new Sequelize(dbConfig.DB, dbConfig.USER, dbConfig.PASSWORD, {
+    host: dbConfig.HOST,
+        dialect: dbConfig.dialect,
+        operatorsAliases: false,
+
+    pool: {
+        max: dbConfig.pool.max,
+        min: dbConfig.pool.min,
+        acquire: dbConfig.pool.acquire,
+        idle: dbConfig.pool.idle
+    }
+});
+
+const db = {};
+
+db.Sequelize = Sequelize;
+db.sequelize = sequelize;
+
+db.forums = require("./forum.model.js")(sequelize, Sequelize);
+
+module.exports = db;
+```
+
+N'oubliez pas d'appeler la méthode `sync()` dans *server.js* :
+
+```javascript title="server.js"
+...
+const app = express();
+app.use(...);
+
+const db = require("./app/models");
+db.sequelize.sync();
+
+...
+```
+
+Au cours du développement, vous devrez peut-être supprimer les tables existantes et resynchroniser la base de données. Utilisez simplement
+`force: true` en suivant le code :
+
+```javascript title="server.js"
+db.sequelize.sync({ force: true }).then(() => {
+    console.log("Suppression des tables et resynchronisation de la base de données.");
+});
+```
+
+### Définir le modèle Sequelize
+
+Dans le dossier models, créez le fichier *tutorial.model.js* comme ceci :
+
+```javascript title="app/models/forum.model.js"
+module.exports = (sequelize, Sequelize) => {
+    const Forum = sequelize.define("forum", {
+        title: {
+            type: Sequelize.STRING
+        },
+        description: {
+            type: Sequelize.STRING
+        },
+        published: {
+            type: Sequelize.BOOLEAN
+        }
+    });
+
+    return Forum;
+};
+```
+
+Ce modèle Sequelize représente la table des **forums** dans la base de données MySQL. Ces colonnes seront générées automatiquement :
+*id*, *title*, *description*, *published*, *createdAt*, *updateAt*.
+
+Après avoir initialisé Sequelize, nous n'avons pas besoin d'écrire les fonctions CRUD, Sequelize les prend toutes en charge :
+- créer un nouveau forum : `create(object)`
+- trouver un forum par id : `findByPk(id)`
+- obtenir tous les forums : `findAll()`
+- mettre à jour un forum par id : `update(data, where: { id: id })`
+- supprimer un forum : `destroy(where: { id: id })`
+- supprimer tous les forums : `destroy(where: {})`
+- trouver tous les forums par titre : `findAll({ where: { title: ... } })`
+
+Ces fonctions seront utilisées dans notre contrôleur.
+
+Nous pouvons améliorer l'exemple en ajoutant des commentaires pour chaque forum. C'est la relation un-à-plusieurs et j'écris un tutoriel pour
+cela à l'adresse : [Sequelize Associations: One-to-Many example – Node.js, MySQL](https://bezkoder.com/sequelize-associate-one-to-many/).
+
+Ou vous pouvez ajouter des balises pour chaque forum et ajouter des forums à la balise (relation plusieurs-à-plusieurs) :
+[Sequelize Many-to-Many Association example with Node.js & MySQL](https://bezkoder.com/sequelize-associate-many-to-many/).
+
+### Créer le contrôleur
+
+Dans le dossier **app/controllers**, créons *tutorial.controller.js* avec ces fonctions CRUD :
+- create
+- findAll
+- findOne
+- update
+- delete
+- deleteAll
+- findAllPublished
+
+```javascript title="app/controllers/forum.controller.js"
+const db = require("../models");
+const Tutorial = db.tutorials;
+const Op = db.Sequelize.Op;
+
+// Créer et enregistrer un nouveau forum
+exports.create = (req, res) => {
+  
+};
+
+// Récupérez tous les forums de la base de données
+exports.findAll = (req, res) => {
+  
+};
+
+// Trouver un seul forum avec un id
+exports.findOne = (req, res) => {
+  
+};
+
+// Mettre à jour un forum par l'id dans la demande
+exports.update = (req, res) => {
+  
+};
+
+// Supprimer un forum avec l'id spécifié dans la demande
+exports.delete = (req, res) => {
+  
+};
+
+// Supprimer tous les forums de la base de données
+exports.deleteAll = (req, res) => {
+  
+};
+
+// Trouver tous les forums publiés
+exports.findAllPublished = (req, res) => {
+  
+};
+```
+
+Vous pouvez continuer étape par étape pour implémenter cette application Node.js Express dans l'article : [Node.js Rest APIs example with Express, Sequelize & MySQL](https://bezkoder.com/node-js-express-sequelize-mysql/).
+
+### Exécutez le serveur Node.js Express
+
+Exécutez notre application Node.js avec la commande : `node server.js`.
+
+La console affiche :
+
+```shell
+➜  GillesChassignet_7_01072021 git:(master) ✗ node server.js
+Le serveur s'exécute sur le port 8080.
+Executing (default): DROP TABLE IF EXISTS `forums`;
+Executing (default): DROP TABLE IF EXISTS `forums`;
+Executing (default): CREATE TABLE IF NOT EXISTS `forums` (`id` INTEGER NOT NULL auto_increment , `title` VARCHAR(255), `description` VARCHAR(255), `published` TINYINT(1), `createdAt` DATETIME NOT NULL, `updatedAt` DATETIME NOT NULL, PRIMARY KEY (`id`)) ENGINE=InnoDB;
+Executing (default): SHOW INDEX FROM `forums`
+Suppression des tables et resynchronisation de la base de données.
+```
+
+## Implémenter les fonctions
+
+### Créer un nouvel objet
+
+Créer et enregistrer un nouveau forum :
+
+```javascript title="app/controllers/forum.controller.js"
+// Créer et enregistrer un nouveau forum
+exports.create = (req, res) => {
+    // Valider la demande
+    if (!req.body.title) {
+        res.status(400).send({
+            message: "Le contenu ne peut pas être vide !"
+        });
+        return;
+    }
+    // Créer un forum
+    const forum = {
+        title: req.body.title,
+        description: req.body.description,
+        published: req.body.published ? req.body.published : false
+    };
+
+    // Enregistrer le forum dans la base de données
+    Forum.create(tutorial)
+        .then(data => {
+            res.send(data);
+        })
+        .catch(err => {
+            res.status(500).send({
+                message:
+                    err.message || "Une erreur s'est produite lors de la création du forum."
+            });
+        });
+};
+```
+
+### Récupérer des objets (avec condition)
+
+Récupérer tous les forums / rechercher par titre dans la base de données :
+
+```javascript title="app/controllers/forum.controller.js"
+// Récupérez tous les forums de la base de données
+exports.findAll = (req, res) => {
+    const title = req.query.title;
+    let condition = title ? { title: { [Op.like]: `%${title}%` } } : null;
+
+    Forum.findAll({ where: condition })
+        .then(data => {
+            res.send(data);
+        })
+        .catch(err => {
+            res.status(500).send({
+                message:
+                    err.message || "Une erreur s'est produite lors de la récupération des forums."
+        });
+    });  
+};
+```
+
+Nous utilisons `req.query.title` pour obtenir la chaîne de requête de Request et la considérons comme une condition pour la méthode `findAll()`.
+
+### Récupérer un seul objet
+
+Trouvez un seul tutoriel avec un `id` :
+
+```javascript title="app/controllers/forum.controller.js"
+exports.findOne = (req, res) => {
+    const id = req.params.id;
+
+    Forum.findByPk(id)
+        .then(data => {
+            if (data) {
+                res.send(data);
+            } else {
+                res.status(404).send({
+                    message: `Impossible de trouver le forum avec l'id=${id}.`
+                });
+            }
+        })
+        .catch(err => {
+            res.status(500).send({
+                message: "Erreur lors de la récupération du forum avec l'id=" + id
+            });
+        });  
+};
+```
+
+### Mettre à jour un objet
+
+Mettre à jour un forum identifié par l'`id` dans la requête :
+
+```javascript title="app/controllers/forum.controller.js"
+// Mettre à jour un forum par l'id dans la demande
+exports.update = (req, res) => {
+    const id = req.params.id;
+
+    Forum.update(req.body, {
+        where: { id: id }
+    })
+        .then(num => {
+            if (num == 1) {
+                res.send({
+                    message: "Le forum a été mis à jour avec succès."
+                });
+            } else {
+                res.send({
+                    message: `Impossible de mettre à jour le forum avec l'id=${id}. Peut-être que le forum n'a pas été trouvé ou que req.body est vide !`
+                });
+            }
+        })
+        .catch(err => {
+            res.status(500).send({
+                message: "Erreur lors de la mise à jour du forum avec l'id=" + id
+            });
+        });
+};
+```
+
+### Supprimer un objet
+
+Supprimer un forum avec l'`id` spécifié :
+
+```javascript title="app/controllers/forum.controller.js"
+// Supprimer un forum avec l'id spécifié dans la demande
+exports.delete = (req, res) => {
+    const id = req.params.id;
+
+    Forum.destroy({
+        where: { id: id }
+    })
+        .then(num => {
+            if (num == 1) {
+                res.send({
+                    message: "Le forum a été supprimé avec succès !"
+                });
+            } else {
+                res.send({
+                    message: `Impossible de supprimer le didacticiel avec l'id=${id}. Peut-être que le forum n'a pas été trouvé !`
+                });
+            }
+        })
+        .catch(err => {
+            res.status(500).send({
+                message: "Impossible de supprimer le didacticiel avec l'id=" + id
+            });
+        });
+};
+```
+
+### Supprimer tous les objets
+
+Supprimer tous les forums de la base de données :
+
+```javascript title="app/controllers/forum.controller.js"
+// Supprimer tous les forums de la base de données
+exports.deleteAll = (req, res) => {
+    Forum.destroy({
+        where: {},
+        truncate: false
+    })
+        .then(nums => {
+            res.send({ message: `${nums} forums ont été supprimés avec succès !` });
+        })
+        .catch(err => {
+            res.status(500).send({
+                message:
+                    err.message || "Une erreur s'est produite lors de la suppression de tous les forums."
+            });
+        });
+};
+```
+
+### Trouver tous les objets par condition
+
+Trouver tous les forums avec `published = true` :
+
+```javascript title="app/controllers/forum.controller.js"
+// Trouver tous les forums publiés
+exports.findAllPublished = (req, res) => {
+    Forum.findAll({ where: { published: true } })
+    .then(data => {
+        res.send(data);
+    })
+    .catch(err => {
+        res.status(500).send({
+            message:
+                err.message || "Une erreur s'est produite lors de la récupération des forums."
+        });
+    });
+};
+```
+
+Ce contrôleur peut être légèrement modifié pour renvoyer la réponse de pagination :
+
+```javascript
+{
+    "totalItems": 8,
+    "forums": [...],
+    "totalPages": 3,
+    "currentPage": 1
+}
+```
+
+Vous pouvez trouver plus de détails sur : [Server side Pagination in Node.js with Sequelize and MySQL](https://bezkoder.com/node-js-sequelize-pagination-mysql/).
+
+## Définir des routes
+
+Lorsqu'un client envoie une requête pour un point de terminaison à l'aide d'une requête HTTP (GET, POST, PUT, DELETE), nous devons déterminer
+comment le serveur répondra en configurant les routes.
+
+Voici nos routes :
+
+- `/api/forums` : GET, POST, DELETE
+- `/api/forums/:id` : GET, PUT, DELETE
+- `/api/forums/published` : GET
+
+Créer un *forum.routes.js* dans le dossier **app/routes** avec un contenu comme celui-ci :
+
+```javascript title="pp/routes/forum.routes.js"
+module.exports = app => {
+    const forums = require("../controllers/forum.controller.js");
+  
+    var router = require("express").Router();
+  
+    // Créer un nouveau forum
+    router.post("/", forums.create);
+  
+    // Récupérer tous les forums
+    router.get("/", forums.findAll);
+  
+    // Récupérer tous les forums publiés
+    router.get("/published", forums.findAllPublished);
+  
+    // Récupérer un seul forum avec id
+    router.get("/:id", forums.findOne);
+  
+    // Mettre à jour un forum avec un id
+    router.put("/:id", forums.update);
+  
+    // Supprimer un forum avec un id
+    router.delete("/:id", forums.delete);
+  
+    // Supprimer tous les forums
+    router.delete("/", forums.deleteAll);
+  
+    app.use('/api/forums', router);
+};
+```
+
+Vous pouvez voir que nous utilisons un contrôleur de `/controllers/forum.controller.js`.
+
+Nous devons également inclure les routes dans *server.js* (juste avant `app.listen()`) :
+
+```javascript title="server.js"
+...
+
+// Appeler les routes
+require("./app/routes/forum.routes")(app);
+
+// Définir le port, écouter les demandes
+const PORT = process.env.PORT || 8080;
+app.listen(PORT, () => {
+    console.log(`Le serveur s'exécute sur le port ${PORT}.`);
+});
+```
+
+## Tester les API
+
+Exécutez notre application Node.js avec la commande : `node server.js`.
+
+La console affiche :
+
+```shell
+➜ GillesChassignet_7_01072021 git:(master) ✗ node server.js
+Le serveur s'exécute sur le port 8080.
+Executing (default): DROP TABLE IF EXISTS `forums`;
+Executing (default): DROP TABLE IF EXISTS `forums`;
+Executing (default): CREATE TABLE IF NOT EXISTS `forums` (`id` INTEGER NOT NULL auto_increment , `title` VARCHAR(255), `description` VARCHAR(255), `published` TINYINT(1), `createdAt` DATETIME NOT NULL, `updatedAt` DATETIME NOT NULL, PRIMARY KEY (`id`)) ENGINE=InnoDB;
+Executing (default): SHOW INDEX FROM `forums`
+Suppression des tables et resynchronisation de la base de données.
+```

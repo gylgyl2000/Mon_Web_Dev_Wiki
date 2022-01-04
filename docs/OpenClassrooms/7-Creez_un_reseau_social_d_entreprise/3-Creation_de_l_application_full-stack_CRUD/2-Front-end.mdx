@@ -1,0 +1,625 @@
+---
+sidebar_position: 3
+---
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+import { Vimeo } from 'mdx-embed';
+
+# Front-end Vue.js
+
+## Aperçu
+
+- Le composant `App` est un conteneur avec `router-vue`. Il a une barre de navigation qui relie les chemins des routes.
+- Le composant `ForumsList` obtient et affiche les forums.
+- Le composant `forum` a une forme pour éditer les détails du forum en fonction de `:id`.
+- Le composant `AddForuml` a un formulaire pour la soumission d'un nouveau forum.
+- Ces composants appellent des méthodes `ForumDataService` qui utilisent `axios` pour effectuer des requêtes HTTP et recevoir des réponses.
+
+## Technologie
+
+- vue : 2.6.10
+- vue-routeur : 3.1.3
+- axios : 0.19.0
+
+## Structure du projet
+
+- **package.json** contient 3 modules principaux : `vue`, `vue-router`, `axios`.
+- Il y a 3 composants : ForumsList, Forum, AddForum.
+- **router.js** définit les routes pour chaque composant.
+- **http-common.js** initialise axios avec l'URL de base HTTP et les en-têtes.
+- `ForumDataService` a des méthodes pour envoyer des requêtes HTTP aux Apis.
+- **vue.config.js** configure *le port* pour ce client Vue.
+
+## Mise en œuvre
+
+### Configurer le projet Vue.js
+
+Ouvrez cmd dans le dossier que vous souhaitez enregistrer le dossier du projet, exécutez la commande :
+
+```shell
+vue create frontend
+```
+
+Vous verrez quelques options, choisissez **default (babel, eslint)**.
+
+Une fois le processus terminé. Nous créons de nouveaux dossiers et fichiers comme l'arborescence suivante :
+
+- 📁 public
+    - 📄 index.html
+- 📁 src
+    - 📁 components
+        - 📄 AddForum.vue
+        - 📄 Forum.vue
+        - 📄 ForumsList.vue
+    - 📁 services
+        - 📄 ForumDataService.js
+    - 📄 App.vue
+    - 📄 main.js
+- 📄 package.json
+
+Ouvrez **public**/*index.html*, ajouter bootstrap dans la balise `<head>` :
+
+```html title="public/index.html"
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        ...
+        <title>frontend</title>
+        <link type="text/css" rel="stylesheet" href="//unpkg.com/bootstrap/dist/css/bootstrap.min.css" />
+    </head>
+    <body>
+        ...
+    </body>
+</html>
+
+```
+
+### Ajouter Vue Router à l'application Vue.js 2 CRUD
+
+- Exécutez la commande : `npm install vue-router`.
+
+- Dans le dossier **src**, créez *router.js* et définissez `Routeur` comme le code suivant :
+
+```javascript title="src/router.js"
+import Vue from "vue";
+import Router from "vue-router";
+
+Vue.use(Router);
+
+export default new Router({
+    mode: "history",
+    routes: [
+        {
+            path: "/",
+            alias: "/forums",
+            name: "forums",
+            component: () => import("./components/ForumsList")
+        },
+        {
+            path: "/forums/:id",
+            name: "forum-details",
+            component: () => import("./components/Forum")
+        },
+        {
+            path: "/add",
+            name: "add",
+            component: () => import("./components/AddForum")
+        }
+    ]
+});
+```
+
+- Ouvrez **src**/*main.js*, puis importer `router` :
+
+```javascript {3,8} title="src/main.js"
+import Vue from 'vue'
+import App from './App.vue'
+import router from './router'
+
+Vue.config.productionTip = false
+
+new Vue({
+    router,
+    render: h => h(App),
+}).$mount('#app')
+```
+
+### Ajouter la barre de navigation et Routeur View à l'application
+
+Ouvrir **src**/*App.vue*, ce composant `App` est le conteneur racine de notre application, il contiendra une barre de navigation.
+
+```html title="src/App.vue"
+<template>
+    <div id="app">
+        <nav class="navbar navbar-expand navbar-dark bg-dark">
+            <router-link to="/" class="navbar-brand">Groupomania</router-link>
+            <div class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <router-link to="/forums" class="nav-link">Forums</router-link>
+                </li>
+                <li class="nav-item">
+                    <router-link to="/add" class="nav-link">Add</router-link>
+                </li>
+            </div>
+        </nav>
+
+        <div class="container mt-3">
+            <router-view />
+        </div>
+    </div>
+</template>
+
+<script>
+export default {
+  name: "app"
+};
+</script>
+```
+
+### Initialiser Axios pour le client HTTP
+
+Nous allons maintenant installer *axios* avec la commande : `npm install axios`.
+
+Ensuite, sous le dossier **src**, nous créons un fichier *http-common.js* comme ceci :
+
+```javascript title="src/http-commons.js"
+import axios from "axios";
+
+export default axios.create({
+    baseURL: "http://localhost:8080/api",
+    headers: {
+        "Content-type": "application/json"
+    }
+});
+```
+
+N'oubliez pas de changer `baseURL`, cela dépend de l'URL des API REST que votre serveur configure.
+
+### Créer un service de données
+
+Notre service utilisera axios du client HTTP ci-dessus pour envoyer des requêtes HTTP.
+
+**services**/*ForumDataService.js*
+
+```javascript title="src/services/ForumDataService.js"
+import http from "../http-common";
+
+class ForumDataService {
+    getAll() {
+        return http.get("/forums");
+    }
+
+    get(id) {
+        return http.get(`/forums/${id}`);
+    }
+
+    create(data) {
+        return http.post("/forums", data);
+    }
+
+    update(id, data) {
+        return http.put(`/forums/${id}`, data);
+    }
+
+    delete(id) {
+        return http.delete(`/forums/${id}`);
+    }
+
+    deleteAll() {
+        return http.delete(`/forums`);
+    }
+
+    findByTitle(title) {
+        return http.get(`/forums?title=${title}`);
+    }
+}
+
+export default new ForumDataService();
+```
+
+## Créer des composants Vue
+
+Comme je l'ai déjà dit, nous avons 3 composants correspondant à 3 routes définies dans Vue Router :
+- Ajouter un nouvel élément
+- Liste d'éléments
+- Détails de l'élément
+
+### Ajouter un élément
+
+Ce composant a un formulaire pour soumettre un nouveau forum avec 2 champs : titre et description. Il appelle la méthode
+`ForumDataService.create()`.
+
+```html title="src/components/AddForum.vue"
+<template>
+    <div class="submit-form">
+        <div v-if="!submitted">
+            <div class="form-group">
+                <label for="title">Titre</label>
+                <input
+                    type="text"
+                    class="form-control"
+                    id="title"
+                    required
+                    v-model="forum.title"
+                    name="title"
+                />
+            </div>
+
+            <div class="form-group">
+                <label for="description">Description</label>
+                <input
+                    class="form-control"
+                    id="description"
+                    required
+                    v-model="forum.description"
+                    name="description"
+                />
+            </div>
+
+            <button @click="saveForum" class="btn btn-success">Soumettre</button>
+        </div>
+
+        <div v-else>
+            <h4>Vous avez ajouter un forum avec succès !</h4>
+            <button class="btn btn-success" @click="newForum">Ajouter</button>
+        </div>
+    </div>
+</template>
+
+<script>
+import ForumDataService from "../services/ForumDataService";
+
+export default {
+    name: "add-forum",
+    data() {
+        return {
+            forum: {
+                id: null,
+                title: "",
+                description: "",
+                published: false
+            },
+            submitted: false
+        };
+    },
+    methods: {
+        saveForum() {
+            var data = {
+                title: this.forum.title,
+                description: this.forum.description
+            };
+
+            ForumDataService.create(data)
+                .then(response => {
+                    this.forum.id = response.data.id;
+                    console.log(response.data);
+                    this.submitted = true;
+                })
+                .catch(e => {
+                    console.log(e);
+                });
+        },
+        
+        newForum() {
+            this.submitted = false;
+            this.forum = {};
+        }
+    }
+};
+</script>
+
+<style>
+.submit-form {
+    max-width: 300px;
+    margin: auto;
+}
+</style>
+```
+
+### Composant liste des éléments 
+
+Ce composant appelle 3 méthodes ForumDataService :
+- `getAll()`
+- `deleteAll()`
+- `findByTitle()`
+
+```html title="src/components/ForumList.vue"
+<template>
+    <div class="list row">
+        <div class="col-md-8">
+            <div class="input-group mb-3">
+                <input type="text" class="form-control" placeholder="Recherche par titre"
+                    v-model="title"/>
+                <div class="input-group-append">
+                    <button class="btn btn-outline-secondary" type="button"
+                        @click="searchTitle">
+                        Rechercher
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <h4>Liste des forums</h4>
+            <ul class="list-group">
+                <li class="list-group-item"
+                    :class="{ active: index == currentIndex }"
+                    v-for="(forum, index) in forums"
+                    :key="index"
+                    @click="setActiveForum(forum, index)">
+                    {{ forum.title }}
+                </li>
+            </ul>
+
+            <button class="m-3 btn btn-sm btn-danger" @click="removeAllForums">
+                Tout retirer
+            </button>
+        </div>
+        <div class="col-md-6">
+            <div v-if="currentForum">
+                <h4>Forum</h4>
+                <div>
+                    <label><strong>Titre :</strong></label> {{ currentForum.title }}
+                </div>
+                <div>
+                    <label><strong>Description :</strong></label> {{ currentForum.description }}
+                </div>
+                <div>
+                    <label><strong>Status :</strong></label> {{ currentForum.published ? "Published" : "Pending" }}
+                </div>
+
+                <router-link :to="'/forums/' + currentForum.id" class="badge badge-warning">Edit</router-link>
+            </div>
+            <div v-else>
+                <br />
+                <p>Veuillez cliquer sur un Forum...</p>
+            </div>
+        </div>
+    </div>
+</template>
+
+<script>
+import ForumDataService from "../services/ForumDataService";
+
+export default {
+    name: "forums-list",
+    data() {
+        return {
+            forums: [],
+            currentForum: null,
+            currentIndex: -1,
+            title: ""
+        };
+    },
+    methods: {
+        retrieveForums() {
+            ForumDataService.getAll()
+                .then(response => {
+                    this.forums = response.data;
+                    console.log(response.data);
+                })
+                .catch(e => {
+                    console.log(e);
+                });
+        },
+
+        refreshList() {
+            this.retrieveForums();
+            this.currentForum = null;
+            this.currentIndex = -1;
+        },
+
+        setActiveForum(forum, index) {
+            this.currentForum = forum;
+            this.currentIndex = forum ? index : -1;
+        },
+
+        removeAllForums() {
+            ForumDataService.deleteAll()
+                .then(response => {
+                    console.log(response.data);
+                    this.refreshList();
+                })
+                .catch(e => {
+                    console.log(e);
+                });
+        },
+        
+        searchTitle() {
+            ForumDataService.findByTitle(this.title)
+                .then(response => {
+                    this.forums = response.data;
+                    this.setActiveForum(null);
+                    console.log(response.data);
+                })
+                .catch(e => {
+                    console.log(e);
+                });
+        }
+    },
+    mounted() {
+        this.retrieveForums();
+    }
+};
+</script>
+
+<style>
+.list {
+    text-align: left;
+    max-width: 750px;
+    margin: auto;
+}
+</style>
+```
+
+Si vous cliquez sur le bouton **Modifier** de n'importe quel forum, l'application vous dirigera vers la page du forum avec l'url :
+`/forums/:forumId`.
+
+:::info
+Vous pouvez ajouter de la pagination à ce composant, suivez simplement les instructions de la publication :<br />
+[Exemple de pagination Vue avec Axios et API (pagination côté serveur)](https://bezkoder.com/vue-pagination-axios/)
+:::
+
+### Détails de l'élément
+
+Pour obtenir des données et mettre à jour, supprimez le didacticiel, ce composant utilisera 3 méthodes ForumDataService :
+- `get()`
+- `update()`
+- `delete()`
+
+```html title="src/components/Forum.vue"
+<template>
+    <div v-if="currentForum" class="edit-form">
+        <h4>Forum</h4>
+        <form>
+            <div class="form-group">
+                <label for="title">Titre</label>
+                <input type="text" class="form-control" id="title"
+                    v-model="currentForum.title"
+                />
+            </div>
+            <div class="form-group">
+                <label for="description">Description</label>
+                <input type="text" class="form-control" id="description"
+                    v-model="currentForum.description"
+                />
+            </div>
+
+            <div class="form-group">
+                <label><strong>Status :</strong></label>
+                {{ currentForum.published ? "Published" : "Pending" }}
+            </div>
+        </form>
+
+        <button class="badge badge-primary mr-2"
+            v-if="currentForum.published"
+            @click="updatePublished(false)"
+        >
+            Dépublier
+        </button>
+        <button v-else class="badge badge-primary mr-2"
+            @click="updatePublished(true)"
+        >
+            Pubier
+        </button>
+
+        <button class="badge badge-danger mr-2"
+            @click="deleteForum"
+        >
+            Supprimer
+        </button>
+
+        <button type="submit" class="badge badge-success"
+         @click="updateForum"
+        >
+            Mettre à jour
+        </button>
+        <p>{{ message }}</p>
+    </div>
+
+    <div v-else>
+        <br />
+        <p>Veuillez cliquer sur un Forum...</p>
+    </div>
+</template>
+
+<script>
+import ForumDataService from "../services/ForumDataService";
+
+export default {
+    name: "forum",
+    data() {
+        return {
+            currentForum: null,
+            message: ''
+        };
+    },
+    methods: {
+        getForum(id) {
+            ForumDataService.get(id)
+                .then(response => {
+                    this.currentForum = response.data;
+                    console.log(response.data);
+                })
+                .catch(e => {
+                    console.log(e);
+                });
+        },
+
+        updatePublished(status) {
+            var data = {
+                id: this.currentForum.id,
+                title: this.currentForum.title,
+                description: this.currentForum.description,
+                published: status
+            };
+
+            ForumDataService.update(this.currentForum.id, data)
+                .then(response => {
+                    console.log(response.data);
+                    this.currentForum.published = status;
+                    this.message = 'Le status a été mis à jour avec succès !';
+                })
+                .catch(e => {
+                console.log(e);
+                });
+        },
+
+        updateForum() {
+            ForumDataService.update(this.currentForum.id, this.currentForum)
+                .then(response => {
+                    console.log(response.data);
+                    this.message = 'Le forum a été mis à jour avec succès !';
+                })
+                .catch(e => {
+                    console.log(e);
+                });
+        },
+
+        deleteForum() {
+            ForumDataService.delete(this.currentForum.id)
+                .then(response => {
+                    console.log(response.data);
+                    this.$router.push({ name: "forums" });
+                })
+                .catch(e => {
+                    console.log(e);
+                });
+        }
+    },
+    mounted() {
+        this.message = '';
+        this.getForum(this.$route.params.id);
+    }
+};
+</script>
+
+<style>
+.edit-form {
+    max-width: 300px;
+    margin: auto;
+}
+</style>
+```
+
+## Configurer le port pour l'application
+
+Étant donné que la plupart des serveurs HTTP utilisent une configuration CORS qui accepte le partage de ressources limité à certains sites
+ou ports, nous devons donc également configurer le port pour notre application.
+
+Dans le dossier racine du projet, créez le fichier *vue.config.js* avec le contenu suivant :
+
+```javascript title="vue.config.js"
+module.exports = {
+    devServer: {
+        port: 8081
+    }
+}
+```
+
+Nous avons configuré notre application sur le port 8081.
+
+## Exécuter l'application
+
+Vous pouvez exécuter notre application avec la commande : `npm run serve`.
+
+Si le processus réussit, ouvrez le navigateur avec l'URL : http://localhost:8081/ et vérifiez-le.

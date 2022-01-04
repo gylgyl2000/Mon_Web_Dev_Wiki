@@ -4,9 +4,24 @@ import styles from './MenupageAidememoire.module.css';
 
 const AideMemoireList = [
   {
+    title: 'Git',
+    Svg: 'https://monwikidevweb.la-loutre.fr/img/git.svg',
+    Url: './Git/',
+  },
+  {
     title: 'JavaScript',
-    Svg: require('../../static/img/JavaScript.svg').default,
+    Svg: 'https://monwikidevweb.la-loutre.fr/img/JavaScript.svg',
     Url: './JavaScript/accueil',
+  },
+  {
+    title: 'MySQL',
+    Svg: 'https://monwikidevweb.la-loutre.fr/img/MySQL.svg',
+    Url: './MySQL/',
+  },
+  {
+    title: 'Vue.js',
+    Svg: 'https://monwikidevweb.la-loutre.fr/img/vuejs.svg',
+    Url: './Vuejs/',
   },
 ];
 
@@ -15,7 +30,7 @@ function AideMemoire({Svg, title, Url}) {
     <div className={clsx('col')}>
       <div>
         <a href={Url}>
-          <Svg className={styles.aidememoireSvg} alt={title} />
+          <img className={styles.aidememoireSvg} alt={title} src={Svg} />
         </a>
       </div>
       

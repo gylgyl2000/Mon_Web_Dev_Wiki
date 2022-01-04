@@ -227,6 +227,13 @@ article ul li.algo-menu a {
   text-align: center;
 }
 
+.summary i {
+  font-size: 20px;
+  padding-right: 5px;
+  color: white;
+  line-height: 0;
+}
+
 .list-group {
   display: flex;
   flex-direction: column;
@@ -253,11 +260,6 @@ article ul li.algo-menu a {
   padding-right: 17px;
   color: black;
   line-height: 0;
-}
-
-.list-group-item.retrait {
-  margin-left: 6%;
-  width: 94%;
 }
 
 .list-group-item-action {

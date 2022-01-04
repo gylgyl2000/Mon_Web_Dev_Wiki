@@ -1,0 +1,302 @@
+---
+sidebar_position: 16
+---
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+import { Vimeo } from 'mdx-embed';
+
+# NodeJS
+
+-----
+
+## Environnement d’exécution JavaScript
+
+### Node.js
+
+:::info
+<img src="https://monwikidevweb.la-loutre.fr/img/outils/Nodejs_logo.png" style={{ width: '80px', float: 'left', margin:'0 40px 20px 0'}} />
+
+Node.js est un environnement d'exécution JavaScript multiplateforme gratuit, open source, qui permet aux développeurs
+d'écrire des outils de ligne de commande et des scripts côté serveur en dehors d'un navigateur.<br />
+
+- [Site officiel Node.js](https://nodejs.org/fr)
+- [Run JavaScript Everywhere.](https://nodejs.dev/)
+- [Introduction Express/Node - Apprendre le développement web | MDN](https://developer.mozilla.org/fr/docs/Learn/Server-side/Express_Nodejs/Introduction)
+- [Node.js — Wikipédia](https://fr.wikipedia.org/wiki/Node.js)
+- [NodeJs : le guide complet pour tout comprendre du javascript serveur](https://practicalprogramming.fr/nodejs)
+- [Node.js, npm, npx, yarn - huh? | By Naman Gupta](https://commudle.com/labs/node-js-npm-npx-yarn-huh)
+
+:::
+
+### nvm
+
+:::info
+nvm est un excellent outil pour installer `Node.js` et gérer ses versions. `nvm` prend en charge le shell compatible
+POSIX (sh, dash, ksh, zsh, bash). En d'autres termes, vous pouvez utiliser cet outil sur MacOS, Linux (Ubuntu, Debian,
+Arch, etc.) et Windows WSL (Window Subsystem for Linux).
+
+- [nvm-sh/nvm: Node Version Manager - POSIX-compliant bash script to manage multiple active node.js versions](https://github.com/nvm-sh/nvm)
+
+:::
+
+### npx
+
+:::info
+<img src="https://monwikidevweb.la-loutre.fr/img/outils/npx.png" style={{ width: '80px', float: 'left', margin:'0 40px 20px 0'}} />
+npx est un outil destiné à compléter l'expérience d'utilisation des packages du registre npm - de la même manière que
+npm facilite l'installation et la gestion des dépendances hébergées sur le registre, npx facilite l'utilisation des
+outils CLI et d'autres exécutables hébergés sur le registre. Cela simplifie grandement un certain nombre de choses qui,
+jusqu'à présent, nécessitaient un peu de cérémonie à faire avec npm simplement.
+
+- [npx - npm](https://www.npmjs.com/package/npx)
+- [npx | npm Docs](https://docs.npmjs.com/cli/v7/commands/npx)
+- [npm/npx: npm package executor](https://github.com/npm/npx)
+- [Introducing npx: an npm package runner | by Kat Marchán | Medium](https://medium.com/@maybekatz/introducing-npx-an-npm-package-runner-55f7d4bd282b)
+- [The npx Node.js Package Runner](https://nodejs.dev/learn/the-npx-nodejs-package-runner)
+- [npm vs npx — What’s the Difference?](https://www.freecodecamp.org/news/npm-vs-npx-whats-the-difference/)
+:::
+
+-----
+
+## Le fichier package.json
+
+- [Le fichier package.json - apcpedagogie](https://apcpedagogie.com/le-fichier-package-json/)
+- [The package.json guide](https://nodejs.dev/learn/the-package-json-guide)
+- [Qu'est-ce que le fichier package.json en Node.js](https://blog.lesieur.name/node-js--pour-commencer--npm--qu-est-ce-que-le-fichier-package-json/)
+
+-----
+
+## Gestionnaires de paquets
+
+### npm
+
+:::info
+<img src="https://monwikidevweb.la-loutre.fr/img/outils/Npm_logo.png" style={{ width: '80px', float: 'left', margin:'0 40px 20px 0'}} />
+npm est le gestionnaire de packages pour Node.js. Il a été créé en 2009 en tant que projet open source pour aider
+les développeurs JavaScript à partager facilement des modules de code packagés.
+
+Le registre npm est une collection publique de packages de code open source pour Node.js, les applications Web frontales,
+les applications mobiles, les robots, les routeurs et d'innombrables autres besoins de la communauté JavaScript.
+
+npm est le client de ligne de commande qui permet aux développeurs d'installer et de publier ces packages.
+
+- [npm](https://www.npmjs.com/)
+- [npm Docs](https://docs.npmjs.com/)
+- [npm — Wikipédia](https://fr.wikipedia.org/wiki/Npm)
+- [npm : Tout comprendre du gestionnaire de paquets Node JS](https://practicalprogramming.fr/npm)
+- [Les commandes npm courantes en 5 min - Blog .NET](https://cdiese.fr/commandes-npm/)
+
+:::
+
+### yarn
+
+:::info
+<img src="https://monwikidevweb.la-loutre.fr/img/outils/yarn.png" style={{ width: '80px', float: 'left', margin:'0 40px 20px 0'}} />
+Yarn est un autre gestionnaire de packages, une alternative à npm. Il a été construit par des développeurs de Facebook
+tandis que Npm, Inc. (une organisation appartenant à Github) est derrière npm.
+
+Yarn contre NPM
+Quand Yarn a commencé, il avait beaucoup de meilleures choses à offrir que npm. C'était rapide, sécurisé, verrouiller
+le fichier et bien plus encore, mais maintenant en 2021, cela dépend simplement de la préférence du développeur. Les
+deux sont rapides, sécurisés et offrent presque les mêmes fonctionnalités. Juste une différence - Yarn maintient un
+arbre de dépendances plat tandis que npm maintient celui imbriqué.
+
+En cas de confusion, utilisez simplement npm ou essayez les deux. 😜
+
+- [Home | Yarn - Package Manager](https://yarnpkg.com/)
+:::
+
+-----
+
+## Bibliothèques
+
+### `react`
+
+React est une bibliothèque JavaScript permettant de créer des interfaces utilisateur.
+
+### `moment`
+
+Une bibliothèque de dates JavaScript pour l'analyse, la validation, la manipulation et le formatage des dates.
+
+### `lodash`
+
+Une bibliothèque d'utilitaires JavaScript moderne offrant modularité, performances et extras.
+
+### `sass`
+
+Une implémentation JavaScript pure de Sass.
+
+### `chai`
+
+:::info
+<img src="https://monwikidevweb.la-loutre.fr/img/outils/chai.png" style={{ width: '80px', float: 'left', margin:'0 40px 20px 0'}} />
+
+Chai est une bibliothèque d'assertions, similaire à `assert` intégré de Node. Cela rend les tests beaucoup plus faciles
+en vous donnant de nombreuses assertions que vous pouvez exécuter sur votre code.
+
+- [chai - npm](https://www.npmjs.com/package/chai)
+- [Chai](https://www.chaijs.com/)
+:::
+
+
+### `lodash`
+
+:::info Lodash
+
+<img src="https://monwikidevweb.la-loutre.fr/img/outils/lodash.svg" style={{ width: '80px', float: 'left', margin:'0 40px 20px 0'}} />
+
+Lodash facilite JavaScript en évitant les tracas liés au travail avec des tableaux, des nombres, des objets, des chaînes,
+etc. Les méthodes modulaires de Lodash sont idéales pour l'itération de tableaux, d'objets et de chaînes ; la manipulation
+et test des valeurs ; créer des fonctions composites.
+
+
+- [Lodash](https://lodash.com/)
+- [lodash - npm](https://www.npmjs.com/package/lodash)
+
+:::
+
+-----
+
+## Frameworks
+
+### `express`
+
+:::info
+<img src="https://monwikidevweb.la-loutre.fr/img/outils/expressjs.png" style={{ width: '80px', float: 'left', margin:'0 40px 20px 0'}} />
+Express est le framework serveur de référence pour les applications web Node.js. Cette infrastructure légère et flexible
+propose un ensemble de fonctionnalités robustes permettant d’organiser son projet avec une architecture MVC
+(modèle-vue-contrôleur) en la couplant avec une base de données et un langage de templating ou un framework front-end.
+Par exemple, Express est le composant back-end du stack MEAN (MongoDB en base de données lien vers MongoDB et AngularJS
+en front-end).
+
+- [Express - Infrastructure d'application Web Node.js](https://expressjs.com/fr/)
+- [Introduction Express/Node - Apprendre le développement web | MDN](https://developer.mozilla.org/fr/docs/Learn/Server-side/Express_Nodejs/Introduction)
+- [Express JS : tout savoir du framework Node.JS](https://practicalprogramming.fr/express-js)
+- [Express.js — Wikipédia](https://fr.wikipedia.org/wiki/Express.js)
+:::
+
+### `mocha`
+
+:::info
+<img src="https://monwikidevweb.la-loutre.fr/img/outils/mocha.svg" style={{ width: '80px', float: 'left', margin:'0 40px 20px 0'}} />
+Mocha est un framework de test JavaScript riche en fonctionnalités s'exécutant sur Node.js et dans le navigateur,
+rendant les tests asynchrones simples et amusants. Les tests Mocha s'exécutent en série, permettant des rapports
+flexibles et précis, tout en mappant les exceptions non détectées aux cas de test corrects. Hébergé sur GitHub.
+
+- [mocha - npm](https://www.npmjs.com/package/mocha)
+- [Mocha - the fun, simple, flexible JavaScript test framework](https://mochajs.org/)
+:::
+
+### `zombie`
+
+:::info Zombie.js
+Si vous voulez un navigateur headless incroyablement rapide, comment ne pas l'appeler Zombie ? C'est un zombie.
+
+Zombie.js est un framework léger pour tester le code JavaScript côté client dans un environnement simulé. Aucun
+navigateur requis.
+
+- [zombie - npm](https://www.npmjs.com/package/zombie)
+:::
+
+-----
+
+## Modules utilitaires
+
+### `async`
+
+Async est un module utilitaire qui fournit des fonctions simples et puissantes pour travailler avec JavaScript asynchrone.
+
+### `debug`
+
+Un petit utilitaire de débogage JavaScript inspiré de la technique de débogage du noyau Node.js. Fonctionne dans Node.js et
+les navigateurs Web.
+
+-----
+
+## Modules tiers
+
+### `chalk`
+
+:::info
+
+<img src="https://monwikidevweb.la-loutre.fr/img/outils/chalk.svg" style={{ width: '80px', float: 'left', margin:'0 40px 20px 0'}} />
+
+Le module Chalk de Node.js est le module tiers utilisé pour styliser le format du texte et nous permet de créer nos propres thèmes dans le
+projet node.js.
+
+Avantages du module de craie :
+- Il aide à personnaliser la couleur de la sortie de la sortie de la ligne de commande.
+- Il aide à améliorer la qualité de la sortie en fournissant plusieurs options de couleur comme la couleur rouge du message d'avertissement et
+bien d'autres.
+
+- [chalk - npm](https://www.npmjs.com/package/chalk)
+
+:::
+
+-----
+
+## Outils
+
+### `mongoose`
+
+:::info
+Mongoose est un outil de modélisation d'objets MongoDB conçu pour fonctionner dans un environnement asynchrone. Mongoose prend en charge à la
+fois les promesses et les rappels.
+<br/>
+<br/>
+<br/>
+:::
+
+### `nodemon`
+
+:::info
+
+<img src="https://monwikidevweb.la-loutre.fr/img/outils/nodemon.png" style={{ width: '80px', float: 'left', margin:'0 40px 20px 0'}} />
+
+nodemon est un outil qui permet de développer des applications basées sur node.js en redémarrant automatiquement
+l'application node lorsque des modifications de fichier dans le répertoire sont détectées.
+
+
+- [nodemon](https://nodemon.io/)
+- [nodemon - npm](https://www.npmjs.com/package/nodemon)
+
+:::
+
+-----
+
+## Moteur de template
+
+### `pug`
+
+:::info
+
+<img src="https://monwikidevweb.la-loutre.fr/img/outils/pug.svg" style={{ width: '80px', float: 'left', margin:'0 40px 20px 0'}} />
+
+Pug est un moteur de template haute performance fortement influencé par Haml et implémenté avec JavaScript pour Node.js
+et les navigateurs.
+
+- [pug - npm](https://www.npmjs.com/package/pug)
+- [Getting Started – Pug](https://pugjs.org/api/getting-started.html)
+- [pugjs/pug: Pug – robust, elegant, feature rich template engine for Node.js](https://github.com/pugjs/pug)
+
+:::
+
+-----
+
+## Middleware
+
+### `passport`
+
+:::info Passport
+
+<img src="https://monwikidevweb.la-loutre.fr/img/outils/passport.svg" style={{ width: '80px', float: 'left', margin:'0 40px 20px 0'}} />
+
+Passport est un middleware d'authentification compatible Express pour Node.js.
+
+- [passport - npm](https://www.npmjs.com/package/passport)
+- [Passport.js](http://www.passportjs.org/)
+- [Node.js and Express Tutorial: Authentication Using Passport](https://auth0.com/blog/create-a-simple-and-secure-node-express-app/)
+
+:::
+
+-----

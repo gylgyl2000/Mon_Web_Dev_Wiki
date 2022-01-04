@@ -5,127 +5,137 @@ import styles from './HomepageTopics.module.css';
 const TopicsList = [
     {
         title: 'CSS',
-        Svg: require('../../static/img/logos/CSS3.svg').default,
+        Svg: 'https://monwikidevweb.la-loutre.fr/img/logos/CSS3.svg',
         siteUrl: 'https://www.w3.org/Style/CSS/Overview.fr.html',
     },
     {
         title: 'HTML',
-        Svg: require('../../static/img/logos/HTML5.svg').default,
+        Svg: 'https://monwikidevweb.la-loutre.fr/img/logos/HTML5.svg',
         siteUrl: 'https://html.spec.whatwg.org/',
     },
     {
         title: 'JavaScript',
-        Svg: require('../../static/img/logos/JavaScript.svg').default,
+        Svg: 'https://monwikidevweb.la-loutre.fr/img/logos/JavaScript.svg',
         siteUrl: 'https://developer.mozilla.org/fr/docs/Web/JavaScript',
     },
     {
         title: 'nodejs',
-        Svg: require('../../static/img/logos/NodeJS.svg').default,
+        Svg: 'https://monwikidevweb.la-loutre.fr/img/logos/NodeJS.svg',
         siteUrl: 'https://nodejs.org/fr/',
     },
     {
         title: 'reactjs',
-        Svg: require('../../static/img/logos/react.svg').default,
+        Svg: 'https://monwikidevweb.la-loutre.fr/img/logos/react.svg',
         siteUrl: 'https://fr.reactjs.org/',
     },
     {
+        title: 'vuejs',
+        Svg: 'https://monwikidevweb.la-loutre.fr/img/logos/vuejs.svg',
+        siteUrl: 'https://fr.vuejs.org/',
+    },
+    {
         title: 'php',
-        Svg: require('../../static/img/logos/PHP.svg').default,
+        Svg: 'https://monwikidevweb.la-loutre.fr/img/logos/PHP.svg',
         siteUrl: 'https://www.php.net/',
     },
     {
         title: 'MySQL',
-        Svg: require('../../static/img/logos/MySQL.svg').default,
+        Svg: 'https://monwikidevweb.la-loutre.fr/img/logos/MySQL.svg',
         siteUrl: 'https://www.mysql.com/',
     },
     {
         title: 'WordPress',
-        Svg: require('../../static/img/logos/WordPress.svg').default,
+        Svg: 'https://monwikidevweb.la-loutre.fr/img/logos/WordPress.svg',
         siteUrl: 'https://fr.wordpress.org/',
     },
     {
         title: 'Python',
-        Svg: require('../../static/img/logos/Python.svg').default,
+        Svg: 'https://monwikidevweb.la-loutre.fr/img/logos/Python.svg',
         siteUrl: 'https://www.python.org/',
     },
     {
         title: 'Bootstrap',
-        Svg: require('../../static/img/logos/Bootstrap.svg').default,
+        Svg: 'https://monwikidevweb.la-loutre.fr/img/logos/Bootstrap.svg',
         siteUrl: 'https://getbootstrap.com/',
     },
     {
         title: 'jquery',
-        Svg: require('../../static/img/logos/jquery.svg').default,
+        Svg: 'https://monwikidevweb.la-loutre.fr/img/logos/jquery.svg',
         siteUrl: 'https://jquery.com/',
     },
     {
         title: 'sass',
-        Svg: require('../../static/img/logos/sass.svg').default,
+        Svg: 'https://monwikidevweb.la-loutre.fr/img/logos/sass.svg',
         siteUrl: 'https://sass-lang.com/',
     },
     {
         title: 'redux',
-        Svg: require('../../static/img/logos/redux.svg').default,
+        Svg: 'https://monwikidevweb.la-loutre.fr/img/logos/redux.svg',
         siteUrl: 'https://redux.js.org/',
     },
     {
         title: 'git',
-        Svg: require('../../static/img/logos/git.svg').default,
+        Svg: 'https://monwikidevweb.la-loutre.fr/img/logos/git.svg',
         siteUrl: 'https://git-scm.com/',
     },
     {
         title: 'github',
-        Svg: require('../../static/img/logos/github.svg').default,
+        Svg: 'https://monwikidevweb.la-loutre.fr/img/logos/github.svg',
         siteUrl: 'https://github.com',
     },
     {
         title: 'gitlab',
-        Svg: require('../../static/img/logos/gitlab.svg').default,
+        Svg: 'https://monwikidevweb.la-loutre.fr/img/logos/gitlab.svg',
         siteUrl: 'https://gitlab.com',
     },
     {
         title: 'yarn',
-        Svg: require('../../static/img/logos/yarn.svg').default,
+        Svg: 'https://monwikidevweb.la-loutre.fr/img/logos/yarn.svg',
         siteUrl: 'https://classic.yarnpkg.com/fr/',
     },
     {
         title: 'npm',
-        Svg: require('../../static/img/logos/npm.svg').default,
+        Svg: 'https://monwikidevweb.la-loutre.fr/img/logos/npm.svg',
         siteUrl: 'https://www.npmjs.com/',
     },
     {
         title: 'babel',
-        Svg: require('../../static/img/logos/babel.svg').default,
+        Svg: 'https://monwikidevweb.la-loutre.fr/img/logos/babel.svg',
         siteUrl: 'https://babeljs.io/',
     },
     {
         title: 'd3',
-        Svg: require('../../static/img/logos/D3.svg').default,
+        Svg: 'https://monwikidevweb.la-loutre.fr/img/logos/D3.svg',
         siteUrl: 'https://d3js.org/',
     },
     {
         title: 'Express',
-        Svg: require('../../static/img/logos/expressjs.svg').default,
+        Svg: 'https://monwikidevweb.la-loutre.fr/img/logos/expressjs.svg',
         siteUrl: 'https://expressjs.com/',
     },
     {
         title: 'docusaurus',
-        Svg: require('../../static/img/logos/docusaurus.svg').default,
+        Svg: 'https://monwikidevweb.la-loutre.fr/img/logos/docusaurus.svg',
         siteUrl: 'https://docusaurus.io/',
     },
     {
         title: 'MongoDB',
-        Svg: require('../../static/img/logos/mongodb.svg').default,
+        Svg: 'https://monwikidevweb.la-loutre.fr/img/logos/mongodb.svg',
         siteUrl: 'https://www.mongodb.com/fr',
     },{
         title: 'Mongoose',
-        Svg: require('../../static/img/logos/mongoose.svg').default,
+        Svg: 'https://monwikidevweb.la-loutre.fr/img/logos/mongoose.svg',
         siteUrl: 'https://mongoosejs.com/',
     },
     {
         title: 'Postman',
-        Svg: require('../../static/img/logos/postman.svg').default,
+        Svg: 'https://monwikidevweb.la-loutre.fr/img/logos/postman.svg',
         siteUrl: 'https://www.postman.com/',
+    },
+    {
+        title: 'Firebase',
+        Svg: 'https://monwikidevweb.la-loutre.fr/img/logos/firebase.svg',
+        siteUrl: 'https://firebase.google.com/',
     },
 ];
 
@@ -134,7 +144,7 @@ function Topic({Svg, title, siteUrl}) {
         <div className={clsx('col')}>
             <div className="text--center">
                 <a className="topic" href={siteUrl} target="_blank">
-                    <Svg className={styles.topicSvg} alt={title} />
+                    <img className={styles.topicSvg} alt={title} src={Svg} />
                 </a>
             </div>
             <div className="text--center padding-horiz--md">
