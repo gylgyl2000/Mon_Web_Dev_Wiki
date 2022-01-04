@@ -6,7 +6,7 @@ const AideMemoireList = [
   {
     title: 'Git',
     Svg: 'https://monwikidevweb.la-loutre.fr/img/git.svg',
-    Url: './Git/',
+    Url: './Git/accueil',
   },
   {
     title: 'JavaScript',
@@ -16,12 +16,12 @@ const AideMemoireList = [
   {
     title: 'MySQL',
     Svg: 'https://monwikidevweb.la-loutre.fr/img/MySQL.svg',
-    Url: './MySQL/',
+    Url: './MySQL/accueil',
   },
   {
     title: 'Vue.js',
     Svg: 'https://monwikidevweb.la-loutre.fr/img/vuejs.svg',
-    Url: './Vuejs/',
+    Url: './Vuejs/accueil',
   },
 ];
 
