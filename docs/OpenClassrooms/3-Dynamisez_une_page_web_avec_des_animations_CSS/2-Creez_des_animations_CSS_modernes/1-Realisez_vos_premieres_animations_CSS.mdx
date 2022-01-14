@@ -1,0 +1,2143 @@
+---
+sidebar_position: 2
+---
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+import { Vimeo } from 'mdx-embed';
+
+# Réalisez vos premières animations CSS
+
+## Découvrez les animations web
+
+[Découvrez les animations web - Créez des animations CSS modernes - OpenClassrooms](https://openclassrooms.com/fr/courses/5919246-creez-des-animations-css-modernes/6340912-decouvrez-les-animations-web)
+
+<Vimeo vimeoId="508777077" />
+
+<br />
+
+Bienvenue dans ce cours !
+
+Ensemble nous allons parcourir le monde des **animations CSS**.
+
+Si vous êtes ici, vous avez sûrement déjà appris à créer de superbes pages web fonctionnelles. Mais est-ce que vous avez déjà
+essayé de leur **donner vie** ?
+
+Parce que c’est ce que fait l’animation : elle prend un objet inerte, et lui insuffle un souffle de vie. Rien que ça !
+
+Je m’appelle **Alexia**, je suis **développeuse fullstack**, passionnée par le front-end. Je vais vous guider tout au long de ce
+cours pour apprendre à maîtriser les animations CSS. 💪
+
+Mais avant de nous plonger dans le cœur du sujet, j'aimerais éclaircir un point avec vous. Tout au long de ce cours, vous verrez
+des exemples de code. Si vous voulez tirer le maximum de ce cours, il est important que vous preniez le temps de les **tester**
+par vous-même. Pour cela, vous pouvez utiliser vos propres outils de développement, ou des éditeurs de code en ligne tels que
+[CodePen](https://codepen.io/), [CodeSandbox](https://codesandbox.io) ou d'autres. N'hésitez pas à tester des choses, vous ferez
+des erreurs, mais ce n'est pas grave ! Faire des erreurs fait totalement partie de l'apprentissage du développement. Alors
+lançons-nous ! 🚀
+
+### Apprenez-en plus sur les animations
+
+Quand vous entendez le mot « **animation** », cela vous évoque peut-être une fameuse petite souris qui parle, dessinée à l’aide de
+cercles.
+
+![Une animation de Mickey Mouse qui est petite et qui grossit](https://user.oc-static.com/upload/2021/02/09/16128885728824_1c1_Gif004.gif)
+
+C’est normal. Pour la simple et bonne raison que le créateur de Mickey Mouse est celui qui a fait découvrir l’animation au grand
+public, via **l’animation cellulo** dessinée à la main. Mais il ne s'agit que de la partie émergée de l’iceberg des techniques
+d’animation. De nos jours, l’animation cellulo a été remplacée par l’**animation 3D**, rendue célèbre par une petite bande de
+jouets vivants, menés par un ranger de l'espace et son ami le cow-boy. Il existe aussi l’animation de pâte à modeler.
+
+:::info
+L'animation celullo, ou _cell_, est une technique qui utilise une **feuille plastique transparente** d'acétate de cellulose, sur
+laquelle on peint à la main les éléments de l'animation. Les feuilles sont ensuite superposées pour créer l'animation.
+:::
+
+Aujourd'hui, l'animation est partout. Là où vous pouvez trouver un écran, vous trouverez probablement des animations : que ce soit
+dans les jeux vidéo, sur vos objets connectés, vos applications mobiles, et bien sûr… sur les sites web !
+
+### Partons à la découverte des animations web
+
+Avez-vous déjà vu passer cette animation ?
+
+![Animation CopdePen Beresnev](https://user.oc-static.com/upload/2021/02/09/1612888607565_1c1_Gif005.gif)
+
+:::info
+Retrouvez le code de l'animation [ici](https://codepen.io/miocene/pen/mjLPVp) sur CodePen, une plateforme permettant de partager
+du code front-end.
+:::
+
+Publiée sur [CodePen](https://codepen.io/) en 2018 par Beresnev, cette animation est la plus vue de la plateforme. Et ce n'est pas
+étonnant : il s'agit d'une véritable œuvre d'art, quand on sait que tout a été entièrement réalisé en CSS ! Pourtant, avant d'en
+arriver là, il a fallu quelques étapes…
+
+:::note ?
+Mais quelles sont ces étapes ?
+:::
+
+Aux débuts d'Internet, les pages web étaient de **simples documents**, constitués de texte et de liens vers d'autres pages. Le CSS
+n'existait même pas ! Vous vous rendez compte ?
+
+La première forme d'animation est apparue sur une page web en 1987, avec la création du [GIF](https://fr.wikipedia.org/wiki/Graphics_Interchange_Format)
+(que vous le prononciez avec le son "g" ou le son "j", le résultat est le même). Cela a d'ailleurs été la seule forme d'animation
+pendant presque 10 ans, jusqu'à l'apparition de Flash.
+
+Adobe Flash Player, ça vous dit quelque chose ?
+
+À partir de là, l'animation est devenue de plus en plus répandue sur les sites Internet. Mais avec la naissance du **mobile**, et
+le refus de la part d'Apple de supporter cette technologie sur leur matériel, Adobe Flash Player est progressivement devenue une
+technologie dépréciée.
+
+Aujourd'hui, les techniques d'animation sont nombreuses : JavaScript, SVG, Canvas, WebGL mais surtout CSS. Le couplage
+**CSS3/HTML5** fait partie des techniques les plus utilisées pour créer des animations web. Ça tombe bien, c’est pour cela que
+nous sommes là aujourd’hui !
+
+### Ouvrez la porte des possibilités
+
+Tout au long de ce cours, nous créerons des animations directement en **codant** en CSS. Plutôt que de dessiner des personnages
+ou de déplacer des marionnettes, nous allons écrire des bouts de CSS pour faire évoluer l’apparence d’éléments HTML sur une
+certaine durée. Par exemple l’animation de la couleur d’un bouton :
+
+![Une animation en CSS avec 3 capsules](https://user.oc-static.com/upload/2019/07/23/15638914177239_pt01ch01-amstramgram.gif)
+
+Ou un feedback visuel destiné à l’utilisateur en cas d’erreur :
+
+![Un champ email qui devient rouge et qui tremble lorsque l'email n'est pas correct](https://user.oc-static.com/upload/2021/02/09/16128886431265_1c1_Gif007.gif)
+
+Ou encore l’amélioration de l’engagement utilisateur. Typiquement, par l’ajout de mouvements sur un bouton de menu, par exemple.
+
+![Une animation d'un menu qui disparaît au clic et qui est remplacé par une croix](https://user.oc-static.com/upload/2021/02/09/16128886526802_1c1_Gif008.gif)
+
+Le cerveau humain est conçu pour remarquer les **mouvements** : pour être aux aguets en cas de danger, pour trouver de la
+nourriture, et pour prendre en compte les signaux silencieux qui sont partie intégrante de notre communication. En animant des
+éléments d’une page web, nous pouvons capter l’attention de nos visiteurs et les guider sur notre site, grâce à des indices qui
+leur permettront de vivre une expérience plus fluide et plus agréable. Alors c'est parti ! 🚀
+
+### En résumé
+
+- vous pouvez créer vos **animations CSS** sur vos propres éditeurs de code, ou bien sur des outils de code en ligne tels que
+[CodePen](https://codepen.io/) ou [CodeSandbox](https://codesandbox.io) ;
+- l'animation a été démocratisée auprès du grand public par **Disney** ;
+- les techniques d'animation web n'ont cessé d'évoluer depuis les débuts du web : **GIF**, **Flash**, etc. ;
+- aujourd'hui, il existe de nombreuses techniques d'animation web : JavaScript, SVG, Canvas, WebGL mais surtout CSS ;
+- l'animation permet d'**ajouter de la vie** à une page web, et ainsi de vraiment impacter l'expérience d'un utilisateur sur
+cette page.
+
+_Maintenant que vous savez ce qu’est une animation CSS et pourquoi elles ajoutent tant de valeur à nos pages web, nous allons
+pouvoir mettre nos pixels en mouvement !_
+
+-----
+
+## Créez des animations simples avec les transitions
+
+[Créez des animations simples avec les transitions - Créez des animations CSS modernes - OpenClassrooms](https://openclassrooms.com/fr/courses/5919246-creez-des-animations-css-modernes/6340913-creez-des-animations-simples-avec-les-transitions)
+
+<Vimeo vimeoId="508777109" />
+
+<br />
+
+### Commencez les choses sérieuses : les transitions
+
+Maintenant que je vous ai convaincu du large potentiel des animations CSS, il est temps de commencer les choses sérieuses !
+
+Il existe deux moyens de créer des animations en CSS : les **transitions**, et les **keyframes**.
+
+Je vous disais que les keyframes sont à mon sens la technique la plus fun pour les animations. C'est en fait parce qu'elles
+permettent d'aboutir à des animations plus élaborées... Mais elles sont aussi plus **complexes** à mettre en place.
+
+Les transitions, quant à elles, sont plus limitées, mais particulièrement **simples** à créer. Elles permettent à un élément de
+passer d'un état A à un état B. Elles sont parfaites pour une animation simple, comme le changement d'un bouton au survol de la
+souris.
+
+Donc n'attendons plus, lançons-nous dans nos premières transitions !
+
+Pour créer une transition, vous aurez besoin de plusieurs informations :
+- une **propriété CSS** à modifier ;
+- une **valeur initiale** pour votre propriété CSS ;
+- une **valeur finale** pour cette même propriété ;
+- une **durée** ;
+- un **événement** pour déclencher votre transition.
+
+Imaginons que vous vouliez agrandir un bouton de 15 % en une seconde.
+
+![Un bouton](https://user.oc-static.com/upload/2021/02/09/16128887387498_Gif009.gif)
+
+Comme je vous le disais, la première information nécessaire pour une transition est une **propriété CSS** à modifier. Puisqu'ici
+nous voulons que le bouton grossisse quand un utilisateur passe sa souris dessus, nous pouvons choisir la **propriété** `transform`
+et sa **fonction** `scale()`.
+
+Vous n'êtes pas encore familier avec la propriété `transform` et ses nombreuses fonctions ? Surtout, pas de panique. Nous les
+verrons en détail dans les chapitres suivants ! Pour le moment, sachez juste que la fonction `scale()` permet de modifier la
+taille d’un élément, selon la valeur qu’on lui donne, sachant que 0 = 0 % et 1 = 100 %.
+
+Ici, nous allons utiliser du Sass.
+
+:::info
+Sass signifie "syntactically awesome style sheets" (_feuilles de styles syntaxiquement super_).
+:::
+
+Sass a créé un nouveau langage à partir du CSS : le **SCSS**. Tout ce qui est valide en CSS l'est aussi en SCSS, mais il y ajoute
+des expressions, des fonctions, des variables, une logique conditionnelle et des boucles. Il utilise ensuite un préprocesseur (un
+programme qui fonctionne sur votre ordinateur ou sur un serveur) chargé de traduire cette nouvelle syntaxe intelligente en CSS.
+
+:::info
+Vous souhaitez en savoir plus sur le Sass ? Rendez-vous [ici](https://la-cascade.io/se-lancer-dans-sass/).
+:::
+
+Jetons un œil au code HTML que nous avons utilisé pour créer notre bouton :
+
+```HTML
+<body>
+    <div class="container">
+        <div class="btn">
+            Vois comme je grandis !
+        </div>
+    </div>
+</body>
+```
+
+Ce bouton est constitué d’une **div** à laquelle est appliquée la classe `.btn`, complétée du texte du bouton. Si on regarde le
+Sass, on peut voir qu’on a utilisé la classe `.btn` pour définir la couleur du bouton, sa marge et ses dimensions :
+
+```scss
+$cd-btn: #011c37;
+$cd-txt: #15DEA5;
+.btn {
+    background: $cd-btn;
+    color: $cd-txt;
+    font-size: 3rem;
+    cursor: pointer;
+    padding: 1.85rem 3rem;
+}
+```
+
+Nous avons donc nos informations : nous avons choisi la propriété `transform`, que nous allons faire passer d'une valeur de 1.0
+(100 %), à une échelle de 1.15 (115 %) quand la souris passe sur le bouton, en une seconde.
+
+### Passez d’un état A à un état B
+
+Ajoutons maintenant le `transform` et sa fonction `scale()` à notre classe `.btn` :
+
+```scss
+$cd-btn: #011c37;
+$cd-txt: #15DEA5;
+.btn {
+    background: $cd-btn;
+    color: $cd-txt;
+    font-size: 3rem;
+    cursor: pointer;
+    padding: 1.85rem 3rem;
+    border-radius: 10rem;
+    transform: scale(1);
+}
+```
+
+Étant donné que le bouton était déjà à l’échelle par défaut de 1, notre nouvelle propriété n'a pas changé grand-chose.
+
+![Une animation CSS avec un bouton qui ne grandit pas au passage de la souris](https://user.oc-static.com/upload/2021/02/09/16128887532261_Gif010.gif)
+
+Eh oui, il nous faut la valeur finale !
+
+Nous voulons que le bouton grossisse de 15 % au survol de la souris. Pour cela, nous avons besoin de la pseudoclasse `:hover`,
+avec la fonction `scale()` définie sur 1.15.
+
+:::info
+Les pseudoclasses sont en quelque sorte le if/else du CSS. Ici, quand la souris survole l'élément, le code sous le `:hover` est
+appliqué. Sinon, c'est le style en dehors de `:hover` qui est utilisé.
+:::
+
+```scss
+$cd-btn: #011c37;
+$cd-txt: #15DEA5;
+.btn {
+    background: $cd-btn;
+    color: $cd-txt;
+    font-size: 3rem;
+    cursor: pointer;
+    padding: 1.85rem 3rem;
+    border-radius: 10rem;
+    transform: scale(1);
+    &:hover {
+        transform: scale(1.15);
+    }
+}
+```
+
+Les transitions doivent être déclenchées par un **changement d’état**, généralement par des pseudoclasses comme ici avec le
+`:hover`. Maintenant, quand nous testons notre bouton, nous pouvons voir notre point de départ et notre destination, mais il n’y
+a pas d’animation. Le bouton passe brusquement d'une taille à l'autre. 🙈
+
+![Une animation CSS sans transition d'un bouton qui grossit mais qui manque de fluidité](https://user.oc-static.com/upload/2021/02/09/16128887641195_Gif011.gif)
+
+Pour ajouter un peu de **fluidité**, nous devons indiquer à notre navigateur que le changement d’échelle, entre l’état inactif et
+le `:hover`, devra se faire par une **transition animée**. Pour cela, vous pouvez ajouter la propriété `transition-property` au
+sélecteur `.btn`. On lui indique que la propriété `transform` est celle sur laquelle le navigateur doit appliquer une transition :
+
+```scss
+$cd-btn: #011c37;
+$cd-txt: #15DEA5;
+.btn {
+    background: $cd-btn;
+    color: $cd-txt;
+    font-size: 3rem;
+    cursor: pointer;
+    padding: 1.85rem 3rem;
+    border-radius: 10rem;
+    transform: scale(1);
+    transition-property: transform;
+    &:hover {
+        transform: scale(1.15);
+    }
+}
+```
+
+Yaaaay nous avons ajouté une transition ! Voyons ce que ça donne :
+
+![Animation CSS d'une transition qui grossit mais qui n'est toujours pas fluide](https://user.oc-static.com/upload/2021/02/09/16128887793511_Gif012.gif)
+
+Loupé 😤.
+
+:::note
+Mais pourquoi ???
+:::
+
+Nous avons ajouté `transition-property`, mais rien ne se passe ! Vous vous souvenez, je vous ai dit qu'il fallait 5 informations
+pour une transition. Or, ici, nous n'avons pas indiqué la **durée** à notre navigateur. Il applique donc la durée par défaut...
+soit 0 seconde. Ce qui ne nous avance pas vraiment.
+
+Si votre transition ne se déclenche pas, regardez où vous avez placé vos **propriétés** de transition. Elles doivent être dans le
+sélecteur qui contient le point de départ de l’élément. Il arrive souvent de les placer par erreur dans le sélecteur contenant la
+valeur de fin, comme par exemple le sélecteur `:hover`.
+
+### Modulez la durée de votre transition
+
+La propriété `transition-duration` vous permet d'indiquer la durée que prendra votre transition.
+
+```scss
+transition-duration: 1s;
+```
+
+En CSS, on peut exprimer une durée de plusieurs manières. En **secondes**, comme nous venons de le faire, en indiquant le nombre
+de secondes suivi de la lettre “s” ; mais aussi en **millisecondes**, 1 000 millisecondes faisant 1 seconde, suivies par les
+lettres “ms” :
+
+```scss
+transition-duration: 1000ms;
+```
+
+Les deux méthodes permettent d'obtenir le même résultat, c’est donc surtout une question de préférence. Ici, utilisons les
+millisecondes pour ajouter une durée de 1 000 millisecondes à notre sélecteur `.btn`.
+
+```scss
+$cd-btn: #011c37;
+$cd-txt: #15DEA5;
+.btn {
+    background: $cd-btn;
+    color: $cd-txt;
+    font-size: 3rem;
+    cursor: pointer;
+    padding: 1.85rem 3rem;
+    border-radius: 10rem;
+    transform: scale(1);
+    transition-property: transform;
+    transition-duration: 1000ms;
+    &:hover {
+        transform: scale(1.15);
+    }
+}
+```
+
+![Animation d'un bouton qui grandit de manière fluide mais trop lentement](https://user.oc-static.com/upload/2021/02/09/16128887912942_Gif013.gif)
+
+Parfait !<br />
+On obtient bien l'effet de **grossissement**. Mais… ça paraît un peu long, non ? 🤔Il faut garder à l'esprit que les animations
+doivent être suffisamment courtes pour ne pas perturber l'utilisateur dans son expérience. Ici, on survole le bouton avec la
+souris, et il faut attendre la fin de la transition pour interagir : c'est définitivement trop long. On peut réduire la durée de
+`transition-duration` à quelque chose comme **400 ms** pour voir ce que ça donne.
+
+```scss
+$cd-btn: #011c37;
+$cd-txt: #15DEA5;
+.btn {
+    background: $cd-btn;
+    color: $cd-txt;
+    font-size: 3rem;
+    cursor: pointer;
+    padding: 1.85rem 3rem;
+    border-radius: 10rem;
+    transform: scale(1);
+    transition-property: transform;
+    transition-duration: 400ms;
+    &:hover {
+        transform: scale(1.15);
+    }
+}
+```
+
+Voyons voir…
+
+Parfait ! Le bouton grossit de 15 % sur une durée de 400 millisecondes.
+
+![Une animation CSS d'un bouton qui grossit rapidement](https://user.oc-static.com/upload/2021/02/09/16128888153191_Gif014.gif)
+
+**👏Bravo👏**
+
+Vous venez de construire votre première animation CSS !
+
+:::info
+Il n’existe pas de formule magique pour déterminer la **durée idéale** d’une animation. Il faut prendre le temps de **tester**.
+Mais à force d’entraînement, il est possible de développer une intuition à ce sujet, ce qui permet d’accélérer le processus. Pour
+ma part, j’essaie d’éviter les transitions de **plus de 0.2 secondes** pour tout ce qui est interface fonctionnelle.
+:::
+
+### Maîtrisez les propriétés raccourcies
+
+Est-ce que vous vous souvenez de ce qu'on a dit précédemment ?
+
+> Pour **déclarer** une transition, vous pouvez ajouter la propriété `transition-property` au sélecteur `.btn`.
+
+Il s'agit bien de “vous pouvez”, et non pas “vous devez”. Car il y a d’autres moyens de déclarer une transition.
+
+```css
+transition-property: transform;
+transition-duration: 400ms;
+```
+
+La propriété `transition` vous permet de **combiner** toutes les propriétés en une. Elle commence par le **nom** de la propriété,
+un **espace**, puis la **durée**.
+
+```css
+transition: transform 400ms;
+```
+
+Les deux syntaxes produisent les mêmes résultats. Mais il est bien plus courant de définir les transitions par la propriété
+raccourcie `transition`, c’est donc ce que nous allons faire à partir de maintenant.
+
+**Refactorons** donc le style de `.btn` en utilisant la propriété raccourcie `transition`.
+
+:::info
+"Refactorer" veut dire _réviser le code_ pour qu'il soit mieux écrit, plus efficace. Ce mot est un anglicisme à partir de
+_refactoring_. Oui, vous avez le droit de vous moquer de moi, j'utilise beaucoup d'anglicismes quand je parle. 🙈 Mais ce mot est
+assez souvent utilisé dans le monde du développement.
+:::
+
+```scss
+$cd-btn: #011c37;
+$cd-txt: #15DEA5;
+.btn {
+    background: $cd-btn;
+    color: $cd-txt;
+    font-size: 3rem;
+    cursor: pointer;
+    padding: 1.85rem 3rem;
+    border-radius: 10rem;
+    transform: scale(1);
+    transition: transform 400ms;
+    &:hover {
+        transform: scale(1.15);
+    }
+}
+```
+
+Nous avons simplifié le code, et notre bouton chéri fonctionne toujours parfaitement :
+
+![Une animation CSS d'un bouton qui grandit de façon fluide et dont le code a été refactoré](https://user.oc-static.com/upload/2021/02/09/16128888276684_Gif015.gif)
+
+Ouf ! Cela fonctionne !
+
+:::note ?
+Et vous, vous avez réussi à refactorer avec la propriété raccourcie transition ?
+:::
+
+C'est peut-être même l'occasion de manipuler quelques propriétés et de vous amuser avec le code du bouton. Je vous ai créé
+[un CodePen](https://codepen.io/atoulmet/pen/OKVXxE) pour que puissiez voir le code. 👩‍💻
+
+_Essayez de changer la couleur du bouton et sa police par exemple 😋_ 
+
+### En résumé
+
+- les 5 éléments nécessaires pour créer une transition sont :
+    - une propriété CSS à modifier,
+    - une valeur initiale pour votre propriété CSS,
+    - une valeur finale pour cette même propriété,
+    - une durée,
+    - une pseudoclasse pour déclencher l’animation ;
+- on applique la valeur initiale à l’élément qu’on veut modifier, et la valeur finale dans la pseudoclasse qui déclenche la
+transition ;
+- la durée peut s’exprimer en secondes : 0.4s, ou en millisecondes : 400ms ;
+- les propriétés d’une transition peuvent être déclarées individuellement : transition-duration: 400ms ;
+- ou bien combinées en une seule propriété comme : transition: transform 400ms.
+
+_Ici, nous avons utilisé la pseudoclasse :hover pour déclencher notre transition. Mais il existe de nombreuses autres
+pseudoclasses ! Je suis sûre que vous avez hâte d'en savoir plus. Pour ça, allez voir la suite du cours ! 🚀_
+
+-----
+
+## Déclenchez vos transitions avec les pseudoclasses
+
+[Déclenchez vos transitions avec les pseudoclasses - Créez des animations CSS modernes - OpenClassrooms](https://openclassrooms.com/fr/courses/5919246-creez-des-animations-css-modernes/6340914-declenchez-vos-transitions-avec-les-pseudoclasses)
+
+<Vimeo vimeoId="508777134" />
+
+<br />
+
+Vous avez commencé à utiliser `:hover` pour déclencher vos **transitions**. Très pratique, n'est-ce pas ? Mais nous allons
+découvrir dans ce chapitre comment maîtriser les **pseudoclasses** les plus utiles pour les animateurs. Alors c'est parti !
+
+### Déclenchez vos transitions CSS
+
+L’utilisation d’une pseudoclasse pour déclencher une transition est l’un des points essentiels des animations CSS. Nous venons
+d’utiliser la pseudoclasse `:hover` pour changer la **taille** d’un bouton au survol de la souris. Il s’agit probablement d’un
+des cas les plus courants. Mais `:hover` est une pseudoclasse parmi beaucoup d'autres. Les possibilités pour déclencher nos
+transitions sont sans limite ! En effet, il existe aujourd’hui plus de [50 pseudoclasses](https://developer.mozilla.org/fr/docs/Web/CSS/Pseudo-classes).
+Mais elles ne conviennent pas toutes pour déclencher des transitions. Jetons un œil ensemble aux pseudoclasses pour comprendre un
+peu mieux comment cela fonctionne, et vérifier si elles seront adaptées ou non pour déclencher une transition. 🔍
+
+Comme je vous le disais, une pseudoclasse s’apparente à un if/else pour le CSS. Elle est interprétée par le navigateur, qui
+applique le style si la condition de la pseudoclasse est à **true**. Pour notre bouton, si la condition du survol de souris est
+vérifiée, le style défini dans la pseudoclasse `:hover` est appliqué.
+
+Le survol de l’élément par la souris déclenche un changement d’état, de “non survolé” à “survolé". C’est bien ce changement d’état
+qui rend cette pseudoclasse parfaite pour nos animations. Pour déclencher une transition, il faut utiliser une pseudoclasse dont
+on sait que l’état changera selon l’interaction de l’utilisateur.
+
+De la même manière qu’on sait qu’un utilisateur va passer sa souris sur un bouton, on sait également qu’il va écrire du texte dans
+un input, déclenchant alors la pseudoclasse `:active`. Cela permet alors d’attribuer le style que l’on souhaite en fonction de
+ces changements d’état.
+
+Même s’il en existe d’autres, voici une liste des pseudoclasses les plus couramment utilisées pour déclencher des transitions :
+- `:hover`, qui est déclenché au **survol** de la souris ;
+- `:active`, activé au **clic** de l'utilisateur (le plus souvent pour les liens et boutons) ;
+- `:focus`, qui se déclenche lorsque son élément reçoit le **focus** (soit il est sélectionné à l'aide du clavier, soit il est
+activé avec la souris) ;
+- `:valid`, dont la [validation](https://developer.mozilla.org/fr/docs/Web/Guide/HTML/HTML5/Constraint_validation) du contenu
+s'effectue correctement par rapport au type de donnée attendu ;
+- `:invalid`, qui inversement, correspond à un élément dont la [validation](https://developer.mozilla.org/fr/docs/Web/Guide/HTML/HTML5/Constraint_validation)
+du contenu ne s'effectue pas correctement par rapport au type de donnée attendu ;
+- `:not()`, qui correspond à la **négation**. Elle prend un sélecteur en argument et permet de cibler les éléments qui ne sont pas
+représentés par cet argument ;
+- `:checked`, qui correspond aux **input** de type checkbox, option ou radio qui sont cochés ;
+- `:enabled`, un élément avec lequel on peut **interagir ;**
+- `:disabled`, qui correspond à un élément dont l'interaction a été **bloquée**.
+
+:::info
+Vous pouvez trouver la liste complète des pseudoclasses dans [la documentation MDN](https://developer.mozilla.org/fr/docs/Web/CSS/Pseudo-classes).
+:::
+
+Les pseudoclasses sont essentielles pour **déclencher** une transition en CSS. Une transition peut également être déclenchée par
+un changement de classe en JavaScript, même si nous ne verrons pas cette technique ici.
+
+### Validez un formulaire
+
+Créons ensemble un formulaire. Ici, l'idée est de faire un retour direct à l’utilisateur au fur et à mesure qu'il entre son
+adresse email, pour lui indiquer si son texte est **valide** ou non. Le code HTML de notre formulaire donnerait quelque chose
+comme ça :
+
+```html
+<body>
+    <div class="container">
+        <div class="form">
+            <div class="form__group">
+                <label for="">email</label>
+                <input type="email" name="" id="">
+            </div>
+        </div>
+    </div>
+</body>
+```
+
+Nous avons un élément .form, qui contient un .form_group, lui-même composé d’un input et d’un label. Dans le navigateur, cela nous
+donne :
+
+![Un champ email en HTML](https://user.oc-static.com/upload/2019/07/24/15639560902701_image1.png)
+
+Maintenant, utilisons la pseudoclasse `:focus`.<br />
+Elle nous permet de donner un feedback immédiat à l’utilisateur lorsqu’il sélectionne l’input en **surlignant** le bord de l’input.
+
+```scss
+$cd-txt: #6300a0;
+$cd-box: #fff;
+.container {
+    background-color: rgb(237, 246, 247);
+}
+.form {
+    &__group {
+        & input {
+            border: 2px solid $cd-box;
+            border-radius: 100rem;
+            color: $cd-txt;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 2.5rem;
+            outline: none;
+            padding: .5rem 1.5rem;
+            width: 100%;
+            &:focus {
+                    border: 2px solid $cd-txt;
+            }
+        }
+    }
+}
+```
+
+Maintenant, quand l’utilisateur clique, cela change l’état du champ à `:focus`, ajoutant ainsi un contour violet à l’élément.
+
+![Un champ email animé en CSS au clic de la souris](https://user.oc-static.com/upload/2021/02/09/16128890356328_Gif016.gif)
+
+Yay ! 💪 Maintenant, utilisons la fonctionnalité [de validation des champs](https://developer.mozilla.org/fr/docs/Web/Guide/HTML/Formulaires/Validation_donnees_formulaire)
+directement depuis HTML. Nous pouvons la combiner avec la pseudoclasse `:invalid`, afin que les utilisateurs reçoivent
+l’information que l’adresse e-mail qu’ils ont entrée n’est pas valide. Nous allons donc commencer par ajouter une pseudoclasse
+`:invalid` dans le sélecteur CSS de l’input, et y ajouter des propriétés pour transformer le texte en texte blanc sur fond rouge.
+
+```scss
+$cd-txt: #6300a0;
+$cd-txt--invalid: #fff;
+$cd-danger: #b20a37;
+.form {
+    &__group {
+        & input {
+            border: 2px solid $cd-box;
+            border-radius: 100rem;
+            color: $cd-txt;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 2.5rem;
+            outline: none;
+            padding: .5rem 1.5rem;
+            width: 100%;
+            &:focus {
+                border: 2px solid $cd-txt;
+            }
+            &:invalid {
+                background: $cd-danger;
+                border: 2px solid $cd-danger;
+                color: $cd-txt--invalid;
+            }
+        }
+    }
+}
+```
+
+Maintenant, testons le formulaire !
+
+![Le champ email animé en CSS qui devient rouge dès la première lettre tapée si l'adresse mail n'est pas au bon format](https://user.oc-static.com/upload/2021/02/09/16128890589119_Gif017.gif)
+
+Techniquement, nous avons ce que nous voulions : l’adresse e-mail est bien vérifiée pendant que l’utilisateur la tape. Mais le
+clignotement entre l’effet `:focus` et l’effet `:invalid` est assez désagréable à l’œil. Pour affiner tout ça, nous pouvons
+utiliser la pseudoclasse `:not()`, combinée à la pseudoclasse `:focus`, afin de s’assurer que l’utilisateur a terminé de
+renseigner son adresse e-mail avant de lui faire un feedback de validation.
+
+```scss
+$cd-txt: #6300a0;
+$cd-txt--invalid: #fff;
+$cd-danger: #b20a37;
+.form {
+    &__group {
+        & input {
+            border: 2px solid $cd-box;
+            border-radius: 100rem;
+            color: $cd-txt;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 2.5rem;
+            outline: none;
+            padding: .5rem 1.5rem;
+            width: 100%;
+            &:focus {
+                border: 2px solid $cd-txt;
+            }
+            &:not(:focus):invalid {
+                background: $cd-danger;
+                border: 2px solid $cd-danger;
+                color: $cd-txt--invalid;
+            }
+        }
+    }
+}
+```
+
+L’explication peut sembler compliquée, mais elle est plus simple qu’il n'y paraît. La pseudoclasse `:not` passe à true lorsque le
+sélecteur qu’elle contient est à false.
+
+Ici, `:not()` est true quand l’input n’est **pas** `:focus`.
+
+Et vous voyez bien qu’il est possible de combiner les pseudoclasses, comme avec d’autres sélecteurs CSS.
+
+Dans notre cas, le style est appliqué si l’input n’est pas en état `:focus` **et** si `: invalid` est à true. Ce qui nous permet
+d’obtenir l’effet recherché : la couleur rouge d’avertissement pour e-mail invalide n’apparaît qu’une fois que l’utilisateur a
+terminé de taper son adresse e-mail.
+
+![Le champ email animé en CSS qui devient rouge si l'adresse mail n'est pas au bon format](https://user.oc-static.com/upload/2021/02/09/16128890927753_Gif018.gif)
+
+Beaucoup plus agréable, n’est ce pas ?
+
+Mais nous pouvons faire encore mieux.
+
+N’oublions pas que nous apprenons à maîtriser les animations CSS ici, alors animons tout ça ! Pour cela, nous pouvons tout
+simplement ajouter une propriété **transition au background-color** :
+
+```scss
+$cd-txt: #6300a0;
+$cd-txt--invalid: #fff;
+$cd-danger: #b20a37;
+.form {
+    &__group {
+        & input {
+            border: 2px solid $cd-box;
+            border-radius: 100rem;
+            color: $cd-txt;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 2.5rem;
+            outline: none;
+            padding: .5rem 1.5rem;
+            width: 100%;
+            transition: background-color 500ms;
+            &:focus {
+                border: 2px solid $cd-txt;
+            }
+            &:not(:focus):invalid {
+                background-color: $cd-danger;
+                border: 2px solid $cd-danger;
+                color: $cd-txt--invalid;
+            }
+        }
+    }
+}
+```
+
+Nous obtenons un rapide effet de fondu entre le moment où l’utilisateur tape son adresse e-mail et l’affichage de la couleur rouge.
+
+![Le champ email animé en CSS qui devient rouge, avec une effet de fondu, si l'adresse mail n'est pas au bon format](https://user.oc-static.com/upload/2021/02/09/16128891087992_Gif019.gif)
+
+Parfait 👌.<br />
+Combiner nos pseudoclasses nous a permis d’obtenir un sélecteur plus spécifique, et ainsi d’améliorer l’expérience utilisateur
+pour notre input.
+
+### Modifiez les éléments voisins avec les pseudoclasses
+
+Les pseudoclasses sont parfaites pour **déclencher** des transitions sur l’élément auquel elles sont affectées, par exemple pour
+changer le style d’un bouton pour lequel l’état `:hover` est modifié, ou un champ dont l’état `:invalid` est activé. Mais vous
+pouvez également utiliser les **pseudoclasses** pour changer le style d’_autres_ éléments.
+
+![Une animation CSS d'un texte avec un astérisque qui bouge](https://user.oc-static.com/upload/2019/07/24/15639591341843_pt01ch03-asterisk.gif)
+
+L'astérisque bouge
+
+Alors oui MAIS…
+
+Pour qu’une pseudoclasse déclenche une transition sur un autre élément, cet élément doit être le voisin suivant direct (ou
+_sibling_ en anglais) dans le document HTML. De fait, nous devons utiliser le combinateur **d’adjacence +** pour créer la
+transition sur l’élément voisin.
+
+Pour notre bouton avec la pseudoclasse `:hover` :
+
+```scss
+.btn {
+    background: $cd-primary;
+    font-size: 3rem;
+    cursor: pointer;
+    padding: 1.85rem 3rem;
+    border-radius: 10rem;
+    &:hover {
+        transform: scale(1.15);
+    }
+}
+```
+
+Quand la souris survole le bouton, le style est appliqué à l’élément auquel le `:hover` est lié, soit .btn :
+
+![Une animation CSS d'un bouton qui grossit au passage de la souris](https://user.oc-static.com/upload/2021/02/09/1612889142661_Gif020.gif)
+
+Mais imaginons que notre bouton ait un voisin de la classe `.ball` et que ce soit à lui que nous voulions appliquer la transition.
+
+```html
+<body>
+    <div class="container">
+        <div class="btn">
+            C'est partiii!
+        </div>
+        <div class="ball"></div>
+    </div>
+</body>
+```
+
+On peut utiliser le combinateur d’adjacence pour combiner la pseudoclasse `:hover` avec l’élément `.ball` à la place :
+
+```scss
+.btn {
+    background: $cd-primary;
+    font-size: 3rem;
+    cursor: pointer;
+    padding: 1.85rem 3rem;
+    border-radius: 10rem;
+    &:hover + .ball{
+        transform: scale(1.15);
+    }
+}
+.ball {
+    width: $ball-size;
+    height: $ball-size;
+    background: $cd-secondary;
+    margin-bottom: 1rem;
+    border-radius: $ball-size \* 0.5;
+}
+```
+
+Maintenant, c’est .ball qui va grossir lorsque l’utilisateur survolera le bouton avec sa souris.
+
+![Une animation CSS d'une balle qui grossit lorsque la souris de l'utilisateur passe au-dessus d'un bouton](https://user.oc-static.com/upload/2021/02/09/16128891551933_Gif021.gif)
+
+Pour aller un peu plus loin, au lieu de démarrer par une grosse boule et de l’agrandir encore, commençons petit en réglant
+l’échelle initiale `scale()` à .1, et profitons-en pour ajouter une **transition**. Et au lieu de la faire durer une fraction de
+seconde, réglons-la sur **quatre secondes**, pour créer une impression de ballon en train d’être gonflé :
+
+```scss
+.btn {
+    background: $cd-primary;
+    font-size: 3rem;
+    cursor: pointer;
+    padding: 1.85rem 3rem;
+    border-radius: 10rem;
+    &:hover + .ball{
+        transform: scale(1.15);
+    }
+}
+.ball {
+    width: $ball-size;
+    height: $ball-size;
+    background: $cd-secondary;
+    margin-bottom: 1rem;
+    border-radius: $ball-size \* 0.5;
+    transform: scale(0.1);
+    transition: transform 4000ms;
+}
+```
+
+Nous pouvons même faire en sorte que la boule grossisse au clic de l’utilisateur en utilisant la pseudoclasse : `active` plutôt
+que `:hover`. Terminons le tout en beauté, en changeant l’échelle de la boule lorsque le bouton est cliqué, de 1.15 à 1.
+
+```scss
+.btn {
+    background: $cd-primary;
+    font-size: 3rem;
+    cursor: pointer;
+    padding: 1.85rem 3rem;
+    border-radius: 10rem;
+    &:active + .ball{
+        transform: scale(1.0);
+    }
+}
+.ball {
+    width: $ball-size;
+    height: $ball-size;
+    background: $cd-secondary;
+    margin-bottom: 1rem;
+    border-radius: $ball-size \* 0.5;
+    transform: scale(0.1);
+    transition: transform 4000ms;
+}
+```
+
+Nous devrions bien avoir notre bouton qui, lorsqu’on clique dessus, modifie l’élément voisin, le faisant passer d’une échelle de
+10 % à 100 %, en 4 secondes.
+
+![Animation CSS d'une balle qui grossit](https://user.oc-static.com/upload/2021/02/09/16128891687293_GIF022.gif)
+
+Superbe !
+
+Les pseudoclasses sont très utiles pour **attribuer un style** à un élément en fonction de leur état, mais elles peuvent aussi
+être utilisées pour manipuler d’autres éléments de la page. Ça nous permet d’offrir une expérience plus interactive à nos
+utilisateurs.
+
+### En résumé
+
+- les pseudoclasses sont essentielles pour **déclencher** des transitions en CSS ;
+- les pseudoclasses les plus adaptées pour déclencher des transitions sont celles qui impliquent une **interaction** avec
+l’utilisateur ;
+- les pseudoclasses les plus courantes pour déclencher une transition sont `:hover`, `:active`, `:focus`, `:valid`, `:invalid`,
+`:not()`, `:checked`, `:enabled`, et `:disabled` ;
+- on peut **combiner** des pseudoclasses entre elles pour créer des sélecteurs plus précis ;
+- les pseudoclasses peuvent aussi être utilisés pour changer le style d’un élément voisin.
+
+_Félicitations, vous avez maintenant vu les bases des transitions CSS. Vous êtes maintenant prêt à découvrir quelques méthodes
+permettant d’ajouter un peu de complexité et de vie dans nos animations, en apprenant directement auprès des neuf sages de
+l’animation !_
+
+-----
+
+## Appliquez les 12 principes de l’animation au web
+
+[Appliquez les 12 principes de l’animation au web - Créez des animations CSS modernes - OpenClassrooms](https://openclassrooms.com/fr/courses/5919246-creez-des-animations-css-modernes/6340915-appliquez-les-12-principes-de-l-animation-au-web)
+
+<Vimeo vimeoId="508777158" />
+
+<br />
+
+### Donnez vie à vos animations
+
+Maintenant que vous commencez à saisir le principe des animations CSS, il est temps de réfléchir à comment créer des animations
+plus **naturelles** et **engageantes**. Ça ne veut pas dire que les animations que nous avons créées jusqu’ici sont à jeter :
+vous pouvez totalement les utiliser. Mais nous n’avons utilisé que les propriétés de transition les plus **basiques**, et laissé
+la plupart des valeurs par défaut pour les propriétés.
+
+Les valeurs par défaut produisent des effets parfaitement **fluides** et **uniformes**. Or, un mouvement parfait peut justement
+être un peu _trop_ parfait. En effet, la nature est chaotique. Elle ne produit pas de mouvement parfait. Les objets ont une
+masse, ils doivent accélérer et décélérer. Les mouvements, à une échelle ou une autre, tremblent, oscillent, changent de
+direction : nous sommes contraints par les lois de la physique. Ce que nos cerveaux trouvent naturels, ce sont des mouvements
+**irréguliers**. C’est pour cette raison que les valeurs par défaut de nos animations risquent de paraître lisses, artificielles
+ou robotiques.
+
+On ajoute des animations à un site web dans le but d’offrir une expérience plus **immersive** et **engageante** aux utilisateurs,
+dont les cerveaux sont programmés pour accepter les imperfections de la nature. Pour créer une expérience satisfaisante, nous
+devons donc insuffler de la vie dans nos animations.
+
+### Les Neuf Sages de Disney
+
+Pour produire les films cultes que sont _Blanche-Neige et les sept nains_ ou _Cendrillon_, Disney employait un noyau dur
+d’animateurs, responsables du style et des techniques, qui ont fait de ces films des monuments de l’animation. Ils sont rentrés
+dans l'histoire sous le nom de “Neuf Sages”.
+
+Parmi les neuf, Ollie Johnston et Frank Thomas ont coécrit un livre intitulé _The Illusion of Life_. Ils y détaillent leurs
+méthodes pour donner vie à leur création par ce qu’ils appellent les “**12 principes de l’animation**”. Bien que ces règles
+aient été établies dans le cadre de l’animation à la main traditionnelle, elles ont depuis été adaptées à pratiquement tous les
+autres styles d’animation, et restent parfaitement pertinentes dans le domaine de l’animation CSS.
+
+Penchons-nous sur ces 12 principes.
+
+### Squash and Stretch (compression et étirement)
+
+Ce principe permet de donner de la **masse** à un objet, en l’étirant quand il accélère, puis en l’aplatissant et en
+l'élargissant quand il ralentit. Imaginez une balle en caoutchouc qui rebondit sur le sol en **s'aplatissant** avant de rebondir.
+
+![L'animation Squash and Stretch](https://user.oc-static.com/upload/2021/02/09/16128892736152_Gif023.gif)
+
+Squash and Stretch
+
+Vous pouvez voir ici **l’étirement horizontal** pendant l’accélération, puis la compression au moment de la décélération à
+l’arrivée contre le mur.
+
+### Anticipation
+
+Le principe de **l’anticipation** permet de **préparer l'audience** (ici, l'utilisateur) à une action à venir, lui donnant ainsi
+plus d'impact. Un chat qui se trémousse avant de bondir, le bras d'Astérix qui tourne avant de décocher un coup à un Romain… Les
+personnages animés ont besoin de mouvements préliminaires pour donner de la force à leurs actions. À l'inverse, un mouvement sans
+anticipation paraîtra lisse et artificiel.
+
+![L'animation anticipation](https://user.oc-static.com/upload/2021/02/09/16128892932711_Gif024.gif)
+
+Anticipation
+
+### Staging (mise en scène)
+
+La **mise en scène**, dans le contexte de l’animation, désigne la **composition**. Il s’agit de **guider** les yeux des
+utilisateurs, vers les parties importantes de l’écran par l’utilisation de mouvements. Par exemple, cela peut se réaliser en
+faisant ressortir le bouton sur lequel nous voulons que l’utilisateur clique.
+
+![L'animation staging](https://user.oc-static.com/upload/2021/02/18/16136584219165_Gif025%20%281%29.gif)
+
+Staging
+
+### Straight Ahead and Pose to Pose (toute l'action d'un coup et partie par partie)
+
+Straight Ahead et Pose to Pose sont deux différentes techniques qui permettent de créer des animations traditionnelles qui ne
+s’appliquent pas vraiment à l’animation web. Cependant, en CSS, il existe aussi deux différentes méthodes d’animation : les
+**transitions**, dont nous avons commencé à parler, et les **keyframes**, que nous étudierons bientôt. Les transitions sont
+basées sur une valeur de début et une valeur de fin, entre lesquelles le navigateur crée l’animation. Avec les keyframes, nous
+apprendrons à créer des animations par étapes, ou comme ci-dessous, partie par partie.
+
+![Les animations straight ahead et pose to pose](https://user.oc-static.com/upload/2021/02/09/1612889322337_Gif026.gif)
+
+Straight ahead et pose to pose
+
+### Follow Through and Overlapping Action (continuité du mouvement initial et chevauchement de deux mouvements consécutifs)
+
+Dans le monde réel, la **masse** et la **densité** des objets ne sont pas uniformes, ils accélèrent et décélèrent donc à des
+vitesses différentes. Imaginez que vous êtes dans une voiture et que votre tête est plaquée à l’appuie-tête lors de
+l’accélération, ou qu’elle est balancée vers l’avant quand le conducteur pile. Sans follow through ou overlapping action, vous
+resteriez statique dans la voiture lors des changements de vitesse. Le fait de donner des vitesses différentes au différentes
+parties d’un objet ajoute de l’authenticité à nos animations, et contribue à lui donner une masse réaliste.
+
+![Les animations Follow Through Overlapping Action](https://user.oc-static.com/upload/2021/02/09/16128893355601_Gif027.gif)
+
+Follow Through et Overlapping Action
+
+### Slow in and slow out (ralentissement en début et en fin de mouvement)
+
+Aussi connu comme "ease-in" et "ease-out" (que vous verrez dans ce cours) ce principe est basé sur le fait que les objets ne
+démarrent pas et ne s’arrêtent pas instantanément. Ils **accélèrent** et **décélèrent**. _Slow in_ fait référence à
+l’accélération d’un objet, et _slow out_ à la décélération. En appliquant des valeurs différentes à nos accélérations et
+décélérations, on peut modifier la perception de la taille ou de la masse d’un objet, rendre les mouvements plus vifs, ou plus
+laborieux pour un objet lourd.
+
+![Les animations slow in et slow out](https://user.oc-static.com/upload/2021/02/09/16128893470259_Gif028.gif)
+
+Slow in et slow out
+
+### Arc
+
+La nature ne crée pas de lignes droites, et les mouvements naturels ne font pas exception à la règle. Cet exemple est un peu
+plus compliqué à exprimer avec une boîte en animation CSS, mais l’introduction d’arcs dans le mouvement d’un objet peut aider à
+le rendre plus **naturel**, comme ici.
+
+![Une animation CSS d'arc](https://user.oc-static.com/upload/2021/02/09/16128893593509_Gif029.gif)
+
+Un arc
+
+### Secondary Action (action secondaire)
+
+Ajouter des animations pour séparer différentes parties d’une scène peut aider à **accentuer** ou **renforcer** les principaux
+éléments d’une animation.
+
+![Une animation CSS d'action secondaire](https://user.oc-static.com/upload/2021/02/09/16128893696087_Gif030.gif)
+
+Une animation d'action secondaire
+
+### Timing
+
+Les objets doivent se déplacer à des **vitesses crédibles** par rapport à leur taille et à leur masse. Un semi-remorque accélère
+et décélère plus lentement et de manière plus homogène qu’une Ferrari, qui peut accélérer en un clin d’œil et s’arrêter quasiment
+sur place. On contrôle le timing des objets par rapport à leurs tailles relatives, ainsi que par la durée de l’animation.
+
+![Une animation CSS du principe de timing](https://user.oc-static.com/upload/2021/02/09/16128893834654_Gif031.gif)
+
+Le principe de timing
+
+### Exaggeration (exagération)
+
+Même si le but est bien de rendre les animations réalistes, trop pousser ce réalisme peut résulter en un mouvement austère et
+fade. Aller un peu au-delà des limites naturelles permet de donner un peu de **caractère** et de personnalité à une animation.
+
+![Une animation exaggeration en CSS](https://user.oc-static.com/upload/2021/02/09/1612889396684_Gif032.gif)
+
+Exaggeration
+
+### Solid Drawing (notion de volume)
+
+Traditionnellement, ce principe fait référence à la façon de réaliser une scène en représentant correctement la perspective. Pour
+nous, ce principe concerne la **structure du code** de l’animation. Il est très important de comprendre les tenants et les
+aboutissants des propriétés qu’on utilise, pour s’assurer que les animations correspondent au résultat souhaité. Si on ne
+construit pas le code avec les animations à l’esprit, on peut facilement se retrouver avec, au lieu de quelque chose comme ça :
+
+![Une animation CSS avec Solid Drawing](https://user.oc-static.com/upload/2021/02/09/16128894147984_Gif033.gif)
+
+Une animation avec Solid Drawing
+
+Une animation qui ressemblerait plutôt à ça :
+
+![Une animation CSS sans solid drawing](https://user.oc-static.com/upload/2021/02/09/16128894248934_Gif034.gif)
+
+Une animation sans Solid Drawing
+
+### Appeal (charisme)
+
+Pour rendre nos animations plus **dynamiques** et plus intéressantes, on peut y ajouter quelques effets supplémentaires. Le
+centre de l’attention l’est parce qu’il attire tous les regards. C’est l’attrait et le charisme qui attirent l’attention, et la
+conservent.
+
+![Une animation CSS Appeal](https://user.oc-static.com/upload/2021/02/09/16128894369541_Gif035.gif)
+
+Appeal
+
+Tout au long de ce cours, nous apprendrons à maîtriser les animations CSS pour incorporer des éléments de ces 12 principes dans
+nos propres animations, et créer une expérience utilisateur plus authentique et attirante.
+
+:::info
+Pour aller plus loin
+
+Le YouTubeur Alan Becker a fait une excellente série de 12 vidéos pour revenir sur chacun de ces principes : [https://www.youtube.com/watch?v=uDqjIdI4bF4](https://www.youtube.com/watch?v=uDqjIdI4bF4).
+:::
+
+### En résumé
+
+Les 12 principes de l'animation sont :
+- Squash and Stretch, pour **compresser** et **étirer** un élément ;
+- Anticipation, pour **préparer l’audience** à un mouvement à venir ;
+- Staging (mise en scène), pour **guider** les yeux de l’utilisateur vers les éléments importants d’une page ;
+- Straight Ahead and Pose to Pose (toute l'action d'un coup et partie par partie), qui correspond davantage à l'animation
+traditionnelle mais fait penser à la différence **transitions/keyframes** ;
+- Follow Through and Overlapping Action (continuité du mouvement initial et chevauchement de deux mouvements consécutifs), pour
+faire **accélérer** et **décélérer** un élément en fonction de sa masse ;
+- Slow in and slow out (ralentissement en début et en fin de mouvement), basé sur le fait que les objets ne démarrent pas et ne
+s’arrêtent pas instantanément ;
+- Arc, pour créer des **mouvements naturels** ;
+- Secondary Action (action secondaire), pour **séparer** différentes parties d’une scène dans une animation ;
+- Timing, pour faire se **déplacer** les objets à une vitesse crédible ;
+- Exaggeration (exagération), pour donner du **caractère** et de la **personnalité** à une animation ;
+- Solid Drawing (notion de volume), pour que les animations correspondent au résultat souhaité ;
+- Appeal (charisme), pour rendre les animations plus dynamiques.
+
+Est-ce que vous seriez capable de les expliquer avec vos propres mots ? 🤓
+
+_Dans le prochain chapitre, vous découvrirez comment créer des transitions CSS à propriétés multiples._
+
+-----
+
+## Créez des transitions CSS à propriétés multiples
+
+[Créez des transitions CSS à propriétés multiples - Créez des animations CSS modernes - OpenClassrooms](https://openclassrooms.com/fr/courses/5919246-creez-des-animations-css-modernes/6340916-creez-des-transitions-css-a-proprietes-multiples)
+
+<Vimeo vimeoId="508777179" />
+
+<br />
+
+### Montez en puissance
+
+Très bien, nous avons appris les bonnes techniques pour **renforcer** et **améliorer** nos animations. Mais il semble compliqué
+d’appliquer certains de ces principes directement dans vos transitions.
+
+Certes, nous pouvons faire grandir ou rétrécir des objets… mais comment atteindre l’objectif qui est de donner vie à nos pages ?
+
+Dans l’animation, la complexité est essentielle pour rendre nos animations plus **vivantes** et convaincantes. Il ne s’agit pas
+simplement de passer d’un état A à un état B. Mais davantage de faire une superposition d’effets de mouvement, afin d’obtenir une
+animation qui paraît bien plus authentique aux yeux de l’utilisateur.
+
+:::note ?
+OK, c'est super de savoir tout cela. Mais COMMENT atteindre cet objectif ? 🤔
+:::
+
+Pour l’instant, nous nous sommes contentés des propriétés les plus simples pour créer nos transitions. Mais il existe davantage
+de propriétés dont nous pouvons nous servir pour créer cet effet de **complexité**.
+
+### Créez des animations naturelles en combinant les transitions
+
+Comme vous avez pu le voir dans les 12 principes de l’animation, certains principes nécessitent d’animer plusieurs propriétés,
+comme “Secondary Action”. Impossible de passer à côté, c’est même dans le titre ! Mais pas de souci à se faire : au sein d’une
+transition, vous pouvez facilement animer **deux propriétés**, ou même trois, ou même autant que vous souhaitez.
+
+Même si c’était il y a plusieurs chapitres, j’espère que vous vous souvenez que nous avions construit un bouton qui grossit au
+survol de la souris.
+
+```html
+<body>
+    <div class="container">
+        <div class="btn">
+            Survole-moi!
+        </div>
+    </div>
+</body>
+```
+
+Dans le fichier Sass, nous avions ajouté une pseudoclasse `:hover`. Ainsi, au survol de la souris, la propriété `transform`
+permettait de le faire grossir de 15 % en 0.4 secondes.
+
+```scss
+.btn {
+    background-color: $cd-btn;
+    border: 4px solid $cd-btn;
+    border-radius: 10rem;
+    cursor: pointer;
+    font-size: 3rem;
+    overflow: hidden;
+    padding: 1.85rem 3rem;
+    position: relative;
+    transition: transform 400ms;
+    &:hover {
+        transform: scale(1.15);
+    }
+}
+```
+
+Essayons ensemble de corser tout ça en créant une **action secondaire** : au survol de la souris, non seulement le bouton
+grossira, mais on lui appliquera également un effet de fondu.
+
+![Une animation d'un bouton qui grossit avec un fondu](https://user.oc-static.com/upload/2021/02/09/16128896899312_Gif036.gif)
+
+Il existe plusieurs moyens d’animer l’**opacité** d’un élément. Nous verrons plus tard dans ce cours le moyen le plus performant.
+Mais pour le moment, par souci de simplicité, nous changerons la valeur de la propriété `background-color` entre deux valeurs
+rgba. Pour cela, nous utiliserons deux variables Sass :
+
+```scss
+$cd-btn-start: rgba(1, 28, 55, 0);
+$cd-btn-end: rgba(1, 28, 55, 1);
+```
+
+Les deux variables ont la même valeur RGB. Seule leur valeur **alpha** diffère, avec une valeur de 0 pour $cd-btn-start, et 1
+pour $cd-btn-end. La première est ainsi **transparente**, alors que la seconde sera **opaque**.
+
+Nous sommes maintenant prêts à ajouter nos variables de couleur à la pseudoclass `:hover` du sélecteur `.btn`.
+
+```scss
+.btn {
+    background-color: $cd-btn-start;
+    border: 4px solid $cd-btn;
+    border-radius: 10rem;
+    cursor: pointer;
+    font-size: 3rem;
+    padding: 1.85rem 3rem;
+    &:hover {
+        transform: scale(1.13);
+        background-color: $cd-btn-end;
+    }
+}
+```
+
+On a donc maintenant un bouton avec un `:hover` qui fonctionne. Ajoutons maintenant une transition 🤩
+
+![Une animation CSS d'un bouton qui grossit](https://user.oc-static.com/upload/2021/02/09/16128897035555_Gif037.gif)
+
+Lorsque vous souhaitez créer une transition à **propriétés multiples**, plutôt que de taper le nom de la propriété à laquelle
+nous voulons ajouter une transition…
+
+```scss
+transition: transform 450ms;
+```
+
+On peut utiliser à la place le mot clé `all` :
+
+```scss
+transition: all 450ms;
+```
+
+Le mot clé `all` nous permet d’indiquer au navigateur d’appliquer la transition à toutes les propriétés que nous avons modifiées
+au sein de la pseudoclasse `:hover`. Ajoutons donc une transition à notre sélecteur `.btn` pour animer à la fois l’échelle du
+bouton et l’opacité de son arrière-plan :
+
+```scss
+.btn {
+    background-color: $cd-btn-start;
+    border: 4px solid $cd-btn;
+    border-radius: 10rem;
+    cursor: pointer;
+    font-size: 3rem;
+    overflow: hidden;
+    padding: 1.85rem 3rem;
+    position: relative;
+    transition: all 450ms;
+    &:hover {
+        transform: scale(1.13);
+        background-color: $cd-btn-end;
+    }
+}
+```
+
+Voyons ce que cela donne maintenant :
+
+_![Une animation CSS d'un bouton qui grossit avec un fondu](https://user.oc-static.com/upload/2021/02/09/16128897170531_Gif038.gif)_
+
+Youpiiiii !!! 🥳
+
+On a bien les deux transitions en même temps !
+
+### Séparez les propriétés
+
+L’utilisation du mot-clé `all` est parfaite pour **déclencher** plusieurs changements au même moment et pour la même durée, mais
+il existe un autre moyen d’ajouter des propriétés multiples à une transition.
+
+Au lieu d’utiliser `all`, nous pouvons faire une liste des animations de chaque propriété à laquelle nous voulons ajouter une
+transition, séparées par des **virgules**. Dans notre exemple de transitions pour transformer et changer la couleur de fond, on
+pourrait les séparer comme ça :
+
+```scss
+transition: transform 450ms, background-color 450ms;
+```
+
+Maintenant qu’on a séparé les propriétés, on peut donner une durée différente à leur transition. C’est très utile pour obtenir
+un rendu moins uniforme, et ainsi créer quelque chose de plus intéressant visuellement et de plus **engageant** pour
+l’utilisateur. Rendons notre transition background-color un peu plus rapide que celle de l’échelle du bouton, en réduisant sa
+durée à 300 ms :
+
+```scss
+transition: transform 450ms, background-color 300ms;
+```
+
+Maintenant, notre `background-color` devient totalement opaque avant que le bouton ait terminé de grossir. La différence n’est
+pas énorme, mais ces quelques fractions de secondes permettent de rendre l’animation un peu **moins parfaite** et lui apportent
+un peu de **texture** :
+
+![Une animation CSS avec un background-color à 450ms](https://user.oc-static.com/upload/2021/02/09/1612889732553_Gif039.gif)
+
+![Une animation CSS avec un background color à 300ms](https://user.oc-static.com/upload/2021/02/09/16128897457114_Gif040.gif)
+
+En séparant les transitions, il devient possible d’attribuer des **durées spécifiques** à chaque effet, ce qui nous permet
+d’ajouter de la complexité à nos animations, les rendant alors plus intéressantes et plus engageantes. Mais ce n’est pas tout !
+Il y a plus que les durées…
+
+### Retardez le début d'une transition
+
+Pour le moment, nous avons créé une même transition pour deux propriétés ayant des durées propres. Mais les deux commencent en
+même temps. Le background-color devient donc totalement **opaque** avant la fin de la transition transform. Ce qui serait parfait,
+ce serait de faire commencer la transition `background-color 150 ms` plus tard, pour que les deux transitions se terminent en
+même temps.
+
+Pour cela, nous pouvons utiliser la propriété `transition-delay`. Cette propriété **retarde** le début de l’animation de
+transition par la valeur de temps que vous indiquez. Pour retarder une transition de 150 ms, le code est donc le suivant :
+
+```scss
+transition-delay: 150ms;
+```
+
+Ici, notre propriété `transition` concerne deux propriétés différentes. Il faut donc spécifier une valeur pour chacune d’elles.
+Attention à bien respecter l'ordre qu'on a utilisé juste avant pour préciser la durée de chaque propriété. Dans notre cas précis,
+nous ne voulons pas retarder l’animation de transformation, mais celle de couleur d’arrière-plan :
+
+```scss
+transition: transform 450ms, background-color 300ms;
+transition-delay: 0, 150ms;
+```
+
+Avec `transition-delay` nos transitions vont commencer à 150 ms d’écart et se terminer simultanément. Tout comme
+`transition-property` et `transition-duration`, cette propriété peut être définie directement dans transition, en l’indiquant
+juste après `transition-duration`.
+
+```scss
+transition: transform 450ms, background-color 300ms 150ms;
+```
+
+Si aucune valeur n’est précisée pour `transition-delay`, la propriété transition n’appliquera aucun délai. Ici, on peut donc s’en
+passer pour la transition appliquée à transform. Regardons à quoi ressemble notre code :
+
+```scss
+.btn {
+    background-color: $cd-btn-start;
+    border: 4px solid $cd-btn;
+    border-radius: 10rem;
+    cursor: pointer;
+    font-size: 3rem;
+    overflow: hidden;
+    padding: 1.85rem 3rem;
+    position: relative;
+    transition: transform 450ms, background-color 300ms 150ms;
+    &:hover {
+        transform: scale(1.13);
+        background-color: $cd-btn-end;
+    }
+}
+```
+
+Voilà ce que ça donne pour notre bouton :
+
+![Une animation CSS utilisation la transition delay](https://user.oc-static.com/upload/2021/02/09/1612889763562_Gif041.gif)
+
+Et vous, ça vous plaît plus comme ça ? N'hésitez pas à ajuster les valeurs et à faire des tests selon vos préférences 🔥.
+
+Dans la vie réelle, les choses ne se déroulent pas de manière parfaitement simultanée. Si nous regardions des
+[images ultra-ralenties](https://youtu.be/xbuvcQrAOSk?t=137), nous verrions les images arriver les unes après les autres. Nos
+cerveaux se sont habitués à voir des successions d’événements séparés par une rupture, même si elle ne dure qu’une fraction de
+seconde.
+
+Décaler le minutage de nos animations, à la fois en modifiant leur durée et en retardant leur déclenchement, nous permet de créer
+des effets visuels plus authentiques, plus intéressants et plus captivants.
+
+### En résumé
+
+- il est possible d’**animer** autant de propriétés que l’on veut avec les transitions ;
+- le mot clé `all` permet d’appliquer des transitions **simultanément** à toutes les propriétés ;
+- ou bien on peut séparer les animations par **des virgules**, ce qui permet de leur donner des valeurs différentes. Exemple :
+`transition: transform 450ms, background-color 300ms;`
+-   on peut **décaler** le départ des transitions avec `transition-delay` ;
+- la valeur de `transition-delay` peut également être définie directement dans la propriété `transition`.
+
+_Maintenant que nous avons ajouté une nouvelle corde à notre arc pour les transitions, nous allons apprendre à donner une
+véritable masse à nos animations, en travaillant sur leurs accélérations et ralentissements. Pour cela, nous allons maîtriser la
+propriété `transition-timing-function`. Alors rendez-vous au chapitre suivant ! 🚀_
+
+-----
+
+## Créez des animations plus naturelles avec les fonctions de timing
+
+[Créez des animations plus naturelles avec les fonctions de timing - Créez des animations CSS modernes - OpenClassrooms](https://openclassrooms.com/fr/courses/5919246-creez-des-animations-css-modernes/6340917-creez-des-animations-plus-naturelles-avec-les-fonctions-de-timing)
+
+<Vimeo vimeoId="508777192" />
+
+<br />
+
+Tout objet en mouvement doit forcément **accélérer**, et avant de pouvoir s’arrêter, il doit **décélérer**.
+
+Une petite balle rebondissante n'a pas la même accélération que le ballon lancé par un joueur de basket, mais tous deux
+accélèrent. Et c'est cette accélération que notre cerveau va évaluer pour estimer sa masse et l'impulsion donnée, ainsi que son
+emplacement présent et futur.
+
+### Gérez l'accélération et la décélération de vos animations
+
+Pour que nos animations aient l’air réalistes et authentiques, l'accélération et la décélération sont essentielles. Dans le
+jargon de l’animation, il s'agit du **ease-in** et du **ease-out**.
+
+Disons que nous voulons animer une petite boîte pour qu’elle se déplace de 1 000 pixels en 1 000 millisecondes :
+
+![Une animation CSS d'un carré qui avance et recule de gauche à droite](https://user.oc-static.com/upload/2021/02/09/16128898742169_Gif042.gif)
+
+Intéressons-nous maintenant à l’**accélération** et la **décélération** de notre boîte. Puisqu’il s’agit d’un sujet très visuel,
+l'utilisation d'une image semble plus pertinente. Essayons donc d’indiquer la vélocité de notre animation sur un graphique :
+
+![Graphique représentant la durée et le mouvement d'une animation](https://user.oc-static.com/upload/2019/08/05/15650075058411_image14.png)
+
+Graphique représentant la durée et le mouvement d'une animation
+
+:::caution !
+Le site web le plus utilisé pour réaliser des béziers étant en anglais, les captures d'écran seront donc en anglais.
+
+Progress = Progrès (avancement de l'animation)
+
+Duration = Durée
+:::
+
+L’axe X représente le **pourcentage d’avancement** dans la durée de l’animation, et l’axe Y le **pourcentage de mouvement**
+effectué. Le graphique commence donc, dans le coin en bas à gauche, avec 0 % de durée écoulée et 0 % de mouvement effectué. Il
+terminera nécessairement dans le coin supérieur droit, puisque l'animation sera terminée. On peut donc relier ce point de départ
+et ce point d’arrivée par une ligne qui représente la vélocité de notre animation :
+
+![Courbe représentant la vélocité de l'animation](https://user.oc-static.com/upload/2021/02/15/1613382159098_Gif043.gif)
+
+On remarque tout de suite que la **vélocité** n’est pas une ligne droite, mais que son angle change dès le début lors de
+l’accélération. Elle change également à la fin pendant la décélération. Dans la première partie, la boîte n’avance pas très vite,
+donc elle n’avance pas autant sur l’axe mouvement que sur l’axe durée, ce qui aplatit la ligne. À partir de 20 % environ sur
+l’axe de durée, la boîte atteint une vitesse plus élevée, elle progresse donc plus rapidement et la ligne devient plus pentue.
+
+Quand notre boîte doit **freiner** pour commencer sa décélération, elle **réduit** son taux de progression. Le temps progresse
+plus rapidement que le mouvement, ce qui **aplanit** de nouveau la courbe. Le graphique nous permet de comprendre rapidement la
+vitesse de l’animation. Plus la courbe est raide, plus sa vitesse est élevée, et plus elle est plate, plus la vitesse est faible.
+
+Revenons à notre boîte, en gardant notre graphique et son accélération à l'esprit :
+
+![Animation d'un carré qui se déplace de gauche à droite](https://user.oc-static.com/upload/2021/02/09/16128900009147_Gif044.gif)
+
+Vous voyez la façon dont elle accélère rapidement, tandis qu’elle ralentit de manière plus progressive ? En CSS, on appelle ces
+courbes d’accélération des _**fonctions de timing**_. On peut utiliser la propriété `transition-timing-function` pour régler la
+courbe d’accélération d’une transition.
+
+### Découvrez les principales fonctions de timing par défaut
+
+#### La fonction linear
+
+De base, le navigateur nous donne accès à plusieurs courbes d'accélération **prédéfinies par défaut** dans le CSS.
+
+Intéressons-nous à la première courbe, qui n'en est pas vraiment une : la fonction `linear`. Une animation dont le timing est
+**linéaire** : elle ne connaît pas d'accentuation à l'accélération ou à la décélération. Sa courbe est totalement droite du point
+A au point B :
+
+![Un graphique d'une fonction linear](https://user.oc-static.com/upload/2021/02/15/16133804444234_1C6_1.png)
+
+Une fonction linear
+
+Pour appliquer une fonction de timing linéaire à l'animation de notre boîte, nous pouvons ajouter la propriété
+`transition-timing-function` et indiquer sa valeur en `linear` :
+
+```scss
+transition: transform 1000ms;
+transition-timing-function: linear;
+```
+
+Ou bien nous pouvons l’ajouter au raccourci de la propriété de transition, en précisant le mot clé `linear` dans les valeurs :
+
+```scss
+transition: transform 1000ms linear;
+```
+
+Si on revient à notre boîte en mouvement avec sa courbe d’accélération linéaire, on pourra constater qu’elle se déplace à
+**vitesse constante** du départ à l’arrivée :
+
+![Une animation CSS d'un carré qui avance et recule de gauche à droite avec une fonction linear](https://user.oc-static.com/upload/2021/02/09/16128902275351_Gif045.gif)
+
+Fonction linear
+
+#### Les fonctions ease-in-out, ease-in et ease-out
+
+La seconde fonction que j'aimerais vous faire découvrir est `ease-in-out`. C’est la fonction de timing préférée de beaucoup
+d’animateurs car elle suit une courbe d’**accélération** et de **décélération subtile**, comme vous pouvez le voir sur le
+graphique suivant :
+
+![Graphique de la fonction ease-in-out](https://user.oc-static.com/upload/2021/02/15/16133804713952_1C6_2.png)
+
+Graphique de la fonction ease-in-out
+
+Essayons-la maintenant dans la transition de notre boîte :
+
+```scss
+transition: transform 1000ms ease-in-out;
+```
+
+Voilà ce que ça donne :
+
+![Une animation CSS d'un carré qui avance et recule de gauche à droite avec une fonction ease-in-out](https://user.oc-static.com/upload/2021/02/09/16128902548435_Gif046.gif)
+
+Fonction ease-in-out
+
+On peut voir l’augmentation de la vitesse puis sa réduction, mais ses accélérations et décélérations sont suffisamment subtiles
+pour se fondre dans le mouvement. Ça tombe bien, on cherche justement à créer un mouvement naturel !
+
+On peut aussi choisir de seulement d'accentuer l'accélération ou la décélération avec `ease-in` et `ease-out`.
+
+```scss
+// Fonction de timing ease-in :
+transition: transform 1000ms ease-in;
+// Fonction de timing ease-out :
+transition: transform 1000ms ease-out;
+```
+
+Si on compare leurs courbes au graphique `ease-in-out`, on constate que le graphique `ease-in` correspond au début du
+`ease-in-out`, avec une fin linéaire. Et inversement, le départ de `ease-out` est linéaire, alors que sa courbe de décélération
+s'accentue comme celle de `ease-in-out` :
+
+![Graphique des fonctions ease in, ease out et ease in-out](https://user.oc-static.com/upload/2019/08/05/15650076977784_image2.png)
+
+Graphique des fonctions ease-in, ease-out et ease in-out
+
+En les observant bien, on peut voir que `ease-in` est plus lent au départ, tandis que `ease-out` freine plus tôt :
+
+![Deux animations CSS d'un carré qui avance et recule de gauche à droite avec les fonctions ease-in et ease-out](https://user.oc-static.com/upload/2021/02/09/16128902706169_Gif047.gif)
+
+Fonctions ease-in et ease-out
+
+Notre perception du mouvement selon l'accélération et le ralentissement devient évidente si on regarde les deux fonctions côte à
+côte : elles ont toutes les deux exactement la même durée, mais en raison de leurs différentes fonctions de timing, le mouvement
+et même la durée semblent totalement différents.
+
+#### La fonction ease
+
+Alors quel timing s’applique aux transitions que nous avons réalisées jusqu’ici ? Eh bien, lorsqu'aucune n'est précisée, le
+navigateur applique la fonction **ease par défaut**, qui ressemble aux courbes que nous venons de décrire. Mais `ease` suit un
+profil d’accélération plus net, et une rampe de décélération plus prononcée :
+
+![Graphique de la fonction ease](https://user.oc-static.com/upload/2021/02/15/1613380486342_1C6_3.png)
+
+Graphique de la fonction ease
+
+Si la courbe `ease` vous paraît familière, c’est normal ! C’est la courbe que notre boîte suivait au début de ce chapitre. Vous
+pouvez la comparer aux autres fonctions de timing par défaut des navigateurs :
+
+![Animations d'un carré qui avance et recule de gauche à droite avec différentes fonctions](https://user.oc-static.com/upload/2021/02/09/16128903000541_Gif048.gif)
+
+### Allez à votre propre rythme avec la fonction cubic-bezier
+
+Les fonctions de timing intégrées à CSS nous permettent d'ajouter du naturel à nos animations très simplement, mais vous pouvez
+avoir envie de créer vos propres effets de timing.
+
+Reprenons l'exercice avec nos boules grossissantes, pour en faire un compteur “force-mètre” (oui oui, ce jeu où je ne gagne
+jamais dans les fêtes foraines) :
+
+![Une animation CSS d'un forcemètre](https://user.oc-static.com/upload/2021/02/09/16128903135599_Gif049.gif)
+
+Quand on maintient le clic appuyé sur le bouton, la boule monte au sommet du compteur. Ça fonctionne bien, si ce n’est le fait
+qu’on ne ressent aucune tension, aucun suspense. On ne doute pas un seul instant que la boule va atteindre le sommet,
+l’utilisateur ne se sentira donc pas engagé dans son interaction.
+
+Un utilisateur qui s'en fiche ? Ça ne va pas du tout ça ! Modifions donc l'accélération de la boule pour apporter un élément de
+doute. Pour l’instant, la transition est fixée à la valeur de la fonction de timing par défaut `ease` :
+
+```scss
+$trans-dur: 2000ms;
+transform: translateY(100%);
+transition: transform $trans-dur;
+```
+
+`ease` comprend un `ease-in` léger puis un `ease-out` un peu plus marqué. Mais si on faisait monter la boule comme une fusée au
+départ, pour la faire ralentir de plus en plus à l’approche du sommet, ça changerait le ressenti. Les utilisateurs se sentiraient
+impliqués, comme s'ils avaient eux-mêmes utilisé un marteau pour faire monter la boule : ils s'appliqueraient davantage sur le
+clic de leur souris.
+
+Sur un graphique, voilà la courbe de l'effet qu'on cherche à obtenir :
+
+![Graphique du mouvement que l'on cherche à reproduire](https://user.oc-static.com/upload/2021/02/15/16133805248827_1C6_4.png)
+
+La représentation graphique du mouvement recherché
+
+Cette courbe ne ressemble à aucune des configurations que nous avons vues… Pour que notre boule la suive, nous allons donc
+devoir la créer nous-mêmes.
+
+Pour cela, je vous présente la fonction CSS **`cubic-bezier`**.
+
+Il faut savoir que les fonctions de timing intégrées à CSS que nous avons vues jusqu'à présent ne sont que des raccourcis de
+fonctions **`cubic-bezier`**.
+
+La fonction `cubic-bezier` fonctionne comme la fonction `rgb()` : on indique une liste de **valeurs numériques**, mais au lieu
+de transformer ces chiffres en couleur, la fonction `cubic-bezier` les transforme en courbe d’accélération. Par exemple,
+`ease-in-out` peut être écrite ainsi :
+
+```scss
+.selector {
+    transition-timing-function: cubic-bezier(.42, 0, .58, 1);
+}
+```
+
+:::note ?
+Super, mais… comment est-ce qu’on transforme la courbe d’accélération de notre effet en fonction `cubic-bezier()` ?
+:::
+
+`cubic-bezier()` a besoin d’une liste de quatre nombres, qui sont les coordonnées de deux points sur le graphique. Les deux
+premiers nombres sont les **coordonnées** X et Y du point qui déterminent le `ease-in` de la courbe d’accélération, et les deux
+suivants déterminent le `ease-out` :
+
+```scss
+.selector {
+/*(X1,Y1)(X2,Y2)*/
+transition-timing-function: cubic-bezier(.42, 0, .58, 1);
+}
+```
+
+Maintenant, imaginez que la courbe d’accélération soit une corde tendue entre deux arbres. Si on attrapait cette corde à deux
+points différents, et qu’on poussait dans deux directions différentes, on forcerait la corde à dévier de sa ligne, dans ces deux
+directions. Les coordonnées que nous indiquons dans `cubic-bezier()` représentent la force et la direction dans laquelle nous
+voulons faire dévier la ligne de notre courbe d’accélération.
+
+Plaçons les coordonnées de notre `ease-in-out` sur le graphique et voyons comment elles créent une courbe d’accélération :
+
+![La courbe d'accélération](https://user.oc-static.com/upload/2021/02/09/16128903473795_Gif050.gif)
+
+Superbe ! Mais… comment est-ce qu’on transforme ça :
+
+![La courbe de bézier que l'on cherche à atteindre](https://user.oc-static.com/upload/2021/02/15/16133805764126_1C6_5.png)
+
+La courbe de bézier que l'on cherche à atteindre
+
+pour obtenir les coordonnées cubic-bezier (0, .75, .08, 1) ???
+
+On pourrait deviner les coordonnées à l'aveuglette… ou bien utiliser un outil en ligne pour nous aider, comme le bien nommé
+[cubic-bezier.com](http://cubic-bezier.com/).
+
+:::info
+Nous utiliserons beaucoup cubic-bezier.com, mais il existe d’autres sites tout aussi fonctionnels. Il vous suffit de faire une
+recherche “cubic bezier”.
+
+Ce site étant en anglais, tous les graphiques seront également en anglais.
+:::
+
+Sur ce site, vous êtes accueilli sur la gauche par le graphique d’une courbe par défaut, accompagnée de deux leviers que vous
+pouvez déplacer pour modifier le profil de l’accélération :
+
+![Modification de la courbe avec un site internet](https://user.oc-static.com/upload/2021/02/15/16133832915168_Gif051%20%281%29.gif)
+
+Vous pouvez voir les valeurs de la fonction cubic-bezier changer quand vous déplacez les leviers. Pour créer notre **courbe
+personnalisée**, nous pouvons faire glisser les leviers `ease-in` et `ease-out` de manière à créer la courbe que nous voulons
+obtenir, puis utiliser dans notre code les valeurs cubic-bezier générées par le site.
+
+Voici la courbe pour notre force-mètre :
+
+![Image de la courbe pour le force-mètre](https://user.oc-static.com/upload/2021/02/15/16133835882607_Gif052.gif)
+
+Il ne nous reste plus qu’à coller ces valeurs cubic-bezier() dans notre transition, et c’est parti !
+
+```scss
+$trans-dur: 2000ms;
+.strength {
+    transform: translateY(100%);
+    transition: transform $trans-dur cubic-bezier(0, .75, .08, 1);
+}
+```
+
+Notre transition crée enfin un peu d'enjeu ! La boule accélère très rapidement, mais traîne sur la fin :
+
+![Une animation CSS du force-mètre amélioré](https://user.oc-static.com/upload/2021/02/15/16133803498613_Gif053.gif)
+
+Comme nous l'avons vu ici, les effets de timing ne sont pas uniquement fonctionnels pour donner un côté naturel à nos animations,
+mais ils peuvent également parfois transmettre une véritable émotion et raconter une histoire.
+
+Les configurations par défaut peuvent souvent suffire, mais parfois, il est nécessaire de créer une courbe personnalisée pour
+aboutir à l’effet souhaité.
+
+Ici, nous avons vu les principales fonctions de timing. Mais il en existe d'autres. Vous pouvez trouver une liste exhaustive sur
+[la documentation MDN](https://developer.mozilla.org/fr/docs/Web/CSS/animation-timing-function).
+
+### En résumé
+
+- l’**accélération** et la **décélération** des transitions sont contrôlées par la propriété `transition-timing-function` ;
+- si aucune fonction de timing n’est indiquée, la transition utilisera la fonction `ease`. Elle suit un profil d’accélération
+plus net, et une rampe de décélération plus prononcée ;
+- parmi les autres mots clés pour les fonctions de **temporisation**, on peut trouver `ease-in`, `ease-out`, `ease-in-out`, et
+`linear` ;
+- quand aucune fonction de timing par défaut ne correspond à l’animation, il est possible de créer ses propres courbes
+d’animation personnalisée à l’aide de la fonction `cubic-bezier()` ;
+- il existe des outils pour ajuster les effets de timing avec la fonction `cubic-bezier()`.
+
+_Félicitation, vous avez terminé cette première partie ! Apprenez dans la seconde partie de ce cours à maîtriser les translations,
+les rotations et l’opacité._
+
+-----
+
+## Quiz : Réalisez vos premières animations CSS
+
+[Réalisez vos premières animations CSS - OpenClassrooms](https://openclassrooms.com/fr/courses/5919246-creez-des-animations-css-modernes/exercises/3567)
+
+#### Compétences évaluées
+
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-checkbox" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#00b341" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <polyline points="9 11 12 14 20 6" />
+  <path d="M20 12v6a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h9" />
+</svg> Réaliser ses premières animations CSS
+
+-----
+
+#### Description
+
+Vous êtes arrivé jusqu'ici, c'est bien ! C'est même très bien !<br />
+Testons maintenant vos connaissances !
+
+
+#### Question 1 : Vous avez un bouton avec une classe `.btn`. Vous voulez créer une animation qui agrandit sa taille de 20 %, et qui change son `background-color` de orange à vert au survol de la souris. Laquelle de ces options écrites en Sass permet de le faire ?
+
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg>
+
+```scss
+.btn {
+    background-color: orange;
+    transform: scale(1);
+    transition: scale, background-color 600ms;
+    &:hover {
+        background-color: green;
+        transform: scale(1.2);
+    }
+}
+```
+
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle-check" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#7bc62d" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M9 12l2 2l4 -4" />
+</svg>
+
+```scss
+.btn {
+    background-color: orange;
+    transform: scale(1);
+    transition: all 600ms;
+    &:hover {
+        background-color: green;
+        transform: scale(20%);
+    }
+}
+```
+
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg>
+
+```scss
+.btn {
+    background-color: orange;
+    transform: scale(1);
+    transition: all 600ms;
+    &:hover {
+        background-color: green;
+        transform: scale(1.2);
+    }
+}
+```
+
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg>
+
+```scss
+.btn {
+    background-color: orange;
+    transform: scale(1);
+    transition: scale 600ms;
+    &:hover {
+        background-color: green;
+        transform: scale(1.2);
+    }
+}
+```
+
+*Le mot clé _all_ vous permet de déclencher une animation à propriétés multiples. Il indique au navigateur de lancer la
+transition sur l'ensemble des propriétés modifiées (ici, `background-color` et `scale()`) dans la pseudo-classe `:hover`.*
+
+*Par ailleurs, la valeur renseignée dans la fonction `scale()` représente un multiplicateur de la taille de base. Typiquement,
+pour agrandir un élément de 20 %, il faut partir de 1 (100 %), et le transformer à une échelle de 1.2, soit 120 %.*
+
+-----
+
+#### Question 2 : Parmi ces propositions, lesquelles sont un élément essentiel pour créer une transition CSS ?
+
+*Attention, plusieurs réponses sont possibles.*
+
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-checkbox" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#00b341" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <polyline points="9 11 12 14 20 6" />
+  <path d="M20 12v6a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h9" />
+</svg> Une propriété à animer<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-checkbox" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#00b341" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <polyline points="9 11 12 14 20 6" />
+  <path d="M20 12v6a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h9" />
+</svg> La durée de la transition<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-square" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <rect x="4" y="4" width="16" height="16" rx="2" />
+</svg> Un sélecteur d'ID<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-checkbox" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#00b341" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <polyline points="9 11 12 14 20 6" />
+  <path d="M20 12v6a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h9" />
+</svg> Une pseudoclasse pour déclencher l’animation<br />
+<br />
+
+*Les 5 éléments nécessaires pour créer une transition sont :*
+- *une propriété CSS à modifier ;*
+- *une valeur initiale pour votre propriété CSS ;*
+- *une valeur finale pour cette même propriété ;*
+- *une durée ;*
+- *une pseudoclasse pour déclencher l’animation.*
+
+*Il n'y a pas besoin d'un sélecteur d'ID pour créer une transition.*
+
+-----
+
+#### Question 3 : Quels principes font partie des 12 principes de l'animation ?
+
+*Attention, plusieurs réponses sont possibles.*
+
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-square" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <rect x="4" y="4" width="16" height="16" rx="2" />
+</svg> Primary Action (action principale)<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-checkbox" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#00b341" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <polyline points="9 11 12 14 20 6" />
+  <path d="M20 12v6a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h9" />
+</svg> Staging (mise en scène)<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-checkbox" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#00b341" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <polyline points="9 11 12 14 20 6" />
+  <path d="M20 12v6a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h9" />
+</svg> Timing<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-checkbox" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#00b341" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <polyline points="9 11 12 14 20 6" />
+  <path d="M20 12v6a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h9" />
+</svg> Anticipation<br />
+<br />
+
+*Les 12 principes de l'animation sont :*
+- *Squash and Stretch ;*
+- *Anticipation ;*
+- *Staging (mise en scène) ;*
+- *Straight Ahead and Pose to Pose ;*
+- *Follow Through and Overlapping Action ;*
+- *Slow in and slow out ;*
+- *Arc ;*
+- *Secondary Action ;*
+- *Timing ;*
+- *Exaggeration (exagération) ;*
+- *Solid Drawing (notion de volume) ;*
+- *Appeal (charisme).*
+
+*Primary Action n'en fait pas partie.*
+
+-----
+
+#### Question 4 : Imaginons que vous vouliez créer une animation d'une fusée qui décolle en cliquant sur un bouton, comme ci-dessous. Quel code permet de créer cette animation ?
+
+![Fusée quiz 1](https://user.oc-static.com/upload/2019/09/01/15673547104799_ezgif.com-resize%20%285%29.gif)
+
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle-check" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#7bc62d" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M9 12l2 2l4 -4" />
+</svg>
+
+```html
+<div class="container">
+    <div class="btn">
+        Lancement !
+    </div>
+    <div class="rocket"></div>
+</div>
+```
+
+```scss
+.btn {
+    &:active + .rocket {
+        transform: translateY(0%);
+    }
+}
+.rocket {
+    transform: translateY(100%);
+    transition: transform 4s;
+}
+```
+
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg>
+
+```html
+<div class="container">
+    <div class="btn">
+        Lancement !
+    </div>
+    <div class="rocket"></div>
+</div>
+```
+
+```scss
+.btn:active .rocket{
+    transform: translateY(0%);
+}
+.rocket {
+    transform: translateY(100%);
+    transition: transform 4s;
+}
+```
+
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg>
+
+```html
+<div class="container">
+    <div class="rocket"></div>
+    <div class="btn">
+        Lancement !
+    </div>
+</div>
+```
+
+```scss
+.btn {
+    &:hover + .rocket {
+        transform: translateY(0%);
+    }
+}
+.rocket {
+    transform: translateY(100%);
+    transition: transform 4s;
+}
+```
+
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg>
+
+```html
+<div class="container">
+    <div class="rocket"></div>
+    <div class="btn">
+        Lancement !
+    </div>
+</div>
+```
+
+```scss
+.btn {
+    &:active + .rocket {
+        transform: translateY(0%);
+    }
+}
+.rocket {
+    transform: translateY(100%);
+    transition: transform 4s;
+}
+```
+
+
+
+*Ici, la pseudoclasse `:active` nous permet de déclencher l'animation en cliquant sur le bouton.*
+
+*Pour qu’une pseudoclasse déclenche une transition sur un autre élément, cet élément doit être le voisin suivant direct dans le
+document HTML. Nous devons donc utiliser le combinateur d’adjacence `+` pour créer la transition sur l’élément voisin. La div
+`.btn` doit donc être un voisin direct de la div `.rocket`. Ainsi, la pseudoclasse de la div `.btn` permet de déclencher
+l'animation sur la div `.rocket`.*
+
+-----
+
+#### Question 5 : Quelle est la fonction de timing la plus utile pour les animateurs grâce à ses subtiles accélérations et ralentissements en fin d'animation ?
+
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> Linear<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle-check" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#7bc62d" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M9 12l2 2l4 -4" />
+</svg> Ease-in-out<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> Ease-out-in<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> Ease-out<br />
+<br />
+
+*L'accélération à son début, et le ralentissement, à la fin, subtils de la fonction de timing **_ease-in-out_** la rendent très
+utile pour les animateurs.*
+
+-----
+
+#### Question 6 : Laquelle de ces courbes représente la fonction de ease-in ?
+
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg>
+
+![La courbe est droite](https://user.oc-static.com/upload/2019/07/16/15633067377605_15554517001423_linear.png)
+
+Choix numéro 1
+
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg>
+
+![La courbe fait suit une décélération plus subtile](https://user.oc-static.com/upload/2019/07/16/1563306782401_15554517628873_ease-out.png)
+
+Choix numéro 2
+
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg>
+
+![La courbe suit une décélération et accélération subtiles](https://user.oc-static.com/upload/2019/07/16/15633068370734_15554517166935_ease-in-out.png)
+
+Choix numéro 3
+
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle-check" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#7bc62d" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M9 12l2 2l4 -4" />
+</svg>
+
+![La courbe suit une accélération subtile](https://user.oc-static.com/upload/2019/07/16/15633068745861_1555451734433_ease-in.png)
+
+Choix numéro 4
+
+*La fonction _ease-in_ commence avec une pente d'accélération assez subtile et reste assez stable jusqu'à la fin de l'animation.
+Elle est représentée par le graphique de la réponse 4.*
+
+-----
+
+#### Question 7 : Quel principe d'animation la propriété transition-timing-function permet d'appliquer à un élément ?
+
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> Anticipation<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle-check" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#7bc62d" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M9 12l2 2l4 -4" />
+</svg> Slow in and slow out  (ralentissement en début et en fin de mouvement)<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> Straight ahead and pose-to-pose (toute l'action d'un coup et partie par partie)<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> Timing<br />
+<br />
+
+_La propriété `transition-timing-function` permet de définir les courbes d'accélération des transition. Sa valeur par défaut
+_ease_ permet facilement de mettre en application le  principe d'animation **_slow in and slow out._**_
+
+-----
+
+#### Question 8 : Dans la question 4, aucune valeur n'est déclarée pour `transition-timing-function`. Le timing par défaut est donc appliqué, mais quelle est la valeur par défaut appliquée à `transition-timing-function` ?
+
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> Ease-in<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> Ease-in-out<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle-check" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#7bc62d" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M9 12l2 2l4 -4" />
+</svg> Ease<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> Ease-out<br />
+<br />
+
+*Lorsqu'aucune valeur n'est précisée, le navigateur applique automatiquement la fonction _ease_.*
+
+-----
+
+#### Question 9 : Vous voulez rendre l'animation de la question 4 plus réaliste en appliquant une fonction de timing `cubic-bezier()`. Vous souhaitez donner l'impression qu'il est difficile pour la fusée de s'élever puisqu'elle doit lutter contre la gravité au démarrage de l'animation. Puis elle atteint une vitesse constante à partir du milieu de l'animation, comme ci-dessous 👇.
+
+![Fusée cubic](https://user.oc-static.com/upload/2019/09/01/15673548597072_ezgif.com-resize%20%286%29.gif)
+
+**Voilà à quoi ressemble la courbe d'accélération associée :**
+
+![Courbe d'accélération fusée](https://user.oc-static.com/upload/2019/07/16/15633072449706_15554877293344_custom%20curve.png)
+
+Courbe d'accélération de la fusée
+
+**Laquelle des fonctions suivantes décrit la courbe d'accélération ?**
+
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle-check" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#7bc62d" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M9 12l2 2l4 -4" />
+</svg>
+
+```css
+cubic-bezier(.65,0,.28,.79)
+```
+
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg>
+
+```css
+cubic-bezier(.65,0,.79,.28)
+```
+
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg>
+
+```css
+cubic-bezier(0,.65,.28,.79)
+```
+
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg>
+
+```css
+cubic-bezier(0,.65,.79,.28)
+```
+
+*L'outil en ligne [**cubic-bezier.com**](http://cubic-bezier.com/) vous permet de trouver les bons paramètres pour donner à la
+fonction `cubic-bezier()` la courbe d'accélération que vous souhaitez.*
+
+*Pour créer notre courbe personnalisée, nous pouvons faire glisser les leviers _ease-in_ et _ease-out_ de manière à créer la
+courbe que nous voulons obtenir, puis utiliser dans notre code les valeurs _cubic-bezier_ générées par le site.*
+
+-----
+
+#### Question 10 : Quelle est la pseudo-classe la plus adaptée pour changer un élément au clic d'un bouton ?
+
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> :hover<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle-check" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#7bc62d" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M9 12l2 2l4 -4" />
+</svg> :active<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> :disabled<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> :not()<br />
+<br />
+
+*C'est `:active` qui est activé au clic de l'utilisateur, le plus souvent utilisée dans le cas d'un lien ou d'un bouton.*
+
+*La pseudoclasse `:hover`, quant à elle, est déclenchée au survol de la souris.*
+
+*`:not()` est une notation fonctionnelle qui prend un sélecteur comme argument. Elle permet de cibler les éléments qui ne sont
+pas représentés par cet argument.*
+
+*Et la pseudoclasse `:disabled` correspond à un élément dont l'interaction avec l'utilisateur a été bloquée.*

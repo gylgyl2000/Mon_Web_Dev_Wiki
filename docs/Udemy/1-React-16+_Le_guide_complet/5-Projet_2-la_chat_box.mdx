@@ -1,0 +1,1182 @@
+---
+id: Udemy-React-16+_Le_guide_complet-05-Projet_2-la_chat_box
+title: "05 - Projet 2 : la Chat Box"
+---
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+import { MDXEmbedProvider } from 'mdx-embed';
+
+
+## Initialisation du Projet
+
+<video
+  height="auto"
+  width="100%"
+  controls>
+    <source
+      src="https://monwikidevweb.la-loutre.fr/data/udemy/video/Udemy-React-16+_Le_guide_complet-05-Projet_2-la_chat_box-01.mp4"
+      type="video/mp4"
+    />
+</video>
+
+<br />
+<br />
+
+Installer l'app
+
+```bash title="console"
+➜  base-chatbox-app npm install
+```
+
+firebase<br />
+re-base<br />
+react-dom<br />
+react-transition-group
+
+-----
+
+## Formulaire de Connexion
+
+<video
+  height="auto"
+  width="100%"
+  controls>
+    <source
+      src="https://monwikidevweb.la-loutre.fr/data/udemy/video/Udemy-React-16+_Le_guide_complet-05-Projet_2-la_chat_box-02.mp4"
+      type="video/mp4"
+    />
+</video>
+
+<br />
+<br />
+
+
+[ES7 React/Redux/GraphQL/React-Native snippets – Open VSX Registry](https://open-vsx.org/extension/dsznajder/es7-react-js-snippets)
+
+Raccourci :
+- rcc : React Components Class
+
+
+```js title="components/Connexion.js"
+import React, { Component } from 'react'
+
+class Connexion extends Component {
+    render () {
+        return (
+            <div className='connexionBox'>
+                <form className='connexion'>
+                    <input
+                        placeholder='pseudo'
+                        type='text'
+                        required
+                    />
+                    <button type='submit'>GO</button>
+                </form>
+            </div>
+        )
+    }
+}
+
+export default Connexion
+```
+
+```js title="App.js"
+import React, { Component } from 'react'
+import './App.css'
+
+class App extends Component {
+  render () {
+    return (
+      <div className='box' />
+    )
+  }
+}
+
+export default App
+```
+
+```js title="index.js"
+import React from 'react'
+import ReactDOM from 'react-dom'
+import './index.css'
+import App from './App'
+import Connexion from './components/Connexion'
+import * as serviceWorker from './serviceWorker'
+
+ReactDOM.render(<Connexion />, document.getElementById('root'))
+
+// If you want your app to work offline and load faster, you can change
+// unregister() to register() below. Note this comes with some pitfalls.
+// Learn more about service workers: http://bit.ly/CRA-PWA
+serviceWorker.register()
+```
+
+-----
+
+## Découverte de React Router V4
+
+<video
+  height="auto"
+  width="100%"
+  controls>
+    <source
+      src="https://monwikidevweb.la-loutre.fr/data/udemy/video/Udemy-React-16+_Le_guide_complet-05-Projet_2-la_chat_box-03.mp4"
+      type="video/mp4"
+    />
+</video>
+
+<br />
+<br />
+
+```js {8-9,11-19} title="index.js"
+import React from 'react'
+import ReactDOM from 'react-dom'
+import './index.css'
+import App from './App'
+import Connexion from './components/Connexion'
+import * as serviceWorker from './serviceWorker'
+
+import { BrowserRouter, Route, Switch } from 'react-router-dom'
+import NotFound from './components/NotFound'
+
+const Root = () => (
+    <BrowserRouter>
+        <Switch>
+            <Route exact path='/' component={Connexion} />
+            <Route path='/pseudo/:pseudo' component={App} />
+            <Route component={NotFound} />
+        </Switch>
+    </BrowserRouter>
+)
+
+ReactDOM.render(<Root />, document.getElementById('root'))
+```
+
+```js title="components/NotFound.js"
+import React from 'react'
+
+const NotFound = () => (
+    <h2 className='notFound'>Y'a rien ici !</h2>
+)
+
+export default NotFound
+```
+
+-----
+
+## Changement de Page avec React Router V4
+
+<video
+  height="auto"
+  width="100%"
+  controls>
+    <source
+      src="https://monwikidevweb.la-loutre.fr/data/udemy/video/Udemy-React-16+_Le_guide_complet-05-Projet_2-la_chat_box-04.mp4"
+      type="video/mp4"
+    />
+</video>
+
+<br />
+<br />
+
+```jsx {2,5-8,10-13,15-18,21-23,27,29-30} title="components/Connexion.js"
+import React, { Component } from 'react'
+import { Redirect } from 'react-router-dom'
+
+class Connexion extends Component {
+    state = {
+        pseudo: '',
+        goToChat: false
+    }
+
+    handleChange = event => {
+        const pseudo = event.target.value
+        this.setState({ pseudo })
+    }
+
+    handleSubmit = event => {
+        event.preventDefault()
+        this.setState({ goToChat: true })
+    }
+
+    render () {
+        if (this.state.goToChat) {
+            return <Redirect push to={`/pseudo/${this.state.pseudo}`} />
+        }
+
+        return (
+            <div className='connexionBox'>
+                <form className='connexion' onSubmit={this.handleSubmit}>
+                    <input
+                        value={this.state.pseudo}
+                        onChange={this.handleChange}
+                        placeholder='pseudo'
+                        type='text'
+                        required
+                    />
+                    <button type='submit'>GO</button>
+                </form>
+            </div>
+        )
+    }
+}
+
+export default Connexion
+```
+
+- Redirect from react-router-dom
+
+-----
+
+## Création des Components
+
+<video
+  height="auto"
+  width="100%"
+  controls>
+    <source
+      src="https://monwikidevweb.la-loutre.fr/data/udemy/video/Udemy-React-16+_Le_guide_complet-05-Projet_2-la_chat_box-05.mp4"
+      type="video/mp4"
+    />
+</video>
+
+<br />
+<br />
+
+raccourci : rafce
+
+[Emmet in Visual Studio Code](https://code.visualstudio.com/docs/editor/emmet)
+
+```bash title="~/.var/app/com.vscodium.codium/config/VSCodium/User/settings.json"
+"emmet.includeLanguages": {
+    "javascript": "javascriptreact",
+    "razor": "html",
+    "plaintext": "pug"
+}
+```
+
+raccourci : `p.user-message` => `<p className="user-message"></p>`
+
+```jsx {4-5,12-16,18} title="App.js"
+import React, { Component } from 'react'
+import './App.css'
+
+import Formulaire from './components/Formulaire'
+import Message from './components/Message'
+
+class App extends Component {
+  render () {
+    return (
+      <div className='box'>
+        <div>
+          <div className="messages">
+            <Message />
+            <Message />
+            <Message />
+          </div>
+        </div>
+        <Formulaire />
+      </div>
+    )
+  }
+}
+
+export default App
+```
+
+```jsx title="components/Formulaire.js"
+import React, { Component } from 'react'
+
+export default class Formulaire extends Component {
+    render() {
+        return (
+            <form
+                className='form'>
+                <textarea
+                    required
+                    maxLength='140' />
+                <div
+                    className='info' >
+                    140
+                </div>
+                <button
+                    type='submit' >
+                    Envoyer !
+                </button>
+            </form>
+        )
+    }
+}
+```
+
+```jsx title="components/Message.js"
+import React from 'react'
+
+const Message = () => {
+    return (
+        <p className="user-message">
+            Mon message
+        </p>
+    )
+}
+
+export default Message
+```
+
+-----
+
+## Enregistrer les Messages dans le State
+
+<video
+  height="auto"
+  width="100%"
+  controls>
+    <source
+      src="https://monwikidevweb.la-loutre.fr/data/udemy/video/Udemy-React-16+_Le_guide_complet-05-Projet_2-la_chat_box-06.mp4"
+      type="video/mp4"
+    />
+</video>
+
+<br />
+<br />
+
+```jsx {3-6,8-12,25-26} title="App.js"
+class App extends Component {
+
+  state = {
+    messages: {},
+    pseudo: this.props.match.params.pseudo
+  }
+
+  addMessage = message => {
+    const messages = { ...this.state.messages }
+    messages[`message-${Date.now()}`] = message
+    this.setState({ messages })
+  }
+
+  render () {
+    return (
+      <div className='box'>
+        <div>
+          <div className="messages">
+            <Message />
+            <Message />
+            <Message />
+          </div>
+        </div>
+        <Formulaire
+          pseudo={this.state.pseudo}
+          addMessage={this.addMessage} />
+      </div>
+    )
+  }
+}
+```
+
+```jsx {3-5,7-19,21-24,26-29,35,37-38} title="components/Formulaire.js"
+export default class Formulaire extends Component {
+
+    state = {
+        message: ''
+    }
+
+    createMessage = () => {
+        const { addMessage, pseudo } = this.props
+
+        const message = {
+            pseudo,
+            message: this.state.message
+        }
+
+        addMessage(message)
+
+        // reset
+        this.setState({ message: ''} )
+    }
+
+    handleSubmit = event => {
+        event.preventDefault()
+        this.createMessage()
+    }
+
+    handleChange = event => {
+        const message = event.target.value
+        this.setState({ message })
+    }
+
+    render() {
+        return (
+            <form
+                className='form'
+                onSubmit={this.handleSubmit}>
+                <textarea
+                    value={this.state.message}
+                    onChange={this.handleChange}
+                    required
+                    maxLength='140' />
+                <div
+                    className='info' >
+                    140
+                </div>
+                <button
+                    type='submit' >
+                    Envoyer !
+                </button>
+            </form>
+        )
+    }
+}
+```
+
+-----
+
+## Gestion de Nouveaux Events
+
+<video
+  height="auto"
+  width="100%"
+  controls>
+    <source
+      src="https://monwikidevweb.la-loutre.fr/data/udemy/video/Udemy-React-16+_Le_guide_complet-05-Projet_2-la_chat_box-07.mp4"
+      type="video/mp4"
+    />
+</video>
+
+<br />
+<br />
+
+```jsx {25} title="App.js"
+class App extends Component {
+
+  state = {
+    messages: {},
+    pseudo: this.props.match.params.pseudo
+  }
+
+  addMessage = message => {
+    const messages = { ...this.state.messages }
+    messages[`message-${Date.now()}`] = message
+    this.setState({ messages })
+  }
+
+  render () {
+    return (
+      <div className='box'>
+        <div>
+          <div className="messages">
+            <Message />
+            <Message />
+            <Message />
+          </div>
+        </div>
+        <Formulaire
+          length={140}
+          pseudo={this.state.pseudo}
+          addMessage={this.addMessage} />
+      </div>
+    )
+  }
+}
+```
+
+```jsx {5,9,19,29-30,33-37,47,49,52} title="components/Formulaire.js"
+export default class Formulaire extends Component {
+
+    state = {
+        message: '',
+        length: this.props.length
+    }
+
+    createMessage = () => {
+        const { addMessage, pseudo, length } = this.props
+
+        const message = {
+            pseudo,
+            message: this.state.message
+        }
+
+        addMessage(message)
+
+        // reset
+        this.setState({ message: '', length} )
+    }
+
+    handleSubmit = event => {
+        event.preventDefault()
+        this.createMessage()
+    }
+
+    handleChange = event => {
+        const message = event.target.value
+        const length = this.props.length - message.length
+        this.setState({ message, length })
+    }
+
+    handleKeyUp = event => {
+        if (event.key === 'Enter') {
+            this.createMessage()
+        }
+    }
+
+    render() {
+        return (
+            <form
+                className='form'
+                onSubmit={this.handleSubmit}>
+                <textarea
+                    value={this.state.message}
+                    onChange={this.handleChange}
+                    onKeyUp={this.handleKeyUp}
+                    required
+                    maxLength={this.props.length} />
+                <div
+                    className='info' >
+                    { this.state.length }
+                </div>
+                <button
+                    type='submit' >
+                    Envoyer !
+                </button>
+            </form>
+        )
+    }
+}
+```
+
+-----
+
+## Afficher notre State
+
+<video
+  height="auto"
+  width="100%"
+  controls>
+    <source
+      src="https://monwikidevweb.la-loutre.fr/data/udemy/video/Udemy-React-16+_Le_guide_complet-05-Projet_2-la_chat_box-08.mp4"
+      type="video/mp4"
+    />
+</video>
+
+<br />
+<br />
+
+```jsx {16-23,29-31} title="App.js"
+class App extends Component {
+
+  state = {
+    messages: {},
+    pseudo: this.props.match.params.pseudo
+  }
+
+  addMessage = message => {
+    const messages = { ...this.state.messages }
+    messages[`message-${Date.now()}`] = message
+    this.setState({ messages })
+  }
+
+  render () {
+
+    const messages = Object
+      .keys(this.state.messages)
+      .map(key => (
+        <Message
+          key={key}
+          message={this.state.messages[key].message}
+          pseudo={this.state.messages[key].pseudo} />
+      ))
+
+    return (
+      <div className='box'>
+        <div>
+          <div className="messages">
+            <div className='message'>
+              { messages }
+            </div>
+          </div>
+        </div>
+        <Formulaire
+          length={140}
+          pseudo={this.state.pseudo}
+          addMessage={this.addMessage} />
+      </div>
+    )
+  }
+}
+```
+
+```jsx {1,4} title="components/Message.js"
+const Message = ({ pseudo, message }) => {
+    return (
+        <p className="user-message">
+            {message}
+        </p>
+    )
+}
+```
+
+-----
+
+## Découverte de Firebase
+
+<video
+  height="auto"
+  width="100%"
+  controls>
+    <source
+      src="https://monwikidevweb.la-loutre.fr/data/udemy/video/Udemy-React-16+_Le_guide_complet-05-Projet_2-la_chat_box-09.mp4"
+      type="video/mp4"
+    />
+</video>
+
+<br />
+<br />
+
+Firebase : https://firebase.google.com
+
+-> Accéder à la console<br />
+-> Ajouter un projet<br />
+-> Nom du projet : "chatbox-app"<br />
+-> Zone des données analytiques : France<br />
+-> Zone Cloud Firestore : europe-west3<br />
+-> Realtime Database : Créer une base de données<br />
+-> Choisir une Zone<br />
+-> "Démarrer en mode test"<br />
+-> "Activer"<br />
+
+-----
+
+## Connecter Firebase et React
+
+<video
+  height="auto"
+  width="100%"
+  controls>
+    <source
+      src="https://monwikidevweb.la-loutre.fr/data/udemy/video/Udemy-React-16+_Le_guide_complet-05-Projet_2-la_chat_box-10.mp4"
+      type="video/mp4"
+    />
+</video>
+
+<br />
+<br />
+
+```jsx title="base.js"
+import Rebase from 're-base'
+import firebase from 'firebase/app'
+import 'firebase/database'
+
+const firebaseApp = firebase.initializeApp({
+    apiKey: "AIzaSyCyiHN-WIR710Y8py6VVM4d02dD9zIOElM",
+    authDomain: "chatbox-app-94cfa.firebaseapp.com",
+    databaseURL: "https://chatbox-app-94cfa-default-rtdb.europe-west1.firebasedatabase.app"
+})
+
+const base = Rebase.createClass(firebase.database())
+
+export { firebaseApp }
+
+export default base
+```
+
+-----
+
+## Synchroniser notre State et la Realtime Database
+
+<video
+  height="auto"
+  width="100%"
+  controls>
+    <source
+      src="https://monwikidevweb.la-loutre.fr/data/udemy/video/Udemy-React-16+_Le_guide_complet-05-Projet_2-la_chat_box-11.mp4"
+      type="video/mp4"
+    />
+</video>
+
+<br />
+<br />
+
+
+- [react-router-dom - npm](https://www.npmjs.com/package/react-router-dom)
+- [re-base - npm](https://www.npmjs.com/package/re-base)
+
+```jsx {7-8,17-22} title="App.js"
+import React, { Component } from 'react';
+import './App.css';
+
+import Formulaire from './components/Formulaire';
+import Message from './components/Message';
+
+// firebase
+import base from './base';
+
+class App extends Component {
+
+  state = {
+    messages: {},
+    pseudo: this.props.match.params.pseudo
+  }
+
+  componentDidMount () {
+    base.syncState('/', {
+      context: this,
+      state: 'messages'
+      })
+  }
+
+  addMessage = message => {
+    const messages = { ...this.state.messages }
+    messages[`message-${Date.now()}`] = message
+    this.setState({ messages })
+  }
+
+  render () {
+
+    const messages = Object
+      .keys(this.state.messages)
+      .map(key => (
+        <Message
+          key={key}
+          message={this.state.messages[key].message}
+          pseudo={this.state.messages[key].pseudo} />
+      ))
+
+    return (
+      <div className='box'>
+        <div>
+          <div className="messages">
+            <div className='message'>
+              { messages }
+            </div>
+          </div>
+        </div>
+        <Formulaire
+          length={140}
+          pseudo={this.state.pseudo}
+          addMessage={this.addMessage} />
+      </div>
+    )
+  }
+}
+
+export default App
+```
+
+-----
+
+## Les Ref dans React : createRef()
+
+<video
+  height="auto"
+  width="100%"
+  controls>
+    <source
+      src="https://monwikidevweb.la-loutre.fr/data/udemy/video/Udemy-React-16+_Le_guide_complet-05-Projet_2-la_chat_box-12.mp4"
+      type="video/mp4"
+    />
+</video>
+
+<br />
+<br />
+
+```jsx {1,17,26-29,51} title="App.js"
+import React, { Component, createRef } from 'react';
+import './App.css';
+
+import Formulaire from './components/Formulaire';
+import Message from './components/Message';
+
+// firebase
+import base from './base';
+
+class App extends Component {
+
+  state = {
+    messages: {},
+    pseudo: this.props.match.params.pseudo
+  }
+
+  messagesRef = createRef()
+
+  componentDidMount () {
+    base.syncState('/', {
+      context: this,
+      state: 'messages'
+      })
+  }
+
+  componentDidUpdate () {
+    const ref = this.messagesRef.current
+    ref.scrollTop = ref.scrollHeight
+  }
+
+  addMessage = message => {
+    const messages = { ...this.state.messages }
+    messages[`message-${Date.now()}`] = message
+    this.setState({ messages })
+  }
+
+  render () {
+
+    const messages = Object
+      .keys(this.state.messages)
+      .map(key => (
+        <Message
+          key={key}
+          message={this.state.messages[key].message}
+          pseudo={this.state.messages[key].pseudo} />
+      ))
+
+    return (
+      <div className='box'>
+        <div>
+          <div className="messages" ref={this.messagesRef}>
+            <div className='message'>
+              { messages }
+            </div>
+          </div>
+        </div>
+        <Formulaire
+          length={140}
+          pseudo={this.state.pseudo}
+          addMessage={this.addMessage} />
+      </div>
+    )
+  }
+}
+
+export default App
+```
+
+-----
+
+## Supprimer des Éléments du State
+
+<video
+  height="auto"
+  width="100%"
+  controls>
+    <source
+      src="https://monwikidevweb.la-loutre.fr/data/udemy/video/Udemy-React-16+_Le_guide_complet-05-Projet_2-la_chat_box-13.mp4"
+      type="video/mp4"
+    />
+</video>
+
+<br />
+<br />
+
+```jsx {25-30} title="App.js"
+class App extends Component {
+
+  state = {
+    messages: {},
+    pseudo: this.props.match.params.pseudo
+  }
+
+  messagesRef = createRef()
+
+  componentDidMount () {
+    base.syncState('/', {
+      context: this,
+      state: 'messages'
+      })
+  }
+
+  componentDidUpdate () {
+    const ref = this.messagesRef.current
+    ref.scrollTop = ref.scrollHeight
+  }
+
+  addMessage = message => {
+    const messages = { ...this.state.messages }
+    messages[`message-${Date.now()}`] = message
+    Object
+      .keys(messages)
+      .slice(0, -10)
+      .forEach(key => {
+        messages[key] = null
+      })
+
+    this.setState({ messages })
+  }
+
+  render () {
+
+    const messages = Object
+      .keys(this.state.messages)
+      .map(key => (
+        <Message
+          key={key}
+          message={this.state.messages[key].message}
+          pseudo={this.state.messages[key].pseudo} />
+      ))
+
+    return (
+      <div className='box'>
+        <div>
+          <div className="messages" ref={this.messagesRef}>
+            <div className='message'>
+              { messages }
+            </div>
+          </div>
+        </div>
+        <Formulaire
+          length={140}
+          pseudo={this.state.pseudo}
+          addMessage={this.addMessage} />
+      </div>
+    )
+  }
+}
+```
+
+-----
+
+## Rendu Conditionnel des Messages
+
+<video
+  height="auto"
+  width="100%"
+  controls>
+    <source
+      src="https://monwikidevweb.la-loutre.fr/data/udemy/video/Udemy-React-16+_Le_guide_complet-05-Projet_2-la_chat_box-14.mp4"
+      type="video/mp4"
+    />
+</video>
+
+<br />
+<br />
+
+```jsx {35,44} title="App.js"
+class App extends Component {
+
+  state = {
+    messages: {},
+    pseudo: this.props.match.params.pseudo
+  }
+
+  messagesRef = createRef()
+
+  componentDidMount () {
+    base.syncState('/', {
+      context: this,
+      state: 'messages'
+      })
+  }
+
+  componentDidUpdate () {
+    const ref = this.messagesRef.current
+    ref.scrollTop = ref.scrollHeight
+  }
+
+  addMessage = message => {
+    const messages = { ...this.state.messages }
+    messages[`message-${Date.now()}`] = message
+    Object
+      .keys(messages)
+      .slice(0, -10)
+      .forEach(key => {
+        messages[key] = null
+      })
+
+    this.setState({ messages })
+  }
+
+  isUser = pseudo => pseudo === this.state.pseudo
+
+  render () {
+
+    const messages = Object
+      .keys(this.state.messages)
+      .map(key => (
+        <Message
+          key={key}
+          isUser={this.isUser}
+          message={this.state.messages[key].message}
+          pseudo={this.state.messages[key].pseudo} />
+      ))
+
+    return (
+      <div className='box'>
+        <div>
+          <div className="messages" ref={this.messagesRef}>
+            <div className='message'>
+              { messages }
+            </div>
+          </div>
+        </div>
+        <Formulaire
+          length={140}
+          pseudo={this.state.pseudo}
+          addMessage={this.addMessage} />
+      </div>
+    )
+  }
+}
+```
+
+```jsx {1,2,8-14} title="components/Message.js"
+const Message = ({ pseudo, message, isUser }) => {
+    if (isUser(pseudo)) {
+        return (
+            <p className="user-message">
+                {message}
+            </p>
+        )
+    } else {
+        return (
+            <p className="not-user-message">
+                <strong>{pseudo} : </strong>{message}
+            </p>
+        )
+    }
+}
+```
+
+-----
+
+## Gérer les Animations en React
+
+<video
+  height="auto"
+  width="100%"
+  controls>
+    <source
+      src="https://monwikidevweb.la-loutre.fr/data/udemy/video/Udemy-React-16+_Le_guide_complet-05-Projet_2-la_chat_box-15.mp4"
+      type="video/mp4"
+    />
+</video>
+
+<br />
+<br />
+
+react-transition-group :
+- CSSTransition
+- TransitionGroup
+
+```jsx {11-12,55-58,63,70,72} title="App.js"
+import React, { Component, createRef } from 'react';
+import './App.css';
+import './animation.css'
+
+import Formulaire from './components/Formulaire';
+import Message from './components/Message';
+
+// firebase
+import base from './base';
+
+// Animations
+import { CSSTransition, TransitionGroup } from 'react-transition-group'
+
+class App extends Component {
+
+  state = {
+    messages: {},
+    pseudo: this.props.match.params.pseudo
+  }
+
+  messagesRef = createRef()
+
+  componentDidMount () {
+    base.syncState('/', {
+      context: this,
+      state: 'messages'
+      })
+  }
+
+  componentDidUpdate () {
+    const ref = this.messagesRef.current
+    ref.scrollTop = ref.scrollHeight
+  }
+
+  addMessage = message => {
+    const messages = { ...this.state.messages }
+    messages[`message-${Date.now()}`] = message
+    Object
+      .keys(messages)
+      .slice(0, -10)
+      .forEach(key => {
+        messages[key] = null
+      })
+
+    this.setState({ messages })
+  }
+
+  isUser = pseudo => pseudo === this.state.pseudo
+
+  render () {
+
+    const messages = Object
+      .keys(this.state.messages)
+      .map(key => (
+        <CSSTransition
+          timeout={200}
+          classNames='fade'
+          key={key}>
+          <Message
+            isUser={this.isUser}
+            message={this.state.messages[key].message}
+            pseudo={this.state.messages[key].pseudo} />
+        </CSSTransition>
+      ))
+
+    return (
+      <div className='box'>
+        <div>
+          <div className="messages" ref={this.messagesRef}>
+            <TransitionGroup className='message'>
+              { messages }
+            </TransitionGroup>
+          </div>
+        </div>
+        <Formulaire
+          length={140}
+          pseudo={this.state.pseudo}
+          addMessage={this.addMessage} />
+      </div>
+    )
+  }
+}
+
+export default App
+```
+
+```css title="animation.css"
+.fade-enter {
+    opacity: 0.01;
+    transform: scale(0.9) translateY(-50%);
+}
+
+.fade-enter-active {
+    opacity: 1;
+    transform: scale(1) translateY(0%);
+    transition: all 200ms ease-out;
+}
+
+.fade-exit {
+    opacity: 1;
+    transform: scale(1) translateY(0%);
+}
+
+.fade-exit-active {
+    opacity: 0.01;
+    transform: scale(0.9) translateY(-50%);
+    transition: all 200ms ease-out;
+}
+```
+
+-----
+
+## Résumé
+
+<video
+  height="auto"
+  width="100%"
+  controls>
+    <source
+      src="https://monwikidevweb.la-loutre.fr/data/udemy/video/Udemy-React-16+_Le_guide_complet-05-Projet_2-la_chat_box-16.mp4"
+      type="video/mp4"
+    />
+</video>
+
+<br />
+<br />

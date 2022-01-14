@@ -1,0 +1,77 @@
+---
+sidebar_position: 1
+---
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+import { Vimeo } from 'mdx-embed';
+
+# Mission
+
+[Coding Games and Programming Challenges to Code Better](https://www.codingame.com/ide/puzzle/onboarding)
+
+## Objectif
+
+Votre programme doit détruire les vaisseaux ennemis en tirant sur l'ennemi le plus proche à chaque tour.
+
+## Règles
+
+Les vaisseaux ennemis approchent en ligne droite vers votre canon.
+  
+**À chaque début d'un tour de jeu** (dans la boucle _game loop_), vous obtenez les informations des deux ennemis les plus proches :
+- variable `enemy1` : le nom de l'ennemi 1.
+- variable `dist1` : la distance à laquelle se trouve l'ennemi 1.
+- variable `enemy2` : le nom de l'ennemi 2.
+- variable `dist2` : la distance à laquelle se trouve l'ennemi 2.
+
+**Avant la fin du tour** (fin de la boucle), vous devez indiquer en sortie le nom de l'ennemi le plus proche. Pour afficher le nom de
+l'ennemi le plus proche, vous devez utiliser la variable `enemy1` ou `enemy2`.
+
+```javascript
+// game loop
+while (true) {
+    var enemy1 = readline(); // name of enemy 1
+    var dist1 = parseInt(readline()); // distance to enemy 1
+    var enemy2 = readline(); // name of enemy 2
+    var dist2 = parseInt(readline()); // distance to enemy 2
+
+    // Write an action using console.log()
+
+    // Enter the code here
+
+    if (dist1 < dist2) {
+        console.log(enemy1);
+    } else {
+        console.log(enemy2);
+    }
+}
+```
+
+[Conditions: exercises and theory](https://www.codingame.com/learn/conditions)
+
+## Conditions
+
+### Définition
+
+En programmation, les expressions conditionnelles sont caractéristiques d'un langage de programmation, qui effectuent différents calculs ou
+des actions en fonction de si une condition booléenne spécifiée est évaluée à vrai (true) ou non (false).
+
+La construction **if-then-else** est commun dans de nombreux langages de programmation. Bien que la syntaxe varie en fonction du langage,
+la structure de base (en pseudocode) ressemble à ceci:
+
+```sh
+If (boolean condition) Then
+    -- do some stuff
+Else
+    -- do other stuff
+End If
+```
+
+Quand un programme trouve un if, il attend une condition booléenne - par exemple, x > 0, ce qui signifie "la variable x contient un nombre
+qui est supérieur à zéro" - et évalue cette condition. Si la condition est vraie, les instructions qui suivent le "Then" sont exécutées.
+Dans le cas contraire, l'exécution se poursuit dans la branche suivante - soit dans le bloc "Else" (optionel), ou s'il n'y a pas d'autre
+branche, après la fin If.
+
+#### Ressources externes
+
+[Conditions](https://fr.wikipedia.org/wiki/Structure_de_contr%C3%B4le#Test_si)[(EN) Operateur Ternaire](https://en.wikipedia.org/wiki/%3F:)
+

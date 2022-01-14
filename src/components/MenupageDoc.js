@@ -21,7 +21,7 @@ const DocList = [
   {
     title: 'Udemy',
     Svg: require('../../static/img/sites/udemy.svg').default,
-    Url: '*',
+    Url: '../docs/Udemy/menu',
   },
   {
     title: 'MDNWebDoc',
@@ -32,6 +32,11 @@ const DocList = [
     title: 'Codewars',
     Svg: require('../../static/img/sites/codewars.svg').default,
     Url: '../docs/Codewars/menu',
+  },
+  {
+    title: 'CodinGame',
+    Svg: require('../../static/img/sites/CodinGame.svg').default,
+    Url: '../docs/CodinGame/menu',
   },
   {
     title: 'CSS-Tricks',

@@ -1,0 +1,3489 @@
+---
+sidebar_position: 4
+---
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+import { Vimeo } from 'mdx-embed';
+
+# Réalisez des animations dynamiques avec les @keyframes
+
+## Créez des animations plus complexes avec la règle CSS @keyframes
+
+[Créez des animations plus complexes avec la règle CSS @keyframes - Créez des animations CSS modernes - OpenClassrooms](https://openclassrooms.com/fr/courses/5919246-creez-des-animations-css-modernes/6340923-creez-des-animations-plus-complexes-avec-la-regle-css-keyframes)
+
+<Vimeo vimeoId="508777342" />
+
+<br />
+
+Avec les transitions, nous avons appris à définir une valeur de départ et une valeur de fin.
+
+Ces transitions sont parfaites pour animer par exemple l'état de survol d'un bouton ou le fait de passer d'une couleur A à une couleur B (en
+animant `opacity` et pas `background-color`, n'est-ce pas 🤨). Simple et efficace. Vous pouvez même changer le timing de votre transition.
+
+Mais comment faire si on veut plus qu'un point A et un point B ?
+
+### Créez des étapes supplémentaires
+
+Jetons un œil à la barre de progression que nous avions créée dans la partie 2, lorsque nous avons étudié `transform-origin` :
+
+![La barre de chargement avec transform-origin](https://user.oc-static.com/upload/2021/02/10/16129488216241_Gif099.gif)
+
+Cette barre de chargement fait le travail. Mais… toutes les personnes ayant déjà téléchargé quelque chose sur Internet savent que les vitesses
+de connexion sont loin d'être **constantes**. La progression se fait par à-coups, entrecoupés de pauses et de ralentissements (ce qu'on préfère).
+Dans la courbe d'accélération de notre transition, le **timing** commence rapidement avant de s'estomper vers la fin, mais la progression suit
+toujours une trajectoire régulière.
+
+Si nous voulons créer une barre de progression avec un ressenti plus **authentique**, nous pouvons utiliser la règle CSS _**@keyframes**_. Elle
+nous permet de créer des arrêts et des accélérations plus irréguliers, qui ressemblent davantage à une véritable barre de chargement.
+
+Alors que les transitions CSS ne font que passer d'une valeur à l'autre, les @keyframes nous permettent de concevoir des animations avec
+plusieurs étapes, et ainsi de créer des animations plus **complexes** et **dynamiques**.
+
+Représentez-vous une course d'obstacles. Pour se rendre de la ligne de départ à la ligne d'arrivée, les concurrents doivent passer à travers
+des pneus, grimper par-dessus un mur et se balancer à travers une série de barres parallèles. Et entre deux obstacles, un point de contrôle,
+pour que les concurrents terminent tout le parcours, plutôt que de tricher en courant directement jusqu'à la ligne d'arrivée. Nous pouvons
+comparer les @keyframes à ces points de contrôle : ils jalonnent l'itinéraire de nos animations.
+
+### Définissez vos keyframes
+
+Un keyframe CSS est défini par le **pourcentage d'animation** complété lorsque sa valeur est réalisée.
+
+Cela veut dire que le début de notre animation en keyframes aurait une progression de 0% et la propriété transformée une valeur de `scaleX(0)`.
+La fin aurait une progression de 100% et une valeur de `scaleX(1)`. Maintenant que nous avons la première et la dernière étape, construisons
+notre premier ensemble de @keyframes !
+
+Contrairement aux transitions, qui sont à usage unique et qui n'existent qu'à l'intérieur du sélecteur où elles ont été déclarées, les
+@keyframes sont disponibles globalement, donc n'importe quel sélecteur dans notre fichier CSS peut les utiliser. Et comme ils sont disponibles
+de manière globale, ils ne sont pas déclarés dans un sélecteur. Au lieu de cela, nous déclarons les @keyframes au niveau de base du fichier CSS,
+en utilisant l'opérateur @keyframe, suivi du nom de notre choix, entre accolades ouverte et fermée :
+
+```scss
+@keyframes progress-bar {
+}
+```
+
+Lorsque nous utilisons la règle @keyframes, nous déclarons un **ensemble** de keyframes et nous lui donnons un nom, que nous pouvons utiliser
+pour appeler l'animation sur le sélecteur de notre choix. Maintenant que nous avons créé un ensemble @keyframes pour notre barre de progression,
+ajoutons nos keyframes de début et de fin.
+
+Chaque keyframe est défini en utilisant son pourcentage, puis sa propre paire d'accolades qui nous permettent de définir les propriétés que
+nous souhaitons appliquer à ce stade de l'animation :
+
+```scss
+@keyframes progress-bar {
+    0% {
+        transform: scaleX(0);
+    }
+    100% {
+        transform: scaleX(1);
+    }
+}
+```
+
+Nous avons maintenant une animation « progress-bar » (barre de progression) définie par la règle keyframes. Elle part d'une échelle `scaleX()`
+de zéro qui finit à 1 au cours de son animation, tout comme la transition que nous avons construite dans la partie 2.
+
+Imaginons que nous voulions des keyframes de début et de fin sans rien au milieu. Dans ce cas, pas besoin de pourcentage : nous pouvons définir
+les keyframes en utilisant les mots clés « **from** » et « **to** » :
+
+```scss
+@keyframes progress-bar {
+    from {
+        transform: scaleX(0);
+    }
+    to {
+        transform: scaleX(1);
+    }
+}
+```
+
+Le mot clé « from » agit exactement de la même façon que le 0%, et « to » correspond à 100% : à vous de choisir en fonction de vos
+préférences/vos styles de codage établis.
+
+On est plutôt pas mal partis…
+
+:::note ?
+Mais qu'est-ce qu'on fait maintenant ?
+:::
+
+### Passez à l'action
+
+Nous pouvons ajouter cette animation dans le pseudosélecteur `:active` de notre bouton. Cela vous rappelle quelque chose ? C'est ce que nous
+avions fait pour notre transition. Sauf qu'ici, nous la déclarons via les propriétés `animation-name` et `animation-duration`.
+`animation-duration` ressemble beaucoup à `transition-duration`, et accepte une valeur en ms (millisecondes) ou en s (secondes).
+
+`animation-name`, en revanche, est une nouvelle propriété. Elle nous permet d'assigner l'animation que nous venons de déclarer (avec les
+étapes from et to) à notre élément déclencheur ; ici la pseudoclasse `:active`.
+
+Ainsi, pour utiliser les keyframes de notre animation progress-bar, nous devons donner la valeur progress-bar à `animation-name` :
+
+```scss
+.btn {
+    &:active {
+        & > .progress__bar {
+            transform: scaleX(1);
+            animation-name: progress-bar;
+        }
+    }
+}
+@keyframes progress-bar {
+    0% {
+        transform: scaleX(0);
+    }
+    100% {
+        transform: scaleX(1);
+    }
+}
+```
+
+Maintenant, il nous suffit de reproduire la durée de notre transition. Pour cela, assignons à la propriété `animation-duration` une valeur de
+1000 ms :
+
+```scss
+.btn {
+    &:active {
+        & > .progress__bar {
+            transform: scaleX(1);
+            animation-name: progress-bar;
+            animation-duration: 1000ms;
+        }
+    }
+}
+@keyframes progress-bar {
+    0% {
+        transform: scaleX(0);
+    }
+    100% {
+        transform: scaleX(1);
+    }
+}
+```
+
+Bien joué !
+
+Pour bien comprendre : les transitions s'animent lorsqu'on assigne une valeur à une propriété et que cette valeur change dans l'élément
+déclencheur. Pour les transitions, les valeurs doivent donc être assignées aux sélecteurs à l'intérieur de notre code.
+
+Les animations @keyframes sont un peu différentes. Lorsque `animation-name` et `animation-duration` sont assignés à un sélecteur, les
+propriétés et valeurs contenues dans chaque keyframe sont appliquées pendant toute la durée de l'animation.
+
+Cela signifie que nous n'avons pas besoin de nous soucier de régler la valeur de `scaleX()` comme nous l'avions fait avec notre transition sur
+la barre de progression. Nous n'avons cependant pas besoin de la supprimer. En cas de conflit entre les propriétés/valeurs CSS d'une valeur
+assignée et d'une valeur avec keyframe, le CSS privilégie la valeur déclarée dans le keyframe.
+
+:::caution !
+Quelles que soient les propriétés CSS que nous plaçons à l'intérieur de notre animation @keyframes, elles remplaceront toutes les propriétés
+CSS existantes sur le sélecteur où elles sont assignées. Il est important de se rappeler que nous ne pouvons avoir qu'une seule propriété de
+transformation appliquée à un sélecteur. Par exemple, si nous avons un sélecteur ayant une propriété `transform` utilisant la fonction
+`translate()`, nos keyframes ayant également scale l'écraseront et supprimeront toutes les translations que nous avions appliquées.
+:::
+
+Même si nous n'en avons pas _besoin_, pour des raisons de clarté, voyons comment supprimer transform de la pseudoclasse `:active` :
+
+```scss
+.btn {
+    &:active {
+        & > .progress__bar {
+            animation-name: progress-bar;
+            animation-duration: 1000ms;
+        }
+    }
+}
+@keyframes progress-bar {
+    0% {
+        transform: scaleX(0);
+    }
+    100% {
+        transform: scaleX(1);
+    }
+}
+```
+
+Et voilà, on est prêts !
+
+Heu… vraiment ? Comme pour les transitions, il est possible d'utiliser une seule propriété d'animation pour définir son nom, sa durée, etc. Un
+peu de ménage s'impose pour simplifier notre code !
+
+```scss
+.btn {
+    &:active {
+        & > .progress__bar {
+            animation: progress-bar 1000ms;
+        }
+    }
+}
+@keyframes progress-bar {
+    0% {
+        transform: scaleX(0);
+    }
+    100% {
+        transform: scaleX(1);
+    }
+}
+```
+
+Voyons voir comment se porte notre nouvelle barre de progression avec keyframes :
+
+![La barre de chargement avec les keyframes](https://user.oc-static.com/upload/2021/02/10/16129488552233_Gif100.gif)
+
+:::note ?
+Où est-elle passée ?! Elle s'anime comme on voulait... mais ensuite elle disparaît ?
+:::
+
+Nous reviendrons plus en détail sur les différences entre les transitions et les animations réalisées avec @keyframes dans le chapitre suivant.
+Mais pour l'instant, sachez simplement que les deux se comportent différemment.
+
+### Décomposez les différents keyframes
+
+Nous avons une barre de progression animée qui passe directement de 0% à 100%. Elle ressemble bien à notre transition. Mais nous voulions
+**complexifier** l'animation en ajoutant quelques keyframes ici et là. Pour cela, quels pourcentages devons-nous choisir ? Et quelles valeurs
+devons-nous leur attribuer ? Utilisons comme modèle la courbe d'accélération de notre transition de barre de progression originale :
+
+![Image montrant la progression originale de l'animation](https://user.oc-static.com/upload/2021/02/15/16133908125247_CSS_graphic_1C6_5%20copy.png)
+
+:::info
+Comme dans la partie précédente, le logiciel le plus utilisé étant en anglais, les captures d'écran seront en anglais.
+
+Précisons : Animation Percentage = pourcentage de l'animation.
+:::
+
+Sur l'axe X, nous avons le pourcentage de progression de l'animation, de notre point de départ à 0% à 100% tout à droite. Et sur l'axe Y, nous
+avons la valeur de `scaleX()` de 0 en bas à 1 en haut.
+
+Si nous devions choisir un point le long de la courbe d'accélération, sa coordonnée X pourrait servir de valeur en pourcentage des keyframes,
+et sa coordonnée Y de valeur pour `scaleX()` :
+
+![Barre de chargement avec keyframes](https://user.oc-static.com/upload/2021/02/10/16129488958038_Gif101.gif)
+
+Choisissons trois points le long de la courbe que nous définirons comme keyframes. Puisque nous voulons décomposer un peu l'animation de façon
+à la rendre plus naturelle, essayons de choisir ces points à intervalles aléatoires sur l'axe des X. Quelque chose comme cela pourrait marcher :
+
+![Les points choisis pour les keyframes](https://user.oc-static.com/upload/2019/08/06/15650997031089_image54.png)
+
+Maintenant que nous avons des valeurs avec lesquelles nous pouvons travailler, replongeons-nous dans nos keyframes ! Pour les créer, nous
+allons prendre la coordonnée X de chaque point, la transformer en pourcentage pour chacun de nos nouveaux keyframes, et utiliser la coordonnée
+Y comme valeur pour la valeur de scaleX(), de cette façon :
+
+```scss
+.btn {
+    &:active {
+        & > .progress__bar {
+            animation: progress-bar 1000ms;
+        }
+    }
+}
+@keyframes progress-bar {
+    0% {
+        transform: scaleX(0);
+    }
+    17% {
+        transform: scaleX(.18);
+    }
+    24% {
+        transform: scaleX(.4);
+    }
+    46% {
+        transform: scaleX(.81);
+    }
+    100% {
+        transform: scaleX(1);
+    }
+}
+```
+
+Voyons comment l'animation s'affiche à l'écran avec nos nouveaux keyframes :
+
+![L'animation de la barre de chargement avec les keyframes](https://user.oc-static.com/upload/2021/02/10/16129489187728_Gif102.gif)
+
+La barre se remplit avec un profil similaire à notre transition, mais chaque fois que l'animation arrive à un keyframe, il y a un léger
+ralentissement dans sa progression. On approche bien du sentiment de vraiment charger quelque chose.
+
+:::info
+Les ralentissements à chaque keyframe proviennent de la fonction de timing qui leur est appliquée par défaut. Ici, nous n'avons pas appliqué
+manuellement de fonction de timing, donc comme pour les transitions, une fonction de timing par défaut est appliquée. Dans le chapitre suivant,
+nous examinerons plus en détail le rôle des fonctions de timing avec les @keyframes CSS, mais pour l'instant, sachez que si aucune fonction de
+timing n'est appliquée à une animation, une fonction de timing par défaut est appliquée à chaque keyframe. Cela crée ainsi des ralentissements
+momentanés entre la sortie lente d'un keyframe et l'introduction lente du keyframe suivant.
+:::
+
+### Animez plusieurs propriétés
+
+Nous avons donc une barre de progression un peu plus authentique. Ajoutons maintenant encore un peu plus de complexité. Au-delà de sa
+progression de gauche à droite, nous aimerions aussi que l’opacité de notre animation change, pour qu'elle évolue d'un vert translucide à un
+joli vert menthe, au fur et à mesure que la barre se remplit. Lorsque nous créons des @keyframes CSS, nous ne sommes pas limités à une seule
+propriété. Bien au contraire ! Nous pouvons assigner à chaque keyframe **autant de propriétés** que nous le souhaitons.
+
+Pour ajouter des propriétés supplémentaires à un keyframe, il suffit de les ajouter dans nos **accolades**, comme nous le ferions avec un
+sélecteur CSS standard. Pour notre animation de couleur, nous pouvons configurer notre premier keyframe pour que la barre ait une opacité de
+10% au début de l'animation :
+
+```scss
+@keyframes progress-bar {
+    0% {
+        transform: scaleX(0);
+        opacity: .1;
+    }
+    17% {
+        transform: scaleX(.18);
+    }
+    24% {
+        transform: scaleX(.4);
+    }
+    46% {
+        transform: scaleX(.81);
+    }
+    100% {
+        transform: scaleX(1);
+    }
+}
+```
+
+Nous avons réglé l'opacité à 10% dans le premier keyframe. Mais rien n'est précisé dans les suivants quant à l'opacité. On peut supposer que
+la couleur de la barre restera à 10% d'opacité pendant le reste de l'animation.
+
+Voyons voir ce que ça donne dans le navigateur :
+
+![L'animation de la barre de chargement dans le navigateur](https://user.oc-static.com/upload/2021/02/10/16129489287995_Gif103.gif)
+
+… Ce n'est pas du tout le cas !
+
+Bien qu'il n'y ait pas d'autres keyframes pour l'opacité, la barre repasse bien à 100% d'opacité au cours de l'animation.
+
+:::note ?
+Mais pourquoi ?
+:::
+
+Nous n'avons pas précisé de valeur d'opacité dans les autres keyframes. Le navigateur va donc chercher la valeur d'opacité dans le sélecteur.
+Or, nous n'avons déclaré aucune valeur de manière explicite non plus dans `.progress__bar`. Le navigateur prend donc la valeur par défaut de
+1 pour l'opacité.
+
+Testons cela. Assignons une valeur de 0 à opacity dans le sélecteur `.progress__bar` et augmentons l'opacité de notre premier keyframe à 50% :
+
+```scss
+.progress {
+    &__bar {
+        opacity: 0;
+    }
+}
+@keyframes progress-bar {
+    0% {
+        transform: scaleX(0);
+        opacity: .5;
+    }
+    17% {
+        transform: scaleX(.18);
+    }
+    24% {
+        transform: scaleX(.4);
+    }
+    46% {
+        transform: scaleX(.81);
+    }
+    100% {
+        transform: scaleX(1);
+    }
+}
+```
+
+Maintenant, notre barre devrait commencer à 50% et s'animer pour devenir complètement transparente à la fin de l'animation :
+
+![L'animation avec la valeur d'opacité changée](https://user.oc-static.com/upload/2021/02/10/16129489876045_Gif105.gif)
+
+Sans keyframe de départ, le navigateur démarrera l'animation avec la valeur dans le sélecteur, tout comme il le fait à la fin d'une animation
+si nous ne fournissons pas de keyframe de fin. Donc, si nous devions seulement fixer la valeur d'opacité à un pourcentage intermédiaire, comme
+cela :
+
+```scss
+.progress {
+    &__bar {
+        opacity: 0;
+    }
+}
+@keyframes progress-bar {
+    0% {
+        transform: scaleX(0);
+    }
+    17% {
+        transform: scaleX(.18);
+    }
+    24% {
+        transform: scaleX(.4);
+    }
+    46% {
+        transform: scaleX(.81);
+        opacity: 1;
+    }
+    100% {
+        transform: scaleX(1);
+    }
+}
+```
+
+Notre barre commence et se termine désormais avec la valeur d'opacité que nous avons assignée dans `.progress__bar`, qui est zéro :
+
+![L'animation de la barre qui se charge](https://user.oc-static.com/upload/2021/02/10/1612948948211_Gif104.gif)
+
+Nous sommes d'accord là-dessus : une barre de progression entièrement transparente ne constitue pas vraiment la meilleure expérience
+utilisateur.
+
+Assignons donc une valeur d'opacité de 1. Mais, cette fois-ci, plutôt que d'attendre que l'animation soit complètement terminée pour devenir
+opaque, fixons le pourcentage de keyframe à 85% :
+
+```scss
+.progress {
+    &__bar {
+        opacity: 0;
+    }
+}
+@keyframes progress-bar {
+    0% {
+        transform: scaleX(0);
+    }
+    17% {
+        transform: scaleX(.18);
+    }
+    24% {
+        transform: scaleX(.4);
+    }
+    46% {
+        transform: scaleX(.81);
+    }
+    85% {
+        opacity: 1;
+    }
+    100% {
+        transform: scaleX(1);
+    }
+}
+```
+
+Maintenant notre barre devrait passer 85 % de la durée de l'animation à remplir l'opacité. Allons vérifier cela :
+
+![L'animation avec l'opacité changée](https://user.oc-static.com/upload/2021/02/10/1612948998744_Gif106.gif)
+
+Eh bien... elle passe bien 85% de l'animation à augmenter l'opacité de la barre, mais ensuite elle passe les 15% de l'animation finale à
+revenir à une barre complètement transparente. Ce n'est pas exactement ce que nous espérions...
+
+Plutôt normal en fait : nous n'avons toujours pas de valeur pour la propriété d'opacité à animer entre 85% et 100%, donc le navigateur passe
+les 15 derniers pourcents de l'animation à repasser à la valeur assignée à `.progress__bar`, qui est toujours 0. Nous devons donc définir un
+dernier keyframe pour la propriété d'opacité, avec une valeur fixée à 1.
+
+Nous avons déjà créé un keyframe avec un pourcentage de 100% pour notre propriété `transform`. Nous pourrions ajouter la propriété d'opacité à
+ce keyframe, mais que se passerait-il si nous décidions que nous voulions que notre opacité finale soit de 85% au lieu de 100% ? Ensuite, nous
+devons modifier la valeur d'opacité dans plusieurs emplacements. Cela signifie plus de travail 😭, mais aussi des risques supplémentaires
+d'oubli et d'erreur.
+
+Jusqu'à présent, nous avons fixé un pourcentage unique pour chaque keyframe, mais nous pouvons attribuer plusieurs pourcentages à un keyframe.
+En ajoutant plusieurs pourcentages à un keyframe, le navigateur appliquera son contenu à chaque pourcentage d'animation. Il suffit de les
+séparer par des virgules :
+
+```scss
+.progress {
+    &__bar {
+        opacity: 0;
+    }
+}
+@keyframes progress-bar {
+    0% {
+        transform: scaleX(0);
+    }
+    17% {
+        transform: scaleX(.18);
+    }
+    24% {
+        transform: scaleX(.4);
+    }
+    46% {
+        transform: scaleX(.81);
+    }
+    85%,100% {
+        opacity: 1;
+    }
+    100% {
+        transform: scaleX(1);
+    }
+}
+```
+
+Et maintenant, si nous reprenons notre barre de progression pour la tester à nouveau, les choses _devraient_ ressembler à ce à quoi nous nous
+attendions :
+
+![L'animation terminée](https://user.oc-static.com/upload/2021/02/10/1612949009296_Gif107.gif)
+
+PARFAIT ! Maintenant l'opacité de notre barre de chargement est totale à 85% et le reste jusqu'à la fin de l'animation.
+
+Alors, vous avez testé chez vous ? 🤓
+
+:::info
+Si un pourcentage de keyframe est défini plusieurs fois au sein d'un ensemble et que ces keyframes contiennent des valeurs contradictoires, la
+valeur du keyframe qui a été définie en dernier remplacera la ou les valeur(s) précédente(s) du ou des keyframe(s).
+:::
+
+:::caution
+Les animations CSS sont encore relativement nouvelles, et ne sont donc pas encore complètement standardisées d'un navigateur à l'autre. Par
+souci de simplicité pour le cours, nous n'utilisons que les propriétés standard dans nos snippets de code. Mais si vous déployez votre code,
+toutes les animations CSS devraient avoir des préfixes de navigateur appliqués avant leur déploiement, pour être sûr qu'elles soient
+compatibles avec tous les navigateurs.
+:::
+
+### En résumé
+
+- les animations @keyframes nous permettent de construire des animations plus complexes en créant plusieurs étapes pour les propriétés tout au
+long de l'animation ;
+- les keyframes CSS sont instanciées à l'aide de la règle @keyframes suivie d'un nom pour l'ensemble des keyframes :
+    - @keyframes example-frames {...} ;
+- chaque keyframe peut être établi en utilisant comme valeur le pourcentage d'animation réalisé :
+    - 33% {...} ;
+- si vous n'avez besoin que d'un keyframe de début et de fin, les mots clés « from » et « to » peuvent être utilisés à la place de 0% et 100%
+respectivement ;
+- si aucun keyframe de début ou de fin n'est fourni, l'animation commence et/ou se termine avec les valeurs de propriété assignées au sélecteur.
+Si aucune valeur n'est explicitement assignée dans le sélecteur, c'est la valeur par défaut qui est choisie ;
+- une animation définie par la règle @keyframes peut contenir différents keyframes avec des propriétés distinctes ;
+- plusieurs pourcentages peuvent être assignés à un seul keyframe. Les valeurs définies dans ce keyframe seront appliquées à ces pourcentages
+dans l'animation ;
+- les propriétés et valeurs d'un ensemble de keyframes remplaceront les valeurs de propriétés attribuées à un sélecteur au cours de l'animation.
+
+_Vous avez maintenant découvert les keyframes : bravo ! Dans le prochain chapitre, nous allons nous pencher plus en détail sur l'implémentation
+d'animations @keyframes dans notre CSS, sur les différences fondamentales avec les transitions. Nous verrons également comment pousser nos
+animations encore plus loin avec d'autres propriétés d'animation @keyframes. À tout de suite !_
+
+-----
+
+## Utilisez les propriétés de l'animation CSS
+
+[Utilisez les propriétés de l'animation CSS - Créez des animations CSS modernes - OpenClassrooms](https://openclassrooms.com/fr/courses/5919246-creez-des-animations-css-modernes/6341109-utilisez-les-proprietes-de-lanimation-css)
+
+<Vimeo vimeoId="508777376" />
+
+<br />
+
+En surface, les keyframes ressemblent _beaucoup_ à des transitions, mais avec des étapes supplémentaires en chemin. Peut-être que vous-même,
+vous ne voyez les keyframes que comme des transitions avec des étapes supplémentaires ?
+
+Mais détrompez-vous ! Les keyframes sont _plus_ qu'un ensemble de valeurs !
+
+### Comprenez la différence entre @keyframes et transition
+
+Comme nous venons de le voir avec notre barre de progression, les animations CSS avec keyframes ne se comportent pas comme des transitions.
+C'est normal : **transitions et animations sont deux techniques ayant des logiques différentes, car elle ne répondent pas au même objectif**.
+
+Les transitions sont destinées à s'intégrer de manière subtile entre une valeur de départ et une valeur de fin. Telles que des valeurs
+`scale()` (d'échelle) différentes sur un bouton et sa pseudoclasse `:hover` :
+
+![Une animation CSS d'un bouton qui grossit avec des transitions](https://user.oc-static.com/upload/2021/02/10/1612949114373_Gif108.gif)
+
+Ce bouton s'agrandit au fur et à mesure que nous le survolons, puis rétrécit lorsque la souris s'en éloigne, même si la transition n'est pas
+terminée.
+
+Si nous appliquons les mêmes valeurs `scale()` via des @keyframes, le résultat obtenu est totalement différent. Voyez par vous-même :
+
+![Une animations du même bouton qui grossit avec des keyframes](https://user.oc-static.com/upload/2021/02/10/16129491258451_Gif109.gif)
+
+Lorsque nous créons une transition, nous disons au navigateur d'aller et venir entre les valeurs assignées dans un sélecteur et les valeurs
+assignées à une pseudoclasse. Les @keyframes, quant à eux, lisent une série de valeurs **définies**. Une fois déclenchée, une animation avec
+keyframes progresse jusqu'à ce qu'elle soit terminée, ou jusqu'à ce qu'elle soit interrompue.
+
+Avec les keyframes, lorsque nous assignons notre animation progress-bar à l'état `:active` de notre bouton, l'animation n'existe que si l'état
+`:active` est déclenché. Lorsque l'on retire la souris, l'état `:active` disparaît de l'élément, et avec lui, de l'animation qui lui a été
+assignée. C'est pour cette raison que l'animation disparaît si brusquement lorsque l'on sort de l'état `:active`.
+
+![Une animation d'une barre de chargement qui disparaît lorsqu'elle est à 100 %](https://user.oc-static.com/upload/2021/02/10/16129491378691_Gif110.gif) 
+
+Les transitions sont **intrinsèquement** liées à l'état d'un élément et aux différences dans ses valeurs assignées. Les propriétés et valeurs
+des keyframes sont quant à elles codées en dur, elles ne nécessitent qu'un événement pour les déclencher. Les pseudoclasses ne sont que l'une
+des options pour le faire. Dans ce chapitre, nous allons examiner une autre façon de déployer nos animations, ainsi que les propriétés
+supplémentaires à notre disposition pour concevoir des animations et des expériences utilisateur plus complexes.
+
+### Déclenchez vos animations dès le chargement de la page
+
+Jusqu'à maintenant, nous avons appris à utiliser systématiquement une pseudoclasse pour déclencher nos animations. Car c'est effectivement la
+seule option en CSS lorsque nous utilisons des transitions. **Mais avec les @keyframes, nous pouvons déclencher une animation dès le
+chargement d'un élément.**
+
+Lorsque nous assignons une animation avec keyframe à un élément, il déclenchera l'animation au chargement dans le navigateur. Plutôt que
+d'appliquer notre animation de barre de progression à la pseudoclasse `:active` sur `.btn,` appliquons-la à `.progress__bar` en tant que
+telle :
+
+```scss
+.progress {
+    &__bar {
+        animation: progress-bar 1000ms;
+    }
+}
+@keyframes progress-bar{
+    0% {
+        transform: scaleX(0);
+        opacity: .1;
+    }
+    17% {
+        transform: scaleX(.18);
+    }
+    24% {
+        transform: scaleX(.4);
+    }
+    46% {
+        transform: scaleX(.81);
+    }
+    85%,100% {
+        opacity: 1;
+    }
+    100% {
+        transform: scaleX(1);
+    }
+}
+```
+
+Maintenant, notre barre de progression se chargera dès que la page web sera chargée. Il n'est pas nécessaire d'interagir avec un bouton, ni
+d'ailleurs avec aucun autre élément. Le chargement de la page, et donc la barre de progression, est l'événement qui déclenche l'animation.
+Cela signifie que nous pouvons nous débarrasser de ce bouton :
+
+```html
+<html>
+    <div class="container">
+        <div class="progress">
+            <div class="progress__bar"></div>
+        </div>
+    </div>
+</html>
+```
+
+Notre barre de progression se suffit maintenant à elle-même. Nous avons inséré un GIF pour indiquer quand la page se recharge :
+
+![Barre de chargement avec icone et sans délai](https://user.oc-static.com/upload/2021/02/10/16129491527251_Gif111.gif)
+
+Superbe ! Notre animation... est animée !
+
+Cher utilisateur, nous n'avons plus besoin de toi pour déclencher nos animations avec tes interactions. Plutôt pratique, n'est-ce pas ? Nous
+pouvons créer des animations sur notre site web pour introduire des éléments au fur et à mesure de leur chargement.
+
+### Ajoutez un délai à votre animation @keyframes
+
+Le seul problème avec une animation qui démarre dès que la page se charge, c'est que... l'animation démarre dès la page se charge. Notre
+animation commence donc avant que nos visiteurs n'aient vraiment eu la chance de commencer à parcourir notre page.
+
+Vous savez ce qui serait parfait ? Utiliser un délai de transition pour que notre animation attende un peu avant de démarrer. Malheureusement,
+la propriété `transition-delay` permet de retarder les _transitions_, et les transitions seulement. 😭
+
+...Heureusement pour nous, il existe la propriété `animation-delay` !
+
+Vous allez finir par croire que j'adore jouer avec vos émotions. Je vous dis qu'on ne peut pas, mais que finalement si. Ne m'en veuillez pas,
+j'essaie de vous faire découvrir la richesse des animations keyframes petit à petit, pour que puissiez pleinement en profiter 🤩.
+
+La propriété `animation-delay` fonctionne comme `transition-delay`, sauf qu'elle retarde uniquement les animations conçues avec des @keyframes.
+Elle accepte les valeurs en secondes ou en millisecondes :
+
+```scss
+.delay-seconds {
+    animation-delay: 1s;
+}
+.delay-seconds {
+    animation-delay: 1000ms;
+}
+```
+
+Tout comme pour `transition-delay`, nous pouvons indiquer la valeur de cette propriété dans la version abrégée "animation", en l'indiquant
+dans sa liste de valeurs. Ajoutons donc un court délai de 150ms à l'animation de notre barre de progression :
+
+```scss
+.progress {
+    &__bar {
+        animation: progress-bar 1000ms 150ms;
+    }
+}
+```
+
+Maintenant, notre barre de progression attendra 0,15 secondes avant de commencer le chargement, donnant à nos visiteurs un moment pour
+remarquer notre barre de progression au chargement de la page :
+
+![Barre de chargement avec icone et délai de 0.15s](https://user.oc-static.com/upload/2021/02/15/16133904011168_Gif112.gif)
+
+Ça marche ! Mais...
+
+L'effet ne marche pas vraiment, car rien n'est chargé... La barre se remplit, et puis... plus rien.
+
+Choisissons du contenu à afficher une fois l'animation de la barre de progression terminée. Après tout, on est sur Internet, et Internet,
+c'est un peu le royaume des chats. Donc c'est parti pour une photo de chat. Alors, voyons voir ce que nous trouvons.
+
+### Enchaînez les animations
+
+![Photo de chat](https://user.oc-static.com/upload/2019/08/24/15666772486521_Capture%20d%E2%80%99e%CC%81cran%202019-08-24%20a%CC%80%2018.48.50.jpg)
+
+🙌Yes ! Ça devrait faire l'affaire !
+
+:::info
+Des sites comme [unsplash.com](https://unsplash.com/) ou [pexels.com](https://www.pexels.com/) mettent à votre disposition des tonnes d'images
+de qualité, libres de droit et donc disponibles gratuitement ! Assurez-vous simplement que la licence sur la photo corresponde à l'utilisation
+que vous comptez en faire sur votre site.
+:::
+
+Ajoutons une `div` pour notre photo de chat après notre `div .progress`, ainsi que quelques paragraphes de texte :
+
+```html
+<html>
+    <p>Merci pour votre patience</p>
+    <p>Voici votre chat</p>
+</html>
+```
+
+Et utilisons la propriété `background-image` pour remplir la div avec notre nouvelle photo de chat, ainsi que quelques autres propriétés pour
+redimensionner et recadrer l'image et rendre le texte lisible :
+
+```scss
+.cat {
+    width: 50vw;
+    height: 30vw;
+    position: absolute;
+    overflow: hidden;
+    background-image: url("https://bit.ly/2XJJLKn");
+    background-size: cover;
+    background-position: -20%;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    padding: .1rem;
+    font-size: 4vw;
+    font-weight: 900;
+    color: white;
+}
+```
+
+Si nous l'affichons dans le navigateur, nous voyons notre photo de chat... et pas grand-chose d'autre :
+
+![Image de chat](https://user.oc-static.com/upload/2019/08/24/15666817026193_Webp.net-resizeimage.png)
+
+Pour le moment, notre div `.cat` couvre notre barre de progression, ce qui convient une fois la barre chargée. En revanche, nous ne souhaitons
+pas la voir tant que la barre n'a pas fini de se charger. Pour cela, créons un nouvel ensemble de @keyframes pour déplacer notre image hors de
+l'écran, jusqu'à ce que la barre ait fini de se charger.
+
+```scss
+@keyframes cat {
+    0% {
+        transform: translateX(-9999px);
+    }
+    100% {
+        transform: translateX(0);
+    }
+}
+```
+
+La propriété `transform` avec sa fonction `translateX()` nous permet de déplacer notre chat hors de l'écran au début de l'animation, et
+mettre sa valeur de fin à 0, ce qui l'amène à son point de destination. Nous avons également déclaré la durée et le délai de lancement de
+l'animation dans des variables, ce qui nous permet de changer ces valeurs plus facilement (merci Sass 🔥).
+
+Maintenant, ajoutons notre animation de chat à notre div `.cat`. Nous ne voulons pas que notre chat bouge. Nous voulons simplement qu'il
+apparaisse quand la barre est complètement chargée. Nous réglons donc la durée de l'animation sur 0. Le délai, quant à lui, correspond à la
+combinaison entre la durée de l'animation progress-bar avec son délai de lancement :
+
+```scss
+$prog-bar-dur: 1000ms;
+$prog-bar-delay: 150ms;
+$cat-delay: $prog-bar-dur + $prog-bar-delay;
+.cat {
+    animation: cat 0ms $cat-delay;
+}
+@keyframes cat {
+    0% {
+        transform: translateX(-9999px);
+    }
+    100% {
+        transform: translateX(0);
+    }
+}
+```
+
+Et quand nous la vérifions dans le navigateur...
+
+![Image de chat](https://user.oc-static.com/upload/2019/08/24/15666817340739_Webp.net-resizeimage.png)
+
+... le résultat est toujours le même. Notre chat cache toujours tout notre travail. Heureusement qu'il est mignon. Cette fois-ci, ajoutons
+une durée à notre animation pour voir pourquoi les choses ne se passent pas comme prévu :
+
+```scss
+$prog-bar-dur: 1000ms;
+$prog-bar-delay: 150ms;
+$cat-delay: $prog-bar-dur + $prog-bar-delay;
+.cat {
+    animation: cat 1000ms $cat-delay;
+}
+@keyframes cat {
+    0% {
+        transform: translateX(\-9999px);
+    }
+    100% {
+        transform: translateX(0);
+    }
+}
+```
+
+Maintenant, notre chat va glisser en position en l'espace d'une seconde :
+
+![Animation avec translation de la photo de chat sur la barre de chargement](https://user.oc-static.com/upload/2021/02/10/16129492697858_Gif113.gif)
+
+Eh bien, ce n'est pas exactement ce que nous attendions... Notre image apparaît au chargement de notre page, puis disparaît brusquement avant
+de se placer comme on s'y attendait. Pas _tout à fait_ ce que nous voulions...
+
+Mais justement, ce comportement ne vous dit pas quelque chose ? 🤔
+
+Quelque chose de _**très**_ similaire se produit avec notre barre de progression, sauf qu'elle disparaît une fois l'animation _**terminée**_.
+
+En fait, lorsque notre animation _n'est pas_ en train d'être animée, les éléments reviennent à leur valeur de propriété assignée. C'est
+pourquoi notre barre de progression disparaît à la fin de son animation ; elle anime l'échelle horizontale de 0 à 1, mais elle a une valeur
+`scaleX()` de 0 :
+
+```scss
+$prog-bar-dur: 1000ms;
+$prog-bar-delay: 150ms;
+.progress {
+    &__bar {
+        transform-origin: left;
+        transform: scaleX(0);
+        animation: progress-bar $prog-bar-dur $prog-bar-delay;
+    }
+}
+```
+
+Ainsi, lorsque l'animation se termine, la barre revient à sa valeur assignée pour `scaleX()`, qui est aussi 0, disparaissant ainsi du site :
+
+![Animation de la barre de chargement seule](https://user.oc-static.com/upload/2021/02/10/16129493076545_Gif114.gif)
+
+Il en va de même pour les éléments qui ont des animations avec des délais assignés. Pendant que l'élément attend de démarrer son animation, il
+utilisera les valeurs des propriétés qui lui ont été assignées. Pour tester cela par nous-même, réglons la valeur `scaleX()` de la barre
+`.progress__bar` sur .5 et augmentons le délai pour une valeur plus visible, par exemple 1000ms :
+
+```scss
+$prog-bar-dur: 1000ms;
+$prog-bar-delay: 1000ms;
+.progress {
+    &__bar {
+        transform-origin: left;
+        transform: scaleX(0.5);
+        animation: progress-bar $prog-bar-dur $prog-bar-delay;
+    }
+}
+```
+
+Ajoutons des commentaires à notre `div .cat` pour que nous puissions nous concentrer pour l'instant sur la barre de progression :
+
+```html
+<html>
+    <div class="container">
+        <div class="progress">
+            <div class="progress__bar"></div>
+        </div>
+        <!-- <div class="cat">
+            <p>Merci pour votre patience</p>
+            <p>Voici votre chat</p>
+        </div> -->
+    </div>
+</html>
+```
+
+Voyons maintenant comment se comporte notre barre de progression :
+
+![Barre de progression rechargée à moitié](https://user.oc-static.com/upload/2021/02/10/16129493210861_Gif115.gif)
+
+Notre barre de progression respecte un délai d'une seconde avant de s'animer. En attendant, elle est à une échelle de 50% sur l'axe des X et
+100% d'opacité. Puis, tout à coup, elle passe à une `scaleX()` de 0, une opacité de .1 et commence à s'animer jusqu'à ce que la barre soit
+pleine et complètement opaque. Puis, une fois l'animation terminée, la barre revient à ses valeurs assignées dans le sélecteur.
+
+### Étendez les propriétés de vos keyframes avec animation-fill-mode
+
+Pourtant, nous voulons que notre animation s'étende de la gauche vers la droite, en remplissant l'espace avant que l'animation ne commence
+puis se termine avec les valeurs de début et de fin de l'animation. Nous pouvons nous représenter notre animation par un dégradé de couleur,
+allant d'un vert menthe au bleu marine :
+
+![Image représentant le dégradé de couleurs](https://user.oc-static.com/upload/2019/08/07/15651665038496_image76.png)
+
+Plutôt que de commencer et de terminer la couleur au début du dégradé de couleur, nous voulons que la couleur de départ remplisse l'espace à
+gauche du dégradé, en reprenant la couleur de départ, puis que la couleur de fin s'étende vers la droite du dégradé, basée sur la couleur de
+fin :
+
+![Image représentant le dégradé complet](https://user.oc-static.com/upload/2019/08/07/15651665735252_image16.png)
+
+Pour remplir les espaces avant et après nos animations avec keyframes, nous pouvons utiliser la propriété **`animation-fill-mode`**, qui va
+étendre les valeurs de début d'une animation, ou ses valeurs finales, ou les deux.
+
+`animation-fill-mode` accepte trois mots clés différents comme valeur. Le premier est **backwards** (pour "en arrière"). Backwards étend les
+valeurs de départ d'une animation pour la période de temps qui précède le début de l'animation :
+
+![Image représentant le dégradé avec backwards](https://user.oc-static.com/upload/2019/08/07/15651666424076_image67.png)
+
+Comme backwards étend cette valeur au début, ce mot clé n'est utile que si nous avons un délai appliqué à nos animations. S'il n'y a pas de
+délai, il n'y a pas de vide à remplir avant l'animation pour `animation-fill-mode`.
+
+Ajoutons maintenant animation-fill-mode à la barre `.progress__bar` avec le mot clé _backwards_ :
+
+```scss
+$prog-bar-dur: 1000ms;
+$prog-bar-delay: 1000ms;
+.progress {
+    &__bar {
+        transform-origin: left;
+        transform: scaleX(0.5);
+        animation: progress-bar $prog-bar-dur $prog-bar-delay;
+        animation-fill-mode: backwards;
+    }
+}
+```
+
+Maintenant, plutôt que de commencer à moitié remplie, notre barre de progression reste vide pendant toute la durée de son délai
+(animation-delay). À la fin du délai, l'animation continue normalement, et à la fin, revient en arrière à la valeur assignée de `scaleX(.5)` :
+
+![animation-fill-mode: backwards pour la barre de progression](https://user.oc-static.com/upload/2021/02/10/16129493399757_Gif116.gif)
+
+Le deuxième mot clé pour le mode animation-fill-mode est **forwards** (pour "en avant"). Au contraire de backwards, forwards étend les valeurs
+finales d'une animation vers l'avant, sans fin :
+
+![Une image du dégradé avec forwards](https://user.oc-static.com/upload/2019/08/07/15651668513712_image37.png)
+
+Forwards consiste en quelque sorte à dire au navigateur de mettre l'animation sur pause sur la toute dernière image, plutôt que de passer aux
+valeurs assignées. Changeons la valeur de `animation-fill-mode` de la barre `.progress__bar` avec forwards et découvrons ce que ça donne :
+
+```scss
+$prog-bar-dur: 1000ms;
+$prog-bar-delay: 1000ms;
+.progress {
+    &__bar {
+        transform-origin: left;
+        transform: scaleX(0.5);
+        animation: progress-bar $prog-bar-dur $prog-bar-delay;
+        animation-fill-mode: forwards;
+    }
+}
+```
+
+Maintenant, notre barre de progression est de nouveau à 50% jusqu'à ce que l'animation commence. Elle revient à 0 en animant à partir de là.
+Mais plutôt que de revenir directement à 50%, la barre reste pleine :
+
+![animation-fill-mode forwards pour la barre de progression](https://user.oc-static.com/upload/2021/02/10/16129493556086_Gif117.gif)
+
+Dans notre cas, il semble évident que nous voulons que notre animation s'étende et se remplisse, dans les deux sens, comme celle de notre
+barre de progression. Le mot clé judicieusement intitulé **both** (_les deux_) pour le mode animation-fill-mode remplit l'animation dans les
+deux sens :
+
+![Une image de dégradé avec both](https://user.oc-static.com/upload/2019/08/07/15651672482074_image13.png)
+
+Réglons le mode animation-fill-mode de la barre `.progress__bar` sur both :
+
+```scss
+$prog-bar-dur: 1000ms;
+$prog-bar-delay: 1000ms;
+.progress {
+    &__bar {
+        transform-origin: left;
+        transform: scaleX(0.5);
+        animation: progress-bar $prog-bar-dur $prog-bar-delay;
+        animation-fill-mode: both;
+    }
+}
+```
+
+Vérifions dans le navigateur. Nous devrions voir notre barre partie de 0% de remplissage jusqu'à ce que l'animation commence, puis se remplir
+normalement, et ensuite rester à 100% :
+
+![animation-fill-mode: both pour la barre de progression](https://user.oc-static.com/upload/2021/02/10/16129493665592_Gif118.gif)
+
+Et voilààààààààààà une barre de progression fonctionnelle avec nos keyframes 🙌 ! Plutôt pas mal ! Réduisons le délai à nos 100ms d'origine.
+D'ailleurs, tout comme avec nos autres propriétés d'animation, nous ne sommes pas _obligés_ d'indiquer la propriété animation-fill-mode
+séparément. Au lieu de cela, nous pouvons définir sa valeur directement dans la propriété `animation` raccourcie :
+
+```scss
+$prog-bar-dur: 1000ms;
+$prog-bar-delay: 1000ms;
+.progress {
+    &__bar {
+        transform-origin: left;
+        transform: scaleX(0.5);
+        animation: progress-bar $prog-bar-dur $prog-bar-delay both;
+    }
+}
+```
+
+Nous avons maintenant une barre de progression fonctionnelle.
+
+Revenons maintenant à notre chat. Nous pouvons utiliser animation-fill-mode. Nous voulons que l'animation s'étende dans les deux sens, pour
+qu'elle reste invisible jusqu'à la fin du délai, puis reste visible après cela. Ajoutons donc le mot clé _both_ à la propriété d'animation de
+`.cat` :
+
+```scss
+$prog-bar-dur: 1000ms;
+$prog-bar-delay: 150ms;
+$cat-delay: $prog-bar-dur + $prog-bar-delay;
+.progress {
+    &__bar {
+        transform-origin: left;
+        transform: scaleX(0.5);
+        animation: progress-bar $prog-bar-dur $prog-bar-delay both;
+    }
+}
+.cat {
+    animation: cat 0ms $cat-delay both;
+}
+```
+
+J'espère que ça va marcher, que la barre de chargement s'affichera dès le chargement de la page. Qu'elle sera vide dans un premier temps,
+puis qu'elle se remplira pour enfin laisser apparaître l'image de chat :
+
+![Barre de progression avec photo de chat](https://user.oc-static.com/upload/2021/02/10/16129493817443_Gif119.gif)
+
+Yaaaaay ! On a réussi !
+
+Maintenant que tout marche comme voulu, nous pouvons faire quelques petits ajustements.
+
+Nous ne voyons presque pas la barre de progression complètement pleine, car notre image de chat se charge dès que la barre est pleine, ce qui
+nous laisse peu de temps pour enregistrer que le processus de chargement est terminé. Ajoutons un peu de retard entre la fin de l'animation
+de la barre de progression et le début de l'animation du chat. Nous pouvons multiplier la variable $prog-delay par 2 dans `$cat-delay`, ce qui
+nous donnera 150ms supplémentaires avant le début de l'animation du chat :
+
+```scss
+$prog-bar-dur: 1000ms;
+$prog-bar-delay: 150ms;
+$cat-delay: $prog-bar-dur + $prog-bar-delay*2;
+.progress {
+    &__bar {
+        transform-origin: left;
+        transform: scaleX(0.5);
+        animation: progress-bar $prog-bar-dur $prog-bar-delay both;
+    }
+}
+.cat {
+    animation: cat 0ms $cat-delay both;
+}
+```
+
+Jetons à nouveau un coup d'œil au navigateur :
+
+![Barre de chargement avec un délai supplémentaire avant l'affichage de l'image de chat](https://user.oc-static.com/upload/2021/02/10/16129493963629_Gif120.gif)
+
+Beaucoup plus joli. Ce n'est pas un changement énorme, mais ce petit délai supplémentaire entre les deux animations nous permet de comprendre
+que la barre a fini de se charger, ce qui aide à mieux anticiper et trouver plus fluide le passage direct au contenu du chat.
+
+### Animez varié et équilibré
+
+Maintenant que nous avons chargé notre contenu comme nous le voulions, revenons plus spécifiquement à l'animation de la barre de progression
+et aux pauses et accélérations qu'elle crée lorsque la barre se remplit :
+
+![Barre de progression avec image de chat](https://user.oc-static.com/upload/2021/02/10/16129494149961_Gif121.gif)
+
+Elles ajoutent un peu de texture à notre animation, mais elles sont assez uniformes. Pour l'instant, chaque keyframe a une accélération et un
+ralentissement par défaut, que nous pourrions aussi écrire en cubic-bezier (.25,.1,.25,1).
+
+Ainsi, chaque keyframe dans la barre de progression se voit assigner ces valeurs cubic-bezier, comme si l'intervalle entre deux keyframes
+était sa propre animation, avec son propre « ease-in » et « ease-out ». Dans notre graphique cubic-bezier, cela ressemblerait à cela :
+
+![Le graphique cubic-bézier de l'animation](https://user.oc-static.com/upload/2019/08/07/15651685944369_image77.png)
+
+Nous voyons bien comment chaque keyframe a sa propre courbe d'accélération, dictée par la fonction animation-timing. Pour rendre cela un peu
+plus clair, assignons notre propre fonction de timing, plus extrême, à notre animation progress-bar. Utilisons beaucoup de « easing », ce qui
+va créer un contraste plus marquant d'un point de vue du rythme au cours de l'animation. Quelque chose comme cubic-bezier(.9,0,.1,1) :
+
+![Le cubic-bézier pour une animation plus marquée](https://user.oc-static.com/upload/2019/08/07/15651687129788_image7.png)
+
+Pour assigner notre courbe d'accélération `cubic-bezier()` à `progress-bar`, nous pouvons utiliser la propriété **animation-timing-function**,
+avec la fonction cubic-bezier comme valeur :
+
+```scss
+$prog-bar-dur: 1000ms;
+$prog-bar-delay: 150ms;
+$cat-delay: $prog-bar-dur + $prog-bar-delay*2;
+.progress {
+    &__bar {
+        transform-origin: left;
+        transform: scaleX(0.5);
+        animation: progress-bar $prog-bar-dur $prog-bar-delay both;
+        animation-timing-function: cubic-bezier(.9,0,.1,1);
+    }
+}
+```
+
+Nous pouvons également raccourcir les choses et ajouter la fonction cubic-bezier à notre propriété d'animation abrégée :
+
+```scss
+$prog-bar-dur: 1000ms;
+$prog-bar-delay: 150ms;
+$cat-delay: $prog-bar-dur + $prog-bar-delay*2;
+.progress {
+    &__bar {
+        transform-origin: left;
+        transform: scaleX(0.5);
+        animation: progress-bar $prog-bar-dur $prog-bar-delay both cubic-bezier(.9,0,.1,1);
+    }
+}
+```
+
+Maintenant, les ease-in et ease-out de nos keyframes sont beaucoup plus marqués. Notre animation paraît donc plus irrégulière. Lorsque nous
+regardons notre barre de progression à nouveau dans le navigateur, nous voyons des pauses beaucoup plus délibérées et des accélérations dans
+le mouvement de la barre :
+
+![Barre de progression chat avec animation cubic-bezier](https://user.oc-static.com/upload/2021/02/10/16129494777497_Gif122.gif)
+
+Bien que les accélérations soient nettement plus visibles avec notre fonction cubic-bezier, elles sont probablement un peu exagérées. En
+général, la fonction de « ease timing » par défaut fonctionne assez bien. Le problème vient du keyframe à 24%. Il est trop proche du keyframe
+précédent, qui, à 17%, n'est séparé que de 7%. La proximité des deux keyframes, combinée à l'uniformité des courbes d'accélération, entraîne
+une légère perte de la pause/accélération du deuxième keyframe.
+
+Un keyframe hérite par défaut du timing défini dans le sélecteur où l'animation a été assignée, **sauf si une fonction de timing a été
+explicitement assignée à ce keyframe**. Pour assigner une fonction de timing à un keyframe spécifique, il suffit de déclarer la propriété
+animation-timing-function dans le keyframe en question. Revenons à notre fameux keyframe de 24% :
+
+```scss
+$prog-bar-dur: 1000ms;
+$prog-bar-delay: 150ms;
+$cat-delay: $prog-bar-dur + $prog-bar-delay*2;
+.progress {
+    &__bar {
+        transform-origin: left;
+        transform: scaleX(0.5);
+        animation: progress-bar $prog-bar-dur $prog-bar-delay both;
+    }
+}
+@keyframes progress-bar {
+    0% {
+        transform: scaleX(0);
+        opacity: .1;
+    }
+    17% {
+        transform: scaleX(.18);
+    }
+    24% {
+        transform: scaleX(.40);
+        animation-timing-function: cubic-bezier(.9,0,.1,1);
+    }
+    46% {
+        transform: scaleX(.81);
+    }
+    85%,100% {
+        opacity: 1;
+    }
+    100% {
+        transform: scaleX(1);
+    }
+}
+```
+
+Lorsque nous assignons une fonction de timing à un keyframe, nous contrôlons la courbe d'accélération des valeurs entre ce keyframe et le
+suivant. Cela signifie que nous contrôlons l'introduction lente du mouvement à 24% et la sortie lente à 46% :
+
+![La partie qui nous intéresse du cubic-bézier](https://user.oc-static.com/upload/2019/08/07/15651795905117_image62.png)
+
+Observons comment notre barre de progression s'affiche dans le navigateur avec sa nouvelle fonction de timing de keyframe :
+
+![Animation barre de progression image chat avec fonction de timing par keyframe](https://user.oc-static.com/upload/2021/02/10/16129495082933_Gif123.gif)
+
+Maintenant, l'accélération du keyframe à 24% est beaucoup plus prononcée, tandis que les autres restent à des valeurs d'introduction et de
+sortie plus fluides. Ce qui est _presque_ parfait.... presque... mais, puisque nous y mettons tant d'efforts, autant le faire jusqu'au bout.
+
+Il y a un petit problème lors de l'accélération du keyframe 46%. Ceci s'explique par le fait que la fonction de timing précédente, déclarée
+sur 24%, a une fin longue et plane, tandis que le début de la fonction de timing du keyframe suivant de cubic-bezier (.25,.1,.25,1) est plus
+court avec une pente plus raide. Le mouvement paraît moins harmonieux :
+
+![Zoom sur la courbe cubic-bézier](https://user.oc-static.com/upload/2021/02/15/16133815127074_3C2_1.png)
+
+Donnons également au keyframe 46% sa propre fonction de timing et utilisons-la pour fluidifier un peu cette transition. Pour rendre le
+mouvement plus fluide, il suffit d'aplanir son début, pour mieux enchaîner avec la sortie du keyframe précédent. Pour l'instant, notre
+"ease in" a une coordonnée Y de .1. Si nous le réduisons à 0, nous obtenons un cubic-bezier(.25, 0, .25,1) et un "ease in" plus plat :
+
+![La courbe plus](https://user.oc-static.com/upload/2021/02/15/16133815255053_3C2_2.png)
+
+Intégrons notre nouvelle fonction de timing au keyframe 46%.
+
+Par ailleurs, l'animation de l'opacité ne semble plus vraiment ajouter de valeur. Au contraire, elle rend notre animation moins visible.
+Supprimons-la et simplifions un peu les choses :
+
+```scss
+@keyframes progress-bar {
+    0% {
+        transform: scaleX(0);
+    }
+    17% {
+        transform: scaleX(.18);
+    }
+    24% {
+        transform: scaleX(.40);
+        animation-timing-function: cubic-bezier(.9,0,.1,1);
+    }
+    46% {
+        transform: scaleX(.81);
+        animation-timing-function: cubic-bezier(.25,0.25,1);
+    }
+    100% {
+        transform: scaleX(1);
+    }
+}
+```
+
+Voyons ce que ça donne :
+
+![Animation barre de progression fonction de timing personnalisée et pas de changement d'opacité](https://user.oc-static.com/upload/2019/08/24/1566683102931_ezgif.com-optimize%20%284%29.gif)
+
+_Beaucoup_ mieux. 
+
+Bravo ! Nous avons une barre de progression avec un ressenti plus authentique grâce à l'utilisation des @keyframes, et de la propriété
+animation-timing-function. Les propriétés animation-delay et animation-fill-mode nous permettent également d'enchaîner les animations entre
+elles au mieux.
+
+Encore une fois, si vous souhaitez vous amuser avec le code, je vous mets [un CodePen](https://codepen.io/atoulmet/pen/rNByOPr) à disposition.
+
+_Pourquoi ne pas essayer de changer la durée de la propriété animation-timing-function ?_
+
+### Résumé
+
+- les animations CSS @keyframes peuvent être déclenchées en utilisant des pseudoclasses telles que `:hover`, tout comme les transitions ;
+- les @keyframes CSS peuvent également être déclenchés par le chargement des éléments auxquels ils sont assignés, comme un sélecteur. Par
+exemple, dès le chargement d'une page ;
+- nous pouvons retarder le démarrage des animations avec keyframes en utilisant la propriété `animation-delay`, avec un délai exprimé en
+secondes ou en millisecondes, tout comme les transitions ;
+- nous pouvons étendre ces valeurs du début à la fin de ces animations en utilisant la propriété `animation-fill-mode` :
+    - le mot clé « backwards » prolonge les valeurs de départ d'une animation avant son lancement, couvrant la durée du délai assigné avant
+    que l'animation elle-même ne commence,
+    - le mot clé « forwards » prolonge les valeurs finales d'une animation jusqu'à ce que la page soit rechargée ou que le navigateur soit
+    fermé,
+    - le mot clé « both » prolonge l'animation dans les deux sens ;
+- nous pouvons définir une fonction de timing des @keyframes en utilisant la fonction animation-timing-function sur le sélecteur où
+l'animation a été assignée ;
+- nous pouvons également définir un timing spécifique keyframe par keyframe, en assignant la propriété `animation-timing-function` aux
+keyframes en question.
+
+_Au chapitre suivant, nous verrons de nouvelles propriétés liées aux @keyframes. Nous verrons notamment comment écrire des animations plus
+concises et réutilisables, mais nous apprendrons également à mettre nos animations sur pause. À très vite ! 🚀_
+
+-----
+
+## Manipulez et réutilisez les animations CSS
+
+[Manipulez et réutilisez les animations CSS - Créez des animations CSS modernes - OpenClassrooms](https://openclassrooms.com/fr/courses/5919246-creez-des-animations-css-modernes/6340941-manipulez-et-reutilisez-les-animations-css)
+
+<Vimeo vimeoId="508777409" />
+
+<br />
+
+Ça fait deux chapitres que je vous en parle, vous devez commencer à saisir le potentiel des animations @keyframes, n'est-ce pas ?
+
+Nous avons maintenant tous les outils nécessaires pour créer et affiner la plupart des animations auxquelles nous pouvons penser. Mais...
+
+Et si on voulait faire une animation de quelque chose qui rebondit indéfiniment d'avant en arrière ?
+
+![Carré qui se déplace de gauche à droite](https://user.oc-static.com/upload/2021/02/10/16129496961984_Gif124.gif)
+
+Nous _pourrions_ bien sûr créer une animation avec _**BEAUCOUP**_ de keyframes... 
+
+Et si nous voulions que des éléments différents tournent dans des directions opposées ? Ou à des vitesses différentes ?
+
+![Carrés qui effectuent des rotations à différentes vitesses et dans différents sens](https://user.oc-static.com/upload/2021/02/10/16129497089353_Gif125.gif)
+
+Nous _pourrions_ créer plusieurs animations @keyframes, une avec une rotation dans le sens des aiguilles d'une montre et l'autre dans le sens
+inverse, une autre avec une vitesse différente, etc.
+
+Je préfère vous le dire tout de suite : si vous préférez ces solutions, ce sera sans moi 🙃. Car si je vous en parle, c'est qu'il existe bien
+sûr une solution adaptée. En quelques propriétés seulement, nous pouvons dire au navigateur de le répéter pour nous. Ou de le lire à l'envers.
+Ou même de faire une pause et de le jouer sur commande.
+
+Nous allons voir ensemble comment tirer le meilleur parti des animations @keyframes, tout en gardant la base de code la plus propre et
+maintenable possible.
+
+### Repensez votre validation d'email
+
+Remontons dans le temps ⏱, à la partie 1, chapitre 3 et au monde des transitions et des pseudoclasses. Cette époque où vous ne connaissiez
+pas encore les keyframes. Nous avions créé un input d'adresse e-mail qui donnait à l'utilisateur un feedback visuel si l'adresse entrée
+n'était pas valide :
+
+![Champs email qui devient rouge si l'email n'est pas valide](https://user.oc-static.com/upload/2021/02/10/16129497209027_Gif126.gif) 
+
+C'était déjà pas mal du tout. L'utilisateur peut voir en un coup d’œil qu'il y a quelque chose qui cloche. Mais le fondu entre les états
+valide et non valide reste plutôt soft.
+
+Nous pouvons maintenant tirer parti des keyframes pour créer une animation encore plus impactante.
+
+Pour vous rafraîchir la mémoire, ici notre élément input est un input standard, dont le type est défini sur email :
+
+```html
+<html>
+    <div class="container">
+        <div class="form">
+            <div class="form__group">
+                <label for="email-input">email</label>
+                <input type="email" name=”email-input>
+            </div>
+        </div>
+    </div>
+</html>
+```
+
+Notre animation change actuellement la `background-color` pour un rouge foncé sur une durée de 500ms si l'adresse saisie n'est pas valide :
+
+```scss
+$cd-txt: #6300a0;
+$cd-txt--invalid: #fff;
+$cd-danger : #b20a37 ;
+.form {
+    &__group {
+        & input {
+            border: 2px solid $cd-box;
+            border-radius: 100rem;
+            color: $cd-txt;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 2.5rem;
+            outline: none;
+            padding: .5rem 1.5rem;
+            width: 100%;
+            transition: background-color 500ms;
+            &:focus {
+                border: 2px solid $cd-txt;
+            }
+            &:not(:focus):invalid {
+                background-color: $cd-danger;
+                border: 2px solid $cd-danger;
+                color: $cd-txt--invalid;
+            }
+        }
+    }
+}
+```
+
+Le style de base est tout à fait correct, il vaut mieux donc mieux ne pas y toucher. Au lieu de cela, nous allons supprimer la transition du
+sélecteur d'entrée. Au revoir tout notre beau travail ! Il est parfois très difficile d'avoir à supprimer du travail sur lequel on avait
+passé du temps pour se lancer dans une autre direction, mais cela fait juste partie du processus créatif. Parfois, quelque chose ne
+fonctionne pas aussi bien que nous l'envisagions, et nous devons savoir l'abandonner. Alors... adieu transition `background-color`.
+
+```scss
+$cd-txt: #6300a0;
+$cd-txt--invalid: #fff;
+$cd-danger : #b20a37 ;
+.form {
+    &__group {
+        & input {
+            border: 2px solid $cd-box;
+            border-radius: 100rem;
+            color: $cd-txt;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 2.5rem;
+            outline: none;
+            padding: .5rem 1.5rem;
+            width: 100%;
+            &:focus {
+                border: 2px solid $cd-txt;
+            }
+            &:not(:focus):invalid {
+                background-color: $cd-danger;
+                border: 2px solid $cd-danger;
+                color: $cd-txt--invalid;
+            }
+        }
+    }
+}
+```
+
+Nous avons désormais un input d'e-mail qui devient rouge lorsque l'entrée n'est pas valide et ne sera pas corrigée :
+
+![Champ email qui devient rouge lorsque l'email n'est pas valide](https://user.oc-static.com/upload/2021/02/10/16129499442575_Gif127.gif)
+
+Alors maintenant, quoi ? Qu'est-ce qu'on pourrait faire de tellement mieux qui justifierait de jeter une transition parfaitement utilisable
+pour tout recommencer ?
+
+### Créez des émotions avec vos animations
+
+Je vous vois. Vous avez hâte de savoir ce que l'on va créer ensemble.
+
+L'idée est simple : Et si on faisait hocher la tête à notre input ?
+
+C'est un signe quasiment universel que la plupart peuvent interpréter comme un « non ». En tant qu'humains, nous absorbons et nous traitons
+le langage corporel au niveau de l'inconscient, de sorte que même les mouvements subtils peuvent avoir un sens. Nous n'avons ainsi plus rien
+à faire. Un rapide hochement de tête, clair et ferme, c'est tout ce dont nous avons besoin.
+
+:::info
+Il y a plusieurs décennies, le professeur de psychologie Albert Mehrabian publiait le livre _Silent Messages,_ dans lequel il détaillait les
+composants d’une communication efficace, en établissant la règle des 7% - 38% - 55%. Selon cette règle, une communication efficace passe à 7%
+par les mots, à 38% par le ton, et à 55% par le langage corporel. En d’autres termes, le composant le plus important est le langage corporel,
+mais les sites Internet nous limitent au langage. Avec l’animation, nous pouvons donner aux sites Internet la possibilité de parler avec les
+mains !
+:::
+
+Alors représentons notre "refus" avec l'animation @keyframes headshake :
+
+```scss
+@keyframes headshake {
+}
+```
+
+Nous voulons que notre entrée commence et se termine là où elle devrait, et nous n'avons donc pas besoin de créer des keyframes pour le début
+et la fin. En les laissant en dehors des keyframes, notre animation utilisera les valeurs par défaut du sélecteur. Ça tombe bien, ce dont nous
+avons vraiment besoin, ce sont des keyframes pour le mouvement intermédiaire.
+
+Depuis son état neutre, nous voulons que l'input se déplace un peu vers la droite, puis vers la gauche, avant de revenir à sa position à son
+état neutre. Donc, à 0%, nous sommes dans la position par défaut. Puis, à un quart de l'animation, nous voulons que l'entrée soit entièrement
+à droite. Et à 75% dans l'animation, nous voulons qu'elle soit à l'opposé sur la gauche, avant de revenir enfin à sa position neutre :
+
+```scss
+@keyframes headshake {
+    25% {
+        // entièrement à droite
+        transform: translateX();
+    }
+    75% {
+        // entièrement à gauche
+        transform: translateX();
+    }
+}
+```
+
+Il ne nous reste plus qu'à décider à quel moment nous voulons que notre input hoche la tête. Ça ne devrait pas être trop exagéré, juste un
+hochement de tête net et courtois. Un point de pourcentage ou deux devraient faire l'affaire. Créons une variable intitulée `$shake-intensity`,
+réglons-la (soyons fous) sur une valeur de 2%, et ajoutons-la à nos fonctions `translateX()` :
+
+```scss
+$shake-intensity: 2%;
+@keyframes headshake {
+    25% {
+        // entièrement à droite
+        transform: translateX($shake-intensity);
+    }
+    75% {
+        // entièrement à gauche
+        transform: translateX(-$shake-intensity);
+    }
+}
+```
+
+Nous voulons que la position de notre input sur la gauche soit l'inverse de la droite. Nous avons donc juste préfixé la variable avec un
+symbole négatif. Désormais, nous devons ajouter nos @keyframes headshake au sélecteur `input:not(:focus):invalid.` Nous voulons un hochement
+de tête brusque et rapide, alors donnons-lui une valeur courte pour sa durée. Quelque chose aux alentours des 100ms devrait faire l'affaire,
+au début du moins :
+
+```scss
+$cd-danger : #b20a37 ;
+$cd-txt: #6300a0;
+$shake-intensity: 2%;
+.form {
+    &__group {
+        & input {
+            &:active, &:focus {
+                border: 2px solid $cd-txt;
+            }
+            &:not(:focus):invalid {
+                color: white;
+                border: 2px solid $cd-danger;
+                background: $cd-danger;
+                animation: headshake 100ms cubic-bezier(.4,.1,.6,.9);
+            }
+        }
+    }
+}
+@keyframes headshake {
+    25% {
+        // entièrement à droite
+        transform: translateX($shake-intensity);
+    }
+    75% {
+        // entièrement à gauche
+        transform: translateX($shake-intensity \* \-1);
+    }
+}
+```
+
+Nous avons également réglé la fonction `animation-timing-function` pour le headhake sur cubic-bezier(.4,.1,.6,.9), ce qui reste plutôt léger :
+
+![Le cubic-bézier légèrement modifié](https://user.oc-static.com/upload/2019/08/07/15651814252524_image40.png)
+
+Testons la réaction que cela nous donne !
+
+![Champs d'email qui devient rouge lorsque l'email n'est pas valide](https://user.oc-static.com/upload/2021/02/10/1612950073298_Gif128.gif)
+
+Ça, c'est un beau hochement de tête anthropomorphique ! Si beau d'ailleurs qu'on ne s'en lasse pas : on voudrait en voir plus.
+
+OK ! Donc, ça veut dire que nous devons encore ajouter d'autres keyframes. Pour obtenir deux hochements de tête, l'extrême droite devrait être
+à... 12,5% et 62,5%... et la gauche devrait être à 37,5% et 87,5%... c'est ça ? Et si ça ne suffisait toujours pas pour un bon hochement de
+tête ? Et si on avait besoin de trois hochements de tête ? Ça voudrait dire que l'extrême droite serait à... juste une seconde... passer à...
+euh... vous savez quoi ? Il doit y avoir un meilleur moyen. **Parce qu'il y a toujours un meilleur moyen !**
+
+:::note ?
+Et ce meilleur moyen, c'est quoi ?
+:::
+
+La propriété `animation-iteration-count` ! Elle nous permet d'écrire des keyframes d'un seul cycle d'animation et demander au navigateur de
+les répéter autant de fois que nous le souhaitons. Cela signifie que nous pouvons faire secouer la tête de notre input deux fois, ou deux
+cents fois, en changeant une seule valeur :
+
+```scss
+$cd-danger : #b20a37 ;
+$cd-txt: #6300a0;
+$shake-intensity: 2%;
+.form {
+    &__group {
+        & input {
+            &:active, &:focus {
+                border: 2px solid $cd-txt;
+            }
+            &:not(:focus):invalid {
+                color: white;
+                border: 2px solid $cd-danger;
+                background: $cd-danger;
+                animation: headshake 100ms cubic-bezier(.4,.1,.6,.9);
+                animation-iteration-count: 3;
+            }
+        }
+    }
+}
+@keyframes headshake {
+    25% {
+        // entièrement à droite
+        transform: translateX($shake-intensity);
+    }
+    75% {
+        // entièrement à gauche
+        transform: translateX($shake-intensity \* \-1);
+    }
+}
+```
+
+Il y a un principe d'écriture appelé la « règle de trois » selon laquelle une chose qui arrive trois fois serait plus efficace et impactante.
+Que ce soit plus dramatique, plus drôle ou plus percutant (vous avez vu, je l'ai utilisée ici). Alors nous avons donné une valeur de trois à
+la propriété `animation-iteration-count`.
+
+![Champs d'email qui devient rouge et qui tremble lorsque l'email n'est pas valide](https://user.oc-static.com/upload/2021/02/10/16129502050779_Gif129.gif)
+
+Meh. Je ne suis pas convaincue. Deux c'était très bien aussi. Réduisons donc le nombre d'itérations à 2 et testons à nouveau l'animation. Et
+quand on les voit enchaînés comme ça, 2% d'intensité pour le hochement semble également un peu trop. Descendons à 1% pendant qu'on y est :
+
+```scss
+$cd-danger : #b20a37 ;
+$cd-txt: #6300a0;
+$shake-intensity: 1%;
+.form {
+    &__group {
+        & input {
+            &:active, &:focus {
+                border: 2px solid $cd-txt;
+            }
+            &:not(:focus):invalid {
+                color: white;
+                border: 2px solid $cd-danger;
+                background: $cd-danger;
+                // animation-iteration-count est directement intégré dans la propriété raccourcie animation :
+                animation: headshake 100ms cubic-bezier(.4,.1,.6,.9) 2;
+            }
+        }
+    }
+}
+@keyframes headshake {
+    25% {
+        // entièrement à droite
+        transform: translateX($shake-intensity);
+    }
+    75% {
+        // entièrement à gauche
+        transform: translateX($shake-intensity \* \-1);
+    }
+}
+```
+
+Où est passé `animation-iteration-count` ? Comme pour les autres propriétés d'animation, nous l'avons inclus dans la propriété d'animation
+abrégée, plutôt que d'écrire la version explicite. Nous avons donc ajouté le chiffre 2 à la liste des valeurs pour l'animation, et maintenant
+notre entrée devrait hocher la tête deux fois.
+
+Cette valeur pour la durée de l'animation s'applique à la durée d'un seul cycle d'animation. Cela signifie que notre animation de hochement de
+tête, avec une durée assignée de 100ms et un nombre d'itérations de 2, prendra un total de 200ms à se terminer :
+
+![Champs d'email qui devient rouge et qui tremble lorsque l'email n'est pas valide](https://user.oc-static.com/upload/2021/02/10/16129502187277_Gif130.gif)
+
+Ça c'est la bonne durée pour un hochement de tête ! 🎉
+
+Avec `animation-iteration-count`, nous pouvons nous épargner beaucoup de calcul mental et de keyframes compliqués en écrivant un seul cycle
+d'animation et en demandant au navigateur de le rejouer autant de fois que nous le voulons. Bien plus propre, et bien plus facile à retoucher
+et à affiner.
+
+:::note ?
+Mais comment faire si on veut qu'une animation joue en boucle à l'infini ?
+:::
+
+### Créez votre premier loader
+
+Les sites web appellent souvent le serveur en arrière-plan pour demander des données, comme une image, un texte, une donnée, etc. Pendant que
+la page attend la réponse du serveur, elle affiche un espace réservé.
+
+La réponse du serveur ne prend parfois qu'une fraction de seconde ou beaucoup plus, selon la complexité de la demande, la taille des données
+transférées et la vitesse de connexion. Or, sur la plupart des interfaces, nous ne connaissons pas le temps nécessaire pour obtenir une
+réponse du serveur. La barre de progression du chapitre précédent n'est pas forcément adaptée à cet usage. Nous allons donc construire quelque
+chose de plus générique : un loader !
+
+Pour commencer, créons une `<div>` avec une classe `.load,` et cinq divs enfants intégrées, chacune avec une classe de `.load__bar assignée` :
+
+```html
+<html>
+    <div class="container">
+        <div class="load">
+            <div class="load__bar"></div>
+            <div class="load__bar"></div>
+            <div class="load__bar"></div>
+            <div class="load__bar"></div>
+            <div class="load__bar"></div>
+        </div>
+    </div>
+</html>
+```
+
+Maintenant que nous avons construit nos barres, nous devons les styliser pour qu'elles ressemblent à... eh bien... des barres ! Attribuons à
+`.load` les propriétés de layout appropriées, et configurons les dimensions pour `.load__bar`, tout en leur donnant un joli `background-color`
+vert menthe :
+
+```scss
+$cd-bars: #15DEA5;
+$size: 3vh;
+.load {
+    width: $size*10;
+    height: $size*7.5;
+    display: flex;
+    justify-content: space-evenly;
+    &__bar {
+        background-color: #15DEA5;
+        height: 100%;
+        width: $size;
+    }
+}
+```
+
+En vérifiant dans notre navigateur, nous découvrons une magnifique rangée de cinq barres vert menthe !
+
+![Les barres sont immobiles](https://user.oc-static.com/upload/2019/08/07/15651820975803_image12.png)
+
+Super ! Mais pour le moment elles sont juste là, immobiles...
+
+Nous sommes dans un cours d'animation ! Et nous voulons offrir à nos utilisateurs un peu de mouvement pour éveiller leur intérêt pendant
+qu'ils patientent. Alors créons un ensemble de @keyframes appelés _bars_ et utilisons la fonction de transformation `scaleY()` pour animer
+l'échelle verticale de ces barres dans le temps, en commençant à 50% et en terminant à 100% :
+
+```scss
+@keyframes bars {
+    0% {
+        transform: scaleY(0.5);
+    }
+    100% {
+        transform: scaleY(1.0);
+    }
+}
+```
+
+Bien sûr, pour que nos keyframes aient un effet sur nos barres et commencent à animer leur échelle, nous devons d'abord les appliquer au
+sélecteur .bars. Alors configurons une animation à l'aide de @keyframes bars et une durée de 1000ms :
+
+```scss
+$cd-bars: #15DEA5;
+$size: 3vh;
+$anim-dur: 1000ms;
+.load {
+    width: $size*10;
+    height: $size*7.5;
+    display: flex;
+    justify-content: space-evenly;
+    &__bar {
+        background-color: $cd-bars;
+        height: 100%;
+        width: $size;
+        animation: bars $anim-dur;
+    }
+}
+@keyframes bars {
+    0% {
+        transform: scaleY(0.5);
+    }
+    100% {
+        transform: scaleY(1.0);
+    }
+}
+```
+
+La variable `$anim-dur` correspond à la durée de notre animation. Comme nous l'avons vu, nous pouvons profiter du Sass pour créer des
+variables, ce qui nous permet d'ajuster nos valeurs un peu plus facilement, si nécessaire. Maintenant, nos barres devraient passer de la
+moitié de leur taille verticale à leur hauteur totale en une seconde :
+
+![Barres animées de loading](https://user.oc-static.com/upload/2021/02/10/16129502416335_Gif131.gif)
+
+C'est parfait : ça fonctionne comme ce qu'on attendait... mais, vous me connaissez. C'est encore loin de me suffire... Rien de très fun dans
+cette animation pour le moment. Souvenez-vous des 12 principes : ajouter un peu de complexité à nos animations contribue grandement à les
+rendre attrayantes pour nos visiteurs. Nous pouvons alterner leur croissance, pour qu'elles grandissent les unes après les autres, un peu
+comme une vague.
+
+À votre avis, quel est le meilleur moyen de créer des animations qui se déclenchent de manière alternée ?
+
+La propriété `animation-delay`, ça vous dit quelque chose ?
+
+Nous avons cinq barres, donc nous avons besoin de cinq sélecteurs de modification, chacun avec un délai d'animation assigné légèrement plus
+long.
+
+On _pourrait_ les écrire manuellement, on pourrait faire beaucoup de choses. Mais pourquoi le faire alors que nous pourrions utiliser Sass
+pour gérer cette tâche répétitive et incrémentale ? Configurons une boucle Sass @for pour l'itération à travers un ensemble de nombres allant
+de un à cinq, en incrémentant le nom du sélecteur et le délai de l'animation :
+
+```scss
+$cd-bars: #15DEA5;
+$size: 3vh;
+$num-bars: 5
+$anim-dur: 1000ms;
+$anim-delay: $anim-dur / $num-bars;
+.load {
+    width: $size*10;
+    height: $size*7.5;
+    display: flex;
+    justify-content: space-evenly;
+    &__bar {
+        background-color: $cd-bars;
+        height: 100%;
+        width: $size;
+        animation: bars $anim-dur;
+        @for $i from 1 through $num-bars {
+            &--#{$i} {
+                animation-delay: $anim-delay * $i;
+            }
+        }
+    }
+}
+```
+
+Chaque itération à travers la boucle produira un nouveau sélecteur, avec le numéro d'index de l'itération utilisé dans son nom, ainsi que
+pour multiplier le `$anim-delay` et créer un délai de lancement qui sera incrémenté au fur et à mesure. `$anim-delay` est réglé sur la durée
+de l'animation divisée par le nombre de barres.
+
+Ainsi, lors de la première itération, le modificateur sera nommé `.load__bar--1` et aura un retard de 200ms, le second sera `.load__bar--2`
+avec un retard de 400ms, et ainsi de suite. En vérifiant le CSS compilé, nous voyons que les sélecteurs suivants viennent d'être créés :
+
+```scss
+.load__bar--1 {
+    animation-delay: 200ms;
+}
+.load__bar--2 {
+    animation-delay: 400ms;
+}
+.load__bar--3 {
+    animation-delay: 600ms;
+}
+.load__bar--4 {
+    animation-delay: 800ms;
+}
+.load__bar--5 {
+    animation-delay: 1000ms;
+}
+```
+
+Maintenant, il ne nous reste plus qu'à appliquer nos nouveaux modificateurs aux divs appropriées dans notre HTML :
+
+```html
+<div class="container">
+    <div class="load">
+        <div class="load__bar load__bar--1"></div>
+        <div class="load__bar load__bar--2"></div>
+        <div class="load__bar load__bar--3"></div>
+        <div class="load__bar load__bar--4"></div>
+        <div class="load__bar load__bar--5"></div>
+    </div>
+</div>
+```
+
+J'aimerais que nous prenions un instant pour admirer nos barres dans le navigateur :
+
+![Barre animées loading pas synchronisées](https://user.oc-static.com/upload/2021/02/10/1612950255976_Gif132.gif)
+
+Nous avons ajouté tous nos délais, mais nous avons oublié de régler le mode de remplissage. Résultat : nos barres reviennent à leur taille
+initiale à la fin de l'animation.
+
+:::note ?
+Mais comment faire pour éviter ce problème ?
+:::
+
+Réglons donc le mode `animation-fill-mode` sur backwards pour étendre les valeurs de départ de l'animation pendant le délai :
+
+```scss
+$cd-bars: #15DEA5;
+$size: 3vh;
+$anim-dur: 1000ms;
+$anim-delay: $anim-dur / 5;
+.load {
+    width: $size*10;
+    height: $size*7.5;
+    display: flex;
+    justify-content: space-evenly;
+    &__bar {
+        background-color: $cd-bars;
+        height: 100%;
+        width: $size;
+        animation: bars $anim-dur backwards;
+        @for $i from 1 through 5 {
+            &--#{$i} {
+                animation-delay: $anim-delay * $i;
+            }
+        }
+    }
+}
+```
+
+Et voilà ! Admirez nos magnifiques barres ondulantes !
+
+![Barres animées ondulation](https://user.oc-static.com/upload/2021/02/10/16129502689305_Gif133.gif)
+
+Du moins, admirez au moins UN cycle de nos barres ondulantes... Maintenant, répétons ce cycle, vers l'infini et au delà ! 👩‍🚀
+
+Pour cela, utilisons `animation-iteration-count`, qui est parfait pour ce genre de situation. Mais combien de cycles devons-nous utiliser
+dans les réglages pour le nombre d'itérations ?
+
+### Faites boucler vos animations à l'infini
+
+Nous ne savons pas combien de temps va s'écouler entre le moment où notre navigateur envoie sa requête au serveur et la réception des données
+en réponse. Et cela signifie que nous ne savons jamais vraiment combien de fois nous aurons besoin de répéter l'animation de nos barres.
+
+Nous pourrions leur attribuer un chiffre très élevé comme 9999.... mais c'est une solution de contournement un peu facile et pas du tout
+optimisée...
+
+Plutôt que de spécifier un nombre spécifique pour le nombre d'itérations, **nous pouvons aussi dire au navigateur de lire l'animation à
+l'infini en lui assignant le mot clé « infinite » à la place** :
+
+```scss
+$cd-bars: #15DEA5;
+$size: 3vh;
+$anim-dur: 1000ms;
+$anim-delay: $anim-dur / 5;
+.load {
+    width: $size*10;
+    height: $size*7.5;
+    display: flex;
+    justify-content: space-evenly;
+    &__bar {
+        background-color: $cd-bars;
+        height: 100%;
+        width: $size;
+        animation: bars $anim-dur backwards infinite;
+        @for $i from 1 through 5 {
+            &--#{$i} {
+                animation-delay: $anim-delay * $i;
+            }
+        }
+    }
+}
+```
+
+Et _maintenant_ voici notre animation répétant à l'infini une série de barres !
+
+![Barres animées iteration count](https://user.oc-static.com/upload/2021/02/10/16129502897753_Gif134.gif)
+
+Maintenant qu'elles tournent en boucle, nous avons un problème très similaire à celui que nous avions avant d'ajouter le mode de remplissage
+backwards à notre animation : les barres passent subitement de leur taille finale à leur taille initiale. Sauf que cette fois, c'est parce que
+les valeurs de début et de fin de la boucle sont différentes. Notre cycle devrait en fait commencer par des barres plus petites, qui
+grandissent jusqu'à leur taille maximale au milieu de l'animation, avant de rétrécir à leur taille initiale à la fin.
+
+Pour cela, nous _pourrions_ ajouter un keyframe supplémentaire au milieu de l'animation de nos barres. Mais encore une fois... nous n'allons
+pas le faire. Ici aussi, il existe une meilleure solution. Et si nous voulions utiliser nos @keyframes bars ailleurs sur notre page, mais
+plutôt que de les animer en boucle, nous voulions qu'elles ne grandissent qu'une fois ? Si nous ajoutions ce keyframe supplémentaire à
+l'animation de nos barres, nous serions en train de modifier notre animation originale au service d'un cas particulier, et éventuellement de
+nous empêcher de l'utiliser dans d'autres animations sur notre site.
+
+À la place, **nous pouvons utiliser la propriété animation-direction pour transformer nos @keyframes en une boucle invisible**, même si les
+valeurs de début et de fin des keyframes sont différentes !
+
+La valeur par défaut pour animation-direction, celle qui est assignée si nous ne lui donnons pas explicitement une autre valeur, est « normal ».
+Comme vous auriez pu le supposer, ceci rejoue une animation normalement, c'est-à-dire du début à la fin :
+
+```scss
+$cd-bars: #15DEA5;
+$size: 3vh;
+$anim-dur: 1000ms;
+$anim-delay: $anim-dur / 5;
+.load {
+    width: $size*10;
+    height: $size*7.5;
+    display: flex;
+    justify-content: space-evenly;
+    &__bar {
+        background-color: $cd-bars;
+        height: 100%;
+        width: $size;
+        animation: bars $anim-dur backwards infinite;
+        animation-direction : normal;
+        @for $i from 1 through 5 {
+            &--#{$i} {
+                animation-delay: $anim-delay * $i;
+            }
+        }
+    }
+}
+```
+
+Généralement, il est très rare de voir animation-direction avec la valeur « normal », car il s'agit d'une option qui donne le même résultat
+que si nous ne l’avions pas précisé du tout :
+
+![Barres ondulantes rythmées](https://user.oc-static.com/upload/2021/02/10/16129503060738_Gif135.gif)
+
+Là où l'utilisation de animation-direction commence à devenir très utile, c'est avec le mot clé « reverse ». Et qu'est-ce qu'on obtient en
+attribuant « reverse » à animation-direction ? Vous vous en doutez peut-être. L'animation est lue à l'envers, en commençant par la fin et en
+la lisant à l'envers jusqu'au début :
+
+```scss
+$cd-bars: #15DEA5;
+$size: 3vh;
+$anim-dur: 1000ms;
+$anim-delay: $anim-dur / 5;
+.load {
+    width: $size*10;
+    height: $size*7.5;
+    display: flex;
+    justify-content: space-evenly;
+    &__bar {
+        background-color: $cd-bars;
+        height: 100%;
+        width: $size;
+        animation: bars $anim-dur backwards infinite;
+        animation-direction: reverse;
+        @for $i from 1 through 5 {
+            &--#{$i} {
+                animation-delay: $anim-delay * $i;
+            }
+        }
+    }
+}
+```
+
+Et maintenant, l'animation de nos barres va être jouée à l'envers, ce qui n'est pas exactement ce que nous recherchons :
+
+![Barres ondulantes reverse](https://user.oc-static.com/upload/2021/02/10/16129503188664_Gif136.gif)
+
+Non seulement animation-direction nous permet de jouer des animations en avant et en arrière, mais elle **nous permet également de jouer des
+animations avec des allers-retours**, de sorte que la direction de l'animation alterne avec chaque itération, d'abord avec une lecture du
+début à la fin, puis en alternant avec une lecture de la fin au début. Ça pourrait être pas mal dans le cas de notre loader.
+
+Renseignons donc la valeur **alternate** :
+
+```scss
+$cd-bars: #15DEA5;
+$size: 3vh;
+$anim-dur: 1000ms;
+$anim-delay: $anim-dur / 5;
+.load {
+    width: $size*10;
+    height: $size*7.5;
+    display: flex;
+    justify-content: space-evenly;
+    &__bar {
+        background-color: $cd-bars;
+        height: 100%;
+        width: $size;
+        animation: bars $anim-dur backwards infinite;
+        animation-direction: alternate;
+        @for $i from 1 through 5 {
+            &--#{$i} {
+                animation-delay: $anim-delay * $i;
+            }
+        }
+    }
+}
+```
+
+Et maintenant, nous avons une animation en boucle infinie et invisible !
+
+![Barres ondulantes optimales](https://user.oc-static.com/upload/2021/02/10/16129503320031_Gif137.gif)
+
+Nous voilà sur le bon chemin ! La fonction timing-function prévoit par défaut différentes pentes d'easing par rapport à ses profils
+d'accélération et de décélération, ce qui crée un effet d'à-coups entre les cycles :
+
+![Le cubic-bézier de l'animation](https://user.oc-static.com/upload/2019/08/07/1565183220894_image23.png)
+
+Au lieu de s'en tenir aux valeurs par défaut de la fonction animation-timing-function, assignons-lui quelque chose de plus symétrique, comme
+le profil ease-in-out :
+
+![Le cubic-bézier que nous souhaitons avoir](https://user.oc-static.com/upload/2019/08/07/15651832814153_image39.png)
+
+Et pendant que nous modifions le timing de notre animation, profitons-en pour abréger tout cela en utilisant le mot clé “animation”. Encore
+une fois, il suffit d’ajouter la valeur alternate à la liste des valeurs de la propriété animation :
+
+```scss
+$cd-bars: #15DEA5;
+$size: 3vh;
+$anim-dur: 1000ms;
+$anim-delay: $anim-dur / 5;
+.load {
+    &__bar {
+        background-color: $cd-bars;
+        animation: bars $anim-dur backwards infinite ease-in-out alternate;
+        @for $i from 1 through 5 {
+            &--#{$i} {
+                animation-delay: $anim-delay * $i;
+            }
+        }
+    }
+}
+```
+
+Maintenant, notre boucle devrait être beaucoup plus fluide :
+
+![Barres ondulantes encore plus fluides](https://user.oc-static.com/upload/2021/02/10/16129503441908_Gif138.gif)
+
+Joliiiii 🤓 ! Alors, on s'arrête là ? ... Non, pas encore.
+
+Pour le moment, l'animation reste quand même un peu ennuyeuse. Essayons de rendre l'ensemble un peu plus attrayant en ajoutant un peu plus de
+complexité visuelle. Peut-être que nous pouvons ajouter un autre ensemble de barres juste en dessous, et les animer en miroir ? Pour cela,
+nous pouvons simplement dupliquer la `div .load` et son contenu :
+
+```html
+<div class="container">
+    <div class="load">
+        <div class="load__bar load__bar--1"></div>
+        <div class="load__bar load__bar--2"></div>
+        <div class="load__bar load__bar--3"></div>
+        <div class="load__bar load__bar--4"></div>
+        <div class="load__bar load__bar--5"></div>
+    </div>
+    <div class="load">
+        <div class="load__bar load__bar--1"></div>
+        <div class="load__bar load__bar--2"></div>
+        <div class="load__bar load__bar--3"></div>
+        <div class="load__bar load__bar--4"></div>
+        <div class="load__bar load__bar--5"></div>
+    </div>
+</div>
+```
+
+Voyons où ça nous mène :
+
+![Barres ondulantes x2 non synchronisées](https://user.oc-static.com/upload/2021/02/10/16129503569036_Gif139.gif)
+
+Mmm... c'est _plutôt_ cool... Mais tentons de pimenter tout ça. Plutôt que de reproduire l'ensemble de barres du haut, essayons de faire en
+sorte que l'ensemble de barres du bas se fonde dans celui du haut, de façon à ce que la barre du haut s'agrandisse et celle du bas rétrécisse.
+Un peu comme une synchronisation inversée. Il nous faut une boucle continue pour l'animation, mais en sens inverse.
+
+Dites donc, ne serait-ce pas génial s'il y avait un mot clé pour la propriété animation-direction qui jouerait les animations dans des
+directions alternées, mais à l'envers ? Bon, vous vous doutez sûrement maintenant que nous ne faisons pas les choses au hasard !
+
+La valeur s'appelle « alternate-reverse ». Afin d'appliquer la valeur `alternate-reverse` à notre deuxième ensemble de barres, nous devrons
+créer un nouvel ensemble de modificateurs, ce qui est possible depuis notre boucle @for.
+
+Au sein de chaque boucle, nous demanderons de créer un deuxième sélecteur, en utilisant la même structure de dénomination de base, mais en
+ajoutant un suffixe pour indiquer que sa direction est inversée. Pendant que nous y sommes, donnons aussi un peu plus de contraste visuel et
+ajoutons une couleur différente à nos barres inversées :
+
+```scss
+$cd-bars: #15DEA5;
+$cd-bars-inv: #0E397F;
+$size: 3vh;
+$anim-dur: 1000ms;
+$anim-delay: $anim-dur / 5;
+.load {
+    &__bar {
+        animation: bars $anim-dur backwards infinite ease-in-out alternate;
+        @for $i from 1 through 5 {
+            &--#{$i} {
+                animation-delay: $anim-delay * $i;
+            }
+            &--#{$i}-inv {
+                animation-delay: $anim-delay * $i;
+                animation-direction: alternate-reverse;
+                background-color: $cd-bars-inv;
+            }
+        }
+    }
+}
+```
+
+Notre CSS compilé a désormais deux ensembles de modificateurs, un pour la ligne du haut, un autre pour le bas :
+
+```scss
+.load__bar--1 {
+    animation-delay: 200ms;
+}
+.load__bar--1-inv {
+    animation-delay: 200ms;
+    animation-direction: alternate-reverse;
+    animation-fill-mode: forwards;
+    background: #0E397F;
+}
+.load__bar--2 {
+    animation-delay: 400ms;
+}
+.load__bar--2-inv {
+    animation-delay: 400ms;
+    animation-direction: alternate-reverse;
+    animation-fill-mode: forwards;
+    background: #0E397F;
+}
+.load__bar--3 {
+    animation-delay: 600ms;
+}
+.load__bar--3-inv {
+    animation-delay: 600ms;
+    animation-direction: alternate-reverse;
+    animation-fill-mode: forwards;
+    background: #0E397F;
+}
+.load__bar--4 {
+    animation-delay: 800ms;
+}
+.load__bar--4-inv {
+    animation-delay: 800ms;
+    animation-direction: alternate-reverse;
+    animation-fill-mode: forwards;
+    background: #0E397F;
+}
+.load__bar--5 {
+    animation-delay: 1000ms;
+}
+.load__bar--5-inv {
+    animation-delay: 1000ms;
+    animation-direction: alternate-reverse;
+    animation-fill-mode: forwards;
+    background: #0E397F;
+}
+```
+
+Remplaçons les modificateurs pour notre deuxième ensemble de barres dans le HTML :
+
+```html
+<div class="container">
+    <div class="load">
+        <div class="load__bar load__bar--1"></div>
+        <div class="load__bar load__bar--2"></div>
+        <div class="load__bar load__bar--3"></div>
+        <div class="load__bar load__bar--4"></div>
+        <div class="load__bar load__bar--5"></div>
+    </div>
+    <div class="load">
+        <div class="load__bar load__bar--1-inv"></div>
+        <div class="load__bar load__bar--2-inv"></div>
+        <div class="load__bar load__bar--3-inv"></div>
+        <div class="load__bar load__bar--4-inv"></div>
+        <div class="load__bar load__bar--5-inv"></div>
+    </div>
+</div>
+```
+
+Et maintenant, vérifions comment nos barres synchronisées de façon inverse s'affichent dans notre navigateur :
+
+![Barres ondulantes synchronisées](https://user.oc-static.com/upload/2021/02/10/16129503736544_Gif140.gif)
+
+Beaucoup mieux ! Nous avons ajouté une sorte de mouvement secondaire à notre animation en faisant en sorte que nos deux séries de barres
+soient complémentaires...
+
+### Faites une pause
+
+Nos barres de chargement sont pas mal du tout. Nous pourrions très bien dire qu'elles sont terminées et passer à autre chose. Mais qu'en
+est-il de ces pauvres utilisateurs qui n’ont pas encore la fibre ? Qui sait combien de temps ils devront regarder ces barres avant d'obtenir
+une réponse du serveur ? Ayons pitié de leurs pauvres âmes et faisons quelque chose pour rendre l'animation un peu plus interactive et les
+divertir pendant qu'ils patientent.
+
+Surprise ! Il y a une propriété d'animation CSS que nous n'avons pas encore abordée. Plutôt que de contrôler la direction ou le délai d'une
+animation, cette propriété permet de contrôler si l'animation est lue ou non. La propriété **animation-play-state** permet de mettre en pause
+ou de jouer des animations en utilisant respectivement les mots clés « paused » ou « running ».
+
+Supposons que nous disposions d'une div toute simple avec la classe .spin :
+
+```html
+<div class="container">
+    <div class="spin"></div>
+</div>
+```
+
+Quelques @keyframes et propriétés d'animation suffisent pour la faire tourner à l'infini, chaque rotation prenant trois secondes à se terminer :
+
+```scss
+.spin {
+    background-color: #15DEA5;
+    width: 30vh;
+    height: 30vh;
+    animation: spin 3s linear infinite;
+}
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+```
+
+![Carré qui pivote](https://user.oc-static.com/upload/2021/02/10/16129505611161_Gif141.gif)
+
+Elle tourne, tourne, tourne... Plus rien ne peut l'arrêter, ni l'accélérer ou lui faire quoi que ce soit, à vrai dire. Pour l'instant, nous
+n'avons vu que comment mettre nos animations en mouvement, mais une fois qu'elles sont en marche, nous n'avons plus qu'à attendre qu'elles se
+terminent. Mais la propriété `animation-play-state` nous offre une commande toute prête que nous pouvons utiliser pour lire et mettre en pause
+nos animations.
+
+Configurons notre boîte pour qu'elle commence en pause, mais que la lecture de l'animation commence au survol de la souris. Pour mettre en
+pause notre boîte en rotation, nous devons régler `animation-play-state` sur « paused », ou simplement ajouter le mot clé « paused » à la
+propriété d'animation abrégée :
+
+```scss
+.spin {
+    background-color: #15DEA5;
+    width: 30vh;
+    height: 30vh;
+    animation: spin 3s linear infinite paused;
+}
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+```
+
+Maintenant, notre boîte ne bouge plus, même si notre animation de rotation « spin » lui est appliquée :
+
+![L'animation ne fonctionne plus](https://user.oc-static.com/upload/2019/08/07/15651894112127_image34.png)
+
+Notre animation commence directement en statut pause. Pour faire bouger notre animation, nous avons besoin d'ajouter un bouton de lecture, ce
+que nous allons faire en ajoutant un pseudosélecteur `:hover` à notre sélecteur `.spin`, dans lequel l’état de l’animation sera sur « running » :
+
+```scss
+.spin {
+    background-color: #15DEA5;
+    width: 30vh;
+    height: 30vh;
+    animation: spin 3s linear infinite paused;
+    &:hover {
+        animation-play-state: running;
+    }
+}
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+```
+
+Maintenant, chaque fois que nous survolerons notre boîte, elle reprendra l'animation là où elle s'était arrêtée, et une fois le survol
+terminé, elle fera une pause là où elle était, pour recommencer son animation si nous la survolons à nouveau :
+
+![Carré pivotant au passage de la souris](https://user.oc-static.com/upload/2021/02/10/16129505768598_Gif142.gif)
+
+`animation-play-state` donne à nos utilisateurs la possibilité d'interagir avec nos animations 🔥. Ce qui pourrait être plutôt cool, à
+condition de ne pas en faire trop. Utilisons `animation-play-state` pour transformer nos barres de chargement en un petit jeu qui va aider
+nos utilisateurs à patienter en attendant la réponse du serveur.
+
+Pour l'instant, nos deux ensembles de barres sont verrouillés l'un et l'autre dans une sorte de danse :
+
+![Barres ondulantes synchronisées](https://user.oc-static.com/upload/2021/02/10/1612950588033_Gif143.gif)
+
+Et si on changeait ces délais sur la deuxième série de barres, pour que chacune ait un temps de départ aléatoire ?
+
+![Barres ondulantes délai](https://user.oc-static.com/upload/2021/02/10/16129506197045_Gif144.gif)
+
+Maintenant, tout est désynchronisé ! Mais cela nous permet d'intégrer une certaine interactivité pour nos utilisateurs et de les divertir un
+peu pendant qu'ils attendent que les choses se chargent.
+
+Nous pourrions utiliser la pseudoclasse :hover pour agir comme un bouton pause. Mais l’utilisateur pourra resynchroniser les deux ensembles
+de barres en survolant chaque barre, jusqu'à ce qu'elle soit synchronisée avec son acolyte. La première étape consiste à donner des délais
+aléatoires sur les barres inversées, ce qui peut se faire via la fonction `random()` de Sass :
+
+```scss
+$cd-bars: #15DEA5;
+$cd-bars-inv: #0E397F;
+$size: 3vh;
+$anim-dur: 1000ms;
+$anim-delay: $anim-dur / 5;
+.load {
+    &__bar {
+        animation: bars $anim-dur backwards infinite ease-in-out alternate;
+        @for $i from 1 through 5 {
+            &--#{$i} {
+                animation-delay: $anim-delay * $i;
+            }
+            &--#{$i}-inv {
+                animation-delay: $anim-delay * $i + random(100)*15ms;
+                animation-direction: alternate-reverse;
+                animation-fill-mode: forwards;
+                background-color: $cd-bars-inv;
+            }
+        }
+    }
+}
+```
+
+La fonction aléatoire génère un entier compris entre 1 et le nombre choisi comme argument, qui dans notre cas de figure est 100. Nous
+générons donc un nombre aléatoire entre 1 et 100, puis nous le multiplions par 15ms et l'ajoutons à notre retard incrémentiel, créant ainsi
+un animation-delay aléatoire pour chacune des barres inversées :
+
+![Barres ondulantes délai aléatoire](https://user.oc-static.com/upload/2021/02/10/16129506320049_Gif145.gif)
+
+Maintenant, tout ce que nous avons à faire est d'ajouter notre bouton pause en assignant à `.load__bar` une pseudoclasse `:hover` permettant
+de régler animation-play-state sur « paused » :
+
+```scss
+$cd-bars: #15DEA5;
+$cd-bars-inv: #0E397F;
+$size: 3vh;
+$anim-dur: 1000ms;
+$anim-delay: $anim-dur / 5;
+.load {
+    &__bar {
+        animation: bars $anim-dur backwards infinite ease-in-out alternate;
+        @for $i from 1 through 5 {
+            &--#{$i} {
+                animation-delay: $anim-delay * $i;
+            }
+            &--#{$i}-inv {
+                animation-delay: $anim-delay * $i + random(100)*15ms;
+                animation-direction: alternate-reverse;
+                animation-fill-mode: forwards;
+                background-color: $cd-bars-inv;
+                &:hover {
+                    animation-play-state: paused;
+                }
+            }
+        }
+    }
+}
+```
+
+Pendant que nous y sommes, ajoutons quelques instructions directement dans notre HTML.
+
+```html
+<div class="container">
+    <span>
+        Survolez les barres bleues pour les synchroniser</span>
+    <div class="load">
+        <div class="load__bar load__bar--1"></div>
+        <div class="load__bar load__bar--2"></div>
+        <div class="load__bar load__bar--3"></div>
+        <div class="load__bar load__bar--4"></div>
+        <div class="load__bar load__bar--5"></div>
+    </div>
+    <div class="load">
+        <div class="load__bar load__bar--1-inv"></div>
+        <div class="load__bar load__bar--2-inv"></div>
+        <div class="load__bar load__bar--3-inv"></div>
+        <div class="load__bar load__bar--4-inv"></div>
+        <div class="load__bar load__bar--5-inv"></div>
+    </div>
+    <span>avec leurs équivalents verts au dessus.</span>
+</div>
+```
+
+Et c'est tout ! Maintenant, nos barres vont démarrer de façon aléatoire, et c'est l'utilisateur qui pourra les resynchroniser en les
+survolant avec sa souris :
+
+![Barres ondulantes jeu survol souris](https://user.oc-static.com/upload/2021/02/15/16133818585532_Gif146.gif)
+
+Pas mal du tout !
+
+De quoi tenir votre utilisateur alerte pour un petit moment.
+
+Si vous voulez les manipuler directement, jetez un œil [à mon CodePen](https://codepen.io/atoulmet/pen/WNeEWdx).
+
+_Essayez de changer le temps de anim-delay 😀_
+
+### En résumé
+
+- nous pouvons répéter un ensemble de keyframes autant de fois que nous le souhaitons en utilisant la propriété `animation-iteration-count`,
+avec le nombre de cycles comme valeur ;
+- nous pouvons régler nos keyframes pour qu'ils se répètent à l'infini en utilisant la propriété `animation-iteration-count` avec le mot clé
+« infinite » ;
+- la propriété `animation-direction` nous permet de lire un ensemble de keyframes normalement, avec le mot clé « normal » ;
+- la propriété `animation-direction` nous permet de lire un ensemble de keyframes vers l'arrière avec le mot clé « reverse » ;
+- la propriété `animation-direction` nous permet de lire un ensemble de keyframes avec des allers-retours avec le mot clé « alternate » ;
+- et enfin, la propriété `animation-direction` nous permet de lire un ensemble de keyframes avec des allers-retours, mais en commençant par
+la fin avec le mot clé « alternate-reverse » ;
+- nous pouvons mettre en pause une animation avec keyframe en assignant à la propriété `animation-play-state` la valeur réglée sur « paused » ;
+- nous pouvons reprendre la lecture d'une animation avec keyframe en assignant la propriété `animation-play-state` avec la valeur réglée sur
+« running ».
+
+_Nous avons maintenant fait un tour d’ensemble plutôt utile de l'animation CSS et des propriétés de transition ! Toutes les propriétés que le
+CSS peut vous offrir sont désormais à votre disposition pour l'animation. Vous avez sûrement hâte de les mettre en pratique pour donner vie à
+vos pages. Mais avant de conclure, nous allons apprendre à maîtriser un nouvel outil qui nous aidera à construire et peaufiner plus rapidement
+vos animations en revenant à DevTools. Rendez-vous au chapitre suivant !_
+
+-----
+
+## Affinez vos animations CSS avec DevTools
+
+[Affinez vos animations CSS avec DevTools - Créez des animations CSS modernes - OpenClassrooms](https://openclassrooms.com/fr/courses/5919246-creez-des-animations-css-modernes/6340942-affinez-vos-animations-css-avec-devtools)
+
+<Vimeo vimeoId="508777445" />
+
+<br />
+
+Tout au long de ce cours, nous avons construit beaucoup de transitions et d'animations. Et, pour chacune d'entre elles, nous sommes revenus
+plusieurs fois sur le rythme, les accélérations, les transformations de nos animations.
+
+"C'est un peu trop rapide, trop lent, trop X, trop Y"... Maintenant c'est mieux/c'est bien/c'est idéal/c'est la perfection incarnée/ ➡️insérez
+ici une déclaration positive.
+
+Vous vous êtes sûrement demandé d’où sortaient ces propositions de transitions de X secondes ? Est-ce que ces X secondes ne devraient pas être
+Y secondes ? Mais est-ce que rendre un nombre de millisecondes soi-disant aléatoire plus rapide/plus lent permet encore d'améliorer l'effet
+obtenu ?
+
+Vraiment ?
+
+Et la réponse est... peut-être... 🤷‍♀️ ?
+
+### Ajustez vos animations par l'itération et les bonnes pratiques
+
+Instant révélation : la « perfection » n'existe pas. Chaque personne a un point de vue différent. Mais si nos préférences peuvent paraître
+assez variées, elles tendent quand même à être regroupées autour de certaines valeurs. Une personne pense peut-être qu'un menu doit mettre
+500ms pour s'ouvrir, alors que quelqu'un d'autre peut préférer 400ms. Mais nous aurions probablement du mal à trouver quelqu'un qui pense
+qu'il faudrait 15 secondes pour que la même animation soit lue.
+
+Alors, comment faire pour que nos animations soient « parfaites » ? Comment pouvons-nous savoir quelle devrait être leur durée _idéale_ ? Et
+lorsque cette durée ne semble toujours pas « parfaite », savons-nous de combien nous devons la ralentir ou l'accélérer ?
+
+La réponse à ces questions vient en partie de l'expérience et de la pratique. Au fil du temps, l'expérience en tant qu'animateurs, concepteurs
+ou programmateurs, permet de développer une intuition de ce qui est « parfait ». En animation, tout comme dans tout ce qui est en rapport
+avec la programmation, c’est en pratiquant que l’on apprend.
+
+Vous vous souvenez quand je vous disais que j’essayais de ne jamais faire une animation de plus de 300ms dans mes éléments fonctionnels ? Il
+s’agit en fait de l’un des principes d’UX (user experience, ou _expérience utilisateur_). Car en termes d’UX, il existe un certain nombre de
+best practices qui peuvent vous guider dans vos choix.
+
+La pratique pourrait signifier : ajouter plein de valeurs à notre code, actualiser, changer ces nombres, actualiser à nouveau, plisser les
+yeux en regardant l'écran pour essayer de savoir si ça améliore les choses ou non, puis changer à nouveau les nombres, Ctrl + R/Cmd + R,
+commencer à devenir nerveuse, changer les nombres pour un tout nouvel ensemble de nombres, actualiser, ça semble mieux... vraiment ?
+
+L'itération est essentielle dans le processus de création d’une animation, mais relancer à chaque fois notre code peut parfois être pénible.
+Et quand nous sommes sur une app front qui prend quelques secondes à recharger, comme une application React, cela peut rapidement devenir
+assez frustrant.
+
+Alors, vous pouvez prendre votre mal en patience… ou vous pouvez utiliser les outils d’animation DevTools ! (Vous vous doutez bien que je
+vous recommande fortement l'option 2.)
+
+### Démythifiez les animations
+
+DevTools de Chrome possède un outil intégré que nous pouvons utiliser pour peaufiner et améliorer les transitions et les animations. Cet
+outil s'appelle judicieusement « Animations ».
+
+Mais avant de pouvoir utiliser le panneau Animations, nous devons l'ouvrir :
+
+:::info
+Petit rappel : pour ouvrir DevTools, nous devons taper Ctrl-Shift-I sous Windows, ou Cmd-Opt-I sous Mac. Une fois DevTools ouvert, il faut
+cliquer sur les trois points en haut à droite du panneau, descendre vers « More Tools » (_plus d'outils_) et cliquer sur « Animations ».
+:::
+
+![Ouverture du panneau animations dans DevTools](https://user.oc-static.com/upload/2019/08/26/15668476626738_15545563480631_pt03ch04_01_openAnimPanel_v002.gif)
+
+Et voilà, nous y sommes. Le panneau Animations. Rien de très excitant pour l'instant, sauf un message nous disant que l'application écoute
+les animations. Donnons-lui quelque chose à écouter en chargeant une page avec une animation :
+
+![Le panneau DevTools lorsque qu'une page avec une animation se charge](https://user.oc-static.com/upload/2021/02/10/16129510589393_Gif148.gif)
+
+Nous avons un menu animé, la boîte principale qui s'ouvre en coulissant, puis les éléments du menu qui glissent en position. Au fur et à
+mesure que l'animation est lue, une boîte grise s'efface, remplie de quelques lignes colorées.
+
+Étrange... Laissons-nous tenter et cliquons :
+
+![Le panneau Devtools au clic sur la boite grise](https://user.oc-static.com/upload/2019/08/26/15668477332601_15545564074413_pt03ch04_03_clickThumbnail_v001.gif)
+
+Et voilà ! Notre animation de menu se répète, bien que la page n'ait pas été rechargée. Dans le panneau Animations, une timeline d'éléments
+animés apparaît, avec un logo de lecture lisant les segments pendant que l'animation progresse.
+
+Mais à quoi servent ces lignes colorées sur l'image miniature ? 
+
+Chaque ligne représente un élément HTML animé avec sa propre couche dans la timeline. Si nous survolons le nom de l'élément ou si nous
+cliquons sur son graphique d'animation, Chrome le met en surbrillance sur la page :
+
+![Illustration de la surbrillance dans Devtools](https://user.oc-static.com/upload/2019/08/26/15668478903004_15545564313588_pt03ch04_04_clickElement_v001.gif)
+
+On dirait donc que nous avons un élément de menu, avec une div pour chaque élément de menu, quelques éléments décoratifs pour améliorer
+l'animation et des éléments de menu.
+
+Dans chaque couche, des points représentent les étapes clés pour voir où chaque animation commence et se termine, ainsi que les courbes
+d'accélération, représentées par un graphique de vitesse, où le pic du profil est la vitesse maximale.
+
+L'élément de menu avec la classe `.menu` qui lui est appliquée commence à 0 seconde et dure environ 600ms, en tout cas à première vue. En
+fait, si nous cliquons sur la couche, non seulement l'élément est mis en surbrillance, mais ses balises et son style sont également affichés
+dans le panneau Éléments ci-dessous :
+
+![Illustration du panneau éléments dans Devtools](https://user.oc-static.com/upload/2019/08/26/15668479285784_15545564651766_pt03ch04_05_animProps_v002.gif)
+
+Avec le style de .menu qui nous est présenté, nous pouvons voir qu'il a en effet une durée d'animation de 600ms, ainsi que la fonction de
+timing par défaut, et un `animation-fill-mode` réglé sur « both ». Il utilise également un ensemble de keyframes appelé « menu » et possède
+un keyframe entre le début et la fin, ce qui est indiqué par le point creux au milieu de l'animation.
+
+Les animations attachées aux éléments .menu__open-accent utilisent toujours le même ensemble de keyframes que l'animation du menu principal.
+On peut le voir grâce au nom “menu” qui est indiqué au-dessus du profil de vitesse. Elles sont les seules à avoir des durées et des délais
+différents. Si nous cliquons sur l'une d'elles, nous verrons exactement quels sont sa durée et son délai :
+
+![Propriétés duration et delay dans les Elements](https://user.oc-static.com/upload/2019/08/26/15668481964151_15545564932301_pt03ch04_06_accentProps_v002_1.gif)
+
+Vous pouvez faire des allers-retours avec l'animation en déplaçant le curseur sur la timeline. Cela donne une très bonne idée de la façon
+dont les différents éléments agissent et interagissent les uns avec les autres :
+
+![Déplacement du curseur sur la timeline](https://user.oc-static.com/upload/2019/08/26/15668482559065_15545565166639_pt03ch04_07_scrubbing.gif)
+
+En cliquant sur le bouton de lecture situé à gauche de la timeline, on peut voir notre animation en temps réel :
+
+![Clic sur le bouton lecture](https://user.oc-static.com/upload/2019/08/26/15668482911548_15545565375392_pt03ch04_08_play100_v001.gif)
+
+Ceci n'est possible que si l'option 100% est surlignée près du haut du panneau. 100% indique la vitesse de lecture. Nous pouvons donc
+également choisir de lire une animation à un quart de sa vitesse normale :
+
+![Devtools Animations playback speed](https://user.oc-static.com/upload/2019/08/26/1566848471581_15545565774503_pt03ch04_09_play25_v001%20%281%29.gif)
+
+Ou, pour une lecture très ralentie, nous pouvons même la régler pour qu'elle soit lue à 10 % de sa vitesse normale :
+
+![Devtools Animations playback slow](https://user.oc-static.com/upload/2019/08/26/15668485350069_15545566258087_pt03ch04_10_play10_v001.gif)
+
+:::info
+Une excellente façon d'améliorer ses compétences en animation consiste à décomposer les animations que vous aimez. Vous voyez immédiatement
+si vous aimez quelque chose en particulier, mais avec l’outil Animations des DevTools, vous pouvez aller plus loin et les disséquer étape par
+étape.
+
+En bref, l'outil d'animation peut nous aider pour :
+1. Voir rapidement tous les éléments utilisés dans une animation.
+2. Comprendre comment ils sont combinés et mis en scène pour créer le rendu final.
+3. Repérer là où il y a un problème.
+4. Et commencer à trouver une solution !
+
+Ainsi, au-delà d'une meilleure compréhension de la composition des animations, comment est-ce que DevTools peut nous aider à améliorer nos
+animations ?
+
+Regardons à nouveau notre animation de menu :
+
+![Devtools Animations playback slow 2](https://user.oc-static.com/upload/2019/08/26/15668485695034_15545566757547_pt03ch04_10_play10_v001.gif)
+
+Ça vous paraît enthousiasmant, n'est-ce pas ? Mais il y a encore quelque chose qui me chiffonne.
+
+Ce n'est pas que cette application soit _mauvaise_... Mais, quand on regarde la timeline, on voit qu’elle est très linéaire. L'animation se
+déroule de manière très régulière et graduelle. Chaque élément du menu commence lorsque le précédent est à mi-chemin. Tout semble un peu trop
+robotique et sans vie :
+
+![Devtools Animations steps](https://user.oc-static.com/upload/2019/08/26/15668486304178_15545567133209_pt03ch04_11_uniformity_v001%20%280-00-01-07%29_1.png)
+
+OK, cette animation n'est pas la meilleure qui soit. J’ai compris ! 🙈 Alors, revenons à l'éditeur et changeons un peu les délais et les
+durées des éléments du menu, et espérons que les choses aient l'air un peu plus naturelles.
+
+Croisons les doigts. Mais vous n’êtes cependant pas certain d’obtenir le résultat attendu. Pour avoir une animation avec un timing adapté,
+rien ne remplace l'expérimentation. Et expérimenter en faisant de nombreux allers-retours entre notre éditeur et notre navigateur, c'est un
+peu comme essayer de courir dans des sables mouvants : une expérience lente, frustrante, avec le risque constant de s'enliser.
+
+Alors, plutôt qu'un destin fait de frustrations et de désespoir, pourquoi ne pas simplement faire glisser son curseur sur les DevTools ? Ça
+paraît plus tentant, n'est-ce-pas ?
+
+### Réglez vos animations directement dans les DevTools
+
+Eh oui, vous pouvez ajuster vos animations très simplement en cliquant et en faisant glisser les éléments de la timeline. Vous voulez faire
+durer votre animation plus longtemps ou au contraire l’accélérer ? Cliquez sur son point de départ ou sa destination et faites-le glisser vers
+la gauche ou la droite :
+
+![Devtools Animations duration drag and drop](https://user.oc-static.com/upload/2019/08/26/15668486799632_15545567554873_pt03ch04_12_outPointDrag_v002.gif)
+
+Et d'un seul coup, nous avons modifié la durée de l'animation pour le premier élément de menu. Dans le volet Elements, les valeurs de durée
+et de délai de l'animation ont été mises à jour.
+
+En cliquant à nouveau sur ce bouton de lecture, nous pouvons voir que notre menu est maintenant lu en utilisant la nouvelle durée.
+
+![Devtools Animations drag and drop duration](https://user.oc-static.com/upload/2019/08/26/15668487262798_15545567826443_pt03ch04_13_modPlayback_v001.gif)
+
+Nous pouvons donc ajuster nos durées et effectuer quelques petites modifications jusqu'à ce que tout semble parfait. C'est beaucoup plus
+rapide et plus facile que de faire des allers-retours entre le navigateur et l'éditeur, vous ne trouvez pas ?
+
+
+:::caution
+Le panneau d'animation nous permet d'ajuster les propriétés de l'animation telles que la durée. Mais les pourcentages des keyframes ne font
+pas partie des propriétés de l'animation : ces pourcentages font partie de l'animation @keyframes en tant que telle. La modification d'un
+pourcentage d'un keyframe se reflète dans chaque instance d'une animation qui utilise ces keyframes. Donc, si nous voulons ajuster les
+pourcentages des keyframes, nous devons le faire à la main.
+:::
+
+En plus de faire glisser les extrémités des animations pour ajuster leur durée, nous pouvons également ajuster leurs délais en faisant glisser
+(en mode drag-and-drop) le profil de l'animation :
+
+![Devtools Animations drag and drop delay](https://user.oc-static.com/upload/2019/08/26/1566848786371_15545568254129_pt03ch04_14_clipDrag_v001.gif)
+
+Après avoir déplacé une animation sur la timeline dans un sens ou dans l'autre, sa valeur de délai d'animation est mise à jour dans le volet
+Elements ci-dessus. Et en cliquant sur le bouton de lecture, vous verrez apparaître notre animation modifiée avec son nouveau délai :
+
+![Observation directe du résultat d'un changement dans DevTools](https://user.oc-static.com/upload/2019/08/26/15668488338333_15545568586413_pt03ch04_15_dragPlayback_v001.gif)
+
+:::note ?
+_Que se passe-t-il si nous actualisons la page à ce stade ?_
+:::
+
+Si on regarde notre code source, rien n'a changé. Cela signifie que si nous actualisons notre page, tout reviendrait à la version précédente
+de nos animations, et toutes nos modifications seraient perdues !
+
+![Devtools Animations refresh page](https://user.oc-static.com/upload/2019/08/26/15668488646528_15545568971949_pt03ch04_16_pageRefresh_v001.gif)
+
+Quand nous modifions des animations dans le panneau d'animation, nous modifions des éléments dans ce qu'on appelle le DOM (vous vous souvenez,
+je vous en avais parlé), qui, pour simplifier, est le rendu par le navigateur de nos HTML et CSS, etc. Les modifications que nous avons
+apportées aux panneaux Animation et Elements n'affectent donc que l'interprétation du rendu de notre code. Si nous voulons conserver la
+version de notre animation que nous créons dans le panneau Animation, nous devrons mettre à jour manuellement notre code pour le faire
+correspondre.
+
+:::note ?
+Euh... mais... il se passe tout plein de trucs... des durées, des délais... cela fait beaucoup de choses à suivre...
+:::
+
+C'est vrai. Heureusement, Chrome suit mieux que nous. En haut dans l'onglet de l'élément, aligné à droite du sélecteur qui contient le délai
+que nous venons de modifier, il y a un lien vers l'emplacement dans le fichier CSS. Cliquons dessus. Devtools passe directement au volet
+Sources et le met en surbrillance dans le code. Et si nous faisons un clic droit sur le fichier CSS, il est possible de choisir « Local
+Modifications » (_modifications locales_) dans le menu contextuel, ce qui ouvre un panneau Modifications à côté de notre panneau Animations :
+
+![Animation des changements](https://user.oc-static.com/upload/2019/08/26/15668491227766_15545569362614_pt03ch04_17_localMods_v001_3%20%281%29.gif)
+
+Dans le panneau « Changes », on peut voir les logs de « diff ». Cela correspond aux différences entre le code source et les modifications
+effectuées dans les DevTools. Les valeurs originales sont surlignées en rouge, et les valeurs mises à jour sont surlignées en vert.
+
+Nous pouvons rapidement voir les propriétés que nous devons mettre à jour, et les valeurs sur lesquelles nous devons les mettre à jour. Une
+fois que nous avons ajusté nos animations pour qu’elles correspondent à l’effet recherché, nous pouvons ainsi passer à ce panneau et
+l'utiliser pour mettre à jour notre code source.
+
+La comparaison avec les “diffs” fonctionne comme les systèmes de contrôle de version, où les modifications apportées au code existant sont
+stockées et utilisées pour créer la version la plus récente d'un document. Si vous avez déjà eu un conflit de merge sur Git, vous avez
+probablement comparé les différences entre les deux documents pour résoudre ce conflit.
+
+### Évaluez vos animations
+
+Maintenant que nous connaissons l’outil Animation sur le bout des doigts, jetons un coup d’œil à notre menu :
+
+![Menu animation devtools](https://user.oc-static.com/upload/2019/08/26/15668491605298_15545569983309_pt03ch04_08_play100_v001%20%282%29.gif)
+
+Retour à l'animation de votre menu
+
+Pour l'instant, il y a quelques éléments qui ne vont pas.
+1. Les éléments du menu s'affichent trop tard.
+2. Les borders de l'élément de menu arrivent également un peu trop tard.
+3. Le décalage est trop important entre les différents éléments de menu qui s'animent à l'intérieur. Ils donnent l'impression de s'animer
+l'un après l'autre, plutôt que d'être décalés.
+4. La durée des animations menu__item semble être un peu trop rapide.
+
+Toutes ces remarques viennent vraiment d’une sensibilité. Nous assignons des valeurs en pensant qu'elles seraient de bons points de départ
+pour les différentes animations, mais elles peuvent et doivent être ajustées en fonction des préférences. Nous n'allons pas entrer dans les
+détails des durées et des délais de chaque animation.
+
+Différentes choses peuvent vous sembler parfaites ou imparfaites. C’est donc le moment pour vous de faire vos propres expériences. Ouvrez le
+panneau Animations, cliquez, glissez-déplacez, modifiez et expérimentez à votre guise. Revenez quand vous serez satisfait de votre résultat.
+
+### Comparez vos animations
+
+Vous voilà de retour ? Parfait ! J'espère que vous avez une animation qui vous plaît. De mon côté, voici la version que je préfère !
+
+![Devtools menu final](https://user.oc-static.com/upload/2019/08/26/15668492166283_15545570580813_pt03ch04_18_finalResult_v001.gif)
+
+Et voilà le rendu final !
+
+Dans l'ensemble, l'animation principale .menu est un peu plus lente, de même que les animations de .menu__item, qui sont maintenant
+échelonnées de manière plus rapprochée.
+
+Modifier son animation est un véritable processus. Arriver à une animation que l'on trouve « parfaite » n'est pas quelque chose que l'on
+parvient à faire du premier coup. Grâce à notre expérience et à notre instinct, nous pouvons commencer à nous faire une idée de ce que les
+valeurs de l'animation devraient _probablement_ être, mais ce n'est que le point de départ. À partir de là, il s'agit de tester et de tâtonner
+pour arriver à un résultat dont nous sommes satisfaits.
+
+![Différences avec tous les changements effectués](https://user.oc-static.com/upload/2019/08/26/15668497833648_1554557862722_pt03ch04_21_diffed_v001%20%280-00-03-02%29.png)
+
+Tous les changements effectués
+
+Les durées ont été un peu modifiées, mais les changements les plus importants concernent la durée des `animation-delay`. Tous les éléments de
+.menu__item arrivent plus tôt, avec .menu__item--1 à peine 25 millisecondes plus tôt, et .menu__item--3 presque 400ms plus tôt.
+
+Dans l'ensemble, cela permet d’avoir une animation plus dynamique et plus accrocheuse. Voici ces changements, intégrés dans le code final :
+
+```html
+<div class="container">
+    <menu class="menu">
+        <div class="menu__item menu__item--1 menu__item--current">
+            Home
+            <div class="menu__item-accent menu__item-accent--active"></div>
+        </div>
+        <div class="menu__item menu__item--2">
+            About
+            <div class="menu__item-accent"></div>
+        </div>
+        <div class="menu__item menu__item--3">
+            Contact
+            <div class="menu__item-accent"></div>
+        </div>
+        <div class="menu__open-accent--1"></div>
+        <div class="menu__open-accent--2"></div>
+    </menu>
+</div>
+```
+
+```scss
+$cd-navy: #0E397F;
+$cd-mint: #15dea5;
+@mixin menu__open-accent($dur, $delay) {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    top:0;
+    bottom: 0;
+    background: #f4f9f8;
+    transform-origin: top left;
+    animation: menu $dur $delay both;
+    z-index: -1;
+}
+.menu {
+    min-width: 33vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 1rem;
+    background:$cd-mint;
+    overflow: hidden;
+    transform-origin: top left;
+    position: relative;
+    animation: menu 661ms both;
+    z-index: -10;
+    &__open-accent--1 {
+        @include menu__open-accent(450ms, 275ms);
+    }
+    &__open-accent--2 {
+        @include menu__open-accent(450ms, 150ms);
+        background: $cd-navy;
+        z-index: -2;
+    }
+    &__item {
+        padding: .75rem;
+        margin: .25rem;
+        background: #fff;
+        animation: menu__item 810ms cubic-bezier(.1,.9,.1,1) both;
+        position: relative;
+        &-accent {
+            content: "";
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            width: .25rem;
+            background-color: $cd-mint;
+            animation: menu__accent 400ms both;
+            &--active {
+                background-color: $cd-navy
+            }
+        }
+        &--1 {
+            animation-delay: 475ms;
+            > div {
+                animation-delay: 712ms;
+            }
+        }
+        &--2 {
+            animation-delay: 546ms;
+            > div {
+                animation-delay: 805ms;
+            }
+        }
+        &--3 {
+            animation-delay: 632ms;
+            > div {
+                animation-delay: 914ms;
+            }
+        }
+    }
+}
+@keyframes menu {
+    0% {
+        transform: scale(0,.07);
+    }
+    33% {
+        transform: scale(1,.07);
+        animation-timing-function: cubic-bezier(.73,.01,.2,.99)
+    }
+}
+@keyframes menu__item {
+    0% {
+        transform: translateX(\-110%);
+    }
+}
+@keyframes menu__accent {
+    0% {
+        transform: scaleY(0);
+    }
+}
+```
+
+Votre code peut vous sembler très similaire, ou il peut y avoir d'énormes différences. Quoi qu'il en soit, vous avez créé une animation qui
+vous convient à _vous_, et c’est très important. Maintenant une étape essentielle : s’assurer que votre animation convient également aux
+autres. Le meilleur moyen de savoir si c'est le cas est de demander des feedbacks autour de vous.
+
+La création d'une animation ne consiste pas seulement à cocher des cases sur une liste d'éléments à livrer. Elle vient également étayer et
+améliorer notre compréhension de ce qui esthétique ou non. Chaque keyframe, chaque ajustement, chaque erreur nous permet d'être plus
+performants à l'avenir. Chaque animation que nous créons nous permet d'améliorer notre art.
+
+Félicitations, vous êtes maintenant de véritables animateurs dans l’âme. Vous donnez vie aux pages web 👩‍🎨 !
+
+### En résumé
+
+- Itérer, c’est le secret d'une bonne animation. Le simple fait d'ajouter quelques chiffres et d'appuyer sur Enregistrer est rarement
+suffisant ;
+- Notre expérience nous donne une bonne intuition quant aux valeurs de départ qui paraissent bien pour nos propriétés d'animation ;
+- Le panneau Animations de DevTools nous permet d'affiner rapidement les animations, d'improviser et d'expérimenter jusqu'à ce que nous
+trouvions la bonne durée ou le bon délai pour un élément ;
+- Le panneau Changes (Modifications) nous permet de voir les propriétés que nous avons modifiées ainsi que leurs nouvelles valeurs, de façon
+à mettre à jour notre code source en conséquence.
+
+_Dans le prochain chapitre, nous ferons un petit tour d’horizon de vos nouvelles compétences 🚀_
+
+-----
+
+## Résumé du cours
+
+[Résumé du cours - Créez des animations CSS modernes - OpenClassrooms](https://openclassrooms.com/fr/courses/5919246-creez-des-animations-css-modernes/6340949-resume-du-cours)
+
+<Vimeo vimeoId="508777494" />
+
+<br />
+
+Prenez un instant pour réfléchir à où vous en étiez il n’y a pas si longtemps... C’est assez fou, non ?
+
+En quelques chapitres seulement, vous avez appris l’essentiel pour donner vie à vos pages web.
+
+Ensemble, nous avons appris comment :
+- appliquer les principes de l’animation au CSS ;
+- créer des transitions CSS simples ;
+- mais aussi des transitions complexes ;
+- créer des animations ayant de nombreuses étapes avec les keyframes ;
+- créer une animation qui boucle à l’infini avec les propriétés d’itération et de direction.
+
+Il est maintenant temps de vous lancer dans vos propres animations avec keyframes. Pour cela, vous avez la dernière activité de ce cours.
+J’espère que vous en profiterez pour exprimer votre créativité d’animateurs et animatrices !
+
+:::info
+Personnellement, quand j'ai besoin de créer une nouvelle animation, je recherche toujours ce qui existe déjà. Voilà les sites que je consulte
+en priorité :
+- [Awwwards](https://www.awwwards.com/websites/animation/) : ce site recense les plus beaux sites Internet. La catégorie "animation" a de
+quoi faire rêver n'importe quel animateur 😍 ;
+- [Dribbble](https://dribbble.com/) : vous pouvez chercher le mot clé qui correspond le plus à ce que vous voulez créer, et rassembler vos
+résultats dans un panier (_bucket_ en anglais). Très pratique !
+- [Codepen](https://codepen.io/) : ce site est parfait lorsque vous cherchez une animation sur un élément bien spécifique, comme un burger
+menu, par exemple ;
+- [UI Movement](https://uimovement.com/) : votre dose d'inspiration quotidienne en UI (User Interface), qui recense de nombreuses animations ;
+- et encore bien plus en vous perdant dans le web. Alors bonnes découvertes à vous 👩‍🚀 !
+:::
+
+-----
+
+## Quiz : Réalisez des animations dynamiques
+
+[Réalisez des animations dynamiques - OpenClassrooms](https://openclassrooms.com/fr/courses/5919246-creez-des-animations-css-modernes/exercises/3624)
+
+#### Compétences évaluées
+
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-checkbox" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#00b341" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <polyline points="9 11 12 14 20 6" />
+  <path d="M20 12v6a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h9" />
+</svg> Réaliser des animations dynamiques
+
+-----
+
+#### Description
+
+Dans ce quiz, vous allez créer vos premières animations @keyframes.<br />
+Ce quiz n'est **pas** comme les deux précédents. Il vérifie vos connaissances mais aussi **votre pratique sur un exemple concret**. Veillez à
+suivre les questions dans l'ordre et effectuer les tâches demandées. Ce quiz ressemble à un TP et **vous prendra donc sûrement plus de temps**
+que les deux autres, c'est normal !<br />
+Les premières questions sont des questions générales sur les compétences apprises dans la partie 3. Pour les questions 6, 7, 8, 9 et 10, vous
+allez devoir travailler sur le [repository GitHub](https://github.com/atoulmet/openclassrooms_css-animations) dont vous aviez eu besoin pour
+le quiz de la deuxième partie.<br />
+Vérifiez le fichier README.md pour obtenir quelques instructions supplémentaires sur comment le faire tourner.<br />
+Alors à vous de jouer ! 💪
+
+
+#### Question 1 : Quels snippets de code me permettent de créer une animation @keyframes ?
+
+*Attention, plusieurs réponses sont possibles.*
+
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-square" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <rect x="4" y="4" width="16" height="16" rx="2" />
+</svg>
+
+```scss
+@keyframes mon-animation {
+    0%: {
+        transform: scale(1);
+    }
+    100%: {
+        transform: scale(1.2);
+    }
+}
+```
+
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-checkbox" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#00b341" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <polyline points="9 11 12 14 20 6" />
+  <path d="M20 12v6a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h9" />
+</svg>
+
+```scss
+@keyframes mon-animation {
+    100% {
+        transform: scale(1.2);
+    }
+    0% {
+        transform: scale(1);
+    }
+}
+```
+
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-checkbox" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#00b341" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <polyline points="9 11 12 14 20 6" />
+  <path d="M20 12v6a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h9" />
+</svg>
+
+```scss
+@keyframes mon-animation {
+    from {
+        transform: scale(1);
+    }
+    to {
+        transform: scale(1.2);
+    }
+}
+```
+
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-square" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <rect x="4" y="4" width="16" height="16" rx="2" />
+</svg>
+
+```scss
+@keyframes mon-animation {
+    from: {
+        transform: scale(1);
+    }
+    to: {
+        transform: scale(1.2);
+    }
+}
+```
+
+*La première réponse semble exacte ; pourtant, elle utilise les ":" pour définir chaque keyframe. Cette syntaxe n'est pas correcte.*
+
+*En revanche, les deuxième et troisième réponses permettent bien de créer une animation. Même si l'étape 100% est déclarée avant l'étape 0%,
+l'animation interprète le pourcentage déclaré.*<br />
+*Pour ce qui est de la quatrième réponse, elle reprend également les ":" qui sont une mauvaise syntaxe.*
+
+-----
+
+#### Question 2 : Une animation @keyframes peut être déclenchée en CSS…
+
+*Attention, plusieurs réponses sont possibles.*
+
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-checkbox" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#00b341" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <polyline points="9 11 12 14 20 6" />
+  <path d="M20 12v6a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h9" />
+</svg> par le survol d'un élément par la souris avec la pseudoclasse <code>:hover</code><br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-checkbox" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#00b341" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <polyline points="9 11 12 14 20 6" />
+  <path d="M20 12v6a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h9" />
+</svg> au moment d'un clic sur un élément avec <code>:active</code><br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-checkbox" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#00b341" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <polyline points="9 11 12 14 20 6" />
+  <path d="M20 12v6a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h9" />
+</svg> dès le chargement d'une page<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-square" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <rect x="4" y="4" width="16" height="16" rx="2" />
+</svg> juste avant la fermeture de la page<br />
+<br />
+
+*Tout comme pour les transitions, les animations @keyframes peuvent être déclenchées par les pseudoclasses adéquates. Les pseudoclasses :hover
+et :active sont parfaites pour déclencher nos animations @keyframes. Mais il existe aussi une spécificité des animations @keyframes : elles
+peuvent être également déclenchées dès le chargement de la page sur laquelle elles se trouvent. Pour cela, il suffit juste de préciser les
+valeurs minimales pour créer une animation.*
+
+*En revanche, il n'existe pas de propriété CSS permettant de déclencher une animation juste au moment de la fermeture de la page. Pour cela,
+il faudrait avoir recours à d'autres technologies, telles que JavaScript.*
+
+-----
+
+#### Question 3 : J'ai besoin d'aide.
+
+**Lorsque je code un bouton avec une animation @keyframes, l'animation n'est pas du tout fluide. J'ai le code suivant :**
+
+```html
+<div class="grow-element">
+    Je grossis
+</div>
+```
+
+```scss
+@keyframes grow {
+    0% {
+        transform: scale(1);
+    }
+    100% {
+        transform: scale(1.2);
+    }
+}
+.grow-element {
+    border: 1px solid black;
+    width: 100px;
+    cursor: pointer;
+}
+.grow-element:active {
+    animation: grow 200ms;
+}
+```
+
+**Quand je clique dessus, mon élément grossit bien comme je le souhaite. Mais lorsque j'arrive à la fin de mon animation, catastrophe.
+L'animation s'arrête de manière brutale, et revient à la valeur de départ, avant même que j'arrête de cliquer. Comment faire pour fluidifier
+tout ça, et qu'il reste à une échelle de 1.2 tant que je maintiens mon clic activé ?**
+
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> Préciser la valeur backwards pour animation-fill-mode<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> Changer le timing de mon animation<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> Utiliser une valeur de scale de 1.1 au lieu de 2<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle-check" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#7bc62d" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M9 12l2 2l4 -4" />
+</svg> Préciser la valeur forwards pour animation-fill-mode<br />
+<br />
+
+*C'est bien la propriété **animation-fill-mode** qui me permet d'étendre mon animation CSS avant et après la fin de son exécution. Avec la
+valeur backwards, l'animation appliquera les valeurs définies par la première _keyframe_. Elle les retiendra pendant la durée indiquée par
+[animation-delay](https://developer.mozilla.org/fr/docs/Web/CSS/animation-delay), mais ici, c'est à la fin de notre animation que nous voulons
+étendre les propriétés. Il s'agit donc de la valeur forwards.*<br />
+*Changer le timing de mon animation me permettrait de la peaufiner, mais ne me permet pas de corriger l'arrêt brutal de mon animation pour
+autant. De même, si je modifie la valeur de scale, mon élément grossira de manière moins forte, mais l'arrêt de l'animation sera tout aussi
+brutal. C'est donc bien la réponse 4 qui est correcte ici 😎.*
+
+-----
+
+#### Question 4 : Trouvez l'intrus !
+
+**Mon outil Animation dans mes DevTools me permet très facilement de :**
+    
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> voir rapidement tous les éléments utilisés dans une animation.<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> comprendre comment les éléments sont combinés et mis en scène pour créer le rendu final.<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle-check" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#7bc62d" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M9 12l2 2l4 -4" />
+</svg> modifier les pourcentages d'un keyframe.<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> repérer là où il y a un problème.<br />
+<br />
+
+*L'outil Animation des DevTools est très pratique. Il permet en effet d'itérer beaucoup plus simplement sur les animations @keyframes, en
+ajustant les propriétés de l'animation telles que la durée. Mais les pourcentages des keyframes ne font pas partie des propriétés de
+l'animation : ces pourcentages font partie des keyframes en tant que tels. Ils ne peuvent donc pas être modifiés depuis l'outil Animation.*
+
+-----
+
+#### Question 5 : Quelles affirmations sont exactes ?
+
+*Attention, plusieurs réponses sont possibles.*
+    
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-square" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <rect x="4" y="4" width="16" height="16" rx="2" />
+</svg> Les fonctions de timing ne peuvent être appliquées qu'aux transitions.<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-checkbox" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#00b341" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <polyline points="9 11 12 14 20 6" />
+  <path d="M20 12v6a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h9" />
+</svg> Par défaut, chaque keyframe prend la fonction de timing du sélecteur où la fonction a été assignée.<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-square" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <rect x="4" y="4" width="16" height="16" rx="2" />
+</svg> La valeur par défaut de la fonction de timing de chaque keyframe toujours ease.<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-checkbox" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#00b341" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <polyline points="9 11 12 14 20 6" />
+  <path d="M20 12v6a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h9" />
+</svg> Le fait de déclarer une fonction de timing dans une des étapes d'un keyframe permet d'appliquer un timing spécifique à ce keyframe.<br />
+<br />
+
+*Comme nous l'avons vu dans le chapitre 2 de notre troisième partie, il est tout à fait possible d'appliquer une fonction de timing à nos
+animations @keyframes. Vous pouvez aussi bien déclarer une valeur à la propriété animation-timing-function dans le sélecteur où vous assignez
+votre fonction, ou bien directement dans l'un de vos keyframes. Par défaut, les valeurs assignées au timing de chaque keyframe seront celles
+déclarées dans le sélecteur où vous assignez votre fonction. Si cette valeur est par défaut ease, elle ne reste pas toujours à sa valeur par
+défaut. Les réponses exactes sont donc la 2 et la 4.*
+
+-----
+
+#### Question 6 : Maintenant, je veux que vous retourniez sur le repository GitHub lié à ce cours. Encore une fois, lisez le readme.md pour obtenir plus d'informations sur comment faire marcher le code.
+
+**Vous devriez avoir une scène comme celle-ci :**
+
+![Capture d'écran repository Github](https://user.oc-static.com/upload/2019/08/27/15669306000626_15562876576348_Scene%20%281%29.png)
+
+**Pour cette question, concentrons-nous sur la montgolfière.**
+
+**J'ai défini une animation :**
+
+```scss
+@keyframes balloon {
+    0% {
+        bottom: 20%;
+    }
+    100% {
+        bottom: 70%;
+    }
+}
+```
+
+**Quel snippet de code CSS me permet de faire monter et descendre la montgolfière à l'infini de manière fluide ?**
+
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg>
+
+```scss
+animation-timing-function: ease-in-out;
+animation-direction: reverse;
+animation-iteration-count: infinite;
+animation-name: balloon;
+animation-duration: 0s;
+```
+
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle-check" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#7bc62d" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M9 12l2 2l4 -4" />
+</svg>
+
+```scss
+animation-direction: alternate-reverse;
+animation-timing-function: ease-in-out;
+animation-iteration-count: infinite;
+animation-name: balloon;
+animation-duration: 5s;
+```
+
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg>
+
+```scss
+animation-timing-function: ease-in-out;
+animation-iteration-count: infinite;
+animation-name: balloon;
+animation-duration: 5s;
+```
+
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg>
+
+```scss
+animation-direction: alternate-reverse;
+animation-timing-function: ease-in-out;
+animation-iteration-count: 8;
+animation-name: balloon;
+animation-duration: 5s;
+```
+
+*Ici, c'est bien la deuxième réponse qui nous permet d'obtenir l'effet suivant (attention, le format GIF utilisé ici me limite en temps
+d'animation et en qualité) :*
+
+![Animation montgolfière](https://user.oc-static.com/upload/2019/08/27/15669305180794_ezgif.com-optimize%20%2812%29.gif)
+
+*La réponse 1, en revanche, ne permet même pas de créer une animation, puisque sa durée est de 0 seconde. Et même si sa durée était précisée,
+la valeur "reverse" de "animation-direction" ne permet pas de créer l'effet de montée-descente : au lieu de ça, la montgolfière part d'en haut,
+descend tout en bas, puis se téléporte par magie tout en haut.*
+
+*La troisième réponse quant à elle ne précise même pas la propriété "animation-direction". L'effet est donc similaire à celui de la réponse 1 :
+la montgolfière part du sol, monte dans le ciel, puis se téléporte en bas. La dernière réponse n'est pas correcte non plus : elle ne précise
+pas que l'animation doit boucler à l'infini, car elle donne la valeur de 8 à  animation-iteration-count.*
+
+-----
+
+#### Question 7 : Reprenons l'exemple ci-dessus.
+
+**Quel(s) snippet(s) de code me permet(tent) de reproduire le même effet ?**
+
+*Attention, plusieurs réponses sont possibles.*
+
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-square" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <rect x="4" y="4" width="16" height="16" rx="2" />
+</svg>
+
+```scss
+animation: balloon 0s 5s ease-in-out alternate-reverse infinite;
+```
+
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-square" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <rect x="4" y="4" width="16" height="16" rx="2" />
+</svg>
+
+```scss
+animation: balloon 5s 0ms alternate-reverse infinite;
+```
+
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-checkbox" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#00b341" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <polyline points="9 11 12 14 20 6" />
+  <path d="M20 12v6a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h9" />
+</svg>
+
+```scss
+animation: balloon 5000ms ease-in-out alternate-reverse infinite;
+```
+
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-checkbox" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#00b341" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <polyline points="9 11 12 14 20 6" />
+  <path d="M20 12v6a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h9" />
+</svg>
+
+```scss
+animation: balloon 5s 0s ease-in-out alternate-reverse infinite;
+```
+
+*Ici, les réponses 3 et 4 permettent de reproduire l'animation de la question précédente. Souvenez-vous : la propriété raccourcie animation
+permet de définir les mêmes propriétés que animation-name, animation-duration, animation-timing-function, animation-delay,
+animation-iteration-count, animation-direction, animation-fill-mode, animation-play-state. Mais pour cela, il faut bien respecter l'ordre des
+valeurs. La réponse 1 inverse animation-duration et animation-delay : ici, animation-duration est à 0, ce qui ne permet pas de créer une
+animation. Par ailleurs, il faut bien garder à l'esprit que les animations, tout comme les transitions, ont des valeurs par défaut. Pour la
+propriété animation-timing-function, la valeur par défaut est 'ease' : elle ne permet pas de reproduire le snippet de code de la question
+précédente. En revanche, dans la réponse 4, aucune valeur n'est précisée pour animation-delay, et sa valeur par défaut est 0 : cela correspond
+bien 🚀.*
+
+-----
+
+#### Question 8 : Au tour, cette fois-ci, de la voiture !
+
+**Je veux créer un effet où ma voiture démarre tranquillement jusqu'au passage piéton. Elle y marque un bref arrêt, avant de repartir
+tranquillement vers la partie droite de mon écran.**<br />
+**Dans ma classe .car, j'ai le code suivant :**
+
+```scss
+animation: car-animation 3s;
+```
+
+**Quelle animation @keyframes me permet d'y parvenir ?**
+
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle-check" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#7bc62d" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M9 12l2 2l4 -4" />
+</svg>
+
+```scss
+@keyframes car-animation {
+    0% {
+        left: 0;
+    }
+    30%, 40% {
+        left: 20%;
+    }
+    100% {
+        left: 80%;
+    }
+}
+```
+
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg>
+
+```scss
+@keyframes car-animation {
+    0% {
+        left: 0;
+    }
+    10% {
+        left: 50%;
+    }
+    100% {
+        left: 80%;
+    }
+}
+```
+
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg>
+
+```scss
+@keyframes car-animation {
+    0% {
+        left: 80%;
+    }
+    30% {
+        left: 40%;
+    }
+    100% {
+        left: 80%;
+    }
+}
+```
+
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg>
+
+```scss
+@keyframes car-animation {
+    from {
+        left: 0;
+    }
+    30%, 40% {
+        left: 20%;
+    }
+    100% {
+        left: 80%;
+    }
+}
+```
+
+*C'est bien l'animation numéro 1 qui permet, grâce aux keyframes déclarés, de créer l'animation voulue. Si vous hésitez pour créer un effet,
+n'hésitez pas à itérer !*
+
+-----
+
+#### Question 9 : Testons maintenant les freins de notre voiture.
+
+**Je veux pouvoir interagir avec ma voiture : à chaque fois que ma souris la survole, elle doit s'arrêter net.**<br />
+**Quelle propriété et quelle valeur associée dois-je préciser dans le :hover pour y parvenir simplement ?**
+
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg>
+
+```scss
+animation-play: none;
+```
+
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg>
+
+```scss
+animation-play-state: pause;
+```
+
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle-check" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#7bc62d" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M9 12l2 2l4 -4" />
+</svg>
+
+```scss
+animation-play-state: paused;
+```
+
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg>
+
+```scss
+animation-timing-function: stop;
+```
+
+*Il s'agit bien de la propriété animation-play-state. En revanche, ni none ni pause ne sont des valeurs possibles pour cette propriété. La
+bonne réponse est bien la 3 ici. Pour ce qui est du quatrième choix possible, je tenais à préciser que stop n'est pas non plus une fonction
+de timing 🙈.*
+*Si vous avez un doute, n'hésitez surtout pas à aller consulter la doc des propriétés CSS, comme [ici](https://developer.mozilla.org/fr/docs/Web/CSS/animation-play-state).*
+
+-----
+
+#### Question 10 : Restons sur la voiture. Je veux cette fois-ci que ma voiture marque un délai de 3 secondes avant de se lancer puis de sortir de l'écran et de rester en dehors de l'écran. Comme dans le GIF ci-dessous :
+
+![Animation voiture activité](https://user.oc-static.com/upload/2019/08/27/1566931460763_ezgif.com-resize%20%284%29.gif)
+
+**Mon animation @keyframes est la suivante :**
+
+```scss
+@keyframes car-animation {
+    0% {
+        left: 0;
+    }
+    30%,
+    40% {
+        left: 20%;
+    }
+    100% {
+        left: 110%;
+    }
+}
+```
+
+**Et mon CSS :**
+
+```scss
+.car {
+    height: 60px;
+    width: 200px;
+    position: absolute;
+    bottom: 80px;
+    left: 10%;
+    background-image: URL("../images/car.png");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    z-index: 99;
+}
+```
+
+**Quel snippet de code me permet d'obtenir l'effet ci-dessus ?**
+
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg>
+
+```scss
+animation: car-animation 3s backwards;
+```
+
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg>
+
+```scss
+animation: car-animation 3s 3s backwards;
+```
+
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle-check" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#7bc62d" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M9 12l2 2l4 -4" />
+</svg>
+
+```scss
+animation: car-animation 3s 3s both;
+```
+
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg>
+
+```scss
+animation: car-animation 3s 3s forwards;
+```
+
+*Ici, le choix numéro 1 ne précise pas de délai, la voiture ne peut donc pas marquer un arrêt de 3 secondes. Le choix numéro 2 étend bien
+l'effet durant la propriété animation-delay, ce qui veut dire que la voiture marquera bien l'arrêt à la position de la première keyframe de
+notre animation. Mais dès l'animation terminée, elle retourne à sa position initiale. À l'inverse, forwards permet de prolonger l'effet de la
+dernière keyframe après la fin de l'animation, me permettant de laisser la voiture en dehors de l'écran, mais son arrêt du début ne se fait
+pas au bon endroit. C'est donc bien la réponse 3 qui me permet de reproduire l'effet voulu.*

@@ -1,5 +1,4 @@
 import React from 'react';
-import clsx from 'clsx';
 import styles from './MenupageAidememoire.module.css';
 
 const AideMemoireList = [
@@ -7,6 +6,11 @@ const AideMemoireList = [
     title: 'Git',
     Svg: 'https://monwikidevweb.la-loutre.fr/img/git.svg',
     Url: './Git/accueil',
+  },
+  {
+    title: 'GitHub',
+    Svg: 'https://monwikidevweb.la-loutre.fr/img/fa-github.svg',
+    Url: './GitHub/accueil',
   },
   {
     title: 'JavaScript',
@@ -23,11 +27,31 @@ const AideMemoireList = [
     Svg: 'https://monwikidevweb.la-loutre.fr/img/vuejs.svg',
     Url: './Vuejs/accueil',
   },
+  {
+    title: 'npm',
+    Svg: 'https://monwikidevweb.la-loutre.fr/img/logos/npm.svg',
+    Url: './npm/accueil',
+  },
+  {
+    title: 'css',
+    Svg: 'https://monwikidevweb.la-loutre.fr/img/logos/CSS3.svg',
+    Url: './css/accueil',
+  },
+  {
+    title: 'html',
+    Svg: 'https://monwikidevweb.la-loutre.fr/img/logos/HTML5.svg',
+    Url: './html/accueil',
+  },
+  {
+    title: 'NodeJS',
+    Svg: 'https://monwikidevweb.la-loutre.fr/img/logos/NodeJS.svg',
+    Url: './NodeJS/accueil',
+  },
 ];
 
 function AideMemoire({Svg, title, Url}) {
   return (
-    <div className={clsx('col')}>
+    <div className={styles.col}>
       <div>
         <a href={Url}>
           <img className={styles.aidememoireSvg} alt={title} src={Svg} />

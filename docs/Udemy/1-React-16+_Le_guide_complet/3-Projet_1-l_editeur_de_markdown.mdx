@@ -1,0 +1,379 @@
+---
+id: Udemy-React-16+_Le_guide_complet-03-Projet_1-l_editeur_de_markdown
+title: "03 - Projet 1 : l'Éditeur de Markdown"
+---
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+import { MDXEmbedProvider } from 'mdx-embed';
+
+
+## Création du Projet
+
+<video
+  height="auto"
+  width="100%"
+  controls>
+    <source
+      src="https://monwikidevweb.la-loutre.fr/data/udemy/video/Udemy-React-16+_Le_guide_complet-03-Projet_1-l_editeur_de_markdown-01.mp4"
+      type="video/mp4"
+    />
+</video>
+
+<br />
+<br />
+
+```bash
+➜  UDEMY npx create-react-app markdown-app
+```
+
+```bash
+➜  markdown-app git:(master) npm install marked bootstrap
+```
+
+- [marked - npm](https://preview.npmjs.com/package/marked)
+- [Marked Documentation](https://marked.js.org/)
+- [bootstrap - npm](https://preview.npmjs.com/package/bootstrap)
+- [Bootstrap · The most popular HTML, CSS, and JS library in the world.](https://getbootstrap.com/)
+
+
+```js title="src/sampleText.js"
+export const sampleText = '# Titre\n## Sous-Titre \n### Titre plus profond\n 
+\nLes paragraphes sont séparés\npar une ligne vide.\n\nLaissé deux espaces à la 
+fin d\'une ligne pour  \naller à la ligne.\n\nAttributs *italique*, **gras**, 
+\n`monospace`, ~~rayé~~.\n\nListe:\n\n  * pommes\n  * oranges\n  * 
+poires\n\nListe numérotée:\n\n  1. jambon\n  2. cornichon\n  3. pain\n\n *
+[Anthony Welc](https://www.youtube.com/channel/UChhPkjgG1-iLUOmURGdgQrw)* \n\n 
+Lien automatique : https://www.facebook.com/anthonywelc/ \n\n```\n console.log
+("hello"); \n``` '
+```
+
+-----
+
+## Écrire du HTML avec JSX
+
+En React on ne code pas directement en HTML, on utilise du JSX. C'est un langage spécifique à Reactjs qui
+ressemble au HTML avec quelques particularités.
+
+<br />
+
+<video
+  height="auto"
+  width="100%"
+  controls>
+    <source
+      src="https://monwikidevweb.la-loutre.fr/data/udemy/video/Udemy-React-16+_Le_guide_complet-03-Projet_1-l_editeur_de_markdown-02.mp4"
+      type="video/mp4"
+    />
+</video>
+
+<br />
+<br />
+
+```jsx {1} title="index.js"
+import 'bootstrap/dist/css/bootstrap.min.css'
+import React from 'react';
+import ReactDOM from 'react-dom';
+import './index.css';
+import App from './App';
+import reportWebVitals from './reportWebVitals';
+
+ReactDOM.render(
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>,
+  document.getElementById('root')
+);
+
+// If you want to start measuring performance in your app, pass a function
+// to log results (for example: reportWebVitals(console.log))
+// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
+reportWebVitals();
+```
+
+```jsx title="App.js"
+class App extends Component {
+  render () {
+    return (
+      <div className="container">
+        <div className="row">
+          <div className="col-sm-6">
+            <textarea
+              className="form-control"
+              rows="35">
+            </textarea>
+          </div>
+          <div className="col-sm-6">
+            <h1>Résultat</h1>
+          </div>
+        </div>
+      </div>
+    );
+  }
+}
+```
+
+```css title="App.css"
+.container {
+  margin-top: 24px;
+}
+```
+
+-----
+
+## Importer du JavaScript Perso
+
+React ce n'est que du JavaScript et parfois on a besoin d'importer des fichiers perso pour ajouter des fonctions
+ou des données.
+
+<br />
+
+<video
+  height="auto"
+  width="100%"
+  controls>
+    <source
+      src="https://monwikidevweb.la-loutre.fr/data/udemy/video/Udemy-React-16+_Le_guide_complet-03-Projet_1-l_editeur_de_markdown-03.mp4"
+      type="video/mp4"
+    />
+</video>
+
+<br />
+<br />
+
+```jsx {4,13,19} title="App.js"
+import React, { Component } from 'react'
+import './App.css';
+
+import { sampleText } from './sampleText'
+
+class App extends Component {
+  render () {
+    return (
+      <div className="container">
+        <div className="row">
+          <div className="col-sm-6">
+            <textarea
+              value={sampleText}
+              className="form-control"
+              rows="35">
+            </textarea>
+          </div>
+          <div className="col-sm-6">
+            { sampleText }
+          </div>
+        </div>
+      </div>
+    );
+  }
+}
+
+export default App;
+```
+
+-----
+
+## Utiliser et Modifier le State
+
+Dans React on ne modifie pas directement ce qui est affiché, on met à jour le State !
+
+<br />
+
+<video
+  height="auto"
+  width="100%"
+  controls>
+    <source
+      src="https://monwikidevweb.la-loutre.fr/data/udemy/video/Udemy-React-16+_Le_guide_complet-03-Projet_1-l_editeur_de_markdown-04.mp4"
+      type="video/mp4"
+    />
+</video>
+
+<br />
+<br />
+
+```jsx {2-4,6-9,17,18} title="App.js"
+class App extends Component {
+  state = {
+    text: sampleText
+  }
+
+  handleChange = event => {
+    const text = event.target.value
+    this.setState({ text })
+  }
+
+  render () {
+    return (
+      <div className="container">
+        <div className="row">
+          <div className="col-sm-6">
+            <textarea
+              onChange={this.handleChange}
+              value={this.state.text}
+              className="form-control"
+              rows="35">
+            </textarea>
+          </div>
+          <div className="col-sm-6">
+            { sampleText }
+          </div>
+        </div>
+      </div>
+    );
+  }
+}
+```
+
+-----
+
+## Du Markdown avec Marked.js
+
+On peut importer dans React d'autres librairies pour étendre ses fonctions. Ici on va importer Marked.js qui
+va nous permettre de convertir automatiquement du markdown en HTML !
+
+<br />
+
+<video
+  height="auto"
+  width="100%"
+  controls>
+    <source
+      src="https://monwikidevweb.la-loutre.fr/data/udemy/video/Udemy-React-16+_Le_guide_complet-03-Projet_1-l_editeur_de_markdown-05.mp4"
+      type="video/mp4"
+    />
+</video>
+
+<br />
+<br />
+
+
+```jsx {4,18-21,36} title="App.js"
+import React, { Component } from 'react'
+import './App.css';
+
+import marked from 'marked'
+
+import { sampleText } from './sampleText'
+
+class App extends Component {
+  state = {
+    text: sampleText
+  }
+
+  handleChange = event => {
+    const text = event.target.value
+    this.setState({ text })
+  }
+
+  renderText = text => {
+    const __html = marked(text, { sanitize: true })
+    return { __html }
+  }
+
+  render () {
+    return (
+      <div className="container">
+        <div className="row">
+          <div className="col-sm-6">
+            <textarea
+              onChange={this.handleChange}
+              value={this.state.text}
+              className="form-control"
+              rows="35">
+            </textarea>
+          </div>
+          <div className="col-sm-6">
+            <div dangerouslySetInnerHTML={this.renderText(this.state.text)} />
+          </div>
+        </div>
+      </div>
+    );
+  }
+}
+
+export default App;
+```
+
+marked(text, { sanitize: true })<br />
+dangerouslySetInnerHTML
+
+-----
+
+## Sauvegarder le State avec le localStorage
+
+Le localStorage est une option de HTML5. Il va nous permettre de stocker notre State React dans le navigateur
+de l'utilisateur. Comme ça il pourra reprendre son édition où il en était.
+
+<br />
+
+<video
+  height="auto"
+  width="100%"
+  controls>
+    <source
+      src="https://monwikidevweb.la-loutre.fr/data/udemy/video/Udemy-React-16+_Le_guide_complet-03-Projet_1-l_editeur_de_markdown-06.mp4"
+      type="video/mp4"
+    />
+</video>
+
+<br />
+<br />
+
+```jsx {11-20,22-26} title="App.js"
+class App extends Component {
+  state = {
+    text: sampleText
+  }
+
+  handleChange = event => {
+    const text = event.target.value
+    this.setState({ text })
+  }
+
+  componentDidMount () {
+    // console.log('Je suis monté.')
+    const text = localStorage.getItem('text')
+
+    if (text) {
+    this.setState({ text })
+    } else {
+      this.setState({ text: sampleText })
+    }
+  }
+
+  componentDidUpdate () {
+    // console.log('Je suis mis à jour.')
+    const { text } = this.state
+    localStorage.setItem('text', text)
+  }
+
+  renderText = text => {
+    const __html = marked(text, { sanitize: true })
+    return { __html }
+  }
+
+  render () {
+    return (
+      <div className="container">
+        <div className="row">
+          <div className="col-sm-6">
+            <textarea
+              onChange={this.handleChange}
+              value={this.state.text}
+              className="form-control"
+              rows="35">
+            </textarea>
+          </div>
+          <div className="col-sm-6">
+            <div dangerouslySetInnerHTML={this.renderText(this.state.text)} />
+          </div>
+        </div>
+      </div>
+    );
+  }
+}
+```
+
+localStorage.setItem<br />
+localStorage.getItem
+

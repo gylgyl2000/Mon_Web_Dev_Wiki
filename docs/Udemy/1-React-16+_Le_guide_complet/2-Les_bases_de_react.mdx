@@ -1,0 +1,969 @@
+---
+id: Udemy-React-16+_Le_guide_complet-02-Les_bases_de_react
+title: 02 - Les bases de React
+---
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+import { MDXEmbedProvider } from 'mdx-embed';
+
+
+## Un Workflow moderne
+
+<video
+  height="auto"
+  width="100%"
+  controls>
+    <source
+      src="https://monwikidevweb.la-loutre.fr/data/udemy/video/Udemy-React-16+_Le_guide_complet-02-Les_bases_de_react-01.mp4"
+      type="video/mp4"
+    />
+</video>
+
+<br />
+<br />
+
+HTML / CSS / JavaScript / Images dans un format moderne et agréable pour travailler.
+
+**Version de production, minimisée, concaténée, fusionnée et optimisée.**
+
+- Gestionnaire de paquets
+  - npm -> [npm](https://www.npmjs.com/)
+  - yarn -> [yarn](https://yarnpkg.com/)
+- Outils
+  - Webpack -> [webpack](https://webpack.js.org/)
+  - Parcel -> [Parcel](https://v2.parceljs.org/)
+  - Gulp -> [Gulp](https://gulpjs.com/)
+  - Grunt -> [Grunt](https://gruntjs.com/)
+- Compilateurs
+  - Babel -> [Babel](https://babeljs.io/)
+  - Sass -> [Sass](https://sass-lang.com/)
+  - Pug -> [Pug](https://pugjs.org/)
+- Serveur de développement
+  - Browsersync -> [Browsersync](https://www.browsersync.io/)
+  - Webpack -> [webpack](https://webpack.js.org/)
+
+-----
+
+## Utiliser create-react-app
+
+<video
+  height="auto"
+  width="100%"
+  controls>
+    <source
+      src="https://monwikidevweb.la-loutre.fr/data/udemy/video/Udemy-React-16+_Le_guide_complet-02-Les_bases_de_react-02.mp4"
+      type="video/mp4"
+    />
+</video>
+
+<br />
+<br />
+
+[Getting Started | Create React App](https://create-react-app.dev/docs/getting-started)
+
+```bash
+➜  cd /home/gilles/Projets/UDEMY
+➜  UDEMY npx create-react-app premier-projet
+```
+
+```bash
+➜  UDEMY cd premier-projet
+➜  premier-projet git:(master) ✗
+
+➜  premier-projet git:(master) npm start
+
+Compiled successfully!
+
+You can now view premier-projet in the browser.
+
+  Local:            http://localhost:3001
+  On Your Network:  http://192.168.0.42:3001
+
+Note that the development build is not optimized.
+To create a production build, use yarn build.
+
+```
+
+-----
+
+## Comprendre la structure du dossier
+
+<video
+  height="auto"
+  width="100%"
+  controls>
+    <source
+      src="https://monwikidevweb.la-loutre.fr/data/udemy/video/Udemy-React-16+_Le_guide_complet-02-Les_bases_de_react-03.mp4"
+      type="video/mp4"
+    />
+</video>
+
+<br />
+<br />
+
+-----
+
+## C'est quoi un Component ?
+
+<video
+  height="auto"
+  width="100%"
+  controls>
+    <source
+      src="https://monwikidevweb.la-loutre.fr/data/udemy/video/Udemy-React-16+_Le_guide_complet-02-Les_bases_de_react-04.mp4"
+      type="video/mp4"
+    />
+</video>
+
+<br />
+<br />
+
+```js title="App.js"
+import './App.css';
+
+function App() {
+  return (
+    <div className="App">
+      <h1>React App</h1>
+      <p>Ipsam tempora quam sint excepturi omnis omnis dolor. Deserunt occaecati reprehenderit aspernatur enim
+      reiciendis sed. Enim aperiam ab ea velit distinctio et praesentium qui.</p>
+    </div>
+  );
+}
+
+export default App;
+```
+
+```js title="App.js"
+import React, { Component } from 'react'
+import './App.css'
+
+class App extends Component {
+  render () {
+    return (
+      <div className="App">
+        <h1>React App</h1>
+        <p>Ipsam tempora quam sint excepturi omnis omnis dolor. Deserunt occaecati reprehenderit aspernatur enim
+        reiciendis sed. Enim aperiam ab ea velit distinctio et praesentium qui.</p>
+      </div>
+    )
+  }
+}
+
+export default App
+```
+
+<br />
+<br />
+
+**Fonctions composants et composants à base de classes**<br />
+[Composants et props – React](https://fr.reactjs.org/docs/components-and-props.html#function-and-class-components)
+
+La manière la plus simple de définir un composant est d'écrire une fonction JavaScript :
+
+```js
+function Welcome(props) {
+  return <h1>Bonjour, {props.name}</h1>;
+}
+```
+
+Cette fonction est un composant React valide car elle accepte un seul argument d'objet « props » (qui signifie
+propriétés) avec des données et renvoie un élément React. Nous appelons ces composants « composants de fonction »
+car ce sont littéralement des fonctions JavaScript.
+
+Vous pouvez également utiliser une classe ES6 pour définir un composant :
+
+```js
+class Welcome extends React.Component {
+  render() {
+    return <h1>Bonjour, {this.props.name}</h1>;
+  }
+}
+```
+
+Les deux composants ci-dessus sont équivalents du point de vue de React.
+
+Les composants de fonction et de classe ont tous deux des fonctionnalités supplémentaires que nous aborderons
+dans [les sections suivantes](https://fr.reactjs.org/docs/state-and-lifecycle.html).
+
+-----
+
+## Comprendre le JSX
+
+<video
+  height="auto"
+  width="100%"
+  controls>
+    <source
+      src="https://monwikidevweb.la-loutre.fr/data/udemy/video/Udemy-React-16+_Le_guide_complet-02-Les_bases_de_react-05.mp4"
+      type="video/mp4"
+    />
+</video>
+
+<br />
+<br />
+
+**JSX représente des objets**
+
+Babel compile JSX vers des appels à `React.createElement()`.
+
+Ces deux exemples sont identiques :
+
+```js title="App.js"
+import React, { Component } from 'react'
+import './App.css'
+
+class App extends Component {
+  render () {
+    return (
+      <div className="App">
+        <h1>React App</h1>
+        <p>Ipsam tempora quam sint excepturi omnis omnis dolor. Deserunt occaecati reprehenderit aspernatur enim
+        reiciendis sed. Enim aperiam ab ea velit distinctio et praesentium qui.</p>
+      </div>
+    )
+  }
+}
+
+export default App
+```
+
+```js title="App.js"
+import React, { Component } from 'react'
+import './App.css'
+
+class App extends Component {
+  render () {
+    return (
+      React.createElement('div', { classNamme: 'App' },
+        React.createElement('h1', null, 'React App'),
+        React.createElement('p', null, 'Ipsam tempora quam sint excepturi omnis omnis dolor. Deserunt occaecati reprehenderit aspernatur enim reiciendis sed. Enim aperiam ab ea velit distinctio et praesentium qui.')
+      )
+    )
+  }
+}
+
+export default App
+```
+
+`React.createElement()` effectue quelques vérifications pour vous aider à écrire un code sans bug, mais pour
+l’essentiel il crée un objet qui ressemble à ceci :
+
+```js
+// Remarque : cette structure est simplifiée
+const element = {
+  type: 'h1',
+  props: {
+    className: 'greeting',
+    children: 'Bonjour, monde !'
+  }
+};
+```
+
+Ces objets sont appelés des « éléments React ». Vous pouvez les considérer comme des descriptions de ce que
+vous voulez voir sur l’écran. React lit ces objets et les utilise pour construire le DOM et le tenir à jour.
+
+-----
+
+## Particularités du JSX
+
+<video
+  height="auto"
+  width="100%"
+  controls>
+    <source
+      src="https://monwikidevweb.la-loutre.fr/data/udemy/video/Udemy-React-16+_Le_guide_complet-02-Les_bases_de_react-06.mp4"
+      type="video/mp4"
+    />
+</video>
+
+<br />
+<br />
+
+:::info
+Dans la mesure où JSX est plus proche de JavaScript que de HTML, React DOM utilise la casse `camelCase` comme
+convention de nommage des propriétés, au lieu des noms d’attributs HTML.
+
+Par exemple, `class` devient [`className`](https://developer.mozilla.org/fr/docs/Web/API/Element/className) en JSX,
+et `tabindex` devient [`tabIndex`](https://developer.mozilla.org/fr/docs/Web/API/HTMLElement/tabIndex).
+
+```js
+<div className="App">
+```
+:::
+
+Si une balise est vide, vous pouvez la fermer immédiatement avec `/>`, comme en XML :
+
+```js
+const element = <img src={user.avatarUrl} />;
+
+<input type='text' />
+```
+
+Les balises JSX peuvent contenir des enfants :
+
+```js
+class App extends Component {
+  render () {
+    return (
+      <div className="App">
+        <h1>React App</h1>
+        <h2>Second titre</h2>
+      </div>
+    )
+  }
+}
+```
+
+**Fragments**
+
+```js
+import React, { Component, Fragment } from 'react'
+import './App.css'
+
+class App extends Component {
+  render () {
+    return (
+      <Fragment>
+        <div className='App'>
+          <h1>React App</h1>
+        </div>
+        <h2>Second titre</h2>
+      </Fragment>
+    )
+  }
+}
+
+export default App
+```
+
+[Fragments – React](https://fr.reactjs.org/docs/fragments.html)
+
+-----
+
+## Créer un Component Stateless
+
+<video
+  height="auto"
+  width="100%"
+  controls>
+    <source
+      src="https://monwikidevweb.la-loutre.fr/data/udemy/video/Udemy-React-16+_Le_guide_complet-02-Les_bases_de_react-07.mp4"
+      type="video/mp4"
+    />
+</video>
+
+<br />
+<br />
+
+```js title="src/components/Membres.js"
+import React from 'react'
+
+const Membre = () => (
+  <h2>Membre de ma famille</h2>
+)
+
+export default Membre
+```
+
+```js title="App.js"
+import React, { Component } from 'react'
+import './App.css'
+import Membre from './components/Membre'
+
+class App extends Component {
+  render () {
+    return (
+      <div className="App">
+        <h1>React App</h1>
+        <Membre />
+      </div>
+    )
+  }
+}
+
+export default App
+```
+
+-----
+
+## Réutiliser les Components
+
+<video
+  height="auto"
+  width="100%"
+  controls>
+    <source
+      src="https://monwikidevweb.la-loutre.fr/data/udemy/video/Udemy-React-16+_Le_guide_complet-02-Les_bases_de_react-08.mp4"
+      type="video/mp4"
+    />
+</video>
+
+<br />
+<br />
+
+-----
+
+## Du JavaScript dans le JSX
+
+<video
+  height="auto"
+  width="100%"
+  controls>
+    <source
+      src="https://monwikidevweb.la-loutre.fr/data/udemy/video/Udemy-React-16+_Le_guide_complet-02-Les_bases_de_react-09.mp4"
+      type="video/mp4"
+    />
+</video>
+
+<br />
+<br />
+
+```js title="Membre.js"
+import React from 'react'
+
+const Membre = () => {
+    const name = 'antho'
+
+    return (
+        <h2>Membre de ma famille : {name.toUpperCase()}</h2>
+    )
+}
+
+export default Membre
+```
+<br />
+<br />
+
+-----
+
+## Les Props
+
+<video
+  height="auto"
+  width="100%"
+  controls>
+    <source
+      src="https://monwikidevweb.la-loutre.fr/data/udemy/video/Udemy-React-16+_Le_guide_complet-02-Les_bases_de_react-10.mp4"
+      type="video/mp4"
+    />
+</video>
+
+<br />
+<br />
+
+```js title="App.js"
+class App extends Component {
+  render () {
+    return (
+      <div className="App">
+        <h1>React App</h1>
+        <Membre nom='Antho' />
+        <Membre nom='Ségolène' />
+        <Membre nom='Éléanor' />
+        <Membre nom='Mocha' />
+      </div>
+    )
+  }
+}
+```
+
+```js title="Membre.js"
+const Membre = (props) => {
+    const name = props.nom
+
+    return (
+        <h2>Membre de ma famille : {name.toUpperCase()}</h2>
+    )
+}
+```
+
+<br />
+Et aussi
+<br />
+
+```js title="index.js"
+ReactDOM.render(
+  <React.StrictMode>
+    <App titre='Ma super app React'/>
+  </React.StrictMode>,
+  document.getElementById('root')
+);
+```
+
+```js title="App.js"
+class App extends Component {
+  render () {
+    return (
+      <div className="App">
+        <h1>{this.props.titre}</h1>
+        <Membre nom='Antho' />
+        <Membre nom='Ségolène' />
+        <Membre nom='Éléanor' />
+        <Membre nom='Mocha' />
+      </div>
+    )
+  }
+}
+```
+
+```js title="Membre.js"
+const Membre = ({ nom }) => {
+    return (
+        <h2>Membre de ma famille : {nom.toUpperCase()}</h2>
+    )
+}
+```
+
+**On peut aussi destructurer :**
+
+```js title="App.js"
+class App extends Component {
+  render () {
+    const { titre } = this.props
+    return (
+      <div className="App">
+        <h1>{titre}</h1>
+        <Membre nom='Antho' />
+        <Membre nom='Ségolène' />
+        <Membre nom='Éléanor' />
+        <Membre nom='Mocha' />
+      </div>
+    )
+  }
+}
+```
+
+-----
+
+## La Props Children
+
+<video
+  height="auto"
+  width="100%"
+  controls>
+    <source
+      src="https://monwikidevweb.la-loutre.fr/data/udemy/video/Udemy-React-16+_Le_guide_complet-02-Les_bases_de_react-11.mp4"
+      type="video/mp4"
+    />
+</video>
+
+<br />
+<br />
+
+```js title="App.js"
+class App extends Component {
+  render () {
+    const { titre } = this.props
+    return (
+      <div className="App">
+        <h1>{titre}</h1>
+        <Membre nom='Antho' />
+        <Membre nom='Ségolène' />
+        <Membre nom='Éléanor' />
+        <Membre nom='Mocha'>
+          <strong>Je suis un chien.</strong>
+        </Membre>
+      </div>
+    )
+  }
+}
+```
+
+```js title="Membre.js"
+import React, { Fragment } from 'react'
+
+const Membre = ({ nom, children }) => {
+    return (
+        <Fragment>
+            <h2>Membre de ma famille : {nom.toUpperCase()}</h2>
+            { children ? <p>{children}</p> : <Fragment /> }
+        </Fragment>
+    )
+}
+
+export default Membre
+```
+
+-----
+
+## Le State
+
+<video
+  height="auto"
+  width="100%"
+  controls>
+    <source
+      src="https://monwikidevweb.la-loutre.fr/data/udemy/video/Udemy-React-16+_Le_guide_complet-02-Les_bases_de_react-12.mp4"
+      type="video/mp4"
+    />
+</video>
+
+<br />
+<br />
+
+```jsx title="App.js"
+const famille = {
+  membre1: {
+    nom: 'Anthony',
+    age: 27
+  },
+  membre2: {
+    nom: 'Ségolène',
+    age: 27
+  },
+  membre3: {
+    nom: 'Éléanor',
+    age: 0
+  },
+  membre4: {
+    nom: 'Mocha',
+    age: 2
+  }
+}
+class App extends Component {
+  state = {
+    famille
+  }
+  render () {
+    const { titre } = this.props
+    const { famille } = this.state
+    return (
+      <div className="App">
+        <h1>{titre}</h1>
+        <Membre nom={famille.membre1.nom} />
+        <Membre nom={famille.membre2.nom} />
+        <Membre nom={famille.membre3.nom} />
+        <Membre nom={famille.membre4.nom}>
+          <strong>Je suis un chien.</strong>
+        </Membre>
+      </div>
+    )
+  }
+}
+```
+
+-----
+
+## Gérer les Événements
+
+<video
+  height="auto"
+  width="100%"
+  controls>
+    <source
+      src="https://monwikidevweb.la-loutre.fr/data/udemy/video/Udemy-React-16+_Le_guide_complet-02-Les_bases_de_react-13.mp4"
+      type="video/mp4"
+    />
+</video>
+
+<br />
+<br />
+
+```jsx title="App.js"
+class App extends Component {
+  state = {
+    famille
+  }
+
+  handleClick = () => console.log('click')
+
+  render () {
+    const { titre } = this.props
+    const { famille } = this.state
+    return (
+      <div className="App">
+        <h1>{titre}</h1>
+        <Membre
+          nom={famille.membre1.nom} />
+        <Membre
+          nom={famille.membre2.nom} />
+        <Membre
+          nom={famille.membre3.nom} />
+        <Membre
+          nom={famille.membre4.nom}>
+          <strong>Je suis un chien.</strong>
+        </Membre>
+        <button
+          onClic={this.handleClick}
+        >
+          Vieillir
+        </button>
+      </div>
+    )
+  }
+}
+```
+
+-----
+
+## Modifier le State
+
+<video
+  height="auto"
+  width="100%"
+  controls>
+    <source
+      src="https://monwikidevweb.la-loutre.fr/data/udemy/video/Udemy-React-16+_Le_guide_complet-02-Les_bases_de_react-14.mp4"
+      type="video/mp4"
+    />
+</video>
+
+<br />
+<br />
+
+```jsx title="App.js"
+class App extends Component {
+  state = {
+    famille
+  }
+
+  handleClick = () => {
+    const famille = { ...this.state.famille }
+    famille.membre1.age += 1
+    this.setState({ famille })
+  }
+
+  render () {
+    const { titre } = this.props
+    const { famille } = this.state
+    return (
+      <div className="App">
+        <h1>{titre}</h1>
+        <Membre
+          age={famille.membre1.age}
+          nom={famille.membre1.nom} />
+        <Membre
+          age={famille.membre2.age}
+          nom={famille.membre2.nom} />
+        <Membre
+          age={famille.membre3.age}
+          nom={famille.membre3.nom} />
+        <Membre
+          age={famille.membre4.age}
+          nom={famille.membre4.nom}>
+          <strong>Je suis un chien.</strong>
+        </Membre>
+        <button
+          onClick={this.handleClick}
+        >
+          Vieillir
+        </button>
+      </div>
+    )
+  }
+}
+```
+
+-----
+
+## Passer des Méthodes entre les Components
+
+<video
+  height="auto"
+  width="100%"
+  controls>
+    <source
+      src="https://monwikidevweb.la-loutre.fr/data/udemy/video/Udemy-React-16+_Le_guide_complet-02-Les_bases_de_react-15.mp4"
+      type="video/mp4"
+    />
+</video>
+
+<br />
+<br />
+
+```jsx title="components/Button.js"
+import React from 'react'
+
+const Button = ({ vieillir }) => {
+    return (
+        <button onClick={vieillir}>
+            Vieillir de 2 ans
+        </button>
+    )
+}
+
+export default Button
+```
+
+```jsx title="App.js"
+class App extends Component {
+  state = {
+    famille
+  }
+
+  handleClick = (num) => {
+    const famille = { ...this.state.famille }
+    famille.membre1.age += num
+    this.setState({ famille })
+  }
+
+  render () {
+    const { titre } = this.props
+    const { famille } = this.state
+    return (
+      <div className="App">
+        <h1>{titre}</h1>
+        <Membre
+          age={famille.membre1.age}
+          nom={famille.membre1.nom} />
+        <Membre
+          age={famille.membre2.age}
+          nom={famille.membre2.nom} />
+        <Membre
+          age={famille.membre3.age}
+          nom={famille.membre3.nom} />
+        <Membre
+          age={famille.membre4.age}
+          nom={famille.membre4.nom}>
+          <strong>Je suis un chien.</strong>
+        </Membre>
+        <Button
+          vieillir={() => this.handleClick(2)}
+        />
+      </div>
+    )
+  }
+}
+```
+
+-----
+
+## Gérer les Inputs
+
+<video
+  height="auto"
+  width="100%"
+  controls>
+    <source
+      src="https://monwikidevweb.la-loutre.fr/data/udemy/video/Udemy-React-16+_Le_guide_complet-02-Les_bases_de_react-16.mp4"
+      type="video/mp4"
+    />
+</video>
+
+<br />
+<br />
+
+
+```jsx title="App.js"
+class App extends Component {
+  state = {
+    famille
+  }
+
+  handleClick = (num) => {
+    const famille = { ...this.state.famille }
+    famille.membre1.age += num
+    this.setState({ famille })
+  }
+
+  handleChange = event => {
+    const famille = { ...this.state.famille }
+    const nom = event.target.value
+    console.log(nom)
+    famille.membre1.nom = nom
+    this.setState({ famille })
+  }
+
+  render () {
+    const { titre } = this.props
+    const { famille } = this.state
+    return (
+      <div className="App">
+        <h1>{titre}</h1>
+        <input value={famille.membre1.nom} onChange={this.handleChange} type='text' />
+        <Membre
+          age={famille.membre1.age}
+          nom={famille.membre1.nom} />
+        <Membre
+          age={famille.membre2.age}
+          nom={famille.membre2.nom} />
+        <Membre
+          age={famille.membre3.age}
+          nom={famille.membre3.nom} />
+        <Membre
+          age={famille.membre4.age}
+          nom={famille.membre4.nom}>
+          <strong>Je suis un chien.</strong>
+        </Membre>
+        <Button
+          vieillir={() => this.handleClick(2)}
+        />
+      </div>
+    )
+  }
+}
+```
+
+-----
+
+## Ajouter du style avec du CSS
+
+<video
+  height="auto"
+  width="100%"
+  controls>
+    <source
+      src="https://monwikidevweb.la-loutre.fr/data/udemy/video/Udemy-React-16+_Le_guide_complet-02-Les_bases_de_react-17.mp4"
+      type="video/mp4"
+    />
+</video>
+
+<br />
+<br />
+
+```jsx title="Button.js"
+import React from 'react'
+import './Button.css'
+
+const Button = ({ vieillir }) => {
+    return (
+        <button onClick={vieillir}>
+            Vieillir de 2 ans
+        </button>
+    )
+}
+
+export default Button
+```
+
+```css title="Button.css"
+button {
+    background-color: #bada55;
+    padding: 8px;
+    border: none;
+}
+```
+
+-----
+
+## Utiliser le style Inline
+
+<video
+  height="auto"
+  width="100%"
+  controls>
+    <source
+      src="https://monwikidevweb.la-loutre.fr/data/udemy/video/Udemy-React-16+_Le_guide_complet-02-Les_bases_de_react-18.mp4"
+      type="video/mp4"
+    />
+</video>
+
+<br />
+<br />
+
+```jsx title="Membre.js"
+const Membre = ({ nom, age, children }) => {
+    return (
+        <Fragment>
+            <h2 style={{
+                backgroundColor:  age < 10 ? 'yellow' : 'purple',
+                color: age < 10 ? 'black' : 'white' }}>
+                {nom.toUpperCase()} : {age}
+            </h2>
+            { children ? <p>{children}</p> : <Fragment /> }
+        </Fragment>
+    )
+}
+```
+

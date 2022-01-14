@@ -10,10 +10,20 @@
     justify-content: space-around;
     align-items: center;
 }
-    
+
+.aidememoireRow .col {
+    --ifm-col-width: 100%;
+    flex: content;
+    margin-left: 0;
+    max-width: 100%;
+    padding: 0 var(--ifm-spacing-horizontal);
+    width: 100%;
+}
+
 .aidememoireSvg {
     height: 7em;
     width: 7em;
     border: 1px solid white;
     border-radius: 10px;
+    background-color: white;
 }

@@ -1,0 +1,109 @@
+---
+sidebar_position: 2
+---
+
+# Commandes
+
+[Les commandes npm courantes en 5 min - Blog .NET](https://cdiese.fr/commandes-npm/)
+
+### npm install
+
+| Commande | Raccourci | Action |
+|----------|-----------|--------|
+| `npm install` | `npm i` | Installe les packages indiqués dans le fichier `package.json` |
+| `npm install <_package_>` | `npm i <_package_>` | Installe la dernière version d’un package |
+| `npm install <_package_>@<_version_>` | `npm i <_package_>@<_version_>` | Installe une version particulière d’un package |
+| `npm install <_package_>@">=2 <3.0"` | `npm i <_package_>@">=2 <3.0"` | Installe un package en précisant des conditions sur la version |
+| `npm install <_package_> --global` | `npm i <_package_> -g` | Installe un package dans le répertoire global |
+| `npm install <_package_> --save-dev` | `npm i <_package_> --save-dev` | Installe un package et indique ce package dans la partie `devDependencies` du fichier `package.json` |
+| `npm install <_package_> --no-save` | `npm i <_package_> --no-save` | Installe un package sans le mentionner dans le fichier `package.json` |
+| `npm install @<_nom du domaine_>/<_package_>` | `npm i @<_nom du domaine_>/<_package_>` | Installe un package appartenant à un domaine particulier (i.e. _scope_)<br />Par exemple: `npm install @types/jquery` |
+| `npm install <_utilisateur_>/<_repository_>` | `npm i <_utilisateur_>/<_repository_>` | Installe un package à partir de GitHub |
+| `npm install <_utilisateur_>/<_repository_>#<_branche_>` | `npm i <_utilisateur_>/<_repository_>#<_branche_>` | |
+| `npm install github:<_utilisateur_>/<_repository_>` | `npm i github:<_utilisateur_>/<_repository_>` | |
+
+### npm update
+
+`npm update`
+
+`npm up`
+
+Met à jour les packages listés dans la partie `dependencies` du fichier `package.json`
+
+`npm update --dev`
+
+`npm up --dev`
+
+Met à jour les packages listés dans la partie `devDependencies` du fichier `package.json`
+
+`npm update --global`
+
+`npm up -g`
+
+Met à jour les packages se trouvant dans le répertoire global
+
+`npm update <_package_>`
+
+`npm up <_package_>`
+
+Met à jour un package spécifique
+
+`npm outdated`
+
+Affiche les packages à mettre à jour
+
+`npm outdated <_package_>`
+
+Affiche si un package spécifique peut être mis à jour
+
+`npm uninstall <_package_>`
+
+`npm un <_package_>`
+
+Désinstalle un package
+
+`npm uninstall <_package_> --global`
+
+`npm un <_package_> -g`
+
+Désintalle un package du répertoire global
+
+### npm list
+
+`npm list`
+
+`npm ls`
+
+Liste les packages et leurs dépendances
+
+`npm list --global`
+
+`npm ls -g`
+
+Liste les packages dans le répertoire global
+
+`npm list --depth=0`
+
+`npm ls --depth=0`
+
+Liste les packages sans afficher leurs dépendances
+
+`npm ll`
+
+Liste les packages en affichant plus de détails
+
+`npm la`
+
+### Autres commandes
+
+`npm view <_package_>`
+
+Affiche les détails d’un package
+
+`npm view <_package_> versions`
+
+Affiche les versions disponibles d’un package
+
+`npm search <_nom partiel d'un package_>`
+
+Affiche les packages disponibles à partir d’un nom partiel

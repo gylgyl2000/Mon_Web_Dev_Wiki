@@ -1,0 +1,2904 @@
+---
+sidebar_position: 4
+---
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+import { Vimeo } from 'mdx-embed';
+
+# Optimisez votre code en utilisant les techniques avancées de Sass
+
+## Utilisez le système 7-1 pour une codebase plus simple à gérer
+
+[Utilisez le système 7-1 pour une codebase plus simple à gérer - Simplifiez-vous le CSS avec Sass - OpenClassrooms](https://openclassrooms.com/fr/courses/6106181-simplifiez-vous-le-css-avec-sass/6599201-utilisez-le-systeme-7-1-pour-une-codebase-plus-simple-a-gerer)
+
+<Vimeo vimeoId="534802603" />
+
+<br />
+
+Est-ce que comme moi ça vous arrive d’être tellement occupé que lorsque vous avez enfin un moment pour souffler, vous regardez
+autour de vous et vous rendez compte qu’il y a pas mal de bazar ?
+
+Yep yep, c’est l’heure de faire le ménage. Personne n’aime ça, mais prendre du recul et ranger un peu est vital pour maintenir
+une codebase propre et saine.
+
+### Organisez et structurez votre code
+
+Jusqu’à présent, vous avez beaucoup appris, et écrit du code par la même occasion. Vos fichiers Sass sont bien **ordonnés**, avec
+des **variables groupées** et des composants écrits sous forme de **blocs BEM** bien **rangés** et **propres**. Mais vous devez
+aussi parcourir des mixins, fonctions et autres bouts de code pour pouvoir trouver un élément en particulier.
+
+Fort heureusement, Sass vous permet de séparer votre code en fichiers séparés pour le **catégoriser** et l’**organiser**. Vous
+pouvez mettre toutes vos variables dans un fichier et tous vos mixins dans un autre. Pareil pour les feuilles de style et les
+composants. Pouvoir ouvrir un fichier précis et trouver facilement un morceau de code vous évitera des migraines et vous fera
+gagner beaucoup de temps.
+
+### Découvrez le modèle 7-1
+
+Pour ordonner tous ces nouveaux fichiers, vous allez utiliser ce qui s’appelle le **système de fichiers 7-1**. Le “7”, ce sont
+les sept **directories** thématiques (des dossiers, en langage de développeur) pour ranger vos fichiers, qui sont regroupés dans
+le “1” : un fichier .scss unique se compilant sous forme de feuilles de style CSS pour votre site.
+
+C’est parti ! Créons donc les sept directories suivants dans notre directory Sass, chacun d’entre eux représentant une catégorie
+de code Sass :
+1. Base.
+2. Utils.
+3. Layout (mise en page).
+4. Composants.
+5. Pages.
+6. Themes.
+7. Vendors (tiers).
+
+Un moyen rapide de créer des directories est d’utiliser le **terminal** dans VS Code et la **commande** **mkdir** suivie du nom
+du directory que vous souhaitez créer. Vous pouvez créer plusieurs directories simultanément en les listant l’un après l’autre :
+
+:::info
+Vous souhaitez en savoir plus sur les lignes de commande ? Rendez-vous sur le cours [Apprenez à utiliser la ligne de commande dans un terminal](https://openclassrooms.com/fr/courses/6173491-apprenez-a-utiliser-la-ligne-de-commande-dans-un-terminal).
+:::
+
+Maintenant que vous avez créé vos sept directories pour y stocker votre code, on va voir à quoi sert chacun d’entre eux :
+- le directory **base/** contient les fichiers qui définissent les fondations de votre site, par exemple la police de caractères
+et les normes que vous voulez appliquer sur tout votre site, telles que le box-sizing ;
+- dans **utils/**, vous rangez vos variables, fonctions, mixins et les %placeholders pour les extensions (si vous en utilisez) ;
+- **layouts/** est le dossier où vous mettez vos blocs BEM qui contiennent ce qui est réutilisable, par exemple un header pour
+les mises en page de grande taille ou un footer ;
+- **components/** est utilisé pour ranger les blocs BEM qui sont plus indépendants, comme les boutons.
+
+Alors que les layouts peuvent utiliser d’autres composants pour générer leurs contenus, les **composants**, eux, sont plus
+élémentaires. Par exemple, un formulaire doit être considéré comme un layout : la mise en page est une fonction vitale du bloc et
+il utilise d’autres blocs pour fonctionner, comme des boutons. En revanche, le bouton lui-même est un composant car il n’a besoin
+d’aucun autre composant pour remplir sa fonction ;
+
+- **pages/** contient les blocs de code qui ne s’appliquent qu’à une seule page. Vous utilisez des boutons dans tout votre site,
+en revanche votre page d’accueil comporte une section Citation et une grille de projets qui ne sont employés nulle part ailleurs.
+En d’autres termes, pages/ contient des règles spécifiques à une seule page qui ne seront pas réutilisées ailleurs ;
+- **themes/**, c’est ici que vous stockez le code thématique, par exemple un style customisé pour Noël ou pour l’été. On ne
+l’utilisera pas dans notre site ;
+- **vendors/** est un directory pour des feuilles de style externes comme Bootstrap ou jQuery UI. En gros, il s’utilise pour tout
+CSS venant de l’extérieur. Utiliser des frameworks comme Bootstrap permet d’accélérer le développement d’un site, car ils
+contiennent des feuilles de style prédéfinies pour des choses comme les formulaires ou des boutons.
+
+#### Essayez par vous-même !
+
+**![16183911506509_A-vous-de-jouer%20%282%29.png](https://user.oc-static.com/upload/2021/04/14/16183911506509_A-vous-de-jouer%20%282%29.png)**
+
+Dans cet exercice, entraînez-vous et créez les sept directories du 7-1 pattern via le terminal ou via le panneau de navigation.
+
+Console de code
+
+<iframe title="codevolve" id="codevolveIframe1" src="https://www.codevolve.com/api/v1/access_token/A7A011CDB32BF49CF5658FAC6A75F446" width="100%" height="500" frameborder="0"></iframe>
+
+Retrouvez la [correction de l'exercice ici](https://github.com/tdimnet/Simplifiez-vous-le-CSS-avec-Sass/tree/partie-3/chapitre-1/exercice-1) !
+
+### Nettoyez et réorganisez vos fichiers
+
+Maintenant que vous avez tous ces directories sous la main, qu’est-ce que vous pouvez bien en faire ? Commençons par ranger un
+peu en mettant toutes les variables dans leur fichier attitré. Pour cela, créez un fichier dans le dossier Utils, nommé
+`_variables.scss` :
+
+![Image illustrant la création d'un fichier](https://user.oc-static.com/upload/2019/10/09/15706344888741_image1.jpg)
+
+Création d'un fichier
+
+Vous avez maintenant un fichier pour vos variables imbriquées dans le **directory utils/**. Son titre est logique : un fichier
+nommé “variables” pour ranger des variables.
+
+:::note ?
+Mais pourquoi cet underscore ? 🤔
+:::
+
+Lorsque vous séparez votre code, les fichiers individuels font tous **partie d’une codebase globale**, du coup Sass les appelle
+des **partiels**. Pour indiquer à Sass qu’un fichier est un partiel, vous devez lui ajouter le préfixe **underscore (_)**.
+
+Tous les partiels commencent par un underscore (_), suivi de son nom (ici variables) puis de l’extension de fichier `.scss`
+👉🏼 `_variables.scss`.
+
+Nous avons un fichier pour nos variables ; à présent nous pouvons couper nos variables de notre fichier scss principal pour les
+coller dans notre nouveau fichier `_variables.scss` :
+
+![Image illustrant le fichier variables à couper](https://user.oc-static.com/upload/2019/10/09/15706345944107_image15.jpg)
+
+Le fichier Variables à couper
+
+Ah… regardez le CSS compilé, vous voyez une erreur !
+
+```scss
+error sass/main.scss (Line 16: Undefined variable: "$colour-secondary".)
+```
+
+Sass vous indique que vous utilisez des **variables non définies** dans le code. Nous avons déplacé nos variables dans leur
+propre partiel, mais nous n’avons pas dit au fichier main.scss où les trouver ! Avant de pouvoir utiliser du code qui a été
+découpé en partiels, vous devez préciser dans votre codebase où importer ces nouvelles variables. Comment ? En utilisant le mot
+clé **@import**.
+
+```scss
+@import "./utils/variables";
+```
+
+Pour importer les variables, vous devez taper @import suivi d’une paire de guillemets. Entre les guillemets, renseignez le chemin
+vers le partiel des variables.
+
+:::info
+Le chemin traduit l’endroit où se situe votre fichier par rapport à votre point de départ.
+:::
+
+Le point (.) indique à Sass que pour arriver jusque _variables_, le chemin commence dans le même dossier que main.scss. Ensuite,
+/utils/ mène Sass au directory _utils_ dans lequel il trouvera le partiel _variables_.
+
+:::info
+Notez qu’on n’utilise pas d’underscore ni d’extension de fichier lorsqu’on indique dans le chemin le **nom du fichier du partiel**.
+Lors de l’importation d’un partiel, Sass sait qu’il lui faut chercher un fichier commençant par un underscore et qu’il s’agit d’un
+fichier Sass, pas besoin de le préciser.
+:::
+
+Et si vous jetez un œil au CSS compilé, vous verrez que les variables se comportent comme si elles se trouvaient encore dans le
+fichier main.scss :
+
+```scss
+body {
+    box-sizing: border-box;
+    background: #001534;
+}
+```
+
+Parfait ! Nous avons rendu notre code plus propre en regroupant toutes nos variables de couleurs au même endroit.👌
+
+#### Essayez par vous-même !
+
+**![16183911506509_A-vous-de-jouer%20%282%29.png](https://user.oc-static.com/upload/2021/04/14/16183911506509_A-vous-de-jouer%20%282%29.png)**
+
+Dans cet exercice, regroupez les couleurs dans un nouveau fichier.
+
+Console de code
+
+<iframe title="codevolve" id="codevolveIframe2" src="https://www.codevolve.com/api/v1/access_token/B27B46A1F3FD3807BB10AF652D338413" width="100%" height="500" frameborder="0"></iframe>
+
+Avez-vous essayé l'exercice ? Retrouvez la [correction ici](https://github.com/tdimnet/Simplifiez-vous-le-CSS-avec-Sass/tree/partie-3/chapitre-1/exercice-2) !
+
+**Faites de l’ordre dans le bloc formulaire**
+
+Maintenant que vous l’avez fait pour les couleurs, on ne va pas s’arrêter en si bon chemin. Attaquons-nous au bloc du formulaire !
+Dans layouts/, créez un nouveau partiel nommé _form.scss, puis coupez-collez le bloc formulaire depuis main.scss. Pourquoi le
+directory layout ? Parce que le formulaire est un grand composant, qui en contient plusieurs et qu’il peut être réutilisé.
+
+```scss
+.form {
+    width: 100%;
+    padding-bottom: $grid-gutter;
+    &__heading {
+        width: 100%;
+        color: $colour-white;
+        @include heading-shadow;
+        background: $colour-primary;
+        line-height: 5rem;
+        padding: $grid-gutter;
+    }
+    &__field {
+        & label {
+            color: $colour-accent;
+            display: block;
+            font-size: map-get($txt-size, label);
+            line-height: map-get($txt-size, label);
+            padding-top: $grid-gutter;
+        }
+        & input {
+            width: 100%;
+            background: $colour-secondary;
+            @include border;
+            padding: $grid-gutter;
+            color: $colour-accent;
+        }
+        & textarea {
+            width: 100%;
+            color: $colour-primary;
+            background: $colour-secondary;
+            @include border;
+            outline: none;
+            padding: $grid-gutter;
+            margin-bottom: $grid-gutter\*0.5;
+            &:active, &:focus {
+                color: $colour-accent;
+            }
+        }
+    }
+}
+```
+
+Maintenant que le bloc formulaire est dans son propre partiel, nous devons l’importer dans notre fichier principal pour pouvoir
+l’utiliser, comme avec _variables_ :
+
+```scss
+@import "./utils/variables";
+@import "./layouts/form";
+```
+
+Notez que nous avons placé l’import du formulaire _après_ les variables. **L’ordre dans lequel vous importez vos partiels dans
+le fichier principal est l’ordre dans lequel Sass compilera tout ce qu’ils contiennent**. Si on importait le partiel du formulaire
+avant les variables, on aurait une erreur de compilation, car les variables utilisées dans le formulaire n’auraient pas encore
+été définies !
+
+D’une manière générale, pour éviter les erreurs, faites en sorte d’importer vos fichiers dans l’ordre suivant :
+
+1. **Utils** :
+    1. Variables.
+    2. Fonctions.
+    3. Mixins.
+    4. Placeholders.
+2. **Feuilles de style de tiers (vendors)** (si vous en avez).
+3. **Base.**
+4. **Composants.**
+5. **Layout.**
+6. **Pages.**
+7. **Thèmes.**
+
+Vous n’aurez sans doute pas besoin de tous ces dossiers pour chaque site sur lesquels vous travaillerez. Le site que nous
+construisons dans ce cours n’utilise pas de feuilles de styles externes, ni de thèmes, par exemple. Mais il est important que
+vous les connaissiez 👌.
+
+Une fois que l’ensemble du code a bien été séparé en partiels et importé, le fichier main.scss ne doit contenir que des imports.
+Les ensembles de règles sont eux aussi rangés dans leurs propres partiels :
+
+```scss
+@import "./utils/variables";
+@import "./utils/functions";
+@import "./utils/mixins";
+@import "./utils/extensions";
+@import "./base/base";
+@import "./base/typography";
+@import "./components/buttons";
+@import "./layouts/header";
+@import "./layouts/nav";
+@import "./layouts/container";
+@import "./layouts/form";
+@import "./pages/work";
+@import "./pages/about";
+@import "./pages/project";
+```
+
+À présent, pour trouver un bout de code, c’est aussi simple que de regarder votre fichier main.scss pour voir où il est rangé !
+Facile à lire, à écrire et à maintenir. Les règles d’or du code sont honorées ! 🙌
+
+### En résumé
+
+- Le système de fichiers 7-1 se compose de sept dossiers thématiques qui sont regroupés dans un fichier .scss.
+- Les 7 directories thématiques sont :
+    - Base ;
+    - Utils ;
+    - Layout (mise en page) ;
+    - Composants ;
+    - Pages ;
+    - Thèmes ;
+    - Vendors (tiers).
+- Dans Sass, les différents fichiers s’appellent des partiels. Ils commencent par un underscore.
+- On importe les partiels dans le fichier principal `.scss` en utilisant le mot clé `@import`.
+- Dans Sass, les partiels sont compilés dans le même ordre que celui dans lequel ils sont importés.
+
+_Dans le chapitre suivant, nous allons installer Sass sur votre ordinateur !_
+
+-----
+
+## Installez Sass sur votre machine
+
+[Installez Sass sur votre machine - Simplifiez-vous le CSS avec Sass - OpenClassrooms](https://openclassrooms.com/fr/courses/6106181-simplifiez-vous-le-css-avec-sass/6599386-installez-sass-sur-votre-machine)
+
+<Vimeo vimeoId="534814848" />
+
+<br />
+
+Grâce au système 7-1, nous avons séparé notre Sass en **morceaux logiques** ce qui facilite la tâche pour trouver et maintenir
+des éléments. Mais vous ne pouvez pas juste vous asseoir devant votre ordinateur et commencer à travailler. Pour le moment, le
+projet se trouve entièrement dans le **cloud**. Vous devez donc ouvrir un navigateur, naviguer, vous connecter, puis charger le
+projet. Il vous faut aussi une connexion internet pour pouvoir continuer à travailler et sauvegarder votre travail.
+
+### Téléchargez les fichiers du projet
+
+Et si vous voulez travailler dans l’avion ? Ou quand vous n’avez qu’une connexion wifi médiocre ? Ou si vous voulez juste l’avoir
+dans votre ordinateur ? La solution est de **télécharger** tous les fichiers source et d'**installer Sass** sur votre machine,
+ce qui vous permettra de recompiler votre Sass en CSS à chaque fois que vous faites des changements.
+
+Il existe de nombreuses manières pour installer Sass sur votre machine, nous allons en voir juste une pour des raisons de
+simplicité. Mais avant de commencer, vous devez transférer les fichiers du site sur votre ordinateur pour que vous ayez de quoi
+travailler.
+
+:::info
+Si vous suivez ce cours en ligne, vous pouvez d’ores et déjà télécharger vos fichiers. Sinon, vous pouvez télécharger
+**[le fichier zip ici](https://s3-eu-west-1.amazonaws.com/course.oc-static.com/courses/5625786/Maintainable-CSS-with-SASS-pt04ch02_start+(4).zip)**.
+:::
+
+Une fois que vous avez téléchargé les fichiers, il faut les **extraire** et les placer dans le dossier où vous voulez que votre
+projet soit rangé. En ce qui me concerne, j’ai un dossier nommé openclassrooms-courses dans lequel j’ai extrait mon projet
+`writing-sass`. Tous les fichiers pour notre site sont situés dans mon dossier `writing-sass`.
+
+Lancez VS Code et ouvrez le dossier du projet en sélectionnant “Ouvrir le dossier” (Open Folder) dans le menu Fichier :
+
+![Illustration de l'onglet open folder](https://user.oc-static.com/upload/2019/10/09/15706351658794_image21.jpg)
+
+L'onglet Open Folder
+
+En allant dans votre dossier et en sélectionnant le **directory** de votre projet, vous verrez les fichiers du projet dans le
+panneau de navigation de gauche dans VS Code :
+
+![Illustration du panneau de navigation](https://user.oc-static.com/upload/2019/10/09/15706352709479_image11.jpg)
+
+Le panneau de navigation
+
+Si vous vous baladez, vous verrez que tous vos fichiers HTML, CSS et `.scss` sont bien là où ils doivent être. Notre site est
+désormais dans votre ordinateur ! Maintenant que votre site est sur votre ordinateur, il ne vous reste plus qu’à installer Sass.
+
+### Installez et lancez Sass en 4 étapes
+
+#### 1. Installez NodeJS sur votre ordinateur
+
+Pour installer Sass, vous allez avoir besoin d’installer NodeJS.<br />
+Et oui, c’est assez fréquent en informatique de devoir faire des installations en chaîne et qu’un programme dépende d’un autre
+pour s’exécuter ![:)](https://openclassrooms.com/bundles/common/images/smiley/smile.png). Cela dit, rassurez-vous, c’est très
+rapide et très simple.
+
+:::info
+Si vous ne souhaitez pas encore procéder à cette installation, retrouvez un peu plus bas comment passer par une **extension
+VsCode** pour ne pas avoir à télécharger et installer NodeJS et Sass.
+:::
+
+##### Installation de Sass sur Windows
+
+Rendez-vous sur la [page d’installation de NodeJS](https://nodejs.org/) et téléchargez la LTS (actuellement la 14.16.1).
+
+![Capture d'écran des boutons de téléchargement de NodeJS](https://user.oc-static.com/upload/2021/04/14/16183870576618_image3.png)
+
+Cliquez sur le bouton de téléchargement de la version LTS
+
+Une fois le téléchargement réalisé, exécutez le .exe et lancez l’installation.
+
+:::caution !
+Lors de l’installation de NodeJS, il est important de laisser “npm packager manager” et “Add to PATH” cochés.
+:::
+
+![Capture d'écran de la fenêtre d'installation où l'on apparaît bein npm packer manager et Add to PATH.](https://user.oc-static.com/upload/2021/04/14/1618387225824_image4.png)
+
+La fenêtre d'installation de NodeJS
+
+Une fois l’installation terminée, je vous invite à lancer l’invite de commandes windows :
+
+![Capture d'écran de la fenêtre d'invite de commande de Windows](https://user.oc-static.com/upload/2021/04/14/16183873536546_image5.png)
+
+La fenêtre d'invite de commande de Windows
+
+Une fois, sur l’invite de commandes, entrez la commande : `node -v` puis la commande `npm -v`.
+
+Ces deux commandes vous permettront de vérifier si :
+- Node est bien installé et de connaitre sa version.
+- Npm est bien installé et de connaitre sa version.
+
+Vous pouvez maintenant installer Sass avec la commande `npm -g install sass`.
+
+##### Installation de Sass sous MacOS
+
+Sous MacOS, les étapes sont les mêmes niveau installation. Rendez-vous sur [nodejs.org](https://nodejs.org/) et téléchargez la
+LTS de NodeJS. Installez-le ensuite en cliquant sur le programme téléchargé.  
+  
+Une fois installé, ouvrez votre terminal et tapez les commandes suivantes :
+- `node -v`
+- `npm -v`
+
+![Capture d'écran du terminal de commande affichant les versions de Node et npm](https://user.oc-static.com/upload/2021/04/14/16183876507006_image2.png)
+
+Le terminal de commande affichant les versions de Node et Npm
+
+:::info
+Vous pouvez maintenant procéder à l’installation de Sass avec la commande `npm -g install sass`.
+:::
+
+##### Installation de Sass avec VsCode
+
+Voici un petit plus pour les utilisateurs de VsCode ! Il existe une excellente extension qui va vous permettre d’utiliser Sass
+simplement, sans l'installer ni même NodeJS.
+
+Cette extension s’appelle **[Live Sass Compiler](https://marketplace.visualstudio.com/items?itemName=ritwickdey.live-sass)**.
+Pour l’installer, lancez l’onglet “extension” de VsCode.
+
+![Capture d'écran représentant l'onglet extension de VsCode](https://user.oc-static.com/upload/2021/04/14/16183880456963_image1.png)
+
+L'onglet extension de VsCode
+
+Puis recherchez l’extension Live Sass Compiler et installez-là.
+
+![Capture d'écran de téléchargement de l'extension Live Sass Compiler](https://user.oc-static.com/upload/2021/04/14/16183880942109_image7.png)
+
+L'extension Live Sass Compiler
+
+:::info
+Vous pourrez maintenant lancer facilement la compilation de fichiers Sass.
+
+Si vous avez installé l'extension, je vous invite à vous rendre directement à la section suivante "Comment on allume ce truc" ?
+:::
+
+#### 2. Ouvrez une ligne de commande sur VsCode
+
+Tout d’abord, il vous faut une ligne de commande pour que la magie puisse commencer. Dans VS Code, allez dans Vue, puis
+choisissez Terminal ou utilisez le raccourci clavier Ctrl + ` :
+
+![Image montrant comment sélectionner Terminal](https://user.oc-static.com/upload/2019/10/09/15706353317957_image10.jpg)
+
+Sélection de Terminal
+
+La partie inférieure de VS Code laisse désormais place à une fenêtre avec un terminal !
+
+![Image montrant la fenêtre de terminal window](https://user.oc-static.com/upload/2019/10/09/1570635400214_image19.jpg)
+
+Fenêtre de terminal Windows
+
+Première étape : ouvrir une ligne de commande. Check. ✅
+
+#### 3. Initialisez un fichier npm package.json
+
+Vous êtes maintenant prêt pour la deuxième étape : initialiser un fichier `npm package.json`.
+
+:::note ?
+Euh, un quoi ? 😰
+:::
+
+`package.json` est un fichier qui **stocke** les informations sur votre projet : nom, numéro de version, auteur, info de licence,
+dépendances externes, et, encore plus important, des petits bouts de code à exécuter (que nous appellerons dorénavant des
+**_scripts_**). Dites-vous que le `package.json` est un manuel d’utilisation pour que `npm` puisse réassembler et faire
+fonctionner votre site.
+
+:::info
+Le `package.json` liste les **packages** nécessaires pour faire marcher votre propre code, qui sont appelés des **dépendances**.
+Aussi appelés **_librairies_**, ce sont des collections de code que vous pouvez utiliser pour exécuter votre propre code. Au lieu
+d’écrire toutes vos fonctions vous-même, vous pouvez aussi installer celles d’autres personnes, ce qui vous épargne de devoir
+écrire de grandes quantités de code et vous facilite la vie.
+:::
+
+Créons un fichier package en tapant npm init :
+
+```shell
+npm init
+```
+
+La ligne de commande vous demande à présent un tas d’infos sur votre projet. Si vous taper _Entrer_ sans remplir les champs
+demandés, `npm` les remplira avec la valeur par défaut affichée entre parenthèses. S’il n’y a pas de parenthèses, tapez juste
+_Entrer_ et le champ sera vide :
+
+![Illustration du champ vide](https://user.oc-static.com/upload/2019/10/09/1570635652089_image5.jpg)
+
+Le champ est vide 
+
+À vous de jouer, remplissez les champs comme vous le souhaitez. Ne vous inquiétez pas du _repository git_ pour le moment. Une
+fois que tous les champs sont remplis, la ligne de commande vous montrera un aperçu de votre package.json et vous demandera si
+cela vous convient. Tapez _Entrer_ pour accepter.
+
+![Illustration de la fenêtre de terminal](https://user.oc-static.com/upload/2019/10/09/15706357314077_image14.jpg)
+
+Le terminal
+
+Un fichier `package.json` est apparu dans le panneau de navigation sur la gauche de VS Code. Cliquez dessus et regardez ce qu’on
+y trouve !
+
+```json
+{
+"name": "writting-sass",
+"version": "1.0.0",
+"description": "",
+"main": "index.js",
+"scripts": {
+"test": "echo \\"Error: no test specified\\" && exit 1"
+},
+"author": "",
+"license": "ISC"
+}
+```
+
+Ce que vous avez là est un **objet JSON** contenant toutes les données que vous venez de renseigner. À mesure que vous installez
+des packages (ou _librairies_), ils apparaîtront parmi les objets dépendances, ce qui donnera si on ajoute bootstrap par exemple :
+
+```json
+"dependencies": {
+"bootstrap": "4.2.1",
+}
+```
+
+OK, initialiser un package npm : validé ! ✅
+
+Et pour finir, la troisième et dernière étape : installer Sass. Enfin ! 🙌
+
+#### 4. Installez Sass
+
+Dans la ligne de commande, tapez npm install sass -g.
+
+```shell
+npm install -g sass
+```
+
+OK, alors on va décortiquer cette ligne de commande ensemble pour mieux la comprendre. Tout d’abord, lorsque vous tapez _npm_,
+cela indique que vous allez exécuter une commande npm ; _install_ est la **commande npm** que vous êtes en train d’exécuter :
+elle téléchargera et installera les packages indiqués. Dans le cas présent, c’est le package Sass qui sera installé, ainsi que
+toutes ses éventuelles dépendances. _-g_ s’appelle un **_flag_ (ou _drapeau_ en français)**. Cela indique à nmp d’installer le
+package globalement, c’est-à-dire sur l’ensemble de votre machine, plutôt que de l’installer seulement pour votre projet. Vous
+n’aurez plus jamais à installer Sass !
+
+:::info
+Npm est une interface de ligne de commande qui est intégrée dans le framework du serveur node.js. Il installe des packages et
+vous permet d’exécuter des scripts et de gérer les dépendances. Si vous n’avez pas encore installé Node, allez voir notre cours
+sur l’installation des environnements de production.
+:::
+
+Pour vérifier que vous avez bien installé Sass dans votre système, tapez sass --version dans le terminal :
+
+```shell
+sass --version
+```
+
+La ligne de commande vous répond en vous indiquant quelle version de Sass est installée. Si par malheur vous aviez fait une
+erreur et que Sass n’était pas installé, pas de panique vous auriez eu un message d’erreur vous indiquant que Sass n’est pas
+reconnu :
+
+![Illustration du message d'erreur](https://user.oc-static.com/upload/2019/10/09/15706359406906_image7.jpg)
+
+Le message d'erreur
+
+Si vous voyez Sass et une version affichée, ici : Sass 3.5.1 c’est tout bon.
+
+Quatrième étape : installer Sass. Effectuée ! ✅
+
+🎉🎉🎉
+
+### Comment on allume ce truc ?
+
+Okay. Vous avez installé Sass, maintenant comment est-ce qu’on le fait fonctionner ?
+
+Vous avez installé Sass via `npm`, que vous pouvez utiliser pour faire fonctionner Sass et compiler votre CSS. Si on revient au
+fichier `package.json` créé il y a peu de temps, vous avez peut-être remarqué un objet “scripts” :
+
+```json
+{
+"name": "writting-sass",
+"version": "1.0.0",
+"description": "",
+"main": "index.js",
+"scripts": {
+"test": "echo \\"Error: no test specified\\" && exit 1"
+},
+"author": "",
+"license": "ISC"
+}
+```
+
+C’est ici que vous allez mettre votre **script** pour pouvoir faire **fonctionner** Sass. Nous n’allons pas faire de test, vous
+pouvez donc vous débarrasser du script de test et le remplacer par un nouveau script : sass, suivi de deux points et d’une paire
+de guillemets :
+
+```json
+{
+"name": "writting-sass",
+"version": "1.0.0",
+"description": "",
+"main": "index.js",
+"scripts": {
+"sass": ""
+},
+"author": "",
+"license": "ISC",
+}
+```
+
+Vous avez maintenant défini un script `npm` nommé _sass_, mais il est vide. Si vous essayez de le faire fonctionner, il ne se
+passera rien. On va y remédier ! Entre les **guillemets**, tapez ceci : `sass --watch ./sass/main.scss:./public/css/style.css`.
+
+```json
+{
+"name": "writting-sass",
+"version": "1.0.0",
+"description": "",
+"main": "index.js",
+"scripts": {
+"sass": "sass --watch ./sass/main.scss:.public/css/style.css"
+},
+"author": "",
+"license": "ISC",
+}
+```
+
+:::note ?
+Une suite de points et de tirets incompréhensibles... Qu'est-ce que ça veut dire ?
+:::
+
+Pas de panique ! Détaillons ensemble ce que vous venez d’écrire :
+- _sass_ indique à `npm` où trouver le script à exécuter ;
+- `--watch` (_observer_, en anglais) est un flag (ou une option) que npm utilise pour trouver d’éventuels changements dans le
+fichier Sass. En d’autres termes, il observe si un changement opère et s’il en voit, il recompilera et mettra à jour le fichier
+CSS. Sans le flag watch, il vous faudrait faire tourner le script à chaque fois que vous sauvegardez votre fichier. Mais grâce à
+lui, la mise à jour se fera automatiquement tant que le script tourne dans votre terminal ;
+- `./sass/main.scss` indique au script situé dans node-sass où trouver le fichier Sass à compiler ;
+- les deux points séparent le chemin source du chemin de destination ;
+- `./css/style.css` indique au script l’endroit où compiler le CSS et comment le nommer.
+
+Vous avez écrit un script, maintenant il est l’heure d’enregistrer le fichier `package.json` et de lancer Sass ! 🚀
+
+Dans le terminal, tapez “npm run sass” :
+
+```shell
+npm run sass
+```
+
+C’est exactement comme la fois où vous avez initialisé le fichier package : _npm_ indique à la ligne de commande que vous voulez
+exécuter une commande npm. La commande, c’est _run_. Et _sass_, c’est le nom du script que vous voulez exécuter.
+
+Juste après, la ligne de commande indique le contenu du script, puis compile votre `main.scss` en CSS :
+
+![Illustration du code qui compile](https://user.oc-static.com/upload/2019/10/09/15706362981507_image3.jpg)
+
+Le code compile
+
+Ça y est, vous êtes fin prêt !
+
+Tant que vous n’interrompez pas le processus, soit en tapant Ctrl+C dans le terminal, soit en cliquant sur la corbeille, le
+script attendra et sera à l'affût de tout changement à compiler. On va vérifier ça en changeant la couleur dans l’une de nos
+variables, puis en sauvegardant.
+
+Si tout a fonctionné comme prévu, la ligne de commande va repérer le changement puis nous indiquera qu’elle a recompilé le CSS
+en vert :
+
+![Illustration du code recompilé](https://user.oc-static.com/upload/2019/10/09/15706363384504_image6.jpg)
+
+Le code recompilé
+
+Ça marche !
+
+Mais si vous faites une erreur, par exemple en tapant une faute de frappe intentionnelle, Sass enverra une erreur à la ligne de
+commande :
+
+![Illustration d'une erreur dans le code](https://user.oc-static.com/upload/2019/10/09/15706364557812_image13.jpg)
+
+Une erreur dans le code
+
+Oooooops on dirait qu’on a oublié le “y” de $colour-primary . Hop, on corrige !
+
+![Illustration du code qui compile à nouveau](https://user.oc-static.com/upload/2019/10/09/15706364855752_image12.jpg)
+
+Le code qui compile à nouveau
+
+Sass voit que nous avons modifié le fichier et tente de le recompiler. Cette fois-ci, nous avons corrigé la faute de frappe et
+voyons un message vert de victoire. Vous avez maintenant le site et Sass sur votre ordinateur, vous pouvez donc travailler avec
+ou sans connexion, où que vous soyez !
+
+### Découvrez les différents modes de compilation
+
+Ouvrez votre feuille style.css fraîchement compilée :
+
+```scss
+.form {
+    width: 100%;
+    padding-bottom: 1.5rem; }
+.form__heading {
+    width: 100%;
+    color: #fff;
+    text-shadow: 0.55rem 0.55rem #11af82;
+    background: #15DEA5;
+    line-height: 5rem;
+    padding: 1.5rem; }
+.form__field label {
+    color: #D6FFF5;
+    display: block;
+    font-size: 2rem;
+    line-height: 2rem;
+    padding-top: 1.5rem; }
+.form__field input {
+    width: 100%;
+    background: #001534;
+    border: 0.1rem solid #15DEA5;
+    padding: 1.5rem;
+    color: #D6FFF5;
+    font-weight: 900;
+    font-style: italic;
+    font-size: 2.75rem; }
+.form__field textarea {
+    width: 100%;
+    color: #15DEA5;
+    background: #001534;
+    border: 0.1rem solid #15DEA5;
+    outline: none;
+    padding: 1.5rem;
+    margin-bottom: 0.75rem;
+}
+```
+
+Elle a un aspect légèrement différent par rapport à quand nous écrivions notre CSS à la main. Toutefois, Sass a préservé la
+**hiérarchie visuelle** du **nesting** issue des feuilles `.scss`. C’est bien pratique, car ça vous permet de parcourir le fichier
+CSS facilement pour trouver les blocs de code qui vous intéressent.
+
+Sass a quatre modes de compilation qui interprètent chacun le CSS d’une façon différente. Le premier, le mode par défaut, est ce
+que vous venez de voir, le mode **nested**.
+
+Le deuxième mode de compilation est appelé **expanded**, et il ressemble en tout point à du CSS qu’on aurait rédigé manuellement :
+
+```scss
+.form {
+width: 100%;
+padding-bottom: 1.5rem;
+}
+.form__heading {
+width: 100%;
+color: #fff;
+text-shadow: 0.55rem 0.55rem #11af82;
+background: #15DEA5;
+line-height: 5rem;
+padding: 1.5rem;
+}
+.form__field label {
+color: #D6FFF5;
+display: block;
+font-size: 2rem;
+line-height: 2rem;
+padding-top: 1.5rem;
+}
+.form__field input {
+width: 100%;
+background: #001534;
+border: 0.1rem solid #15DEA5;
+padding: 1.5rem;
+color: #D6FFF5;
+font-weight: 900;
+font-style: italic;
+font-size: 2.75rem;
+}
+.form__field textarea {
+width: 100%;
+color: #15DEA5;
+background: #001534;
+border: 0.1rem solid #15DEA5;
+outline: none;
+padding: 1.5rem;
+margin-bottom: 0.75rem;
+}
+```
+
+Certaines personnes préfèrent l’expanded plutôt que le nested parce qu’il leur paraît plus familier. À vous de voir.
+
+Le troisième mode est **compact**. Il traduit le CSS avec un ensemble de règles par ligne :
+
+```scss
+.form { width: 100%; padding-bottom: 1.5rem; }
+.form__heading { width: 100%; color: #fff; text-shadow: 0.55rem 0.55rem #11af82; background: #15DEA5; line-height: 5rem; padding: 1.5rem; }
+.form__field label { color: #D6FFF5; display: block; font-size: 2rem; line-height: 2rem; padding-top: 1.5rem; }
+.form__field input { width: 100%; background: #001534; border: 0.1rem solid #15DEA5; padding: 1.5rem; color: #D6FFF5; font-weight: 900; font-style: italic; font-size: 2.75rem; }
+.form__field textarea { width: 100%; color: #15DEA5; background: #001534; border: 0.1rem solid #15DEA5; outline: none; padding: 1.5rem; margin-bottom: 0.75rem; }
+```
+
+
+Le mode compact donne un fichier plus court et légèrement plus léger qui nécessite moins de scrolling, mais il n’est pas forcément
+facile à lire.
+
+Le quatrième et dernier mode est **compressé**. Quand Sass compile la feuille CSS en mode compressé, il retire tous les espaces et
+retours à la ligne inutiles :
+
+```scss
+.form{width:100%;padding-bottom:1.5rem}.form__heading{width:100%;color:#fff;text-shadow:.55rem .55rem #11af82;background:#15DEA5;line-height:5rem;padding:1.5rem}.form__field label{color:#D6FFF5;display:block;font-size:2rem;line-height:2rem;padding-top:1.5rem}.form__field input{width:100%;background:#001534;border:0.1rem solid #15DEA5;padding:1.5rem;color:#D6FFF5;font-weight:900;font-style:italic;font-size:2.75rem}.form__field textarea{width:100%;color:#15DEA5;background:#001534;border:0.1rem solid #15DEA5;outline:none;padding:1.5rem;margin-bottom:.75rem}
+```
+
+Le résultat est compliqué à lire, mais ça donne un fichier beaucoup plus léger. On appelle aussi cela un **fichier CSS minifié**,
+et c’est généralement ce qu’on utilise quand on déploie le site en live. La taille réduite du fichier diminue la quantité de
+données devant être téléchargées, ce qui réduit les temps de chargement, les besoins en matière d’espace de stockage et la
+consommation de données.
+
+Mettons à jour le script pour qu’il compile votre CSS en mode compressé !
+
+### Découvrez la compilation en mode compressé
+
+À la fin de votre script, vous devez ajouter un nouveau **flag** : --style, suivi du style dans lequel vous voulez compiler,
+compressed :
+
+```json
+{
+"name": "writting-sass",
+"version": "1.0.0",
+"description": "",
+"main": "index.js",
+"scripts": {
+"sass": "sass --watch ./sass/main.scss:./css/style.css --style compressed"
+},
+"author": "",
+"license": "ISC",
+}
+```
+
+Une fois le flag ajouté, cliquez sur _Enregistrer_ pour mettre à jour votre fichier Sass et lancer une recompilation puisque
+--watch observe chaque fois que votre code est modifié :
+
+```scss
+.form {
+    width: 100%;
+    padding-bottom: 1.5rem; }
+.form__heading {
+    width: 100%;
+    color: #fff;
+    text-shadow: 0.55rem 0.55rem #11af82;
+    background: #15DEA5;
+    line-height: 5rem;
+    padding: 1.5rem; }
+.form__field label {
+    color: #D6FFF5;
+    display: block;
+    font-size: 2rem;
+    line-height: 2rem;
+    padding-top: 1.5rem; }
+.form__field input {
+    width: 100%;
+    background: #001534;
+    border: 0.1rem solid #15DEA5;
+    padding: 1.5rem;
+    color: #D6FFF5;
+    font-weight: 900;
+    font-style: italic;
+    font-size: 2.75rem; }
+.form__field textarea {
+    width: 100%;
+    color: #15DEA5;
+    background: #001534;
+    border: 0.1rem solid #15DEA5;
+    outline: none;
+    padding: 1.5rem;
+    margin-bottom: 0.75rem; }
+```
+
+Mais ce n’est pas ça qu’on voulait. C’est toujours nesté, non, pourquuuuuoi ! 😭
+
+Si vous regardez la ligne de commande de plus près, vous pouvez voir notre erreur :
+
+![Image du code qui n'a pas été arrêté](https://user.oc-static.com/upload/2019/10/09/15706367044052_image9.jpg)
+
+Le code continue de compiler
+
+Nous n’avons jamais interrompu le script Sass originellement. Il tourne encore ! Et celui-ci avait un mode de compilation bien
+différent.
+
+Pour **compiler** en utilisant notre script fraîchement modifié, il faut d’abord **interrompre** l’ancien script, en appuyant sur
+Ctrl+C. Ensuite, relancez-le en tapant à  nouveau npm run sass :
+
+```shell
+npm run sass
+```
+
+Notre script Sass fonctionne à nouveau, mais cette fois il inclut le style de compilation que nous voulions :
+
+![Le bon mode de compilation](https://user.oc-static.com/upload/2019/10/09/15706367569307_image8.jpg)
+
+Le bon mode de compilation
+
+Cliquez à nouveau sur Enregistrer et regardez le code compilé :
+
+```scss
+.form{width:100%;padding-bottom:1.5rem}.form__heading{width:100%;color:#fff;text-shadow:.55rem .55rem #11af82;background:#15DEA5;line-height:5rem;padding:1.5rem}.form__field label{color:#D6FFF5;display:block;font-size:2rem;line-height:2rem;padding-top:1.5rem}.form__field input{width:100%;background:#001534;border:0.1rem solid #15DEA5;padding:1.5rem;color:#D6FFF5;font-weight:900;font-style:italic;font-size:2.75rem}.form__field textarea{width:100%;color:#15DEA5;background:#001534;border:0.1rem solid #15DEA5;outline:none;padding:1.5rem;margin-bottom:.75rem}
+```
+
+Par souci de concision, nous n’avons montré que le bloc `.form` pour chacun des modes de compilation. Lorsque vous compilez, vous
+voyez bien sûr l’intégralité de votre code CSS.
+
+#### Essayez par vous-même !
+
+**![16183911506509_A-vous-de-jouer%20%282%29.png](https://user.oc-static.com/upload/2021/04/14/16183911506509_A-vous-de-jouer%20%282%29.png)**
+
+Installez Sass et compilez le code donné en exemple en suivant les étapes vues dans ce chapitre.
+
+Console de code
+
+<iframe title="codevolve" id="codevolveIframe1" src="https://www.codevolve.com/api/v1/access_token/7D8CFDFE009F14291C255CE1DFFF6A2B" width="100%" height="500" frameborder="0"></iframe>
+
+
+:::info
+Et si vous compariez votre travail avec [cette correction](https://github.com/tdimnet/Simplifiez-vous-le-CSS-avec-Sass/tree/partie-3/chapitre-2/exercice-1) ?
+:::
+
+### Vous avez réussi !
+
+Organiser ses fichiers et installer des packages n’est pas l’activité la plus excitante du monde, mais c’est important.
+Rappelez-vous que vous passez _beaucoup_ plus de temps à lire votre code qu’à l’écrire : plus votre codebase sera propre et bien
+organisée, plus vous serez en mesure de trouver et surtout comprendre des morceaux de code rapidement et facilement.
+
+Continuez comme ça et votre futur vous aura une adoration sans fin envers votre vous présent.
+
+### En résumé
+
+- _package.json_ contient les informations de votre projet.
+- La commande `npm init` initialise un fichier package.json.
+- La commande `npm install sass -g` installe Sass sur votre machine et pas seulement votre projet.
+- `scripts` contient la liste des commandes que vous pouvez exécuter en lançant `npm + le nom du script`.
+- Le flag --style permet de préciser sous quelle forme sera compilé votre CSS. Vous pouvez choisir entre nested, compressed,
+expanded ou compact.    
+
+_Dans les chapitres suivants, on va revenir aux choses plus amusantes : se familiariser avec les types de données avancées de Sass
+et comment les utiliser pour vous faciliter encore un peu plus la vie !_
+
+-----
+
+## Intégrez les types de données Sass
+
+[Intégrez les types de données Sass - Simplifiez-vous le CSS avec Sass - OpenClassrooms](https://openclassrooms.com/fr/courses/6106181-simplifiez-vous-le-css-avec-sass/6599971-integrez-les-types-de-donnees-sass)
+
+<Vimeo vimeoId="534814897" />
+
+<br />
+
+Vous vous souvenez lorsque vous appreniez ce qu’étaient les variables ? Nous avons survolé les types de données disponibles dans
+Sass, et je vous avais dit de ne pas trop vous occuper des listes et des maps, car on les verrait plus en détail plus tard... Eh
+bien ça y est, nous y voilà : l’heure des **listes** et des **maps** est arrivée !
+
+### Découvrez les listes et les maps
+
+Les variables Sass que nous avons vues jusqu’à présent ne stockent qu’une seule valeur : une couleur, une taille, etc. Cela
+convient très bien pour de nombreux usages, mais qu’en est-il du **padding** ? Vous pouvez assigner quatre valeurs différentes
+au sein d'une seule règle :
+
+```scss
+.block {
+    padding: 1rem 2rem 3rem 4rem;
+}
+```
+
+Créer une variable pour chaque côté du padding n’aurait aucun intérêt : alerte aux répétitions ! 🚨 Et s’il existait une variable
+capable de stocker les quatre dimensions ?
+
+```scss
+$padding-dimensions: 1rem 2rem 3rem 4rem;
+.block {
+    padding: $padding-dimensions;
+}
+```
+
+:::note ?
+Une minute ! Ça fonctionne, ça ?
+:::
+
+Regardons le CSS compilé :
+
+```scss
+.block {
+    padding: 1rem 2rem 3rem 4rem;
+}
+```
+
+Sorcellerie ! 😨
+
+`$padding-dimensions` est ce que Sass appelle une **_liste_**, ici une liste de valeurs. Cela vous permet de **regrouper** des
+valeurs dans une seule variable. Dans le cas présent, nous avons fait une liste des dimensions à utiliser comme valeurs pour une
+propriété de padding.
+
+Pour créer une liste, il vous suffit de **définir une variable** et de la remplir avec des valeurs. La **syntaxe** pour les
+écrire est extrêmement flexible. Vous pouvez les séparer par des espaces, comme nous l’avons fait pour `$padding-dimesions`, ou
+utiliser des virgules :
+
+```scss
+$syntax-01: 1rem 2rem 3rem 4rem;
+$syntax-02: 1rem, 2rem, 3rem, 4rem;
+```
+
+Vous pouvez aussi les écrire avec ou sans parenthèses, c’est comme vous voulez :
+
+```scss
+$syntax-01: 1rem 2rem 3rem 4rem;
+$syntax-02: 1rem, 2rem, 3rem, 4rem;
+$syntax-03: (1rem 2rem 3rem 4rem);
+$syntax-04: (1rem, 2rem, 3rem, 4rem);
+```
+
+Toutes ces différentes options seront compilées de la même manière :
+
+<div style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between', padding: '12px', backgroundColor: 'gray', border: '1px solid black', borderRadius:'12px'}}>
+<div style={{width:'49%'}}>
+
+```scss title="scss"
+$syntax-01: 1rem 2rem 3rem 4rem;
+$syntax-02: 1rem, 2rem, 3rem, 4rem;
+$syntax-03: (1rem 2rem 3rem 4rem);
+$syntax-04: (1rem, 2rem, 3rem, 4rem);
+.syntax-01 {
+    padding: $syntax-01;
+}
+.syntax-02 {
+    padding: $syntax-02;
+}
+.syntax-03 {
+    padding: $syntax-03;
+}
+.syntax-04 {
+    padding: $syntax-04;
+}
+```
+
+</div>
+<div style={{width:'49%'}}>
+
+```css title="css"
+.syntax-01 {
+    padding: 1rem 2rem 3rem 4rem;
+}
+.syntax-02 {
+    padding: 1rem, 2rem, 3rem, 4rem;
+}
+.syntax-03 {
+    padding: 1rem, 2rem, 3rem, 4rem;
+}
+.syntax-04 {
+    padding: 1rem 2rem 3rem 4rem;
+}
+
+
+
+
+```
+
+</div>
+</div>
+
+<br />
+
+Ce n’est pas parce que vous avez décidé de stocker un groupe de valeurs dans une liste que vous voulez forcément toutes les
+utiliser dans la même instance. Vous pouvez aussi utiliser individuellement les valeurs d’une liste.
+
+Commençons par créer une liste des **différentes tailles de texte** que nous utilisons dans le site :
+
+```scss
+$font-size: 7rem 5rem 4rem 2rem;
+```
+
+Maintenant, utilisons la valeur **2rem** issue de $font-size pour renseigner la valeur de la taille de texte de nos labels. Pour
+accéder aux valeurs individuelles d’une liste, utilisez la fonction `nth()` suivie du nom de la liste et l’index de l’élément
+souhaité au sein de la liste :
+
+:::info
+L’index représente l’emplacement d’un élément dans un tableau.
+:::
+
+```scss
+$font-size: 7rem 5rem 4rem 2rem;
+.form{
+    &__field {
+        & label {
+            font-size: nth($font-size, 4);
+        }
+    }
+}
+```
+
+On veut utiliser la valeur 2rem située dans la liste $font-size pour le label de notre formulaire font-size, on appelle donc
+nth($font-size, 4). Pourquoi 4 ? 2rem est la quatrième valeur dans $font-size.
+
+:::info
+Si vous êtes habitué à d’autres langages de programmation, vous êtes peut-être un peu perdu avec cet index à 4 et non à 3, c’est
+normal : la plupart des autres langages de programmation qui ont des listes commencent avec un index à zéro ; Sass, lui, commence
+à 1. C’est étrange, mais au moins vous êtes prévenus !
+:::
+
+Les **listes** permettent de **regrouper des ensembles de valeurs**. Mais si vous revenez sur votre code, disons dans quelques
+mois, elles peuvent être un peu difficiles à lire. Regarder une liste et essayer de se rappeler l’usage de ses éléments peut vous
+filer une bonne migraine ou alors vous forcer à scroller dans toute votre codebase. Dans quelques mois, même dans quelques
+minutes, vous aurez probablement oublié les indices des différentes valeurs de $font-size. Et c’est normal, mais il existe une
+solution.
+
+### Créez des maps
+
+Les listes sont souvent difficiles à lire et à mémoriser parce qu’il n’y a pas vraiment de contexte pour lister leur contenu,
+c’est juste un ensemble de valeurs regroupées. C’est pour ça qu’existent les maps de Sass ! Elles sont très semblables aux listes,
+sauf qu’elles assignent à chaque valeur un nom sous forme d’une **paire clé/valeur** :
+
+```scss
+$font-size: (logo:7rem, heading:5rem, project-heading:4rem, label:2rem);
+```
+
+En assignant chaque valeur à une **clé**, ou un nom, c’est beaucoup plus simple de se souvenir et de comprendre son utilité. Ici
+nous avons assigné la valeur 7rem à la clé logo, 2rem à la clé label, etc. Si c’est plus clair, c’est plus simple. Si c’est plus
+simple, c’est mieux .👍
+
+Pour ceux d’entre vous qui connaissent d’autres langages informatiques, sachez qu’en Sass les maps sont l’équivalents des hashs,
+ou objets en JavaScript, mais ne portent juste pas le même nom.
+
+Les règles sont beaucoup plus strictes pour écrire des maps que pour les listes. Avec les listes, à peu près tout est optionnel
+(les parenthèses, les virgules...).
+
+Mais le contenu des maps doit être **entouré d’une paire de parenthèses** et doit **utiliser des virgules pour séparer les paires
+clé/valeur** :
+
+```scss
+$map: (
+    key-01: value-01,
+    key-02: value-02,
+    key-03: value-03
+);
+```
+
+Pour accéder à la valeur d’une map, c’est aussi un peu différent. Avec les maps, il faut utiliser la fonction `map-get()` ;
+celle-ci nécessite deux **arguments** : le premier est **le nom de la map** (ici _$font-size_), et le second est **le nom de la
+clé** (ici _label_).
+
+```scss
+$font-size: (logo:7rem, heading:5rem, project-heading:4rem, label:2rem);
+.form{
+    &__field {
+        & label {
+            font-size: map-get($font-size, label);
+        }
+    }
+}
+```
+
+Le résultat final sera toujours 2rem compilé en tant que taille de police dans le CSS :
+
+```css
+.form__field label {
+    font-size: 2rem;
+}
+```
+
+Allez, testons un peu nos nouvelles compétences maps en créant une map nommée $input-txt-palettes, qui contient les palettes de
+couleurs pour tous nos inputs de texte. Regroupez les palettes de couleurs par état (principale, secondes), puis créez une clé
+pour chaque pseudoclasse `: active`, `focus` et `invalid` (active, focus, invalide) :
+
+```scss
+$colour-primary: #15DEA5;
+$colour-secondary: #001534;
+$colour-accent: #D6FFF5;
+$colour-white: #fff;
+$colour-invalid: #DB464B;
+$txt-input-palette: (
+    active: ,
+    focus: ,
+    invalid:
+);
+```
+
+Vous avez créé des clés, sauf qu’elles sont vides. Souvenez-vous : il s’agit de paires clé/valeurs. Nous avons nos clés, il nous
+faut maintenant leur assigner des valeurs. Pour assigner vos palettes de couleurs à chaque clé, cela nécessite de **nester** une
+autre map pour les couleurs dans chacune des clés.
+
+:::info
+Vous vous souvenez du nesting ? On l’a déjà vu [ici](https://openclassrooms.com/en/courses/6106181-simplifiez-vous-le-sass-avec-css/6596483-decouvrez-sass-et-sa-syntaxe?status=draft)
+avec Sass.
+:::
+
+Eh oui, des maps dans les maps ! Inception. 🤯
+
+**Vous pouvez assigner n’importe quel type de données Sass comme valeurs dans vos maps (ou listes).** Vos inputs de texte doivent
+stocker trois couleurs distinctes, du coup chaque clé contiendra elle-même une clé avec trois valeurs : les couleurs de la
+bordure, du fond et du texte :
+
+```scss
+$colour-primary: #15DEA5;
+$colour-secondary: #001534;
+$colour-accent: #D6FFF5;
+$colour-white: #fff;
+$colour-invalid: #DB464B;
+$txt-input-palette: (
+    active: (
+        bg: $colour-primary,
+        border: $colour-primary,
+        txt: $colour-white,
+    ),
+    focus: (
+        bg: $colour-primary,
+        border: $colour-primary,
+        txt: $colour-white,
+    ),
+    invalid: (
+        bg: $colour-invalid,
+        border: $colour-white,
+        txt: $colour-white,
+    )
+);
+```
+
+Vous avez maintenant une **variable** qui contient toutes les informations de couleurs pour les différents états de votre texte
+(active, focus, invalid), dans un format qui est **facile à lire** mais surtout **facile à retenir.** Si vous avez besoin de
+modifier les états ou les valeurs, ils sont tous regroupés au même endroit dans un seul bloc : 1000 fois plus simple à retrouver
+de cette façon que de scroller dans toute votre codebase non ?
+
+### Utilisez les mixins avec les maps
+
+Toutes vos couleurs pour les différents états de vos input textes sont stockées dans une variable et elles sont prêtes pour la
+bataille ! Pour vous faciliter un peu la tâche, créons une **mixin** pour déployer ces palettes. Pour cela, vous devez assigner
+des règles pour les propriétés border, background-color et color du texte, avec les bonnes valeurs issues de `$txt-input-palette`.
+
+```scss
+@mixin txt-input-palette {
+    border: .1rem solid $border;
+    background-color: $bg;
+    color: $txt;
+}
+
+Pour déclarer de quel état (hover, etc.) obtenir les informations, vous devez
+assigner un argument pour l’état que vous pouvez passer dans la mixin :
+
+@mixin txt-input-palette($state) {
+    border: .1rem solid $border;
+    background-color: $bg;
+    color: $txt;
+}
+```
+
+Aux côtés du nom de l’état, vous pouvez stocker sa map de palette dans une variable nommée `$palette` :
+
+```scss
+@mixin txt-input-palette($state) {
+    $palette: map-get($txt-input-palette, $state);
+    border: .1rem solid $border;
+    background-color: $bg;
+    color: $txt;
+}
+```
+
+À présent, $palette contient une map des valeurs de couleurs pour bg, border et txt de l’état assigné. Vous pouvez l’utiliser
+avec la fonction map-get() pour remplir les valeurs de couleur de votre ensemble de règles :
+
+```scss
+@mixin txt-input-palette($state) {
+    $palette: map-get($txt-input-palette, $state);
+    border: .1rem solid map-get($palette, border);
+    background-color: map-get($palette, bg);
+    color: map-get($palette, txt);
+}
+```
+
+Et voilà ! Vous avez une mixin utilisable pour mettre en forme tous les **éléments de texte** et les **pseudo-sélecteurs**
+simplement en passant l’état quand vous appliquez la mixin ! Ceci vous aidera à ce que votre code soit maintenable et facile à
+modifier à l’avenir.
+
+Appliquons la mixin à votre sélecteur par défaut et inactif `form__txt input` :
+
+```scss
+@mixin txt-input-palette($state) {
+    $palette: map-get($txt-input-palette, $state);
+    border: .1rem solid map-get($palette, border);
+    background-color: map-get($palette, bg);
+    color: map-get($palette, txt);
+}
+.form {
+    &__field {
+        & input {
+            @include txt-input-palette(focus);
+        }
+    }
+}
+```
+
+Maintenant, vous devriez voir dans le CSS compilé le sélecteur `.form__field input`, rempli avec des règles pour `border`,
+`background-color` et `color` pour le texte :
+
+```scss
+.form__field input {
+    border: 0.1rem solid #15DEA5;
+    background-color: #001534;
+    color: #15DEA5;
+}
+```
+
+Parfait !
+
+#### Essayez par vous-même !
+
+**![16183911506509_A-vous-de-jouer%20%282%29.png](https://user.oc-static.com/upload/2021/04/14/16183911506509_A-vous-de-jouer%20%282%29.png)**
+
+Mettez en application vos nouvelles connaissances dans cet exercice où vous devez conserver les couleurs des boutons, tout en adaptant le code avec les listes et les maps.
+
+Console de code
+
+<iframe title="codevolve" id="codevolveIframe1" src="https://www.codevolve.com/api/v1/access_token/8B38C5501F7E9611B283FA25511199FE" width="100%" height="500" frameborder="0"></iframe>
+
+:::info
+Retrouvez la [correction de l'exercice ici](https://github.com/tdimnet/Simplifiez-vous-le-CSS-avec-Sass/tree/partie-3/chapitre-3/exercice-1). 😉
+:::
+
+### En résumé
+
+- Les listes et les maps sont des collections de valeurs.
+- Les listes ont une syntaxe très flexible ; on peut utiliser ou non des virgules, ou rien. Pareil pour les parenthèses.
+- On accède aux valeurs d’une liste en appelant leur index via la fonction `nth()` 👉🏼 `nth($list, index)`.
+- En Sass, les indexs des listes commencent à 1.
+- Les maps sont semblables aux listes, sauf que chaque valeur reçoit un nom qu’on appelle une clé : `$map(key: value)`.
+- Les maps ont une syntaxe beaucoup moins permissive que les listes. Les maps doivent utiliser des parenthèses et virgules.
+- On accède aux valeurs d’une map via la fonction `map-get()` 👉🏼 `map-get($map, key)`.
+- Les maps et les listes peuvent contenir n’importe quel type de données Sass, y compris d’autres listes et maps.
+
+_À présent, vous avez une mixin avec laquelle vous pouvez créer des propriétés pour chaque état de vos inputs texte ouuuuu vous
+pourriez aussi l’automatiser, n’est-ce pas ? Ce serait nettement moins fastidieux, et beaucoup plus classe ! 😎_
+
+_Quelle coïncidence – c’est exactement ce que nous ferons dans le prochain chapitre !_
+
+-----
+
+## Utilisez les boucles dans Sass pour fluidifier votre code
+
+[Utilisez les boucles dans Sass pour fluidifier votre code - Simplifiez-vous le CSS avec Sass - OpenClassrooms](https://openclassrooms.com/fr/courses/6106181-simplifiez-vous-le-css-avec-sass/6606591-utilisez-les-boucles-dans-sass-pour-fluidifier-votre-code)
+
+<Vimeo vimeoId="534814945" />
+
+<br />
+
+Dans le chapitre précédent, nous avons créé une mixin qui nous facilite grandement la création de différents modificateurs pour
+vos textes :
+
+```scss
+$txt-input-palette: (
+    active: (
+        bg: $colour-primary,
+        border: $colour-primary,
+        txt: $colour-white,
+    ),
+    focus: (
+        bg: $colour-primary,
+        border: $colour-primary,
+        txt: $colour-white,
+    ),
+    invalid: (
+        bg: $colour-invalid,
+        border: $colour-white,
+        txt: $colour-white,
+    )
+);
+@mixin txt-input-palette($state) {
+    $palette: map-get($txt-input-palette, $state);
+    border: .1rem solid map-get($palette, border);
+    background-color: map-get($palette, bg);
+    color: map-get($palette, txt);
+}
+```
+
+Il nous reste encore à créer le **sélecteur adapté** pour chaque état et à appliquer la mixin avec le bon argument. Sauf que
+c’est un travail répétitif et fastidieux, exactement ce que Sass nous invite à éviter.
+
+### Créez des boucles !
+
+:::note ?
+Comment faire ? 🤔
+:::
+
+En programmation, il existe ce qu’on appelle des **_boucles_**. Une boucle est une structure qui permet d’exécuter un certain
+nombre de fois une série d’instructions.
+
+:::info
+Euh, pardon… ? 😨
+:::
+
+Prenez une boîte de biscuits. Dans le paquet, il y a 45 délicieux cookies aux pépites de chocolat. 🍪 Vous êtes dans la cuisine
+et vous avez envie d’un petit cookie, la séquence suivante démarre :
+- Vous ouvrez le paquet.
+- Vous hésitez sur le fait d’avoir ou non besoin de manger ce cookie.
+- Vous décidez que non mais bon, vous les avez achetés, alors autant en manger un, non ?
+- Vous mangez un cookie et nagez en plein bonheur.
+- Vous vous sentez un peu coupable.
+- Vous refermez le paquet et vous dites que c’était juste un seul cookie..
+
+Ensuite vous rouvrez le paquet. Encore une fois. Et vous recommencez la même chose, encore et encore, jusqu’à ce que vous ayez
+mangé tous les cookies du paquet. Certains parleraient de cercle vicieux, personnellement je préfère le terme de **boucle** !
+Une boucle pleine de culpabilité peut-être, mais ça reste une boucle. Dans notre cas, la boucle n’est rien d’autre que **la
+répétition d’un ensemble d’actions sur notre paquet de cookies**, elle se termine lorsque le paquet est vide. On pourrait la
+traduire par : “tant qu’il y a encore des cookies dans le paquet”, je peux effectuer à la suite toutes les actions précédentes.
+
+En appliquant une boucle au sein de votre mixin de texte, Sass peut **automatiquement** créer les **bons sélecteurs** et les
+**bons ensembles de règles** pour chaque élément de la map que vous lui soumettez. Voilà qui semble bien plus propre et moins
+laborieux que de créer manuellement un bloc pour chacun des différents textes, non ?
+
+Sass met à notre disposition plusieurs types de boucles, mais nous n’en utiliserons qu’une : la boucle **@each**. C’est la plus
+simple à mettre en place et elle fonctionne très bien avec maps. Puisque tous les types de boucles de Sass nous donneront les
+mêmes résultats à la fin, autant choisir l’option la plus simple.
+
+Quand vous écrivez une boucle @each dans Sass, vous indiquez que pour chaque paire clé/valeur d’une $map vous voulez effectuer
+une tâche, et c’est exactement comme ça qu’on la définit :
+
+```scss
+@each $key, $value in $map {
+}
+```
+
+C’est parti ! On définit notre boucle grâce au mot clé @each (pour _chaque_...). Puis, on déclare les éléments dont il s’agit :
+chaque **$key** et chaque **$value**. Ensuite, on lui dit où aller les chercher. Ce qui nous donne : pour chaque $key et $value
+dans cette **$map**.
+
+Sass entre dans $map et crée des variables temporaires $key et $value pour chaque ensemble clé/valeur qu’il trouve. Ces variables
+n’existent que dans cette itération de la boucle. Elles n’existent ni avant ni après l’itération, et sont invisibles pour le
+reste du code.
+
+### Pour chacun et jusqu’au dernier
+
+Nous allons utiliser la boucle @each pour créer tous les ensembles de règles de pseudosélecteurs pour tous nos états
+`.form__input label`, et les remplir de leur ensemble de règles d’un seul coup ! Modifions un peu notre mixin `txt-input-palette`
+pour qu’elle le fasse à notre place.
+
+La première chose que vous devez faire est de passer toute la map `$txt-input-palette` en tant qu’argument, plutôt que juste la
+clé $state. Votre boucle va itérer sur chaque clé de la map, il n’y a donc pas besoin de les nommer manuellement :
+
+```scss
+@mixin txt-input-palette($palettes) {
+    $palette: map-get($txt-input-palette, $state);
+    border: .1rem solid map-get($palette, border);
+    background-color: map-get($palette, bg);
+    color: map-get($palette, txt);
+}
+```
+
+Vous pouvez aussi supprimer la variable $palette et sa fonction `map-get()`. La boucle @each ira aussi chercher automatiquement
+les valeurs pour chaque clé dans la map :
+
+```scss
+@mixin txt-input-palette($palettes) {
+    border: .1rem solid map-get($palette, border);
+    background-color: map-get($palette, bg);
+    color: map-get($palette, txt);
+}
+```
+
+À présent, vous pouvez commencer à utiliser @each pour automatiser votre travail !
+
+```scss
+@mixin txt-input-palette($palettes) {
+    @each $state, $palette in $palettes {
+        border: .1rem solid map-get($palette, border);
+        background-color: map-get($palette, bg);
+        color: map-get($palette, txt);
+    }
+}
+```
+
+On regarde ensemble : ici nous avons ajouté une boucle @each qui va itérer tout au long de notre map $palettes, tandis que les
+variables $state et $palette stockent chacune la clé et la valeur. Ensuite, en itérant à chaque passage, cela crée des règles
+pour border, background-color, et la color du texte.
+
+Malgré les nombreuses itérations, ils sont tous placés dans un même sélecteur :
+
+<div style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between', padding: '12px', backgroundColor: 'gray', border: '1px solid black', borderRadius:'12px'}}>
+<div style={{width:'49%'}}>
+
+```scss title="scss"
+@mixin txt-input-palette($palettes) {
+    @each $state, $palette in $palettes {
+        border: .1rem solid map-get($palette, border);
+        background-color: map-get($palette, bg);
+        color: map-get($palette, txt);
+    }
+}
+.form {
+    &__field {
+        & input {
+            @include txt-input-palette($txt-input-palette);
+        }
+    }
+}
+```
+
+</div>
+<div style={{width:'49%'}}>
+
+```css title="css"
+.form__field input {
+    border: 0.1rem solid #15DEA5;
+    background-color: #001534;
+    color: #15DEA5;
+    border: 0.1rem solid #15DEA5;
+    background-color: #15DEA5;
+    color: #fff;
+    border: 0.1rem solid #15DEA5;
+    background-color: #15DEA5;
+    color: #fff;
+    border: 0.1rem solid #fff;
+    background-color: #DB464B;
+    color: #fff;
+}
+```
+
+</div>
+</div>
+
+<br />
+
+Pas tout à fait ce que nous avions prévu à la base...
+
+Le but était de créer le sélecteur pour chaque état au fur et à mesure que notre boucle traitait les éléments de la map... On va
+trouver une solution. 💪 Nous allons utiliser **l’esperluette** (vous vous en souvenez ? 😃) suivie par deux points pour
+attribuer le nom de chaque `$state` à un pseudosélecteur :
+
+```scss
+@mixin txt-input-palette($palettes) {
+    @each $state, $palette in $palettes {
+        &:#{$state} {
+            border: .1rem solid map-get($palette, border);
+            background-color: map-get($palette, bg);
+            color: map-get($palette, txt);
+        }
+    }
+}
+```
+
+Cet ensemble hashtag/accolade/$variable est tout nouveau, mais pas de panique, il s’agit simplement de la **syntaxe
+d’interpolation (#{variable})** de Sass. 
+
+:::note ??
+Alerte : mot trop compliqué, je veux des explications !
+:::
+
+Okay. On peut aussi remplacer syntaxe d’interpolation par _substitution de variable._ Celle-ci n’est pas exclusive à Sass et
+existe dans de nombreux langages, comme Ruby par exemple. Elle vous permet d’utiliser la valeur d’une variable au sein d’une
+**chaîne de caractères** (ou _string_) et de la remplacer par une autre.
+
+Dans notre cas, elle nous permet de dire que l’on veut utiliser la valeur de la variable `$state` en tant que nom de
+pseudosélecteur au lieu de le taper nous-mêmes.
+
+Maintenant, quand vous regardez le CSS compilé, vous voyez un pseudosélecteur pour chaque état, avec les bonnes valeurs de
+couleurs renseignées au sein de l’ensemble de règles :
+
+```css
+.form__field input:active {
+    border: 0.1rem solid #15DEA5;
+    background-color: #15DEA5;
+    color: #fff;
+}
+.form__field input:focus {
+    border: 0.1rem solid #15DEA5;
+    background-color: #15DEA5;
+    color: #fff;
+}
+.form__field input:invalid {
+    border: 0.1rem solid #fff;
+    background-color: #DB464B;
+    color: #fff;
+}
+```
+
+Désormais, `txt-input-palette` générera un pseudosélecteur pour l’état **si** cet état n’est pas “inactif”. Vérifions si tout
+marche correctement :
+
+```css
+.form__field input:active {
+    border: 0.1rem solid #15DEA5;
+    background-color: #15DEA5;
+    color: #fff;
+}
+.form__field input:focus {
+    border: 0.1rem solid #15DEA5;
+    background-color: #15DEA5;
+    color: #fff;
+}
+.form__field input:invalid {
+    border: 0.1rem solid #fff;
+    background-color: #DB464B;
+    color: #fff;
+}
+```
+
+Et voilà ! ☀️ Maintenant, dès que vous changez une valeur de couleur ou une combinaison de palettes, les règles s’appliquant au
+texte seront automatiquement modifiées. Et ce n’est pas tout ! Si vous ajoutez un nouvel état dans `$txt-input-palette`, Sass
+l’ajoutera à votre CSS compilé tout seul, sans que vous ayez rien à faire. La classe, non ?
+
+Et même s’il vous prend l’envie d’ajouter 20 palettes de couleur à votre map, ou si vous les supprimiez toutes sauf une, votre
+CSS se mettrait à jour tout seul. Pas d’embrouilles, pas de couper/coller/modifier inutiles. Plus de chasse à la coquille dans
+un océan de code, fini tout ça ! Grâce aux boucles, créer et maintenir votre codebase n’est pas plus compliqué que de modifier
+les valeurs dans une map et cliquer sur Enregistrer. Rien de plus simple !
+
+#### Essayez par vous-même !
+
+**![16183911506509_A-vous-de-jouer%20%282%29.png](https://user.oc-static.com/upload/2021/04/14/16183911506509_A-vous-de-jouer%20%282%29.png)**
+
+Dans l’exercice qui suit, créez une boucle pour générer les couleurs des boutons fournis dans l’exercice.
+
+Console de code
+
+<iframe title="codevolve" id="codevolveIframe1" src="https://www.codevolve.com/api/v1/access_token/1111B22F93AEE7DD3876516F292A085B" width="100%" height="500" frameborder="0"></iframe>
+
+:::info
+Et si vous compariez votre exercice à [cette correction](https://github.com/tdimnet/Simplifiez-vous-le-CSS-avec-Sass/tree/partie-3/chapitre-4/exercice-1)
+pour vérifier votre travail ?
+:::
+
+### En résumé
+
+- Une boucle est un ensemble d’actions qui se répètent.
+- On définit une boucle à l’aide du mot clé `@each`, suivi de la `$key`, la `$value`, et la `$map` associées.
+- La syntaxe d’interpolation vous permet d’utiliser la valeur d’une variable au sein d’une chaîne de caractères.
+
+_Notre site commence à avoir une bonne tête ! Mais de nos jours, il doit être adapté sur tous types d’écrans, que ce soit un
+ordinateur, un smartphone ou une tablette._
+
+_Dans le chapitre suivant, nous allons voir comment Sass peut vous aider à rendre votre site responsive. 😎_
+
+-----
+
+## Ajoutez des breakpoints pour une mise en page responsive
+
+[Ajoutez des breakpoints pour une mise en page responsive - Simplifiez-vous le CSS avec Sass - OpenClassrooms](https://openclassrooms.com/fr/courses/6106181-simplifiez-vous-le-css-avec-sass/6606716-ajoutez-des-breakpoints-pour-une-mise-en-page-responsive)
+
+<Vimeo vimeoId="534815002" />
+
+<br />
+
+Pour le moment, tout a l’air parfait quand on regarde notre page sur un navigateur d’ordinateur :
+
+![Image du portfolio sur desktop](https://user.oc-static.com/upload/2019/10/11/15708063068998_image16.png)
+
+Notre portfolio sur desktop
+
+Mais ce n’est pas aussi beau quand on la regarde sur un appareil mobile !
+
+![Image du portfolio sur mobile](https://user.oc-static.com/upload/2021/04/14/16183930066623_image3-bis.png)
+
+Notre portfolio sur mobile
+
+Oooooops...😬 L’affichage n’est pas fou sur mobile, et c’est normal car notre page n’est pas encore **responsive**. 
+
+La mise en page reste la même quelle que soit la résolution de l’écran, et ce n’est pas ce que nous voulons. Pour que l’affichage
+de notre site s’adapte sur n’importe quel support, nous devons mettre en place des **media queries**.
+
+Les media queries indiquent au navigateur d’**utiliser un ensemble de règles alternatif** sous certaines conditions. Par exemple,
+si c’est pour un écran ou si c’est pour du print, ou si la résolution du navigateur est celle d’un grand écran ou d’un petit
+téléphone portable. Pour exécuter une media query, on déploie la règle CSS **@media**, suivie d’un argument et d’une paire
+d’accolades contenant les ensembles de règles :
+
+```css
+@media (max-width: 599px) {
+}
+```
+
+Cette **media query** signifie que le navigateur appliquera **l’ensemble de règles** que vous mettrez entre les accolades si la
+largeur du navigateur est inférieure à 600 pixels.
+
+Les résolutions que vous indiquez pour vos media queries sont appelées des **_breakpoints_** : ce sont les **limites** liées à la
+**résolution de l’écran** qui font que les ensembles de règles liés s’appliquent ou non. Pour notre exemple, nous avons créé une
+media query avec un breakpoint qui appliquera les ensembles de règles spécifiquement adaptés aux écrans mobiles.
+
+La syntaxe CSS standard pour les media queries consiste à placer un **sélecteur** et son **ensemble de règles** directement entre
+les **accolades** de la query. Lorsque la résolution de l’écran correspond au breakpoint, alors le breakpoint prendra le pas sur
+l’ensemble de règles par défaut :
+
+```css
+@media (max-width: 599px) {
+    .proj-grid {
+        grid-template-columns: 1fr;
+    }
+}
+```
+
+Nous avons utilisé le breakpoint pour changer la mise en page de la grille des projets sur notre site, afin qu’elle soit adaptée
+sur mobile. Sur la version desktop (pour ordinateur), elle fait trois colonnes de large et peu importe la résolution de la
+fenêtre. Mais sur mobile, nous avons mis tous les aperçus de projets **sur une seule colonne**. Au final, cette section est bien
+plus lisible sur mobile que sur desktop :
+
+![Image de la version mobile améliorée du portfolio](https://user.oc-static.com/upload/2021/04/14/16183931359083_image5-bis.jpg)
+
+Une version mobile améliorée
+
+Nous sommes bien partis pour rendre notre site **mobile-friendy** (adapté sur mobile) ! Et entre nous, cette mode du smartphone
+risque de bien durer, donc c’est plutôt une bonne chose pour notre site. 😉 Mais devoir placer les sélecteurs au sein de la media
+query signifie qu’**ils ne feront pas partie de leurs blocs BEM nestés**. Ça nous complique la tâche pour trouver et maintenir
+les éléments, et ça nous rajoute encoooore du travail d’écriture...
+
+Heureusement, Sass, comme toujours, est là pour vous sauver la mise et vous faciliter la vie. Ça devient difficile d’imaginer
+écrire du CSS sans préprocesseur, n’est-ce pas ? 🤭
+
+#### Mettez en place des media queries
+
+Les media queries CSS standard exigent de placer les sélecteurs à l’intérieur de la query, alors que Sass, lui, vous permet de
+placer les media queries directement dans les sélecteurs :
+
+```css
+.proj-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    @media (max-width: 599px) {
+        grid-template-columns: 1fr;
+    }
+}
+```
+
+Plutôt que de devoir tout séparer, la media query et ses règles sont **proprement imbriquées dans leur bloc BEM** ; du coup,
+bonus pour nous : comme tout est au même endroit, c’est plus simple à trouver et à modifier. Quand Sass compile les media queries,
+il vérifie dans quel sélecteur elles sont imbriquées et affiche une media query standard avec le sélecteur **nesté** dedans :
+
+```css
+.proj-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+}
+@media (max-width: 599px) {
+    .proj-grid {
+        grid-template-columns: 1fr;
+    }
+}
+```
+
+Et voilà ! Sass vous aide à gérer les media queries clés en main. Essayons à présent de passer à la vitesse supérieure en
+intégrant les notions vues précédemment dans le cours, pour rendre notre code encore plus simple et maintenable.
+
+#### Essayez par vous-même !
+
+**![16183911506509_A-vous-de-jouer%20%282%29.png](https://user.oc-static.com/upload/2021/04/14/16183911506509_A-vous-de-jouer%20%282%29.png)**
+
+Dans cet exercice,  il vous faut passer en responsive la section image du code fourni, en vous basant sur ce que vous venez d’apprendre.
+
+Console de code
+
+<iframe title="codevolve" id="codevolveIframe1" src="https://www.codevolve.com/api/v1/access_token/5DFCE761B8B81B08ACC2718D6DD746EE" width="100%" height="500" frameborder="0"></iframe>
+
+:::info
+Retrouvez la [correction de l'exercice ici](https://github.com/tdimnet/Simplifiez-vous-le-CSS-avec-Sass/tree/partie-3/chapitre-5/exercice-1)
+:::
+
+### Utilisez les breakpoints avec Sass
+
+Pour rendre les choses encore plus **maintenables** (oui oui, c’est possible), au lieu de déclarer tous nos breakpoints dans
+notre codebase, nous allons créer une **map** `$breakpoints` pour y stocker nos différents breakpoints. Ajoutons-y notre valeur
+de breakpoint pour mobile tant qu’on y est :
+
+```scss
+$breakpoints: (
+    mobile: 599px
+);
+```
+
+Devoir écrire @media screen and (max-width: map-get($breakpoints, mobile) à chaque fois que vous devez utiliser une media query
+me semble un peu lassant. Nous allons utiliser une **mixin** Sass pour réduire toute cette syntaxe superflue et obtenir quelque
+chose de plus sémantique :
+
+```scss
+@mixin mobile-only {
+    @media screen and (max-width: map-get($breakpoints, mobile)) {
+        grid-template-columns: 1fr;
+    }
+}
+```
+
+En nommant la **mixin mobile-only**, vous comprenez tout de suite que les règles qu’elle contient **ne s’appliquent qu’aux
+résolutions mobile**, sans compter que c’est plus facile à retenir et à écrire. Nous avons déplacé la règle grid-template-columns
+pour la version mobile du preview de projet dans la mixin.
+
+Branchons à présent notre mixin mobile-only dans le `bloc.proj-prev` :
+
+```scss
+@mixin mobile-only {
+    @media screen and (max-width: map-get($breakpoints, mobile)){
+        grid-template-columns: 1fr;
+    }
+}
+.proj-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    @include mobile-only;
+}
+```
+
+Voilà qui est beaucoup plus clair à regarder ! Et quand vous vérifiez le CSS compilé, vous voyez une media query pour les
+résolutions inférieures à 600px avec un ensemble de règles pour le bloc `.proj-prev`, comme avant :
+
+```css
+.proj-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+}
+@media screen and (max-width: 599px) {
+    .proj-grid {
+        grid-template-columns: 1fr;
+    }
+}
+```
+
+Parfait !
+
+Sauf qu’on ne peut utiliser la mixin que dans ce cas précis. Pour d’autres situations elle est inutile : son ensemble de règles
+est spécifique à la mise en page de la grille du bloc `.proj-prev`, et en plus de ça elle est codée en dur dans la mixin. Ce qui
+signifie que nous devrons **écrire une nouvelle mixin pour chacune de nos media queries**. Entre nous, c’est beaucoup trop de
+travail inutile. Peut-être que Sass n’est pas si génial, après tout…
+
+😎 Je vous fais marcher, bien sûr que Sass a une bien meilleure façon de s’y prendre, voyons !
+
+#### Utilisez la directive @content
+
+Plutôt que de devoir coder en dur le contenu d’une mixin, Sass vous offre la possibilité de déployer la directive **@content**.
+
+```scss
+@mixin mobile-only {
+    @media screen and (max-width: map-get($breakpoints, mobile)) {
+        @content;
+    }
+}
+```
+
+Quand Sass compile les instances de la mixin, il remplace @content par le code que vous aurez placé à l’intérieur de l’instance
+de la mixin.
+
+
+:::note ?
+Et comment on s’y prend, au juste, pour ajouter du contenu dans une instance de mixin ? 🤔
+:::
+
+Lorsque vous utilisez la directive @content, vous pouvez ajouter une paire d’accolades aux instances de la mixin pour y mettre
+votre contenu :
+
+```scss
+@mixin mobile-only {
+    @media screen and (max-width: map-get($breakpoints, mobile)) {
+        @content;
+    }
+}
+.proj-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    @include mobile-only {
+        grid-template-columns: 1fr;
+    }
+}
+```
+
+Désormais, Sass remplacera @content par `grid-template-columns: 1fr` quand il compile le code :
+
+```css
+.proj-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+}
+@media screen and (max-width: 599px) {
+    .proj-grid {
+        grid-template-columns: 1fr;
+    }
+}
+```
+
+En réalité, @content est un placeholder pour du code qui **sera remplacé au moment de la compilation, instance par instance**.
+En l’appliquant, nous avons créé une mixin très flexible et simple à la fois pour nos media queries.
+
+Nous pouvons maintenant utiliser notre mixin mobile-only dans tout notre site pour l’adapter aux appareils mobiles. Utilisons-la
+pour ajuster la font-size du bloc .quote, tant qu’on y est :
+
+<div style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between', padding: '12px', backgroundColor: 'gray', border: '1px solid black', borderRadius:'12px'}}>
+<div style={{width:'49%'}}>
+
+```scss title="scss"
+$font-size: (
+    logo: 7rem,
+    quote: 6rem,
+    heading: 5rem,
+    project-heading: 4rem,
+    label: 2rem
+);
+.quote {
+    font-size: map-get($font-size, quote);
+    @include mobile-only {
+        font-size: map-get($font-size, quote)\*0.4;
+    }
+}
+```
+
+</div>
+<div style={{width:'49%'}}>
+
+```css title="css"
+.quote {
+    font-size: 6rem;
+}
+@media screen and (max-width: 599px) {
+    .quote {
+        font-size: 2.4rem;
+    }
+}
+
+
+
+
+
+```
+
+</div>
+</div>
+
+<br />
+
+Sass nous fournit les outils pour créer des sites web **responsive** et **graphiquement cohérents** avec du CSS propre et
+maintenable, tout en réduisant drastiquement les quantités de code fastidieux et répétitif à écrire.
+
+#### Essayez par vous-même !
+
+**![16183911506509_A-vous-de-jouer%20%282%29.png](https://user.oc-static.com/upload/2021/04/14/16183911506509_A-vous-de-jouer%20%282%29.png)**
+
+Dans l’exercice précédent, vous avez rendu responsive le bloc image ; il est temps de faire de même avec le bloc article !
+
+Console de code
+
+<iframe title="codevolve" id="codevolveIframe2" src="https://www.codevolve.com/api/v1/access_token/EC12BFCE9E9F0B0AFE5E79CA0E65539B" width="100%" height="500" frameborder="0"></iframe>
+
+Retrouvez [la correction de l'exercice ici](https://github.com/tdimnet/Simplifiez-vous-le-CSS-avec-Sass/tree/partie-3/chapitre-5/exercice-2) !
+
+### En résumé
+
+- Les media queries vous permettent d’adapter votre contenu à différents écrans, en disant au navigateur d’utiliser un ensemble
+de règles alternatives dans certaines circonstances.
+- Pour exécuter une media query, on déploie la règle CSS `@media`, suivie de la liste des queries et d’une paire d’accolades
+contenant les ensemble de règles alternatives requises.
+- Les breakpoints sont les résolutions que vous utilisez pour les media queries.
+- Dans Sass, vous pouvez placer des media queries dans des sélecteurs, ce qui vous permet de les imbriquer dans le bon bloc BEM.
+- On utilise `@content` en tant que placeholder pour des media queries spécifiques.
+
+_Dans le prochain chapitre, nous mettrons la cerise sur le gâteau en ajoutant automatiquement des préfixes à notre CSS compilé,
+ce qui nous garantira que notre site s’affiche correctement sur tous les principaux navigateurs. Cool, non ?_
+
+-----
+
+## Utilisez Autoprefixer pour créer du code adapté à tous les navigateurs
+
+[Utilisez Autoprefixer pour créer du code adapté à tous les navigateurs - Simplifiez-vous le CSS avec Sass - OpenClassrooms](https://openclassrooms.com/fr/courses/6106181-simplifiez-vous-le-css-avec-sass/6612156-utilisez-autoprefixer-pour-creer-du-code-adapte-a-tous-les-navigateurs)
+
+<Vimeo vimeoId="534815049" />
+
+<br />
+
+Notre site a l’air parfait sur votre navigateur, mais pas nécessairement sur celui des autres. Nous l’avons développé en
+utilisant Chrome, mais d’autres utilisateurs peuvent très bien utiliser Firefox, Opera… ou _Internet Explorer_ (aaaaaahhh). 😱
+
+:::note ?
+Et alors… c’est pas pareil pour tout le monde ? C’est juste une histoire de préférence, non ? 🙄
+:::
+
+### Explorez les différents affichages par navigateurs
+
+Eh bien non, il s’avère que **certaines propriétés CSS s’afficheront différemment selon les navigateurs**, sauf que vous voulez
+vous assurer que le rendu soit le même pour tous les visiteurs de votre site, peu importe leur navigateur. Pour les propriétés
+anciennes et bien connues telles que border ou margin, pas besoin de s’inquiéter : elles sont standardisées et fonctionnent sur
+tous les navigateurs. Mais ce n’est pas le cas pour certaines propriétés plus récentes, telles que grid ou flexbox.
+
+:::info
+Flexbox permet de disposer, aligner et distribuer l'espace entre les items d'un container, même lorsque leurs dimensions sont
+inconnues et/ou dynamiques – d'où le terme "flex".
+:::
+
+Les équipes qui conçoivent vos navigateurs, tels que Google et Mozilla, n’attendent pas que les nouveaux outils plutôt cool
+soient **standardisés** pour pouvoir les intégrer. Au lieu de ça, ils créent leur **propre version**, en ajoutant un **préfixe**
+pour la distinguer des autres navigateurs. Bien sûr, un jour ou l’autre, la nouvelle propriété sera standardisée et fonctionnera
+pour tous les navigateurs, supprimant le besoin d’utiliser des préfixes. Mais en attendant, il vous faudra utiliser des préfixes
+dans votre code.
+
+Quand vous utilisez flexbox, au lieu de simplement définir la propriété display comme étant flex, vous devez lister touuuuuus les
+**préfixes** :
+
+```css
+.header {
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: flex;
+}
+```
+
+:::info
+_webkit_ est pour Chrome et Safari, _ms_ pour Microsoft, _moz_ pour Firefox.
+:::
+
+Désormais, notre header s’affichera uniformément sous Chrome, Safari, Mozilla, Opera et Microsoft Edge ! Je sais, ce n’était pas
+du tout au programme jusqu’ici et nous avons écrit énormément de code. Et maintenant, il va falloir aller tout modifier pour que
+notre code tout entier soit adapté sur tous les supports, quel boulot !
+
+:::note ?
+Noooon ! Je refuuuuseeee ! **😭**
+:::
+
+Pas de panique, clairement personne n’en a envie. Ajouter des préfixes est ennuyeux et ils changent tout le temps : puisque les
+standards évoluent en permanence, vous allez devoir les vérifier à chaque fois que vous écrivez du CSS pour être sûr que votre
+code est bien compatible. Mmmh barbant.
+
+“**Autoprefixer**” est un plugin qui vous sauvera des `-webkit-` et des `-moz-`. Il fait exactement ce que son nom indique : il
+ajoute automatiquement des préfixes dans votre CSS. Il vous suffit de lui fournir une feuille CSS et il la passera en revue pour
+y ajouter les préfixes là où il faut.
+
+### Installez Autoprefixer
+
+Alors, comment fait-on pour faire marcher ce plugin salvateur ? Ouvrez le terminal dans VS Code et utilisez **npm** pour
+installer **Autoprefixer**, **PsstCSS** et **PostCSS-CLI**.
+
+:::info
+**PostCSS-CLI** est un outil de ligne de commande que vous utiliserez pour faire tourner Autoprefixer.
+:::
+
+La marche à suivre est à peu près la même que pour installer Sass, sauf que vous installez trois packages d’un coup. Pour
+installer plusieurs packages en même temps, il vous suffit de les séparer par des espaces :
+
+```shell
+npm install autoprefixer postcss postcss-cli -g
+```
+
+Une fois que npm a téléchargé et installé les packages, retournez dans package.json et ajoutez un nouveau script à exécuter pour
+npm, comme lorsque vous avez installé Sass. Après votre script “sass”, vous allez ajouter un nouveau script nommé “prefix”.
+
+```json
+{
+"name": "joeblow",
+"version": "1.0.0",
+"description": "Joe Blow's web portfolio",
+"main": "index.js",
+"scripts": {
+    "sass": "sass ./sass/main.scss:./public/css/style.css -w --style compressed",
+    "prefix":
+},
+"author": "",
+"license": "ISC",
+}
+```
+
+Et dans ce script, vous devez dire à npm d’utiliser le nouveau package `postcss` que vous venez d’installer, et n’oubliez pas de
+lui dire où trouver votre fichier CSS compilé :
+
+```json
+{
+"name": "joeblow",
+"version": "1.0.0",
+"description": "Joe Blow's web portfolio",
+"main": "index.js",
+"scripts": {
+    "sass": "sass ./sass/main.scss:./public/css/style.css -w --style compressed",
+    "prefix": "postcss ./public/css/style.css"
+},
+"author": "",
+"license": "ISC",
+}
+```
+
+Une fois que vous avez dit à npm quel package utiliser et où trouver votre fichier CSS, vous devez dire au package `postcss`
+d’utiliser Autoprefixer en exécutant le `flag --use` suivi d’_autoprefixer_ :
+
+```json
+{
+"name": "joeblow",
+"version": "1.0.0",
+"description": "Joe Blow's web portfolio",
+"main": "index.js",
+"scripts": {
+    "sass": "sass ./sass/main.scss:./public/css/style.css -w --style compressed",
+    "prefix": "postcss ./public/css/style.css --use autoprefixer"
+},
+"author": "",
+"license": "ISC",
+}
+```
+
+Hop et dernière étape : vous devez lui dire où mettre votre nouvelle feuille CSS préfixée :
+
+
+```json
+{
+"name": "joeblow",
+"version": "1.0.0",
+"description": "Joe Blow's web portfolio",
+"main": "index.js",
+"scripts": {
+    "sass": "sass ./sass/main.scss:./public/css/style.css -w --style compressed",
+    "prefix": "postcss ./public/css/style.css --use autoprefixer -d ./public/css/prefixed/"
+},
+"author": "",
+"license": "ISC",
+}
+```
+
+Et voilà, votre script de préfixage est terminé ! Tout ce qu’il reste à faire, c’est dire à Autoprefixer jusqu’à quand il doit
+remonter pour assurer votre compatibilité avec tous les browsers.
+
+:::note
+Comment ça jusqu’à quand ? Tu veux dire une date ? 🤔
+:::
+
+Par défaut, Autoprefixer **n’ira vérifier que la précédente version** des principaux navigateurs pour conclure quels préfixes il
+doit ajouter à vos feuilles CSS. Mais vous voulez être sûr que les internautes utilisant des versions de browsers un peu
+**plus anciennes** soient également pris en compte. On va donc indiquer à Autoprefixer de regarder les quatre dernières versions
+des navigateurs lorsqu’il vérifie la compatibilité de vos feuilles CSS. Juste après nos scripts, ajoutons donc une nouvelle clé
+nommée `browserslist` (liste des navigateurs) :
+
+```json
+{
+"name": "joeblow",
+"version": "1.0.0",
+"description": "Joe Blow's web portfolio",
+"main": "index.js",
+"scripts": {
+    "sass": "sass ./sass/main.scss:./public/css/style.css -w --style compressed",
+    "prefix": "postcss ./public/css/style.css --use autoprefixer -d ./public/css/prefixed/"
+},
+"author": "",
+"license": "ISC",
+"browserslist":
+}
+```
+
+Et donnons à browserslist la valeur de `last 4 versions` :
+
+```json
+{
+"name": "joeblow",
+"version": "1.0.0",
+"description": "Joe Blow's web portfolio",
+"main": "index.js",
+"scripts": {
+    "sass": "sass ./sass/main.scss:./public/css/style.css -w --style compressed",
+    "prefix": "postcss ./public/css/style.css --use autoprefixer -d./public/css/prefixed/"
+},
+"author": "",
+"license": "ISC",
+"browserslist": "last 4 versions"
+}
+```
+
+Vous venez de dire à Autoprefixer de remonter et de prendre en compte jusqu’à 4 versions avant celle d’aujourd’hui.
+
+Ça y est, vous êtes maintenant prêt à autopréfixer votre CSS ! 🤘
+
+### Lancez Autoprefixer
+
+Allons dans le terminal et lançons le script prefix :
+
+```shell
+npm run prefix
+```
+
+Le script apparaît dans la ligne de commande et, un instant plus tard, c’est terminé (tellement rapide) !
+
+![Image illustrant l'exécution rapide du script](https://user.oc-static.com/upload/2019/10/14/15710402787877_image17.jpg)
+
+Exécution du script
+
+Regardez le nouveau CSS préfixé et vérifiez le bloc .header :
+
+
+```css
+.header {
+    background: #15DEA5;
+    height: 10rem;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    width: 100%;
+}
+```
+
+Notre site web s’affichera désormais proprement et uniformément sur tous les navigateurs **compatibles**.
+
+:::info
+Notez le mot “compatible.” Flexbox, par exemple, n’est pas supporté sur Internet Explorer 9 ni sur les versions précédentes.
+Ajouter un préfixe n’y changera rien. **Les préfixes garantissent que les différentes implémentations d’une même propriété seront
+appelées dans leurs navigateurs respectifs**. Si pour une raison obscure vous avez besoin que votre site soit adapté sur IE8 (😬),
+il vous faudra utiliser d’autres propriétés pour votre mise en page...
+:::
+
+Notre site web est prêt pour le grand public ! Il est responsive et compatible. Et grâce à Sass, le maintenir à l’avenir sera
+tellement plus simple ! 🙌
+
+### Bonus : utiliser des boucles et maps pour créer des modificateurs
+
+Vous savez comment ça marche : la clé de la réussite, c’est la pratique ! 😉
+
+L’exercice suivant est totalement facultatif, mais c’est un très bon entraînement pour créer des maps et les utiliser avec des
+boucles @each, qui peuvent vous faire gagner du temps et rendre votre code encooore plus maintenable (vers l’infini et au delà !)
+
+Voici le challenge : automatiser la création de modificateurs qui changent la couleur du texte de .article__headline pour les
+valeurs de couleurs suivantes :
+1. #cc8624 (orange).
+2. #cc2475 (rose).
+3. #2469cc (bleu).
+4. #24cc24 (vert).
+
+Mettez les valeurs dans une map en attribuant une clé à chacune, puis utilisez une boucle @each pour générer des sélecteurs ayant
+la structure suivante :
+
+```css
+.article__heading-- /*colour name goes here*/ {
+    color: /*colour values goes here*/;
+}
+```
+
+:::info
+Si vous êtes encore un peu mal à l’aise avec les maps, vous pouvez aller réviser dans les chapitres précédents ! 😀
+:::
+
+### En résumé
+
+- Certaines propriétés CSS nécessitent ce qu’on appelle des _préfixes_ et s’afficheront différemment sur différents navigateurs.
+- Utilisez le plugin Autoprefixer pour ajouter automatiquement des préfixes dans votre CSS.
+- Installez Autoprefixer en utilisant la ligne de commande, et faites bien attention d’indiquer combien de versions anciennes
+vous voulez couvrir !
+
+_Nous arrivons à la fin de ce cours. Félicitation ! Encore un petit effort : je vous ai préparé un résumé du cours, au chapitre
+suivant !_
+
+-----
+
+## Résumé du cours
+
+[Résumé du cours - Simplifiez-vous le CSS avec Sass - OpenClassrooms](https://openclassrooms.com/fr/courses/6106181-simplifiez-vous-le-css-avec-sass/6612666-resume-du-cours)
+
+<Vimeo vimeoId="534815121" />
+
+<br />
+
+### Mission accomplie ! 👏👏👏
+
+Vous avez réussi ! Félicitations ! 🎉 Vous avez monté d’un cran vos compétences en CSS, appris à utiliser des outils performants
+tels que Sass pour améliorer votre code et acquis de solides bases de développeur par-dessus le marché ! Je sais que nous avons
+vu beaucoup de choses, que c’est un sacré paquet d’informations à ingérer et que vous avez pu vous sentir submergé par moments,
+mais vous avez tenu bon ! Et par-dessus tout, vous avez acquis de solides compétences qui vous seront utiles tout au long de
+votre carrière.
+
+😢 Trop d’émotions, je ne dois pas pleurer… ***disparaît sous sa cape d’invisibilité***
+
+Allez, on se reprend. À présent tout ce qu’il vous reste à faire, c’est de mettre vos nouvelles compétences en application :
+tout d’abord en faisant le quiz de fin de section, puis en continuant à améliorer et personnaliser votre site portfolio ✨.
+
+Je vous laisse quelques sites utiles juste en dessous 👇🏼 :
+- Codepen ([https://codepen.io/](https://codepen.io/pen/))
+- Documentation de Sass ([https://sass-lang.com/documentation](https://sass-lang.com/documentation))
+- MDN CSS ([https://developer.mozilla.org/fr/docs/Web/CSS](https://developer.mozilla.org/fr/docs/Web/CSS))
+
+Vous avez maintenant les connaissances nécessaires pour :
+- identifier comment utiliser les sélecteurs BEM et les préprocesseurs CSS pour structurer votre code ;
+- expliquer la syntaxe Sass et les conventions (notamment pour les sélecteurs, les modificateurs et les extensions) ;
+- appliquer les variables, mixins, extensions et fonctions Sass pour améliorer une codebase ;
+- identifier les techniques Sass avancées pour créer un site web responsive et compatible avec tous les browsers ;
+- posséder des bases en programmation dans divers sujets comme les loops, listes, maps et les fonctions !
+
+J’aimerais beaucoup vous souhaiter bonne chance pour vos futurs projets... mais entre nous… je sais que vous n’en aurez pas
+besoin. Vous allez tout déchirer ! 😉
+
+-----
+
+## Quiz : Optimisez votre code en utilisant les techniques avancées de Sass
+
+[Optimisez votre code en utilisant les techniques avancées de Sass - OpenClassrooms](https://openclassrooms.com/fr/courses/6106181-simplifiez-vous-le-css-avec-sass/exercises/3707)
+
+#### Compétences évaluées
+
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-checkbox" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#00b341" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <polyline points="9 11 12 14 20 6" />
+  <path d="M20 12v6a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h9" />
+</svg> Optimiser son code en utilisant les techniques avancées de Sass
+
+-----
+
+#### Description
+
+Bienvenue dans ce quiz ! Il s'agit du dernier pour valider ce cours.
+
+Bonne chance !
+
+-----
+
+#### Question 1 : Parmi les directories suivants, lequel ne fait pas partie du pattern 7-1 ?
+
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> Base<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle-check" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#7bc62d" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M9 12l2 2l4 -4" />
+</svg> _variables.scss<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> Themes<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> Utils<br />
+<br />
+
+*Les sept noms de directories du pattern 7-1 sont les suivants :*
+- Base
+- Utils
+- Layout
+- Components
+- Pages
+- Themes
+- Vendors
+
+*_variables.scss est le nom d’un partiel Sass, qui peut être importé dans le fichier main.scss. Il doit être placé dans le
+directory Utils.*
+
+-----
+
+#### Question 2 : D’après la structure de fichiers suivante, quelle proposition est correctement formatée pour importer le partiel `_variables.scss` dans main.scss ?
+
+![Image montrant la structure du fichier](https://user.oc-static.com/upload/2019/10/14/15710584610645_image17.png)
+
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle-check" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#7bc62d" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M9 12l2 2l4 -4" />
+</svg>
+
+```css
+@import "./utils/variables"
+```
+
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg>
+
+```css
+@import "variables"
+```
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg>
+
+```css
+@import ./utils/variables
+```
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg>
+
+```css
+import "./utils/variables"
+```
+
+*Pour importer le partiel des variables, vous devez taper @import suivi d’une paire de guillemets. Entre les guillemets, tapez
+le chemin vers votre partiel : “./utils/variables”. Le point au début du chemin indique à Sass que le chemin du partiel commence
+dans le même directory que main.scss.*
+
+*Ensuite, /utils/ mène Sass au directory Utils, où il trouvera le partiel de variables.*
+
+*Quand vous tapez le nom du partiel, n’utilisez pas d’underscore ni d’extension de fichier. Sass sait qu’il doit trouver un
+fichier commençant par un underscore et qu’il s’agira d’un fichier Sass.*
+
+-----
+
+#### Question 3 : Laquelle des propositions suivantes est une map Sass correctement formatée ?
+
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg>
+
+```scss
+$map: (key1,$value1,key2,$value2,key3,$value3
+```
+
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle-check" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#7bc62d" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M9 12l2 2l4 -4" />
+</svg>
+
+```scss
+$map: (key1: value1, key2: value2, key3: value3)
+```
+
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg>
+
+```scss
+$map: value1, value2, value3
+```
+
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg>
+```scss
+$map: $value1 $value2 $value
+```
+
+*Les maps Sass doivent contenir des paires clé/valeur. Pour assigner une valeur à une clé : indiquez la clé, ajoutez les deux
+points, puis renseignez la valeur. comme suit : `clé: valeur`.*
+
+*Chaque paire clé/valeur doit être séparée par des virgules et elles doivent toutes se trouver entre des parenthèses.*
+
+-----
+
+#### Question 4 : Parmi les propositions suivantes, lesquelles sont des listes Sass correctement formatées ?
+
+*Attention, plusieurs réponses sont possibles.*
+
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-checkbox" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#00b341" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <polyline points="9 11 12 14 20 6" />
+  <path d="M20 12v6a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h9" />
+</svg>
+
+```scss
+$list: $value1, $value2, $value3
+```
+
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-checkbox" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#00b341" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <polyline points="9 11 12 14 20 6" />
+  <path d="M20 12v6a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h9" />
+</svg>
+
+```scss
+$list: ($value1, $value2, $value3)
+```
+
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-checkbox" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#00b341" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <polyline points="9 11 12 14 20 6" />
+  <path d="M20 12v6a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h9" />
+</svg>
+
+```scss
+$list: $value1 $value2 $value3
+```
+
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-square" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <rect x="4" y="4" width="16" height="16" rx="2" />
+</svg>
+
+```scss
+$list: $value1$value2$value3
+```
+
+*La syntaxe pour écrire des listes est très flexible. Vous pouvez les mettre ou non entre parenthèses. En revanche, vous devez
+séparer les valeurs par des espaces ou des virgules. La réponse 4 n’est pas correctement formatée, puisque les valeurs ne sont
+pas séparées les unes des autres.*
+
+-----
+
+#### Question 5 : À partir de cette liste Sass, lequel des bouts de code suivants retournera une valeur de 3 rem ?
+
+```scss
+$list: 1rem, 2rem, 3rem, 4rem;
+```
+
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg>
+
+```scss
+nth($list, 2)
+```
+
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle-check" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#7bc62d" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M9 12l2 2l4 -4" />
+</svg>
+
+```scss
+nth($list, 3)
+```
+
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg>
+
+```scss
+$map-get($list, 2)
+```
+
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg>
+
+```scss
+nth(3, $list)
+```
+
+*Pour accéder aux différentes valeurs d’une liste Sass, appelez la fonction nth() avec deux arguments :*
+1. *Le premier argument est le nom de la liste à laquelle vous voulez accéder.*
+2. *Le second argument est l’index de la valeur que vous voulez retourner, le premier item de la liste a un index de 1.*
+
+*Dans le cas de la liste indiquée dans la question, le nom de la liste est $list et 3rem a un index de 3, donc pour retourner la
+valeur de 3rem à partir de la liste, il faut appeler la fonction nth() suivante :*
+
+```scss
+nth($list, 3);
+```
+
+#### Question 6
+
+```scss
+$map: (
+    pink: #f442f1,
+    mint: #15dea5,
+);
+@each $key, $value in $map {
+    .btn--#{$key} {
+        background-color: $value;
+    }
+}
+```
+
+**En partant du code ci-dessus, lesquels de ces sélecteurs seront générés par la boucle `@each` ?**
+
+*Attention, plusieurs réponses sont possibles.*
+
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-checkbox" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#00b341" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <polyline points="9 11 12 14 20 6" />
+  <path d="M20 12v6a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h9" />
+</svg>
+
+```scss
+.btn--pink {
+    background-color: #f442f1;
+}
+```
+
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-checkbox" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#00b341" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <polyline points="9 11 12 14 20 6" />
+  <path d="M20 12v6a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h9" />
+</svg>
+
+```scss
+.btn--mint {
+    background-color: #15dea5;
+}
+```
+
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-square" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <rect x="4" y="4" width="16" height="16" rx="2" />
+</svg>
+
+```scss
+.btn .pink {
+    background-color: #f442f1;
+}
+```
+
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-square" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <rect x="4" y="4" width="16" height="16" rx="2" />
+</svg>
+
+```scss
+.mint {
+    background-color: #15dea5;
+}
+```
+
+*La boucle @each va générer un sélecteur avec le préfixe `.btn--` suivi du nom de chaque clé dans $map. Elle créera une propriété
+background-color avec la couleur correspondant à la valeur de cette clé dans chaque sélecteur.*
+
+-----
+
+#### Question 7
+
+```scss
+$font-sizes: (
+    heading: 3rem,
+    byline: 1.75rem,
+    caption: 1rem
+);
+```
+
+**En vous basant sur la map Sass ci-dessus, lequel de ces bouts de code retournerait la valeur de la clé `byline` ?**
+
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle-check" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#7bc62d" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M9 12l2 2l4 -4" />
+</svg>
+
+```scss
+.article__byline {
+    font-size: map-get($font-sizes, byline);
+}
+```
+
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg>
+
+```scss
+.article__byline {
+    font-size: map-get(byline, $font-sizes);
+}
+```
+
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg>
+
+```scss
+.article__byline {
+    font-size: nth($font-sizes), byline);
+}
+```
+
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg>
+
+```scss
+.article__byline {
+    font-size: map-get($font-sizes, 2);
+}
+```
+
+*Pour accéder à une valeur située dans une map, on utilise la fonction `map-get()` qui prend deux arguments : le premier est le
+nom de la map (ici `$font-sizes`), le second le nom de la clé de la valeur que vous voulez obtenir (ici `byline`).*
+
+*Pour accéder à byline via `map-get()`, utilisez `$font-sizes` comme premier argument et `byline` comme second :*
+
+```scss
+.article__byline {
+    font-size: map-get($font-sizes, byline);
+}
+```
+
+-----
+
+#### Question 8
+
+```scss
+@mixin mobile-only {
+    @media screen and (max-width: 599px) {
+        @content;
+    }
+}
+.block {
+    margin: 1.5rem;
+    @include mobile-only {
+        margin: .5rem;
+    }
+}
+```
+
+**En partant du code ci-dessus, quelle sera le margin de `.block` si la largeur du navigateur est de 480 px ?**
+
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle-check" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#7bc62d" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M9 12l2 2l4 -4" />
+</svg> .5 rem<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> 2 rem<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> 1.5 rem<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> 0<br />
+<br />
+
+*La mixin `mobile-only` contient une media query pour un écran d’une largeur maximale de **599 px**.*
+   
+***Si** l’écran a une largeur de 599 px ou moins, **alors** le navigateur appliquera les règles contenues dans la media query,
+que nous pouvons régler pour chaque usage grâce à la directive `@content`.*
+    
+*Étant donné que la largeur du navigateur est de 480 px, celui-ci appliquera l’ensemble de règles que nous avons écrit quand
+nous avons inclus la mixin `mobile-only` dans `.block`, donc une marge de .5rem.*
+
+-----
+
+#### Question 9
+
+```scss
+$map: (
+    small: 1rem,
+    medium: 5rem,
+    large: 10rem
+);
+@each $size, $measurement in $map {
+    .btn--#{$mesurement} {
+        font-size: $size;
+    }
+}
+```
+
+**Le code que vous avez ci-dessus, lorsqu'il est compilé nous donne ce résultat :**
+
+```css
+.btn--1rem {
+    font-size: small;
+}
+.btn--5rem {
+    font-size: medium;
+}
+.btn--10rem {
+    font-size: large;
+}
+```
+
+**Le souci, c’est que le résultat est tout emmêlé : il semblerait que des valeurs aient été mal placées. Le code attendu était
+celui-ci :**
+
+```css
+.btn--small {
+    font-size: 1rem;
+}
+.btn--medium {
+    font-size: 5rem;
+}
+.btn--large {
+    font-size: 10rem;
+}
+```
+
+**Parmi les solutions suivantes, laquelle vous permet d’obtenir le résultat attendu ci-dessus ?**
+
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg>
+
+```scss
+@each $size, $measurement in $map {
+    .btn--$size {
+        font-size: $measurement;
+    }
+}
+```
+
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg>
+
+```scss
+@each $size, $measurement in $map {
+    .btn--#{$map($size)} {
+        font-size: $measurement;
+    }
+}
+```
+
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle-check" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#7bc62d" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M9 12l2 2l4 -4" />
+</svg>
+
+```scss
+@each $size, $measurement in $map {
+    .btn--#{$size} {
+        font-size: $measurement;
+    }
+}
+```
+
+*Nous avons une map Sass avec trois paires clé/valeur et nous voulons produire trois sélecteurs dont :*
+1. *Le nom du sélecteur comprend la clé sous forme de string.*
+2. *La valeur sera stockée dans une propriété de ce sélecteur.*
+
+*Dans le résultat de notre première boucle, tout est inversé : la valeur se retrouve dans le nom du sélecteur et la clé dans la
+propriété !*
+
+```css
+.btn--1rem {
+    font-size: small;
+}
+.btn--5rem {
+    font-size: medium;
+}
+.btn--10rem {
+    font-size: large;
+}
+```
+
+*Pour y remédier, il vous faut utiliser `$size` dans le nom du sélecteur.*
+
+*Pour l’utiliser sous forme de chaîne de caractères, vous devez utiliser la syntaxe d’interpolation : c’est-à-dire l’accompagner
+d’un hashtag et d’accolades :*
+
+```scss
+#{$size}
+```
+
+*Ensuite, utilisez la valeur de cette clé pour définir la taille de texte du sélecteur :*
+
+```scss
+@each $size, $measurement in $map {
+    // incluez le nom de la clé dans le sélecteur
+    .btn--#{$size} {
+        // utilisez la valeur de la clé
+        font-size: $measurement;
+    }
+}
+```
+
+#### Question 10 : Autoprefixer crée du CSS compatible avec tous les navigateurs en…
+
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> supprimant tout le code non compatible.<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> plaçant le code non compatible dans un fichier à part.<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle-check" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#7bc62d" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M9 12l2 2l4 -4" />
+</svg> ajoutant automatiquement dans votre CSS les préfixes nécessaires.<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> alertant l’utilisateur qu’il doit mettre à jour son browser.<br />
+<br />
+
+*Les constructeurs des navigateurs n’ont pas nécessairement envie d’attendre que les nouvelles propriétés CSS soient standardisées
+pour pouvoir les mettre en application dans leur navigateur.*
+
+*Du coup, en attendant qu’elles le soient, chaque navigateur a sa propre version de ces propriétés, qui sont identifiables grâce
+à des préfixes spécifiques.*
+
+*Plutôt que de devoir renseigner tous les préfixes manuellement, vous pouvez utiliser _Autoprefixer_ pour les générer
+automatiquement.*
+
+-----
+
+#### Question 11
+
+```css
+.form{width:100%;padding-bottom:1.5rem}.form__heading{width:100%;color:#fff;
+text-shadow:.55rem .55rem #11af82;background:#15DEA5;line-height:5rem;padding:1.5rem}
+.form__field label{color:#D6FFF5;display:block;font-size:2rem;line-height:2rem;padding-top:1.5rem}
+.form__field input{width:100%;background:#001534;border:0.1rem solid #15DEA5;padding:1.5rem;
+color:#D6FFF5;font-weight:900;font-style:italic;font-size:2.75rem}
+.form__field textarea{width:100%;color:#15DEA5;background:#001534;border:0.1rem solid #15DEA5;
+outline:none;padding:1.5rem;margin-bottom:.75rem}
+```
+
+**Pour préparer votre déploiement en ligne, lequel des bouts de code suivants compilera votre code Sass en CSS minifié tel qu’on
+peut le voir ci-dessus ?**
+
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> Nested<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle-check" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#7bc62d" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M9 12l2 2l4 -4" />
+</svg> Compressed<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> Compact<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> Expanded<br />
+<br />
+
+*Sass a quatre modes de compilation disponibles via le flag `--style` :*
+- _**Nested** : imite le nesting Sass tout en maintenant une syntaxe CSS correcte._
+- _**Expanded** : le plus proche de la façon dont on écrit généralement le CSS manuellement, et par conséquent plus facile à lire._
+- _**Compact** : met chaque sélecteur et son ensemble de règles sur une seule ligne._
+- _**Compressed** : supprime tous les espaces et retours à la ligne, ce qui crée un fichier plus léger et plus adapté au
+déploiement. On l’appelle souvent code minifié._
+
+*Pour préparer votre déploiement, la meilleure façon de procéder est de compiler votre Sass en CSS minifié en utilisant le mode
+**compressé**.*

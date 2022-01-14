@@ -1,0 +1,2238 @@
+---
+sidebar_position: 3
+---
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+import { Vimeo } from 'mdx-embed';
+
+# Créez du code maintenable grâce aux techniques Sass intermédiaires
+
+## Améliorez la maintenabilité du code avec les variables Sass
+
+[Améliorez la maintenabilité du code avec les variables Sass - Simplifiez-vous le CSS avec Sass - OpenClassrooms](https://openclassrooms.com/fr/courses/6106181-simplifiez-vous-le-css-avec-sass/6597580-ameliorez-la-maintenabilite-du-code-avec-les-variables-sass)
+
+<Vimeo vimeoId="534354241" />
+
+<br />
+
+### Tirez parti de la force de Sass
+
+Quand j’étais ado, j’étais obsédée par le surf. Je passais mes étés au bord de l’océan à regarder les surfeurs. J’ai voulu faire
+comme eux ; alors après un cours je prends une planche grande et assez large pour que ce soit plus facile et je pars à l’eau.
+Impossible de me lever, pourtant j’observe les surfers et j’essaie j’essaie, je lance mes jambes sur le côté, j’essaie de sauter
+sur la planche, je me dis que j’ai une planche stable et que je devrais réussir, et pourtant rien ne fonctionne.
+
+Au bout d’un moment, une surfeuse passe près de moi et je lui demande conseil en lui expliquant que je n’arrive pas à poser mes
+pieds sur la planche assez rapidement et à rester debout. Elle me regarde faire, s’approche, me montre comment positionner mes
+pieds et m’explique pendant un moment. Puis elle me dit de m’élancer sur la planche, sans réfléchir, de pousser sur mes bras et de
+ramener mes jambes au-dessous de mes hanches. Et là, je me suis levée ! Bon, et je suis tombée juste après, certes.
+
+La morale de cette histoire est que la question n’est pas de choisir la bonne planche, c’est aussi de savoir l’utiliser. Et c’est
+pareil avec Sass.
+
+#### Travailler mieux, pas plus dur.
+
+Le plus important, ce n’est pas seulement de choisir le bon outil, mais de bien savoir l’utiliser. 💪
+
+Grâce aux outils de Sass, vous allez rendre votre vie de développeur CSS beaucoup plus facile, à la fois en réduisant la quantité
+de code à écrire et en le rendant plus simple à modifier et à maintenir à l’avenir.
+
+### Utilisez des variables pour gérer les couleurs
+
+Notre site n’utilise qu’une poignée de couleurs, certes, mais nous les utilisons sans arrêt. Entre nous, retenir les couleurs par
+leur **codes couleur hexadécimaux** tels que #16FFBD et #001534 et savoir quelles couleurs ils représentent, c’est compliqué et
+pas franchement très pratique. Pour y remédier, je n’ai pour le moment qu’une solution : parcourir mon fichier, chercher une autre
+instance de cette couleur, et la copier-coller. Mais c’est une sacrée perte de temps et cela peut devenir rapidement **pénible**
+et surtout **dangereux**.
+
+:::note ?
+Pénible je comprends, mais pourquoi dangereux ?
+:::
+
+Le client pourrait demander un **changement** de couleur sans prévenir, et vous allez devoir repasser en revue touuuuuut le
+fichier pour modifier les valeurs à la main, une par une. C’est souvent comme ça que les erreurs apparaissent.
+
+Juste en jetant un coup d’œil à notre bloc `.form`, vous pouvez voir que nous avons systématiquement répété les quatre mêmes
+valeurs hexadécimales (#15DEA5, #D6FFF5,  #001534, #fff) :
+
+```scss
+.form {
+    width: 100%;
+    padding-bottom: 1.5rem;
+}
+.form__heading {
+    width: 100%;
+    color: #fff;
+    text-shadow: 0.55rem 0.55rem #11af82;
+    background: #15DEA5;
+    line-height: 5rem;
+    padding: 1.5rem;
+}
+.form__field label {
+    color: #D6FFF5;
+    display: block;
+    font-size: 2rem;
+    line-height: 2rem;
+    padding-top: 1.5rem;
+}
+.form__field input {
+    width: 100%;
+    background: #001534;
+    border: 0.1rem solid #15DEA5;
+    padding: 1.5rem;
+    color: #D6FFF5;
+}
+.form__field textarea {
+    width: 100%;
+    color: #15DEA5;
+    background: #001534;
+    border: 0.1rem solid #15DEA5;
+    outline: none;
+    padding: 1.5rem;
+    margin-bottom: 0.75rem;
+}
+```
+
+Comment pourrions-nous rendre ce code plus **lisible** et **organisé** ? Mmmh... si on pouvait définir une couleur **une seule
+fois** et la **référencer** à chaque fois qu’on en a besoin, ce serait vraiment pratique. Eh bien, heureusement pour nous, il
+existe bien une solution pour le faire, et c’est une **variable** ! 🙌
+
+Les variables sont comme des **boîtes**. On les remplit avec quelque chose, dans notre cas des valeurs de couleurs (ou des amandes)
+et on y colle une **étiquette** pour savoir ce qu’il y a dedans. Ainsi, votre collègue Anna sait que ce sont vos amandes, dans le
+placard, et n’y touche pas (je t’ai à l’œil, Anna). Et en plus, vous savez exactement ce qu’il y a dedans grâce à l’étiquette.
+
+Maintenant, vous pouvez emmener cette boîte partout avec vous. Non, parce qu’avec Anna, on n’est jamais trop prudent (je rigole 😏).
+Quand j’ai besoin du contenu du tupperware, pour définir la couleur d’un texte par exemple, il me suffit de l’ouvrir. Bon appétit ! 🤤
+
+:::info
+Anna est l’objet d’une métaphore servant à illustrer le concept de variable. Toute ressemblance avec des personnes réelles,
+vivantes ou mortes, ne saurait être que purement fortuite.
+:::
+
+En programmation, l’équivalent de _remplir son tupperware de nourriture_ s’appelle **déclarer une variable**. Pour déclarer une
+variable dans Sass, il vous suffit de taper un **symbole dollar ($)** suivi de son nom, puis deux points et enfin la valeur que
+vous souhaitez lui donner :
+
+```scss
+$mint: #15DEA5;
+```
+
+À présent, si vous regardez le CSS compilé, vous verrez… absolument rien du tout.
+
+C’est parce que lorsque Sass compile les variables en CSS, il remplace **l’instance de la variable** directement par sa valeur, et
+comme vous n’avez pas encore utilisé cette variable, il n’y a absolument rien à compiler.
+
+OK, utilisons cette **variable** ! 💪 Modifions à présent les couleurs vert menthe (#15DEA5) de notre `.form` pour utiliser notre
+nouvelle variable. Pour implémenter une variable dans Sass, tapez le nom de la variable à l’endroit où vous auriez normalement
+inséré la valeur correspondante. Dans notre cas pour remplacer #15DEA5 par notre variable $mint , ça nous donne :
+
+```scss
+$mint: #15DEA5;
+.form {
+    width: 100%;
+    padding-bottom: 1.5rem;
+}
+.form__heading {
+    width: 100%;
+    color: #fff;
+    text-shadow: 0.55rem 0.55rem #11af82;
+    background: $mint;
+    line-height: 5rem;
+    padding: 1.5rem;
+}
+.form__field label {
+    color: #D6FFF5;
+    display: block;
+    font-size: 2rem;
+    line-height: 2rem;
+    padding-top: 1.5rem;
+}
+.form__field input {
+    width: 100%;
+    background: #001534;
+    border: 0.1rem solid $mint;
+    padding: 1.5rem;
+    color: #D6FFF5;
+}
+.form__field textarea {
+    width: 100%;
+    color: $mint;
+    background: #001534;
+    border: 0.1rem solid $mint;
+    outline: none;
+    padding: 1.5rem;
+    margin-bottom: 0.75rem;
+}
+```
+
+On peut voir que nous avons des instances de notre variable $mint partout où nous avions auparavant utilisé notre valeur hex vert
+menthe #15DEA5.
+
+Maintenant, quand vous regardez le CSS compilé, vous voyez bien que Sass a remplacé le nom de la variable par la **valeur
+correspondante** :
+
+```scss
+.form {
+    width: 100%;
+    padding-bottom: 1.5rem;
+}
+.form__heading {
+    width: 100%;
+    color: #fff;
+    text-shadow: 0.55rem 0.55rem #11af82;
+    background: #15DEA5;
+    line-height: 5rem;
+    padding: 1.5rem;
+}
+.form__field label {
+    color: #D6FFF5;
+    display: block;
+    font-size: 2rem;
+    line-height: 2rem;
+    padding-top: 1.5rem;
+}
+.form__field input {
+    width: 100%;
+    background: #001534;
+    border: 0.1rem solid #15DEA5;
+    padding: 1.5rem;
+    color: #D6FFF5;
+}
+.form__field textarea {
+    width: 100%;
+    color: #15DEA5;
+    background: #001534;
+    border: 0.1rem solid #15DEA5;
+    outline: none;
+    padding: 1.5rem;
+    margin-bottom: 0.75rem;
+}
+```
+
+:::info
+Notez que le **CSS standard** a lui aussi des variables qu’on appelle "**custom properties**" et qui fonctionnent de la même
+manière que les variables Sass. La plupart du temps, il n’y a pas de véritable avantage à utiliser des custom properties plutôt
+que des variables Sass, surtout que leur syntaxe est bien plus compliquée. On optera donc **sans hésiter** pour les variables Sass.
+:::
+
+Puisqu’il y aura forcément des changements, ne soyez pas trop spécifique lorsque vous nommez vos variables. $mint fonctionne très
+bien pour un vert menthe c’est sûr, mais imaginons que le client se lasse du vert et veuille du rose. Super simple : on a juste à
+modifier la valeur hex :
+
+```scss
+$mint: #ffa7c2;
+```
+
+Sauf qu’à présent, $mint n’a plus aucun sens, comme nous avons une couleur rose à la place. Le problème, c’est que nous
+l’utilisons un paquet de fois dans notre codebase et ça peut porter à confusion, si un jour un autre développeur récupère votre
+code : il ou elle pensera en voyant le nom que la couleur est vert menthe et non rose. Deux solutions s’offrent à nous : soit on
+garde $mint comme nom de variable et on fait avec (mauvaise idée), soit on donne un nouveau nom plus adéquat à la variable :
+
+```scss
+$pink:#ffa7c2;
+```
+
+![Image illustrant une erreur dans le code](https://user.oc-static.com/upload/2019/10/09/15706289362303_image5.jpg)
+
+Il y a une erreur dans le code
+
+Aaaaaargh ! Qu’est-ce qui s’est passé ? On a cassé Internet (ou du moins notre fichier Sass) ! 😨 L’erreur stipule "Undefined
+variable..." (ou _variable non définie_ en français).
+
+Tout notre code utilise encore la **variable** $mint, sauf qu’elle n’existe plus. Quand nous avons changé son nom en $pink, $mint
+a cessé d’exister, sauf que nous l’utilisons encore dans toute notre codebase. Ooooooops. Pour que ça fonctionne, on doit
+remplacer tous les $mint par des $pink.
+
+Une meilleure idée pour éviter ce genre de soucis serait de **nommer la variable en fonction de son rôle** plutôt que son contenu.
+Par exemple, les mains d’Anna sont remplies de mes amandes aujourd’hui, mais demain elles pourraient être remplies de mes noisettes.
+Il serait donc plus logique de lui donner le nom de “voleuse de graines”, parce que visiblement elle n’a pas l’intention de
+s’arrêter.
+
+Au lieu de $mint/$pink, il est préférable d’opter pour quelque chose comme **$color-primary** (_couleur principale_ en anglais).
+Le nom de la variable vous indique que son rôle est de stocker la couleur principale de votre site, qu’il s’agisse de vert menthe,
+de rose ou de jaune fluo. Là où ça devient intéressant, c’est que lorsque vous vous replongerez dans votre code d’ici quelques
+mois ou quelques années, le nom $color-primary  vous dira toujours quelque chose. Une variable appelée $mint qui contient du rose
+vous donnera certainement une sacrée migraine...
+
+#### Essayez par vous-même !
+
+**![16183911506509_A-vous-de-jouer%20%282%29.png](https://user.oc-static.com/upload/2021/04/14/16183911506509_A-vous-de-jouer%20%282%29.png)**
+
+Dans cet exercice, remplacez les couleurs dans le code par des variables que vous allez créer.
+
+Console de code
+
+<iframe title="codevolve" id="codevolveIframe1" src="https://www.codevolve.com/api/v1/access_token/32AC0A152BF6C46A6EF79C81A91D454E" width="100%" height="500" frameborder="0"></iframe>
+
+:::info
+[Retrouvez la correction de l'exercice ici](https://github.com/tdimnet/Simplifiez-vous-le-CSS-avec-Sass/tree/partie-2/chapitre-1/exercice-1) !
+:::
+
+Et les variables, ce n’est pas que pour les couleurs ! Il y a huit types de données en tout dans Sass :
+- **les couleurs :** on vient d’en parler ;
+- **les chaînes de caractères (strings) :** terme de programmation signifiant du texte ;
+- **les nombres :** oui, des nombres ;
+- **les listes et maps :** des collections de n’importe quels éléments ci-dessus. On en parlera plus tard ;
+- et trois autres que vous pouvez laisser de côté pour le moment : les **booléens (boolean),** les **nulls** et les **fonctions**.
+
+:::info
+Dans ce cours, nous aborderons seulement les cinq premiers éléments de cette liste, mais pour votre culture générale, sachez juste
+que les trois autres existent. Je vous recommande de vous renseigner dessus en lisant la **[documentation Sass](http://sass-lang.com/documentation/file.SASS_REFERENCE.html#data_types)**.
+:::
+
+### En résumé
+
+- Les variables stockent des valeurs que vous pouvez réutiliser dans tout votre codebase.
+- Pour définir une variable, tapez le signe dollar ($) puis le nom de la variable : $variable-name.
+- Quand vous modifiez la valeur de la variable, cela modifiera cette valeur partout où la variable a été utilisée.
+- Les variables peuvent stocker tous les types de données de Sass : couleur, taille et listes de valeurs.
+
+_Les variables nous permettent de stocker des valeurs que l’on peut réutiliser dans notre codebase, mais serait-il possible d’y
+stocker un ensemble de règles ? La réponse est non. Mais il existe bien quelque chose pour nous sauver de ce pétrin : les mixins.
+Et on en parle justement dans le prochain chapitre 😉._
+
+-----
+
+## Utilisez les mixins Sass avec des arguments
+
+[Utilisez les mixins Sass avec des arguments - Simplifiez-vous le CSS avec Sass - OpenClassrooms](https://openclassrooms.com/fr/courses/6106181-simplifiez-vous-le-css-avec-sass/6598201-utilisez-les-mixins-sass-avec-des-arguments)
+
+<Vimeo vimeoId="534390635" />
+
+<br />
+
+Allons encore plus loin pour structurer notre code avec les mixins.
+
+### Découvrez les mixins avec Sass
+
+:::note ?
+Attends attends deux secondes, on dit _un_ ou _une_ mixin ?
+:::
+
+En programmation objet, on dit **un ensemble de règles**, donc un mixin ; mais une règle, c’est une mixin. Ici on parlera de la
+mixin en tant que règle (entre nous, en anglais on ne donne pas de genre, donc bon, on va pas chipoter 😉).
+
+Dans notre CSS, nous utilisons beaucoup de **texte ombré**. Et avec tous les différents arguments auxquels on doit l’appliquer,
+on obtient un bon paquet de  répétitions : alerte aux répétitioooooons ! 🚨
+
+```scss
+.heading__header {
+    text-shadow: 0.55rem 0.55rem #fff;
+}
+.form__heading {
+    text-shadow: 0.55rem 0.55rem #15DEA5;
+}
+.about__heading {
+    text-shadow: 0.55rem 0.55rem #15DEA5;
+}
+.project__heading {
+    text-shadow: 0.55rem 0.55rem #15DEA5;
+}
+```
+
+👆Vous voyez que text-shadow est dupliqué dans tous les sélecteurs où on en a besoin.
+
+Rappelez vous : ce que l’on veut, c’est du code plus simple et mieux organisé !
+
+```scss
+.heading__header {
+    text-shadow: 0.55rem 0.55rem #fff;
+}
+.form__heading {
+    text-shadow: 0.55rem 0.55rem #15DEA5;
+}
+.about__heading {
+    text-shadow: 0.55rem 0.55rem #15DEA5;
+}
+.project__heading {
+    text-shadow: 0.55rem 0.55rem #15DEA5;
+}
+```
+
+Si on reprend notre code : alerte aux répétitions ! 🚨 La solution la plus simple serait de tout caser dans une variable, non ?
+
+```scss
+$heading-shadow: text-shadow: 0.55rem 0.55rem #15DEA5;
+```
+
+Malheureusement non, les variables ne peuvent stocker que des valeurs. 😓 Mais pas d’inquiétude ! Sass a donné aux variables une
+grande sœur, et elle est parfaitement adaptée à la situation : la **@mixin** Sass !
+
+### Gérez les paramètres du mixin
+
+Plutôt que d’être limités à des valeurs, **les mixins stockent des blocs entiers de code**. 🤘 Vous pouvez les utiliser pour
+stocker des ensembles de règles CSS que vous utilisez fréquemment, comme avec une variable :
+
+```scss
+@mixin mixin-name {
+    css-property: value;
+}
+```
+
+Ça ressemble beaucoup au fait d'écrire un bloc CSS standard, non ? Sauf peut-être pour le **nom**. Là encore, il vaut mieux éviter
+d’être trop spécifique quand on donne un nom à une mixin, faites plutôt référence à **son rôle**. Puisque tous les éléments sur
+lesquels on met une ombre sont des headers, nommez-le _heading-shadow_ (ombre du heading).
+
+```scss
+@mixin heading-shadow
+```
+
+À partir de là, c’est la même chose que d’écrire un bloc CSS normal. Utilisez des **accolades** pour entourer ce que vous voulez
+mettre dans votre ensemble de règles. Dans le cas de la mixin heading-shadow, il s’agit de la propriété text-shadows et de ses
+paramètres :
+
+```scss
+@mixin heading-shadow {
+    text-shadow: .55rem .55rem #15DEA5;
+}
+```
+
+Et voilà votre première mixin Sass ! 👏 Cependant, comme pour les variables, votre heading-shadow ne fera pas grand-chose tant que
+vous ne l’aurez pas **inclus** dans le bloc CSS où vous voulez qu’il y ait une ombre.
+
+Dans le cas présent, nous voulons ajouter une ombre dans notre sélecteur `.form__heading`, ce que nous faisons en tapant
+**@include** suivi d’un espace et du nom de notre mixin :
+
+```scss
+.form {
+    &__heading {
+        @include heading-shadow;
+    }
+}
+```
+
+Et lorsque Sass compile cela en CSS, il place l’ensemble de règles issues de la mixin directement dans le bloc dans lequel nous
+l’avons inclus :
+
+```scss
+.form__heading {
+    text-shadow: .55rem .55rem #15DEA5;
+}
+```
+
+Tant qu’on y est, remplaçons à présent les autres instances d’ombres :
+
+```scss
+.heading {
+    &__header {
+        text-shadow: 0.55rem 0.55rem #fff;
+    }
+}
+.form {
+    &__heading {
+        @include heading-shadow;
+    }
+}
+.about{
+    &__heading {
+        @include heading-shadow;
+    }
+}
+.project{
+    &__heading{
+        @include heading-shadow;
+    }
+}
+```
+
+Et voilà, des ombres en veux-tu en voilà :
+
+```scss
+.heading__header {
+    text-shadow: 0.55rem 0.55rem #fff;
+}
+.form__heading {
+    text-shadow: .55rem .55rem #15DEA5;
+}
+    .about__heading {
+    text-shadow: .55rem .55rem #15DEA5;
+}
+.project__heading {
+    text-shadow: .55rem .55rem #15DEA5;
+}
+```
+
+### Essayez par vous-même !
+
+**![16183911506509_A-vous-de-jouer%20%282%29.png](https://user.oc-static.com/upload/2021/04/14/16183911506509_A-vous-de-jouer%20%282%29.png)**
+
+Dans cet exercice, pratiquez et créez une mixin qui contiendra les règles des bordures.
+
+Console de code
+
+<iframe title="codevolve" id="codevolveIframe1" src="https://www.codevolve.com/api/v1/access_token/E7F7DF29B8FFC65D2E83CF928CF979B0" width="100%" height="500" frameborder="0"></iframe>
+
+:::info
+Retrouvez ici [la correction de l'exercice](https://github.com/tdimnet/Simplifiez-vous-le-CSS-avec-Sass/tree/partie-2/chapitre-2/exercice-1) !
+:::
+
+### Customisez la valeur par défaut de la mixin
+
+Voilà, vous avez remplacé tous les textes ombrés grâce à votre mixin. Enfin, pas tout à fait. Il reste un texte ombré : l’en-tête
+dans votre header qui utilise aussi un **text-shadow**, mais la couleur n’est pas la même que dans votre mixin heading-shadow ;
+vous ne pouvez donc pas l’utiliser.
+
+```scss
+.heading__header {
+    text-shadow: 0.55rem 0.55rem #fff;
+}
+```
+
+Enfin, pas encore…
+
+![L’en-tête dans votre header doit avoir un texte ombré blanc et non vert](https://user.oc-static.com/upload/2019/10/09/15706295321934_image6.png)
+
+L’en-tête dans votre header doit avoir un texte ombré blanc et non vert
+
+```scss
+.heading {
+    &__header {
+    // This shadow has a white colour, not mint!
+    text-shadow: 0.55rem 0.55rem #fff;
+    }
+}
+```
+
+Ça ne vaut pas le coup de créer une mixin juste pour une seule instance. Rappelez-vous : travaillez mieux, pas plus. Au lieu de
+ça, vous pouvez **modifier** votre mixin pour qu’il se comporte différemment selon ses **inputs**.
+
+:::note ?
+Vous avez dit _inputs_ ? 🤔
+:::
+
+Absolument ! Si vous placez des **parenthèses** après le nom de votre mixin mais avant les accolades, et qu’entre ces parenthèses
+vous mettez un **argument** (ou plusieurs), votre mixin devient **customisable** 🤩 :
+
+```scss
+@mixin heading-shadow($colour) {
+    text-shadow: .55rem .55rem #15DEA5;
+}
+```
+
+$colour ressemble fort à une variable, non ? C’est l’**argument**. Voyez les arguments comme des variables vides qui ne vivent
+que dans la mixin. Vous fixez leur valeur à chaque fois que vous placez la mixin dans votre code, et cette valeur est utilisée
+dans le bloc du mixin quand il est compilé en CSS :
+
+```scss
+@mixin heading-shadow($colour) {
+    text-shadow: .55rem .55rem $colour;
+}
+```
+
+Sass remplacera la variable $colour au sein de la mixin avec la valeur de couleur que vous indiquez, créant ainsi une ombre de la
+couleur voulue pour le header de l’en-tête.
+
+```scss
+.heading {
+    &__header {
+        @include heading-shadow(#fff);
+    }
+}
+```
+
+Et quand vous regardez le code CSS compilé, le header de l’en-tête a bien une ombre blanche !
+
+```scss
+.heading__header {
+    text-shadow: 0.55rem 0.55rem #fff;
+}
+```
+
+#### Définissez une valeur
+
+Désormais, vous pouvez utiliser text-shadows avec la couleur que vous voulez et ce, en customisant la couleur une seule fois.
+
+Pour toutes les autres instances, le $colour-primary originel aurait très bien fait l’affaire.
+
+Plutôt que de renseigner une valeur de couleur chaque fois que vous utilisez votre **mixin heading-shadow**, vous pouvez régler
+la **valeur par défaut** de l’argument. Si vous décidez de ne pas customiser la couleur de l’ombre, c’est la couleur par défaut
+qui sera utilisée. Vous pouvez le faire en définissant sa valeur de la même manière que pour une variable déclarée normalement :
+
+```scss
+@mixin heading-shadow($colour: $colour-primary) {
+    text-shadow: .55rem .55rem $colour;
+}
+```
+
+Du coup, si vous oubliez d’ajouter l’argument ou d’assigner une couleur à la variable quand vous l’incluez, Sass en déduira que
+vous voulez que l’ombre soit celle de la **couleur par défaut**, dans notre cas $colour-primary.
+
+Dans le cas où vous n’auriez pas défini de valeur par défaut pour $colour, vous auriez dû aller ajouter dans les arguments toutes
+les autres inclusions de heading-shadow. Mais plus besoin de vous inquiéter, grâce à la couleur par défaut, vous pouvez les
+laisser tels quels :
+
+```scss
+.heading {
+    &__header {
+        @include heading-shadow($colour-white);
+    }
+}
+.form {
+    &__heading {
+        @include heading-shadow;
+    }
+}
+.about {
+    &__heading {
+        @include heading-shadow;
+    }
+}
+.project{
+    &__heading {
+        @include heading-shadow;
+    }
+}
+```
+
+Ce qui donne une fois compilé :
+
+
+```scss
+.heading__header {
+    text-shadow: 0.55rem 0.55rem #fff;
+}
+.form__heading {
+    text-shadow: 0.55rem 0.55rem #15DEA5;
+}
+.about__heading {
+    text-shadow: 0.55rem 0.55rem #15DEA5;
+}
+.project__heading {
+    text-shadow: 0.55rem 0.55rem #15DEA5;
+}
+```
+
+Parfait ! Vous avez transformé votre mixin heading-shadow en un bloc de code qui s’adapte aux besoins de votre codebase. 🙌
+
+### Essayez par vous-même !
+
+**![16183911506509_A-vous-de-jouer%20%282%29.png](https://user.oc-static.com/upload/2021/04/14/16183911506509_A-vous-de-jouer%20%282%29.png)**
+
+À présent, nous allons reprendre notre mixin du dernier exercice tout en l’améliorant pour qu’elle puisse être utilisée, peu
+importe la couleur de la bordure que l’on souhaite appliquer.
+
+Console de code
+
+<iframe title="codevolve" id="codevolveIframe2" src="https://www.codevolve.com/api/v1/access_token/A88AFB0F6A4922BFC85431937BFD6B65" width="100%" height="500" frameborder="0"></iframe>
+
+:::info
+Vous avez terminé ? Vérifiez votre travail avec [la correction de l'exercice](https://github.com/tdimnet/Simplifiez-vous-le-CSS-avec-Sass/tree/partie-2/chapitre-2/exercice-2).
+:::
+
+### Allez plus loin en sophistiquant vos mixins
+
+Votre mixin a une bonne tête. Vous pouvez customiser la couleur au gré de vos besoins ou la laisser telle quelle pour que ce soit
+la valeur par défaut qui soit utilisée. Mais il y a encore quelques petites choses que vous pouvez faire pour améliorer tout ça.
+Idéalement, les valeurs de couleur et de taille doivent être contenues dans des variables, pour qu’elles soient faciles à trouver
+et à modifier si nécessaire. Mais la mixin utilise des **valeurs fixes** pour la taille de l’ombre sur le texte. Remédions à cela
+en déclarant une variable $heading-shadow-size :
+
+```scss
+$heading-shadow-size: 0.55rem;
+```
+
+Mais plutôt que de simplement remplacer les tailles d’ombres dans la mixin, mettons en application un argument $shadow-size et
+définissons $heading-shadow-size en tant que réglage par défaut :
+
+```scss
+$heading-shadow-size: 0.55rem;
+@mixin heading-shadow($colour: $colour-primary, $shadow-size: $heading-shadow-size) {
+    text-shadow: $shadow-size $shadow-size $colour;
+}
+```
+
+À présent, votre mixin est aussi solide qu’un roc. Elle est **maintenable** grâce à ses variables et a un effet prévisible mais
+customisable, grâce à l’implémentation d’arguments et de valeurs par défaut.
+
+### En résumé
+
+- Les mixins sont très similaires aux variables, mais au lieu de ne stocker que des valeurs, ils stockent des blocs de code
+entiers.
+- On utilise le mot clé `@mixin` pour déclarer une mixin.
+- On utilise le mot clé `@include` pour placer une instance du mixin dans son code.
+- Lorsque Sass compile les instances d’une mixin, il remplace le mixin par les règles qu’il contient.
+- Pour rendre les mixins plus adaptables et réutilisables, vous pouvez inclure des arguments lorsque vous les déclarez.
+- Les arguments peuvent changer l’effet du code compilé, par exemple définir des couleurs ou tailles customisées.
+
+_Dans le chapitre suivant, nous allons voir un autre ensemble d’outils Sass servant à gérer les modules de code qui se répètent :
+les extensions._
+
+-----
+
+## Écrivez du code plus propre grâce aux extensions Sass
+
+[Écrivez du code plus propre grâce aux extensions Sass - Simplifiez-vous le CSS avec Sass - OpenClassrooms](https://openclassrooms.com/fr/courses/6106181-simplifiez-vous-le-css-avec-sass/6598331-ecrivez-du-code-plus-propre-grace-aux-extensions-sass)
+
+<Vimeo vimeoId="534402807" />
+
+<br />
+
+### Appréhendez les points faibles des mixins pour mieux les contourner.
+
+Les mixins sont utiles, certes, mais elles ont aussi quelques inconvénients. En effet, chaque mixin crée une **duplication de
+l’ensemble de règles** dans notre CSS compilé :
+
+<div style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between', padding: '12px', backgroundColor: 'gray', border: '1px solid black', borderRadius:'12px'}}>
+<div style={{width:'49%'}}>
+
+```scss title="scss"
+.form {
+    &__heading {
+        @include heading-shadow;
+    }
+}
+.about {
+    &__heading {
+        @include heading-shadow;
+    }
+}
+.project {
+    &__heading {
+        @include heading-shadow;
+    }
+}
+```
+
+</div>
+<div style={{width:'49%'}}>
+
+```css title="css"
+.form__heading {
+    text-shadow: 0.55rem 0.55rem #15DEA5;
+}
+.about__heading {
+    text-shadow: 0.55rem 0.55rem #15DEA5;
+}
+.project__heading {
+    text-shadow: 0.55rem 0.55rem #15DEA5;
+}
+
+
+
+
+
+
+```
+
+</div>
+</div>
+
+<br />
+
+Alerte aux répétitions ! 🚨Et la mixin heading-shadow contient le strict minimum : une **propriété**. Mais ce n’est pas toujours
+le cas. Par exemple, si on crée une mixin pour un ensemble de règles, on en obtient beaucoup plus :
+
+```scss
+@mixin .typography {
+    color: $colour-primary;
+    font-size: 2rem;
+    font-weight: 100;
+    line-height: 1.7;
+}
+```
+
+Et il pourrait y en avoir encore plus : `font-kerning`, `line-height`, `text-transfor`, etc., etc. Maintenant, supposons qu’on
+inclue plusieurs fois cette **mixin typography**. Quand on regarde notre Sass, il paraît plutôt correct :
+
+```scss
+@mixin .typography {
+    color: $colour-primary;
+    font-size: 2rem;
+    font-weight: 100;
+    line-height: 1.7;
+}
+h1 {
+    @include .typography;
+}
+textarea {
+    @include .typography;
+}
+button {
+    @include .typography;
+}
+input {
+    @include .typography;
+}
+```
+
+Mais quand on jette un œil au CSS compilé, on voit qu’il contient beaucoup de **code répétitif** (alerte, alerte ! 🚨) :
+
+```scss
+h1 {
+    color: #15dea5;
+    font-size: 2rem;
+    font-weight: 100;
+    line-height: 1.7;
+}
+textarea {
+    color: #15dea5;
+    font-size: 2rem;
+    font-weight: 100;
+    line-height: 1.7;
+}
+button {
+    color: #15dea5;
+    font-size: 2rem;
+    font-weight: 100;
+    line-height: 1.7;
+}
+input {
+    color: #15dea5;
+    font-size: 2rem;
+    font-weight: 100;
+    line-height: 1.7;
+}
+```
+
+Trouver un bout de code précis devient un enfer au vu des multiples **répétitions**. Il sera d’autant plus difficile de le
+trouver au milieu de tous les blocs qui se ressemblent. Et le doigt qui vous sert à scroller aimerait autant ne pas être trop
+surexploité.*
+
+:::caution !
+*Ceci est un message de la Fédération Unitaire des Doigts Scrolleurs.🖐
+:::
+
+Je vous entends venir, vous pourriez transformer votre mixin de changement typographique en un sélecteur `.typography` et
+l’assigner aux éléments qui en ont besoin dans le HTML :
+
+<div style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between', padding: '12px', backgroundColor: 'gray', border: '1px solid black', borderRadius:'12px'}}>
+<div style={{width:'49%'}}>
+
+```scss title="scss"
+.typography {
+    color: $colour-primary;
+    font-size: 2rem;
+    font-weight: 100;
+    line-height: 1.7;
+}
+```
+</div>
+<div style={{width:'49%'}}>
+
+```css title="css"
+<h1 class="heading__header typography">
+    Heading Goes Here
+</h1>
+...
+<button class="btn typography">Click Me!</button>
+...
+```
+
+</div>
+</div>
+
+<br />
+
+Mais cela met complètement en l’air les **conventions de nomenclature BEM**. Reprenons, une mixin produit de grandes quantités
+de codes répétitifs, et un sélecteur normal ne sera pas compatible avec BEM. Un sacré dilemme… Eh bien, pas forcément : on peut
+trouver un juste milieu grâce *roulements de tambours* aux **extensions Sass**.
+
+### Utilisez les extensions Sass
+
+Les **extensions** sont très similaires aux mixins. Vous écrivez un bloc de code et vous comptez sur Sass pour le réutiliser, ce
+qui nous épargne la tâche de devoir le retaper indéfiniment. Mais contrairement aux mixins, pas besoin de les **déclarer** avec
+un **identifiant** **spécifique** – il suffit de les écrire comme un simple sélecteur :
+
+```scss
+.typography {
+    color: #15dea5;
+    font-size: 2rem;
+    font-weight: 100;
+    line-height: 1.7;
+}
+```
+
+Ensuite, pour étendre un sélecteur à `.typography`, tapez @extend suivi du nom du sélecteur, `.typography` :
+
+```scss
+.typography {
+    color: $colour-primary;
+    font-size: 2rem;
+    font-weight: 100;
+    line-height: 1.7;
+}
+h1 {
+    @extend .typography;
+}
+```
+
+### Essayez par vous-même !
+
+**![16183911506509_A-vous-de-jouer%20%282%29.png](https://user.oc-static.com/upload/2021/04/14/16183911506509_A-vous-de-jouer%20%282%29.png)**
+
+Dans cet exercice, reprenez ce que vous avez vu dans ce chapitre en unifiant la typographie de deux blocs grâce aux extensions.
+
+Console de code
+
+<iframe title="codevolve" id="codevolveIframe1" src="https://www.codevolve.com/api/v1/access_token/A85E701C4EA94CFBFD1F302F02509F4B" width="100%" height="500" frameborder="0"></iframe>
+
+
+:::info
+Retrouvez la [correction de l'exercice ici](https://github.com/tdimnet/Simplifiez-vous-le-CSS-avec-Sass/tree/partie-2/chapitre-3/exercice-1).
+:::
+
+### Utilisez les placeholders
+
+Vous avez remarqué que j’ai dit “étendre à” et pas juste “étendre” dans le paragraphe ci-dessus ? C’est parce que vous n’êtes
+pas en train d’étendre le sélecteur `.typography-content` ! Vous êtes en train d’étendre le sélecteur h1 au sélecteur
+`.typography`.
+
+:::note ?
+Ok, mais ça veut dire quoi, au juste ? 😧
+:::
+
+Regardons le CSS compilé pour y voir un peu plus clair :
+
+```scss
+.typography, h1 {
+    color: #15dea5;
+    font-size: 2rem;
+    font-weight: 100;
+    line-height: 1.7;
+}
+```
+
+Notez que vous ne voyez pas de code issu de l’extension au sein du sélecteur h1, mais que Sass a ajouté h1 à la liste des
+sélecteurs pour l’ensemble de règles.
+
+Avec les mixins, Sass inclut le contenu du mixin partout où il est appelé, ce qui a pour conséquence un tas de répétitions. Mais
+si vous utilisez **@extend** sur h1, vous dites à Sass que plutôt que de dupliquer les propriétés au sein de h1, vous voulez que
+h1 utilise l’ensemble de règles issu d’un autre sélecteur – dans le cas présent, `.typography`. Du coup, Sass “étend” h1 aux
+règles de .typography dans toute la feuille de style et l’ajoute à la liste.
+
+:::info
+Mixin duplique un ensemble de règles alors que **@extend duplique le sélecteur**.
+:::
+
+Si vous déployez @extend `.typography` dans plein d’autres sélecteurs, vous ne vous retrouverez pas avec des tas de **règles
+dupliquées**. À la place, tous les sélecteurs concernés seront ajoutés à la liste aux côtés de `.typography` :
+
+<div style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between', padding: '12px', backgroundColor: 'gray', border: '1px solid black', borderRadius:'12px'}}>
+<div style={{width:'49%'}}>
+
+```scss title="scss"
+.typography {
+    color: $colour-primary;
+    font-size: 2rem;
+    font-weight: 100;
+    line-height: 1.7;
+}
+h1 {
+    @extend .typography;
+}
+textarea {
+    @extend .typography;
+}
+button {
+    @extend .typography;
+}
+input {
+    @extend .typography;
+}
+```
+
+</div>
+<div style={{width:'49%'}}>
+
+```css title="css"
+.typography, h1, textarea, button, input {
+    color: #15dea5;
+    font-size: 2rem;
+    font-weight: 100;
+    line-height: 1.7;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+```
+
+</div>
+</div>
+
+<br />
+
+Quand vous regardez la **liste des sélecteurs** qui suivent `.typography`, vous voyez beaucoup d’éléments que nous utilisons
+déjà un peu partout dans notre code mais pas `.typography`. C’est parce que son but n’est pas de **modifier** un élément, mais
+plutôt de **servir de placeholder** (ou de terrain de base, si on veut) pour d’autres sélecteurs auxquels il doit être étendu.
+
+Okay ; donc, en suivant cette logique on pourrait décider de renommer `.typography` par `.placeholder-typography`, **mais avoir
+dans son CSS des sélecteurs qui ne sont utilisés nulle part est une mauvaise idée 🔥**. Les sélecteurs inutilisés augmentent la
+taille de votre fichier et ajoutent de la **confusion** inutilement. Ce n’est pas notre but. En plus, ils pourraient sérieusement
+vous compliquer la tâche le jour où vous aurez besoin de déchiffrer ce qui se passe.
+
+N’oublions pas que nous essayons de faire en sorte que votre futur vous soit content, ne serait-ce que pour lui éviter de
+construire une machine à voyager dans le temps pour revenir se venger, et ce au risque de créer une faille spatio-temporelle qui
+aurait pour inévitable conséquence d’annihiler le reste de l’humanité.
+
+L’humanité vous remercie donc pour vos efforts.
+
+Comment faire pour utiliser `.typography` et pour l’étendre aux autres classes sans le déclarer comme un sélecteur ? Sass à la
+rescousse ! 🏋️‍♀️ Sass a un placeholder intégré prêt à l’emploi, que vous pouvez utiliser pour contenir votre ensemble de règles et
+garder un code propre et ordonné plutôt que d’utiliser un sélecteur standard ; il se matérialise avec le préfixe % :
+
+```scss
+%typography {
+    color: $colour-primary;
+    font-size: 2rem;
+    font-weight: 100;
+    line-height: 1.7;
+}
+```
+
+Lorsque vous utilisez le **préfixe pourcentage (%)** devant votre sélecteur plutôt que le point qu’on utilise d’habitude pour
+les classes, Sass crée un **placeholder**.
+
+On peut créer des **extensions** aux placeholders Sass, aussi appelés “classes silencieuses”, de la même façon qu’on le fait avec
+les sélecteurs. On peut réutiliser nos placeholders partout dans le code, comme on le ferait avec des sélecteurs.
+
+```scss
+%typography {
+    color: $colour-primary;
+    font-size: 2rem;
+    font-weight: 100;
+    line-height: 1.7;
+}
+h1 {
+    @extend %typography;
+}
+textarea {
+    @extend %typography;
+}
+button {
+    @extend %typography;
+}
+input {
+    @extend %typography;
+}
+```
+
+En n’appliquant que les sélecteurs qui s’étendent au **placeholder**, votre CSS devient plus propre et plus explicite. Aucune
+confusion et pas de code dupliqué : jackpot ! 🙌
+
+### Essayez par vous-même !
+
+**![16183911506509_A-vous-de-jouer%20%282%29.png](https://user.oc-static.com/upload/2021/04/14/16183911506509_A-vous-de-jouer%20%282%29.png)**
+
+Dans cet exercice, créez et utilisez les placeholders.
+
+Console de code
+
+<iframe title="codevolve" id="codevolveIframe2" src="https://www.codevolve.com/api/v1/access_token/116E8D3CD84F4537FC536B88EF7B9C43" width="100%" height="500" frameborder="0"></iframe>
+
+:::info
+Avez-vous réalisé l'exercice ? [Retrouvez la correction ici](https://github.com/tdimnet/Simplifiez-vous-le-CSS-avec-Sass/tree/partie-2/chapitre-3/exercice-2).
+:::
+
+### En résumé
+
+- Les extensions ont une fonction similaire aux mixins : tous deux vous épargnent d’écrire de nombreuses lignes de code
+répétitives.
+- Alors que les mixins se compilent en ensembles de règles dupliqués, les extensions se compilent en sélecteurs dupliqués.
+- Pour éviter la présence de sélecteurs inutilisés dans votre codebase, vous pouvez utiliser des placeholders d’ensembles de
+règles en préfixant leur nom d’un symbole pourcent (%) : `%extend-placeholder`.
+
+_Pas mal, non ? Mais quand faut-il utiliser des mixins plutôt que des extensions et vice versa ? Dans le chapitre suivant, nous
+allons voir et essayer de comprendre ensemble les similitudes et les différences entre les deux._
+
+-----
+
+## Choisissez quand utiliser des mixins ou des extensions
+
+[Choisissez quand utiliser des mixins ou des extensions - Simplifiez-vous le CSS avec Sass - OpenClassrooms](https://openclassrooms.com/fr/courses/6106181-simplifiez-vous-le-css-avec-sass/6598436-choisissez-quand-utiliser-des-mixins-ou-des-extensions)
+
+<Vimeo vimeoId="534427374" />
+
+<br />
+
+Allons plus loin dans notre analyse des mixins et des extensions.
+
+### Mixins vs extensions
+
+Sur le principe, les mixins et les extensions sont très **semblables**. Pour discerner leurs différentes fonctions, il faut
+prêter attention au **code compilé**, ce qui complique la tâche pour déterminer la situation dans laquelle utiliser l’un ou
+l’autre.
+
+Il n’y aura aucun doute possible pour un cas précis : si vous voulez que votre bloc de code utilise ou non **des arguments**. Si
+vous avez besoin d’avoir recours à un argument, utilisez des mixins – vous n’avez pas d’autre choix.
+
+Les extensions ne tolèrent pas les arguments : puisqu’il n’y a qu’un ensemble de règles compilé, utiliser des arguments pour
+modifier ses résultats pour un sélecteur les modifierait pour tous les sélecteurs.
+
+Mis à part les arguments, la différence principale entre les mixins et les extensions est qu’avec les mixins vous obtenez des
+**règles dupliquées**, alors qu’avec les extensions, vous obtenez des **sélecteurs dupliqués**.
+
+:::note ?
+Du coup, lequel faut-il utiliser ? 😧
+:::
+
+Pour avoir une réponse, regardons les sélecteurs dupliqués de l'**extend**. Si vous scrollez dans votre CSS compilé jusqu’au
+bloc h1 dans le CSS compilé, tout ce qu’il y a à savoir sur votre bloc h1 s’y trouve. Tout ? Pas vraiment. Vous ne verrez pas
+ses propriétés **typographiques** (les fonts, la taille de texte, etc.). Pour connaître ses propriétés typographiques, cherchez
+au hasard jusqu’à ce que vous les trouviez dans une liste aux côtés d’autres sélecteurs. Le souci, c’est qu'en les trouvant au
+hasard, vous risquez d’avoir oublié que vous l’aviez étendu avant. Et puisque rien n’indique que vous aviez défini des propriétés
+typographiques pour h1, que ce soit dans les extensions ou n’importe où ailleurs, vous risquez de vous retrouver perdu et frustré.
+
+### Verdict : mixins ou extensions ?
+
+Eh bien en fait, posé comme ça, la réponse est plutôt simple : **n’utilisez pas d’extensions**.
+
+Je sais, je sais. Les mixins génèrent des tas de code qui se répètent ! Oui, c’est vrai. Mais ils n’affectent pas l’organisation
+de votre CSS. Les extensions démolissent l’ordre et la prédictibilité de votre codebase et ce, juste pour vous épargner du code
+répétitif. Le jeu n’en vaut pas la chandelle.
+
+Tenez-vous-en donc aux mixins. Le code que vous obtiendrez sera plus propre et plus simple à maintenir, même s’il est un peu plus
+volumineux.
+
+Mais, mais… pourquoi ? Pourquoi est-ce qu’on vient de passer tout ce temps sur les extensions ? 😫
+
+Souvenez-vous, tout au début de ce cours, j’ai dit que le CSS était délicat car il n’y a **pas de règles concrètes pour son
+architecture**. Ce qui veut dire que d’autres gens auront construit leur écosystème CSS différemment du vôtre, et cela inclut
+l’utilisation d’extensions.
+
+Être développeur, ce n’est pas seulement écrire son propre code, c’est aussi être capable de lire le code des autres et
+travailler avec.
+
+Vous tomberez **forcément** sur des extensions Sass un jour ou l’autre. Même si vous n’en écrivez pas vous-même, les connaître
+et savoir comment elles fonctionnent est vital pour un développeur Sass. Donc par pitié, ne construisez pas une machine à remonter
+le temps pour venir vous défouler sur moi au moment où j’écris ce cours ; l’annihilation de l’humanité, tout ça, vous vous
+rappelez ? Ce ne vaut pas le coup, merci. 🙏🏼
+
+### En résumé
+
+- Les mixins tolèrent les arguments mais génèrent du code répétitif.
+- Les extensions ne tolèrent pas les arguments et génèrent des sélecteurs dupliqués. 
+- Vous tomberez sur des extensions dans du code écrit par d’autres, mais pour que le vôtre reste propre, tenez-vous-en aux mixins.
+
+_Maintenant que nous avons tiré tout ça au clair, et puisqu’on a décidé de s’en tenir aux mixins, passons à la vitesse supérieure.
+Dans le chapitre suivant, nous allons utiliser des fonctionnalités propres à Sass pour passer notre code à un tout autre niveau._
+
+-----
+
+## Améliorez les mixins avec les fonctions Sass
+
+[Améliorez les mixins avec les fonctions Sass - Simplifiez-vous le CSS avec Sass - OpenClassrooms](https://openclassrooms.com/fr/courses/6106181-simplifiez-vous-le-css-avec-sass/6598491-ameliorez-les-mixins-avec-les-fonctions-sass)
+
+<Vimeo vimeoId="534427460" />
+
+<br />
+
+Passons à la vitesse supérieure avec nos mixins grâce aux fonctions Sass
+
+### Utilisez la bonne fonction
+
+Si vous regardez plus attentivement la maquette de la page de contact, vous verrez que la couleur de l’ombre du texte n’est pas
+du même vert menthe que $colour-primary. Elle est même un peu plus foncée :
+
+![Image montrant que l'ombre de contactez-moi est un vert plus foncée que $colour-primary](https://user.oc-static.com/upload/2019/10/09/15706305647486_image4.png)
+
+L’ombre de contactez-moi est d'un vert plus foncé que $colour-primary
+
+Cela signifie que le mixin heading-shadow doit utiliser **une valeur de couleur plus foncée**. OK, remontons donc en haut du
+document pour créer une nouvelle variable pour la coul… stooooooop. Il doit y avoir un moyen plus simple, non ? Au final, c’est
+presque la même couleur, juste un poil plus foncée.
+
+Créer une toute nouvelle variable pour l’ombre voudrait dire qu’on aurait une couleur de plus à garder en tête. Et si
+$colour-primary était changée à l’avenir, il ne faudrait pas oublier de modifier la couleur de l’ombre en fonction. Bref, encore
+du travail supplémentaire et du code encombrant, aucun intérêt. On va trouver une autre solution. 💪
+
+Rappelez-vous : mieux travailler, pas plus…
+
+Il se trouve que Sass a une boîte à outils conséquente, pleine d’outils qui peuvent vous aider à faire ce genre de choses. Pas
+seulement une petite caisse à outils mais une grande, genre dernier cri, pleine de compartiments et de tiroirs avec tout ce
+qu’il faut dedans. 🛠🔩⚙️⛏ Si vous y jetez un œil, vous découvrirez qu’il y a un tiroir entier d’outils uniquement dédiés aux
+couleurs ! 🎉
+
+On appelle ces outils des **_fonctions_**. Les fonctions sont des **bouts de code préfabriqués** qui effectuent des tâches,
+comme par exemple prendre un argument, le modifier et renvoyer la nouvelle valeur sans que vous n’ayez à le faire vous-même.
+Sass a des fonctions pour désaturer, inverser et même foncer les couleurs (et bien d’autres encore, la liste est longue).
+
+La fonction nommée judicieusement **“darken”** (_assombrir_, en anglais) prend deux arguments : une **valeur de couleur**, et
+une valeur qui indique à quel point vous voulez assombrir votre valeur. Pour assombrir $colour-primary pour notre ombre de texte,
+utilisez la fonction à l’endroit où vous auriez placé une valeur de couleur en temps normal :
+
+```scss
+@mixin heading-shadow($colour:$colour-primary, $size: $heading-shadow-size) {
+    text-shadow: $size $size darken($colour, 10%);
+}
+```
+
+Nous avons remplacé $colour dans les **arguments** de text-shadow par la fonction `darken()` et avons passé $colour en premier
+argument, et la proportion dans laquelle nous voulons la rendre plus foncée en deuxième argument : ici 10 %.
+
+Quand vous regardez le CSS compilé, vous voyez que le mixin heading-shadow produit une ombre ayant la valeur hex #11af82, soit
+une version 10 % plus foncée que $colour-primary (#15dea5) :
+
+```scss
+.form__heading {
+    text-shadow: 0.55rem 0.55rem #11af82;
+}
+```
+
+Maintenant, plus besoin de vous souvenir de mettre à jour la couleur plus foncée pour le mixin heading-shadow. Dès que vous
+modifiez votre $colour-primary, votre mixin générera automatiquement l’ombre correspondante.
+
+:::info
+Pour rafraîchir votre mémoire sur les couleurs en CSS, vous pouvez revoir le chapitre "[Ajoutez de la couleur et un fond](https://openclassrooms.com/fr/courses/1603881-apprenez-a-creer-votre-site-web-avec-html5-et-css3/1605551-ajoutez-de-la-couleur-et-un-fond)"
+du cours "[Apprenez à créer votre site web avec HTML5 et CSS3](https://openclassrooms.com/fr/courses/1603881-apprenez-a-creer-votre-site-web-avec-html5-et-css3)".
+:::
+
+Plutôt stylé, non ?
+
+:::note ?
+Mais pourquoi seulement 10 % ? Et comment je sais qu’il faut une couleur 10 % plus foncée ? Qu’est-ce que ça signifie ? 😶
+:::
+
+C’est précisément le sujet de notre prochain point !
+
+### Découvrez d’autres méthodes pour manipuler les couleurs
+
+La valeur de $colour-primary est #15dea5, qui est l’équivalent de vert menthe en hexadécimal, mais qui peut aussi s’écrire
+(21,222,165) en RGB. Les valeurs hexadécimales (ou hex) sont en réalité composées de trois paires de valeurs qui se traduisent
+en canaux rouge, vert et bleu dans les couleurs **RBG** ; en d’autres termes, c’est juste une façon plus brève d’écrire les
+valeurs `rgb()`.
+
+![Image montrant une couleur exprimée de deux façon différentes](https://user.oc-static.com/upload/2019/10/09/15706310032811_image3.jpg)
+
+Des valeurs de couleurs exprimées de deux façons différentes 
+
+Mais il existe un autre moyen d’exprimer les couleurs dans CSS et Sass : `hsl()`, L’abréviation de **_hue_**, **_saturation_**
+et **_lightness_** (teinte, saturation et clarté). Alors que `rgb()` se rapporte aux proportions de rouge, vert et bleu dans une
+couleur, `hsl()` mesure où se situe la couleur dans le nuancier et à quel point elle est vive et claire :
+
+![Image illustrant la mesure hsl](https://user.oc-static.com/upload/2019/10/09/15706311553171_image7.jpg)
+
+La mesure hsl 
+
+$colour-primary a des valeurs de **teinte**, **saturation** et **clarté** de hsl(163, 83%, 48%), ce qui signifie que sa teinte
+se situe à 163° dans le spectre, que sa saturation est de 83% et sa clarté de 48%. Pour obtenir une couleur 10% plus foncée, il
+faut **diminuer** la valeur de clarté de 10%, ce qui donne une valeur de hsl(163, 83%, 38%).
+
+Et c’est exactement ce que fait la fonction `darken()` en arrière-plan. Elle prend une couleur et, par le biais d’une magie
+obscure, la convertit en `hsl()`. Ensuite, elle prend la quantité de changement demandé sur la clarté et fait le calcul. Enfin,
+elle prend la valeur `hsl()` obtenue et la retourne sous forme de valeur hex à compiler dans le document CSS.
+
+Quand une fonction donne une valeur, par exemple une nouvelle couleur, on dit que **la fonction retourne cette valeur**. Nous
+verrons de plus près comment marchent les fonctions et le mot clé **@return** très rapidement !
+
+:::note ?
+Mais attends, c’est suuuper compliqué ! 🤯
+:::
+
+Ici, je vous explique juste comment fonctionne la fonction darken et ce qu’elle fait exactement, afin que vous compreniez ce qui
+se passe quand vous l’utilisez, sans forcément voir toutes les étapes. Le but des fonctions est de vous faciliter la vie et
+d'écrire une codebase propre et flexible. Et ceci, en créant des valeurs de façon dynamique, ce qui vous permet de les inclure
+dans des modules qui sont réutilisables partout dans votre code.
+
+:::info
+Il existe bien plus de fonctions préinstallées dans Sass que nous n’avons guère le temps de couvrir, mais bon nombre d’entre
+elles pourraient vous être utiles pour un projet. Je vous recommande donc de lire **[la page sur les fonctions dans la documentation Sass](http://sass-lang.com/documentation/Sass/Script/Functions)**
+si vous voulez en savoir plus.
+:::
+
+### **Essayez par vous-même !**
+
+**![16183911506509_A-vous-de-jouer%20%282%29.png](https://user.oc-static.com/upload/2021/04/14/16183911506509_A-vous-de-jouer%20%282%29.png)**
+
+Apprenez à utiliser les fonctions avec un cas précis : en générant une couleur en fonction d’une autre.
+
+Console de code
+
+<iframe title="codevolve" id="codevolveIframe1" src="https://www.codevolve.com/api/v1/access_token/FBD7463616E3F8CFA217E3762ECC0603" width="100%" height="500" frameborder="0"></iframe>
+
+:::info
+Comparez votre travail avec la [correction de l'exercice](https://github.com/tdimnet/Simplifiez-vous-le-CSS-avec-Sass/tree/partie-2/chapitre-5/exercice-1) 😉
+:::
+
+Notre mixin heading-shadow crée désormais par elle-même des valeurs de couleurs plus foncées selon les paramètres que nous avons
+précisés, diminuant notre charge de travail... Mais que se passerait-il si on remplaçait $colour-primary par quelque chose de
+beaucoup plus foncé ? Dans ce cas, peut-être qu’on voudrait rendre la couleur de l’ombre plus claire, et pas plus foncée.
+
+### En résumé
+
+- Les fonctions sont des bouts de code réutilisables qui effectuent des tâches prédéfinies.
+- Sass fournit tout un tas de fonctions prêtes à l’emploi que vous pouvez utiliser pour manipuler des valeurs et rendre votre
+code mieux organisé et du coup plus facile à maintenir.
+- Les valeurs de couleurs peuvent être manipulées à travers les couleurs rouge, vert et bleu, mais aussi à travers les teintes,
+saturations et clartés.
+
+_Dans le chapitre suivant, nous vous apprendrons comment faire pour que votre mixin réagisse complètement différemment en
+fonction des situations._
+
+-----
+
+## Optimisez les mixins grâce aux conditions dans Sass
+
+[Optimisez les mixins grâce aux conditions dans Sass - Simplifiez-vous le CSS avec Sass - OpenClassrooms](https://openclassrooms.com/fr/courses/6106181-simplifiez-vous-le-css-avec-sass/6598606-optimisez-les-mixins-grace-aux-conditions-dans-sass)
+
+<Vimeo vimeoId="534427557" />
+
+<br />
+
+Notre code n’est pas très dynamique, par là j’entends qu’il n’est pas modulable, qu’il ne s’adapte pas en fonction des situations.
+Comment faire si on veut que la couleur s’adapte si l’ombre est plus ou moins foncée, par exemple ? 🤔
+
+### Découvrez les conditions
+
+Notre mixin heading-shadow fonctionne très bien en l’état, sauf si bien sûr on emploie une couleur très très foncée. L’œil
+humain distingue mal les **couleurs sombres**, c’est pour cela qu'une différence de luminosité de 10% entre deux couleurs claires
+sera beaucoup plus visible que la même différence entre deux couleurs sombres.
+
+Au-delà d’un certain seuil, quand la couleur de l’ombre est rendue plus foncée, il serait logique de la rendre plus claire à la
+place, ou sinon nous ne pourrions plus distinguer le texte de l’ombre. Fixons ce seuil à 25% : toute couleur ayant une luminosité
+de moins de 25% sera éclaircie. Sinon, si elle garde un pourcentage de luminosité de plus de 25%, dans ce cas elle sera foncée.
+
+En programmation, on appelle cela une **_structure conditionnelle_**, ou plus simplement **_condition_** (“if/else” en anglais) :
+**si** la couleur a moins de 25% de luminosité, l’éclaircir ; **sinon**, l’assombrir :
+
+![Illustration de la boucle conditionnelle](https://user.oc-static.com/upload/2019/10/23/15718150509774_image6.png)
+
+Une boucle conditionnelle
+
+:::note ?
+OK, jusqu’ici c’est compris, mais comment faire ça techniquement ? 🤔
+:::
+
+Commencez par taper **@if**... Poursuivez en mettant entre **accolades** le contenu de votre **condition** : le pourcentage de
+luminosité est inférieur à 25%. Pour obtenir la luminosité de $colour, on utilise la fonction lightness() de Sass, qui retourne
+la valeur de luminosité d’une couleur :
+
+```scss
+@if ( lightness($colour) < 25% ) {...}
+```
+
+La condition est prise en compte comme une **question vrai/faux**. Si la réponse est vraie, faire ceci ; si elle est fausse,
+faire autre chose.
+
+Répondre à la question c’est bien, mais il nous faut plus. Si votre condition est vraie, vous voulez que la couleur soit
+**éclaircie** ; et pour spécifier cela vous devez indiquer entre les accolades ce que vous voulez qu’il se passe. Dans notre cas,
+nous utilisons la fonction `lighten()` de Sass, qui éclaircira la couleur et modifiera donc $colour avec cette nouvelle valeur :
+
+```scss
+@if ( lightness($colour) < 25% ) {
+    $colour: lighten($colour, 10%);
+}
+```
+
+Si la condition est vraie, Sass lira ce qu’il y a entre les accolades et **exécutera** le code. Mais si la réponse est fausse
+(le pourcentage de luminosité de la couleur en question est égal ou supérieur à 25%), Sass **ignorera** le contenu de la
+première paire d’accolades et ira directement à la prochaine portion de code, qui est celle où nous indiquons l’instruction
+“alors”. Tapez **@else** pour la créer, suivi des accolades contenant ce qu’il faut faire si la réponse est fausse :
+
+```scss
+@if ( lightness($colour) < 25% ) {
+    $colour: lighten($colour, 10%);
+} @else {
+    $colour: darken($colour, 10%);
+}
+```
+
+Du coup, si la condition est vraie et que la luminosité de $colour est inférieure à 25%, on veut utiliser la fonction `lighten()`
+pour l’éclaircir de 10%. Mais si l’instruction est fausse, alors on veut utiliser la fonction `darken()` pour l’assombrir de 10%.
+
+Intégrons à présent notre nouvelle condition si/alors dans notre mixin heading-shadow  :
+
+```scss
+@mixin heading-shadow($colour: $colour-primary, $size: $heading-shadow-size) {
+    @if ( lightness($colour) < 25% ) {
+        $colour: lighten($colour, 10%);
+    } @else {
+        $colour: darken($colour, 10%);
+    }
+    text-shadow: $size $size $colour;
+}
+```
+
+Et maintenant, mettons $colour-secondary, dont la valeur de #001534 a une luminosité de 10%. Puisque 10% est inférieur à 25%,
+Sass devrait interpréter la condition comme étant vraie et retourner #002a67, la couleur qui est 10% plus claire :
+
+<div style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between', padding: '12px', backgroundColor: 'gray', border: '1px solid black', borderRadius:'12px'}}>
+<div style={{width:'49%'}}>
+
+```scss title="scss"
+.form {
+    &__heading {
+        @include heading-shadow($colour-secondary);
+    }
+}
+```
+
+</div>
+<div style={{width:'49%'}}>
+
+```css title="css"
+.form__heading {
+    text-shadow: 0.55rem 0.55rem #002a67;
+}
+
+
+```
+
+</div>
+</div>
+
+<br />
+
+Woooohooooo, victoire ! 🙌
+
+Testons un peu plus notre nouvelle fonction avec une couleur beaucoup plus claire pour voir ce qui se passe, prenons blanc par
+exemple – entre nous, difficile de faire plus clair 🙄 :
+
+<div style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between', padding: '12px', backgroundColor: 'gray', border: '1px solid black', borderRadius:'12px'}}>
+<div style={{width:'49%'}}>
+
+```scss title="scss"
+.form {
+    &__heading {
+        @include heading-shadow($colour-white);
+    }
+}
+```
+
+</div>
+<div style={{width:'49%'}}>
+
+```css title="css"
+.form__heading {
+    text-shadow: 0.55rem 0.55rem #e6e6e6;
+}
+
+
+```
+
+</div>
+</div>
+
+<br />
+
+#E6E6E6 a une luminosité de 90%, notre mixin l’a donc assombrie de 10%, exactement comme nous le voulions. Parfait. 👌
+
+:::info
+Un moyen rapide d’afficher les valeurs hex d’une couleur sous d’autres formats tels que HSL est de taper les valeurs hex dans
+Google et de cliquer sur le menu déroulant “Afficher les valeurs de couleur”.
+:::
+
+Les **conditions** vous aident à rendre votre codebase **flexible** et **maintenable** en adaptant automatiquement les blocs de
+code avec les données que vous avez renseignées. Flexible et maintenable : deux qualités au poil !
+
+### Essayez par vous-même !
+
+**![16183911506509_A-vous-de-jouer%20%282%29.png](https://user.oc-static.com/upload/2021/04/14/16183911506509_A-vous-de-jouer%20%282%29.png)**
+
+Dans cet exercice, ajustez la couleur d’un bouton en utilisant les conditions.
+
+Console de code
+
+<iframe title="codevolve" id="codevolveIframe1" src="https://www.codevolve.com/api/v1/access_token/BAE4D1BE44599AA5A9C0A7D01F447A19" width="100%" height="500" frameborder="0"></iframe>
+
+:::info
+Avez-vous réalisé l'exercice ? Vérifiez votre travail avec cette [correction de l'exercice](https://github.com/tdimnet/Simplifiez-vous-le-CSS-avec-Sass/tree/partie-2/chapitre-6/exercice-1).
+:::
+
+### Dans quelle condition se trouve ma condition ?
+
+Penchons-nous d’un peu plus près sur notre condition :
+
+```scss
+( lightness($colour) < 25% )
+```
+
+À gauche, la valeur que vous voulez comparer, en l’occurrence la luminosité de $colour. À droite, la valeur à laquelle vous
+voulez la comparer, qui est 25%. Le symbole “inférieur à” ( < )au milieu est ce qu’on appelle  un **_opérateur de comparaison_**.
+
+Un opérateur de comparaison est la façon dont vous comparez les valeurs : est-ce que x est inférieur à y ? Supérieur ? Égal ? Il
+existe six opérateurs de comparaison au total :
+
+| Opérateur | Condition | Résultat |
+|-----------|-----------|----------|
+| == | x==y | Vrai si x est égal à y |
+| != | x!=y | Vrai si x n’est pas égal à y |
+| > | x>y | Vrai si x est supérieur à y |
+| < | x<y | Vrai si x est inférieur à y |
+| >= | x>=y | Vrai si x est supérieur ou égal à y |
+| <= | x<=y | Vrai si x est inférieur ou égal à y |
+
+Et vous n’êtes pas limité à une seule condition. Par exemple, si vous voulez que votre condition soit vraie si $colour est
+inférieure à 25%, mais aussi supérieure à 10% ?
+
+Eh bien, c’est possible ! Vous pouvez enchaîner deux conditions en utilisant `and` pour les lier :
+
+```scss
+@if ( lightness($colour) < 25% ) and ( lightness($colour) > 10% ) {...}
+```
+
+En utilisant cet **opérateur logique** “et”, vous exigez que les deux conditions soient vraies pour que le bloc “si” soit exécuté.
+
+Vous pouvez aussi utiliser l’opérateur logique `or`, auquel cas le résultat sera vrai si **n’importe laquelle** des conditions
+est vraie :
+
+```scss
+@if ( lightness($colour) < 25% ) or ( saturation($colour) > 10% ) {...}
+```
+
+En utilisant _or_, tout ce qui se trouve dans les accolades sera exécuté si la couleur a moins de 25% de luminosité ou plus de
+10% de saturation.
+
+Vous pouvez aussi utiliser les conditions toutes seules. **L’instruction “_**else**_” n’est pas obligatoire**. Il arrive que
+vous ayez besoin que du code soit exécuté si une condition est remplie, mais que si elle est fausse, vous n’ayez pas besoin de
+faire quoi que ce soit ; dans ce cas, ne mettez pas d’instruction _@else_.
+
+Souvenez-vous, quand une condition est jugée fausse, le contenu des accolades est tout simplement **ignoré** et c’est le bout de
+code suivant qui sera pris en compte. Il peut s’agir d’un bloc @else, mais ça peut être tout simplement la suite de votre code :
+
+```scss
+@if ( saturation($colour) < 50% ) {
+    $colour: saturation($colour, 50%);
+}
+background-color: $colour;
+```
+
+Regardons ensemble. Ici la condition vérifie si la **saturation** de $colour est strictement inférieure à 50%. Si le résultat est
+vrai, alors la saturation de la couleur sera fixée à 50% grâce à la fonction saturation() de Sass, puis on attribuera $colour
+comme couleur de fond.
+
+Pour simplifier : il y a un minimum à atteindre concernant la saturation de la couleur de fond. Si elle est inférieure à 50%, il
+faut la porter à 50%, mais si elle est déjà d’au moins 50% voire plus, on peut directement passer à la suite du code qui établit
+$colour en tant que couleur de fond.
+
+:::note ?
+Une seconde. Je ne suis toujours pas sûr de saisir la différence. On peut essayer avec un autre exemple ? ✋
+:::
+
+Prenons un autre exemple. Avec des conditions **if/else**, c’est comme si vous partiez du principe que si vous êtes un sorcier,
+alors vous irez à Poudlard, et si vous êtes un moldu, vous n’irez pas. Selon que vous êtes un moldu ou un sorcier, vous irez ou
+non à Poudlard ; sauf que dans cette logique, si vous êtes un moldu vous vous retrouvez sans école, ce qui est un peu triste pour
+nous autres pauvres moldus.
+
+Avec **les instructions “si” toutes seules**, vous pouvez préciser que si l’étudiant est sorcier (et qu’il a reçu sa lettre
+lettre 🤭) alors il ira à Poudlard ; les autres iront forcément dans l’école la plus proche.
+
+### Essayez par vous-même !
+
+**![16183911506509_A-vous-de-jouer%20%282%29.png](https://user.oc-static.com/upload/2021/04/14/16183911506509_A-vous-de-jouer%20%282%29.png)**
+
+Reprenez le code de l’exercice précédent et allez plus loin avec les conditions et les arguments.
+
+Console de code
+
+<iframe title="codevolve" id="codevolveIframe2" src="https://www.codevolve.com/api/v1/access_token/99DFEA009319BFF81AA5A4CAD0041588" width="100%" height="500" frameborder="0"></iframe>
+
+:::info
+Et si vous compariez votre exercice avec la [correction](https://github.com/tdimnet/Simplifiez-vous-le-CSS-avec-Sass/tree/partie-2/chapitre-6/exercice-2) ?
+:::
+
+Vous avez maintenant du code qui fonctionne. Youhou ! Plutôt que de regarder une couleur vous-même et de décider si elle doit
+être plus claire ou plus foncée, vous avez délégué cette décision en indiquant dans votre code les conditions nécessaires afin de
+le laisser travailler à votre place (et vous la couler douce au soleil) ☀️. Les **instructions “si/alors”** sont des instructions
+étape par étape pour résoudre un problème : si c’est comme ceci, faire cela, puis cela ; ou alors si c’est comme ci, faire ça.
+
+Le terme technique pour ces petites suites d’instructions est **_algorithme_**. Eh oui, vous venez d’écrire votre premier
+algorithme, félicitations ! 💪
+
+On pense souvent (et à tort) que les algorithmes sont des morceaux de code extrêmement complexes et obscurs (coucou Matrix), et
+c’est vrai qu’ils peuvent l’être. L’algorithme du newsfeed de Facebook est suffisamment compliqué pour être breveté ! Mais sur un
+niveau plus basique, un algorithme n’est rien d’autre qu’une condition qui indique au programme comment procéder.
+
+Apprendre à utiliser les conditions pour **contrôler le déroulé d’un programme**, ou comment exécuter les instructions et dans
+quel ordre, est une étape super importante pour apprendre à créer un code flexible et maintenable.
+
+### En résumé
+
+- Les instructions `@if` / `@else` disent au code comment se comporter en fonction de conditions qui sont vraies ou fausses.
+- Elles comparent deux valeurs avec une condition et exécutent un ensemble d’instructions si elle est vraie, et un autre si elle
+est fausse.
+- Elles rendent le code plus flexible en lui permettant de s’adapter aux changements.
+- Les instructions `@if` peuvent être utilisées seules, sans `@else`.
+
+_Dans le chapitre suivant, nous allons réorganiser notre condition en l’enveloppant dans sa propre petite fonction._
+
+-----
+
+## Créez et utilisez des fonctions
+
+[Créez et utilisez des fonctions - Simplifiez-vous le CSS avec Sass - OpenClassrooms](https://openclassrooms.com/fr/courses/6106181-simplifiez-vous-le-css-avec-sass/6599091-creez-et-utilisez-des-fonctions)
+
+<Vimeo vimeoId="534427725" />
+
+<br />
+
+Grâce aux conditions, notre code est devenu plus modulable et il peut s’adapter en fonction des situations. Mais on peut aller
+encore plus loin, avec les fonctions !
+
+### Utilisez des fonctions
+
+À l’heure actuelle, la mixin heading-shadow possède une logique qui gère la façon dont une couleur est modifiée en fonction de
+ses valeurs.
+
+Tout fonctionne comme prévu... sauf qu’en fait, non.
+
+:::note ?
+Mais... mais quoi encore ?! 🙄
+:::
+
+Notre mixin ajuste toujours $colour, qu’il s’agisse de la **couleur par défaut** ou d’une couleur tapée manuellement. Sauf que,
+si vous tapez une couleur, c’est probablement qu’il s’agit d’une couleur que vous avez déjà choisie, n’est-ce pas ? Ce que vous
+voulez vraiment ici, c’est ajuster automatiquement la valeur de la couleur par défaut de votre mixin, en fonction de
+$colour-primary.
+
+![On veut ajuster la couleur de la valeur par défaut](https://user.oc-static.com/upload/2019/10/09/1570633852543_image1.png)
+
+On veut ajuster la couleur de la valeur par défaut
+
+Pour maîtriser la **luminosité/obscurité** de la couleur par défaut sans avoir à la renseigner manuellement, vous devez modifier
+sa valeur au sein de la déclaration de variable dans l’argument. Pour ce faire, vous devez déplacer le bloc de code if/else au
+sein même de l’argument pour $colour :
+
+```scss
+@mixin heading-shadow($colour: @if ( lightness($colour) < 25% ) {
+    $colour: lighten($colour, 10%);
+    } @else {
+        $colour: darken($colour, 10%);
+    }, $size: $heading-shadow-size) {
+    text-shadow: $size $size $colour;
+}
+```
+
+:::note ?
+On veut bien, mais c’est un peu le bazar là, non ?
+:::
+
+Exactement ! C’est tout ce qu’il ne faut pas faire : ce n’est pas du tout clair quand on regarde le code. Où est-ce que les
+arguments de la mixin s’arrêtent ? Où commence le code ? 🤯 Toutes ces accolades rendent l’ensemble trop confus. Et de toute
+façon, vous ne pouvez pas faire ça même si vous en avez envie : Sass vous **renverra une erreur pour syntaxe invalide.** 🤭
+
+Au lieu d’essayer de mettre un gros tas de code dans vos arguments, vous devez plutôt emballer le tout et le ranger dans son
+propre conteneur, ensuite vous allez pouvoir brancher facilement votre code à l’argument. C’est ce qu’on appelle une **fonction**.
+Vous aviez commencé à les utiliser quelques chapitres plus haut pour manipuler les couleurs, mais nous ne nous étions pas plongés
+dedans en détail.
+
+Préparez vos chaudrons chers sorciers, il est temps de créer nos propres fonctions !
+
+### Créez des fonctions
+
+Une fonction est un bout de code qui **effectue une tâche** lorsqu’elle est exécutée, comme par exemple assombrir une couleur,
+indiquer sa clarté ou convertir ses valeurs RBG en hexadécimal : rgb(21, 222,165). Eh oui, à chaque fois que vous écrivez vos
+couleurs sous forme de rgb() dans .scss, vous faites appel à une **fonction**. Vous les utilisez depuis le début sans le savoir !
+Cool, non ? 💫
+
+Allez, c’est parti : prenons la condition de votre mixin et transformons-la en fonction !
+
+```scss
+@function lightness-shift() {
+}
+```
+
+On commence par définir une fonction en utilisant le mot clé **@function** suivi de son nom. Ensuite on y ajoute une **paire de
+parenthèses** dans lesquelles on ajoutera les arguments et une **paire d’accolades** pour accueillir votre code. C’est un peu
+comme si vous étiez en cours de potion : vous prenez une fiole (une fonction), vous y ajoutez une étiquette (un nom), puis vous
+ouvrez le bouchon (accolades) pour y placer une potion (votre code) et vous refermez le bouchon (accolades).
+
+La manière pour définir une fonction et une mixin sont très similaires, sauf qu’au lieu d’utiliser le mot clé @mixin, on utilise
+**@function**.
+
+Et, comme pour les mixins, on peut inclure des **arguments**. Pour `lightness-shift()`, il vous faut un argument avec lequel la
+fonction va pouvoir travailler ; ici vous voulez inclure en argument la couleur que vous voulez modifier :
+
+```scss
+@function lightness-shift($colour){
+}
+
+Et voilà, il nous manque juste le code ! Copiez la condition, et collez-la entre les accolades :
+
+@function lightness-shift($colour) {
+    @if ( lightness($colour) < 25% ) {
+        $colour: lighten($colour, 10%);
+    } @else {
+        $colour: darken($colour, 10%);
+    }
+}
+```
+
+Votre première fonction est écrite à 99 %. Il vous manque une seule petite chose : **retourner une valeur**. Vous avez besoin
+que votre fonction produise une nouvelle valeur de couleur que vous pourrez utiliser en tant que couleur par défaut pour l’ombre.
+Pour le moment, la fonction modifie seulement $colour avec une valeur plus claire ou plus foncée. Mais en code, vous voulez que
+la fonction retourne, ou vous rende, une nouvelle valeur de couleur.
+
+Pour que `lightness-shift()` retourne une valeur, vous devez indiquer à la fonction ce que vous voulez qu’elle retourne quand
+elle est exécutée. Plutôt que de modifier $colour, faites en sorte que la fonction retourne la nouvelle valeur de couleur
+directement. Pour faire cela, vous pouvez utiliser @return :
+
+```scss
+@function lightness-shift($colour) {
+    @if ( lightness($colour) < 25% ) {
+        @return lighten($colour, 10%);
+    } @else {
+        @return darken($colour, 10%);
+    }
+}
+```
+
+Lorsque vous ajoutez **@return**, vous indiquez à Sass la valeur retournée que vous voulez lorsque vous appelez la fonction.
+Donc, **si** la luminosité est inférieure à 25%, vous voulez _retourner_ une couleur qui soit 10% plus claire, **sinon** vous
+voulez _retourner_ une couleur qui soit 10% plus foncée.
+
+Votre fonction est maintenant prête ! Intégrons-la dans votre mixin, comme lorsque vous faites appel à l’une des fonctions
+intégrées de Sass :
+
+```scss
+@mixin heading-shadow($colour: lightness-shift($colour-primary), $size: $heading-shadow-size) {
+    color: $colour;
+    text-shadow: $size $size $colour;
+}
+```
+
+En intégrant la condition dans une fonction, nous avons rendu notre code beaucoup beaucoup **plus propre et facile à lire**. Et
+plus facile à maintenir en bonus. Nous avons réuni toute notre logique dans un seul bloc, ce qui facilite beaucoup la lecture,
+la compréhension et la modification du code à l’avenir.
+
+### Essayez par vous-même !
+
+**![16183911506509_A-vous-de-jouer%20%282%29.png](https://user.oc-static.com/upload/2021/04/14/16183911506509_A-vous-de-jouer%20%282%29.png)**
+
+Dans cet exercice, entraînez-vous aux fonctions en créant une fonction qui change une couleur en une couleur pastel, avec le code fourni dans l’exercice.
+
+Console de code
+
+<iframe title="codevolve" id="codevolveIframe1" src="https://www.codevolve.com/api/v1/access_token/09594EFF87E368822015E82829C4E038" width="100%" height="500" frameborder="0"></iframe>
+
+:::info
+Avez-vous réussi ? Vérifiez votre travail avec la [correction de l'exercice](https://github.com/tdimnet/Simplifiez-vous-le-CSS-avec-Sass/tree/partie-2/chapitre-7/exercice-1).
+:::
+
+Félicitations ! 👏  Écrire votre propre fonction est une sacrée étape et un aspect important de la programmation. Même si la
+syntaxe peut varier d’un langage à l’autre, la logique pour définir une fonction est identique à ce que vous venez d’apprendre.
+Vous pouvez appliquer les techniques apprises dans les précédents chapitres à tous les langages : Ruby, JavaScript, Python, etc.
+
+Vous pensiez juste apprendre à construire des pages web, mais en réalité, vous êtes en train de devenir un programmeur accompli
+spécialisé dans le développement front-end.
+
+Plutôt cool, hein ? 😉
+
+### En résumé
+
+- Les fonctions sont des bouts de code qui effectuent une tâche lorsqu’elles sont exécutées.
+- Elles permettent d’encapsuler un bloc logique dans un module réutilisable, afin d’obtenir une codebase plus propre et plus
+maintenable.
+- On définit une fonction en utilisant le mot clé `@function`.
+- Si vous voulez qu’une fonction retourne une valeur, vous devez le spécifier en utilisant le mot clé `@return`.
+
+-----
+
+## Quiz : Révisez les techniques intermédiaires et outils de Sass
+
+[Révisez les techniques intermédiaires et outils de Sass - OpenClassrooms](https://openclassrooms.com/fr/courses/6106181-simplifiez-vous-le-css-avec-sass/exercises/3706)
+
+#### Compétences évaluées
+
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-checkbox" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#00b341" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <polyline points="9 11 12 14 20 6" />
+  <path d="M20 12v6a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h9" />
+</svg> Créer du code maintenable grâce aux techniques Sass intermédiaires
+
+-----
+
+#### Description
+
+À vous de jouer en répondant aux questions de ce quiz !
+
+Bonne chance !
+
+#### Question 1
+
+```scss
+.btn {
+    color: #0c2461;
+    font-size: 2rem;
+}
+.article {
+    color: #0c2461;
+    background-color: #fff;
+}
+```
+
+**Vous souhaitez refactoriser le code ci-dessus, pour cela vous voulez stocker la couleur `#0c2461` dans une variable pour
+pouvoir la réutiliser plusieurs fois dans votre code. Qu’allez-vous écrire ?**
+    
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> $blue = #0c2461;<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> $colour = b;<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> pink = $#0c2461;<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle-check" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#7bc62d" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M9 12l2 2l4 -4" />
+</svg> $blue: #0c2461;<br />
+<br />
+
+*Les variables permettent de stocker des valeurs afin de pouvoir les réutiliser partout dans le code. Pour déclarer une variable :
+`$nom_de_la_variable: valeur;`*
+
+*Dans notre cas, la bonne réponse est la réponse 4 : $blue: #0c2461;*
+
+
+-----
+
+#### Question 2 :
+
+```scss
+$blue-border: border: solid 5px #0c2461;
+```
+
+**En partant du code ci-dessus, que se passe-t-il si je déclare une variable comme celle-ci pour stocker border et l’appliquer
+sur un sélecteur `.btn` ?**
+
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle-check" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#7bc62d" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M9 12l2 2l4 -4" />
+</svg> Une erreur de compilation<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> Le bouton aura une bordure bleue<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> Le bouton n’aura pas de bordure<br />
+<br />
+
+*Les variables permettent de stocker des valeurs mais pas un ensemble de règles. Le code ne fonctionnera pas et déclenchera une
+erreur. Cependant il est possible de stocker les valeurs de la propriété `border` comme suit :*
+
+```scss
+$blue-border: solid 5px #0c2461;
+```
+
+-----
+
+#### Question 3 : En reprenant le code de l’exercice précédent :
+
+```scss
+$blue-border: border: solid 5px #0c2461;
+```
+
+**Si vous créez la mixin appropriée pour contenir `border` et que vous l’appelez `blue-border`, quelle serait la bonne écriture
+parmi les suivantes ?**
+
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg>
+
+```scss
+$blue-border: border: solid 5px #0c2461;
+```
+
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg>
+
+
+```scss
+@mixin $blue-border: border: solid 5px #0c2461;
+```
+
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle-check" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#7bc62d" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M9 12l2 2l4 -4" />
+</svg>
+
+```scss
+@mixin blue-border {
+    border: solid 5px #0c2461;
+}
+```
+
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg>
+
+```scss
+@mixin $blue-border {
+    border: solid 5px #0c2461;
+}
+```
+
+*Pour déclarer une mixin, il faut qu’elle soit sous cette forme :*
+
+
+```scss
+@mixin mixin-name {
+    css-property: value;
+}
+```
+
+*Les deux premières réponses vous donneront une erreur de compilation, cette syntaxe n’est pas valide.*
+
+*La réponse 4 a un $ en trop. On déclare le nom d’une variable avec le symbole $, pour une mixin `@mixin` + le nom de la mixin
+suffit. C’est donc la réponse 3 qui est la bonne.*
+
+
+-----
+
+#### Question 4 : Vous avez créé votre mixin `blue-border`. Il est temps de l’utiliser dans vos sélecteurs. Si vous deviez utiliser votre nouvelle mixin dans le sélecteur de classe `.article` suivant :
+
+```scss
+.article {
+    display: flex;
+    padding: 5px 10px;
+    color: black;
+    background-color: $white;
+    // insérez votre code ici
+}
+```
+
+**Quelle forme prendrait-il ?**
+
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> @include $blue-border;<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> @mixin blue-border;<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle-check" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#7bc62d" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M9 12l2 2l4 -4" />
+</svg> @include blue-border;<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> @extend %blue-border;<br />
+<br />
+
+*Pour utiliser une mixin, il faut l’inclure de cette manière : `@include` + nom_de_la_mixin.*
+
+*La première ne peut fonctionner car il y a un $ devant blue-border. Rappel : un $ permet de déclarer une variable.*
+
+*La réponse 2 ne fonctionnera pas car `@mixin` sert à déclarer une mixin et non à l’utiliser.*
+
+*Enfin `@extend %blue-border;` est correct en termes de syntaxe, mais cela sert à utiliser un placeholder et non une mixin.*
+
+-----
+
+#### Question 5 : Quelle est la différence entre les mixins et les extensions ?
+
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> Il n'y a aucune différence<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> Les mixins dupliquent les sélecteurs et les extensions dupliquent les règles<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle-check" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#7bc62d" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M9 12l2 2l4 -4" />
+</svg> Les mixins dupliquent les règles et les extensions dupliquent les sélecteurs<br />
+<br />
+
+*La différence principale entre les mixins et les extensions est qu’avec les mixins vous obtenez des **règles dupliquées**, alors
+qu’avec les extensions, vous obtenez des **sélecteurs dupliqués**.*
+
+
+-----
+
+#### Question 6 : Si vous deviez nommer un placeholder pour remplacer le sélecteur de classe `.content-colour`, comment feriez-vous ?
+
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> $content-colour<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle-check" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#7bc62d" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M9 12l2 2l4 -4" />
+</svg> %content-colour<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> .content-colour<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> &content-colour<br />
+<br />
+
+*Pour nommer un placeholder, il faut taper le symbole % suivi du nom du placeholder. Dans notre cas, `%content-colour`.*
+
+-----
+
+#### Question 7
+
+```scss
+.content-colour {
+    color: blue;
+    font-size: 2rem;
+}
+h1 {
+    @extend .content-colour;
+}
+textarea {
+    @extend .content-colour;
+}
+```
+
+**En partant du code ci-dessus, sous quelle forme sera compilé votre code ?**
+
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg>
+
+```scss
+textarea {
+    color: blue;
+    font-size: 2rem;
+}
+```
+
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg>
+
+```scss
+.content-colour {
+    color: blue;
+    font-size: 2rem;
+}
+```
+
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg>
+
+```scss
+.content-colour {
+    color: blue;
+    font-size: 2rem;
+}
+h1 {
+    color: blue;
+    font-size: 2rem;
+}
+textarea {
+    color: blue;
+    font-size: 2rem;
+}
+```
+
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle-check" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#7bc62d" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M9 12l2 2l4 -4" />
+</svg>
+
+```scss
+.content-colour, h1, textarea {
+    color: blue;
+    font-size: 2rem;
+}
+```
+
+*Rappelez-vous, avec les extensions vous obtenez des **sélecteurs dupliqués**. Les réponses 1 et 2 appliquent le résultat sur un
+seul sélecteur, aucun signe d’une quelconque extension.*
+
+*La réponse 3 montre que les règles ont été dupliquées, ce serait plutôt le résultat d’une mixin.*
+
+*La bonne réponse est donc la 4.*
+
+-----
+
+#### Question 8
+
+```scss
+.btn {
+    border: 5px solid blue;
+}
+```
+
+**Quelle serait la mixin appropriée pour obtenir le résultat compilé ci-dessus ?**
+
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg>
+
+```scss
+mixin border-colour {
+    border: 5px solid blue;
+}
+```
+
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle-check" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#7bc62d" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M9 12l2 2l4 -4" />
+</svg>
+
+```scss
+@mixin border-colour {
+    border: 5px solid blue;
+}
+```
+
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg>
+
+```scss
+@include border-colour {
+    border: 5px solid blue;
+}
+```
+
+*On déclare une mixin comme ceci :*
+
+```scss
+@mixin mixin-name {
+    css-property: value;
+}
+```
+
+*La première réponse n’a pas d’@ devant mixin et ne se compilera pas, vous aurez une erreur. La troisième réponse a bien un @
+mais est suivi de include ; @include est utilisé pour appeler votre mixin dans votre sélecteur et non pas pour la déclarer. Dans
+notre cas, si on devait utiliser notre mixin, cela donnerait quelque chose de ce genre :*
+
+```scss
+.btn {
+    @include border-colour;
+}
+```
+
+*La bonne réponse est donc la 2 !*
+
+-----
+
+#### Question 9
+
+```scss
+$white: #fff;
+$pastel-blue: #0097e6;
+$dark-blue: #192a56;
+
+@mixin border-colour($colour) {
+    @if ( lightness($colour) \> 25% ) {
+        $colour: darken($colour, 30%);
+    } @else {
+        $colour: lighten($colour, 30%);
+    }
+    border: 5px solid $colour;
+}
+.article {
+    display: flex;
+    padding: 5px 10px;
+    color: black;
+    background-color: $white;
+    @include border-colour($dark-blue);
+}
+```
+
+```html
+<div class="article">Je suis le contenu d’un article, lis moi !</div>
+```
+
+**En partant du code ci dessus, de quelle couleur sera la bordure de .article si vous remplacez $dark-blue par $pastel-blue ?**
+
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> Blanc<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> Noir<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle-check" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#7bc62d" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M9 12l2 2l4 -4" />
+</svg> Bleu foncé<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> Bleu clair<br />
+<br />
+
+*Reprenons ensemble le code de notre mixin : **si** la luminosité de la couleur passée en paramètre est supérieure à 25%, alors
+on l’assombrit de 30%, **sinon** on l'éclaircit de 30%. Si on passe en paramètre le bleu clair, sa luminosité est supérieure à
+25%, donc on l’assombrit et la mixin applique ces changement directement dans `border`. Vous pouvez changer les valeurs dans ce
+[Codepen](https://codepen.io/kadaaran-the-selector/pen/RwwWPyd) pour vous en rendre compte !*
+
+-----
+
+#### Question 10
+
+```scss
+$white: #fff;
+$pastel-blue: #0097e6;
+$text-color: #192a56;
+
+@function background($text-color) {
+    @if ( $text-color \== $white ) {
+        @return $pastel-blue;
+    } @else {
+        @return $white;
+    }
+}
+.btn {
+    color: $text-color;
+    background-color: background($text-color);
+}
+```
+
+**En partant du code ci-dessus, de quelle couleur sera le `background-color` de `.btn` ?**
+
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> Rien, il y aura une erreur de syntaxe<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> #0097e6<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle-check" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#7bc62d" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M9 12l2 2l4 -4" />
+</svg> #fff<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> #192a56<br />
+<br />
+
+*La fonction que l’on applique à `background-color` indique que si `$text-color` (la couleur du texte) est égale à ce que
+contient la variable `$white` (#fff qui est du blanc), alors on retourne la valeur `$pastel-blue` (bleu pastel). Ensuite, si la
+couleur du texte n’est pas blanche, alors on retourne la valeur `$white` (blanc).*
+
+*Dans notre cas, la couleur de notre texte n’est pas blanche mais bleu foncé (`#192a56`), donc la fonction retourne la valeur
+`$white` (blanc) !*
+
+*Dans notre CSS, on indique que le résultat de `background($text-colour)` sera la couleur de fond, ici ce sera donc le blanc.*
+

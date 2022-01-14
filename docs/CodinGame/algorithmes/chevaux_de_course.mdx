@@ -1,0 +1,206 @@
+---
+sidebar_position: 2
+---
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+import { Vimeo } from 'mdx-embed';
+
+# Chevaux de course
+
+[S'entraîner avec l'exercice "Chevaux de course" sur les sujets suivants : Boucles](https://www.codingame.com/training/easy/horse-racing-duals)
+
+## Énoncé
+
+Dans ce problème, vous devrez trouver les deux nombres les plus proches entre eux dans une liste de nombres. La liste peut être assez grande
+et vous aurez alors à trouver la meilleure complexité pour votre solution.
+
+### Histoire
+
+Pour rendre une course entre deux chevaux intéressante, il vous faudra trouver les chevaux ayant les niveaux les plus proches.
+
+### Objectif
+
+L’Hippodrome de Casablanca organise un nouveau type de course de chevaux : les duels. Lors d’un duel, seulement deux chevaux participent à
+la course. Pour que la course soit intéressante, il faut sélectionner deux chevaux qui ont une puissance similaire.
+
+Écrivez un programme qui, à partir d’un ensemble donné de puissances, identifie les deux puissances les plus proches et affiche leur écart
+avec un nombre entier positif.
+
+### Entrées du jeu
+
+**Entrée**
+
+Ligne 1 : Le nombre `N` de chevaux
+
+Les `N` lignes suivantes : la puissance `Pi` de chaque cheval. `Pi` est un entier.
+
+**Sortie**
+
+La différence `D` entre les deux puissances les plus proches. `D` est un entier positif.
+
+**Contraintes**
+
+1 < N < 100000<br />
+0 < Pi ≤ 10000000
+
+**Exemple**
+
+| Entrée | Sortie |
+|--------|--------|
+| 3<br />5<br />8<br />9 | 1<br /><br /><br /><br /> |
+
+```javascript
+/**
+ * Le code généré automatiquement ci-dessous vise à vous aider à analyser
+ * l'entrée standard selon l'énoncé du problème.
+ **/
+
+const N = parseInt(readline());
+let tab =[];
+for (let i = 0; i < N; i++) {
+    const pi = parseInt(readline());
+    tab.push(pi);
+}
+// Écrivez une réponse en utilisant console.log()
+// Pour déboguer : console.error('Messages de débogage...');
+const liste = tab.sort(function(a, b) {
+    return a - b;
+});
+
+let D = 10000000;
+let ecart = 0;
+for (let j = liste.length; j > 0; j--) {
+    ecart = liste[j] - liste[j-1];
+    
+    if (ecart < D) {
+        D = ecart;
+    }     
+}
+
+console.log(D);
+```
+
+-----
+
+```javascript
+const N = parseInt(readline());
+let pi = [];
+let answer = Infinity;
+
+for (let i = 0; i < N; i++) {
+    pi[i] = parseInt(readline());
+}
+
+pi.sort(function(a, b){return a-b});
+
+for(let i = 0; i < N; i++)
+{
+    if ((Math.abs(pi[i] - pi[i-1])) < answer)
+    {
+        answer = Math.abs(pi[i] - pi[i-1]);
+    }
+}
+
+console.log(answer);
+```
+
+------
+
+```javascript
+var N = parseInt(readline());
+var parr = [];
+for (var i = 0; i < N; i++) {
+    var pi = parseInt(readline());
+    parr.push(pi);
+}
+
+parr = parr.sort(function (a, b) { return a - b; });
+var minDiff = Math.abs(parr[1] - parr[0]);
+if (N > 2) {
+    for (var i = 2; i < parr.length; i++) {
+        minDiff = Math.min(minDiff, Math.abs(parr[i]-parr[i-1]));
+    }
+}
+
+print(minDiff);
+```
+
+------
+
+```javascript
+const N = parseInt(readline());
+let puissance=[];
+
+for (let i = 0; i < N; i++) {
+    puissance.push(parseInt(readline()));
+}
+
+puissance.sort((a,b)=>{
+ return b-a;
+})
+
+let ecartMin=puissance[0]
+for (let i=0;i<N;i++){
+    if (i>0){
+     let ecart=puissance[i-1]-puissance[i]
+     ecartMin=ecart<ecartMin?ecart:ecartMin;
+    }
+}
+
+console.log(ecartMin);
+```
+
+------
+
+```javascript
+var N = parseInt(readline());
+var pi = [];
+for (var i = 0; i < N; i++) {
+    pi.push(parseInt(readline()));
+}
+
+pi.sort(function (a, b) {
+    return a - b;
+});
+
+var lastValue = pi[1] - pi[0];
+
+for (var i = 1; i < N; i++) {
+    if (pi[i] - pi[i - 1] < lastValue) {
+        lastValue = pi[i] - pi[i - 1];
+    }
+}
+
+print(lastValue);
+```
+
+
+-----
+
+```javascript
+var N = parseInt(readline());
+var horses = [];
+for (var i = 0; i < N; i++) {
+    horses.push(parseInt(readline()));
+}
+
+horses.sort();
+var min = horses[0];
+for (var j = 0; j < horses.length; j++) {
+    var diff = Math.abs(horses[j+1] - horses[j]);
+    if ( diff <= min) {
+        min = diff;
+    }
+}
+
+print(min);
+```
+
+
+-----
+
+```javascript
+console.log([...Array(+readline())].map(_ => +readline())
+    .sort((a, b) => a - b)
+    .reduce((p, c, i, a) => i ? Math.min(p, c - a[i - 1]) : p, Infinity));
+```

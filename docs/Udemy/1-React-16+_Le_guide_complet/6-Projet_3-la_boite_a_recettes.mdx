@@ -1,0 +1,1464 @@
+---
+id: Udemy-React-16+_Le_guide_complet-06-Projet_3-la_boite_a_recettes
+title: "06 - Projet 3 : la Boîte à Recettes"
+---
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+import { MDXEmbedProvider } from 'mdx-embed';
+
+
+## Introduction
+
+<video
+  height="auto"
+  width="100%"
+  controls>
+    <source
+      src="https://monwikidevweb.la-loutre.fr/data/udemy/video/Udemy-React-16+_Le_guide_complet-06-Projet_3-la_boite_a_recettes-01.mp4"
+      type="video/mp4"
+    />
+</video>
+
+<br />
+<br />
+
+-----
+
+## Initialisation du projet
+
+<video
+  height="auto"
+  width="100%"
+  controls>
+    <source
+      src="https://monwikidevweb.la-loutre.fr/data/udemy/video/Udemy-React-16+_Le_guide_complet-06-Projet_3-la_boite_a_recettes-02.mp4"
+      type="video/mp4"
+    />
+</video>
+
+<br />
+<br />
+
+-----
+
+## Créer le Header
+
+<video
+  height="auto"
+  width="100%"
+  controls>
+    <source
+      src="https://monwikidevweb.la-loutre.fr/data/udemy/video/Udemy-React-16+_Le_guide_complet-06-Projet_3-la_boite_a_recettes-03.mp4"
+      type="video/mp4"
+    />
+</video>
+
+<br />
+<br />
+
+```jsx title="components/Header.js"
+import React from 'react'
+
+const Header = ({ pseudo }) => {
+    const formatPseudo = pseudo => /[aeiouy]/i.test(pseudo[0]) ? `d'${pseudo}` : `de ${pseudo}`
+    return (
+        <header>
+            <h1>La boîte à recettes {formatPseudo(pseudo)}</h1>
+        </header>
+    )
+}
+
+export default Header
+```
+
+```jsx title="App.js"
+import React, { Component } from 'react'
+// CSS
+import './App.css'
+
+import Header from './components/Header'
+
+class App extends Component {
+  state = {
+    pseudo: this.props.match.params.pseudo
+  }
+
+  render () {
+    return (
+      <div className='box'>
+        <Header pseudo={this.state.pseudo} />
+        <div className='cards'>
+          <div className='card'>
+            <h2>Une Carte</h2>
+          </div>
+        </div>
+      </div>
+    )
+  }
+}
+
+export default App
+```
+
+-----
+
+## Remplir le State en un clic
+
+<video
+  height="auto"
+  width="100%"
+  controls>
+    <source
+      src="https://monwikidevweb.la-loutre.fr/data/udemy/video/Udemy-React-16+_Le_guide_complet-06-Projet_3-la_boite_a_recettes-04.mp4"
+      type="video/mp4"
+    />
+</video>
+
+<br />
+<br />
+
+```jsx title="components/Admin.js"
+import React, { Component } from 'react'
+
+export default class Admin extends Component {
+    render() {
+        return (
+            <footer>
+                <button onClick={this.props.chargerExemple}>Remplir</button>
+            </footer>
+        )
+    }
+}
+```
+
+```jsx {4,7,12,15,26-27} title="App.js"
+import React, { Component } from 'react'
+// CSS
+import './App.css'
+import Admin from './components/Admin'
+
+import Header from './components/Header'
+import recettes from './recettes'
+
+class App extends Component {
+  state = {
+    pseudo: this.props.match.params.pseudo,
+    recettes: {}
+  }
+
+  chargerExemple = () => this.setState({ recettes })
+
+  render () {
+    return (
+      <div className='box'>
+        <Header pseudo={this.state.pseudo} />
+        <div className='cards'>
+          <div className='card'>
+            <h2>Une Carte</h2>
+          </div>
+        </div>
+        <Admin
+          chargerExemple={this.chargerExemple} />
+      </div>
+    )
+  }
+}
+
+export default App
+```
+
+-----
+
+## Afficher le State
+
+<video
+  height="auto"
+  width="100%"
+  controls>
+    <source
+      src="https://monwikidevweb.la-loutre.fr/data/udemy/video/Udemy-React-16+_Le_guide_complet-06-Projet_3-la_boite_a_recettes-05.mp4"
+      type="video/mp4"
+    />
+</video>
+
+<br />
+<br />
+
+```jsx title="components/Card.js"
+import React from 'react'
+
+const Card = ({ details }) => {
+    return (
+        <div className="card">
+            <div className="recette">
+                <h2>{details.nom}</h2>
+            </div>
+        </div>
+    )
+}
+
+export default Card
+```
+
+
+```jsx {5,18-19,24} title="App.js"
+import React, { Component } from 'react'
+// CSS
+import './App.css'
+import Admin from './components/Admin'
+import Card from './components/Card'
+import Header from './components/Header'
+import recettes from './recettes'
+
+class App extends Component {
+  state = {
+    pseudo: this.props.match.params.pseudo,
+    recettes: {}
+  }
+
+  chargerExemple = () => this.setState({ recettes })
+
+  render () {
+    const cards = Object.keys(this.state.recettes)
+      .map(key => <Card key={key} details={this.state.recettes[key]} />)
+    return (
+      <div className='box'>
+        <Header pseudo={this.state.pseudo} />
+        <div className='cards'>
+          { cards }
+        </div>
+        <Admin
+          chargerExemple={this.chargerExemple} />
+      </div>
+    )
+  }
+}
+
+export default App
+```
+
+-----
+
+## Component Card
+
+<video
+  height="auto"
+  width="100%"
+  controls>
+    <source
+      src="https://monwikidevweb.la-loutre.fr/data/udemy/video/Udemy-React-16+_Le_guide_complet-06-Projet_3-la_boite_a_recettes-06.mp4"
+      type="video/mp4"
+    />
+</video>
+
+<br />
+<br />
+
+```jsx title="components/Card.js"
+const Card = ({ details }) => {
+    const ingredients = details.ingredients
+        .split(',')
+        .map(item => <li key={item}>{item}</li>)
+
+    const instructions = details.instructions
+        .split('\n')
+        .map(item => <li key={item}>{item}</li>)
+
+    return (
+        <div className="card">
+            <div className="image">
+                <img src={require(`../img/${details.image}`)} alt={details.nom} />
+            </div>
+            <div className="recette">
+                <h2>{details.nom}</h2>
+                <ul className="liste-ingredients">
+                    {ingredients}
+                </ul>
+                <ol className="liste-instructions">
+                    {instructions}
+                </ol>
+            </div>
+        </div>
+    );
+}
+```
+
+
+Les images ne s'affiche pas avec ```<img src={require(`../img/${details.image}`)} />``` ?<br />
+Pour changer cela, allez à : node_modules -> react-scripts -> config -> webpack.config.js
+
+```js
+{
+          test: [/\.bmp$/, /\.gif$/, /\.jpe?g$/, /\.png$/],
+          loader: require.resolve('url-loader'),
+          options: {
+            limit: imageInlineSizeLimit,
+            name: 'static/media/[name].[hash:8].[ext]',
+            esModule: false
+          },
+        }
+```
+
+Recherchez la ligne ci-dessus et ajoutez `esModule: false` dans les options.<br />
+Ensuite, l'image s'affichera.
+- [reactjs - React img shows [object Module] instead of the image - Stack Overflow](https://stackoverflow.com/questions/66428206/react-img-shows-object-module-instead-of-the-image)
+
+-----
+
+## Images dynamiques
+
+<video
+  height="auto"
+  width="100%"
+  controls>
+    <source
+      src="https://monwikidevweb.la-loutre.fr/data/udemy/video/Udemy-React-16+_Le_guide_complet-06-Projet_3-la_boite_a_recettes-07.mp4"
+      type="video/mp4"
+    />
+</video>
+
+<br />
+<br />
+
+```jsx {10-16,21} title="components/Card.js"
+const Card = ({ details }) => {
+    const ingredients = details.ingredients
+        .split(',')
+        .map(item => <li key={item}>{item}</li>)
+
+    const instructions = details.instructions
+        .split('\n')
+        .map(item => <li key={item}>{item}</li>)
+
+    const requireImage = chemin => {
+        try {
+            return require(`../img/${chemin}`)
+        } catch (err) {
+            return require(`../img/default.jpeg`)
+        }
+    }
+
+    return (
+        <div className="card">
+            <div className="image">
+                <img src={requireImage(details.image)} alt={details.nom} />
+            </div>
+            <div className="recette">
+                <h2>{details.nom}</h2>
+                <ul className="liste-ingredients">
+                    {ingredients}
+                </ul>
+                <ol className="liste-instructions">
+                    {instructions}
+                </ol>
+            </div>
+        </div>
+    );
+}
+```
+
+-----
+
+## Connecter l'app avec Firebase
+
+<video
+  height="auto"
+  width="100%"
+  controls>
+    <source
+      src="https://monwikidevweb.la-loutre.fr/data/udemy/video/Udemy-React-16+_Le_guide_complet-06-Projet_3-la_boite_a_recettes-08.mp4"
+      type="video/mp4"
+    />
+</video>
+
+<br />
+<br />
+
+```jsx title="base.js"
+import Rebase from 're-base'
+import firebase from 'firebase/app'
+import 'firebase/database'
+
+const firebaseApp = firebase.initializeApp({
+  apiKey: "AIzaSyBYKmD4LHkzRlvZlHi64bWMUxPsQbze9A0",
+  authDomain: "recettes-app-5f80c.firebaseapp.com",
+  databaseURL: "https://recettes-app-5f80c-default-rtdb.europe-west1.firebasedatabase.app"
+})
+
+const base = Rebase.createClass(firebaseApp.database())
+
+// This is a named export
+export { firebaseApp }
+
+// this is a default export
+export default base
+```
+
+```jsx {2,10-15,17-19} title="App.js"
+// Firebase
+import base from './base'
+
+class App extends Component {
+  state = {
+    pseudo: this.props.match.params.pseudo,
+    recettes: {}
+  }
+
+  componentDidMount () {
+    this.ref = base.syncState(`/${this.state.pseudo}/recettes`, {
+      context: this,
+      state: 'recettes'
+    })
+  }
+
+  componentWillUnmount () {
+    base.removeBinding(this.ref)
+  }
+
+  chargerExemple = () => this.setState({ recettes })
+
+  render () {
+    const cards = Object.keys(this.state.recettes)
+      .map(key => <Card key={key} details={this.state.recettes[key]} />)
+    return (
+      <div className='box'>
+        <Header pseudo={this.state.pseudo} />
+        <div className='cards'>
+          { cards }
+        </div>
+        <Admin
+          chargerExemple={this.chargerExemple} />
+      </div>
+    )
+  }
+}
+```
+
+-----
+
+## Ajouter une recette
+
+<video
+  height="auto"
+  width="100%"
+  controls>
+    <source
+      src="https://monwikidevweb.la-loutre.fr/data/udemy/video/Udemy-React-16+_Le_guide_complet-06-Projet_3-la_boite_a_recettes-09.mp4"
+      type="video/mp4"
+    />
+</video>
+
+<br />
+<br />
+
+```jsx {18-22,36} title="App.js"
+class App extends Component {
+  state = {
+    pseudo: this.props.match.params.pseudo,
+    recettes: {}
+  }
+
+  componentDidMount () {
+    this.ref = base.syncState(`/${this.state.pseudo}/recettes`, {
+      context: this,
+      state: 'recettes'
+    })
+  }
+
+  componentWillUnmount () {
+    base.removeBinding(this.ref)
+  }
+
+  ajouterRecette = recette => {
+    const recettes = { ...this.state.recettes }
+    recettes[`recette-${Date.now()}`] = recette
+    this.setState({ recette })
+  }
+
+  chargerExemple = () => this.setState({ recettes })
+
+  render () {
+    const cards = Object.keys(this.state.recettes)
+      .map(key => <Card key={key} details={this.state.recettes[key]} />)
+    return (
+      <div className='box'>
+        <Header pseudo={this.state.pseudo} />
+        <div className='cards'>
+          { cards }
+        </div>
+        <Admin
+          ajouterRecette={this.ajouterRecette}
+          chargerExemple={this.chargerExemple} />
+      </div>
+    )
+  }
+}
+```
+
+```jsx title="components/AjouterRecette.js"
+import React, { Component } from 'react'
+
+export default class AjouterRecette extends Component {
+    render() {
+        return (
+            <div>
+                <h2>Ajouter recette</h2>
+            </div>
+        )
+    }
+}
+```
+
+```jsx {2,7-8,12} title="components/Admin.js"
+import React, { Component } from 'react'
+import AjouterRecette from './AjouterRecette'
+
+export default class Admin extends Component {
+    render() {
+        return (
+            <div className="cards">
+                <AjouterRecette AjouterRecette={this.props.AjouterRecette} />
+                <footer>
+                    <button onClick={this.props.chargerExemple}>Remplir</button>
+                </footer>
+            </div>
+        )
+    }
+}
+```
+
+-----
+
+## Formulaire avec React
+
+<video
+  height="auto"
+  width="100%"
+  controls>
+    <source
+      src="https://monwikidevweb.la-loutre.fr/data/udemy/video/Udemy-React-16+_Le_guide_complet-06-Projet_3-la_boite_a_recettes-10.mp4"
+      type="video/mp4"
+    />
+</video>
+
+<br />
+<br />
+
+```jsx title="components/AjouterRecette.js"
+export default class AjouterRecette extends Component {
+    state = {
+        nom: '',
+        image: '',
+        ingredients: '',
+        instructions: ''
+    }
+
+    handleChange = event => {
+        const { name, value } = event.target
+        this.setState({ [name]: value })
+    }
+
+    render() {
+        return (
+            <div className="card">
+                <form className="admin-form ajouter-recette">
+                    <input
+                        value={this.state.nom}
+                        onChange={this.handleChange}
+                        name="nom"
+                        type="text"
+                        placeholder="Nom de la recette"
+                    />
+                    <input
+                        value={this.state.image}
+                        onChange={this.handleChange}
+                        name="image"
+                        type="text"
+                        placeholder="Nom de l'image"
+                    />
+                    <textarea
+                        value={this.state.ingredients}
+                        onChange={this.handleChange}
+                        name="ingredients"
+                        rows="3"
+                        placeholder="Liste des ingrédients"
+                    />
+                    <textarea
+                        value={this.state.instructions}
+                        onChange={this.handleChange}
+                        name="instructions"
+                        rows="15"
+                        placeholder="Liste des instructions"
+                    />
+                </form>
+            </div>
+        )
+    }
+}
+```
+
+-----
+
+## Modifier le State via le formulaire
+
+<video
+  height="auto"
+  width="100%"
+  controls>
+    <source
+      src="https://monwikidevweb.la-loutre.fr/data/udemy/video/Udemy-React-16+_Le_guide_complet-06-Projet_3-la_boite_a_recettes-11.mp4"
+      type="video/mp4"
+    />
+</video>
+
+<br />
+<br />
+
+```jsx {14-23,30,60} title="components/AjouterRecette.js"
+export default class AjouterRecette extends Component {
+    state = {
+        nom: '',
+        image: '',
+        ingredients: '',
+        instructions: ''
+    }
+
+    handleChange = event => {
+        const { name, value } = event.target
+        this.setState({ [name]: value })
+    }
+
+    handleSubmit = event => {
+        event.preventDefault()
+        const recette = { ...this.state }
+        this.props.ajouterRecette(recette)
+        // Reset
+        Object.keys(recette).forEach(item => {
+            recette[item] = ''
+        })
+        this.setState({ ...recette })
+    }
+
+    render() {
+        return (
+            <div className="card">
+                <form
+                    className="admin-form ajouter-recette"
+                    onSubmit={this.handleSubmit}
+                >
+                    <input
+                        value={this.state.nom}
+                        onChange={this.handleChange}
+                        name="nom"
+                        type="text"
+                        placeholder="Nom de la recette"
+                    />
+                    <input
+                        value={this.state.image}
+                        onChange={this.handleChange}
+                        name="image"
+                        type="text"
+                        placeholder="Nom de l'image"
+                    />
+                    <textarea
+                        value={this.state.ingredients}
+                        onChange={this.handleChange}
+                        name="ingredients"
+                        rows="3"
+                        placeholder="Liste des ingrédients"
+                    />
+                    <textarea
+                        value={this.state.instructions}
+                        onChange={this.handleChange}
+                        name="instructions"
+                        rows="15"
+                        placeholder="Liste des instructions"
+                    />
+                    <button type="submit">+ Ajouter une recette</button>
+                </form>
+            </div>
+        )
+    }
+}
+```
+
+-----
+
+## Modifier les recettes
+
+<video
+  height="auto"
+  width="100%"
+  controls>
+    <source
+      src="https://monwikidevweb.la-loutre.fr/data/udemy/video/Udemy-React-16+_Le_guide_complet-06-Projet_3-la_boite_a_recettes-12.mp4"
+      type="video/mp4"
+    />
+</video>
+
+<br />
+<br />
+
+```jsx {24-28,42,44} title="App.js"
+class App extends Component {
+  state = {
+    pseudo: this.props.match.params.pseudo,
+    recettes: {}
+  }
+
+  componentDidMount () {
+    this.ref = base.syncState(`/${this.state.pseudo}/recettes`, {
+      context: this,
+      state: 'recettes'
+    })
+  }
+
+  componentWillUnmount () {
+    base.removeBinding(this.ref)
+  }
+
+  ajouterRecette = recette => {
+    const recettes = { ...this.state.recettes }
+    recettes[`recette-${Date.now()}`] = recette
+    this.setState({ recettes })
+  }
+
+  majRecette = (key, newRecette) => {
+    const recettes = { ...this.state.recettes }
+    recettes[key] = newRecette
+    this.setState({ recettes })
+  }
+
+  chargerExemple = () => this.setState({ recettes })
+
+  render () {
+    const cards = Object.keys(this.state.recettes)
+      .map(key => <Card key={key} details={this.state.recettes[key]} />)
+    return (
+      <div className='box'>
+        <Header pseudo={this.state.pseudo} />
+        <div className='cards'>
+          { cards }
+        </div>
+        <Admin
+          recettes={this.state.recettes}
+          ajouterRecette={this.ajouterRecette}
+          majRecette={this.majRecette}
+          chargerExemple={this.chargerExemple} />
+      </div>
+    )
+  }
+}
+```
+
+```jsx {3,7,11-19} title="components/Admin.js"
+import React, { Component } from 'react'
+import AjouterRecette from './AjouterRecette'
+import AdminForm from './AdminForm'
+
+export default class Admin extends Component {
+  render() {
+    const { recettes, ajouterRecette, majRecette, chargerExemple } = this.props
+    return (
+      <div className="cards">
+        <AjouterRecette ajouterRecette={ajouterRecette} />
+        {
+          Object.keys(recettes)
+            .map(key => <AdminForm
+              key={key}
+              id={key}
+              majRecette={majRecette}
+              recettes={recettes}
+            />)
+        }
+        <footer>
+            <button onClick={chargerExemple}>Remplir</button>
+        </footer>
+      </div>
+    )
+  }
+}
+```
+
+```jsx title="components/AdminForm"
+import React from 'react'
+
+const AdminForm = () => {
+  return (
+    <div className="card">
+      <form className="admin-form">
+        <input type="text" name="nom" placeholder="Nom de la recette" />
+        <input type="text" name="image" placeholder="Adresse de l'image" />
+        <textarea name="ingredients" rows="3" placeholder="Liste des ingrédients" />
+        <textarea name="instructions" rows="3" placeholder="Liste des instructions" />
+      </form>
+      <button>Supprimer</button>
+    </div>
+  )
+}
+
+export default AdminForm
+```
+
+-----
+
+## Gérer le formulaire de modification
+
+<video
+  height="auto"
+  width="100%"
+  controls>
+    <source
+      src="https://monwikidevweb.la-loutre.fr/data/udemy/video/Udemy-React-16+_Le_guide_complet-06-Projet_3-la_boite_a_recettes-13.mp4"
+      type="video/mp4"
+    />
+</video>
+
+<br />
+<br />
+
+```jsx title="components/AdminForm"
+const AdminForm = ({
+    id: key,
+    majRecette,
+    recettes
+}) => {
+    const recette = recettes[key]
+
+    const handleChange = (event, key) => {
+        const { name, value } = event.target
+        const recette = recettes[key]
+        recette[name] = value
+        majRecette(key, recette)
+    }
+
+    return (
+        <div className="card">
+            <form className="admin-form">
+                <input
+                    value={recette.nom}
+                    onChange={e => handleChange(e, key)}
+                    type="text"
+                    name="nom"
+                    placeholder="Nom de la recette"
+                />
+                <input
+                    value={recette.image}
+                    onChange={e => handleChange(e, key)}
+                    type="text"
+                    name="image"
+                    placeholder="Adresse de l'image"
+                />
+                <textarea
+                    value={recette.ingredients}
+                    onChange={e => handleChange(e, key)}
+                    name="ingredients"
+                    rows="3"
+                    placeholder="Liste des ingrédients"
+                />
+                <textarea
+                    value={recette.instructions}
+                    onChange={e => handleChange(e, key)}
+                    name="instructions"
+                    rows="3"
+                    placeholder="Liste des instructions"
+                />
+            </form>
+            <button>Supprimer</button>
+        </div>
+    )
+}
+```
+
+-----
+
+## Supprimer une recette
+
+<video
+  height="auto"
+  width="100%"
+  controls>
+    <source
+      src="https://monwikidevweb.la-loutre.fr/data/udemy/video/Udemy-React-16+_Le_guide_complet-06-Projet_3-la_boite_a_recettes-14.mp4"
+      type="video/mp4"
+    />
+</video>
+
+<br />
+<br />
+
+```jsx {30-34,51} title="App.js"
+class App extends Component {
+  state = {
+    pseudo: this.props.match.params.pseudo,
+    recettes: {}
+  }
+
+  componentDidMount () {
+    this.ref = base.syncState(`/${this.state.pseudo}/recettes`, {
+      context: this,
+      state: 'recettes'
+    })
+  }
+
+  componentWillUnmount () {
+    base.removeBinding(this.ref)
+  }
+
+  ajouterRecette = recette => {
+    const recettes = { ...this.state.recettes }
+    recettes[`recette-${Date.now()}`] = recette
+    this.setState({ recettes })
+  }
+
+  majRecette = (key, newRecette) => {
+    const recettes = { ...this.state.recettes }
+    recettes[key] = newRecette
+    this.setState({ recettes })
+  }
+
+  supprimerRecette = key => {
+    const recettes = { ...this.state.recettes }
+    recettes[key] = null
+    this.setState({ recettes })
+  }
+
+  chargerExemple = () => this.setState({ recettes })
+
+  render () {
+    const cards = Object.keys(this.state.recettes)
+      .map(key => <Card key={key} details={this.state.recettes[key]} />)
+    return (
+      <div className='box'>
+        <Header pseudo={this.state.pseudo} />
+        <div className='cards'>
+          { cards }
+        </div>
+        <Admin
+          recettes={this.state.recettes}
+          ajouterRecette={this.ajouterRecette}
+          majRecette={this.majRecette}
+          supprimerRecette={this.supprimerRecette}
+          chargerExemple={this.chargerExemple} />
+      </div>
+    )
+  }
+}
+```
+
+```jsx {3,13} title="components/Admin.js"
+export default class Admin extends Component {
+    render() {
+        const { recettes, ajouterRecette, majRecette, chargerExemple, supprimerRecette } = this.props
+        return (
+            <div className="cards">
+                <AjouterRecette ajouterRecette={ajouterRecette} />
+                {
+                    Object.keys(recettes)
+                        .map(key => <AdminForm
+                            key={key}
+                            id={key}
+                            majRecette={majRecette}
+                            supprimerRecette={supprimerRecette}
+                            recettes={recettes}
+                            />)
+                }
+                <footer>
+                    <button onClick={chargerExemple}>Remplir</button>
+                </footer>
+            </div>
+        )
+    }
+}
+```
+
+```jsx {5,48} title="components/AdminForm.js"
+const AdminForm = ({
+    id: key,
+    majRecette,
+    recettes,
+    supprimerRecette
+}) => {
+    const recette = recettes[key]
+
+    const handleChange = (event, key) => {
+        const { name, value } = event.target
+        const recette = recettes[key]
+        recette[name] = value
+        majRecette(key, recette)
+    }
+
+    return (
+        <div className="card">
+            <form className="admin-form">
+                <input
+                    value={recette.nom}
+                    onChange={e => handleChange(e, key)}
+                    type="text"
+                    name="nom"
+                    placeholder="Nom de la recette"
+                />
+                <input
+                    value={recette.image}
+                    onChange={e => handleChange(e, key)}
+                    type="text"
+                    name="image"
+                    placeholder="Adresse de l'image"
+                />
+                <textarea
+                    value={recette.ingredients}
+                    onChange={e => handleChange(e, key)}
+                    name="ingredients"
+                    rows="3"
+                    placeholder="Liste des ingrédients"
+                />
+                <textarea
+                    value={recette.instructions}
+                    onChange={e => handleChange(e, key)}
+                    name="instructions"
+                    rows="3"
+                    placeholder="Liste des instructions"
+                />
+            </form>
+            <button onClick={() => supprimerRecette(key)}>Supprimer</button>
+        </div>
+    )
+}
+```
+
+-----
+
+## Activer l'authentification Facebook dans Firebase
+
+<video
+  height="auto"
+  width="100%"
+  controls>
+    <source
+      src="https://monwikidevweb.la-loutre.fr/data/udemy/video/Udemy-React-16+_Le_guide_complet-06-Projet_3-la_boite_a_recettes-15.mp4"
+      type="video/mp4"
+    />
+</video>
+
+<br />
+<br />
+
+Firebase => Authentification
+
+https://developers.facebook.com/
+
+-----
+
+## Gérer l'authentification
+
+<video
+  height="auto"
+  width="100%"
+  controls>
+    <source
+      src="https://monwikidevweb.la-loutre.fr/data/udemy/video/Udemy-React-16+_Le_guide_complet-06-Projet_3-la_boite_a_recettes-16.mp4"
+      type="video/mp4"
+    />
+</video>
+
+<br />
+<br />
+
+```jsx {4,6-8,11-14,16-29,31-37,42-53} title="components/Admin.js"
+import React, { Component } from 'react'
+import AjouterRecette from './AjouterRecette'
+import AdminForm from './AdminForm'
+import Login from './Login'
+
+import firebase from 'firebase/app'
+import 'firebase/auth'
+import base, { firebaseApp } from '../base'
+
+export default class Admin extends Component {
+  state = {
+    uid: null,
+    chef: null
+  }
+
+  handleAuth = async authData => {
+    const box = await base.fetch(this.props.pseudo, { context: this })
+
+    if (!box.chef) {
+      await base.post(`${this.props.pseudo}/chef`, {
+        data: authData.user.uid
+      })
+    }
+
+    this.setState({
+      uid: authData.user.uid,
+      chef : box.chef || authData.user.uid
+    })
+  }
+
+  authenticate = () => {
+    const authProvider = new firebase.auth.FacebookAuthProvider()
+      firebaseApp
+        .auth()
+        .signInWithPopup(authProvider)
+        .then(this.handleAuth)
+  }
+
+  render() {
+    const { recettes, ajouterRecette, majRecette, chargerExemple, supprimerRecette } = this.props
+
+      // Si l'utilisateur n'est pas connecté
+      if (!this.state.uid) {
+        return <Login authenticate={this.authenticate} />
+      }
+
+      if (this.state.uid !== this.state.chef) {
+        return (
+          <div>
+            <p>Tu n'es pas le chef de cette boîte !</p>
+          </div>
+        )
+      }
+
+    return (
+      <div className="cards">
+        <AjouterRecette ajouterRecette={ajouterRecette} />
+        {
+          Object.keys(recettes)
+            .map(key => <AdminForm
+              key={key}
+              id={key}
+              majRecette={majRecette}
+              supprimerRecette={supprimerRecette}
+              recettes={recettes}
+            />)
+        }
+        <footer>
+          <button onClick={chargerExemple}>Remplir</button>
+        </footer>
+      </div>
+    )
+  }
+}
+```
+
+```jsx title="components/Login.js"
+import React from 'react'
+
+const Login = ({ authenticate }) => {
+  return (
+    <div className='login'>
+      <h2>Connecte-toi pour créer tes recettes !</h2>
+      <button onClick={authenticate} className="facebook-button">
+        Me connecter avec Facebook
+      </button>
+    </div>
+  )
+}
+
+export default Login
+```
+
+```jsx {48} title="App.js"
+class App extends Component {
+  state = {
+    pseudo: this.props.match.params.pseudo,
+    recettes: {}
+  }
+
+  componentDidMount () {
+    this.ref = base.syncState(`/${this.state.pseudo}/recettes`, {
+      context: this,
+      state: 'recettes'
+    })
+  }
+
+  componentWillUnmount () {
+    base.removeBinding(this.ref)
+  }
+
+  ajouterRecette = recette => {
+    const recettes = { ...this.state.recettes }
+    recettes[`recette-${Date.now()}`] = recette
+    this.setState({ recettes })
+  }
+
+  majRecette = (key, newRecette) => {
+    const recettes = { ...this.state.recettes }
+    recettes[key] = newRecette
+    this.setState({ recettes })
+  }
+
+  supprimerRecette = key => {
+    const recettes = { ...this.state.recettes }
+    recettes[key] = null
+    this.setState({ recettes })
+  }
+
+  chargerExemple = () => this.setState({ recettes })
+
+  render () {
+    const cards = Object.keys(this.state.recettes)
+      .map(key => <Card key={key} details={this.state.recettes[key]} />)
+    return (
+      <div className='box'>
+        <Header pseudo={this.state.pseudo} />
+        <div className='cards'>
+          { cards }
+        </div>
+        <Admin
+          pseudo={this.state.pseudo}
+          recettes={this.state.recettes}
+          ajouterRecette={this.ajouterRecette}
+          majRecette={this.majRecette}
+          supprimerRecette={this.supprimerRecette}
+          chargerExemple={this.chargerExemple} />
+      </div>
+    )
+  }
+}
+```
+
+-----
+
+## Gérer la déconnexion
+
+<video
+  height="auto"
+  width="100%"
+  controls>
+    <source
+      src="https://monwikidevweb.la-loutre.fr/data/udemy/video/Udemy-React-16+_Le_guide_complet-06-Projet_3-la_boite_a_recettes-17.mp4"
+      type="video/mp4"
+    />
+</video>
+
+<br />
+<br />
+
+```jsx {30-33,38,49,68} title="components/Admin.js"
+export default class Admin extends Component {
+  state = {
+    uid: null,
+    chef: null
+  }
+
+  handleAuth = async authData => {
+    const box = await base.fetch(this.props.pseudo, { context: this })
+
+    if (!box.chef) {
+      await base.post(`${this.props.pseudo}/chef`, {
+        data: authData.user.uid
+      })
+    }
+
+    this.setState({
+      uid: authData.user.uid,
+      chef : box.chef || authData.user.uid
+    })
+  }
+
+  authenticate = () => {
+    const authProvider = new firebase.auth.FacebookAuthProvider()
+    firebaseApp
+      .auth()
+      .signInWithPopup(authProvider)
+      .then(this.handleAuth)
+  }
+
+  logout = async () => {
+    await firebase.auth().signOut()
+    this.setState({ uid: null })
+  }
+
+  render() {
+    const { recettes, ajouterRecette, majRecette, chargerExemple, supprimerRecette } = this.props
+
+    const logout = <button onClick={this.logout}>Déconnexion</button>
+
+    // Si l'utilisateur n'est pas connecté
+    if (!this.state.uid) {
+      return <Login authenticate={this.authenticate} />
+    }
+
+    if (this.state.uid !== this.state.chef) {
+      return (
+        <div>
+          <p>Tu n'es pas le chef de cette boîte !</p>
+          {logout}
+        </div>
+      )
+    }
+
+    return (
+      <div className="cards">
+        <AjouterRecette ajouterRecette={ajouterRecette} />
+        {
+          Object.keys(recettes)
+            .map(key => <AdminForm
+              key={key}
+              id={key}
+              majRecette={majRecette}
+              supprimerRecette={supprimerRecette}
+              recettes={recettes}
+            />)
+          }
+          <footer>
+            {logout}
+            <button onClick={chargerExemple}>Remplir</button>
+          </footer>
+      </div>
+    )
+  }
+}
+```
+
+
+-----
+
+## Persister la connexion entre les sessions
+
+<video
+  height="auto"
+  width="100%"
+  controls>
+    <source
+      src="https://monwikidevweb.la-loutre.fr/data/udemy/video/Udemy-React-16+_Le_guide_complet-06-Projet_3-la_boite_a_recettes-18.mp4"
+      type="video/mp4"
+    />
+</video>
+
+<br />
+<br />
+
+```jsx {7-13} title="components/Admin.js"
+export default class Admin extends Component {
+  state = {
+    uid: null,
+    chef: null
+  }
+
+  componentDidMount () {
+    firebase.auth().onAuthStateChanged(user => {
+      if (user) {
+        this.handleAuth({ user })
+      }
+    })
+  }
+
+  handleAuth = async authData => {
+    const box = await base.fetch(this.props.pseudo, { context: this })
+
+    if (!box.chef) {
+      await base.post(`${this.props.pseudo}/chef`, {
+        data: authData.user.uid
+      })
+    }
+
+    this.setState({
+      uid: authData.user.uid,
+      chef : box.chef || authData.user.uid
+    })
+  }
+
+  authenticate = () => {
+    const authProvider = new firebase.auth.FacebookAuthProvider()
+    firebaseApp
+      .auth()
+      .signInWithPopup(authProvider)
+      .then(this.handleAuth)
+  }
+
+  logout = async () => {
+    await firebase.auth().signOut()
+    this.setState({ uid: null })
+  }
+
+  render() {
+    const { recettes, ajouterRecette, majRecette, chargerExemple, supprimerRecette } = this.props
+
+    const logout = <button onClick={this.logout}>Déconnexion</button>
+
+    // Si l'utilisateur n'est pas connecté
+    if (!this.state.uid) {
+      return <Login authenticate={this.authenticate} />
+    }
+
+    if (this.state.uid !== this.state.chef) {
+      return (
+        <div>
+          <p>Tu n'es pas le chef de cette boîte !</p>
+          {logout}
+        </div>
+      )
+    }
+
+    return (
+      <div className="cards">
+        <AjouterRecette ajouterRecette={ajouterRecette} />
+        {
+          Object.keys(recettes)
+            .map(key => <AdminForm
+              key={key}
+              id={key}
+              majRecette={majRecette}
+              supprimerRecette={supprimerRecette}
+              recettes={recettes}
+            />)
+          }
+          <footer>
+            {logout}
+            <button onClick={chargerExemple}>Remplir</button>
+          </footer>
+      </div>
+    )
+  }
+}
+```
+
+
+-----
+
+## Règles de sécurité de Firebase
+
+<video
+  height="auto"
+  width="100%"
+  controls>
+    <source
+      src="https://monwikidevweb.la-loutre.fr/data/udemy/video/Udemy-React-16+_Le_guide_complet-06-Projet_3-la_boite_a_recettes-19.mp4"
+      type="video/mp4"
+    />
+</video>
+
+<br />
+<br />
+
+```jsx title="Code des règles de Firebase"
+{
+  "rules": {
+    ".read": true,
+    ".write": "!data.exists()",
+    "$box": {
+      ".write": "auth != null && (!data.exists() || data.child('chef').val() === auth.uid)",
+      ".read": true
+    }
+  }
+}
+```
+
+-----
+
+## Résumé
+
+<video
+  height="auto"
+  width="100%"
+  controls>
+    <source
+      src="https://monwikidevweb.la-loutre.fr/data/udemy/video/Udemy-React-16+_Le_guide_complet-06-Projet_3-la_boite_a_recettes-20.mp4"
+      type="video/mp4"
+    />
+</video>
+
+<br />
+<br />

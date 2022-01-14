@@ -1,0 +1,89 @@
+---
+sidebar_position: 3
+---
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+import { Vimeo } from 'mdx-embed';
+
+# La descente
+
+[S'entraîner avec l'exercice "La descente" sur les sujets suivants : Boucles](https://www.codingame.com/training/easy/the-descent)
+
+### Énoncé
+
+Un problème simple pour expérimenter la plateforme CodinGame : votre programme doit trouver la montagne la plus haute parmi une liste de
+montagnes.
+
+### Histoire
+
+Le *vaisseau Destiny* est en danger : attiré vers le bas, il risque de s'écraser contre les montagnes d'une planète inconnue. Aidez Rick à
+détruire les montagnes... sauvez le *Destiny* !
+
+### Objectif
+
+Écrivez le programme permettant de détruire les montagnes pour pouvoir attérir. Pour cela, tirez sur la montagne la plus haute.
+
+### Règles
+
+**Au début de chaque tour de jeu**, vous recevez en entrée la hauteur de chaque montagne de gauche à droite.<br />
+**Avant la fin du tour de jeu**, vous devez indiquer la montagne la plus haute pour tirer dessus.
+
+Tirer sur une montagne ne fera qu'en détruire une partie. Votre vaisseau descend à chaque passe.
+
+### Conditions de victoire
+
+Vous gagnez si vous détruisez la montagne la plus haute à chaque tour.
+
+### Conditions de défaite
+
+- Votre vaisseau percute une montagne
+- Vous fournissez une sortie invalide ou votre programme ne réponds pas à temps
+
+### Entrées du jeu
+
+Le programme doit lire depuis l'entrée standard la hauteur des montagnes puis fournir sur la sortie standard l'indice de la montagne à
+détruire.
+
+**Entrées pour un tour de jeu**
+
+**8 lignes** : un entier `mountainH` par ligne. Il représente la hauteur d'une montagne. Les hauteurs des montagnes sont données dans l'ordre de
+leur index (allant de 0 à 7).
+
+**Sortie pour un tour de jeu**
+
+Une **unique ligne** contenant le numéro de la montagne sur laquelle tirer.
+
+**Contraintes**
+
+0 ≤ `mountainH` ≤ 9<br />
+Temps de réponse pour un tour ≤ 100ms
+
+
+
+
+
+```javascript
+/**
+ * La boucle while représente le jeu.
+ * Chaque itération représente un tour de jeu
+ * où vous sont donnés les entrées (les hauteurs des montagnes)
+ * et où il faut imprimer une sortie (l'index de la montagne sur laquelle tirer).
+ * Les saisies qui vous sont données sont automatiquement mises à jour en fonction de vos dernières actions.
+ **/
+
+// boucle de jeu
+let tir = 0;
+while (true) {
+let plusHaute = 0;
+    for (let i = 0; i < 8; i++) {
+        const mountainH = parseInt(readline()); // représente la hauteur d'une montagne.
+        if (mountainH > plusHaute) {
+            tir = i;
+            plusHaute = mountainH;
+        }
+    }    
+    // Écrire une action en utilisant console.log()
+    // Pour déboguer : console.error('Messages de débogage...');
+    console.log(tir);     // L'indice de la montagne sur laquelle tirer.
+}
+```

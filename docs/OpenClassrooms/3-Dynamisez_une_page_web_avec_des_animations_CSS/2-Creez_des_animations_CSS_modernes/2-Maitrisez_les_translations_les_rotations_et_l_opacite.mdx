@@ -1,0 +1,2295 @@
+---
+sidebar_position: 3
+---
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+import { Vimeo } from 'mdx-embed';
+
+# Maîtrisez les translations, les rotations et l’opacité
+
+## Optimisez les performances de votre navigateur pour vos animations CSS
+
+[Optimisez les performances de votre navigateur pour vos animations CSS - Créez des animations CSS modernes - OpenClassrooms](https://openclassrooms.com/fr/courses/5919246-creez-des-animations-css-modernes/6340918-optimisez-les-performances-de-votre-navigateur-pour-vos-animations-css)
+
+<Vimeo vimeoId="508777206" />
+
+<br />
+
+### Assurez-vous d’avoir des animations fluides
+
+Comme je vous le disais dans la vidéo d'introduction, les animations que nous voyons sur nos écrans ne sont pas de véritables mouvements. Il
+s'agit en fait de **successions d'images** allant suffisamment vite pour qu'elles soient interprétées par notre cerveau comme des objets en
+mouvement.
+
+Je vous parlais également de **Frames Per Second** (FPS). Voyons ce que cela donne sur nos écrans 🤓
+
+:::info
+Les images par seconde, ou _FPS_, représentent le nombre d’images individuelles affichées en une seconde. Plus les FPS sont élevées, plus le
+mouvement paraît fluide. Comme nous allons bientôt le voir, en animation web, on vise 60 FPS, mais en raison des limitations techniques de GIF,
+nous utilisons des exemples à 50 FPS.
+:::
+
+Dans l’animation suivante, une balle qui va et vient au rythme de 50 images par secondes (ou 50 FPS) :
+
+![Une animation CSS à 50 fps](https://user.oc-static.com/upload/2021/02/09/16128907707836_Gif053.gif)
+
+Le mouvement paraît bien fluide. Maintenant, voici la même animation, mais avec 10 FPS au lieu de 50 :
+
+![Une animation CSS à 10 fps](https://user.oc-static.com/upload/2021/02/09/16128907798918_Gif054.gif)
+
+Le mouvement de la balle paraît vraiment moins fluide à 10 FPS qu’à 50. On peut même distinguer les **images** qui composent l’animation. Au lieu
+de paraître naturelle, l’animation ressemble plutôt à une **tentative d’imitation de mouvement**. L’image **saccadée** ne trompe pas notre
+cerveau. Au contraire, l'expérience est plutôt désagréable, ce qui nous distrait de l’animation.
+
+:::note ?
+Mais alors, quel est le nombre d’images par seconde des transitions que nous avons créées jusqu’ici ? 🧐
+:::
+
+En animation traditionnelle, le nombre d’images par seconde est fixe et toutes les images sont créées avant que l’animation ne soit lancée. Mais
+les animations CSS sont affichées en **temps réel** par le navigateur, qui met à jour l’animation avec les nouvelles images dès qu’il les a
+calculées.
+
+Cela signifie que le nombre d’images par seconde de nos animations est **variable**. Par exemple, disons que le navigateur met 0,04 seconde à
+calculer une image d’une animation, puis 0,03 seconde à calculer la suivante.
+
+Mais cela ne nous donne pas le FPS pour autant.
+
+:::note ?
+Comment le calculer ?
+:::
+
+Pour déterminer le nombre d’images par seconde, on divise une seconde par la durée de calcul, en secondes. Donc 1/0,04 = 25 FPS.
+
+Ce qui veut dire que le nombre d’images par seconde de l’animation est de 25 FPS pour la première image, et 30 pour la deuxième.
+
+La question n’est pas tant comment calculer le nombre d’images par seconde de notre animation, mais comment s'assurer de respecter le nombre
+idéal, à savoir **60 FPS**.
+
+La plupart des écrans ont un taux de rafraîchissement de 60 hz, ou 60 images par seconde. Si on crée une animation avec 75 FPS, le spectateur
+n’en verrait que 60 parce que l’écran ne rafraîchit par l’image assez vite pour afficher les 75. 60 FPS est donc le taux d’images par seconde le
+plus fluide que le spectateur pourra voir sur ses écrans.
+
+De fait, nous devons nous assurer que le navigateur mette moins d'un soixantième de seconde, ou 0,016 seconde (16 millisecondes) pour calculer
+les images de notre animation.
+
+:::noe ?
+Alors comment faire pour garder ce temps de calcul à 16 millisecondes maximum ?
+:::
+
+Pour cela, il suffit de suivre certaines bonnes pratiques dans la manière d'écrire vos animations CSS.
+
+### Comprenez comment le navigateur passe des codes HTML et CSS à une page web
+
+Pour passer des codes CSS et HTML… à une page web, le navigateur passe par plusieurs étapes pour afficher une page. Voici les étapes qui nous
+intéressent pour le rendu de nos animations :
+1. **Style** : le navigateur **reçoit** le code HTML. Il va l'**interpréter** pour comprendre la structure du DOM (Document Object Model). Ainsi,
+pour chaque balise HTML, il crée un élément du DOM, un peu comme un arbre de nœuds. Il parcourt ensuite le CSS, et détermine quelles règles
+s’appliquent à quels éléments. À partir de là, il va créer la structure qui s'affichera.
+
+:::info
+Le DOM, qui signifie **_Document Object Model_** ("modèle d'objet de document", en français), est une représentation du HTML d'une page web. Il
+faut voir le DOM comme un **arbre** où chaque élément peut avoir zéro ou plusieurs enfants, qui peuvent avoir eux-mêmes zéro ou plusieurs enfants,
+qui peuvent avoir zéro ou plusieurs enfants... Si vous voulez en savoir plus, il y a un super cours dessus : [Écrivez du JavaScript pour le web](https://openclassrooms.com/fr/courses/5543061-ecrivez-du-javascript-pour-le-web/5543068-comprenez-ce-quest-le-dom) 🚀.
+:::
+
+2. **Layout** (mise en page) : maintenant que le navigateur connaît les styles et les éléments à afficher, il **détermine** la **taille** des
+éléments et où les placer.
+3. **Paint** (peinture) : le navigateur transforme les éléments en **pixels** en utilisant les styles de l’étape 1, et les positions et
+dimensions déduites de l’étape 2.
+4. **Composition** : le navigateur combine tous les éléments pour **composer** la page qui s’affiche dans le navigateur.
+
+Ces différentes étapes sont importantes pour comprendre quelles propriétés modifier pour nos animations. En effet, le navigateur applique
+différentes propriétés CSS à différentes étapes du processus. Typiquement, width et height sont appliquées pendant l'étape du layout. En revanche,
+color et box-shadow sont appliquées à l'étape paint.
+
+:::info
+Le site **[csstriggers.com](http://csstriggers.com/)** (en anglais, mais vous retrouverez les mots clés que nous avons vus ici) présente les
+étapes de chaque propriété associée aux layout, paint et composition. Pas mal si vous avez un doute sur une propriété pour la performance de
+votre animation !
+:::
+
+Chaque étape nécessite un **temps de calcul** au navigateur. Il est donc plus judicieux de passer par le moins d'étapes possible si on veut
+respecter le seuil des 16 millisecondes pour chaque étape de notre animation.
+
+:::note ?
+Concrètement, comment ça se passe ?
+:::
+
+Reprenons l'exemple de notre bouton dans la partie précédente.
+
+Mon bouton fait 30px par 100px. Au survol de la souris, je veux qu'il s'élargisse de 10px. Si je change la propriété  `width`, cela veut dire que
+mon navigateur recalcule le layout, le paint et la composition. Pas très optimal, n'est-ce pas ? 🙈
+
+Et à chaque mouvement de souris, il faudra tout **recalculer**. Or, plus le navigateur doit faire de calculs, plus il mettra de temps, ce qui
+baisse le nombre d’images par seconde, et **dégrade** considérablement l'expérience utilisateur.
+
+Quand le nombre d’images par seconde devient tellement faible qu’on commence à distinguer les images une par une et que le mouvement semble
+"**rouiller**", on appelle ça “**jank**”. C'est le pire ennemi d’un animateur. La clé pour éviter le jank est de se limiter à animer des
+propriétés qui ne déclenchent pas de calculs de layout ou de paint.
+
+En d’autres termes, il ne faut animer que des propriétés qui font partie de l’étape **composition**. Les plus adaptées sont donc `transform` et
+`opacity`.
+
+Revenons à notre bouton qui faisait grossir une boule en utilisant la fonction `scale()` de la propriété `transform` :
+
+![Animation d'un cercle qui grossit et rétrécit](https://user.oc-static.com/upload/2021/02/09/16128907937053_Gif055.gif)
+
+Les changements de dimension de la boule n’affectent pas la position du bouton. En effet, la propriété transform effectue ses opérations à
+l’étape composition, ce qui ne cause aucun changement de layout (mise en page) ou de paint, donc moins de calcul pour le navigateur, et donc un
+**meilleur FPS**.
+
+Génial, n’est-ce pas ?
+
+Alors, avez-vous réussi à faire grossir votre bouton ?
+
+### En résumé
+
+- à l'écran, il n'y a pas de véritable mouvement, mais une **succession d'images** s'enchaînant suffisamment rapidement pour être interprétées
+par notre cerveau comme du mouvement ;
+- cette succession d'images s'appelle les FPS (Frame Per Second, ce qui signifie _images par seconde_) ;
+- plus le FPS est **élevé**, plus l'animation est **fluide** ;
+- le taux d’images par seconde idéal est **60 FPS** ;
+- les quatre étapes de la création d’une page web sont :
+    - **Style** : le navigateur comprend la structure HTML du code qu'il reçoit et prépare le style qui sera appliqué,
+    - **Layout** (mise en page) : le navigateur détermine la mise en page et la taille des éléments en fonction du style qu'il a reçu,
+    - **Paint** : il transforme les éléments en pixels,
+    - Composition : il combine tous les éléments pour composer la page qui s’affiche ;
+- pour assurer la **fluidité** des animations, il faut se contenter d’animer des propriétés de l’étape composition. Les plus utiles sont
+`transform` et `opacity`.
+
+_Maintenant que vous comprenez tous les enjeux liés au choix des propriétés de ces animations, nous allons pouvoir explorer la propriété transform.
+Nous verrons les nombreuses fonctions qu’elle met à notre disposition pour créer des animations fluides._
+
+-----
+
+## Créez des animations fluides avec la propriété CSS transform
+
+[Créez des animations fluides avec la propriété CSS transform - Créez des animations CSS modernes - OpenClassrooms](https://openclassrooms.com/fr/courses/5919246-creez-des-animations-css-modernes/6340919-creez-des-animations-fluides-avec-la-propriete-css-transform)
+
+<Vimeo vimeoId="508777226" />
+
+<br />
+
+Pour nous assurer que nos animations soient aussi fluides que possibles, nos deux propriétés alliées sont `transform` et `opacity`. Seulement deux
+propriétés, ça vous paraît limité ?
+
+Détrompez-vous ! Car elles nous permettent en réalité de réaliser une multitude d'effets d'animation.
+
+### Découvrez le potentiel de `transform`
+
+La propriété `transform` s'avère un véritable couteau suisse en termes d'animation. En effet, elle dispose de plus de **20 fonctions différentes**
+pour **déplacer**, **faire pivoter**, **déformer** et **changer la taille** des éléments.
+
+Dans les chapitres précédents, nous avons utilisé `transform` pour modifier la taille d’un bouton et d’un cercle. Nous connaissons donc sa
+syntaxe et sa fonction `scale()`.
+
+```scss
+.btn {
+    :hover + .ball {
+        transform: scale(1);
+    }
+}
+```
+
+Mais pour exploiter toute la puissance de la propriété transform, nous allons commencer à utiliser plusieurs de ses fonctions. Dans ce chapitre,
+nous allons couvrir les fonctions `transform` les plus utiles, et voir comment les lier entre elles pour créer des animations plus complexes, tout
+en respectant l'objectif de 60 FPS.
+
+### Modifiez la taille d'un élément avec `scale`
+
+Pour utiliser la propriété `transform` sur un élément, nous devons lui fournir la fonction (ou les fonctions, comme on va le voir) qui
+**déclenche** les transformations souhaitées. Par exemple, pour faire passer un objet à 200 % de sa taille de départ, on utilise la fonction
+`scale()` paramétrée à 2 :
+
+```scss
+.btn {
+    &:hover + .box {
+        transform: scale(2);
+    }
+}
+.box {
+    transition: transform 330ms ease-in-out;
+}
+```
+
+Plutôt que d’exprimer `scale()` en pourcentages, on indique des nombres, 0 pour 0 %, et 1 égal à 100 %. `scale(2)` fait donc grossir notre
+élément à 200% de sa taille :
+
+![Une animation d'un carré qui grossit et rétrécit sans fluidité](https://user.oc-static.com/upload/2021/02/09/16128909432431_Gif056.gif)
+
+Donner une seule valeur à la fonction `scale()` modifie la **taille** de l’élément de manière **uniforme**, aussi bien en hauteur qu'en largeur.
+Mais on peut également lui préciser deux valeurs, une pour modifier la largeur (X), et une autre pour modifier la hauteur (Y).
+
+Par exemple, ici, nous souhaitons garder un **volume constant**. Il faut donc affiner la largeur de la boîte en même temps que nous allongeons sa
+longueur. Passons l’échelle de X à 300%, et Y à 50% :
+
+```scss
+.btn {
+    &:hover + .box {
+        transform: scale(3, 0.5);
+    }
+}
+.box {
+    transition: transform 330ms ease-in-out;
+}
+```
+
+Maintenant, notre boîte s’étire horizontalement :
+
+![Une animation d'un carré qui devient un rectangle allongé](https://user.oc-static.com/upload/2021/02/09/16128909603487_Gif057.gif)
+
+:::note ?
+Et si je veux modifier ma boîte dans une seule direction ? 🧐
+:::
+
+On pourrait faire quelque chose comme ça :
+
+```scss
+.btn {
+    &:hover + .box {
+        transform: scale(2, 1);
+    }
+}
+.box {
+    transition: transform 330ms ease-in-out;
+}
+```
+
+Ça fonctionne : l’axe X est à 200% et l’axe Y à 100%… Mais il existe une méthode plus propre et plus explicite.
+
+Quand on veut modifier l’échelle dans une seule direction, on peut utiliser les fonctions `scaleX()` et `scaleY()`. `scaleX()` permet de modifier
+un objet horizontalement, et `scaleY()` verticalement.
+
+Alors, pour passer l’échelle de notre bouton à 200% horizontalement, nous pouvons utiliser `scaleX(2)` :
+
+```scss
+.btn {
+    &:hover + .box {
+        transform: scaleX(2);
+    }
+}
+.box {
+    transition: transform 330ms ease-in-out;
+}
+```
+
+![Une animation d'un carré qui devient un rectangle allongé](https://user.oc-static.com/upload/2021/02/09/16128909734538_Gif058.gif)
+
+Félicitations ! Vous maîtrisez maintenant une des fonctions les plus utiles de transform 🎉 !
+
+Découvrons maintenant la suite !
+
+### Modifiez la position d'un élément
+
+La fonction `translate` est le moyen idéal pour modifier la **position d'un élément** dans une animation web. `translate()` prend deux valeurs en
+paramètres. La première indique la distance à laquelle on veut se déplacer sur l’axe X, et la seconde la distance sur l’axe Y. Elle accepte
+[différentes unités](https://developer.mozilla.org/fr/docs/Apprendre/CSS/Introduction_%C3%A0_CSS/Values_and_units), comme les px, les vh ou les em.
+Nous pouvons donc déplacer notre boîte de 150 px vers la droite et 7 vh vers le haut, comme ça :
+
+```scss
+.btn {
+    &:hover + .box {
+        transform: translate(150px, \-7vh);
+    }
+}
+```
+
+```scss
+.box {
+    transition: transform 330ms ease-in-out;
+}
+```
+
+Ce qui nous donne :
+
+![Une animation d'un carré qui se déplace en diagonale](https://user.oc-static.com/upload/2021/02/09/16128909912686_Gif059.gif)
+
+Vous pouvez également utiliser des **pourcentages**. Pour certaines propriétés CSS, les pourcentages sont calculés par rapport à leur élément
+parent. Par exemple, `width: 50%` signifie la moitié de la largeur du parent :
+
+![Une illustration de width: 50%](https://user.oc-static.com/upload/2019/08/25/15667221900415_Capture%20d%E2%80%99e%CC%81cran%202019-08-25%20a%CC%80%2010.36.19.png)
+
+Mais quand on utilise des pourcentages avec `translate()`, ces pourcentages sont liés à l’élément lui-même. Disons que notre élément fait 100px de
+large :
+
+```scss
+.btn {
+    &:hover + .box {
+        transform: translate(100px, 0);
+    }
+}
+.box {
+    width: 100px;
+    height: 100px;
+    transition: transform 330ms ease-in-out;
+}
+```
+
+Si on se déplace de 100 % sur l’axe X, on se déplace de 100 px vers la droite :
+
+![Une animation d'un carré qui se déplace à l'horizontale](https://user.oc-static.com/upload/2021/02/09/16128910089039_Gif060.gif)
+
+Comme nous l'avons vu avec `scale()`, il est possible de **déplacer** des éléments sur l’axe X et Y séparément, grâce aux fonctions `translateX()`
+et `translateY()`.
+
+Ajoutons un peu de texte que nous allons faire apparaître dans la boîte :
+
+```html
+<div class="container">
+    <button class="btn">Transform!</button>
+    <div class="box">
+        Boop!
+    </div>
+</div>
+```
+
+La structure convient, mais pour animer le texte séparément de son élément parent, nous devons l’envelopper dans un **conteneur**. Plaçons-le
+donc au sein d’un `<span>` :
+
+```html
+<div class="container">
+    <button class="btn">Transform!</button>
+    <div class="box">
+        <span>Boop!</span>
+    </div>
+</div>
+```
+
+`<span>` donne à la propriété `transform` un élément auquel s’accrocher pour le manipuler. Réglons maintenant notre propriété `transform` pour
+qu’elle utilise `translateY()`. Cela permet d'avoir notre texte hors de la boîte au début de l'animation, puis de le faire défiler dedans :
+
+```scss
+.btn {
+    &:hover + .box {
+        transform: scale(1);
+        span {
+            transform: translateY(0);
+        }
+    }
+}
+```
+
+
+```scss
+.box {
+    transform: scale(0.1);
+    transition: transform 330ms ease-in-out;
+    overflow: hidden;
+    span {
+        display: inline-block;
+        transform: translateY(250%);
+        transition: transform 280ms ease-out 50ms;
+    }
+}
+```
+
+Vous avez remarqué le changement de la valeur de display en `inline-block` ? En effet, la valeur de display par défaut de `<span>` est inline. Or,
+`transform` ne peut pas manipuler d’éléments inline. Nous devons donc modifier le mode d’affichage en `block` ou `inline-block` avant d’obtenir
+des résultats.
+
+:::info
+Pour en apprendre plus sur les différentes valeurs de display, vous pouvez regarder le chapitre du cours sur le HTML et le CSS :
+[Apprenez à créer votre site web avec HTML5 et CSS3](https://openclassrooms.com/fr/courses/1603881-apprenez-a-creer-votre-site-web-avec-html5-et-css3/1606402-decouvrez-dautres-techniques-de-mise-en-page)
+:::
+
+Vous avez peut-être aussi remarqué que le texte n'apparaît pas tant qu'il n'est pas dans la boîte : c'est la propriété `overflow: hidden;` qui
+nous permet cela.
+
+Nous avons aussi ajouté à notre **transition** `span` un petit délai et raccourci sa durée, pour qu’elle agisse un peu comme une animation
+secondaire (principe d’animation numéro 8 ! 🤘).
+
+![Une animation d'un petit carré qui grossit](https://user.oc-static.com/upload/2021/02/09/16128910224453_Gif061.gif)
+
+### Faites pivoter vos éléments avec `rotate()`
+
+Maintenant que vous maîtrisez translate et scale, voyons la dernière fonction du trio gagnant : `rotate()` !
+
+On peut paramétrer `rotate()` en plusieurs unités. Nous verrons ici les plus simples à utiliser : les degrés exprimés en "deg" et les turns. Un
+turn correspond à 360 degrés, ce qui est plutôt intuitif. Il s'agit donc de tours sur soi-même.
+
+Faisons un test ! Prenons deux boîtes, chacune avec ses propres unités de rotation :
+
+```html
+<div class="container">
+    <button class="btn">Transform!</button>
+    <div class="boxes">
+        <div class="boxes__base boxes--rotDegrees">rotate(360deg)</div>
+        <div class="boxes__base boxes--rotTurns">rotate(1turn)</div>
+    </div>
+</div>
+```
+
+Les deux boîtes sont placées dans la div `.boxes`. Rappelez-vous que pour animer les propriétés d’un objet en CSS, elles doivent se trouver à
+côté de l’élément suivant dans la hiérarchie. Nous pouvons donc maintenant sélectionner les boîtes individuellement et les animer séparément :
+
+```scss
+.btn {
+    &:hover + .boxes {
+        & > .boxes--rotDegrees {
+            transform: rotate(0deg);
+        }
+        & > .boxes--rotTurns {
+            transform: rotate(0turn);
+        }
+    }
+}
+```
+
+```scss
+.boxes {
+    &--rotDegrees {
+        transform: rotate(-360deg);
+        transition: transform 500ms ease-in-out;
+    }
+    &--rotTurns {
+        background: pink;
+        transform: rotate(-1turn);
+        transition: transform 500ms ease-in-out;
+    }
+}
+```
+
+Chaque boîte démarre en position de rotation négative de 360 deg/1 turn. Au survol du bouton, cela déclenche la transition. On les fait alors
+tourner vers la position 0 deg/0 turn sur une demi-seconde, en utilisant la fonction de temporisation ease-in-out.
+
+![L'animation de deux carrés qui font une rotation](https://user.oc-static.com/upload/2021/02/09/16128910370748_Gif062.gif)
+
+Le résultat final est exactement le même pour les deux boîtes. À vous de choisir entre degrés et turns selon vos préférences. Pour ma part, j'ai
+tendance à préférer turn lorsque mon élément fait au moins un tour sur lui-même, et deg lorsqu'il s'agit de valeurs inférieures à un tour.
+
+### Combinez les fonctions scale, position et rotate !
+
+Reprenons la boîte que nous avions utilisée en combinant scale et translate. Nous pouvons maintenant complexifier le tout en ajoutant une rotation
+au texte.
+
+```scss
+.btn {
+    &:hover + .box {
+        transform: scale(1);
+        transform: rotate(0deg);
+        span {
+            transform: translateY(0);
+        }
+    }
+}
+
+.box {
+    overflow: hidden;
+    transform: scale(.1);
+    transform: rotate(-90deg);
+    transition: transform 330ms ease-in-out;
+    span {
+        transform: translateY(250%);
+        transition: transform 280ms ease-out 50ms;
+        display: block;
+    }
+}
+```
+
+Maintenant, pendant que la boîte s’agrandit et que le texte apparaît, elle devrait également tourner d’un quart de tour, de -90 deg à 0 deg :
+
+![L'animation d'un carré qui pivote mais dont l'écriture disparaît](https://user.oc-static.com/upload/2021/02/18/16136588170894_gif063_2.gif)
+
+Zuuuuuuut ! 😭 On a tout cassé !
+
+La boîte pivote, mais notre animation scale a disparu. Comme si la transformation rotate() écrasait la transformation `scale()`...
+
+Mettons un commentaire sur notre `rotate()` pour vérifier que nous n’avons pas causé un problème dans le `scale()` :
+
+```scss
+.btn {
+    &:hover + .box {
+        transform: scale(1);
+        // transform: rotate(0deg);
+        span {
+            transform: translateY(0);
+        }
+    }
+}
+.box {
+    overflow: hidden;
+    transform: scale(.1);
+    // transform: rotate(-90deg);
+    transition: transform 330ms ease-in-out;
+    span {
+        transform: translateY(250%);
+        transition: transform 280ms ease-out 50ms;
+        display: block;
+    }
+}
+```
+
+![L'animation d'un petit carré qui grossit](https://user.oc-static.com/upload/2021/02/09/16128910675525_Gif064.gif)
+
+Bon. Pourtant, `scale()` semble toujours fonctionner.
+
+Le problème vient du fait qu’on ne peut assigner qu’une seule propriété `transform` à un élément. Je vous conseille de le noter dans un coin de
+votre tête si vous voulez éviter de vous arracher les cheveux 🙃.
+
+:::note ?
+Alors, comment faire pour avoir plusieurs transformations dans une seule propriété `transform` ?
+:::
+
+Pour cela, faites une liste de toutes les fonctions que vous voulez utiliser dans la propriété `transform`.
+
+Pour créer un effet qui combine rotation et changement d'échelle, nous devons indiquer la fonction `rotate()` à la suite de `scale()` dans la
+propriété `transform` :
+
+```scss
+.btn {
+    &:hover + .box {
+        transform: scale(1) rotate(0deg);
+        span {
+            transform: translateY(0);
+        }
+    }
+}
+.box {
+    overflow: hidden;
+    transform: scale(.1) rotate(\-90deg);
+    transition: transform 330ms ease-in-out;
+    span {
+        transform: translateY(250%);
+        transition: transform 280ms ease-out 50ms;
+        display: block;
+    }
+}
+```
+
+Ce qui donne :
+
+![L'animation d'un carré qui grossit avec du texte à l'intérieur](https://user.oc-static.com/upload/2021/02/09/16128910816927_Gif065.gif)
+
+Yaaaay ! On a réussi ! Vous avez le droit à une petite danse de la victoire 🕺.
+
+:::caution !
+L’utilisation de plusieurs fonctions a un bémol : l’ordre dans lequel on assigne les fonctions peut avoir un gros impact sur le résultat final. Il
+faut savoir que le navigateur effectue les calculs de chaque fonction dans l’ordre, **de droite à gauche**.
+:::
+
+Ici, l'ordre selon lequel vous effectuez la rotation et le changement d’échelle ne va pas poser de problème. En effet, les deux n’ont pas d’effet
+l’un sur l’autre. Une rotation de 90 degrés suivie d’un agrandissement de 200 % aura le même effet qu’un agrandissement de 200 % suivi d’une
+rotation de 90 degrés.
+
+Pour `scale` et `translate`, en revanche, c’est très différent. Si on déplace un élément de 200 % avant de l’agrandir à 200 %, cela aura un
+résultat très différent par rapport au fait de l’agrandir avant de le déplacer :
+
+```scss
+.btn {
+    &:active + .box {
+        & > .box__base--tranxScale {
+            transform: translateX(200%) scale(2);
+        }
+        & > .box__base--scaleTranx {
+            transform: scale(2) translateX(200%);
+        }
+    }
+}
+.box {
+    &__base {
+        &--tranxScale {
+            background-color: #15dea5;
+            transition: transform 330ms ease-in-out;
+        }
+        &--scaleTranx {
+            background-color: pink;
+            transition: transform 330ms ease-in-out;
+        }
+    }
+}
+```
+
+On applique `.box__base-tranxScale` à la première boîte : elle va commencer par appliquer la transformation `scale()`, suivie de `translateX()`.
+
+La deuxième boîte fonctionne avec `.box__base--scaleTranx()` et appliquera la transformation `translateX()`, suivie de `scale()` :
+
+![L'animation de deux carrés qui se déplacent vers la droite et grossissent](https://user.oc-static.com/upload/2021/02/09/16128910946731_Gif066.gif)
+
+La boîte numéro 2 va bien plus loin que la première. Plus exactement deux fois plus loin. Pourquoi ? Parce que le navigateur exécute les fonctions
+transform dans l’ordre, et il utilise le layout de départ comme point d’origine pour les transformations.
+
+En décomposant l’ordre des opérations de ces transformations, on voit bien la première boîte passer à 200% d’échelle puis se déplacer sur la
+droite de 200% de la taille originelle de la boîte :
+
+![L'animation d'un carré qui grossit et se déplace vers la droite](https://user.oc-static.com/upload/2021/02/09/16128911094395_Gif067.gif)
+
+La boîte numéro 2, quant à elle, se déplace de la même distance de 200%, mais au lieu de s’agrandir depuis le centre de sa nouvelle position,
+elle s’agrandit vers l’extérieur en partant du centre d'origine avant son déplacement :
+
+![L'animation d'un carré qui se déplace vers la droite et grossit](https://user.oc-static.com/upload/2021/02/09/16128911347225_Gif068.gif)
+
+La boîte 2 s’est déplacée vers la droite de 200%, puis la translation a été, dans les faits, doublée par l’échelle, la faisant de fait se
+déplacer de 400% vers la droite 🤨.
+
+### Penchez du bon côté de la force
+
+Position, scale, et rotation. Voilà un arsenal déjà respectable.
+
+Mais vous avez sûrement déjà scrollé vers le bas de la page : vous savez bien que nous n'avons pas fini ! Voyons maintenant la fonction `skew()` !
+
+Dans le même esprit que position et scale, vous pouvez désormais incliner des objets horizontalement ou verticalement. Pour cela, `skew()` penche
+les bords horizontaux ou verticaux, ou même les deux, en utilisant les fonctions `skewX()`, `skewY()`, et `skew()` :
+
+```scss
+.box {
+    &--skewX {
+        transform: skewX(45deg);
+    }
+    &--skewY {
+        transform: skewY(45deg);
+    }
+    &--skew {
+        transform: skew(45deg, 45deg);
+    }
+}
+```
+
+![Les fonctions skewX(), skewY() et skew()](https://user.oc-static.com/upload/2021/02/09/16128911542346_Gif069.gif)
+
+### Passez dans une nouvelle dimension
+
+C’est à peu près tout pour les capacités de transform… en 2D.
+
+Eh oui ! Vous n’auriez pas oublié une dimension, par hasard ? 😏
+
+Les fonctions pour les transformations en 3D sont proches des versions 2D, à ceci près qu'elles ont également la capacité de transformer sur
+l’axe Z. Faisons un rapide tour d'horizon des fonctions 3D disponibles avec `transform` :
+
+![Une animation des fonctions 3D disponibles avec transform](https://user.oc-static.com/upload/2021/02/15/16133837187089_Gif070.gif)
+
+:::info
+Pour effectuer une transformation d’échelle en 3D sur l’axe Z, il faut d’abord l’avancer vers l’avant ou l’arrière en utilisant `translateZ()`
+ou `translate3d()`. Sinon, `scaleZ()` ou `scale3d()` verrait son échelle modifiée de 0… ce qui n’aurait aucun effet, évidemment.
+:::
+
+Si les fonctions 3D ressemblent beaucoup aux fonctions 2D, vous avez peut-être remarqué une nouvelle fonction : `perspective()`.
+
+La valeur qu’on donne à `perspective()` indique au navigateur à quelle "distance" se trouve le spectateur. Comme dans le monde réel, plus un
+objet est proche, plus le mouvement aura l’air important, alors qu’à l’inverse, un objet distant semblera plus statique.
+
+```scss
+.box {
+    &--perspective75px {
+        transform: perspective(75px) rotateX(45deg);
+    }
+    &--perspective150px {
+        transform: perspective(150px) rotateX(45deg);
+    }
+    &--perspective300px {
+        transform: perspective(300px) rotateX(45deg);
+    }
+}
+```
+
+Avec une perspective de 75 px, on se retrouve bien plus proche de la boîte qu’à 150 ou 300px. La rotation 3D semble donc bien plus marquée que
+les transformations dont la perspective est plus grande.
+
+![Des animations perspectives avec différents pixels](https://user.oc-static.com/upload/2021/02/09/16128913219948_Gif071.gif)
+
+On peut utiliser la perspective et les transformations 3D pour ajouter de la profondeur et des effets visuels à nos animations.
+
+Vous voyez bien que plus le cours avance, plus nous repoussons les limites de ce qu'il est possible de faire en animations CSS ! Bientôt, votre
+créativité n'aura plus de limite. 🧙‍♂️
+
+### En résumé
+
+- la propriété `transform` nous permet de manipuler et animer nos sites de presque toutes les manières, et comme tout se passe pendant l’étape
+composition, les animations sont bien fluides sur tous les supports ;
+- on peut déplacer des éléments avec les fonctions translate : `translate()`, `translateX()`, `translateY()` et `translate3d()` ;
+- on peut agrandir avec les fonctions scale : `scale()`, `scaleX()`, `scaleY()` et `scale3d()` ;
+- et on peut les faire pivoter grâce aux fonctions rotate : `rotate()`, `rotateX()`, `rotateY()` et `rotateZ()` ;
+- si on ajoute une deuxième propriété `transform`, elle annule la première. On ne peut donc définir qu’une seule propriété `transform` dans un
+même sélecteur ;
+- pour effectuer plusieurs transformations, on peut les lister dans une même propriété transform comme :
+
+```scss
+transform: translateX(200%) scale(2);
+```
+
+- une propriété avec plusieurs fonctions exécute les fonctions dans l’ordre, de droite à gauche ;
+- les fonctions de transformations en 3D comme `translate3d()`, `rotateZ()` et `scale3d()` ont également besoin de la fonction perspective pour
+indiquer au navigateur la distance à laquelle l'utilisateur se trouve : plus la distance est grande, moins l'animation sera marquée.
+
+_Dans le chapitre suivant, nous verrons comment effectuer des animations un peu plus spécifiques, telles qu'un mouvement de balancier. Rendez-vous
+au chapitre suivant !_
+
+-----
+
+## Modifiez le point d’ancrage d’un élément grâce à transform-origin
+
+[Modifiez le point d’ancrage d’un élément grâce à transform-origin - Créez des animations CSS modernes - OpenClassrooms](https://openclassrooms.com/fr/courses/5919246-creez-des-animations-css-modernes/6340920-modifiez-le-point-d-ancrage-d-un-element-grace-a-transform-origin)
+
+<Vimeo vimeoId="508777270" />
+
+<br />
+
+`Transform` nous permet de créer une **multitude** d'effets de mouvement : nous pouvons absolument tout faire…
+
+Sauf un mouvement de balancier…
+
+Ou changer d’échelle du haut vers le bas… 🙃
+
+Mais comme toujours en CSS, il y a une solution !
+
+### Découvrez le point d'ancrage
+
+Par défaut, toutes les fonctions de `transform` partent du **centre** de l’élément. Donc quand on change l’échelle d’un objet, il s’agrandit
+vers l’extérieur :
+
+![Le changement d'échelle se fait depuis le centre](https://user.oc-static.com/upload/2021/02/09/16128913910144_Gif073.gif)
+
+Et quand on fait **pivoter** un élément, il reste sur son axe :
+
+![Le pivotement se fait sur un axe](https://user.oc-static.com/upload/2021/02/09/16128914606847_Gif074.gif)
+
+Et souvent, c’est très bien. Mais parfois, ça ne suffit pas.
+
+La propriété `transform-origin` est là pour ça ! Elle permet de déplacer un **point d’ancrage** où on veut, pour faire partir nos animations de
+ce point.
+
+Nous pouvons par exemple déplacer le point d’origine d'un élément à son sommet et le faire grandir :
+
+![Un exemple de la propriété transform-origin](https://user.oc-static.com/upload/2021/02/09/16128914904677_Gif075.gif)
+
+Nous pouvons mettre le point dans un coin et **faire balancer** l’objet :
+
+![Exemple de la propriété transform-origin](https://user.oc-static.com/upload/2021/02/09/16128915071518_Gif076.gif)
+
+Dans ce chapitre, allons apprendre à maîtriser la propriété `transform-origin` pour apprendre à faire tout cela. C'est parti !
+
+### Déplacez le centre
+
+C'est à nouveau la propriété `transform` qui sera notre alliée ici.
+
+Créons donc une barre de chargement, avec une image vide qui se remplit pendant le chargement : sa progression ne correspond pas réellement au
+pourcentage de chargement, mais sert de transition entre deux blocs de contenu.
+
+```html
+<div class="container">
+    <div class="btn">Charger!</div>
+    <div class="progress">
+        <div class="progress__bar"></div>
+    </div>
+</div>
+```
+
+Nous avons stylisé l’image avec une bordure et un peu de marge intérieure, et la barre avec une couleur de fond, qui s’affiche comme ça :
+
+![Barre de chargement pleine](https://user.oc-static.com/upload/2019/08/26/15668421113643_Capture%20d%E2%80%99e%CC%81cran%202019-08-26%20a%CC%80%2019.54.53.png)
+
+Maintenant, ajoutons la propriété `transform` à notre barre, et servons-nous de la fonction scale-x qui nous est déjà familière sur 0 :
+
+```scss
+.progress {
+    &__bar {
+        transform: scaleX(0);
+    }
+}
+```
+
+Et voilà notre barre de progression vide !
+
+![Barre de chargement vide](https://user.oc-static.com/upload/2019/08/26/15668421300869_Capture%20d%E2%80%99e%CC%81cran%202019-08-26%20a%CC%80%2019.54.47.png)
+
+Nous pouvons utiliser le pseudosélecteur `:active` pour la remplir afin d'agrandir la barre à 100% de largeur quand on clique sur le bouton
+“Charger”.
+
+```scss
+.btn {
+    &:active {
+        & + .progress {
+            & > .progress__bar {
+                transform: scaleX(1);
+            }
+        }
+    }
+}
+```
+
+```scss
+.progress {
+    &__bar {
+        transform: scaleX(0);
+    }
+}
+```
+
+Maintenant, quand on clique sur le bouton, la barre de chargement se remplit… immédiatement.
+
+![Barre de chargement immédiat](https://user.oc-static.com/upload/2021/02/09/16128917971846_Gif077.gif)
+
+Mais nous sommes dans un cours d'animation ici ! Nous voulons donc remplir la barre petit à petit. Pour cela, ajoutons donc une transition, en
+l’animant sur une durée de 2 secondes :
+
+
+```scss
+.btn {
+    &:active {
+        & + .progress {
+            & > .progress__bar {
+                transform: scaleX(1);
+            }
+        }
+    }
+}
+.progress {
+    &__bar {
+        transform: scaleX(0);
+        transition: transform 2000ms;
+    }
+}
+```
+
+Voyons voir comment notre barre se comporte maintenant :
+
+![La barre de chargement qui se remplit depuis le centre, dans les deux sens](https://user.oc-static.com/upload/2021/02/09/16128918089565_Gif078.gif)
+
+Heuuuu, ce n'est pas exactement l'effet que nous recherchions. Quoique, on va peut-être lancer une nouvelle mode ? 😏
+
+Les barres de chargement se remplissent normalement depuis la gauche vers la droite. Ici, la barre se remplit, mais en partant du milieu. Pour
+corriger notre barre, nous pouvons maintenant **tester** la propriété `transform-origin`.
+
+`transform-origin` nous permet de déplacer le centre d'origine de notre transformation, selon les valeurs que nous lui assignons.
+
+Pour déplacer le centre d’origine, on peut utiliser des **unités** comme les **pixels**, ou un pourcentage des dimensions d’un élément, de la
+même manière que pour la fonction `translate`. Dans les deux cas, l’axe X est mesuré à partir de la bordure gauche de l’élément, et l’axe Y est
+mesuré depuis le bord supérieur.
+
+Le point d’origine par défaut, au centre de l’élément, peut donc être écrit de cette manière : `transform-origin: 50% 50%` ;
+
+Ici, nous voulons placer le **point d’origine** de notre barre de chargement sur sa bordure gauche, pour qu’elle progresse vers la droite. Nous
+devons donc mettre l'origine de x à 0% :
+
+```scss
+.btn {
+    &:active {
+        & + .progress {
+            & > .progress__bar {
+                transform: scaleX(1);
+            }
+        }
+    }
+}
+.progress {
+    &__bar {
+        transform-origin: 0% 50%;
+        transform: scaleX(0);
+        transition: transform 1000ms;
+    }
+}
+```
+
+On devrait voir la barre être vide au départ. Puis au clic sur le bouton, elle devrait s’agrandir vers la droite jusqu’à remplir le cadre :
+
+![Une animation CSS d'une barre de chargement complète](https://user.oc-static.com/upload/2021/02/09/16128918195266_Gif079.gif)
+
+Parfait ! Mettons notre touche finale en ajoutant notre propre fonction de timing `cubic-bezier()`. Nous voulons que la barre commence avec un
+ease-in peu prononcé, mais que son ease-out soit bien perceptible à la fin. Le profil de la courbe ressemblerait à quelque chose comme ça :
+
+![La courbe de notre animation](https://user.oc-static.com/upload/2019/08/06/15650825274307_image24.png)
+
+Les valeurs de notre courbe d’accélération sont `cubic-bezier(.32, 0, .07, 1)`. Rentrons-les dans notre fonction de timing :
+
+```scss
+.btn {
+    &:active {
+        & + .progress {
+            & > .progress__bar {
+                transform: scaleX(1);
+            }
+        }
+    }
+}
+.progress {
+    &__bar {
+        transform-origin: 0% 50%;
+        transform: scaleX(0);
+        transition: transform 1000ms cubic-bezier(.32,0,.07,1);
+    }
+}
+```
+
+![La barre de chargement fonctionne](https://user.oc-static.com/upload/2021/02/09/1612891847843_Gif080.gif)
+
+Et c'est encore une réussite pour vous ! Bravo !💪
+
+### Utilisez la bonne valeur
+
+Les valeurs de `transform-origin` ne se limitent pas à des longueurs ou des pourcentages.
+
+On peut aussi utiliser des mots clés CSS pour définir les points d’ancrage, comme `left` pour le mettre sur le bord gauche, ou `right` pour le
+mettre à droite :
+
+```scss
+.box--left-origin {
+// positionne l'origine du côté gauche
+    transform-origin: left 50%;
+}
+.box--right-origin {
+// positionne l'origine du côté droit
+    transform-origin: right 50%;
+}
+```
+
+![Animation de Transform-origin left et right](https://user.oc-static.com/upload/2021/02/09/16128918891629_Gif081.gif)
+
+On peut aussi utiliser `top` et `bottom` :
+
+```scss
+.box--top-origin {
+// positionne l'origine au sommet de l'élément
+    transform-origin: 50% top;
+}
+```
+
+```scss
+.box--bottom-origin {
+// positionne l'origine en bas de l'élément
+    transform-origin: 50% bottom;
+}
+```
+
+![Animation de transform-origin top et bottom](https://user.oc-static.com/upload/2021/02/09/16128919050559_Gif082.gif)
+
+Concrètement, les mots clés `left` et `top` correspondent à 0%, tandis que `right` et `bottom` correspondent à 100%. Mais l'utilisation de ces
+mots clés permet d'être explicite dans la manière d'écrire notre code.
+
+Le dernier mot clé est `center`. Il peut être assigné à l’axe X ou Y, et correspond à une valeur de 50 :
+
+```scss
+.box--left-origin {
+// positionne l'origine au centre de l'élément
+    transform-origin: center center;
+}
+```
+
+![Animation de transform-origin center](https://user.oc-static.com/upload/2021/02/09/1612891919281_Gif083.gif)
+
+Jusqu’à maintenant, nous avons toujours assigné deux valeurs à `transform-origin`, une pour X et l’autre pour Y. Mais une seule valeur peut
+aussi suffire. Si cette valeur est un nombre, elle s’appliquera à l’axe X et laissera Y à la valeur par défaut de 50 %.
+
+Dans le cas de notre barre de progression, c'est surtout la valeur de X qui nous intéresse. La valeur de 50 % pour l’axe Y est donc superflue.
+Retirons cette valeur, ce qui simplifie le code et montre plus explicitement que nous modifions l'axe X quand nous relirons le code dans le
+futur :
+
+```scss
+.btn {
+    &:active {
+        & + .progress {
+            & > .progress__bar {
+                transform: scaleX(1);
+            }
+        }
+    }
+}
+.progress {
+    &__bar {
+        transform-origin: 0%;
+        transform: scaleX(0);
+        transition: transform 1000ms cubic-bezier(.32,0,.07,1);
+    }
+}
+```
+
+Notre code est plus propre et fonctionne toujours de la même manière dans le navigateur :
+
+![La barre de chargement fonctionne de la même façon](https://user.oc-static.com/upload/2021/02/09/16128919347965_Gif084.gif)
+
+Et le navigateur n'a pas fini de nous étonner : si on assigne un simple mot clé à `transform-origin`, le navigateur va comprendre de lui-même à
+quel axe l’appliquer, et laisser l’autre axe sur sa valeur par défaut.
+
+Il est plus explicite d’utiliser le mot clé `left` plutôt que de mettre un `transform-origin` à 0%, car cela nous indique instantanément que
+nous avons déplacé le `transform-origin` sur le côté gauche. Revenons une dernière fois à notre barre de chargement et remplaçons la valeur
+numérique de `transform-origin` par le mot clé `left`, pour rendre notre code aussi clair et concis que possible :
+
+```scss
+.btn {
+    &:active {
+        & + .progress {
+            & > .progress__bar {
+                transform: scaleX(1);
+            }
+        }
+    }
+}
+.progress {
+    &__bar {
+        transform-origin: left;
+        transform: scaleX(0);
+        transition: transform 1000ms cubic-bezier(.32,0,.07,1);
+    }
+}
+```
+
+### Passez dans la troisième dimension
+
+Nous avons vu que la propriété `transform` permet de **manipuler** des éléments en deux dimensions... mais aussi en trois. Et `transform-origin`
+fonctionne parfaitement avec des valeurs X et Y en 2D. Mais comment faire pour changer le point d’origine de transformations 3D ?
+
+Vous l’avez peut-être deviné 😎 : on ajoute une troisième valeur à la liste ! On peut utiliser les valeurs X et Y comme en 2D, avec des
+pourcentages ou des mots-clés, mais l’axe Z DOIT obligatoirement être défini avec des unités réelles comme les pixels, les centimètres, etc.
+
+```scss
+.btn {
+    perspective: 500px;
+    &:active {
+        & > .btn__flip {
+            transform: rotateX(-90deg);
+        }
+    }
+    &__flip {
+        transform-style: preserve-3d;
+        transform-origin: center bottom 7.5vw;
+        transition: transform 500ms cubic-bezier(.7, 0, .23, 1);
+        &--off {
+            transform: rotateX(0deg) translateZ(7.5vw);
+        }
+        &--on {
+            transform: rotateX(90deg) translateZ(7.5vw);
+        }
+    }
+}
+```
+
+Alors, tentons de combiner les fonctions de transformation 3D avec des valeurs transform-origin 3D pour créer des objets à trois dimensions,
+comme des boutons à plusieurs faces !
+
+![Un bouton en 3D](https://user.oc-static.com/upload/2021/02/09/16128919491569_Gif085.gif)
+
+Vous trouverez le code source de notre bouton sur [ce CodePen](https://codepen.io/atoulmet/pen/aboJmOx).
+
+_Avez-vous essayer de changer la vitesse de l'animation ou la couleur des faces du bouton ?_
+
+Et chose promise, chose due. Je vous parlais dans la vidéo d'introduction d'un fameux sabre Jedi : voici ce que donne une animation CSS de sabre
+Jedi avec la propriété `transform-origin`. Le [code source est ici](https://codepen.io/atoulmet/pen/RwbRRaK).
+
+![Animation d'un sabre Jedi qui s'allume](https://user.oc-static.com/upload/2021/02/09/16128919632702_Gif086.gif)
+
+Encore une fois, n'hésitez pas à manipuler les valeurs indiquées.
+
+### En résumé
+
+- `transform-origin` permet de **repositionner** le point d’ancrage, qui se trouve par défaut au centre de l’élément ;
+- on peut **régler** ce point d’origine en utilisant des unités comme px, rem, vh, etc. ;
+- il est aussi possible d'utiliser des pourcentages pour X et Y ;
+- ou encore, on peut utiliser des mots clés : `left` et `right` pour l’axe X, `top` et `bottom` pour l’axe Y, et `center` pour les deux ;
+- il est possible de ne pas indiquer la valeur de l'axe Y ou, quand on utilise des mots clés, de mettre uniquement une valeur : le navigateur
+comprend de lui-même à quel axe la valeur s'applique ;
+- quand on change le point d’origine en 3D, la valeur de Z doit être exprimée en unités (et non en pourcentages) !
+
+_Créer des animations, c'est bien, mais pouvoir analyser leurs performances, c'est mieux. C'est ce que vous allez découvrir dans le chapitre
+suivant._
+
+-----
+
+## Analysez la performance de vos animations avec Chrome DevTools
+
+[Analysez la performance de vos animations avec Chrome DevTools - Créez des animations CSS modernes - OpenClassrooms](https://openclassrooms.com/fr/courses/5919246-creez-des-animations-css-modernes/6340921-analysez-la-performance-de-vos-animations-avec-chrome-devtools)
+
+<Vimeo vimeoId="508777299" />
+
+<br />
+
+Nous avons passé un temps considérable à apprendre comment optimiser nos animations, mais…
+
+Comment savoir si ça marche ?
+
+Pour le moment, vous avez dû me croire sur parole concernant les propriétés à bannir.
+
+Car toutes vos animations sont probablement parfaitement fluides sur votre machine… (oui oui, je dis "machine" pour "ordinateur" 🤖) mais si
+vous apprenez à développer, c'est que vous êtes probablement sur un ordinateur **puissant**, équipé d’une carte graphique moderne (sans vouloir
+vous juger sans vous connaître). Mais comment savoir si l’animation sera bien fluide sur la tablette bas de gamme achetée en soldes par votre
+grand-père ?
+
+Heureusement pour nous, Chrome propose toute une suite d’outils intégrés. Vous les avez peut-être déjà utilisés en inspectant le code source
+d’un site web, ou en ouvrant la console. Mais ce n’est qu'une toute petite partie de l'ensemble de ces outils, aussi appelés DevTools.
+
+**DevTools** met à notre disposition de nombreux outils. Notamment un qui simule le fonctionnement de nos animations sur un vieux smartphone. Il
+permet également d'**analyser** en détail les performances de notre animation, afin d'identifier les problèmes potentiels et de les corriger.
+
+Dans ce chapitre, nous apprendrons à maîtriser l'outil de performance de **Chrome DevTools** pour que nos animations soient aussi fluides que
+possible.
+
+### Faites apparaître des éléments cachés
+
+Ici, nous avons une petite application. Elle représente une série de cartes, chaque carte munie d’une photo et de quelques blocs de texte. Il y
+a également un bouton qui révèle une troisième carte cachée :
+
+![Animation d'un bloc de texte caché derrière un autre](https://user.oc-static.com/upload/2019/08/06/15650844369654_pt02ch04-fall1.gif)
+
+L’apparition de la carte cachée est constituée de plusieurs transitions : l’apparition de la carte elle-même, et une deuxième transition qui
+pousse l’autre carte sur la droite.
+
+```scss
+$easing: cubic-bezier(.49,.18,.23,1);
+$width: 33vh;
+$height: 72vh;
+$margin-right: 4vh;
+$wid-marg: $width + $margin-right;
+.card {
+    width: $width;
+    height: $height;
+    overflow: hidden;
+    &:not(:last-child) {
+        margin-right: $margin-right;
+    }
+    &--anim {
+        transform: translateX($width-marg);
+        transition: transform 700ms $easing;
+    }
+    &__contents {
+        width: $width;
+        overflow: hidden;
+        &--anim {
+            transform: translateX($wid-marg*-1);
+            transition: transform 700ms $easing;
+        }
+    }
+}
+.btn {
+    &--reveal {
+        &:hover {
+            & + .card {
+                &--anim {
+                    transform: translateX(0);
+                }
+                .card__contents--anim {
+                    transform: translateX(0);
+                }
+            }
+        }
+    }
+}
+```
+
+On a aussi ajouté quelques mouvements secondaires (souvenez-vous des 12 principes) avec plusieurs transitions pour révéler les blocs de texte de
+la carte :
+
+```scss
+</>
+$easing: cubic-bezier(.49,.18,.23,1);
+$width: 33vh;
+$height: 72vh;
+$margin-right: 4vh;
+$wid-marg: $width + $margin-right;
+.card {
+    width: $width;
+    height: $height;
+    overflow: hidden;
+    &:not(:last-child) {
+        margin-right: $margin-right;
+    }
+    &--anim {
+        transform: translateX($width-marg);
+        transition: transform 700ms $easing;
+    }
+    &__contents {
+        width: $width;
+        overflow: hidden;
+        &--anim {
+            transform: translateX($wid-marg*-1);
+            transition: transform 700ms $easing;
+        }
+    }
+    &__block {
+        overflow: hidden;
+        // une boucle créée avec sass qui itère de 1 à 3, en utilisant l'index
+        // comme suffixe pour le nom --anim mod
+        // ainsi que comme valeur pour multiplier la valeur de transition delay
+        @for $i from 1 through 3 {
+            &--anim-#{$i} {
+                transform: translateX(-108%);
+                transition: transform 500ms $easing 50ms*$i;
+            }
+        }
+        &:not(:first-child) {
+            margin-top: 1rem;
+        }
+    }
+}
+.btn {
+    &--reveal {
+        &:hover {
+            & + .card {
+                &--anim {
+                    transform: translateX(0);
+                }
+                .card__contents--anim {
+                    transform: translateX(0);
+                }
+                .card__block--anim {
+                    transform: translateX(0);
+                }
+            }
+        }
+    }
+}
+```
+
+Toutes ces animations sont bien fluides sur notre ordinateur, mais ça ne suffit pas. Nous voulons qu’elles soient fluides sur tous les écrans,
+y compris sur des supports anciens ou bas de gamme. Au total, l’apparition de la carte est constituée de 5 transitions distinctes. Comment nous
+assurer qu’elles fonctionneront bien de manière fluide chez tout le monde ?
+
+Vous pouvez laisser un bon d'achat pour commander un appareil moderne sur votre site, mais ça risque peut-être d'être coûteux 🤔.
+
+Mais il existe un moyen plus facile et moins onéreux de tester et d'analyser nos animations.
+
+Mesdames et Messieurs, permettez-moi de vous présenter Chrome Devtools ! 🥳
+
+Eh oui, je vous en parlais, c’est ce qui apparaît quand on clique sur “Inspecter” sur une page web. Il fait bien plus que nous aider à
+comprendre comment une page est organisée.
+
+Au-delà de l’onglet **Elements**, DevTools comporte toute une série d’autres onglets pour inspecter, déboguer et analyser divers aspects de nos
+sites. Ici, c'est l’onglet **Performance** qui va nous intéresser. Il nous permet d’enregistrer et d’analyser comment une page se charge, réagit,
+et s’anime.
+
+Ça paraît être pas mal pour évaluer la performance de nos animations, non ? Alors ouvrons DevTools et voyons ça !
+
+### Ouvrez la boîte à outils DevTools
+
+Avant de commencer l’exploration de l’onglet **Performance**, nous devons ouvrir DevTools. Vous avez probablement l’habitude de faire un clic
+droit sur un élément d’une page et de choisir “Inspecter”.
+
+Mais il existe un moyen plus rapide pour le faire. DevTools peut être ouvert par le raccourci clavier Ctrl+Shift+I sous Windows, ou Cmd+Opt+I
+sur Mac.
+
+Une fois DevTools ouvert, en haut de la fenêtre, on peut trouver une série de boutons qui amènent à différents onglets. Si l’onglet Performance
+n’est pas visible à droite de l’onglet Éléments, selon la taille de votre fenêtre, vous pouvez l’ouvrir en cliquant sur la double flèche à
+droite, et en sélectionnant “Performance” dans le menu qui apparaît :
+
+![Une vidéo montrant comment accéder à l'onglet Performance](https://user.oc-static.com/upload/2021/02/15/16133895775464_2C4_1.gif)
+
+Maintenant que l’onglet Performance est ouvert, nous arrivons sur une fenêtre plutôt spartiate en apparence. En effet, celle-ci contient juste
+quelques boutons et des instructions disant que nous pouvons cliquer sur le bouton “Record” pour enregistrer, ou cliquer sur le bouton du
+dessous pour enregistrer le chargement de la page :
+
+![Illustration du bouton record](https://user.oc-static.com/upload/2021/02/15/16133895917719_2C4_2.gif)
+
+Mais avant de cliquer sur l’un de ces boutons, ajustons un peu notre installation. En haut de la fenêtre se trouve une case “Screenshots”. Si on
+coche la case, Chrome prendra une capture d’écran de chaque image de l’enregistrement, nous permettant ainsi de visionner le déroulement de
+l’animation image par image. Cette option n’est pas toujours nécessaire pour analyser les performances d’un site, comme quand il s’agit de
+performances réseau, mais l’animation est un domaine très visuel, l’option screenshot peut donc s'avérer particulièrement utile. Nous allons
+donc cocher cette case Screenshots :
+
+![Une image montrant comment accéder à Screenshots](https://user.oc-static.com/upload/2019/08/06/15650858539635_image51.png)
+
+Nous voilà presque prêts à commencer l’enregistrement. Mais avant, il nous reste une dernière chose à faire. Rappelez-vous que nous voulons voir
+nos animations telles qu’elles apparaissent sur des appareils plus lents. Or, si on enregistre maintenant, on verra seulement l’animation
+s’exécuter sur notre ordinateur. Pour remédier à cela, l’onglet Performance nous permet de brider la vitesse de notre processeur.
+
+En cliquant sur la roue de paramétrages dans le coin en haut à droite, quatre options apparaissent, dont l’option “CPU throttling”. Simulons
+l’appareil le plus lent possible en choisissant 6X, qui limite notre processeur à une vitesse six fois plus lente que ses capacités (n'oubliez
+surtout pas de décocher cette case quand vous aurez terminé, sinon votre navigateur pourrait très rapidement vous rendre complètement fou 😂) :
+
+![Vidéo montrant comment accéder à l'option CPU throttling](https://user.oc-static.com/upload/2019/08/06/15650859455803_image20.gif)
+
+### Observez les performances dans le détail
+
+Nous voilà fin prêts à commencer l’inspection de nos animations ! Les performances de la page ne nous préoccupent pas pour l’instant, donc nous
+pouvons immédiatement appuyer sur le bouton **Record**. Quand on clique sur ce bouton Record, une fenêtre de dialogue apparaît pour nous informer
+que l’enregistrement du site a commencé. Nous pouvons donc maintenant interagir avec notre bouton pour lancer les transitions. Une fois que les
+animations sont terminées, on peut cliquer sur le bouton “Stop” dans la fenêtre de progression :
+
+![Une vidéo montrant l'analyse de l'animation](https://user.oc-static.com/upload/2019/08/06/15650860661535_pt02ch04-fall2.gif)
+
+Et c’est tout ! DevTools prend un instant pour traiter les données recueillies, puis les affiche dans l’onglet Performance.
+
+Décomposons maintenant tout cela étape par étape.
+
+![Détail de l'outil Performances des Devtools](https://user.oc-static.com/upload/2019/09/01/15673473741049_Capture%20d%E2%80%99e%CC%81cran%202019-09-01%20a%CC%80%2016.15.55.png)
+
+Tout en haut, on trouve l’avancement de l’enregistrement, en millisecondes. Sur cette ligne, des graphiques verts suivent les FPS de notre site ;
+les **plateaux** correspondent aux **événements** d’animation que nous allons détailler dans un instant. Et juste sous cette ligne d’avancement
+se trouve une succession des images que DevTools a enregistrées.
+
+Quand on passe la souris sur un des aperçus, il s’agrandit et nous montre exactement à quoi ressemblait le site à ce moment précis :
+
+![Une animation d'un bloc de texte caché derrière un autre](https://user.oc-static.com/upload/2019/08/06/15650861771846_pt02ch04-fall3.gif)
+
+Regardons notre animation de plus près en zoomant sur une des zones vertes. Pour cela, cliquez puis faites glisser votre souris sur la zone qui
+vous intéresse, ou bien utilisez la molette de la souris :
+
+![L'animation analysée dans Devtools](https://user.oc-static.com/upload/2019/08/06/15650862998667_pt02ch04-fall4.gif)
+
+Maintenant que nous sommes entrés dans les détails de la partie animation de l’enregistrement, concentrons-nous sur les cases vertes plus bas.
+Elles correspondent aux images de notre animation. En passant la souris dessus, nous pouvons voir le temps de calcul de chaque image, et le
+nombre de FPS :
+
+![La calcul du FPS de l'animation](https://user.oc-static.com/upload/2021/02/15/161339026635_Gif091%20%282%29.gif)
+
+On peut constater des changements assez faibles entre chaque image, ce qui est normal, mais globalement, chaque image est proche de notre
+objectif de 60 FPS : c'est parfait ! Nous pouvons donc affirmer avec certitude que nos transitions seront bien fluides, même sur un appareil six
+fois plus lent que notre ordinateur.
+
+### Passez vos images au crible
+
+Allons voir ce qui se passe lorsque le navigateur calcule une image dans une animation. Pour cela, choisissez une image et zoomez au maximum.
+
+![Le zoom pour mieux visualiser le moment de l'animation que l'on cherche](https://user.oc-static.com/upload/2021/02/15/16133901802579_Gif092%20%281%29.gif)
+
+Maintenant que nous avons isolé une image dans l’animation, intéressons-nous à la section “**Main**” de l’onglet Performance. Cette section
+permet de voir tous les calculs qui ont transformé notre code en une page web animée. Les calculs sont répartis en catégories identifiées par
+des codes couleurs.
+
+Les blocs violets représentent les calculs de base qui permettent l’affichage d’une page web, comme l’analyse du CSS et le calcul des styles.
+
+![Représentation des blocs violets](https://user.oc-static.com/upload/2019/08/06/15650867171194_image47.png)
+
+Les blocs jaunes indiquent des calculs de l'étape layout, mais… hourra, il n’y en a pas ici ! Qu'est-ce que je vous avais dit ? 😏 Grâce à la
+propriété `transform`, nous avons évité tout calcul de layout, bien trop gourmand en calcul, ce qui aurait dégradé notre FPS.
+
+Mais si notre image ne comporte pas de calculs de layout, elle comprend bien une case verte, qui représente un calcul de paint ou de composition.
+En passant la souris dessus, nous voyons qu’il s’agit bien d’un calcul de composition. Notre animation n’a pas non plus besoin de calculs de
+paint :
+
+![Calcul de paint ou de composition](https://user.oc-static.com/upload/2019/08/06/1565086815764_image44.png)
+
+Plus besoin de me croire sur parole maintenant : vous le constatez par vous-même ! La propriété transform nous permet de créer des animations
+abouties en évitant des calculs complexes pour notre navigateur. Et moins de calculs signifie plus d’images par seconde, donc une meilleure
+fluidité ! 🚀
+
+### En résumé
+
+- **Chrome DevTools** est l'outil de prédilection des développeurs. Il permet d'**inspecter** le code source d'une page, d'**analyser** les
+performances de notre page, de **brider** la performance de notre machine pour simuler un appareil plus lent. Pour cette dernière option, activez
+l’option “CPU throttling” ;
+- l'outil **Performance** permet d'analyser les performances d’une page, notamment le taux d’images par seconde d’une animation ;
+- on peut utiliser l’onglet Performance pour analyser nos animations, ce qui permet de repérer les problèmes dans notre code qui pourraient
+causer des problèmes de fluidité sur certains supports ;
+- **zoomer** sur une image précise d’une animation permet de détailler les calculs effectués par le navigateur, que nous avions vus dans le
+chapitre sur le fonctionnement du navigateur.
+
+_Dans le chapitre suivant, nous aborderons enfin l'autre propriété dont nous disposons pour assurer un FPS optimal : opacity. Nous apprendrons à
+maîtriser cette propriété pour créer des animations en couleur sans déclencher de calcul de type paint dans le navigateur. Alors, à tout de suite !_
+
+-----
+
+## Animez les couleurs de manière performante avec opacity
+
+[Animez les couleurs de manière performante avec opacity - Créez des animations CSS modernes - OpenClassrooms](https://openclassrooms.com/fr/courses/5919246-creez-des-animations-css-modernes/6340922-animez-les-couleurs-de-maniere-performante-avec-opacity)
+
+<Vimeo vimeoId="508777316" />
+
+<br />
+
+La propriété `transform` permet de répondre à la plus grande partie de nos besoins en animation, mais possède une lacune : la gestion de la
+couleur.
+
+Pourtant, la couleur d’un élément est un aspect fondamental de l’animation. Alors comment faire ?
+
+:::note ?
+Est-ce que ça veut dire qu’on doit laisser tomber l’animation de couleur ? 😱
+:::
+
+Pas de panique, la propriété `opacity` sera notre solution.
+
+Pour cela, il nous faudra adopter une approche un peu différente dans la manière d'écrire notre code.
+
+Jusqu’ici, nous avons écrit notre HTML structurellement, c’est-à-dire que chaque élément fait partie intégrante de notre layout.
+
+Ici, nous allons devoir mettre la fonctionnalité en avant, en créant des éléments non pas pour le layout, mais uniquement pour servir notre
+animation.
+
+Dans ce chapitre, nous allons voir comment organiser notre code pour créer des animations de couleurs en utilisant uniquement la propriété
+opacity.
+
+### Évitez le paint (attention peinture fraîche)
+
+Revenons sur notre bouton. Cette fois-ci, au survol de la souris, il change de couleur :
+
+![Une animation CSS d'un bouton qui change de couleur](https://user.oc-static.com/upload/2021/02/18/16136589804856_Gif093.gif)
+
+Ce type d'animation est parfait pour permettre à l’utilisateur de comprendre qu’il peut interagir avec cet élément. Les changements de couleur
+sont une composante essentielle de l'expérience utilisateur sur un site. Mais plutôt que de faire changer la couleur instantanément, l’ajout
+d’une courte transition pourrait rendre l’état `:hover` un peu plus fluide et naturel.
+
+Si on regarde le code, on peut constater que le bouton est un élément `<button>` auquel est assignée la classe `.btn` :
+
+```scss
+<button class="btn">Survole moi!</button>
+```
+
+Et la variable `$clr-btn` donne à `.btn` une couleur d’arrière-plan `#15DEA5`. La pseudoclasse `:hover` permet d'assombrir le bouton de 5% en
+utilisant la fonction Sass `darken()` :
+
+```scss
+$border-rad: 2rem;
+$clr-btn: #15DEA5;
+.btn {
+    border-radius: $border-rad;
+    background-color: $clr-btn;
+    &:hover {
+        background-color: darken($clr-btn, 5);
+    }
+}
+```
+
+Nous voulons animer la `background-color` de notre bouton. Pour cela, ajoutons une transition à `.btn`, d’une durée de 250 millisecondes :
+
+```scss
+$border-rad: 2rem;
+$clr-btn: #15DEA5;
+.btn {
+    border-radius: $border-rad;
+    background-color: $clr-btn;
+    transition: background-color 250ms;
+    &:hover {
+        background-color: darken($clr-btn, 5);
+    }
+}
+```
+
+Notre bouton prend maintenant une couleur plus sombre quand la souris passe dessus :
+
+![Animation CSS d'un bouton qui change de couleur](https://user.oc-static.com/upload/2021/02/18/16136589961294_Gif094.gif)
+
+Parfait ! Mission accomplie, on peut passer à autre chose. Sauf que…
+
+![Une photo montrant l'analyse du bouton animé](https://user.oc-static.com/upload/2019/08/06/15650923549747_image42.png)
+
+Quelle horreur !!! Du paint !!! 😱
+
+L’animation de la propriété `background-color` déclenche un nouveau calcul de paint à chaque image de la transition. Dans ce cas, il n'y a qu'une
+seule propriété à animer sur notre page. Les performances restent donc acceptables. Mais si notre animation était plus complexe, nous aurions
+sans aucun doute perdu nos 60 FPS. `background-color` n’est donc pas la meilleure option pour animer des changements de couleur. La propriété à
+utiliser, c’est `opacity`.
+
+La propriété `opacity` permet de modifier la transparence d’un élément et de ses enfants sur une échelle de 0 à 1, la valeur 0 représentant la
+transparence totale, et la valeur 1 une opacité complète.
+
+:::note ?
+Mais ce que je veux, c'est changer la couleur, pas le rendre transparent. Et là on utilise la propriété `opacity` ? Comment faire, alors ?
+:::
+
+Je vous ai parlé plus tôt de structurer notre code HTML pour servir la fonctionnalité d’un élément, plutôt que de se concentrer sur le layout.
+Vous vous rappelez ? Que dites-vous de structurer notre bouton de manière à créer deux arrière-plans empilés l’un sur l’autre ?
+
+La couche du fond serait de la couleur normale, inactive, et la couche du dessus serait de la couleur plus sombre pour `:hover`. On pourrait
+ensuite faire apparaître et disparaître la couche du haut en utilisant la propriété `opacity`, en créant une animation entre les deux couleurs.
+
+Commençons par ajouter une `<div>` après le texte du bouton de la `background-color` plus sombre, avec `opacity` à 0, et `opacity` sur 1 à l’état
+:hover. Le code HTML ressemblerait à ça :
+
+```html
+<button class="btn">
+    Survole moi!
+    <div class="btn__bg"></div>
+</button>
+```
+
+et le CSS à ça :
+
+```scss
+$border-rad: 2rem;
+$clr-btn: #15DEA5;
+.btn {
+    border-radius: $border-rad;
+    background-color: $clr-btn;
+    position: relative;
+    z-index: 1;
+    &:hover {
+        & .btn__bg {
+            opacity: 1;
+        }
+    }
+    &__bg {
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        background-color: darken($clr-btn, 5);
+        opacity: 0;
+        z-index: -1;
+        transition: opacity 250ms;
+    }
+}
+```
+
+La `<div />` de la classe `.btn__bg` est en position absolute. Sa `background-color` est réglée sur une version plus sombre de `$clr-btn`. Nous
+avons aussi ajouté un z-index de -1, et un z-index de 1 à `.btn` pour créer notre empilement.
+
+Voyons voir si ça fonctionne !
+
+![Animation CSS d'un bouton qui change de couleur](https://user.oc-static.com/upload/2021/02/18/16136590106631_Gif095.gif)
+
+L’effet est le même qu’en animant la couleur d’arrière-plan, tout en étant bien plus rapide à calculer ! Eh oui, aucun travail de paint !
+
+![Résultat de l'animation sans analyse de paint](https://user.oc-static.com/upload/2019/08/06/15650930342404_image29.png)
+
+Très bien, cette fois-ci, la mission est accomplie, sans aucun calcul de paint.
+
+Alors, vous avez réussi ? On passe à autre chose ?
+
+On pourrait. Notre bouton change effectivement de couleur grâce à la propriété opacity qui assure une performance optimale de notre navigateur.
+C’était notre objectif. Mais on peut toujours faire mieux !
+
+Pour l’instant, chaque bouton que nous ajoutons à notre site nécessite d’ajouter une `<div>` supplémentaire pour l’arrière-plan, ayant la classe
+`.btn__bg`. Ce qui veut dire beaucoup de travail pour chaque bouton, et autant de risques de commettre une erreur.
+
+### Exploitez la puissance du CSS
+
+Créer une nouvelle div à chaque fois que vous faites une animation de couleur sur un élément… meh, ce n'est pas fou. Plutôt que de perdre votre
+temps à intégrer la `div` d’arrière-plan à chaque bouton, nous pouvons exploiter la puissance du CSS pour qu’il crée les éléments d’arrière-plan
+à notre place, comme par magie, grâce aux pseudoéléments ! Plus spécifiquement le pseudoélément `::after`.
+
+:::note ?
+Mais bien sûr ! Enfin... c’est quoi, un pseudoélément ?
+:::
+
+Commençons par étudier son nom : le préfixe "pseudo" désigne un élément qui ressemble à une chose mais en est en fait une autre (ça vous dit
+quelque chose ?). Un pseudoélément ressemble donc à un élément, comme une `<div>` écrite à la main dans le code HTML, mais c’est en fait un
+élément généré par le CSS et interprété dans la page web.  Et on peut le styliser de la même manière.
+
+Il existe plusieurs types de pseudoéléments, mais pour l’instant nous n’allons parler que de `::after`, et de son frère `::before`.
+
+:::info
+Vous pouvez consulter un récapitulatif complet des pseudoéléments disponibles en CSS3, et leur utilisation, **[dans la documentation sur MDN](https://developer.mozilla.org/fr/docs/Web/CSS/Pseudo-elements)**.
+:::
+
+L’ajout des éléments `::before` ou `::after` crée un élément enfant à chaque fois que son sélecteur a été assigné. L’élément créé par `::before`
+sera le premier enfant de l’élément, et celui créé par `::after` sera le dernier. Pour notre bouton, l’élément de background vient après le texte,
+donc le pseudoélément `::after` serait parfait pour remplacer notre `<div>` d’arrière-plan.
+
+La création d’un pseudoélément est identique à celle d’une pseudoclasse : on ajoute le pseudoélément à un sélecteur, mais au lieu d’utiliser
+comme préfixe les deux points ( : ), un pseudoélément en utilise deux ( :: ) :
+
+```scss
+$border-rad: 2rem;
+$clr-btn: #15DEA5;
+.btn {
+    border-radius: $border-rad;
+    background-color: $clr-btn;
+    position: relative;
+    z-index: 1;
+    &:hover {
+        & .btn__bg {
+            opacity: 1;
+        }
+    }
+    &::after {
+        // attribuez des valeurs de style au pseudo sélecteur ::after ici
+    }
+    &__bg {
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        background-color: darken($clr-btn, 5);
+        opacity: 0;
+        z-index: -1;
+        transition: opacity 250ms;
+    }
+}
+```
+
+En CSS2, les pseudoéléments étaient créés avec un signe deux-points unique, comme les pseudosélecteurs, ce qui n’était pas très clair. Pour aider
+à les distinguer, CSS3 a modifié la syntaxe des pseudoéléments avec le préfixe double deux-points. Si vous tombez sur du CSS contenant `:before`
+ou `:after`, c’est généralement le signe qu’il s’agit d’une vieille base de code.
+
+Nous pouvons alors lui assigner du style. Nous voulons que `::after` ait la même apparence que `.btn__bg`. Alors copions le style de `.btn__bg`
+dans le pseudoélément `::after`, avant de supprimer le sélecteur `.btn__bg`, dont nous n’aurons plus besoin :
+
+```scss
+$border-rad: 2rem;
+$clr-btn: #15DEA5;
+.btn {
+    border-radius: $border-rad;
+    background-color: $clr-btn;
+    position: relative;
+    z-index: 1;
+    &:hover {
+        & .btn__bg {
+            opacity: 1;
+        }
+    }
+    &::after {
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        background-color: darken($clr-btn, 5);
+        opacity: 0;
+        z-index: -1;
+        transition: opacity 250ms;
+    }
+}
+```
+
+Notre pseudoélément `::after` a maintenant le style qu'on voulait, mais passer la souris sur le bouton n’a pas encore d’effet parce que la
+pseudoclasse `:hover` du bouton sélectionne toujours avec `.btn__bg` pour changer son `opacity` à 1. Nous allons donc le mettre à jour pour
+qu’il utilise plutôt le pseudoélément `::after` :
+
+```scss
+$border-rad: 2rem;
+$clr-btn: #15DEA5;
+.btn {
+    border-radius: $border-rad;
+    background-color: $clr-btn;
+    position: relative;
+    z-index: 1;
+    &:hover {
+        &::after {
+            opacity: 1;
+        }
+    }
+    &::after {
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        background-color: darken($clr-btn, 5);
+        opacity: 0;
+        z-index: \-1;
+        transition: opacity 250ms;
+    }
+}
+```
+
+Notre bouton n’aura plus besoin de la `<div>` d’arrière-plan, donc tant qu’à faire, retirons-la aussi :
+
+```html
+<button class="btn">
+    Survole moi!
+</button>
+```
+
+Et maintenant, après avoir actualisé la page, quand nous interagissons avec le bouton, il devrait bien réagir comme avant :
+
+![Bouton qui ne change pas de couleur au hover](https://user.oc-static.com/upload/2021/02/18/16136590272364_Gif096.gif)
+
+Argh ! Zéro changement de couleur ! Ouvrons DevTools pour inspecter notre bouton :
+
+![Le code inspecté](https://user.oc-static.com/upload/2019/08/06/15650942922045_image26.png)
+
+Nous devrions voir un élément `::after` là où se trouvait notre `<div>` d’arrière-plan… mais il n’y a rien. 😤
+
+### Maîtrisez la particularité des pseudoéléments
+
+Bon, c'est peut-être de ma faute… Vous vous rappelez quand j’ai dit :
+
+> Comme un pseudoélément reste un élément, on peut le styliser de la même manière.
+
+Je vous ai à moitié menti, car ce n’était pas complètement vrai… 🙈
+
+Pour ma défense, c’était vrai à 99,9 %… mais les pseudoéléments nécessitent une propriété dont les éléments normaux n’ont pas besoin. Pour un
+élément normal, on code son contenu en écrivant la page. Mais comme `::after` injecte un élément dans la page après coup, le CSS doit dire au
+navigateur ce que cet élément contient. C’est là que la propriété **`content`** entre en jeu. Elle est **indispensable au fonctionnement des
+pseudoéléments.** (Prenez gaaaaarde à la propriété content, elle en a rendu plus d’un complètement fou, ne tombez pas dans son pièèège 👿).
+
+La propriété `content` nous permet de remplir un pseudoélément de texte ou d’images, mais dans le cas de notre bouton, nous ne voulons pas y
+ajouter de contenu. Nous voulons plutôt que `::after` agisse comme un fond de couleur. Pourtant, il est indispensable d’assigner une valeur au
+pseudoélément. Essayons donc de lui assigner une chaîne de caractères vides en utilisant des guillemets vides :
+
+```scss
+$border-rad: 2rem;
+$clr-btn: #15DEA5;
+.btn {
+    border-radius: $border-rad;
+    background-color: $clr-btn;
+    position: relative;
+    z-index: 1;
+    &:hover {
+        &::after {
+            opacity: 1;
+        }
+    }
+    &::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        background-color: darken($clr-btn, 5);
+        opacity: 0;
+        z-index: -1;
+        transition: opacity 250ms;
+    }
+}
+```
+
+Inspectons maintenant le code de notre bouton pour voir comment il se comporte. C’est mieux ! Si on jette un œil à DevTools, on peut voir que
+l’élément `::after` se trouve bien là où on avait une `<div>` :
+
+![Le code inspecté](https://user.oc-static.com/upload/2019/08/06/15650946116753_image28.png)
+
+Alors, vous avez réussi ?
+
+Si jamais vous avez envie de vous arracher les cheveux parce que vos pseudoéléments n’apparaissent pas sur votre page, vérifiez en premier que
+vous leur avez attribué une propriété `content`. Personnellement, ça m’arrive encore de devenir à moitié folle avant de me rendre compte que
+j’ai oublié d’ajouter la propriété content à mes pseudoéléments.
+
+### Découvrez les dégradés
+
+L’animation par la propriété `opacity` n’est pas limitée aux changements de couleur. On peut aussi animer des dégradés au lieu de couleurs unies :
+**![Animation de l'opacity gradient](https://user.oc-static.com/upload/2021/02/09/16128925803024_Gif097.gif)**.
+
+Vous pouvez d'ailleurs retrouver le code source de ce bouton dans [ce CodePen](https://codepen.io/atoulmet/pen/OJLjGvV).
+
+_Essayez de modifier le dégradé du bouton 🙂_
+
+Pour cela, il faut créer un dégradé pour la `background-color` du pseudoélément `::after`, et non une couleur unie.
+
+```scss
+$border-rad: 2rem;
+$clr-btn: #15DEA5;
+.btn {
+    border-radius: $border-rad;
+    background-color: $clr-btn;
+    position: relative;
+    z-index: 1;
+    &:hover {
+        &::after {
+            opacity: 1;
+        }
+    }
+    &::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        background: radial-gradient(circle, lighten($clr-btn, 5) 0%, darken($clr-btn, 10) 100%);
+        opacity: 0;
+        z-index: -1;
+        transition: opacity 250ms;
+    }
+}
+```
+
+On peut aussi créer des couches de couleurs sur des images :
+
+![une image avec gradient hover opacity](https://user.oc-static.com/upload/2021/02/09/16128926002097_Gif098.gif)
+
+```scss
+$border-rad: 2rem;
+$clr-primary: #15DEA5;
+@mixin peudo-pos {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+}
+.btn {
+    border-radius: $border-rad;
+    background-color: $clr-primary;
+    position: relative;
+    z-index: 1;
+    &:hover {
+        &::after {
+            opacity: 1;
+        }
+        & + .img {
+            &::before {
+                opacity: 0;
+            }
+        }
+    }
+    &::after {
+        @include pseudo-elem;
+        background: radial-gradient(circle, lighten($clr-primary, 5) 0%, darken($clr-primary, 10) 100%);
+        opacity: 0;
+        z-index: -1;
+        transition: opacity 250ms;
+    }
+}
+.img {
+    z-index: -1;
+    &::before {
+        @include pseudo-elem;
+        border-radius: $border-rad;
+        background: $clr-primary;
+        z-index: 1;
+    }
+}
+```
+
+Pas mal hein ? Vous avez essayé ?
+
+La morale de cette histoire, c’est que la propriété `opacity` permet de faire des transitions de couleur sans que le navigateur fasse des calculs
+de type “paint”. La performance reste donc optimale, et nous permet donc de garder notre objectif de 60 FPS. Pour cela, les pseudoéléments nous
+évitent d’écrire un code HTML répétitif, dans lequel on aurait dû insérer de véritables éléments supplémentaires. Plus pratique et plus propre,
+que demander de plus ?
+
+### En résumé
+
+- animer la couleur d’une propriété déclenche des **calculs** de paint ;
+- la propriété `opacity` nous permet de faire des transitions entre des couleurs en évitant ces calculs ;
+- la propriété `opacity` reçoit une valeur entre 0 et 1, 0 étant complètement transparent et 1 complètement opaque ;
+- pour éviter d’avoir à ajouter des `<div>` supplémentaires, que l'on aurait dû ajouter à chaque fois dans le HTML, on peut utiliser le
+pseudoélément `::before` ou `::after` ;
+- pour créer un pseudoélément, ajoutez le nom du pseudoélément à un sélecteur, en utilisant le préfixe double deux-points : `.selector::after{...}`
+- les pseudo-éléments `::before` et `::after` créent un élément qui est respectivement le premier ou le dernier enfant de l’élément sélectionné ; 
+- il est possible de créer des dégradés de couleur. Il suffit d'attribuer un dégradé au background-color de l'élément d'arrière-plan. On fera
+ensuite disparaître l'élément superposé avec opacity: 0.
+
+_Nous voilà déjà à la fin de la deuxième partie ! Félicitations à vous 🎉 ! Vous allez maintenant pouvoir vous exercer sur le deuxième quiz du
+cours. Une fois le quiz terminé, nous passerons à la partie 3, où nous verrons enfin les keyframes. J'ai hâte !_
+
+-----
+
+## Quiz : Réalisez des translations, des rotations et modifier l'opacité de vos animations
+
+[Réalisez des translations, des rotations et modifier l'opacité de vos animations - OpenClassrooms](https://openclassrooms.com/fr/courses/5919246-creez-des-animations-css-modernes/exercises/3601)
+
+#### Compétences évaluées
+
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-checkbox" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#00b341" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <polyline points="9 11 12 14 20 6" />
+  <path d="M20 12v6a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h9" />
+</svg> Maîtriser les translations, les rotations et l’opacité
+
+-----
+
+#### Description
+
+Bienvenue dans le deuxième quiz de ce cours.<br />
+Cette fois-ci, c'est vous qui allez coder. Il est nécessaire de cloner le [repository GitHub](https://github.com/atoulmet/openclassrooms_css-animations)
+correspondant à ce cours pour répondre aux six premières questions. Vérifiez le fichier README.md pour obtenir quelques instructions
+supplémentaires sur comment le faire tourner.
+
+Dans les quatre questions suivantes, nous testerons votre compréhension générale des points abordés dans la partie 2 de ce cours.
+
+Alors, c'est parti ! 🚀
+
+
+#### Question 1 : Dans le repository, une ligne a été commentée pour animer la première carte. Décommentez cette ligne de code. Quelle propriété a été animée ?
+
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> <code>rotate()</code><br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> <code>width</code><br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle-check" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#7bc62d" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M9 12l2 2l4 -4" />
+</svg> <code>transform</code><br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> <code>transition</code><br />
+<br />
+
+_Il aurait pu être tentant de choisir la première réponse. La flashcard décrit effectivement une rotation. Mais rotate n'est pas une propriété :
+il s'agit d'une fonction de la propriété transform. La propriété width n'a quant à elle pas du tout été animée. Au contraire, je vous déconseille
+d'utiliser cette propriété pour créer vos animations, puisqu'elle n'est pas du tout performante. La propriété transition permet de décrire la
+durée, la courbe d'accélération, le délai, etc. Mais ce n'est pas une propriété animée._
+
+-----
+
+#### Question 2 : Lequel de ces snippets nous donne une animation permettant de faire apparaître la définition du deuxième principe de manière fluide ?
+
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg>
+
+```scss
+.principal-2 {
+    .btn:active + .card > .card__front {
+        transform: scale(0);
+        transform: rotate(-190deg);
+        transition: 0.5s ease-in-out;
+    }
+}
+```
+
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg>
+
+```scss
+.principal-2 {
+    & .btn:active + .card > .card__front {
+        transform: scale(0);
+    }
+}
+```
+
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg>
+
+```scss
+.principal-2 {
+    & .btn:active + .card > .card_front {
+        transform: opacity(0);
+        transition-duration: 0.5s;
+    }
+}
+```
+
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle-check" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#7bc62d" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M9 12l2 2l4 -4" />
+</svg>
+
+```scss
+.principal-2 {
+    .btn:active + .card > .card__front {
+        opacity: 0;
+        transform: rotate(60deg) scale(0);
+        transition: 0.5s ease-in-out;
+    }
+}
+```
+
+*Dans le choix numéro 1, la deuxième propriété transform, transform: rotate(-190deg), vient annuler la première déclaration de transform qui
+précisait scale(0). Le dessus de la carte pivote bien mais ne disparaît pas, ce qui ne nous permet pas de voir la définition.*
+
+*Le deuxième snippet, quant à lui ne prévoit pas de transition : la définition apparaît bien, mais pas d'animation ici.*
+
+*Dans le troisième choix, il y a une toute petite erreur : au lieu de .card__front, on a ici .card_front, par ailleurs, opacity ne fait pas
+partie de transform(). l'animation ne peut donc pas se lancer.*
+
+*C'est bien la solution 4 qui permet de lancer notre animation.*
+
+-----
+
+#### Question 3 : Laquelle de ces animations correspond à ce snippet de code ?
+
+```scss
+.principal-3 {
+    .btn:active + .card > .card__front {
+        transform: scale(2);
+        opacity: 0;
+        transition: all ease-in-out 0.5s;
+    }
+}
+```
+
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg>
+
+![pt02-quiz-q3-r1](https://user.oc-static.com/upload/2019/09/01/15673370875301_ezgif.com-optimize%20%2813%29.gif)
+
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle-check" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#7bc62d" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M9 12l2 2l4 -4" />
+</svg>
+
+![pt02-quiz-q3-r2](https://user.oc-static.com/upload/2019/09/01/15673371075752_ezgif.com-optimize%20%2814%29.gif)
+
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg>
+
+![pt02-quiz-q3-r3](https://user.oc-static.com/upload/2019/09/01/15673371255855_ezgif.com-video-to-gif%20%2816%29.gif)
+
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg>
+
+![pt02-quiz-q3-r4](https://user.oc-static.com/upload/2019/09/01/15673371381181_ezgif.com-optimize%20%2815%29.gif)
+
+*Il s'agit de l'animation numéro 2 !*
+
+*En effet, l'animation numéro 1 ne grandit pas assez pour correspondre à ce snippet : ici elle effectue une transformation de translate(1.2).*
+
+*L'animation numéro 3, quant à elle, ne peut pas correspondre : elle s'étend sur la droite alors que la propriété transform-origin n'a pas été
+manipulée. Et enfin, l'animation 4 ne disparaît pas totalement à la fin, et sa duration est bien trop lente.*
+
+-----
+
+#### Question 4 : Je veux créer une animation où la carte disparaît tout en se décalant de 300 pixels sur la droite, et en réduisant son échelle. Dans mon sélecteur `.principal-4`, je pensais avoir ce qu'il me fallait, mais ça ne marche pas. Qu'est-ce qui pose problème ici ?
+
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> Ma transition est trop rapide : je n'ai pas le temps de voir l'effet.<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle-check" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#7bc62d" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M9 12l2 2l4 -4" />
+</svg> Il n'est pas possible de préciser plusieurs fois <code>transform</code> au sein d'un même sélecteur, ou les effets précédents seront écrasés par la dernière déclaration.<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> Ce n'est pas possible de créer une animation sur 3 propriétés différentes.<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> Il n'est pas possible d'animer les propriétés <code>transform</code> et <code>opacity</code> dans une même animation.<br />
+<br />
+
+*Avec une durée de 300ms, aucun souci de durée de transition ici : c'est largement suffisant pour voir un effet. Par ailleurs, il est également
+possible de créer une animation sur autant de propriétés que l'on souhaite, pas de limite à ce niveau-là. De la même manière, il est tout à fait
+possible d'animer `opacity` ET `transform`. C'est donc bien la déclaration de `transform` qui pose problème. 🙈*
+
+-----
+
+#### Question 5 : Je veux reproduire cette animation.
+
+![pt02-quiz-q5](https://user.oc-static.com/upload/2019/09/01/15673376246868_ezgif.com-optimize%20%2816%29.gif)
+
+**Quel snippet de code me permet d'y parvenir ?**
+
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg>
+
+```scss
+.btn:active + .card > .card__front {
+    transform: rotate(180deg);
+    opacity: 0;
+    transition: transform ease-in-out 0.5s, opacity ease-in-out 0.2s 0.2s;
+}
+```
+
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg>
+
+```scss
+.card > .card__front {
+    transform-origin: top right;
+}
+.btn:active + .card > .card__front {
+    transform-origin: top right;
+    transform: rotate(180deg);
+    opacity: 0;
+    transition: transform ease-in-out 0.5s, opacity ease-in-out 0.2s 0.2s;
+}
+```
+
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle-check" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#7bc62d" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M9 12l2 2l4 -4" />
+</svg>
+
+```scss
+.card > .card__front {
+    transform-origin: 20px 20px;
+}
+.btn:active + .card > .card__front {
+    transform: rotate(180deg);
+    opacity: 0;
+    transition: all ease-in-out 1s;
+}
+```
+
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg>
+
+```scss
+.btn:active + .card > .card__front {
+    transform-origin: top right;
+    transform: rotate(180deg);
+    opacity: 0;
+    transition: all ease-in-out 0.2s 0.2s;
+}
+```
+
+*Ici, la propriété `transform-origin` est essentielle. Or, elle n'est pas présente dans le premier snippet. Ce n'est pas la bonne solution.*
+
+*Le deuxième choix, quant à lui, part d'un `transform-origin` du mauvais côté : alors que sur mon animation le carré bascule vers la gauche, la
+propriété est définie à right ici.*
+
+*Le quatrième extrait de code précise bien `transform-origin: top right;`, mais il le fait directement dans la pseudoclasse `:active`, ce qui ne
+donne pas l'effet souhaité.*
+
+*C'est bien le troisième snippet qui permet d'obtenir cette animation.*
+
+-----
+
+#### Question 6 : Dans le repository, une animation a été créée pour le 6e principe, Slow in and Slow out. Comme nous l'avons vu dans le chapitre "Analysez la performance de vos animations avec Chrome DevTools", ouvrez l'outil Performance des DevTools pour creuser un peu cette animation. Zoomez au maximum pour voir les étapes qui ont été déclenchées pour le calcul de notre animation. Quelles sont ces étapes ?
+
+*Attention, plusieurs réponses sont possibles.*
+
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-checkbox" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#00b341" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <polyline points="9 11 12 14 20 6" />
+  <path d="M20 12v6a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h9" />
+</svg> Paint<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-checkbox" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#00b341" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <polyline points="9 11 12 14 20 6" />
+  <path d="M20 12v6a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h9" />
+</svg> Layout<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-checkbox" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#00b341" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <polyline points="9 11 12 14 20 6" />
+  <path d="M20 12v6a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h9" />
+</svg> Composition (Composite)<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-square" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <rect x="4" y="4" width="16" height="16" rx="2" />
+</svg> Flex<br />
+<br />
+
+*Cette animation modifie les propriétés de transform, opacity, mais également background-color et width/height. Elle déclenche donc des opérations
+de Layout, Paint et Composition. Mon animation n'est donc pas vraiment performante ici : si je veux au maximum limiter les calculs de mon
+navigateur, je dois m'en tenir aux propriétés qui déclenchent des calculs de Composition. Pour cela, je dois privilégier transform et opacity.
+Pour ce qui est de flex, rien à voir : il s'agit d'une valeur de display qui permet de faire des mises en page CSS.*
+
+-----
+
+#### Question 7 : Quel est le FPS optimal à respecter pour obtenir des animations CSS aussi fluides que possible ?
+
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle-check" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#7bc62d" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M9 12l2 2l4 -4" />
+</svg> 60 FPS<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> 16 FPS<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> 100 FPS<br />
+<br />
+
+*Pour créer des animations aussi fluides que possible, le FPS optimal est de 60 FPS. En effet, la plupart des écrans modernes ont une vitesse de
+rafraîchissement des images à 60 hz, ou 60 fois par seconde. Si notre animation a un FPS de 100, l'utilisateur verra malgré tout une animation à
+60 FPS car il sera limité par les capacités de son écran. À l'inverse, 16 FPS est beaucoup trop faible et donne vraiment une impression saccadée.
+Pourtant, si le nombre 16 vous semble familier, c'est aussi parce qu'il s'agit de la durée maximale pour calculer une image d'une animation si
+l'on veut respecter le FPS optimal de 60 FPS. N'hésitez pas à jeter un œil au chapitre _Optimisez les performances de votre navigateur_ pour vos
+animations CSS, si vous avez un doute 😉*
+
+-----
+
+#### Question 8 : Quels snippets de code permettent d'obtenir une animation sur l'opacité et sur transform, avec une transition de 300 millisecondes, une courbe d'accélération ease et un délai 200 millisecondes ?
+
+*Attention, plusieurs réponses sont possibles.*
+
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-checkbox" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#00b341" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <polyline points="9 11 12 14 20 6" />
+  <path d="M20 12v6a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h9" />
+</svg>
+
+```scss
+transition: all 0.3s 0.2s;
+```
+
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-checkbox" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#00b341" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <polyline points="9 11 12 14 20 6" />
+  <path d="M20 12v6a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h9" />
+</svg>
+
+```scss
+transition: all 0.3s ease 0.2s;
+```
+
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-square" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <rect x="4" y="4" width="16" height="16" rx="2" />
+</svg>
+
+```scss
+transition: all 0.2s ease 0.3s;
+```
+
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-checkbox" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#00b341" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <polyline points="9 11 12 14 20 6" />
+  <path d="M20 12v6a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h9" />
+</svg>
+
+```scss
+transition-duration: 0.3s;
+transition-delay: 0.2s
+transition-property: all;
+transition-timing-function: ease;
+```
+
+*Souvenez-vous : la propriété transition est une propriété raccourcie pour les propriétés [transition-property](https://developer.mozilla.org/fr/docs/Web/CSS/transition-property),
+[transition-duration](https://developer.mozilla.org/fr/docs/Web/CSS/transition-duration), [transition-timing-function](https://developer.mozilla.org/fr/docs/Web/CSS/transition-timing-function)
+et [transition-delay](https://developer.mozilla.org/fr/docs/Web/CSS/transition-delay), dans cet ordre précis.*
+
+*Le choix 1 ne précise pas la valeur ease comme fonction de timing, mais comme il s'agit de la valeur par défaut, le premier snippet convient
+bien. Le choix numéro 2 également.*
+
+*Le choix numéro 3 inverse durée et délai de transition, il ne respecte donc pas les critères recherchés. Et le choix numéro 4 correspond à la
+version détaillée de nos propriétés. Vous avez le choix de préciser des valeurs pour vos propriétés CSS une par une comme dans le choix 4, ou
+avec la propriété transition. Mais vous verrez le plus souvent la propriété raccourcie ; je vous conseille donc de l'utiliser pour vous y
+habituer.*
+
+-----
+
+#### Question 9 : Qu'est-ce qu'il ne faut surtout pas oublier pour afficher un pseudo-élément `:before` ou `:after` ?
+
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> Préciser une width<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> display: block;<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle-check" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#7bc62d" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M9 12l2 2l4 -4" />
+</svg> Préciser un content<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> z-index: 1<br />
+<br />
+
+*Les pseudoéléments sont un peu particuliers. Contrairement à un élément HTML traditionnel, il n'est pas nécessaire qu'il ait une width ou une
+height pour qu'il s'affiche. En revanche, il est indispensable de préciser la propriété content, même s'il s'agit d'une chaîne de caractères vide.
+Souvenez-vous-en bien, car cette petite particularité risque de vous rendre fou en cas d'oubli 🙃.*
+
+-----
+
+#### Question 10 : Le navigateur suit plusieurs étapes pour rendre une page web. Selon la propriété appliquée, une animation déclenche différentes étapes de rendu par le navigateur. Quelle est la dernière étape qui est la moins gourmande en puissance de calcul, et doit donc être privilégiée pour vos animations CSS ?
+
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> Paint<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> Layout<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> Styles<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle-check" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#7bc62d" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M9 12l2 2l4 -4" />
+</svg> Composition<br />
+<br />
+
+*Dans l'ordre, les étapes que le navigateur suit sont les suivantes :*
+1. _**Style** : le navigateur va créer la structure HTML qui s'affichera._
+2. _**Layout** (mise en page) : maintenant que le navigateur connaît les styles et les éléments à afficher, il détermine la taille des éléments
+et où les placer._
+3. _**Paint** (peinture) : le navigateur transforme les éléments en pixels en utilisant les styles de l’étape 1, et les positions et dimensions
+déduites de l’étape 2._
+4. _**Composition** : le navigateur combine tous les éléments pour composer la page qui s’affiche dans le navigateur._
+
+*C'est la dernière étape qui est la moins gourmande en puissance de calcul, donc Composition, à privilégier pour vos animations. Vous pouvez
+retrouver à quelle étape correspond la propriété que vous animez sur le site [**csstriggers.com**](http://csstriggers.com/) (en anglais).*

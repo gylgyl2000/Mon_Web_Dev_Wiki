@@ -1,0 +1,447 @@
+---
+id: Udemy-React-16+_Le_guide_complet-04-Rendu_conditionnel_et_liste
+title: "04 - Rendu conditionnel et liste"
+---
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+import { MDXEmbedProvider } from 'mdx-embed';
+
+
+## Base du Rendu Conditionnel
+
+<video
+  height="auto"
+  width="100%"
+  controls>
+    <source
+      src="https://monwikidevweb.la-loutre.fr/data/udemy/video/Udemy-React-16+_Le_guide_complet-04-Rendu_conditionnel_et_liste-01.mp4"
+      type="video/mp4"
+    />
+</video>
+
+<br />
+<br />
+
+```jsx {4,21-24,28,45-52} title="App.js"
+class App extends Component {
+  state = {
+    famille,
+    isShow: false
+  }
+
+  handleClick = (num) => {
+    const famille = { ...this.state.famille }
+    famille.membre1.age += num
+    this.setState({ famille })
+  }
+
+  handleChange = event => {
+    const famille = { ...this.state.famille }
+    const nom = event.target.value
+    console.log(nom)
+    famille.membre1.nom = nom
+    this.setState({ famille })
+  }
+
+  handleShowDescription = () => {
+    const isShow = !this.state.isShow
+    this.setState({ isShow })
+  }
+
+  render () {
+    const { titre } = this.props
+    const { famille, isShow } = this.state
+    return (
+      <div className="App">
+        <h1>{titre}</h1>
+        <input value={famille.membre1.nom} onChange={this.handleChange} type='text' />
+        <Membre
+          age={famille.membre1.age}
+          nom={famille.membre1.nom} />
+        <Membre
+          age={famille.membre2.age}
+          nom={famille.membre2.nom} />
+        <Membre
+          age={famille.membre3.age}
+          nom={famille.membre3.nom} />
+        <Membre
+          age={famille.membre4.age}
+          nom={famille.membre4.nom}>
+          {
+            isShow ? <strong>Je suis un chien.</strong> : null
+          }
+          <button onClick={this.handleShowDescription}>
+            {
+              isShow ? 'Cacher' : 'Montrer'
+            }
+            </button>
+        </Membre>
+        <Button
+          vieillir={() => this.handleClick(2)}
+        />
+      </div>
+    )
+  }
+}
+```
+
+-----
+
+## Rendu Conditionnel Complexe
+
+<video
+  height="auto"
+  width="100%"
+  controls>
+    <source
+      src="https://monwikidevweb.la-loutre.fr/data/udemy/video/Udemy-React-16+_Le_guide_complet-04-Rendu_conditionnel_et_liste-02.mp4"
+      type="video/mp4"
+    />
+</video>
+
+<br />
+<br />
+
+```jsx {30,32-36,54} title="App.js"
+class App extends Component {
+  state = {
+    famille,
+    isShow: false
+  }
+
+  handleClick = (num) => {
+    const famille = { ...this.state.famille }
+    famille.membre1.age += num
+    this.setState({ famille })
+  }
+
+  handleChange = event => {
+    const famille = { ...this.state.famille }
+    const nom = event.target.value
+    console.log(nom)
+    famille.membre1.nom = nom
+    this.setState({ famille })
+  }
+
+  handleShowDescription = () => {
+    const isShow = !this.state.isShow
+    this.setState({ isShow })
+  }
+
+  render () {
+    const { titre } = this.props
+    const { famille, isShow } = this.state
+
+    let description = null
+
+    if (isShow) {
+      description = (
+        <strong>Je suis un chien.</strong>
+      )
+    }
+
+    return (
+      <div className="App">
+        <h1>{titre}</h1>
+        <input value={famille.membre1.nom} onChange={this.handleChange} type='text' />
+        <Membre
+          age={famille.membre1.age}
+          nom={famille.membre1.nom} />
+        <Membre
+          age={famille.membre2.age}
+          nom={famille.membre2.nom} />
+        <Membre
+          age={famille.membre3.age}
+          nom={famille.membre3.nom} />
+        <Membre
+          age={famille.membre4.age}
+          nom={famille.membre4.nom}>
+          { description }
+          <button onClick={this.handleShowDescription}>
+            {
+              isShow ? 'Cacher' : 'Montrer'
+            }
+            </button>
+        </Membre>
+        <Button
+          vieillir={() => this.handleClick(2)}
+        />
+      </div>
+    )
+  }
+}
+```
+
+-----
+
+## Rendre une Liste
+
+<video
+  height="auto"
+  width="100%"
+  controls>
+    <source
+      src="https://monwikidevweb.la-loutre.fr/data/udemy/video/Udemy-React-16+_Le_guide_complet-04-Rendu_conditionnel_et_liste-03.mp4"
+      type="video/mp4"
+    />
+</video>
+
+<br />
+<br />
+
+```jsx {57-63,69} title="App.js"
+const famille = {
+  membre1: {
+    nom: 'Anthony',
+    age: 27
+  },
+  membre2: {
+    nom: 'Ségolène',
+    age: 27
+  },
+  membre3: {
+    nom: 'Éléanor',
+    age: 9
+  },
+  membre4: {
+    nom: 'Mocha',
+    age: 2
+  }
+}
+
+class App extends Component {
+  state = {
+    famille,
+    isShow: false
+  }
+
+  handleClick = (num) => {
+    const famille = { ...this.state.famille }
+    famille.membre1.age += num
+    this.setState({ famille })
+  }
+
+  handleChange = event => {
+    const famille = { ...this.state.famille }
+    const nom = event.target.value
+    console.log(nom)
+    famille.membre1.nom = nom
+    this.setState({ famille })
+  }
+
+  handleShowDescription = () => {
+    const isShow = !this.state.isShow
+    this.setState({ isShow })
+  }
+
+  render () {
+    const { titre } = this.props
+    const { famille, isShow } = this.state
+
+    let description = null
+
+    if (isShow) {
+      description = (
+        <strong>Je suis un chien.</strong>
+      )
+    }
+
+    const liste = Object.keys(famille)
+      .map(membre => (
+        <Membre
+          age={famille[membre].age}
+          nom={famille[membre].nom} />
+      ))
+    console.log(liste)
+
+    return (
+      <div className="App">
+        <h1>{titre}</h1>
+        <input value={famille.membre1.nom} onChange={this.handleChange} type='text' />
+        { liste }
+        {/* <Membre
+          age={famille.membre4.age}
+          nom={famille.membre4.nom}>
+          { description }
+          <button onClick={this.handleShowDescription}>
+            {
+              isShow ? 'Cacher' : 'Montrer'
+            }
+            </button>
+        </Membre> */}
+        <Button
+          vieillir={() => this.handleClick(2)}
+        />
+      </div>
+    )
+  }
+}
+```
+
+
+Object.keys()
+
+-----
+
+## Manipuler le State via un Élément d'une Liste
+
+<video
+  height="auto"
+  width="100%"
+  controls>
+    <source
+      src="https://monwikidevweb.la-loutre.fr/data/udemy/video/Udemy-React-16+_Le_guide_complet-04-Rendu_conditionnel_et_liste-04.mp4"
+      type="video/mp4"
+    />
+</video>
+
+<br />
+<br />
+
+```jsx title="App.js"
+  cacherNom = id => {
+    const famille = { ...this.state.famille }
+    famille[id].nom = 'X'
+    this.setState({ famille })
+  }
+
+// [...]
+
+  const liste = Object.keys(famille)
+  .map(membre => (
+    <Membre
+      cacherNom={() => this.cacherNom(membre)}
+      age={famille[membre].age}
+      nom={famille[membre].nom} />
+  ))
+```
+
+```jsx {1,9} title="Membre.js"
+const Membre = ({ nom, age, children, cacherNom }) => {
+    return (
+        <Fragment>
+            <h2 style={{
+                backgroundColor:  age < 10 ? 'yellow' : 'purple',
+                color: age < 10 ? 'black' : 'white' }}>
+                {nom.toUpperCase()} : {age}
+            </h2>
+            <button onClick={cacherNom}>X</button>
+            { children ? <p>{children}</p> : <Fragment /> }
+        </Fragment>
+    )
+}
+```
+
+-----
+
+## Utiliser et Comprendre les "keys"
+
+<video
+  height="auto"
+  width="100%"
+  controls>
+    <source
+      src="https://monwikidevweb.la-loutre.fr/data/udemy/video/Udemy-React-16+_Le_guide_complet-04-Rendu_conditionnel_et_liste-05.mp4"
+      type="video/mp4"
+    />
+</video>
+
+<br />
+<br />
+
+:::warning
+console<br />
+Warning: Each child in a list should have a unique "key" prop.
+:::
+
+```jsx {4} title="App.js"
+const liste = Object.keys(famille)
+  .map(membre => (
+    <Membre
+      key={membre}
+      cacherNom={() => this.cacherNom(membre)}
+      age={famille[membre].age}
+      nom={famille[membre].nom} />
+  ))
+```
+
+```bash title="React Components"
+App
+  Membre key="membre1"
+  Membre key="membre2"
+  Membre key="membre3"
+  Membre key="membre4"
+```
+
+-----
+
+## Event et Argument dans une liste
+
+<video
+  height="auto"
+  width="100%"
+  controls>
+    <source
+      src="https://monwikidevweb.la-loutre.fr/data/udemy/video/Udemy-React-16+_Le_guide_complet-04-Rendu_conditionnel_et_liste-06.mp4"
+      type="video/mp4"
+    />
+</video>
+
+<br />
+<br />
+
+```jsx {1,5,15} title="App.js"
+  handleChange = (event, id) => {
+    const famille = { ...this.state.famille }
+    const nom = event.target.value
+    console.log(nom)
+    famille[id].nom = nom
+    this.setState({ famille })
+  }
+
+// [...]
+
+    const liste = Object.keys(famille)
+      .map(membre => (
+        <Membre
+          key={membre}
+          handleChange={event => this.handleChange(event, membre)}
+          cacherNom={() => this.cacherNom(membre)}
+          age={famille[membre].age}
+          nom={famille[membre].nom} />
+      ))
+```
+
+```jsx {1,9} title="Membre.js"
+const Membre = ({ nom, age, children, cacherNom, handleChange }) => {
+    return (
+        <Fragment>
+            <h2 style={{
+                backgroundColor:  age < 10 ? 'yellow' : 'purple',
+                color: age < 10 ? 'black' : 'white' }}>
+                {nom.toUpperCase()} : {age}
+            </h2>
+            <input value={nom} onChange={handleChange} type='text' />
+            <button onClick={cacherNom}>X</button>
+            { children ? <p>{children}</p> : <Fragment /> }
+        </Fragment>
+    )
+}
+```
+
+-----
+
+## Résumé
+
+<video
+  height="auto"
+  width="100%"
+  controls>
+    <source
+      src="https://monwikidevweb.la-loutre.fr/data/udemy/video/Udemy-React-16+_Le_guide_complet-04-Rendu_conditionnel_et_liste-07.mp4"
+      type="video/mp4"
+    />
+</video>
+
+<br />
+<br />

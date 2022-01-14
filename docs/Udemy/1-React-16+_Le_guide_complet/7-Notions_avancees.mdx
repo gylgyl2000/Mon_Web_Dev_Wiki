@@ -1,0 +1,530 @@
+---
+id: Udemy-React-16+_Le_guide_complet-07-Notions_avancees
+title: "07 - Notions avancées"
+---
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+import { MDXEmbedProvider } from 'mdx-embed';
+
+## Organiser les fichiers
+
+<video
+  height="auto"
+  width="100%"
+  controls>
+    <source
+      src="https://monwikidevweb.la-loutre.fr/data/udemy/video/Udemy-React-16+_Le_guide_complet-07-Notions_avancees-01.mp4"
+      type="video/mp4"
+    />
+</video>
+
+<br />
+<br />
+
+- [Structure de fichiers – React](https://fr.reactjs.org/docs/faq-structure.html)
+
+-----
+
+## Les cycles de vie de React
+
+<video
+  height="auto"
+  width="100%"
+  controls>
+    <source
+      src="https://monwikidevweb.la-loutre.fr/data/udemy/video/Udemy-React-16+_Le_guide_complet-07-Notions_avancees-02.mp4"
+      type="video/mp4"
+    />
+</video>
+
+<br />
+<br />
+
+
+- [React lifecycle methods diagram](https://projects.wojtekmaj.pl/react-lifecycle-methods-diagram/)
+
+- [React.Component #constructor – React](https://fr.reactjs.org/docs/react-component.html#constructor)
+
+-----
+
+## Les cycles de vie concrètement
+
+<video
+  height="auto"
+  width="100%"
+  controls>
+    <source
+      src="https://monwikidevweb.la-loutre.fr/data/udemy/video/Udemy-React-16+_Le_guide_complet-07-Notions_avancees-03.mp4"
+      type="video/mp4"
+    />
+</video>
+
+<br />
+<br />
+
+-----
+
+## Éléments JSX adjacents
+
+<video
+  height="auto"
+  width="100%"
+  controls>
+    <source
+      src="https://monwikidevweb.la-loutre.fr/data/udemy/video/Udemy-React-16+_Le_guide_complet-07-Notions_avancees-04.mp4"
+      type="video/mp4"
+    />
+</video>
+
+<br />
+<br />
+
+- [Fragments – React](https://fr.reactjs.org/docs/fragments.html)
+
+
+## Higher-Order Components (HOC)
+
+<video
+  height="auto"
+  width="100%"
+  controls>
+    <source
+      src="https://monwikidevweb.la-loutre.fr/data/udemy/video/Udemy-React-16+_Le_guide_complet-07-Notions_avancees-05.mp4"
+      type="video/mp4"
+    />
+</video>
+
+<br />
+<br />
+
+```jsx title="hoc/withPlaceholder.js"
+import React, { Component } from 'react'
+
+const withPlaceholder = WrappedComponent => {
+  class HOC extends Component {
+    render () {
+      return(
+        <WrappedComponent
+          placeholder='Mon HOC'
+          {...this.props}
+        />
+      )
+    }
+  }
+}
+
+export default withPlaceholder
+```
+OU
+```jsx title="hoc/withPlaceholder.js"
+import React from 'react'
+
+const withPlaceholder = WrappedComponent => (props) => (
+  <WrappedComponent
+      placeholder='MonHOC'
+      {...props}
+  />
+)
+
+export default withPlaceholder
+```
+
+```jsx {4,35,46,48} title="components/Connexion.js"
+import React, { Component } from 'react'
+import { Redirect } from 'react-router-dom'
+
+import withPlaceholder from '../hoc/withPlaceholder'
+
+class Connexion extends Component {
+  state = {
+    pseudo: '',
+    goToApp: false
+  }
+
+  goToApp = event => {
+    event.preventDefault()
+    this.setState({ goToApp: true })
+  }
+
+  handleChange = event => {
+    const pseudo = event.target.value
+    this.setState({ pseudo })
+  }
+
+  render () {
+    if (this.state.goToApp) {
+      return <Redirect push to={`/pseudo/${this.state.pseudo}`} />
+    }
+
+    return (
+      <div className='connexionBox'>
+        <form className='connexion' onSubmit={this.goToApp} >
+          <h1>Ma Boîte à Recettes</h1>
+          <input
+            type='text'
+            value={this.state.pseudo}
+            onChange={this.handleChange}
+            placeholder={this.props.placeholder}
+            pattern='[A-Za-z-]{1,}'
+            required />
+          <button type='submit'>GO</button>
+          <p>Pas de caractères spéciaux.</p>
+        </form>
+      </div>
+    )
+  }
+}
+
+const WrappedComponent = withPlaceholder(Connexion)
+
+export default WrappedComponent
+```
+
+- [Composants d’ordre supérieur – React](https://fr.reactjs.org/docs/higher-order-components.html)
+
+-----
+
+## HOC concrètement
+
+<video
+  height="auto"
+  width="100%"
+  controls>
+    <source
+      src="https://monwikidevweb.la-loutre.fr/data/udemy/video/Udemy-React-16+_Le_guide_complet-07-Notions_avancees-06.mp4"
+      type="video/mp4"
+    />
+</video>
+
+<br />
+<br />
+
+```jsx title="hoc/withFirebase.js"
+import React, { Component } from 'react'
+
+import recettes from '../recettes'
+
+// Firebase
+import base from '../base'
+
+const withFirebase = WrappedComponent => (
+  class HOC extends Component {
+    state = {
+      pseudo: this.props.match.params.pseudo,
+      recettes: {}
+    }
+
+    componentDidMount () {
+      this.ref = base.syncState(`/${this.state.pseudo}/recettes`, {
+        context: this,
+        state: 'recettes'
+      })
+    }
+
+    componentWillUnmount () {
+      base.removeBinding(this.ref)
+    }
+
+    ajouterRecette = recette => {
+      const recettes = { ...this.state.recettes }
+      recettes[`recette-${Date.now()}`] = recette
+      this.setState({ recettes })
+    }
+
+    majRecette = (key, newRecette) => {
+      const recettes = { ...this.state.recettes }
+      recettes[key] = newRecette
+      this.setState({ recettes })
+    }
+
+    supprimerRecette = key => {
+      const recettes = { ...this.state.recettes }
+      recettes[key] = null
+      this.setState({ recettes })
+    }
+
+    chargerExemple = () => this.setState({ recettes })
+
+    render() {
+      return (
+        <WrappedComponent
+          recettes={this.state.recettes}
+          ajouterRecette={this.ajouterRecette}
+          majRecette={this.majRecette}
+          supprimerRecette={this.supprimerRecette}
+          chargerExemple={this.chargerExemple}
+          {...this.props}
+        />
+      )
+    }
+  }
+)
+
+export default withFirebase
+```
+
+```jsx title="App.js"
+import React from 'react'
+// CSS
+import './App.css'
+
+import Header from './components/Header'
+import Admin from './components/Admin'
+import Card from './components/Card'
+
+import withFirebase from './hoc/withFirebase'
+
+const App = ({
+  match,
+  recettes,
+  ajouterRecette,
+  majRecette,
+  supprimerRecette,
+  chargerExemple }) => {
+  const cards = Object.keys(recettes)
+    .map(key => <Card key={key} details={recettes[key]} />)
+
+  return (
+    <div className='box'>
+      <Header pseudo={match.params.pseudo} />
+      <div className='cards'>
+        { cards }
+      </div>
+      <Admin
+        pseudo={match.params.pseudo}
+        recettes={recettes}
+        ajouterRecette={ajouterRecette}
+        majRecette={majRecette}
+        supprimerRecette={supprimerRecette}
+        chargerExemple={chargerExemple} />
+    </div>
+  )
+}
+
+const WrappedComponent = withFirebase(App)
+
+export default WrappedComponent
+```
+
+-----
+
+## Les PropTypes
+
+<video
+  height="auto"
+  width="100%"
+  controls>
+    <source
+      src="https://monwikidevweb.la-loutre.fr/data/udemy/video/Udemy-React-16+_Le_guide_complet-07-Notions_avancees-07.mp4"
+      type="video/mp4"
+    />
+</video>
+
+<br />
+<br />
+
+```shell title="console"
+➜  recettes-app git:(master) ✗ npm install prop-types
+```
+
+```json {8} title="package.json"
+  "dependencies": {
+    "@firebase/auth": "^0.16.6",
+    "@testing-library/jest-dom": "^5.11.4",
+    "@testing-library/react": "^11.1.0",
+    "@testing-library/user-event": "^12.1.10",
+    "firebase": "^8.6.7",
+    "firebase-auth": "^0.1.2",
+    "prop-types": "^15.7.2",
+    "re-base": "^4.0.0",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "react-router-dom": "^5.2.0",
+    "react-scripts": "^4.0.3",
+    "web-vitals": "^1.0.1"
+  },
+```
+
+```jsx {2,39-46} title="App.js"
+import React from 'react'
+import PropTypes from 'prop-types'
+// CSS
+import './App.css'
+
+import Header from './components/Header'
+import Admin from './components/Admin'
+import Card from './components/Card'
+
+import withFirebase from './hoc/withFirebase'
+
+const App = ({
+  match,
+  recettes,
+  ajouterRecette,
+  majRecette,
+  supprimerRecette,
+  chargerExemple }) => {
+  const cards = Object.keys(recettes)
+    .map(key => <Card key={key} details={recettes[key]} />)
+
+  return (
+    <div className='box'>
+      <Header pseudo={match.params.pseudo} />
+      <div className='cards'>
+        { cards }
+      </div>
+      <Admin
+        pseudo={match.params.pseudo}
+        recettes={recettes}
+        ajouterRecette={ajouterRecette}
+        majRecette={majRecette}
+        supprimerRecette={supprimerRecette}
+        chargerExemple={chargerExemple} />
+    </div>
+  )
+}
+
+App.propTypes = {
+  match: PropTypes.object.isRequired,
+  recettes: PropTypes.object.isRequired,
+  ajouterRecette: PropTypes.func.isRequired,
+  majRecette: PropTypes.func.isRequired,
+  supprimerRecette: PropTypes.func.isRequired,
+  chargerExemple: PropTypes.func.isRequired
+}
+
+const WrappedComponent = withFirebase(App)
+
+export default WrappedComponent
+```
+
+- [Validation de types avec PropTypes – React](https://fr.reactjs.org/docs/typechecking-with-proptypes.html)
+
+-----
+
+## React Context API
+
+<video
+  height="auto"
+  width="100%"
+  controls>
+    <source
+      src="https://monwikidevweb.la-loutre.fr/data/udemy/video/Udemy-React-16+_Le_guide_complet-07-Notions_avancees-08.mp4"
+      type="video/mp4"
+    />
+</video>
+
+<br />
+<br />
+
+```jsx title="components/Color.js"
+import React, { Component } from 'react'
+
+const ColorContext = React.createContext()
+
+export default class ColorProvider extends Component {
+  state = {
+    color: 'red'
+  }
+
+  render() {
+    return (
+      <ColorContext.Provider
+        value={{
+          state: this.state
+        }}>
+        {this.props.children}
+      </ColorContext.Provider>
+    )
+  }
+}
+
+export { ColorContext }
+```
+
+```jsx {11,24,38} title="App.js"
+import React from 'react'
+// CSS
+import './App.css'
+
+import Header from './components/Header'
+import Admin from './components/Admin'
+import Card from './components/Card'
+
+import withFirebase from './hoc/withFirebase'
+
+import ColorContext from './components/Color'
+
+const App = ({
+  match,
+  recettes,
+  ajouterRecette,
+  majRecette,
+  supprimerRecette,
+  chargerExemple }) => {
+  const cards = Object.keys(recettes)
+    .map(key => <Card key={key} details={recettes[key]} />)
+
+  return (
+    <ColorContext>
+      <div className='box'>
+        <Header pseudo={match.params.pseudo} />
+        <div className='cards'>
+          { cards }
+        </div>
+        <Admin
+          pseudo={match.params.pseudo}
+          recettes={recettes}
+          ajouterRecette={ajouterRecette}
+          majRecette={majRecette}
+          supprimerRecette={supprimerRecette}
+          chargerExemple={chargerExemple} />
+      </div>
+    </ColorContext>
+  )
+}
+
+const WrappedComponent = withFirebase(App)
+
+export default WrappedComponent
+```
+
+```jsx {2,8,9,10,13,14} title="components/Header.js"
+import React from 'react'
+import { ColorContext } from './Color'
+
+const Header = ({ pseudo }) => {
+    const formatPseudo = pseudo => /[aeiouy]/i.test(pseudo[0]) ? `d'${pseudo}` : `de ${pseudo}`
+
+    return (
+        <ColorContext.Consumer>
+            {context => (
+                <header style={{ backgroundColor: context.state.color }}>
+                    <h1>La boîte à recettes {formatPseudo(pseudo)}</h1>
+                </header>
+            )}
+        </ColorContext.Consumer>
+    )
+}
+
+export default Header
+```
+
+- [Contexte – React](https://fr.reactjs.org/docs/context.html)
+
+-----
+
+## Résumé
+
+<video
+  height="auto"
+  width="100%"
+  controls>
+    <source
+      src="https://monwikidevweb.la-loutre.fr/data/udemy/video/Udemy-React-16+_Le_guide_complet-07-Notions_avancees-09.mp4"
+      type="video/mp4"
+    />
+</video>
+
+<br />
+<br />

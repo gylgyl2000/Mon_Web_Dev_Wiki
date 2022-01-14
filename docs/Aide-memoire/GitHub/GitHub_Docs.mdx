@@ -1,0 +1,246 @@
+---
+sidebar_position: 2
+---
+
+# GitHub Docs
+
+## Gérer un domaine personnalisé pour votre site GitHub Pages
+
+[Managing a custom domain for your GitHub Pages site - GitHub Docs](https://docs.github.com/en/pages/configuring-a-custom-domain-for-your-github-pages-site/managing-a-custom-domain-for-your-github-pages-site#configuring-a-subdomain)
+
+Vous pouvez configurer ou mettre à jour certains enregistrements DNS et les paramètres de votre dépôt pour faire pointer le domaine par
+défaut de votre site GitHub Pages vers un domaine personnalisé.
+
+:::tip
+Les pages GitHub sont disponibles dans les dépôts publics avec GitHub Free et GitHub Free pour les organisations, et dans les dépôts
+publics et privés avec GitHub Pro, GitHub Team, GitHub Enterprise Cloud et GitHub Enterprise Server. Pour plus d'informations, consultez
+« [Produits de GitHub](https://docs.github.com/en/get-started/learning-about-github/githubs-products) ».
+:::
+
+Les personnes disposant d'autorisations d'administrateur pour un dépôt peuvent configurer un domaine personnalisé pour un site GitHub Pages.
+
+### À propos de la configuration de domaine personnalisé
+
+Assurez-vous d'ajouter votre domaine personnalisé à votre site GitHub Pages avant de configurer votre domaine personnalisé avec votre
+fournisseur DNS. La configuration de votre domaine personnalisé avec votre fournisseur DNS sans ajouter votre domaine personnalisé à GitHub
+pourrait permettre à quelqu'un d'autre d'héberger un site sur l'un de vos sous-domaines.
+
+:::info Remarque
+Les modifications DNS peuvent prendre jusqu'à 24 heures pour se propager.
+:::
+
+### Configuration d'un sous-domaine
+
+Pour configurer un `www` ou un sous-domaine personnalisé, tel que `www.example.com` ou `blog.example.com`, vous devez ajouter votre domaine
+dans les paramètres du dépôt, ce qui créera un fichier CNAME dans le dépôt de votre site. Après cela, configurez un enregistrement CNAME avec
+votre fournisseur DNS.
+
+1. Sur GitHub, accédez au dépôt de votre site.
+
+2. Sous le nom de votre dépôt, cliquez sur **Settings** (Réglages).
+
+<figure>
+    <img src="https://docs.github.com/assets/cb-21851/images/help/repository/repo-actions-settings.png"
+         alt="Bouton Paramètres du dépôt" />
+    <figcaption>Bouton Paramètres du dépôt</figcaption>
+</figure>
+
+3. Dans la barre latérale gauche, cliquez sur **Pages**.
+
+<figure>
+    <img src="https://docs.github.com/assets/cb-15043/images/help/pages/pages-tab.png"
+         alt="Onglet de page dans la barre latérale de gauche" />
+    <figcaption>Onglet de page dans la barre latérale de gauche</figcaption>
+</figure>
+
+4. Sous « Custom domain » (Domaine personnalisé), saisissez votre domaine personnalisé, puis cliquez sur **Save** (Enregistrer). Cela créera
+un commit qui ajoutera un fichier *CNAME* à la racine de votre source de publication.
+
+<figure>
+    <img src="https://docs.github.com/assets/cb-11473/images/help/pages/save-custom-subdomain.png"
+         alt="Bouton Enregistrer le domaine personnalisé" />
+    <figcaption>Bouton Enregistrer le domaine personnalisé</figcaption>
+</figure>
+
+5. Accédez à votre fournisseur DNS et créez un enregistrement `CNAME` qui pointe votre sous-domaine vers le domaine par défaut de votre site.
+Par exemple, si vous souhaitez utiliser le sous-domaine `www.example.com` pour votre site utilisateur, créez un enregistrement `CNAME` qui
+pointe `www.example.com` vers `<user>.github.io`. Si vous souhaitez utiliser le sous-domaine `www.anotherexample.com` pour le site de votre
+organisation, créez un enregistrement `CNAME` qui pointe `www.anotherexample.com` vers `<organization>.github.io`. L'enregistrement `CNAME`
+doit toujours pointer vers `<user>.github.io` ou `<organization>.github.io`, à l'exclusion du nom du dépôt. Pour plus d'informations sur la
+création de l'enregistrement correct, consultez la documentation de votre fournisseur DNS. Pour plus d'informations sur le domaine par défaut
+de votre site, consultez « [À propos des pages GitHub](https://docs.github.com/en/articles/about-github-pages#types-of-github-pages-sites) ».
+
+:::warning Avertissement
+Nous vous recommandons fortement de ne pas utiliser d'enregistrements DNS génériques, tels que `*.exemple.com`. Un enregistrement DNS générique
+permettra à quiconque d'héberger un site GitHub Pages sur l'un de vos sous-domaines.
+:::
+
+6. Ouvrez le terminal.
+
+7. Pour confirmer que votre enregistrement DNS est correctement configuré, utilisez la commande `dig`, en remplaçant *WWW.EXAMPLE.COM* par
+votre sous-domaine.
+
+```shell
+$ dig WWW.EXAMPLE.COM +nostats +nocomments +nocmd
+    > ;WWW.EXEMPLE.COM.                          IN    A
+    > WWW.EXEMPLE.COM.                    3592   IN   CNAME   VOTRE-NOM-D-UTILISATEUR.github.io.
+    > VOTRE-NOM-D-UTILISATEUR.github.io.  43192  IN   CNAME   GITHUB-PAGES-SERVER .
+    > GITHUB-PAGES-SERVEUR .               22    IN    A      192.0.2.1
+```
+
+8. Si vous utilisez un générateur de site statique pour créer votre site localement et envoyer les fichiers générés vers GitHub, récupérez (pull)
+le commit qui a ajouté le fichier *CNAME* à votre dépôt local. Pour plus d'informations, consultez « [Dépannage des domaines personnalisés et des pages GitHub](https://docs.github.com/en/articles/troubleshooting-custom-domains-and-github-pages#cname-errors) ».
+
+9. Facultativement, pour appliquer le chiffrement HTTPS à votre site, sélectionnez **Enforce HTTPS** (Appliquer HTTPS). Cela peut prendre
+jusqu'à 24 heures avant que cette option ne soit disponible. Pour plus d'informations, consultez « [Sécurisation de votre site GitHub Pages avec HTTPS](https://docs.github.com/en/articles/securing-your-github-pages-site-with-https) ».
+
+<figure>
+    <img src="https://docs.github.com/assets/cb-8878/images/help/pages/enforce-https-custom-domains.png"
+         alt="Appliquer l'option HTTPS pour les domaines personnalisés" />
+    <figcaption>Appliquer l'option HTTPS pour les domaines personnalisés</figcaption>
+</figure>
+
+### Supprimer un domaine personnalisé
+
+1. Sur GitHub, accédez au dépôt de votre site.
+
+2. Sous le nom de votre dépôt, cliquez sur **Setting** (Réglages).
+
+<figure>
+    <img src="https://docs.github.com/assets/cb-21851/images/help/repository/repo-actions-settings.png"
+         alt="Bouton Paramètres du dépôt" />
+    <figcaption>Bouton Paramètres du dépôt</figcaption>
+</figure>
+
+3. Dans la barre latérale gauche, cliquez sur **Pages**.
+
+<figure>
+    <img src="https://docs.github.com/assets/cb-15043/images/help/pages/pages-tab.png"
+         alt="Onglet de page dans la barre latérale de gauche" />
+    <figcaption>Onglet de page dans la barre latérale de gauche</figcaption>
+</figure>
+
+4. Sous « Custom domain » (Domaine personnalisé), cliquez sur **Remove** (Supprimer).
+
+<figure>
+    <img src="https://docs.github.com/assets/cb-11586/images/help/pages/remove-custom-domain.png"
+         alt="Bouton Enregistrer le domaine personnalisé" />
+    <figcaption>Bouton Enregistrer le domaine personnalisé</figcaption>
+</figure>
+
+### Sécuriser votre domaine personnalisé
+
+Si votre site GitHub Pages est désactivé mais qu'un domaine personnalisé est configuré, il risque une prise de contrôle de domaine. La
+configuration d'un domaine personnalisé avec votre fournisseur DNS alors que votre site est désactivé peut amener quelqu'un d'autre à héberger
+un site sur l'un de vos sous-domaines.
+
+La vérification de votre domaine personnalisé empêche les autres utilisateurs de GitHub d'utiliser votre domaine avec leurs dépôts. Si votre
+domaine n'est pas vérifié et que votre site GitHub Pages est désactivé, vous devez immédiatement mettre à jour ou supprimer vos enregistrements
+DNS avec votre fournisseur DNS. Pour plus d'informations, consultez « [Vérification de votre domaine personnalisé pour les pages GitHub](https://docs.github.com/en/pages/configuring-a-custom-domain-for-your-github-pages-site/verifying-your-custom-domain-for-github-pages) ».
+
+### Lectures complémentaires
+
+« [Dépannage des domaines personnalisés et des pages GitHub](https://docs.github.com/en/articles/troubleshooting-custom-domains-and-github-pages) ».
+
+-----
+
+## Vérification de votre domaine personnalisé pour les pages GitHub
+
+Vous pouvez augmenter la sécurité de votre domaine personnalisé et éviter les attaques par prise de contrôle en vérifiant votre domaine.
+
+:::tip
+Les pages GitHub sont disponibles dans les dépôts publics avec GitHub Free et GitHub Free pour les organisations, et dans les dépôts
+publics et privés avec GitHub Pro, GitHub Team, GitHub Enterprise Cloud et GitHub Enterprise Server. Pour plus d'informations, consultez
+« [Produits de GitHub](https://docs.github.com/en/get-started/learning-about-github/githubs-products) ».
+:::
+
+### À propos de la vérification de domaine pour les pages GitHub
+
+Lorsque vous vérifiez votre domaine personnalisé pour votre compte d'utilisateur ou votre organisation, seuls les dépôts appartenant à votre
+compte d'utilisateur ou à votre organisation peuvent être utilisés pour publier un site GitHub Pages sur le domaine personnalisé vérifié ou les
+sous-domaines immédiats du domaine.
+
+La vérification de votre domaine empêche les autres utilisateurs de GitHub de s'emparer de votre domaine personnalisé et de l'utiliser pour
+publier leur propre site de pages GitHub. Les prises de contrôle de domaine peuvent se produire lorsque vous supprimez votre référentiel,
+lorsque votre plan de facturation est rétrogradé ou après tout autre changement qui dissocie le domaine personnalisé ou désactive les pages
+GitHub alors que le domaine reste configuré pour les pages GitHub et n'est pas vérifié.
+
+Lorsque vous vérifiez un domaine, tous les sous-domaines immédiats sont également inclus dans la vérification. Par exemple, si le domaine
+personnalisé `github.com` est vérifié, `docs.github.com`, `support.github.com` et tout autre sous-domaine immédiat seront également protégés
+contre les prises de contrôle.
+
+Il est également possible de vérifier un domaine pour votre organisation, qui affiche un badge « Verified » sur le profil de l'organisation.
+Pour plus d'informations, voir « [Vérifier ou approuver un domaine pour votre organisation](https://docs.github.com/en/organizations/managing-organization-settings/verifying-or-approving-a-domain-for-your-organization) ».
+
+### Vérification d'un domaine pour votre site utilisateur
+
+1. Dans le coin supérieur droit de n'importe quelle page, cliquez sur votre photo de profil, puis sur **Settings** (Paramètres).
+
+<figure>
+    <img src="https://docs.github.com/assets/cb-34573/images/help/settings/userbar-account-settings.png"
+         alt="Icône de paramètres dans la barre d'utilisateurs" />
+    <figcaption>Icône de paramètres dans la barre d'utilisateurs</figcaption>
+</figure>
+
+2. Dans la barre latérale gauche, cliquez sur **Pages**.
+
+<figure>
+    <img src="https://docs.github.com/assets/cb-4057/images/help/settings/user-settings-pages.png"
+         alt="Option Pages dans le menu des paramètres" />
+    <figcaption>Option Pages dans le menu des paramètres</figcaption>
+</figure>
+
+3. Sur la droite, cliquez sur **Add a domain** (Ajouter un domaine).
+
+<figure>
+    <img src="https://docs.github.com/assets/cb-11871/images/help/pages/verify-add-domain.png"
+         alt="Bouton Ajouter un domaine dans les paramètres de Pages" />
+    <figcaption>Bouton Ajouter un domaine dans les paramètres de Pages</figcaption>
+</figure>
+
+4. Sous « What domain would you like to add? » (Quel domaine souhaitez-vous ajouter ?), saisissez le domaine que vous souhaitez vérifier et
+cliquez sur **Add domain** (Ajouter un domaine).
+
+<figure>
+    <img src="https://docs.github.com/assets/cb-7049/images/help/pages/verify-enter-domain.png"
+         alt="Champ de texte Domaine et bouton Ajouter un domaine dans les paramètres de Pages" />
+    <figcaption>Champ de texte Domaine et bouton Ajouter un domaine dans les paramètres de Pages</figcaption>
+</figure>
+
+5. Suivez les instructions sous « Add a DNS TXT record » (Ajouter un enregistrement DNS TXT) pour créer l'enregistrement TXT avec votre service
+d'hébergement de domaine.
+
+<figure>
+    <img src="https://docs.github.com/assets/cb-30153/images/help/pages/verify-dns.png"
+         alt="Informations d'enregistrement DNS TXT sur les paramètres de Pages" />
+    <figcaption>Informations d'enregistrement DNS TXT sur les paramètres de Pages</figcaption>
+</figure>
+
+6. Attendez que votre configuration DNS change, cela peut être immédiat ou prendre jusqu'à 24 heures. Vous pouvez confirmer la modification de
+votre configuration DNS en exécutant la commande `dig` sur la ligne de commande. Dans la commande ci-dessous, remplacez `USERNAME` par votre
+nom d'utilisateur et `example.com` par le domaine que vous vérifiez. Si votre configuration DNS a été mise à jour, vous devriez voir votre
+nouvel enregistrement TXT dans la sortie.
+
+```shell
+dig _github-pages-challenge-USERNAME.example.com +nostats +nocomments +nocmd TXT
+```
+
+7. Après avoir confirmé que votre configuration DNS a été mise à jour, vous pouvez vérifier le domaine. Si le changement n'a pas été immédiat
+et que vous avez quitté la page précédente, revenez aux paramètres de Pages en suivant les premières étapes et, à droite du domaine, cliquez
+sur **...** puis cliquez sur **Continue verifying** (Continuer la vérification).
+
+<figure>
+    <img src="https://docs.github.com/assets/cb-29814/images/help/pages/verify-continue.png"
+         alt="Continuer à vérifier l'option dans les paramètres de Pages" />
+    <figcaption>Continuer à vérifier l'option dans les paramètres de Pages</figcaption>
+</figure>
+
+8. Pour vérifier votre domaine, cliquez sur **Verify** (Vérifier).
+
+<figure>
+    <img src="https://docs.github.com/assets/cb-29102/images/help/pages/verify-button.png"
+         alt="Bouton Vérifier dans les paramètres de Pages" />
+    <figcaption>Bouton Vérifier dans les paramètres de Pages</figcaption>
+</figure>
+
+9. Pour vous assurer que votre domaine personnalisé reste vérifié, conservez l'enregistrement TXT dans la configuration DNS de votre domaine.

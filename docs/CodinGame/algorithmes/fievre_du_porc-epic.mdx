@@ -1,0 +1,70 @@
+---
+sidebar_position: 2
+---
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+import { Vimeo } from 'mdx-embed';
+
+# Fièvre du porc-épic
+
+[S'entraîner avec l'exercice "Porcupine Fever" sur les sujets suivants : Boucles](https://www.codingame.com/training/medium/porcupine-fever)
+
+## Énoncé
+
+### Objectif
+
+Vous avez pour passe-temps de visiter une ferme de porcs-épics. Les porcs-épics sont élevés dans des cages et nourris régulièrement. Ils
+sont généralement en bonne santé et ont été l'un des rongeurs ayant la plus longue durée de vie, mais **certains de ces porcs-épics sont
+malades**.
+
+Chaque année, chaque porc-épic qui était malade l'année dernière **rendra malade 2 porcs-épics sains** dans la même cage, puis **mourra**.
+
+Simulez pour trouver le **nombre total** de porcs-épics survivants après chaque année. Arrêtez si tous les porcs-épics sont morts (ne
+répétez pas les **"0"** après la première fois).
+
+### Entrée
+
+**Ligne 1** : Entier `N`, le nombre de cages.<br />
+**Ligne 2** : Entier `Y`, le nombre d'années.<br />
+**Les N lignes suivantes** : trois nombres entiers séparés par des espaces `S`, `H` et `A`, les quantités de porcs-épics malades, sains et
+vivants dans la cage respective.
+
+### Sortie
+
+**`Y` ou moins de lignes** d'entiers de porcs-épics vivants.<br />
+La ligne 1 correspond à l'année 1, et non à l'année 0. Tous les porcs-épics malades meurent en premier.
+
+### Contraintes
+
+0 ≤ `N` < 500<br />
+0 < `Y` < 100<br />
+0 ≤ `S`, `H`, `A` < 10 000 000<br />
+`S` + `H` est `A`
+
+### Exemple
+
+| Entrée | Sortie |
+|--------|--------|
+| 2<br />3<br />2 118 120<br />0 50 50 | 168<br />164<br />156<br /><br />
+
+```javascript
+/**
+ * Le code généré automatiquement ci-dessous vise à vous aider à analyser
+ * l'entrée standard selon l'énoncé du problème.
+ **/
+const N = parseInt(readline());
+const Y = parseInt(readline());
+for (let i = 0; i < N; i++) {
+    var inputs = readline().split(' ');
+    const S = parseInt(inputs[0]);
+    const H = parseInt(inputs[1]);
+    const A = parseInt(inputs[2]);
+}
+for (let i = 0; i < Y; i++) {
+
+    // Écrivez une réponse en utilisant console.log()
+    // Pour déboguer : console.error('Messages de débogage...');
+    
+    console.log('answer');
+}
+```

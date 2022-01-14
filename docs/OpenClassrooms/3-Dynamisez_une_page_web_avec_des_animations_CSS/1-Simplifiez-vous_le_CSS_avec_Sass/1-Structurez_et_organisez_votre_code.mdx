@@ -1,0 +1,2910 @@
+---
+sidebar_position: 2
+---
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+import { Vimeo } from 'mdx-embed';
+
+# Structurez et organisez votre code 
+
+## Tirez un maximum de ce cours
+
+[Tirez un maximum de ce cours - Simplifiez-vous le CSS avec Sass - OpenClassrooms](https://openclassrooms.com/fr/courses/6106181-simplifiez-vous-le-css-avec-sass/6595338-tirez-un-maximum-de-ce-cours)
+
+<Vimeo vimeoId="534082067" />
+
+<br />
+
+Le meilleur moyen de tirer le meilleur parti de ce cours est de :
+- regarder chaque **vidéo** pour comprendre pourquoi les concepts abordés dans chaque chapitre sont importants ;
+- lire le **texte** sous la vidéo pour apprendre comment appliquer les concepts abordés ;
+- pratiquer au fur et à mesure grâce aux **exercices interactifs** ;
+- tester votre compréhension des concepts clés grâce aux **quiz** à chaque fin de section.
+
+### Rencontrez votre professeur !
+
+#### Kassandre Pedro
+
+![Kassandre Pedro](https://user.oc-static.com/upload/2019/10/24/15719062754123_saas_auteur.png)
+
+Kassandre Pedro
+
+Kassandre a fait des études de langues (Coréen) avant de faire partie de la deuxième promotion de 42 Paris en 2014. Elle n’a
+cessé de coder depuis ! Elle a travaillé dans plusieurs startups avant d'atterrir chez GitHub en 2018.
+
+Elle a fui la grisaille parisienne pour s’installer au plus près des montagnes et de l’océan, au Pays basque, afin de pouvoir
+s’adonner à sa deuxième passion : les sports de glisse.
+
+Kassandre a su allier ses deux passions et a lancé Seacher en 2018,  avec deux amis. Seacher est un outil de gestion allié à une
+plateforme de réservation pour les sports de glisse tels que le surf, le snowboard ou le ski.
+
+Ayant une appétence forte pour l’éducation, elle est aussi freelance au sein de structures comme WILLA ou Iron Hack sur son temps
+libre, pour transmettre sa passion et son expérience.
+
+-----
+
+## Structurez votre CSS
+
+[Structurez votre CSS - Simplifiez-vous le CSS avec Sass - OpenClassrooms](https://openclassrooms.com/fr/courses/6106181-simplifiez-vous-le-css-avec-sass/6595695-structurez-votre-css)
+
+<Vimeo vimeoId="534110004" />
+
+<br />
+
+### Découvrez pourquoi écrire du code bien structuré
+
+Écrire du **CSS désordonné**, de nombreux développeurs l’ont fait ! On ne commence pas forcément à écrire du CSS de manière
+désordonnée. Il s’agit plutôt d’un processus progressif qui se met en place à mesure que l’on fait de nouveaux changements, comme
+commencer par écrire du CSS directement dans le HTML. Et, à moins d’être prévoyant et vigilant, vous allez finir avec une codebase
+CSS chaotique sans vraiment réaliser comment vous en êtes arrivé là.
+
+:::info
+On appelle ici codebase l’ensemble du code source que vous allez écrire.
+:::
+
+:::note ?
+Est-ce que c’est vraiment embêtant ? Tant que je finis mon projet, quel est le problème ? 🙄
+:::
+
+Pour répondre à cette question, suivons ensemble le cours de la vie d’un site web de manière hypothétique.
+
+Un client vous charge de créer un **formulaire de contact** comprenant quelques cases de texte et un bouton. Vous écrivez le HTML
+et le CSS, en assignant le nom de classe btn au bouton qui possède l’**ensemble des règles**, ou groupe d’instructions CSS,
+suivant :
+
+```css
+.btn {
+    background-color: #001534;
+    color: #15DEA5;
+    border-radius: 3rem;
+    width: 100%;
+    padding: 1.5rem;
+}
+```
+
+Tout cela a l’air plutôt pas mal et le client est content ! Tellement content qu’il vous demande de travailler sur le reste du
+site. Tout à coup, vous vous retrouvez à avoir besoin de toute une série de boutons de différentes tailles, couleurs et formes.
+Mais le problème, c’est que `.btn` est très **spécifique** : il a ses propres taille, couleur et dimension. Et malheureusement,
+cela ne convient pas aux nouveaux boutons. Vous allez donc devoir créer de nouveaux boutons avec leurs propres règles et vous
+retrouver avec des classes telles que `.btn-alt`, `.btn-big` et `.btn-round`. Plus tard, vous avez besoin encore d’autres boutons,
+et comme vos boutons sont eux aussi spécifiques, vous ajoutez `.btn-small` et `.btn-alt-2`. Vous commencez à voir le problème ?
+Plus vous allez avoir des boutons spécifiques, plus vous allez en créer, et ainsi de suite. Avec le temps, vous allez avoir un
+trop grand nombre de sélecteurs pour vous souvenir de l’utilité de chacun.
+
+:::note ?
+OK, mais je peux juste aller changer tous les noms manuellement si besoin, non ? Il n’y en a pas tant que ça pour le moment, et
+si le client est content, qu’est-ce que ça peut bien faire ?
+:::
+
+OK, c’est vrai, le site a une bonne tête et le client est encore plus content... pour le moment ! Quelques mois passent et un
+beau jour votre client vous recontacte car il a besoin de modifier certains éléments précis, d’ajouter des choses, et vous devez
+vous replonger dans votre code. Et c’est alors que vous commencez à vous demander : à quoi ressemble `.btn-alt`, déjà ? Et c’est
+quoi la différence avec `.btn-alt-2` ? Et quelle est _réellement_ la taille de`.btn-big` ? Et pourquoi est-ce que j’ai fait ça ? 😭
+
+Plutôt que d’effectuer vos changements rapidement et facilement, vous vous retrouvez à **passer beaucoup trop de temps** à démêler
+le plat de spaghettis qu’est devenu votre CSS. Mais alors, comment faire pour garder le fil entre vos différents éléments, et
+surtout dans un projet de grande envergure ? Comment gérer et se retrouver dans un CSS où vous faites sans cesse des ajouts et des
+modifications ?
+
+C’est bien connu, le CSS est compliqué à maintenir en ordre. Il lui **manque beaucoup de structure**, structure que l’on retrouve
+dans la plupart des autres langages de programmation. Ça se voit rien qu’en comparant des extraits de code en **HTML** et en **CSS** :
+jetez un œil au code ci-dessous 👇🏼
+
+#### **HTML**
+
+```html
+<body>
+  <main class="container">
+      <form class="form">
+        <h1 class="form__heading">Contact me</h1>
+        <div class="form__field">
+            <label for="contact-name">name</label>
+            <input type="text" name="contact-name" id="contact-name">
+        </div>
+        <div class="form__field">
+            <label for="contact-email">email</label>
+            <input type="email" name="contact-email" id="contact-email">
+        </div>
+        <div class="form__field">
+            <label for="mssg">message</label>
+            <textarea name="mssg" id="mssg" cols="30" rows="10"></textarea>
+        </div>
+        <button class="btn btn--full-width">Submit</button>
+      </form>
+  </main>
+</body>
+```
+
+####  **CSS**
+
+```css
+.container {
+  margin: 6rem;
+  padding: 1.5rem 1.5rem 0 1.5rem;
+  border: 0.1rem solid #D6FFF5; }
+}
+
+.form {
+  width: 100%;
+  padding-bottom: 1.5rem;
+}
+
+.form__field label {
+  color: #D6FFF5;
+  display: block;
+  font-size: 2rem;
+  line-height: 2rem;
+  padding-top: 1.5rem;
+}
+
+.form__field input {
+  width: 100%;
+  background: #001534;
+  border: 0.1rem solid #15DEA5;
+  padding: 1.5rem;
+  color: #D6FFF5;
+}
+```
+
+Avez-vous remarqué la façon dont on voit tout de suite que les **éléments HTML** sont reliés entre eux par leur structure ? Alors
+que le CSS, lui, ressemble plutôt à une longue liste qui énumère un tas de règles les unes après les autres, sans aucun lien
+logique visible. Il n’y a pas grand-chose pour indiquer les relations entre les **sélecteurs**, ni leur **spécificité**. Maintenir
+de l’ordre quand il n’y a pas beaucoup de structure visible, c’est encore plus compliqué. Mais pas de souci, nous allons remédier
+à cela. 💪
+
+:::info
+Petit rappel : les **sélecteurs** CSS déterminent à quels éléments s’applique un ensemble de règles données. La **spécificité**
+mesure à quel point un sélecteur est _spécifique_... Pas de panique, nous aborderons cela de plus près au cours de ce chapitre...
+:::
+
+Dans ce cours, vous allez apprendre comment écrire du CSS qui est à la fois mieux **organisé et surtout maintenable**, en :
+- appliquant des **structures de fichiers** clairement définies ;
+- travaillant avec un **préprocesseur CSS** appelé **Sass**, une technologie qui améliore votre codebase et vous simplifie la vie.
+
+Votre vous du futur vous dit “merci !” 😉
+
+### Appliquez le principe du DRY
+
+Mais alors, comment procéder pour vous assurer que le CSS que vous écrivez est propre et maintenable ? La première étape est de
+**trouver des points communs**. Pour cela, reprenons l’exemple de code CSS donné ci-dessus :
+
+```css
+.container {
+    margin: 6rem;
+    padding: 1.5rem 1.5rem 0 1.5rem;
+    border: 0.1rem solid #D6FFF5; }
+}
+
+.form {
+    width: 100%;
+    padding-bottom: 1.5rem;
+}
+
+.form__field label {
+    color: #D6FFF5;
+    display: block;
+    font-size: 2rem;
+    line-height: 2rem;
+    padding-top: 1.5rem;
+}
+
+.form__field input {
+    width: 100%;
+    background: #001534;
+    border: 0.1rem solid #15DEA5;
+    padding: 1.5rem;
+    color: #D6FFF5;
+}
+```
+
+Regardez : on voit quelques règles qui se répètent.
+
+![Image montrant les endroits où le code se répète.](https://user.oc-static.com/upload/2019/10/09/15706160075006_image6.png)
+
+Le code se répète à certains endroits
+
+Par exemple, vous avez plusieurs boutons que vous utilisez dans votre codebase. Tous vos boutons utilisent le même _padding_ et
+la même _couleur de texte_, et quasiment tous ont la même couleur de fond. Cela signifie que vous avez dupliqué votre code.
+
+Il existe un concept dans la programmation appelé le **principe DRY**, qui est une abréviation en anglais signifiant
+“**Don’t repeat yourself**”.
+
+Et en français, s’il vous plaît ? 🤔
+
+**“Ne vous répétez pas !”**
+
+Toutes ces couches de règles CSS répétitives dans votre code, comme les copier-coller de couleur, de taille et autre, vous
+empêchent de créer une codebase **DRY**, la rendent encore plus difficile à maintenir et compliquent sa modification. 
+
+:::note ?
+Bon, mais je fais quoi du coup, concrètement ? 🤔
+:::
+
+La première étape clé consiste à faire un **refactoring** ; en d’autres termes, effectuez un grand ménage dans votre code pour
+éviter les répétitions. Rappelez-vous : “**Ne vous répétez pas !**”. Commençons par passer en revue tous vos sélecteurs pour
+trouver des points communs. Prenons l’exemple d’un bouton. Il faut regarder tous les boutons décrits dans le code et noter
+quelles règles sont identiques. Disons que vous remarquez que tous vos boutons ont la même couleur de fond, la même couleur et
+le même padding. Au lieu de placer tous ces attributs dans chacun de vos boutons, vous allez les réunir au même endroit et éviter
+de vous répéter. Vous obtiendrez quelque chose qui ressemble à :
+
+```css
+.btn {
+    background-color: #001534;
+    color: #15DEA5;
+    padding: 1.5rem;
+}
+```
+
+Avec ce code, sans règles supplémentaires, le bouton aura la largeur de son contenu, plus le padding. Et les coins seront carrés !
+Vous avez donc un bouton générique que vous pouvez utiliser autant de fois que vous le voulez sans ajout de code et surtout sans
+répétition. Parfait, non ?
+
+:::note ?
+Et si j’ai un bouton qui doit être plus large ou plus arrondi, je fais quoi ? 🤔
+:::
+
+Pas de panique, vous pouvez créer des **règles** **additionnelles** au `.btn` original, qui seront réparties dans de nouveaux
+sélecteurs plus spécifiques :
+
+```css
+.btn-wide {
+    width: 100%;
+}
+
+/* And... */
+.btn-rounded {
+    border-radius: 3rem;
+}
+```
+
+Donc en HTML, au lieu de ressembler à ça :
+
+```html
+<button class="btn">...</button>
+```
+
+votre **markup** ressemble à ça :
+
+```html
+<button class="btn btn-rounded btn-wide">...</button>
+```
+
+:::info
+**_Markup_** est parfois utilisé comme une forme abrégée pour dire _HTML_, qui signifie _**Hyper Text Markup Language**_.
+:::
+
+Ce que nous venons de faire s’appelle _**separation of concerns**_ (ou _séparation des préoccupations_). L’idée est que votre HTML
+ne contient que les informations nécessaires à son contenu. Ainsi, toutes vos règles de style sont définies dans votre fichier CSS
+et sont réutilisables. Fini le CSS en dur dans le HTML ! Dans notre exemple de bouton .btn, nous avons défini l’apparence de nos
+boutons et rien de plus.
+
+:::info
+**Un sélecteur est un ensemble de règles de base**.
+:::
+
+Chaque bouton dans votre code aura les qualités définies dans le sélecteur. Ensuite, pour ajouter des règles supplémentaires,
+nous créons les **sélecteurs** dans `.btn-wide` et `.btn-rounded` qui modifieront notre bouton de base `.btn`.
+
+```css
+.btn {
+    background-color: #001534;
+    color: #15DEA5;
+    padding: 1.5rem;
+}
+
+.btn-wide {
+    width: 100%;
+}
+
+/* And... */
+.btn-rounded {
+    border-radius: 3rem;
+}
+```
+
+Ensuite, lorsqu’on les ajoute les uns après les autres dans notre markup, nous disons que l’on utilise `.btn` puis que l’on
+applique `.btn-rounded` et enfin `.btn-wide`.
+
+```html
+<button class="btn btn-rounded btn-wide">...</button>
+```
+
+Ainsi, en regroupant vos classes et en les séparant par leur fonction, votre codebase devient instantanément **plus facile à
+maintenir**. Plutôt que de recourir à Ctrl+F et _Chercher-remplacer_ pour modifier le padding de l'ensemble de vos boutons
+spécifiques, il vous suffit de changer la valeur d’un seul ensemble de règles, ici `.btn`, et la modification se répercutera dans
+tous les `.btn` de votre site.
+
+```css
+.btn {
+    background-color: #001534;
+    color: #15DEA5;
+    padding: 1.5rem;
+}
+```
+
+Une fois de plus, votre futur vous vous fait part de toute sa gratitude.  🙌
+
+#### **Essayez par vous-même !**
+
+**![](https://user.oc-static.com/upload/2021/04/14/16183908793229_A-vous-de-jouer%20%282%29.png)**
+
+Dans cet exercice, vous allez vous entraîner en créant une nouvelle classe et en séparant les propriétés typographiques pour les
+appliquer indépendamment sur la div de votre choix.
+
+:::caution !
+Comment utiliser ces exercices interactifs ?
+
+Pour vous permettre de pratiquer, je vous ai créé des exercices interactifs.<br />
+L’écran de votre exercice est divisé en deux parties.<br />
+À gauche, se trouvent les instructions et les étapes à suivre. Attention, les étapes représentent une check-list. Cela signifie
+que le fait qu’un « v » vert apparaisse ne veut pas dire que l’étape est réussie mais que vous indiquez avoir fait cette étape.
+
+À droite, se trouve le code que vous devez modifier pour faire l’exercice.
+:::
+
+Console de code
+
+<iframe title="codevolve" id="codevolveIframe1" src="https://www.codevolve.com/api/v1/access_token/910B19169CF8001FBBBC495527F59D97" width="100%" height="500" frameborder="0"></iframe>
+
+:::info
+Avez-vous essayé l'exercice ? [Comparez votre travail avec cette correction](https://github.com/tdimnet/Simplifiez-vous-le-CSS-avec-Sass/tree/partie-1/chapitre-2%2Fexercice-1).
+:::
+
+### L’impact de la spécificité sur la structure de votre code
+
+Vous savez maintenant _pourquoi_ il est important de structurer votre code, mais pour le faire efficacement, vous devez comprendre
+un concept fondamental, la **spécificité**.
+
+#### **Qu’est-ce que la spécificité ?**
+
+Si on prend la définition de la [documentation MDN](https://developer.mozilla.org/en-US/docs/Learn/CSS/Building_blocks/Cascade_and_inheritance#Specificity),
+on obtient :
+
+> _**La spécificité**_ _est la manière dont le navigateur décide quelle règle s’applique si plusieurs règles ont des sélecteurs
+différents, mais peuvent quand même s’appliquer au même élément._
+
+En d’autres termes, la spécificité permet **d’attribuer** un **score** à un sélecteur afin de déterminer lequel a le plus de
+valeur par rapport à un autre au sein du HTML, et permet donc de déterminer la **priorité** d’un sélecteur par rapport à un autre.
+C’est comme un système de scores : celui qui a le plus de points gagne ! 👩‍🏭
+
+:::info
+[MDN](https://developer.mozilla.org/en-US/), ou _Mozilla Developer Network_, est un site hébergé par la fondation Mozilla qui
+contient beaucoup de documentation et notamment celle des standards HTML, CSS ou JavaScript.
+:::
+
+:::note ?
+Euh... au secours ? **😶**
+:::
+
+Pas de panique, on va y aller ensemble étape par étape ! Prenons un exemple pour illustrer. Disons que vous avez un élément bouton
+dont l’id est `submit-button` et la classe est `.button` :
+
+##### **HTML**
+
+Nous avons trois sélecteurs : une div, un id `#submit-button` et une classe `.button`
+
+```html
+<div id="submit-button" class="button">Click Here!</div>
+```
+
+Travaillons avec `#submit-button` et `.button`. Dans votre fichier CSS, `#submit-button` et `.button` ont une couleur de fond
+différente car vous utilisez la classe `.button` autre part dans votre code :
+
+#####  **CSS**
+
+```css
+#submit-button {
+    background-color: #15DEA5;
+}
+
+.button {
+    background-color: #DB464B;
+}
+```
+
+Du coup dans ce cas là, quand vous voyez votre bouton dans un navigateur, de quelle couleur sera-t-il ? 🤔
+
+La réponse se trouve dans la **spécificité** de chaque sélecteur. Quand des règles contradictoires s’appliquent à un élément,
+comme dans notre exemple avec plusieurs couleurs de fond en même temps, le navigateur appliquera la règle émanant du sélecteur
+**le plus spécifique**.
+
+:::note ?
+Mais comment un navigateur détermine-t-il la spécificité d’un sélecteur ?
+:::
+
+Regardons cela de plus près !
+
+#### **Découvrez les quatre piliers de la spécificité**
+
+Un navigateur distingue quatre catégories de règles CSS.
+
+##### **1) Le style inline, défini directement dans le HTML**
+
+Lorsque vous écrivez du CSS dans du HTML, c’est ce qu’on appelle du _style inline_.
+
+```html
+<div style="background-color:#15DEA5;">Click Here!</div>
+```
+
+##### **2) Les id**
+
+Les id sont uniques et s’appliquent à un object unique. Vous ne pouvez pas utiliser plusieurs fois un id dans votre HTML.
+
+```html
+<style> #submit-button { background-color: #15DEA5; } </style>
+<div id="submit-button">Click Here!</div>
+```
+
+##### **3) Les classes, pseudoclasses et attributs**
+
+Une **pseudoclasse** est un mot clé ajouté à un sélecteur qui permet de **spécifier un état** comme `:hover`, par exemple, qui
+indique que l’on passe la souris au-dessus du sélecteur. Les attributs permettent de sélectionner un sélecteur précis.
+
+```html
+<style> .button { background-color: #DB464B; } </style>
+<div class="button">Click Here!</div>
+```
+
+##### **4) Les éléments et pseudoéléments**
+
+```html
+<style> div { background-color: #DB464B; } </style>
+<div>Click Here!</div>
+```
+
+Quand le navigateur détermine quelle règle appliquer parmi celles contradictoires comme dans notre cas, il fait le compte du
+nombre de catégories qui sont implémentées par un sélecteur. Nous allons représenter la spécificité avec un **tableau** qui
+répertorie les types de sélecteurs sous forme de tableau de scores, afin que vous compreniez comment le navigateur procède.
+
+Dans notre exemple, nos trois sélecteurs seraient donc pris en compte comme suit.
+
+##### Sélecteur 1
+
+#submit-button {...} :
+
+| Inline | ID | Class | Element |
+|:------:|:--:|:-----:|:-------:|
+| 0 | **1** | 0 | 0 |
+
+##### Sélecteur 2
+
+.button {...} :
+
+| Inline | ID | Class | Element |
+|:------:|:--:|:-----:|:-------:|
+| 0 | 0 | **1** | 0 |
+
+##### Sélecteur 3
+
+div {...} :
+
+| Inline | ID | Class | Element |
+|:------:|:--:|:-----:|:-------:|
+| 0 | 0 | 0 | **1** |
+
+Une fois cette comptabilisation effectuée, le navigateur commence par regarder les scores des sélecteurs dans la **colonne de
+gauche**, parce que **le CSS local (dans le HTML, inline) est plus spécifique**. S’il y trouve un sélecteur avec un score plus
+élevé que les autres dans la première colonne, le navigateur appliquera son style en priorité. En cas d’égalité, il passe à la
+colonne suivante et effectue la même opération.
+
+Dans le cas de nos trois sélecteurs, la première colonne est à 0 pour les 3 sélecteurs. Aucun d’entre eux n’a de CSS implémenté
+localement dans le HTML. C’est pour cette raison qu’ils ont tous un score de zéro. Le navigateur passe donc à la colonne suivante,
+la colonne ID, où un gagnant se dégage clairement : #submit-button a un score égal à 1, alors que les autres ont zéro. Le
+navigateur appliquera l’ensemble de règles de #submit-button  pour la couleur de fond.
+
+:::note ?
+Mais alors, que se passerait-il si on ajoutait une deuxième classe au sélecteur bouton ?
+:::
+
+##### **HTML & CSS**
+
+```html
+<style>
+.button.submit-button { background-color: #DB464B; }
+</style>
+<div class="button submit-button">Click Here!</div>
+```
+
+:::info
+Pour les besoins de l’exercice et afin que les changements soient plus faciles à visualiser, j’ai mis le CSS entre des crochets
+`<style>` en haut de notre fichier HTML, mais je vous encourage fortement à **utiliser des fichiers HTML et CSS séparés**.
+:::
+
+Cela modifierait sa spécificité, qui deviendrait :
+
+| Inline | ID | Class | Element |
+|:------:|:--:|:-----:|:-------:|
+| 0 | 0 | **2** | 0 |
+
+Bien qu’il pourrait sembler que le nouveau sélecteur à double classe `.button.submit-button` soit plus spécifique, il n’est
+toujours pas au niveau de `#submit-button`. Souvenez-vous, **le navigateur travaille de gauche à droite**, et puisque
+`#submit-button` a un score plus élevé dans la colonne ID, le navigateur n’ira pas plus loin. Peu importe qu’un sélecteur ait
+deux classes ou 200, un sélecteur id sera toujours plus spécifique qu’une classe.
+
+:::info
+Notez qu’il n’y a **pas d’espace** entre les noms des classes dans le sélecteur CSS, contrairement au HTML. Ceci indique au
+navigateur qu’un élément doit contenir **toutes** les règles du sélecteur pour être applicable.
+:::
+
+:::note ?
+Un résumé s’il vous plaît ! C’est trop long ! 😱
+:::
+
+Si vous ajoutiez un **espace** entre les classes dans le CSS, le sélecteur jouerait le rôle d’un **combinateur descendant**. Cela
+voudrait dire que l’ensemble de règles ne s’appliquerait qu’aux éléments auxquels a été assignée la deuxième classe, qui seraient
+les enfants d’un élément auquel a été assigné la première classe. Puisque nous essayons de créer un sélecteur pour un div qui
+contient les deux sélecteurs, nous devons faire attention qu’il n’y ait pas d’espaces. 😎
+
+:::note 
+Et si on veut vraiment utiliser la couleur de la classe `.submit-button` ?
+:::
+
+Au lieu d’une deuxième classe, vous pourriez aussi y ajouter l’id :
+
+##### **HTML & CSS**
+
+```html
+<style>
+    #submit-button {background-color: #15DEA5;}
+    #submit-button.button { background-color: #DB464B;}
+</style>
+<div id="submit-button" class="button">
+Click Here!
+</div>
+```
+
+Ce qui vous donne :
+
+**#submit-button {...}** 
+
+| Inline | ID | Class | Element |
+|:------:|:--:|:-----:|:-------:|
+| 0 | **1** | 0 | 0 |
+
+**#submit-button.button {...}** 
+
+| Inline | ID | Class | Element |
+|:------:|:--:|:-----:|:-------:|
+| 0 | **1** | **1** | 0 |
+
+Maintenant il y a égalité dans la colonne ID, le navigateur passe donc à la colonne classe, où `.button` l’emporte 1-0. Le
+navigateur applique donc sa couleur de fond au bouton.
+
+:::caution !
+En règle générale, **évitez d’utiliser des id dans vos sélecteurs**. Votre but est d’écrire du code réutilisable, les id sont
+utilisés dans le cas de **valeurs uniques**. En conséquence, tous les sélecteurs qui les utilisent ne peuvent, par définition,
+être utilisés qu’une fois.
+:::
+
+Les id sont difficiles à outrepasser puisqu’ils ont une spécificité plus importante. Sauf que vous voulez écrire du code propre
+et maintenable, alors comment faire ? Eh bien, en vous focalisant principalement sur les **sélecteurs de classe**, vous ferez en
+sorte qu’ils aient une **spécificité plus basse**, ce qui les rendra plus aisés à contourner proprement.
+
+Comme vous allez le voir dans le prochain chapitre, vous aurez souvent besoin d’**outrepasser** certains attributs à l’aide d’un
+autre sélecteur, plutôt que d’écrire une longue liste de sélecteurs spécifiques. Cela contribuera à rendre votre code plus
+**modulaire et réutilisable**.
+
+:::note ?
+Du coup, que se passe-t-il si le navigateur passe en revue toutes les colonnes et arrive à un match nul ?
+:::
+
+#### **Battle royale : la spécificité en cas d’égalité**
+
+Changez l’id #submit-button par la classe .submit et le CSS comme suit : 👇🏼
+
+##### **HTML & CSS**
+
+```html
+<style>
+    .submit {background-color: #15DEA5;}
+    .button { background-color: #DB464B;}
+    </style>
+<div class="button submit">
+Cliquez ici!
+</div>
+```
+
+`.submit` et `.button` ont tous deux le même score.
+
+**.button {...}** 
+
+| Inline | ID | Class | Element |
+|:------:|:--:|:-----:|:-------:|
+| 0 | 0 | **1** | 0 |
+
+**.submit {...}** 
+
+| Inline | ID | Class | Element |
+|:------:|:--:|:-----:|:-------:|
+| 0 | 0 | **1** | 0 |
+
+Alors, quel sélecteur l’emporte ?
+
+En cas d’égalité, le navigateur sélectionne le **dernier sélecteur** à avoir été déclaré, dans notre cas `.button`.
+
+![Image représentant un bouton cliquez ici rouge](https://user.oc-static.com/upload/2019/10/09/15706234062941_image7.png)
+
+La couleur Rouge l'emporte
+
+`.button` l’emporte sur `.submit`, car il est le dernier à avoir été déclaré.
+
+Donc, si vous les échangez pour que `.submit` soit déclaré en dernier :
+
+```html
+<style>
+    .button { background-color: #DB464B;}
+    .submit {background-color: #15DEA5;}
+</style>
+<div class="button submit">
+Cliquez ici !
+</div>
+```
+
+le navigateur utilisera la couleur de fond de `.submit` :
+
+![Image représentant un bouton cliquez ici vert](https://user.oc-static.com/upload/2019/10/09/15706234984875_image11.png)
+
+La couleur Vert l'emporte
+
+Maintenant que `.submit` est déclaré en dernier, c’est sa couleur de fond qui apparaît.
+
+En vous restreignant aux classes pour créer vos sélecteurs CSS, vous ferez en sorte qu’ils aient une spécificité basse mais
+constante. Cela rend les **règles** **contradictoires** plus faciles à prévoir et surtout à gérer !
+
+#### **Essayez par vous-même !**
+
+**![](https://user.oc-static.com/upload/2021/04/14/16183911506509_A-vous-de-jouer%20%282%29.png)**
+
+Pratiquez en analysant la spécificité entre deux sélecteurs de classe avec deux boutons et leur couleurs. 👌
+
+Console de code
+
+<iframe title="codevolve" id="codevolveIframe1" src="https://www.codevolve.com/api/v1/access_token/48A9E867B164CB508693379200484B1D" width="100%" height="500" frameborder="0"></iframe>
+
+:::info
+Et si vous compariez votre travail avec [la correction de l'exercice](https://github.com/tdimnet/Simplifiez-vous-le-CSS-avec-Sass/tree/partie-1/chapitre-2%2Fexercice-2) ?
+:::
+
+### Adoptez de bonnes pratiques
+
+Vous avez vu ce que sont le principe **DRY** et la **spécificité**. Mais existe-t-il des règles à suivre ? 🤔
+
+Il n’existe pas de règles absolues pour créer l’architecture de votre CSS, seulement des recommandations très variées... Une
+rapide recherche Google vous livrera des flopées d’articles [medium.com](https://www.medium.com/) sur le sujet. Certains sont
+d’accord avec l’idée que _chaque développeur fait comme il l’entend_, d’autres vous diront que non, il faut suivre une
+**nomenclature** **commune**, tandis que d’autres encore émettent certaines réserves sur quelques principes. Au sein de toute
+cette bataille de “_c’est moi qui ai raison !!!"_, j’ai choisi de vous présenter des solutions pratiques. Les méthodes présentées
+dans ce cours sont des **pratiques** **testées et largement adoptées par les développeurs**. Ces bases vous seront d’un grand
+secours pour créer une codebase CSS maintenable et propre, et ce, pour des projets de n’importe quelle taille.
+
+La notion la plus importante lorsqu’on veut bâtir un code front-end robuste et maintenable est de **s’asseoir, établir un plan et
+s’y tenir coûte que coûte**. Au lieu de replonger la tête la première dans votre code existant comme nous l’avons fait dans
+l’exemple ci-dessus et vous lancer dans des modifications à la volée, vous devez **réfléchir et anticiper** la façon de structurer
+votre code, avant d’écrire la moindre première ligne de code. C’est très important, et cela vous fera gagner du temps par la suite.
+
+### En résumé
+
+- Lorsque vous codez, pensez à adopter **le DRY** : ne vous répétez pas !
+- Lorsque vous créez des **sélecteurs**, faites attention à ne pas y entasser trop de règles. Séparer les sélecteurs par leur
+fonction vous aidera à garder votre code compréhensible et maintenable.
+- La **spécificité** permet de mesurer le poids d’un sélecteur au sein du HTML parmi les autres.
+
+
+- Il existe **quatre niveaux** de spécificité :
+    - les feuilles de style locales (_inline styles_) ;
+    - les id ;
+    - les classes, pseudoclasses et attributs ;
+    - les éléments et pseudoéléments.
+- Votre navigateur applique les éléments **les plus spécifiques** en premier.
+- Le CSS **n’a pas de structure rigide**, ce qui complique la tâche pour avoir une codebase propre et maintenable.
+- En **créant et en appliquant votre propre structure**, vous pouvez mettre de l’ordre dans un CSS brouillon...
+
+_Dans le chapitre suivant, vous irez plus loin en mettant en application vos nouvelles connaissances en matière de spécificité et
+de structure, en créant des sélecteurs modulables et structurés pour la mise en forme de votre site._
+
+-----
+
+## Créez des sélecteurs HTML avec la méthodologie BEM
+
+[Créez des sélecteurs HTML avec la méthodologie BEM - Simplifiez-vous le CSS avec Sass - OpenClassrooms](https://openclassrooms.com/fr/courses/6106181-simplifiez-vous-le-css-avec-sass/6595809-creez-des-selecteurs-html-avec-la-methodologie-bem)
+
+<Vimeo vimeoId="534137448" />
+
+<br />
+
+Soyons honnêtes, **vous passerez plus de temps à lire votre code qu’à l’écrire**. Il vous faudra souvent vous replonger dedans
+et le parcourir à la recherche d’un élément à modifier, ou juste pour vous rappeler comment fonctionne tel ou tel élément.
+
+Lorsque vous écrivez du code, il est primordial de le faire en anticipant l’évolution de votre projet et ce qu’il pourrait
+devenir. D'ici quelque temps, il est possible que vous auriez oublié la raison de l'appel de ce sélecteur `.btn-alt` et encore
+moins à quoi il sert.
+
+Avoir la possibilité de jeter un coup d’œil à un nom de classe et savoir immédiatement le rôle de votre classe et comment elle
+interagit avec d’autres éléments nous ferait gagner beaucoup de temps et d’énergie à l’avenir, n’est-ce pas ?
+
+### Apprenez-en un peu plus sur BEM
+
+Eh bien, pour répondre à cette problématique, je vous présente **BEM**, une convention CSS qui va nous aider à rendre nos classes
+plus compréhensibles, et ce grâce au **nommage**.
+
+:::info
+Le nommage vient du terme **_naming_** en anglais, qui est le fait d’identifier une caractéristique en lui attribuant un nom.
+Lorsque vous voyez un grand nombre d’arbres, vous appelez ça une forêt. C’est du naming !
+:::
+
+BEM est l’acronyme de _**bloc, élément, modificateur**_. En assignant chaque sélecteur que vous écrivez à l’une de ces trois
+catégories, vous êtes en mesure de définir sa fonctionnalité et ses relations, tout en le nommant correctement, et de définir un
+sélecteur comme un bloc, élément ou modificateur.
+
+Pas mal, non ? Mais que sont au juste les blocs, éléments et modificateurs ?
+
+#### **Construisez des blocs**
+
+Un bloc est un composant, ou une section d’une page qui est **autonome et peut fonctionner indépendamment du reste de la page**.
+Cela peut être un header, un footer, un conteneur, un menu ou même un bouton. Le but est simple : vous pourriez supprimer tout ce
+qu’il y a autour de votre bloc et vous pourriez toujours comprendre de quoi il s’agit.
+
+Rappelez-vous, dans l’introduction, je vous parlais de construire un portfolio. Jetons-y un œil. Nous avons un logo, une barre
+de navigation, une citation et une grille de projets.
+
+![La page d’accueil du portfolio servant d'exemple](https://user.oc-static.com/upload/2019/10/09/15706237955338_image4.png)
+
+La page d’accueil du portfolio servant d'exemple
+
+Si on supprimait tout sauf le titre d’un projet, ça n’aurait plus trop de sens en soi. Le titre ne serait alors qu’un bout de
+texte isolé, sans aucun lien avec le reste.
+
+![Image montrant un morceau isolé du site appelé le titre du projet](https://user.oc-static.com/upload/2019/10/09/15706238427329_image5.png)
+
+Le titre, oui, mais le titre de quoi… ?
+
+Mais si nous isolons l’aperçu entier d’un projet (le titre, l’image, la description) : ça fonctionne. On a une image avec un
+titre et une description, on comprend de quoi il s’agit. Cela signifie que dans la terminologie BEM, notre preview de projet est
+un **bloc** !
+
+![Image montrant le bloc projet](https://user.oc-static.com/upload/2019/10/09/15706238999699_image2.png)
+
+Aperçu du projet
+
+On nomme un bloc en décrivant sa **fonction**. Nommons notre bloc pour notre aperçu de projet `.proj-prev` (prev pour _preview_
+ou _aperçu_ en français), en y assignant uniquement les règles qui sont spécifiques à la configuration de ce bloc en particulier.
+
+Nous pouvons définir que le texte soit blanc pour tous les éléments utilisés dans notre bloc. En assignant ce paramètre au bloc,
+tous ses éléments hériteront de cette couleur. Nous devons aussi définir une marge pour le bas du bloc.
+
+##### **CSS**
+
+```css
+.proj-prev {
+    color: #fff;
+    margin-bottom: .25rem;
+}
+```
+
+Nous avons utilisé le sélecteur `.proj-prev` pour définir la forme de notre bloc : il a une petite marge en bas et le texte est
+blanc. Peu importe ce que vous ajoutez dans votre aperçu de projet, le texte sera blanc et il y aura une marge en bas. Nous avons
+donc un morceau de code réutilisable, ce qui nous permet d’avoir une codebase bien ordonnée, tout en assurant une certaine
+cohérence graphique et qui, bonus, suit le principe **DRY** (vous vous en souvenez ? 😉).
+
+#### **Créez des éléments**
+
+Maintenant, est-ce que vous vous souvenez de ce bout de texte pour le titre du projet qui ne fonctionnait pas tout seul ? Il ne
+peut pas fonctionner de façon autonome, mais en revanche il fait partie intégrante du bloc : il s’agit d’un **élément** de ce
+bloc.
+
+![Image montrant un bloc et un élément](https://user.oc-static.com/upload/2019/10/09/15706240250407_image12.png)
+
+Le titre du projet est un élément du bloc
+
+Le nom d’un élément doit indiquer deux choses :
+- son **bloc parent**, suivi d’un **double underscore** (aussi appelé “dunders”) ;
+- la **fonction** de l’élément. Comme c’est le titre de notre projet, on va le nommer `.proj-prev__heading` et lui assigner
+l’ensemble de règles qui suit.
+
+**CSS**
+
+```css
+.proj-prev__heading {
+    font-size: 4rem;
+    padding-left: 2.5rem;
+    margin: 0;
+    line-height: 6rem;
+}
+```
+
+Nous avons vu les blocs et les éléments, passons à présent aux **modificateurs** !
+
+#### **Élaborez des modificateurs**
+
+Les modificateurs modifient l’apparence d’un bloc mais aussi d’un élément. Voyez-les comme des **sélecteurs qui créent
+différentes versions d’un bloc ou d’un élément**. Besoin de changer la taille, la couleur, la police, etc. d’un élément, tout en
+le gardant tel quel ? C’est un modificateur qu’il vous faut !
+
+Imaginons que vous vouliez faire les choses un peu différemment pour certains projets, histoire de les faire ressortir. La
+couleur de base du texte pour le bloc est le blanc, mais pour certains projets, vous voudriez les mettre en valeur en utilisant
+du vert clair.
+
+Pour cela, vous allez créer un modificateur pour votre bloc `.proj-prev`. Pour nommer le **modificateur**, vous devez préciser
+le **bloc** (ou l’élément) qu’il modifie, y ajouter **deux tirets** suivi du style graphique de votre modificateur. Puisque vous
+êtes en train de modifier le bloc `.proj-prev` pour lui donner un texte vert couleur menthe, vous pouvez l’appeler
+`.proj-prev--mint` et lui attribuer une couleur.
+
+##### **CSS**
+
+```css
+.proj-prev--mint {
+    color: #15DEA5;
+}
+```
+
+Et l’appliquer au bloc HTML.
+
+##### **HTML**
+
+```html
+<section class="proj-prev proj-prev--mint">
+    <div class="proj-prev__image">
+        <img src="/public/img/photography_1280w.jpg" alt="project title goes here" >
+    </div>
+    <h1 class="proj-prev__heading">
+        Project Title
+    </h1>
+    <p class="proj-prev__byline">
+        project keywords would go here
+    </p>
+</section>
+```
+
+Et quand on regarde le rendu du HTML, on voit qu’il y a bel et bien un projet qui ressort avec un texte couleur menthe sans
+modifier les autres  🎉 :
+
+![Nous avons modifié la couleur du texte pour un seul des blocs](https://user.oc-static.com/upload/2019/10/09/15706242548401_image8.png)
+
+Nous avons modifié la couleur du texte pour un seul des blocs
+
+Voici toute la page d’accueil, séparée en blocs, éléments et modificateurs :
+
+![Notre page d’accueil divisée en blocs, éléments et modificateurs](https://user.oc-static.com/upload/2019/10/09/15706242907473_image9.png)
+
+Notre page d’accueil divisée en blocs, éléments et modificateurs
+
+Quand vous construisez vos pages, imaginez que vous empilez des boîtes dans des boîtes en les dessinant, ça vous aidera à mieux
+visualiser votre structure HTML. 😉
+
+### Créez votre propre barre de navigation avec BEM
+
+Maintenant que nous avons passé en revue les fondamentaux de BEM, mettons-les en application en créant une **barre de navigation**
+avec nos nouveaux sélecteurs.🤘
+
+```html
+<nav class="nav">
+    <ul>
+        <li class="nav__link nav__link--active">work</li>
+        <li class="nav__link"> <a href="/about.html">about</a> </li>
+        <li class="nav__link"> <a href="/contact.html">contact</a>  </li>
+    </ul>
+</nav>
+```
+
+Notez bien, c’est important : les sélecteurs BEM sont **toujours** **implémentés sous forme de classes**.
+
+:::note ?
+Mais pourquoi ? 🤔
+:::
+
+Pour pouvoir appliquer les modificateurs avec des résultats cohérents, vous devez être sûr que **vos sélecteurs ont une
+spécificité aussi basse que possible**. Si vous assignez le sélecteur de bloc avec un id au lieu d’une classe, sa spécificité
+prendra automatiquement le dessus sur tous les modificateurs assignés en tant que classe.
+
+Rappelez-vous, dans le chapitre précédent nous avons vu que quand le navigateur interprète vos éléments, il cherche d’abord les
+**classes locales**, puis les id, puis les classes, et enfin les éléments. S’il croise un sélecteur attaché à un id, celui-ci
+prendra le dessus sur toute règle potentiellement contradictoire provenant d’une classe. Or, le but d’un **modificateur** est
+d’introduire une **règle** **contradictoire**, comme une couleur ou une taille de police différente, et que celle-ci annule la
+règle originelle ; c’est pourquoi on utilise toujours des classes pour implémenter des sélecteurs BEM !
+
+Jetons à présent un œil au CSS de notre barre de navigation :
+
+##### **CSS**
+
+```css
+.nav {
+    padding-right: 6rem;
+    text-align: right;
+}
+
+.nav__link {
+    display: inline;
+    font-size: 3rem;
+    padding-left: 1.5rem;
+}
+
+.nav__link a {
+    text-decoration: none;
+    color: #D6FFF5;
+}
+
+.nav__link--active {
+    color: #001534;
+}
+
+.nav__link a:hover {
+    color: #fff;
+}
+```
+
+Pendant que nous essayons de garder une spécificité basse pour notre sélecteur, les pseudoclasses, comme par exemple `:hover`,
+et les **combinateurs**, tels que les combinateurs descendants, peuvent parfaitement être utilisés.
+
+:::note ?
+Pause pause pause ! Combinateurs descen... quoi ? 😅
+:::
+
+Un **combinateur descendant**, aussi appelé _sélecteur d’éléments descendant_, permet de sélectionner les éléments qui dépendent
+d’un sélecteur. Il est matérialisé par un ou plusieurs espaces. Par exemple, `div span` permet de cibler n’importe quel span dans
+un élément div.
+
+Les combinateurs descendants vont **augmenter** la spécificité du sélecteur, mais ils peuvent aussi contribuer à créer du
+**code plus propre et plus lisible** en diminuant le besoin d’assigner une classe à _chaque élément de la page_.😱
+
+En CSS, les combinateurs, peu importe leur type, sélectionnent les éléments en fonction de leur relation à un élément défini.
+
+Prenons une liste non ordonnée, `<ul>`, et les items de cette liste, `<li>`. Plutôt que de créer un sélecteur de classe pour le
+`<li>` et de l’appliquer à chacun des items, vous pouvez appliquer un **combinateur enfant** qui sélectionnera tous les enfants
+directs du `<ul>`.
+
+##### **CSS**
+
+```css
+ul.list {
+    list-style: none;
+}
+
+ul.list > li {
+    font-weight: 100;
+    color: #001534;
+}
+```
+
+Ce qui donne un HTML beaucoup plus propre que d’appliquer une classe à chaque `<li>` :
+
+##### **HTML**
+
+```html
+<ul class="list">
+    <li>List Item</li>
+    <li>List Item</li>
+    <li>List Item</li>
+</ul>
+```
+
+:::info
+Ne faites pas trop attention au combinateur enfant, on en parlera plus en détail dans un prochain chapitre.
+:::
+
+BEM nous a aidé à rendre notre CSS beaucoup mieux organisé et plus efficace, et notre HTML plus propre et lisible, en définissant
+clairement la fonction des sélecteurs. Mais notre CSS n’en reste pas moins un gros amas de code sans forme.
+
+#### **Essayez par vous-même !**
+
+![16183911506509_A-vous-de-jouer%20%282%29.png](https://user.oc-static.com/upload/2021/04/14/16183911506509_A-vous-de-jouer%20%282%29.png)
+
+Adaptez le code fourni en utilisant la méthode BEM.
+
+Console de code
+
+<iframe title="codevolve" id="codevolveIframe1" src="https://www.codevolve.com/api/v1/access_token/2025781BA1CB53D344796C4E5370D43C" width="100%" height="500" frameborder="0"></iframe>
+
+:::info
+Comparez votre exercice avec [la correction](https://github.com/tdimnet/Simplifiez-vous-le-CSS-avec-Sass/tree/partie-1/chapitre-3%2Fexercice-1) !
+:::
+
+### En résumé
+
+- BEM signifie _bloc, élément, modificateur_ :
+    - les blocs sont des bouts de code autonomes ;
+    - les éléments sont les parties qui forment le bloc ;
+    - les modificateurs changent l’apparence ou le comportement d’un bloc ou d’un élément.
+- Les blocs sont nommés en fonction de leur rôle :
+    - les éléments indiquent le nom de leur bloc parent, suivi d’un double underscore/dunder (__) puis du rôle de l’élément :
+    form__label.
+- Les modificateurs utilisent le nom du bloc ou de l’élément qu’ils modifient, suivi de deux tirets (--) et de ce que le
+sélecteur modifie : button--green.
+- Vous n’avez pas besoin d’attribuer à chaque élément d’une page web un sélecteur de classe. Vous pouvez utiliser les sélecteurs
+pour que votre code HTML soit plus propre et concis.
+
+_Le chapitre suivant va vous présenter des outils qui donneront plus de structure visuelle à votre CSS, tout en vous facilitant
+la vie au passage. Préparez-vous à plonger dans le monde des préprocesseurs CSS et de Sass !_
+
+-----
+
+## Utilisez les préprocesseurs CSS pour des fonctionnalités avancées
+
+[Utilisez les préprocesseurs CSS pour des fonctionnalités avancées - Simplifiez-vous le CSS avec Sass - OpenClassrooms](https://openclassrooms.com/fr/courses/6106181-simplifiez-vous-le-css-avec-sass/6596497-utilisez-les-preprocesseurs-css-pour-des-fonctionnalites-avancees)
+
+<Vimeo vimeoId="534172368" />
+
+<br />
+
+Ne serait-ce pas merveilleux si vous pouviez écrire votre CSS comme vous écrivez votre HTML ? Plutôt qu’une longue liste de
+sélecteurs CSS, vous pourriez **indenter** vos éléments et modificateurs au sein de leur bloc parent, comme ceci :
+
+```css
+.nav {
+    padding-right: 6rem;
+    flex: 2 1 auto;
+    text-align: right;
+        .nav__link {
+            display: inline;
+            font-size: 3rem;
+            padding-left: 1.5rem;
+                .nav__link--active {
+                    color: #001534;
+                }
+        }
+}
+```
+
+### Créez une hiérarchie dans votre code
+
+Avoir une **hiérarchie visuelle** ne rend pas seulement les choses beaucoup plus faciles à lire, cela permet aussi d’être plus
+concis. En forçant un objet à exister au sein de **blocs parents**, votre codebase devient beaucoup plus facile à lire et à
+maintenir. Plutôt que de parcourir votre document de haut en bas en cherchant des éléments dans un bout de code, vous n’avez
+plus qu’à localiser le bloc que vous cherchez en particulier, et tous les éléments qui lui sont reliés se trouveront au même
+endroit.
+
+Voici votre nouveau meilleur ami : le **préprocesseur CSS** ! 
+
+:::info
+Les préprocesseurs sont des **outils**, ou des programmes, qui vont vous permettre de **générer du CSS** à partir des fichiers
+écrits dans la syntaxe du préprocesseur que vous avez choisi. Les préprocesseurs CSS regorgent d’outils qui vous seront très
+utiles dans votre quête d’un code plus structuré et organisé.
+:::
+
+Grâce aux préprocesseurs, vous pouvez rédiger votre code d’une manière plus cohérente visuellement, en utilisant des
+fonctionnalités comme le **nesting**.
+
+:::info
+Le nesting est le fait d’imbriquer les sélecteurs l’un dans l’autre en créant une hiérarchie, exactement comme en HTML !
+:::
+
+Regardez donc une écriture utilisant le nesting dans un préprocesseur, à gauche, avec le résultat en CSS classique à droite :
+
+
+<div style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between', padding: '12px', backgroundColor: 'gray', border: '1px solid black', borderRadius:'12px'}}>
+<div style={{width:'49%'}}>
+
+```scss title="scss"
+.nav {
+    padding-right: 6rem;
+    flex: 2 1 auto;
+    text-align: right;
+    .nav__link {
+        display: inline;
+        font-size: 3rem;
+        padding-left: 1.5rem;
+            .nav__link--active {
+                color: #001534;;
+            }
+    }
+}
+
+
+```
+
+</div>
+<div style={{width:'49%'}}>
+
+```css title="css"
+.nav {
+    padding-right: 6rem;
+    flex: 2 1 auto;
+    text-align: right;
+}
+
+.nav .nav__link {
+    display: inline;
+    font-size: 3rem;
+    padding-left: 1.5rem;
+}
+
+.nav .nav__link .nav__link--active {
+    color: #001534;
+}
+```
+
+</div>
+</div>
+
+<br />
+
+Ne vous préoccupez pas trop de la syntaxe pour le moment, on y viendra. 😇 Observez la façon dont le **code imbriqué** (ou
+_nesté_) produit un fichier CSS très standardisé. Coder en utilisant une syntaxe plus cohérente c’est bien, le souci c’est que
+les navigateurs voudront toujours que vos feuilles de style leur soient fournies sous forme d’un bon vieux fichier CSS classique.
+**Les préprocesseurs vous permettent d’avoir les deux à la fois**, en transformant la syntaxe vers du code CSS standard qui sera
+compris par les navigateurs.
+
+### Découvrez les fonctionnalités des préprocesseurs
+
+Les préprocesseurs regorgent d’outils qui vont nous aider à mieux structurer notre code. Dans cette partie du chapitre, nous
+allons rapidement les découvrir afin que vous soyez familier avec ces outils sans trop creuser. Nous les verrons plus en détail
+plus tard dans le cours. En attendant, vous pouvez vous familiariser avec leur nom et leur fonction.
+
+#### Les variables
+
+En plus d’avoir une syntaxe beaucoup plus agréable visuellement, grâce aux préprocesseurs vous avez accès à des fonctionnalités
+que vous pouvez trouver dans d’autres langages de programmation courants, tels que les **variables** :
+
+<div style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between', padding: '12px', backgroundColor: 'gray', border: '1px solid black', borderRadius:'12px'}}>
+<div style={{width:'49%'}}>
+
+```scss title="scss"
+$mint: #15DEA5;
+.header {
+    background-color: $mint
+}
+```
+
+</div>
+<div style={{width:'49%'}}>
+
+```css title="css"
+.header {
+    background-color: #15DEA5;
+}
+
+```
+
+</div>
+</div>
+
+<br />
+
+Les variables vous permettent de **stocker des valeurs répétées fréquemment**, comme par exemple les couleurs et les mensurations,
+dans un élément unique que vous pouvez **réutiliser à travers l’ensemble de votre code**. Imaginez que vous avez utilisé une
+nuance de vert des centaines de fois dans un site, mais que vous décidez de le changer en rouge. Grâce aux variables, il vous
+suffit de faire le changement une seule fois et il sera répercuté partout où la variable a été utilisée. Un seul changement est
+plus propre et facile que des centaines ! Pratique, non ?
+
+#### Les boucles
+
+Les **boucles**, qui **automatisent les tâches répétitives** telles que la création d’une série de modificateurs de couleurs,
+par exemple, vous épargnent un vrai calvaire tout en gardant une codebase plus petite et plus simple à gérer :
+
+<div style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between', padding: '12px', backgroundColor: 'gray', border: '1px solid black', borderRadius:'12px'}}>
+<div style={{width:'49%'}}>
+
+```scss title="scss"
+$colours: (
+    mint: #15DEA5,
+    navy: #001534,
+    seafoam: #D6FFF5,
+    white: #fff,
+    rust: #DB464B
+);
+
+@each $colour, $hex in $colours {
+    .btn--#{$colour} {
+        background-color: $hex;
+    }
+}
+
+
+
+
+
+
+```
+
+</div>
+<div style={{width:'49%'}}>
+
+```css title="css"
+.btn--mint {
+    background-color: #15DEA5;
+}
+
+.btn--navy {
+    background-color: #001534;
+}
+
+.btn--seafoam {
+    background-color: #D6FFF5;
+}
+
+.btn--white {
+    background-color: #fff;
+}
+
+.btn--rust {
+    background-color: #DB464B;
+}
+```
+
+</div>
+</div>
+
+<br />
+
+#### Les structures conditionnelles (ou conditions)
+
+Les **opérations logiques** vous permettent d’écrire **un même bloc de code que vous pouvez utiliser dans différentes
+circonstances** et qui le font réagir en conséquence, comme changer la couleur du texte en fonction de la couleur du fond. Par
+exemple _si_ le fond est bleu foncé, _alors_ passer le texte en blanc. Avec le temps, cela vous donne une codebase plus petite,
+plus concise qui est donc beaucoup plus facile à maintenir.
+
+<div style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between', padding: '12px', backgroundColor: 'gray', border: '1px solid black', borderRadius:'12px'}}>
+<div style={{width:'49%'}}>
+
+```scss title="scss"
+@if (lightness(#15DEA5) > 25%) {
+    .header {
+        color: #fff;
+        background-color: $mint;
+}
+
+}@else{
+    .header {
+        color: #000;
+        background-color: $mint;
+    }
+}
+```
+
+</div>
+<div style={{width:'49%'}}>
+
+```css title="css"
+.header {
+    color: #fff;
+    background-color: #15DEA5;
+}
+
+
+
+
+
+
+
+
+```
+
+</div>
+</div>
+
+<br />
+
+Pas de panique ! C’était juste une introduction. Ne vous préoccupez pas de comment écrire des conditions ou des boucles pour le
+moment, nous verrons cela en détail plus tard dans le cours. Au lieu de cela, regardez comment nous employons les préprocesseurs
+pour automatiser la création des sélecteurs.
+
+### Découvrez les différents préprocesseurs CSS
+
+![Image montrant 3 préprocesseurs](https://user.oc-static.com/upload/2019/10/09/15706249219051_image10.png)
+
+Les différents préprocesseurs
+
+Il existe de nombreux préprocesseurs CSS, mais les trois plus reconnus sont **Sass**, **Less** et **Stylus**. Et entre nous, il
+n’y a pas grand chose qui les différencie. 🤫 Il existe, il est vrai, quelques différences de syntaxe et de fonctionnalité, mais
+globalement, **ils font tous la même chose et de manière très similaire**.
+
+Dans ce cours, nous allons utiliser Sass, mais ce qui compte, c’est d’apprendre et d'intégrer les concepts et process liés à
+l’utilisation d’un préprocesseur CSS, qui peuvent également s’appliquer à Less et Stylus.
+
+:::info
+Dans d’autres termes, dites-vous que Sass, Less et Stylus sont **différentes marques pour un même outil**, un peu comme des
+snowboards fabriqués par Burton ou Rossignol. Leur couleur et leur forme peuvent varier, leur taille aussi, mais ce sont avant
+tout des snowboards et vous pourrez rider sans aucun problème avec le premier comme le deuxième. Ce qui compte, ce n’est pas la
+marque, c’est la fonction. Apprendre à rider un snowboard Burton ou Rossignol ne vous empêchera pas de descendre un jour une
+piste avec une Salomon.
+:::
+
+Du coup, pourquoi Sass ? Comme je l’ai dit plus haut, ce sont des outils très similaires. Toutefois, vous avez beaucoup plus de
+chances de tomber sur Sass dans votre vie professionnelle, et il est donc logique de faire son apprentissage sur l’outil que vous
+êtes le plus susceptible d’utiliser dans votre travail quotidien, n’est-ce pas ?
+
+:::info
+**[Selon ce sondage](https://ashleynolan.co.uk/blog/frontend-tooling-survey-2018-results)**, la part de marché de Sass est dix
+fois supérieure à celle de Less. Bien que l’échantillon ait été assez limité (5 000 réponses), ça donne tout de même une idée sur
+la notoriété de Sass.
+:::
+
+### En résumé
+
+- Les préprocesseurs CSS vous permettent d’imbriquer votre code (on appelle ça le _nesting_) pour créer une hiérarchie plus
+facile à lire et regrouper des morceaux de code entre eux.
+- Il existe plein de préprocesseurs, mais le plus courant est Sass, qui signifie _Syntactically Awesome Style Sheets_ (“Feuilles
+de style syntaxiquement fantastiques”).
+- Au-delà du nesting, les préprocesseurs vous permettent d’utiliser des fonctionnalités de programmation pour créer une codebase
+plus maintenable, tout en diminuant les énormes quantités de code à écrire.
+
+_Dans le prochain chapitre, nous aborderons Sass en apprenant sa syntaxe et les outils que vous utiliserez pour l’écrire._
+
+-----
+
+## Découvrez Sass et sa syntaxe
+
+[Découvrez Sass et sa syntaxe - Simplifiez-vous le CSS avec Sass - OpenClassrooms](https://openclassrooms.com/fr/courses/6106181-simplifiez-vous-le-css-avec-sass/6596483-decouvrez-sass-et-sa-syntaxe)
+
+<Vimeo vimeoId="534188245" />
+
+<br />
+
+Nous avons vu les différents types de préprocesseurs et leurs avantages. Parmi eux : Sass. Il est donc temps de découvrir plus
+en détail celui-ci.
+
+### Pour bien démarrer
+
+Il est temps de se remonter les manches et de plonger les mains dans Sass ! 💪
+
+Nous allons commencer par découvrir la **syntaxe** de Sass : à quoi elle ressemble et comment l’écrire ; et ce, en pratiquant
+avec des exercices au fur et à mesure. Cela vous permettra de vous jeter directement dans **Sass** et de voir les résultats en
+temps réel, sans avoir besoin pour le moment d’installer quoi que ce soit sur votre ordinateur ! 🌟
+
+Plus tard, vous utiliserez Sass directement sur votre machine : vous allez l’installer et le configurer afin qu’il puisse
+**compiler** votre code pour vous permettre de voir vos résultats de la même manière : en temps réel !
+
+:::note ?
+Une seconde... compi… quoi ? 🤔
+:::
+
+La compilation est un **processus** qui nous permet de **transformer Sass en CSS traditionnel**. Votre navigateur est incapable
+de comprendre Sass dans l’état. En d’autres termes, il nous faut traduire la syntaxe Sass en CSS pour que votre navigateur puisse
+l’utiliser, et c’est possible en le compilant.
+
+Mais point de panique, jeune padawan, pour le moment nous allons nous concentrer seulement sur la syntaxe de Sass !
+
+Vous pouvez aussi suivre le cours en utilisant votre **IDE** (_integrated development environment_, soit un traitement de texte
+super sophistiqué) et Sass, ou bien utiliser Codepen : une solution en ligne ! 
+
+#### Deux manières de faire la même chose
+
+Il existe deux manières d’écrire du Sass ; on les différencie par leur extension de fichier : `.sass` et`.scss`.
+
+Vous avez déjà du **code CSS traditionnel** que vous voulez réutiliser ? Aucun problème ! Sass fonctionne très bien avec du CSS.
+Copiez votre CSS et collez-le dans un fichier `.sass`, et le tour est joué. Votre code sera interprété et votre CSS sera exécuté
+mais ne sera pas transformé en Sass. Pour utiliser Sass, il est important d’apprendre à maîtriser sa **syntaxe**, car elle vous
+permet de bénéficier de fonctionnalités qui vont vous permettre d’écrire du code propre, plus organisé et surtout plus efficace.
+
+Jusqu’à présent, tous les petits bouts de CSS précompilés que vous avez vus précédemment dans ce cours ont été créés en utilisant
+la syntaxe Sass `.scss`. Regardez, ça ressemble énormément à du CSS normal, on a juste ajouté un peu de poudre magique Sass
+par-dessus et voilà le travail :
+
+```scss
+.nav {
+    padding-right: 6rem;
+    flex: 2 1 auto;
+    text-align: right;
+    nav__link {
+        display: inline;
+        font-size: 3rem;
+        padding-left: 1.5rem;
+        nav__link--active {
+            color: #001534;
+        }
+    }
+}
+```
+
+La syntaxe `.scss` s’appuie sur la syntaxe CSS standard ! Celle-ci étant très proche du CSS, elle permet aux développeurs de ne
+pas être perdus lorsqu’ils écrivent du CSS, tout en bénéficiant de toutes les fonctionnalités Sass, et c’est tout l’intérêt !
+
+En CSS, cela donnerait :
+
+```css
+.nav {
+    padding-right: 6rem;
+    flex: 2 1 auto;
+    text-align: right;
+    }
+
+.nav nav__link {
+    display: inline;
+    font-size: 3rem;
+    padding-left: 1.5rem;
+}
+
+.nav nav__link nav__link--active {
+    color: #001534;
+}
+```
+
+Et en `.sass`, ce serait:
+
+```scss
+.nav
+    padding-right: 6rem;
+    flex: 2 1 auto;
+    text-align: right;
+    nav__link
+        display: inline;
+        font-size: 3rem;
+        padding-left: 1.5rem;
+        nav__link--active
+            color: #001534;
+```
+
+La syntaxe spécifique à `.scss` n’est visible que lorsqu’on commence à utiliser les fonctionnalités Sass, comme les variables
+identifiées par **le préfixe dollar** ($) et les fonctions identifiées avec **l’arobase** (@).
+
+Nous verrons en détail comment utiliser ces outils plus tard dans ce cours. Pour le moment, ce qu'il est important de comprendre,
+c’est que vous pouvez appliquer vos connaissances en écriture CSS directement dans Sass avec la syntaxe `.scss`.
+
+:::note ?
+Mais comment faire ? 🧐
+:::
+
+Commencez par **déclarer** le **sélecteur**, qu’il s’agisse d’une classe, d’un élément, d’un id, etc., puis ajoutez une paire
+d’accolades entre lesquelles vous mettrez les propriétés et les valeurs nécessaires :
+
+```scss
+.navbar-content {
+    color: white;
+    background-color: white;
+}
+```
+
+:::note ?
+Et ça donnerait quoi en syntaxe `.sass` ?
+:::
+
+Voici ce que cela donne en syntaxe `.sass` :
+
+```scss
+.navbar-content
+    color: white
+    background-color: black
+```
+
+Le `.scss` ressemble beaucoup à du CSS normal, tandis que le `.sass` a une **syntaxe plus condensée et concise**. En `.sass`,
+dites adieu aux accolades et aux points-virgules ! À la place, elle utilise uniquement des tabulations et des retours à la ligne
+pour la mise en forme du code. La syntaxe `.sass` produit donc une codebase plus propre, mais surtout plus lisible. Sans compter
+qu’éviter toute cette ponctuation vous permet aussi d’écrire plus vite.
+
+#### **Essayez par vous-même !**
+
+**![16183911506509_A-vous-de-jouer%20%282%29.png](https://user.oc-static.com/upload/2021/04/14/16183911506509_A-vous-de-jouer%20%282%29.png)**
+
+Console de code
+
+<iframe title="codevolve" id="codevolveIframe1" src="https://www.codevolve.com/api/v1/access_token/5E38B12FCE24BF1930909E9EA5C47556" width="100%" height="500" frameborder="0"></iframe>
+
+#### Une même syntaxe pour tous
+
+Entre nous, il est assez rare que vous tombiez sur du .sass. Quand quelqu’un parle de Sass, il parle quasi systématiquement de
+`.scss`. Du coup, vos chances d’écrire du `.scss` dans votre vie professionnelles sont nettement plus élevées. Il est donc
+logique que nous utilisions `.scss` dans ce cours.
+
+À partir de maintenant, nous utiliserons Sass comme un synonyme de `.scss`. À chaque fois que nous en parlerons, il s’agira de
+`.scss` et de sa syntaxe.
+
+### Utilisez des sélecteurs à l’intérieur d’autres sélecteurs : découvrez le nesting !
+
+#### Des sélecteurs dans des sélecteurs : Inception
+
+La syntaxe est importante et nous permet d’écrire du code plus organisé ; mais seule, elle n’est pas très efficace et on ne
+comprend pas trop l’intérêt d’écrire du CSS dans un fichier `.scss`. C’est ici qu’intervient le **nesting** !
+
+De la même façon que vous imbriquez des `<li>` dans un `<ul>` en HTML, dans Sass vous pouvez imbriquer les sélecteurs ou
+autrement dit, les nester.
+
+```scss
+ul {
+    list-style: none;
+    text-align: right;
+
+    li {
+        display: inline;
+        font-size: 3rem;
+        color: #D6FFF5;
+    }
+}
+```
+
+Maintenant vous avez une hiérarchie de sélecteurs claire qui reflète leur structure HTML. Vos `<li>` sont imbriqués dans le `<ul>`,
+exactement comme ils le seraient en HTML.
+
+Plutôt que d’avoir à parcourir un fichier CSS interminable à la recherche d’un sélecteur particulier et de son ensemble de règles,
+ce qui équivaut à chercher une aiguille dans une botte de foin, vous pouvez vous référer à un seul endroit dans votre fichier et
+voir comment les `<ul>` et leurs `<li>` enfants sont configurés. Au final, vous n’aurez à aller qu’à un seul et même endroit pour
+faire vos modifications futures.
+
+Plus propre ? Validé. ✅ Maintenable ? Doublement validé. ✅
+
+Regardez le CSS qui en résulte.
+
+```scss
+ul {
+    list-style: none;
+    text-align: right;
+}
+
+ul li {
+    display: inline;
+    font-size: 3rem;
+    color: #D6FFF5;
+}
+```
+
+Le `<ul>` a reçu toutes les règles assignées en dehors du `<li>`. Et le `<li>` a reçu les règles qui étaient assignées dans son
+sélecteur imbriqué. Remarquez qu’au lieu d’avoir créé un sélecteur unique `<li>`, nous avons créé un combinateur descendant (ou
+un combinateur parent/enfant).
+
+#### **Essayez par vous-même !**
+
+**![16183911506509_A-vous-de-jouer%20%282%29.png](https://user.oc-static.com/upload/2021/04/14/16183911506509_A-vous-de-jouer%20%282%29.png)**
+
+Dans cet exercice, pratiquez le nesting : placez un sélecteur dans un autre.
+
+Console de code
+
+<iframe title="codevolve" id="codevolveIframe2" src="https://www.codevolve.com/api/v1/access_token/15520968C926817BFC7AA678BDF552C2" width="100%" height="500" frameborder="0"></iframe>
+
+:::info
+Alors ? Avez-vous réussi ? [Corrigez-vous avec cette correction](https://github.com/tdimnet/Simplifiez-vous-le-CSS-avec-Sass/tree/partie-1/chapitre-5/exercice-2) !
+:::
+
+Nous avons effectué la forme la plus simple de **nesting** dans Sass : placer un sélecteur dans un autre sélecteur. Sass compilera
+toujours ceci sous forme de sélecteurs séparés par des espaces, ce qui, en CSS, correspond à un **combinateur descendant**.
+
+Maintenant que vous connaissez les principes de base de Sass et comment l’écrire, et que vous vous êtes initié au nesting, il est
+temps de passer au niveau supérieur en apprenant à utiliser d’autres combinateurs !
+
+:::info
+Si vous voulez en savoir un peu plus sur les combinateurs, lisez **[l’excellente documentation de MDN](https://developer.mozilla.org/fr/docs/Web/CSS/S%C3%A9lecteurs_CSS#Combinators)**.
+:::
+
+### En résumé
+
+- La syntaxe .scss est très similaire à la syntaxe CSS.
+- On peut utiliser du code CSS préexistant dans Sass en l’intégrant dans un fichier .scss.
+- La syntaxe .sass est plus concise mais .scss reste plus couramment utilisée.
+- Le nesting permet d’imbriquer les sélecteurs comme en HTML. 
+
+ _La syntaxe Sass et surtout le nesting nous permettent de passer un cap dans l’organisation de notre code, mais il existe aussi
+d’autres combinateurs que nous pouvons utiliser pour améliorer notre code, et c’est ce que nous allons découvrir dans le chapitre
+suivant._
+
+-----
+
+## Utilisez les combinateurs
+
+[Utilisez les combinateurs - Simplifiez-vous le CSS avec Sass - OpenClassrooms](https://openclassrooms.com/fr/courses/6106181-simplifiez-vous-le-css-avec-sass/6596489-utilisez-les-combinateurs)
+
+<Vimeo vimeoId="534204277" />
+
+<br />
+
+Dans les chapitres précédents, nous avons vu comment créer et utiliser les combinateurs descendants. Mais vous pouvez aussi créer
+d’autres combinateurs. D’ailleurs, Sass vous permet de créer tous les autres types de combinateurs CSS.
+
+### Découvrez d’autres types de combinateurs
+
+#### Combinateur parent
+
+```scss
+.parent {
+    background-color: #15DEA5;
+}
+```
+
+#### Combinateur descendant
+
+```scss
+.parent .descendant {
+    color: #fff;
+}
+```
+
+#### Combinateur parent > enfant
+
+```scss
+.parent > .child {
+    color: #D6FFF5;
+}
+```
+
+#### Combinateur adjacent
+
+```scss
+.parent + .adjacent {
+    color: #001534;
+}
+```
+
+Ça vous rappelle quelque chose, n’est-ce pas ? Récapitulons :
+1. Dans le premier cas, tout ce qui est **relié** à l’élément parent adoptera la couleur de fond spécifiée.
+2. Dans le deuxième cas, si le deuxième élément est le **descendant** du premier, alors il adoptera la couleur spécifiée.
+3. Dans le troisième cas, si le deuxième élément est un **enfant** du premier, alors il adoptera la couleur spécifiée.
+4. Dans le quatrième cas, si le deuxième élément est immédiatement **précédé** du premier, alors il adoptera la couleur spécifiée.
+
+:::note ?
+Une minute, _descendant_ on l’a vu plus tôt, mais c’est quoi la différence entre “descendant” et “enfant” ? 🤔
+:::
+
+C’est la même différence qu’en français :
+- Vous êtes à la fois l’_enfant_ et le _descendant_ de vos parents ;
+- Vous n’êtes pas l’_enfant_ de vos grands-parents, en revanche vous êtes leur _descendant_.
+
+Un élément enfant a donc un **lien direct et immédiat** avec son élément parent alors qu’un lien descendant, non. Vous avez un
+lien direct et immédiat avec vos parent. Par contre, vous êtes le descendant de vos grand-parents : votre lien n’est pas direct
+et immédiat.
+
+En ajoutant le bon symbole de combinateur devant un sélecteur, vous pouvez créer tous les combinateurs CSS dans Sass :
+
+```scss
+.parent {
+    background-color: #15DEA5;
+    .descendant {
+        color: #fff;
+    }
+    >.child {
+        color: #D6FFF5;
+    }
+    +.adjacent {
+        color: #001534;
+    }
+}
+```
+
+Quand vous imbriquez un bloc dans Sass, cela crée un nouveau sélecteur CSS avec le sélecteur parent attaché, séparé par le
+combinateur adapté.
+
+#### **Essayez par vous-même !**
+
+![16183911506509_A-vous-de-jouer%20%282%29.png](https://user.oc-static.com/upload/2021/04/14/16183911506509_A-vous-de-jouer%20%282%29.png)
+
+Appliquez vos nouvelles connaissances des combinateurs dans cet exercice.
+
+Console de code
+
+<iframe title="codevolve" id="codevolveIframe1" src="https://www.codevolve.com/api/v1/access_token/9C80DE65A962FE2D51D24FF1D96A4317" width="100%" height="500" frameborder="0"></iframe>
+
+:::info
+Et voici [la correction de l'exercice](https://github.com/tdimnet/Simplifiez-vous-le-CSS-avec-Sass/tree/partie-1/chapitre-6/exercice-1)
+pour comparer avec votre travail 😊
+:::
+
+Mais si l’on ne veut pas de séparation entre parent et enfant ? 🙅‍♀️
+
+Dans ce cas-là on utilise **l’esperluette** (ou _ampersand_ en anglais) !
+
+### Utilisez l’esperluette
+
+Vous avez besoin d’ajouter une **pseudoclasse** `li:hover` à vos `<li>` pour ajouter un peu d’interaction visuelle et améliorer
+l’expérience utilisateur. Si on **imbrique** le pseudo-sélecteur dans notre sélecteur li, cela nous donne :
+
+
+```scss
+ul {
+    list-style: none;
+    text-align: right;
+    li {
+        display: inline;
+        font-size: 3rem;
+        color: #D6FFF5;
+        :hover {
+            color: #001534;
+        }
+    }
+}
+```
+
+Ce qui se compile ainsi :
+
+```scss
+ul {
+    list-style: none;
+    text-align: right;
+}
+
+ul li {
+    display: inline;
+    font-size: 3rem;
+    color: #D6FFF5;
+}
+
+ul li :hover {
+    color: #001534;
+}
+```
+
+Aïe, ça ne marchera pas… 😕 Souvenez-vous que le nesting dans Sass crée des combinateurs de lui-même. Sauf que vous ne voulez pas
+d’un combinateur avant votre pseudosélecteur. Ce n’est pas comme ça qu’ils fonctionnent ; vous avez besoin qu’il soit
+**directement relié au sélecteur** pour qu’il ait l’effet attendu.
+
+Sass a un signe spécifique pour concaténer les sélecteurs parent et enfant : l’**esperluette (&)** !
+
+:::info
+_Concaténer_ signifie _relier_. Mettre une esperluette en préfixe devant un sélecteur le reliera directement au sélecteur parent
+sans recourir à des combinateurs.
+:::
+
+Magie. ✨
+
+Ajoutons donc une esperluette avant notre pseudosélecteur `:hover` :
+
+```scss
+ul {
+    list-style: none;
+    text-align: right;
+    li {
+        display: inline;
+        font-size: 3rem;
+        color: #D6FFF5;
+        &:hover {
+            color: #001534;
+        }
+    }
+}
+```
+
+Et voici le CSS qui en découle :
+
+```scss
+ul {
+    list-style: none;
+    text-align: right;
+}
+
+ul li {
+    display: inline;
+    font-size: 3rem;
+    color: #D6FFF5;
+    }
+
+ul li:hover {
+    color: #001534;
+}
+```
+
+Beaucoup mieux ! Maintenant, nous avons un :hover qui fonctionne pour nos `<li>`, et tout ça dans un seul bloc de code.
+
+#### **Essayez par vous-même !**
+
+**![16183911506509_A-vous-de-jouer%20%282%29.png](https://user.oc-static.com/upload/2021/04/14/16183911506509_A-vous-de-jouer%20%282%29.png)**
+
+Dans cet exercice, utilisez l’esperluette.
+
+Console de code
+
+<iframe title="codevolve" id="codevolveIframe2" src="https://www.codevolve.com/api/v1/access_token/EB0E7783DF5E5D0EC0A1700ACD537E0F" width="100%" height="500" frameborder="0"></iframe>
+
+:::info
+Retrouvez la [correction de l'exercice ici](https://github.com/tdimnet/Simplifiez-vous-le-CSS-avec-Sass/tree/partie-1/chapitre-6/exercice-2) !
+:::
+
+### N’abusez pas du nesting
+
+Il n’y a pas réellement de limite quant à la profondeur du nesting qu’on peut opérer dans Sass. On serait tenté de répliquer
+intégralement notre HTML dans Sass, en reproduisant une copie conforme de sa structure.
+
+```scss
+.parent-div {
+    background-color: #15DEA5;
+    .child-div {
+        color: #fff;
+        .grandchild-div {
+            color: #D6FFF5;
+        }
+    }
+}
+```
+
+Mais souvenez-vous, quand vous imbriquez des sélecteurs, vous augmentez la spécificité des sélecteurs compilés. De ce fait, si
+vous les imbriquez trop, vous allez vous retrouver avec des sélecteurs de très haute spécificité, ce qui les rendra extrêmement
+difficiles à modifier ou outrepasser si besoin.
+
+```scss
+.parent-div {
+    background-color: #15DEA5;
+}
+
+.parent-div .child-div {
+    color: #fff;
+}
+
+.parent-div .child-div .grandchild-div {
+    color: #D6FFF5;
+}
+```
+
+Essayer d’outrepasser un sélecteur aussi spécifique que .parent-div, .child-div ou .grandchild-div nécessiterait un sélecteur
+encore plus spécifique. Sans compter que cela nuirait beaucoup à la réutilisation de votre code. À moins d’ajouter plus tard un
+élément qui corresponde parfaitement à cette hiérarchie de classes, ce sélecteur sera complètement inutile. Vous vous retrouverez
+donc avec du code instable et difficile à maintenir – ce qui va à l’encontre de la raison d’être des préprocesseurs !
+
+Plutôt que d’essayer de répliquer exactement la structure du HTML, il est préférable d’écrire des sélecteurs imbriqués qui soient
+**uniquement relatifs au sélecteur racine**. Cela ne reproduira pas la structure HTML aussi clairement, mais permettra de
+maintenir une spécificité basse dans votre codebase, ainsi qu’une certaine flexibilité et une certaine modularité.
+
+Par exemple, si vous avez ce code et que vous voulez modifier l’image :
+
+```html
+<section class="proj-prev proj-prev--mint">
+    <div class="proj-prev__image">
+        <img src="/public/img/photography_1280w.jpg" alt="project title goes here" >
+    </div>
+    <h1 class="proj-prev__heading">
+        Project Title
+    </h1>
+    <p class="proj-prev__byline">
+        project keywords would go here
+    </p>
+</section>
+```
+
+vous pourriez juste vous arrêter au sélecteur précédent et avoir seulement votre balise `img` sans la nester dans `proj-prev`
+puis `proj-prev image` :
+
+```scss
+.proj-prev{
+    votre code ici
+    img {
+        color: #fff;
+    }
+}
+```
+
+En pratique, si vous vous retrouvez à imbriquer au-delà de **deux niveaux de profondeur**, arrêtez-vous et réfléchissez à la
+façon dont vous êtes en train de structurer votre bloc. Il y a des chances que vous soyez en train de créer des sélecteurs trop
+spécifiques et devriez **refactoriser** votre code en conséquence.
+
+Le nesting dans Sass est un outil très performant qui vous aide à regrouper les sélecteurs **pertinents** et ainsi bâtir une
+codebase facile à parcourir et à maintenir. Toutefois, cela a pour inconvénient de créer une **surenchère de spécificité**. Du
+coup, vous vous dites peut-être qu’il vaut mieux revenir au système BEM, avec l’organisation et la structure que cela confère à
+vos sélecteurs. Vous vous souvenez peut-être aussi que BEM **repose sur un principe de basse spécificité**. Ce qui est l’inverse
+de l’augmentation de spécificité générée par le nesting. Alors, qu’est-ce qui vaut mieux ? BEM ou nesting ?
+
+La réponse est : pourquoi pas les deux ! Mais avant de voir ensemble comment faire, récapitulons un peu ce que nous venons
+d’apprendre.
+
+### **En résumé**
+
+- Dans Sass, les sélecteurs peuvent être imbriqués, ou nestés, dans d’autres sélecteurs.
+- Sass peut créer tous les combinateurs CSS.
+- Utilisez l’esperluette pour lier un sélecteur imbriqué à un sélecteur parent sans recourir à un combinateur.
+- Attention à ne pas créer des sélecteurs trop spécifiques.
+
+_Dans le chapitre suivant, nous allons combiner la puissance de Sass et l’ordre de BEM pour créer des sélecteurs de basse
+spécificité, tout en gardant la structure du nesting._
+
+-----
+
+## Utilisez des sélecteurs BEM avec Sass
+
+[Utilisez des sélecteurs BEM avec Sass - Simplifiez-vous le CSS avec Sass - OpenClassrooms](https://openclassrooms.com/fr/courses/6106181-simplifiez-vous-le-css-avec-sass/6596494-utilisez-des-selecteurs-bem-avec-sass)
+
+<Vimeo vimeoId="534216657" />
+
+<br />
+
+Il est temps de fusionner tout ce que nous avons appris jusqu’ici 💪
+
+### Intégrez les notions apprises
+
+Commençons par mettre en application ce que vous avez appris de la méthodologie BEM et du nesting de Sass. Si vous combinez des
+sélecteurs BEM et le nesting de Sass pour créer un `block` et un `block__element`, vous obtiendrez quelque chose comme ceci :
+
+```scss
+.block{
+    background-color: #15DEA5;
+    .block__element {
+        color: #fff;
+    }
+}
+```
+
+Ce qui donne en CSS :
+
+```scss
+.block {
+    background-color: #15DEA5;
+}
+
+.block .block__element {
+    color: #fff;
+}
+```
+
+On se retrouve avec un sélecteur `block` ayant une spécificité de 0/0/1/0 et un sélecteur `block__element` avec une spécificité
+de 0/0/2/0. Ce n’est pas idéal, mais tout fonctionnera comme vous le voulez, sans règles contradictoires.
+
+Mais admettons que vous ayez à présent besoin de créer une **variation** de votre `block__element` pour changer sa couleur de
+fond. Ceci implique de créer un sélecteur `block__element--modifier`, mais puisque vous avez augmenté la spécificité de votre
+élément, vous devez aussi vous assurer que vous augmentez celle de vos modificateurs d’au moins autant, sinon ils n’auront pas
+d’effet.
+
+
+<div style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between', padding: '12px', backgroundColor: 'gray', border: '1px solid black', borderRadius:'12px'}}>
+<div style={{width:'49%'}}>
+
+```scss title="scss"
+.block{
+    background-color: #15DEA5;
+    .block__element {
+        color: #fff;
+    }
+    .block__element--modifier {
+        background-color: #001534;
+    }
+}
+
+
+```
+
+</div>
+<div style={{width:'49%'}}>
+
+```css title="css"
+.block {
+    background-color: #15DEA5;
+}
+
+.block .block__element {
+    color: #fff;
+}
+
+.block .block__element--modifier {
+    background-color: #001534;
+}
+```
+
+</div>
+</div>
+
+<br />
+
+Les petites incohérences de spécificité entre sélecteurs créent des **bugs** et des **comportements** **imprévisibles**. Des
+modificateurs et des éléments ayant des degrés de spécificité variables peuvent se retrouver **dépareillés**, et les règles que
+vous vouliez outrepasser à certains endroits ne le seront pas, ou alors elles seront outrepassées là où vous ne le vouliez pas.
+
+Ce qu’il vous faut, c’est un moyen de **nester** dans Sass sans aller à l’encontre des principes BEM. Vous vous rappelez du
+nesting avec des **esperluettes** ? Quand vous imbriquez avec une esperluette, cela relie le parent et l’enfant dans le CSS
+compilé. Mais l’enfant n’a pas besoin d’être un sélecteur, il peut aussi s’agir de simple texte !
+
+Dans notre nest pour `block__element`, remplaçons la partie “bloc” par une esperluette :
+
+```scss
+.block{
+    background-color: #15DEA5;
+    &__element {
+        color: #fff;
+    }
+}
+```
+
+Il en résulte un sélecteur d’élément BEM identique dans son comportement aux sélecteurs d’éléments que nous avons écrits
+manuellement dans le troisième chapitre, mais avec le bénéfice supplémentaire de n’avoir à écrire “bloc” qu’une fois et de
+pouvoir profiter des formidables fonctionnalités de structure et de regroupement offertes par Sass.
+
+```scss
+.block {
+    background-color: #15DEA5;
+}
+
+.block__element {
+    color: #fff;
+}
+```
+
+Maintenant, nous avons un sélecteur d’élément avec une spécificité basse de 0/0/1/0, comme nous le voulions.
+
+Retournons à notre `block__element--modifier` et recréons-le en utilisant les mêmes principes que pour créer le `block__element` :
+
+```scss
+.block{
+    background-color: #15DEA5;
+    &__element {
+        color: #fff;
+        &--modifier {
+            background-color: #001534;
+        }
+    }
+}
+```
+
+Nous obtenons un CSS compilé parfaitement conforme avec ce que nous voulions :
+
+```scss
+.block {
+    background-color: #15DEA5;
+}
+
+.block__element {
+    color: #fff;
+}
+
+.block__element--modifier {
+    background-color: #001534;
+}
+```
+
+#### **Essayez par vous-même !**
+
+**![16183911506509_A-vous-de-jouer%20%282%29.png](https://user.oc-static.com/upload/2021/04/14/16183911506509_A-vous-de-jouer%20%282%29.png)**
+
+Dans cet exercice, utilisez le refactoring sur un ancien exercice tout en faisant attention à la spécificité.
+
+Console de code
+
+<iframe title="codevolve" id="codevolveIframe1" src="https://www.codevolve.com/api/v1/access_token/03CD6231588682860589CDBEAE4212A7" width="100%" height="500" frameborder="0"></iframe>
+
+:::info
+Avez-vous réalisé l'exercice ? [Comparez votre travail avec la correction](https://github.com/tdimnet/Simplifiez-vous-le-CSS-avec-Sass/tree/partie-1/chapitre-7/exercice-1).
+:::
+
+Vous avez créé des **sélecteurs BEM** en utilisant la **structure épurée** de Sass, ce qui vous permettra de vous assurer que
+votre code demeure bien organisé et facile à modifier. De plus, vous vous êtes épargné le travail de devoir taper le nom du bloc
+encore et encore et encore…
+
+Vous avez échappé à bien des tendinites au poignet ! 🙌  Et tous vos sélecteurs ont la spécificité la plus basse qui soit :
+**0/0/1/0** !
+
+Je sais, je sais… Je vous vois d’ici lever les yeux au ciel. 🙄 Spécificité plate, spécificité basse… Je suis obsédée.🤓 C’est
+possible.
+
+Mais il y a une raison à cela. Comme pour tout dans la vie, il y a un temps et un lieu pour chaque chose.
+
+### Utilisez les spécificités là où vous en avez besoin
+
+Juste parce que nous avons évité jusqu’à présent d’augmenter la **spécificité** ne veut pas nécessairement dire que nous ne le
+ferons jamais. La spécificité n’est pas mauvaise en soi, mais il y a un temps et un lieu pour s’en servir. En maintenant la
+spécificité au minimum, il devient beaucoup plus simple de créer un **modificateur** capable d’outrepasser les propriétés
+souhaitées.
+
+Disons que nous avons créé un bouton avec un fond uni et un bouton modifié avec un fond transparent et un contour, ainsi :
+
+```scss
+.btn {
+    display: inline-block;
+    margin: 0 auto;
+    background: #15DEA5;
+    padding: 1rem;
+    &--outline {
+        background: transparent;
+        border: 2px solid #15DEA5;
+    }
+}
+```
+
+Pour représenter un **bouton désactivé**, il faut le griser, ce qui implique de créer un autre modificateur. Dans le cas d’un
+bouton standard, cela veut dire mettre un fond gris, et dans le cas du bouton avec contour, rendre ce contour gris. Vous pourriez
+donc créer deux nouveaux modificateurs, un pour chaque bouton, mais cela voudrait dire encore des noms de sélecteurs à retenir,
+sans compter que ça ajouterait du désordre dans votre code.
+
+Devinez ce qui simplifierait beaucoup tout ça… Mais oui, **augmenter la spécificité** !
+
+Nous allons donc écrire deux nouveaux modificateurs, un pour chaque instance du bouton, mais nous utiliserons le même nom pour
+les deux. Pour les différencier, nous allons compter sur le **nesting** dans Sass, afin de créer des **sélecteurs spécifiques**
+pour chaque type de bouton.
+
+```scss
+.btn {
+    display: inline-block;
+    margin: 0 auto;
+    background: #15DEA5;
+    padding: 1rem;
+    &--disabled {
+        background: grey;
+    }
+    &--outline {
+        background: transparent;
+        border: 2px solid #15DEA5;
+        &.btn--disabled{
+            border: 2px solid grey;
+        }
+    }
+}
+```
+
+Nous utilisons l’esperluette pour créer deux sélecteurs distincts. Le premier est un **modificateur** **standard**,
+`btn--disabled`, qui outrepassera la couleur de fond de `.btn` pour la mettre en gris. Le second est un **sélecteur** avec deux
+classes, `.btn--outline` et `.btn--disabled`, ce qui signifie que les deux classes doivent être appliquées afin que les règles
+que comporte ce sélecteur entrent en vigueur pour changer la couleur du contour en gris.
+
+```scss
+.btn {
+    display: inline-block;
+    margin: 0 auto;
+    background: #15DEA5;
+    padding: 1rem;
+}
+
+.btn--disabled {
+    background: grey;
+}
+
+.btn--outline {
+    background: transparent;
+    border: 2px solid #15DEA5;
+}
+
+.btn--outline.btn--disabled {
+    border: 2px solid grey;
+}
+```
+
+Vous vous retrouvez avec quatre sélecteurs différents :
+1. Le bouton : `.btn`
+2. Le modificateur pour le contour du bouton : `.btn--outline`
+3. Le modificateur qui rend le bouton gris : `.btn-disabled`
+4. Le modificateur qui rend le contour du bouton gris : `.btn--outline.btn--disabled`
+
+Techniquement, le quatrième de ces sélecteurs a une spécificité de deux, mais `.btn--disabled` marche aussi sans `.btn--outline`,
+ce qui en fait un système modulaire et réutilisable, pour lequel vous pouvez ajouter ou retirer la classe : l’élément se
+comportera toujours comme souhaité.
+
+#### **Essayez par vous-même !**
+
+![16183911506509_A-vous-de-jouer%20%282%29.png](https://user.oc-static.com/upload/2021/04/14/16183911506509_A-vous-de-jouer%20%282%29.png)
+
+Dans cet exercice, créez plusieurs sélecteurs et augmentez la spécificité.
+
+Console de code
+
+<iframe title="codevolve" id="codevolveIframe2" src="https://www.codevolve.com/api/v1/access_token/9425E5E8358847296184B64C917FF788" width="100%" height="500" frameborder="0"></iframe>
+
+Retrouvez ici, [la correction de l'exercice](https://github.com/tdimnet/Simplifiez-vous-le-CSS-avec-Sass/tree/partie-1/chapitre-7/exercice-2).
+
+### Ajoutez des sélecteurs spécifiques à votre HTML
+
+Mettons ces sélecteurs en application en les intégrant dans du HTML. Premièrement, créons deux boutons, un avec contour et un
+sans :
+
+```html
+<div class="container">
+    <div class="btn">Solid Button</div>
+    <div class="btn btn--outline">Outline Button</div>
+</div>
+```
+
+![Image d'un bouton avec contour et d'un bouton sans contour](https://user.oc-static.com/upload/2019/10/22/15717522549903_image10.png)
+
+Un bouton avec contour et un bouton sans contour
+
+À présent, désactivons-les tous les deux en appliquant nos deux sélecteurs restants :
+
+```html
+<div class="container">
+    <div class="btn btn--disabled">Solid Button</div>
+    <div class="btn btn--outline btn--disabled">Outline Button</div>
+</div>
+```
+
+![Image d'un bouton vide et d'un bouton rempli désactivés](https://user.oc-static.com/upload/2019/10/22/15717523887269_image5.png)
+
+Un bouton vide et un bouton rempli désactivés
+
+Disons que vous voulez que votre premier bouton ait un fond transparent et un contour, comme le second. Tout ce que vous avez à
+faire, c’est appliquer le modificateur concerné :
+
+```html
+<div class="container">
+    <div class="btn btn--disabled btn--outline">Solid Button</div>
+    <div class="btn btn--outline btn--disabled">Outline Button</div>
+</div>
+```
+
+![Images de boutons avec un fond transparent](https://user.oc-static.com/upload/2019/10/22/15717524348464_image1.png)
+
+Des boutons avec un fond transparent
+
+Grâce à la **spécificité accrue** de la combinaison détouré/désactivé, ajouter la même classe dans deux situations différentes
+produit deux résultats différents mais prévisibles. Pas besoin de vous soucier de retenir tout un tas de sélecteurs très
+spécifiques, ni de vous inquiéter du fait que si vous supprimez un modificateur, un autre risque d’avoir un comportement
+imprévisible.
+
+En utilisant la spécificité accrue seulement là où c’est nécessaire, vous pouvez créer un système de sélecteurs qui est non
+seulement propre et maintenable, mais aussi stable et prévisible.
+
+### En résumé
+
+Pas de panique si votre cerveau frise la surchauffe. Ça veut dire que vous êtes en train d’apprendre. Et pas qu’un peu ! Nous
+avons branché votre cerveau sur la matrice et vous venez de télécharger l’équivalent de l’art du kung fu en matière de CSS.
+
+Focalisez-vous plutôt sur les points clé :
+- **les incohérences de spécificité** entre différents sélecteurs créeront des bugs et des comportements imprévisibles ;
+- utilisez **les esperluettes pour un nesting** efficace dans Sass sans froisser les principes BEM ;
+- utilisez le nesting et la spécificité pour créer **un système de sélecteurs maintenable** dans Sass.
+
+_Et maintenant, revenons sur tout ce que vous avez appris avec le quiz de fin de section ! Une fois que vous avez fini de réviser,
+je vous retrouve dans la section suivante et nous apprendrons encore des tas de trucs Sass magiques._
+
+-----
+
+## Quiz : Structurez et organisez votre code
+
+[Structurez et organisez votre code - OpenClassrooms](https://openclassrooms.com/fr/courses/6106181-simplifiez-vous-le-css-avec-sass/exercises/3705)
+
+#### Compétences évaluées
+
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-checkbox" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#00b341" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <polyline points="9 11 12 14 20 6" />
+  <path d="M20 12v6a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h9" />
+</svg> Structurer et organiser son code
+
+-----
+
+#### Description
+
+À vous de jouer en répondant aux questions de ce quiz !
+
+Bonne chance !
+
+#### Question 1 : Quelle est la bonne façon de nommer un modificateur ?
+    
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle-check" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#7bc62d" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M9 12l2 2l4 -4" />
+</svg>
+
+```scss
+.block--modifier {...}
+```
+
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg>
+
+```scss
+.block__modifier {...}
+```
+
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg>
+
+```scss
+.block .modifier {...}
+```
+
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg>
+
+```scss
+.block-modifier {...}
+```
+
+*Lorsque vous nommez vos modificateurs, vous utilisez toujours le nom du bloc ou de l’élément modifié, suivi de deux tirets puis
+de la façon dont vous le modifiez. Pour nommer un modificateur qui passe le fond du `.btn` en vert, vous écrivez donc :
+`.btn--green`*
+
+-----
+
+#### Question 2 : Avec le HTML suivant :
+
+```html
+<div id="header" class="header">
+    Header Content!
+</div>
+```
+
+**et le CSS suivant :**
+
+```scss
+#header {
+    background-color: blue;
+}
+
+.header {
+    background-color: green;
+}
+```
+
+**de quelle couleur sera le fond de la `<div>` ?**
+    
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle-check" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#7bc62d" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M9 12l2 2l4 -4" />
+</svg> Bleue (blue)<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> Verte (green)<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> Les deux<br />
+<br />
+
+*Le sélecteur `#header` a une plus forte spécificité car les id ont une plus haute spécificité que les sélecteurs classes.*
+
+*Regardez, `#header` a une spécificité de :*
+
+| Inline | ID | Class | Element |
+|:------:|:--:|:-----:|:-------:|
+| 0 | 1 | 0 | 0 |
+
+*et le sélecteur `.header` a une spécificité de :*
+
+| Inline | ID | Class | Element |
+|:------:|:--:|:-----:|:-------:|
+| 0 | 0 | 1 | 0 |
+
+*Quand il y a des propriétés CSS contradictoires entre deux sélecteurs, le navigateur passe en revue le tableau de spécificité de
+gauche à droite, jusqu’à ce qu’il trouve un gagnant. Dans notre cas, `#header` l’emporte avec un score de 1 contre 0 pour
+`.header`. Le navigateur utilisera donc la couleur de `#header`, soit blue !*
+
+-----
+
+#### Question 3 : Un sélecteur nommé `.recipe-card` appartient à quelle catégorie BEM ?
+
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle-check" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#7bc62d" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M9 12l2 2l4 -4" />
+</svg> Bloc<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> Élément<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> Modificateur<br />
+<br />
+
+*Les noms que vous donnez aux blocs doivent décrire leur fonction ou rôle dans le site, par exemple une recette de cuisine comme
+ici. Notre sélecteur ne contient pas de double underscore : ce n’est pas un élément ; pas de double tiret : ce n’est pas un
+modificateur ; il s’agit donc d’un sélecteur de bloc !*
+
+-----
+
+#### Question 4 : Parmi les extraits suivants, lesquels utilisent le nesting ?
+
+*Attention, plusieurs réponses sont possibles.*
+
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-square" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <rect x="4" y="4" width="16" height="16" rx="2" />
+</svg> 
+
+```scss
+.block {
+    background-color: #15dea5;
+}
+.div {
+    margin: 1rem;
+}
+```
+
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-checkbox" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#00b341" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <polyline points="9 11 12 14 20 6" />
+  <path d="M20 12v6a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h9" />
+</svg> 
+
+```scss
+.block {
+    background-color: #15dea5;
+    div {
+        margin: 1rem;
+    }
+}
+```
+
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-checkbox" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#00b341" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <polyline points="9 11 12 14 20 6" />
+  <path d="M20 12v6a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h9" />
+</svg> 
+
+```scss
+.block {
+    background-color: #15dea5;
+    &__element{
+        background-color: #de15d0;
+    }
+}
+```
+
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-square" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <rect x="4" y="4" width="16" height="16" rx="2" />
+</svg> 
+
+```scss
+.block {
+    background-color: #15dea5;
+}
+.block div {
+    margin: 1rem;
+}
+```
+
+*Le nesting est le fait d’imbriquer les sélecteurs dans d’autres sélecteurs entre des accolades en utilisant des combinateurs ou
+une esperluette, et ainsi de reproduire une architecture en CSS comme en HTML.*
+
+-----
+
+#### Question 5 : En partant avec ce HTML :
+
+```html
+<div class="header">
+    <div class="content">
+        <p>Je suis un paragraphe de la div content et mon background est blanc</p>
+    </div>
+</div>
+```
+
+et avec le CSS suivant :
+
+```scss
+.header {
+    background-color: red;
+}
+```
+
+**quels combinateurs pouvez-vous appliquer à `.header` pour faire en sorte que le background de `.content` soit en rouge ?**
+
+*Attention, plusieurs réponses sont possibles.*
+
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-checkbox" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#00b341" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <polyline points="9 11 12 14 20 6" />
+  <path d="M20 12v6a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h9" />
+</svg> Descendant<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-checkbox" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#00b341" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <polyline points="9 11 12 14 20 6" />
+  <path d="M20 12v6a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h9" />
+</svg> Parent > Enfant<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-square" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <rect x="4" y="4" width="16" height="16" rx="2" />
+</svg> Adjacent<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-square" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <rect x="4" y="4" width="16" height="16" rx="2" />
+</svg> Parent<br />
+<br />
+
+*Pour obtenir un  background de couleur rouge pour `.content` juste en appliquant un combinateur à `.header`, vous pouvez
+utiliser le combinateur descendant :*
+
+```scss
+.header .content {
+    background-color: red;
+}
+```
+
+*et parent enfant :*
+
+```scss
+.header >.content {
+    background-color: red;
+}
+```
+
+-----
+
+#### Question 6 : Dans Sass, sous quelle forme se compile le symbole esperluette (&) ?
+    
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> L’esperluette (&)<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle-check" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#7bc62d" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M9 12l2 2l4 -4" />
+</svg> Le combinateur frère adjacent<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> Le parent du sélecteur dans la hiérarchie<br />
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> Le sélecteur racine dans la hiérarchie<br />
+<br />
+
+*Dans Sass, l’esperluette se compile en tant que sélecteur parent, ce qui facilite la construction et la maintenance de
+nomenclatures complexes telles que BEM, ou de pseudosélecteurs tels que `:hover`.*
+
+-----
+
+#### Question 7 :
+
+```scss
+.block {
+    &__element {
+        background-color: #15dea5;
+    }
+}
+```
+
+**Le morceau de Sass ci-dessus serait compilé en CSS sous laquelle de ces formes ?**
+
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg>
+
+```scss
+.block&__element {
+    background-color: #15dea5;
+}
+```
+
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle-check" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#7bc62d" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M9 12l2 2l4 -4" />
+</svg> 
+
+```scss
+.block__element {
+    background-color: #15dea5;
+}
+```
+
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg>
+
+```scss
+.block .__element {s
+    background-color: #15dea5;
+}
+```
+
+*Quand vous faites du nesting dans Sass, l’esperluette est remplacée par le nom du parent quand elle est compilée en CSS. Le
+préfixe ‘&’ dans le bout de code de la question est donc remplacé par `.block` une fois compilé, ce qui crée un sélecteur nommé
+`.block__element`.*
+
+-----
+
+#### Question 8 : Lequel de ces morceaux de Sass génère le sélecteur CSS le plus spécifique ?
+
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg>
+
+
+```scss
+.block {
+    &__element {
+        color: #fff;
+    }
+}
+```
+
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle-check" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#7bc62d" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M9 12l2 2l4 -4" />
+</svg> 
+
+```scss
+.block {
+    .element {
+        color: #fff;
+    }
+}
+```
+
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg>
+
+```scss
+.block {
+    &__element {
+        div {
+            color: #fff;
+        }
+    }
+}
+```
+
+*Le sélecteur de la première réponse se compilerait en `.block__element {...}` et aurait une spécificité de :
+
+| Inline | ID | Class | Element |
+|:------:|:--:|:-----:|:-------:|
+| 0 | 0 | 1 | 0 |
+
+*Le sélecteur de la deuxième réponse se compilerait en `.block .element {...}` et aurait une spécificité de :
+
+| Inline | ID | Class | Element |
+|:------:|:--:|:-----:|:-------:|
+| 0 | 0 | 2 | 0 |
+
+*Le sélecteur de la troisième réponse se compilerait en `.block__element div {...}` et aurait une spécificité de :
+
+| Inline | ID | Class | Element |
+|:------:|:--:|:-----:|:-------:|
+| 0 | 0 | 1 | 1 |
+
+*La deuxième réponse a la spécificité la plus élevée des trois : elle a un score de classe de 2, contre 1 pour les première et
+troisième réponses.*
+
+*Quand on procède au nesting sans esperluette ni autre combinateur CSS, le CSS se compile sous forme de combinateur descendant,
+ce qui concatène le nom du parent avant le nom qu’on a donné au sélecteur imbriqué ; ce qui n’est pas le cas quand on utilise une
+esperluette.*
+
+-----
+
+#### Question 9 : Lequel de ces bouts de Sass donnerait le code CSS suivant :
+
+```scss
+.block {
+    background-color: #15dea5;
+}
+.block__element {
+    background-color: #de15d0;
+}
+```
+
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg>
+
+```scss
+.block {
+    background-color: #15dea5;
+    &-element {
+        background-color: #de15d0;
+    }
+}
+```
+
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg>
+
+```scss
+.block {
+    background-color: #15dea5;
+    .element {
+        background-color: #de15d0;
+    }
+}
+```
+
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg>
+
+```scss
+.block {
+    background-color: #15dea5;
+    __element {
+        background-color: #de15d0;
+    }
+}
+```
+
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle-check" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#7bc62d" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M9 12l2 2l4 -4" />
+</svg> 
+
+```scss
+.block {
+    background-color: #15dea5;
+    &__element {
+        background-color: #de15d0;
+    }
+}
+```
+
+*Pour obtenir un sélecteur imbriqué qui se compile en `.block__element`, vous devez avoir un sélecteur parent nommé `.block` et
+un sélecteur enfant qui utilise l’esperluette pour se relier au nom du parent en utilisant le préfixe requis, `__element`.*
+
+*La réponse n° 1 se compilerait ainsi :*
+
+```scss
+.block {
+    background-color: #15dea5;
+}
+.block-element {
+    background-color: #de15d0;
+}
+```
+
+*La réponse n° 2 se compilerait ainsi :*
+
+```scss
+.block {
+    background-color: #15dea5;
+}
+.block .element {
+    background-color: #de15d0;
+}
+```
+
+*La réponse n° 3 se compilerait en un CSS non valide :*
+
+```scss
+.block {
+    background-color: #15dea5;
+}
+.block __element {
+    background-color: #de15d0;
+}
+```
+
+*Et la réponse n° 4 se compilerait sous la forme indiquée dans la question :*
+
+```scss
+.block {
+    background-color: #15dea5;
+}
+.block__element {
+    background-color: #de15d0;
+}
+```
+
+*La syntaxe `.scss` de Sass est basée sur la syntaxe standardisée de CSS. Les fonctionnalités avancées offertes par Sass telles
+que le nesting nécessitent des manières supplémentaires de mettre en forme le code. Mais du code CSS valide reste parfaitement
+valide en `.scss`.*
+
+-----
+
+#### Question 10 : Vous voulez créer deux nouveaux boutons, un dont les bords seront ronds et un dont la couleur de fond est #185730, tout en conservant les propriétés de votre premier bouton ci-dessous.
+
+```scss
+.btn {
+    background-color: #001534;
+    color: #fff;
+    padding: 1.5rem;
+}
+```
+
+**En appliquant le principe du DRY, quel résultat pourrait-on obtenir ?**
+
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> 
+
+```scss
+.btn-first {
+    background-color: #001534;
+    color: #fff;
+    padding: 1.5rem;
+}
+.btn-green {
+    background-color: #185730;
+    color: #fff;
+    padding: 1.5rem;
+}
+.btn-rounded {
+    background-color: #001534;
+    color: #fff;
+    padding: 1.5rem;
+    border-radius: 25px;
+}
+```
+
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+</svg> 
+
+```scss
+.btn {
+    background-color: #001534;
+    color: #fff;
+    padding: 1.5rem;
+    border-radius: 25px;
+}
+.btn-green {
+    background-color: #185730;
+}
+```
+
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle-check" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#7bc62d" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M9 12l2 2l4 -4" />
+</svg> 
+
+```scss
+.btn {
+    background-color: #001534;
+    color: #fff;
+    padding: 1.5rem;
+}
+.btn-green {
+    background-color: #185730;
+}
+.btn-rounded {
+    border-radius: 25px;
+}
+```
+
+*Le principe du DRY est de ne pas se répéter, afin d’avoir un code facilement maintenable et modulable.*
+
+*Dans cet exercice, il vous faut avoir un bouton que vous utiliserez comme base pour vos prochains boutons, et ainsi créer une
+classe seulement pour une propriété spécifique.*
+
+*La première réponse vous permet d’avoir trois boutons comme la consigne le demande, mais elle contient beaucoup trop de
+répétitions : les propriétés de votre bouton de base sont répétées plusieurs fois dans tous les sélecteurs.*
+
+```scss
+.btn-first {
+    background-color: #001534;
+    color: #fff;
+    padding: 1.5rem;
+}
+.btn-green {
+    background-color: #185730;
+    color: #fff;
+    padding: 1.5rem;
+}
+.btn-rounded {
+    background-color: #001534;
+    color: #fff;
+    padding: 1.5rem;
+    border-radius: 25px;
+}
+```
+
+*Pour la deuxième, vous êtes sur la bonne voie : vous avez un bouton de base, et une classe qui rend votre bouton vert ; mais
+votre bouton de base rendra tous vos boutons avec des bords carrés, alors qu’on vous demande un bouton aux bords arrondis.*
+
+```scss
+.btn {
+    background-color: #001534;
+    color: #fff;
+    padding: 1.5rem;
+    border-radius: 25px;
+}
+.btn-green {
+    background-color: #185730;
+}
+```
+
+*La troisième réponse est la bonne. Vous avez un bouton de base, puis une classe pour chacune des propriétés que vous pourrez
+appliquer dans votre HTML à vos boutons. Pas de répétitions, et un code maintenable facilement !*
+
+```scss
+.btn {
+    background-color: #001534;
+    color: #fff;
+    padding: 1.5rem;
+}
+.btn-green {
+    background-color: #185730;
+}
+.btn-rounded {
+    border-radius: 25px;
+}
+```
+
