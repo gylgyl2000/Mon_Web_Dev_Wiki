@@ -1,0 +1,290 @@
+---
+sidebar_position: 2
+---
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+import { Vimeo } from 'mdx-embed';
+
+# Fièvre du porc-épic
+
+[S'entraîner avec l'exercice "Porcupine Fever" sur les sujets suivants : Boucles](https://www.codingame.com/training/medium/porcupine-fever)
+
+![](../images/default_banner.jpg)
+
+## Énoncé
+
+### Objectif
+
+Vous avez pour passe-temps de visiter une ferme de porcs-épics. Les porcs-épics sont élevés dans des cages et nourris régulièrement. Ils
+sont généralement en bonne santé et ont été l'un des rongeurs ayant la plus longue durée de vie, mais **certains de ces porcs-épics sont
+malades**.
+
+Chaque année, chaque porc-épic qui était malade l'année dernière **rendra malade 2 porcs-épics sains** dans la même cage, puis **mourra**.
+
+Simulez pour trouver le **nombre total** de porcs-épics survivants après chaque année. Arrêtez si tous les porcs-épics sont morts (ne
+répétez pas les **"0"** après la première fois).
+
+### Entrée
+
+**Ligne 1** : Entier `N`, le nombre de cages.<br />
+**Ligne 2** : Entier `Y`, le nombre d'années.<br />
+**Les N lignes suivantes** : trois nombres entiers séparés par des espaces `S`, `H` et `A`, les quantités de porcs-épics malades, sains et
+vivants dans la cage respective.
+
+### Sortie
+
+**`Y` ou moins de lignes** d'entiers de porcs-épics vivants.<br />
+La ligne 1 correspond à l'année 1, et non à l'année 0. Tous les porcs-épics malades meurent en premier.
+
+### Contraintes
+
+0 ≤ `N` < 500<br />
+0 < `Y` < 100<br />
+0 ≤ `S`, `H`, `A` < 10 000 000<br />
+`S` + `H` est `A`
+
+### Exemple
+
+| Entrée | Sortie |
+|--------|--------|
+| 2<br />3<br />2 118 120<br />0 50 50 | 168<br />164<br />156<br /><br />
+
+```javascript
+/**
+ * Le code généré automatiquement ci-dessous vise à vous aider à analyser
+ * l'entrée standard selon l'énoncé du problème.
+ **/
+let cage = [];
+let alive = 0;
+
+const N = parseInt(readline());
+const Y = parseInt(readline());
+for (let i = 0; i < N; i++) {
+    var inputs = readline().split(' ');
+    const S = parseInt(inputs[0]);
+    const H = parseInt(inputs[1]);
+    const A = parseInt(inputs[2]);
+    cage.push({sick: S, healthy: H, alive: A});
+}
+for (let i = 0; i < Y; i++) {
+    // Écrivez une réponse en utilisant console.log()
+    // Pour déboguer : console.error('Messages de débogage...');
+    for (let j = 0; j < cage.length; j++) {
+        cage[j].alive -= cage[j].sick;
+        cage[j].healthy -= cage[j].sick * 2;
+        cage[j].sick = cage[j].sick * 2;
+        if (cage[j].alive > 0) {
+            alive += cage[j].alive;
+        }
+    }
+    if( alive === 0 ) {
+        console.log(0);
+        break;
+    } else {
+        console.log(alive);
+    }
+    alive = 0;
+}
+```
+```javascript
+//variant #1:
+const N = parseInt(readline());
+const Y = parseInt(readline());
+const dic = {};
+
+for (let i = 0; i < N; i++) {
+    var inputs = readline().split(' ').map(Number);
+    const S = inputs[0];
+    const H = inputs[1];
+    const A = inputs[2];
+    dic[i] = {}
+    dic[i].S = S
+    dic[i].H = H
+    dic[i].A = A
+}
+
+let yearH = 0;
+
+for (let i = 0; i < Y; i++) {
+    yearH = 0;
+    for (let j = 0; j < N; j++){
+        yearH += dic[j].H
+        dic[j].H -= dic[j].S * 2;
+        if(dic[j].H < 0) dic[j].H = 0
+        dic[j].A -= dic[j].S;
+        if(dic[j].A < 0) dic[j].A = 0
+        dic[j].S = dic[j].A - dic[j].H;
+    }
+    console.log( yearH )
+    if(yearH === 0) break;
+}
+
+//variant #3:
+const N = parseInt(readline());
+const Y = parseInt(readline());
+var cages = [];
+for (let i = 0; i < N; i++) {
+    var inputs = readline().split(' ');
+    const S = parseInt(inputs[0]);
+    const H = parseInt(inputs[1]);
+    const A = parseInt(inputs[2]);
+    cages.push([S, H, A]);
+}
+for (let i = 0; i < Y; i++) {
+    var total = 0;
+    for (var c in cages) {
+        if (cages[c][1] - 2 * cages[c][0] < 0) {
+            if (cages[c][1] > 0) {
+                cages[c][0] = cages[c][1];
+                cages[c][1] = 0;
+            } else {
+                cages[c][0] = 0;
+            }
+        } else {
+            cages[c][1] -= 2 * cages[c][0];
+            cages[c][0] *= 2;
+        }
+        cages[c][2] = cages[c][0] + cages[c][1];
+        total += cages[c][2];
+    }
+    console.log(total);
+    if (total === 0) {
+        break;
+    }
+}
+
+//variant #4:
+l = readline
+Y = +l(C = +l(t = 1))
+for(p=[...Array(C)].map(_=>l().split` `); t&&Y--; p=p.map(x=>[y=x[0]*2,(p=x[1]-y)< 0 ? 0 : p]))
+    console.log(t=p.reduce((a,b)=>+b[1]+a,0))
+
+
+//variant #5:
+const [C, Y] = [+readline(), +readline()];
+const cages = [...Array(C)].map(_ => readline().split(' ')).map(s => ({ sick: +s[0], healthy: +s[1], alive: +s[2] }));
+
+for (let y = 0; y < Y; y++) {
+    cages.filter(cage => cage.alive > 0).forEach(cage => {
+        cage.alive -= cage.sick;
+        cage.sick = Math.min(2 * cage.sick, cage.healthy);
+        cage.healthy -= cage.sick;
+    });
+    const total = cages.reduce((p, c) => p + c.alive, 0);
+    console.log(total);
+    if (total < 1) break;
+}
+
+//variant #6:
+class Cage {
+    static parse(text) {
+        let [sick, healthy] = text.split(' ').map(x => parseInt(x));
+        return new Cage(healthy, sick);
+    }
+
+    constructor(healthy, sick) {
+        this.healthy = healthy;
+        this.sick = sick;
+    }
+
+    step() {
+        this.sick = Math.min(this.healthy, 2 * this.sick);
+        this.healthy -= this.sick;
+    }
+
+    total() {
+        return this.healthy + this.sick;
+    }
+}
+
+const CAGES = parseInt(readline());
+const YEARS = parseInt(readline());
+
+let cages = Array(CAGES).fill().map(() => readline()).map(Cage.parse);
+for (let y = 1; y <= YEARS; y++) {
+    cages.forEach(cage => cage.step());
+
+    let total = cages.map(cage => cage.total()).reduce((a, b) => a + b, 0);
+    print(total);
+    if (total == 0) {
+        break;
+    }
+}
+
+//variant #7:
+let cages = []
+
+const N = parseInt(readline());
+const Y = parseInt(readline());
+for (let i = 0; i < N; i++) {
+    var inputs = readline().split(' ');
+    const S = parseInt(inputs[0]);
+    const H = parseInt(inputs[1]);
+    const A = parseInt(inputs[2]);
+    cages.push({S,H})
+}
+
+for (let i = 0; i < Y; i++) {
+    let alivePorcupines = 0;
+    cages.forEach((cage, index) => {
+        const newlySick = cage.S * 2;
+        cages[index] = { S: newlySick, H: Math.max(cage.H - newlySick, 0) }
+        alivePorcupines += cage.H
+    });
+    console.log(alivePorcupines);
+    if (!alivePorcupines) break;
+}
+```
+
+```javascript
+/**
+ * Auto-generated code below aims at helping you parse
+ * the standard input according to the problem statement.
+ **/
+
+//amount of cage
+const N = parseInt(readline());
+//number of year
+const Y = parseInt(readline());
+var farm = [];
+for (let i = 0; i < N; i++) {
+    var inputs = readline().split(' ');
+    const S = parseInt(inputs[0]);
+    const H = parseInt(inputs[1]);
+    const A = parseInt(inputs[2]);
+    var cage = [S, H, A];
+    farm.push(cage);
+}
+
+for (let i = 0; i < Y; i++) {
+    //initialise une variable pour compter le total des cages
+ 
+    //Chaque année on met a jour pour chaque cage
+    var test = farm.map(cage => {
+        //console.log("debut d'année  : "  + cage)
+        //En fin d'année, le double est contaminé et les contaminé du début meurent
+        sick = cage[0];
+        cage[0] = sick * 2;
+        //Si le nombre de malades est plus grand que le nombre sains on met le max dedans
+        if(cage[0]>cage[1]){
+            cage[0]=cage[1]
+        }
+        //Le nombre en bonne santé est recalculé
+        cage[1] -= cage[0];
+        cage[1] = cage[1]<0?0:cage[1]
+        //Le nombre total en bonne santé est recalculé
+        cage[2] = cage[0] + cage[1]
+        //console.log("fin d'année  : "  + cage)
+        return cage[2];
+
+    })
+
+
+    reducer = (acc, currentValue) => acc + currentValue;
+    var total = test.reduce(reducer,0);
+    console.log(total);
+    if(total==0){
+        break;
+    }
+}
+```

@@ -1,0 +1,341 @@
+---
+sidebar_position: 5
+---
+
+import { MDXProvider } from '@mdx-js/react';
+import { CodePen, Gist } from 'mdx-embed';
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+
+# Projets API et microservices
+
+## Introduction aux Projets API et microservices
+
+[APIs and Microservices Projects | freeCodeCamp.org](https://www.freecodecamp.org/learn/apis-and-microservices/#apis-and-microservices-projects)
+
+Vous avez déjà travaillé avec des API, mais maintenant que vous connaissez npm, Node, Express, MongoDB
+et Mongoose, il est temps de créer les vôtres. Tirez parti de tout ce que vous avez appris jusqu'à
+présent pour créer 5 microservices différents, qui sont des applications plus petites dont la portée
+est limitée.
+
+Après les avoir créés, vous disposerez de 5 API de microservices intéressantes que vous pourrez montrer
+à vos amis, à votre famille et à des employeurs potentiels. Oh, et vous aurez également une nouvelle
+certification des API et des microservices.
+
+-----
+
+
+
+## 1. Microservice d'horodatage
+
+[APIs and Microservices Projects - Timestamp Microservice | Learn | freeCodeCamp.org](https://www.freecodecamp.org/learn/apis-and-microservices/apis-and-microservices-projects/timestamp-microservice)
+
+Créez une application JavaScript full stack qui est fonctionnellement similaire à celle-ci :
+https://timestamp-microservice.freecodecamp.rocks/. Travailler sur ce projet vous impliquera
+d'écrire votre code en utilisant l'une des méthodes suivantes :
+- Clonez [ce dépôt GitHub](https://github.com/freeCodeCamp/boilerplate-project-timestamp/) et
+terminez votre projet localement.
+- Utilisez [notre projet de démarrage repl.it](https://repl.it/github/freeCodeCamp/boilerplate-project-timestamp)
+pour terminer votre projet.
+- Utilisez un constructeur de site de votre choix pour terminer le projet. Assurez-vous d'incorporer
+tous les fichiers de notre dépôt GitHub.
+
+Lorsque vous avez terminé, assurez-vous qu'une démo fonctionnelle de votre projet est hébergée dans
+un endroit public. Envoyez-lui ensuite l'URL dans le champ Lien `Solution Link`. Vous pouvez
+également soumettre un lien vers le code source de vos projets dans le champ `GitHub Link`.
+
+**#1 :** Vous devez fournir votre propre projet, pas l'exemple d'URL.
+
+**#2 :** Une demande à `/api/timestamp/:date?` avec une date valide doit retourner un objet JSON avec une
+clé `unix` qui est un horodatage Unix de la date d'entrée en millisecondes.
+
+**#3 :** Une demande à `/api/timestamp/:date?` avec une date valide doit renvoyer un objet JSON avec une
+clé `utc` qui est une chaîne de la date d'entrée au format : `Thu, 01 Jan 1970 00:00:00 GMT`.
+
+**#4 :** Une requête à `/api/timestamp/1451001600000` doit renvoyer `{ unix: 1451001600000, utc: 'Fri,
+25 Dec 2015 00:00:00 GMT' }`.
+
+**#5 :** Votre projet peut gérer des dates qui peuvent être analysées avec succès par `new Date(date_string)`.
+
+**#6 :** Si la chaîne de date d'entrée n'est pas valide, l'API renvoie un objet ayant la structure
+`{ error: 'Invalid Date' }`.
+
+**#7 :** Un paramètre de date vide doit renvoyer l'heure actuelle dans un objet JSON avec une clé `unix`.
+
+**#8 :** Un paramètre de date vide doit renvoyer l'heure actuelle dans un objet JSON avec une clé `utc`.
+
+#### Des ressources :
+
+- [freeCodeCamp Challenge Guide: Timestamp Microservice - Guide - The freeCodeCamp Forum](https://forum.freecodecamp.org/t/freecodecamp-challenge-guide-timestamp-microservice/301508)
+- [Date - JavaScript | MDN](https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Global_Objects/Date)
+- [Date() constructor - JavaScript | MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/Date)
+- [Cross-origin resource sharing — Wikipédia](https://fr.wikipedia.org/wiki/Cross-origin_resource_sharing)
+- [ishandeveloper/Timestamp-Microservice-API](https://github.com/ishandeveloper/Timestamp-Microservice-API)
+- [La différence entre microservice et API - Ludovic TERRAL - LIXTEC](https://lixtec.fr/la-difference-entre-microservice-et-api/)
+
+
+<iframe width="100%" height="600px" src="https://boilerplate-project-timestamp.gylgyl2000.repl.co"></iframe>
+
+[https://boilerplate-project-timestamp.gylgyl2000.repl.co](https://boilerplate-project-timestamp.gylgyl2000.repl.co)
+
+
+<iframe width="100%" height="600px" src="https://microservice-api-d-horodatage.gylgyl2000.repl.co/"></iframe>
+
+[https://microservice-api-d-horodatage.gylgyl2000.repl.co](https://microservice-api-d-horodatage.gylgyl2000.repl.co)
+
+-----
+
+
+
+## 2. Microservice d'analyseur d'en-tête de requête
+
+[APIs and Microservices Projects - Request Header Parser Microservice | Learn | freeCodeCamp.org](https://www.freecodecamp.org/learn/apis-and-microservices/apis-and-microservices-projects/request-header-parser-microservice)
+
+Créez une application JavaScript full stack qui est fonctionnellement similaire à celle-ci :
+https://request-header-parser-microservice.freecodecamp.rocks/. Travailler sur ce projet vous impliquera
+d'écrire votre code en utilisant l'une des méthodes suivantes :
+- Clonez [ce dépôt GitHub](https://github.com/freeCodeCamp/boilerplate-project-headerparser/)
+et terminez votre projet localement.
+- Utilisez [notre projet de démarrage repl.it](https://repl.it/github/freeCodeCamp/boilerplate-project-headerparser)
+pour terminer votre projet.
+- Utilisez un constructeur de site de votre choix pour terminer le projet. Assurez-vous d'incorporer tous les
+fichiers de notre dépôt GitHub.
+
+Lorsque vous avez terminé, assurez-vous qu'une démo fonctionnelle de votre projet est hébergée dans un endroit
+public. Envoyez-lui ensuite l'URL dans le champ `Solution Link`. Vous pouvez également soumettre un lien vers
+le code source de votre projet dans le champ `GitHub Link`.
+
+**#1 :** Vous devez fournir votre propre projet, pas l'exemple d'URL.
+
+**#2 :** Une requête à `/api/whoami` doit renvoyer un objet JSON avec votre adresse IP dans la clé `ipaddress`.
+
+**#3 :** Une requête à `/api/whoami` doit renvoyer un objet JSON avec votre langue préférée dans la clé `language`.
+
+**#4 :** Une requête à `/api/whoami` doit renvoyer un objet JSON avec votre logiciel dans la clé `software`.
+
+#### Des ressources :
+- [Suggested Solution for Request Header Parser Microservice - Contributors - The freeCodeCamp Forum](https://forum.freecodecamp.org/t/suggested-solution-for-request-header-parser-microservice/435492)
+- [FCC: Request Header Parser Microservice – Eirin Gonzales](https://theproactivedeveloper.wordpress.com/2017/10/31/fcc-request-header-parser-microservice/)
+- [freeCodeCamp Project: Request Header Parser Microservice – Diarmuid Murphy](http://diarmuidmurphy.com/request-header-parser-microservice/)
+- [Create a Request Header Parser Microservice in Node.js – StartJS](https://startjs.net/2016/10/28/request-header-parser-microservice-node/)
+- [Request Header Parser Microservice Retrospective](http://mattleonard.io/blog/RequestHeader/)
+
+
+<iframe width="100%" height="600px" src="https://boilerplate-project-headerparser.gylgyl2000.repl.co"></iframe>
+
+[https://boilerplate-project-headerparser.gylgyl2000.repl.co](https://boilerplate-project-headerparser.gylgyl2000.repl.co)
+
+
+<iframe width="100%" height="600px" src="https://microservice-api-d-analyseur-d-en-tete-de-requete.gylgyl2000.repl.co"></iframe>
+
+[https://microservice-api-d-analyseur-d-en-tete-de-requete.gylgyl2000.repl.co](https://microservice-api-d-analyseur-d-en-tete-de-requete.gylgyl2000.repl.co)
+
+-----
+
+
+
+## 3. Microservice de réducteur d'URL
+
+[APIs and Microservices Projects - URL Shortener Microservice | Learn | freeCodeCamp.org](https://www.freecodecamp.org/learn/apis-and-microservices/apis-and-microservices-projects/url-shortener-microservice)
+
+Créez une application JavaScript full stack qui est fonctionnellement similaire à celle-ci :
+https://url-shortener-microservice.freecodecamp.rocks/. Travailler sur ce projet vous impliquera
+d'écrire votre code en utilisant l'une des méthodes suivantes :
+- Clonez [ce dépôt GitHub](https://github.com/freeCodeCamp/boilerplate-project-urlshortener/)
+et terminez votre projet localement.
+- Utilisez [notre projet de démarrage repl.it](https://repl.it/github/freeCodeCamp/boilerplate-project-urlshortener)
+pour terminer votre projet.
+- Utilisez un constructeur de site de votre choix pour terminer le projet. Assurez-vous d'incorporer
+tous les fichiers de notre dépôt GitHub.
+
+Lorsque vous avez terminé, assurez-vous qu'une démo fonctionnelle de votre projet est hébergée dans un
+endroit public. Envoyez-lui ensuite l'URL dans le champ `Solution Link`. Vous pouvez également soumettre
+un lien vers le code source de vos projets dans le champ `GitHub Link`.
+
+**CONSEIL :** n'oubliez pas d'utiliser un middleware d'analyse du corps pour gérer les requêtes POST.
+En outre, vous pouvez utiliser la fonction `dns.lookup(host, cb)` du module principal `dns` pour vérifier
+une URL soumise.
+
+**#1 :** Vous devez fournir votre propre projet, pas l'exemple d'URL.
+
+**#2 :** Vous pouvez POST une URL vers `/api/shorturl/new` et obtenir une réponse JSON avec les propriétés
+`original_url` et `short_url`. Voici un exemple : `{ original_url: 'https://freeCodeCamp.org', short_url: 1 }`.
+
+**#3 :** Lorsque vous visitez `/api/shorturl/<short_url>`, vous serez redirigé vers l'URL d'origine.
+
+**#4 :** Si vous transmettez une URL non valide qui ne respecte pas le format `http://www.example.com` valide,
+la réponse JSON contiendra `{ error: 'invalid url' }`.
+
+:::note guide : Microservice de réducteur d'URL
+### Explication du problème
+
+[freeCodeCamp Challenge Guide: URL Shortener Microservice - Guide - The freeCodeCamp Forum](https://forum.freecodecamp.org/t/freecodecamp-challenge-guide-url-shortener-microservice/301509)
+
+Les principales fonctionnalités pour réaliser cet exercice sont la création et la récupération d'URL à partir
+de la base de données.
+
+### Conseils
+#### Créer une URL courte
+
+- Connectez-vous à votre instance de base de données.<br />
+**Remarque :** Il est important de vérifier l'état de votre connexion Mongoose avant de vous plonger dans le
+problème, juste pour vérifier si tout va bien avec la configuration de votre base de données. Cela devrait aider :
+`mongoose.connection.readyState`.
+- Recevez une requête POST contenant une URL à enregistrer sur la base de données.
+- Vérifiez s'il s'agit d'une URL valide à l'aide de `dns.lookup(url, callback)`.
+    - N'oubliez pas que vous devez importer le module DNS avec les fichiers requis.
+- Générez une sorte d'identifiant pour enregistrer votre URL d'origine dans la base de données.
+    - Un hachage SHA-1 peut être utilisé, ou même l'ID d'objet lors de l'enregistrement de l'élément.
+    - Il existe de nombreux exemples sur Internet sur la façon de générer une sorte d'identifiant, d'essayer de
+    l'explorer ou de créer le vôtre.
+    - Un exemple de ce à quoi cela devrait ressembler : `{'url': www.freecodecamp.org, 'hash': 'ef49fa8b4'}`.
+
+#### Récupération d'une URL courte
+
+- Recevez une requête GET contenant un identifiant utilisé pour trouver une URL stockée.
+- Essayez de trouver une URL enregistrée pour cet identifiant.
+- Redirigez l'utilisateur vers l'URL.<br />
+**Remarque :** La fonction `res.redirect(url)` a besoin que l'url donnée ait un protocole défini (http://, https://),
+ou elle la concaténera simplement en tant qu'extension de votre domaine actuel. Par exemple :<br />
+   - bonne URL : https://www.freecodecamp.org,
+   - mauvaise URL : www.freecodecamp.org.
+- N'oubliez pas de gérer les situations d'erreur avec une réponse appropriée comme, `res.json({'error':'invalid URL'});`
+:::
+
+#### Des ressources :
+- [DariaCode/url-shortener-microservice](https://github.com/DariaCode/url-shortener-microservice)
+- [FreeCodeCamp-APIs and Microservices — URL Shortener Microservice | by Barış Türe | Medium](https://baristure.medium.com/freecodecamp-apis-and-microservices-url-shortener-microservice-720951cb68db)
+
+
+
+
+<iframe width="100%" height="600px" src="https://boilerplate-project-urlshortener.gylgyl2000.repl.co"></iframe>
+
+[https://boilerplate-project-urlshortener.gylgyl2000.repl.co](https://boilerplate-project-urlshortener.gylgyl2000.repl.co)
+
+<iframe width="100%" height="600px" src="https://microservice-api-reducteur-d-url.gylgyl2000.repl.co"></iframe>
+
+[https://microservice-api-reducteur-d-url.gylgyl2000.repl.co](https://microservice-api-reducteur-d-url.gylgyl2000.repl.co)
+
+-----
+
+
+
+## 4. Suivi d'exercices
+
+[APIs and Microservices Projects - Exercise Tracker | Learn | freeCodeCamp.org](https://www.freecodecamp.org/learn/apis-and-microservices/apis-and-microservices-projects/exercise-tracker)
+
+Créez une application JavaScript full stack qui est fonctionnellement similaire à celle-ci :
+https://exercise-tracker.freecodecamp.rocks/. Travailler sur ce projet vous impliquera d'écrire votre code
+en utilisant l'une des méthodes suivantes :
+- Clonez [ce dépôt GitHub](https://github.com/freeCodeCamp/boilerplate-project-exercisetracker/) et terminez votre
+projet localement.
+- Utilisez [notre projet de démarrage repl.it](https://repl.it/github/freeCodeCamp/boilerplate-project-exercisetracker)
+pour terminer votre projet.
+- Utilisez un constructeur de site de votre choix pour terminer le projet. Assurez-vous d'incorporer tous les
+fichiers de notre dépôt GitHub.
+
+Lorsque vous avez terminé, assurez-vous qu'une démo fonctionnelle de votre projet est hébergée dans un endroit public.
+Envoyez-lui ensuite l'URL dans le champ `Solution Link`. Vous pouvez également soumettre un lien vers le code source
+de votre projet dans le champ `GitHub Link`.
+
+**#1 :** Vous devez fournir votre propre projet, pas l'exemple d'URL.
+
+**#2 :** Vous pouvez `POST` sur `/api/exercice/new-user` avec les données de formulaire `username` pour créer un nouvel
+utilisateur. La réponse retournée sera un objet avec les propriétés `username` et `_id`.
+
+**#3 :** Vous pouvez faire une requête `GET` à `api/exercice/users` pour obtenir un tableau de tous les utilisateurs.
+Chaque élément du tableau est un objet contenant `username et `_id` d'un utilisateur.
+
+**#4 :** Vous pouvez `POST` dans `/api/exercice/add` avec les données de formulaire `userId=_id`, `description`,
+`duration` et éventuellement `date`. Si aucune date n'est fournie, la date actuelle sera utilisée. La réponse renvoyée
+sera l'objet utilisateur avec les champs d'exercice ajoutés.
+
+**#5 :** Vous pouvez faire une requête `GET` à `/api/exercice/log` avec un paramètre de `userId=_id` pour récupérer un
+journal d'exercice complet de n'importe quel utilisateur. La réponse renvoyée sera l'objet utilisateur avec un tableau
+`log` de tous les exercices ajoutés. Chaque élément de journal a les propriétés `description`, `duration` et `date`.
+
+**#6 :** Une demande au journal d'un utilisateur (`/api/exercice/log`) renvoie un objet avec une propriété `count`
+représentant le nombre d'exercices renvoyés.
+
+**#7 :** Vous pouvez ajouter des paramètres `from`, `to` et `limit` à une requête `/api/exercice/log` pour récupérer
+une partie du journal de n'importe quel utilisateur. `from` et `to` sont des dates au format `yyyy-mm-dd`. `limit`
+est un entier du nombre de journaux à renvoyer.
+
+
+#### Des ressources :
+- [freeCodeCamp Challenge Guide: Exercise Tracker - Guide - The freeCodeCamp Forum](https://forum.freecodecamp.org/t/freecodecamp-challenge-guide-exercise-tracker/301505)
+- [cmccormack/fcc-exercise-tracker: FreeCodeCamp Apis and Microservices Project - Exercise Tracker](https://github.com/cmccormack/fcc-exercise-tracker)
+- [Exercise Tracker - FreeCodeCamp](https://fcc-exercise-tracker.herokuapp.com/)
+- [satyasandeep007/Exercise-Tracker-Nodejs: An Exercise tracker app created with Node ,React and MongoDB](https://github.com/satyasandeep007/Exercise-Tracker-Nodejs)
+- [Exercise Tracker](https://exercice-tracker.netlify.app/)
+- [MehediEhteshum/FCC-ExerciseTracker](https://github.com/MehediEhteshum/FCC-ExerciseTracker)
+- [satyasandeep007/Exercise-Tracker-Nodejs: An Exercise tracker app created with Node ,React and MongoDB](https://github.com/satyasandeep007/Exercise-Tracker-Nodejs)
+- [rbrewer76/ExerciseTracker](https://github.com/rbrewer76/ExerciseTracker)
+- [Exercise Tracker](https://codepen.io/bojan-c/pen/xzwvrE)
+- [Front-End Exercise Tracker](https://codepen.io/borntofrappe/pen/dgvNLK)
+
+
+
+
+<iframe width="100%" height="600px" src="https://boilerplate-project-exercisetracker.gylgyl2000.repl.co"></iframe>
+
+[https://boilerplate-project-exercisetracker.gylgyl2000.repl.co](https://boilerplate-project-exercisetracker.gylgyl2000.repl.co)
+
+<iframe width="100%" height="600px" src="https://microservice-api-suivi-d-exercices.gylgyl2000.repl.co"></iframe>
+
+[https://microservice-api-suivi-d-exercices.gylgyl2000.repl.co](https://microservice-api-suivi-d-exercices.gylgyl2000.repl.co)
+
+-----
+
+
+
+## 5. Microservice de métadonnées de fichiers
+
+[APIs and Microservices Projects - File Metadata Microservice | Learn | freeCodeCamp.org](https://www.freecodecamp.org/learn/apis-and-microservices/apis-and-microservices-projects/file-metadata-microservice)
+
+Créez une application JavaScript full stack qui est fonctionnellement similaire à celle-ci :
+https://file-metadata-microservice.freecodecamp.rocks/. Travailler sur ce projet vous impliquera d'écrire votre
+code en utilisant l'une des méthodes suivantes :
+- Clonez [ce dépôt GitHub](https://github.com/freeCodeCamp/boilerplate-project-filemetadata/)
+et terminez votre projet localement.
+- Utilisez [notre projet de démarrage repl.it](https://repl.it/github/freeCodeCamp/boilerplate-project-filemetadata)
+pour terminer votre projet.
+- Utilisez un constructeur de site de votre choix pour terminer le projet. Assurez-vous d'incorporer tous les
+fichiers de notre dépôt GitHub.
+
+Lorsque vous avez terminé, assurez-vous qu'une démo fonctionnelle de votre projet est hébergée dans un endroit public.
+Envoyez-lui ensuite l'URL dans le champ `Solution Link`. Vous pouvez également soumettre un lien vers le code source
+de vos projets dans le champ `GitHub Link`.
+
+**ASTUCE :** vous pouvez utiliser le package npm `multer` pour gérer le téléchargement de fichiers.
+
+
+**#1 :** Vous devez fournir votre propre projet, pas l'exemple d'URL.
+
+**#2 :** Vous pouvez soumettre un formulaire qui inclut un téléchargement de fichier.
+
+**#3 :** Le champ d'entrée du fichier de formulaire a l'attribut `name` défini sur `upfile`.
+
+**#4 :** Lorsque vous soumettez un fichier, vous recevez le fichier `name`, `type` et `size` en octets dans la
+réponse JSON.
+
+#### Des ressources :
+- [File Metadata Microservice](https://www.notion.so/File-Metadata-Microservice-961a61693f7944808af6bbfa09a32961)
+- [File Metadata Microservice](https://file-metadata-micro-srvc.herokuapp.com/)
+- [FCC Speedrun — File Metadata Microservice | by P1xt | P1xt’s Blog | Medium](https://medium.com/p1xts-blog/fcc-speedrun-file-metadata-microservice-7501083886e9)
+- [Rafase282/File-Metadata-Microservice: File Metadata Microservice API](https://github.com/Rafase282/File-Metadata-Microservice)
+- [CandiW/file-metadata-microservice](https://github.com/CandiW/file-metadata-microservice)
+- [Create a File Metadata Microservice with Node.js – StartJS](https://startjs.net/2016/11/04/file-metadata-microservice-node-js/)
+
+
+
+<iframe width="100%" height="600px" src="https://boilerplate-project-filemetadata.gylgyl2000.repl.co"></iframe>
+
+[https://boilerplate-project-filemetadata.gylgyl2000.repl.co](https://boilerplate-project-filemetadata.gylgyl2000.repl.co)
+
+<iframe width="100%" height="600px" src="https://microservice-api-de-metadonees-de-fichiers.gylgyl2000.repl.co"></iframe>
+
+[https://microservice-api-de-metadonees-de-fichiers.gylgyl2000.repl.co](https://microservice-api-de-metadonees-de-fichiers.gylgyl2000.repl.co)
+
